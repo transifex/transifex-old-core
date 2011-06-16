@@ -79,7 +79,7 @@ class ResourceForm(forms.ModelForm):
                 # Try to do an actual parsing to see if file is valid
                 fhandler = parser(filename=sf.get_storage_path())
                 fhandler.set_language(language)
-                fhandler.is_content_valid(fhandler.filename)
+                fhandler.is_content_valid()
                 fhandler.parse_file(is_source=True)
             except Exception,e:
                 sf.delete()
@@ -124,7 +124,7 @@ class ResourceForm(forms.ModelForm):
                     fhandler = parser(filename=sf.get_storage_path())
                     fhandler.set_language(language)
                     fhandler.bind_resource(self.instance)
-                    fhandler.is_content_valid(fhandler.filename)
+                    fhandler.is_content_valid()
                     fhandler.parse_file(is_source=True)
                     fhandler.save2db(is_source=True, user=user)
                 except:

@@ -84,30 +84,6 @@ class StorageFile(models.Model):
 
         return parser
 
-    def file_check(self):
-        """
-        Check whether the uploaded file if valid.
-
-        Run a number of checks on the StorageFile contents, including specific
-        checks, depending on the i18n format of the file.
-        """
-        # Get appropriate parser
-        parser = self.find_parser()
-
-        if not parser:
-            logger.debug("file: File is not supported.")
-            raise FileCheckError(ugettext("File you are trying to upload does not "
-                "seem to belong to a known i18n format."))
-
-        # Empty file check
-        if self.size == 0:
-            logger.debug("file: Empty file!")
-            raise FileCheckError(ugettext("You have uploaded an empty file!"))
-
-        # Specific check for the i18n format
-        parser().is_content_valid(self.get_storage_path())
-
-
     def update_props(self):
         """
         Try to parse the file and fill in information fields in current model
@@ -128,14 +104,17 @@ class StorageFile(models.Model):
 
         self.save()
 
-        parser = self.find_parser()
+        try:
+            parser = self.find_parser()
+        except IndexError, e:
+            raise FileCheckError("Invalid format")
 
         if not parser:
             return
 
-        fpo = parser(filename = self.get_storage_path() )
+        fpo = parser(filename=self.get_storage_path() )
         fpo.set_language(self.language)
-        fpo.is_content_valid(self.get_storage_path())
+        fpo.is_content_valid()
         fpo.parse_file()
 
         stringset = fpo.stringset

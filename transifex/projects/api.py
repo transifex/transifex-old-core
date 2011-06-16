@@ -421,7 +421,7 @@ class ProjectResourceHandler(BaseHandler):
                 fhandler.set_language(storagefile.language)
 
                 try:
-                    fhandler.is_content_valid(fhandler.filename)
+                    fhandler.is_content_valid()
                     fhandler.parse_file(True)
                     strings_added, strings_updated = fhandler.save2db(True,
                         user=request.user)
@@ -496,7 +496,7 @@ class ProjectResourceHandler(BaseHandler):
                 fhandler = parser(filename=storagefile.get_storage_path())
                 fhandler.set_language(language)
                 fhandler.bind_resource(resource)
-                fhandler.is_content_valid(fhandler.filename)
+                fhandler.is_content_valid()
 
                 try:
                     fhandler.parse_file()

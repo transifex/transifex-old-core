@@ -115,7 +115,6 @@ class StorageHandler(BaseHandler):
 
                 try:
                     sf.update_props()
-                    sf.file_check()
                     sf.save()
 
                     logger.debug("Uploaded file %s (%s)" % (sf.uuid, sf.name))
@@ -135,9 +134,8 @@ class StorageHandler(BaseHandler):
                         # localized string.
                         message = e.message
                     else:
-                        #TODO Send email to admins
-                        message = _("A strange error happened:") + e.message
-                        logger.error(str(e))
+                        message = _("A strange error happened.")
+                        logger.error("Unhandled exception raised: %s" % e.message)
 
                     # The object is not saved yet, but it removes file from
                     # the filesystem

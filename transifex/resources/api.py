@@ -81,7 +81,7 @@ class ResourceHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     default_fields = ('slug', 'name', 'mimetype', 'source_language', 'category', )
     details_fields = (
-        'slug', 'name', 'created', 'available_languages', 'mimetype',
+        'slug', 'name', 'created', 'available_languages', 'i18n_type',
         'source_language_code', 'project_slug', 'wordcount', 'total_entities',
         'accept_translations', 'last_update', 'category',
     )
