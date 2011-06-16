@@ -38,4 +38,4 @@ def _string_to_list(string):
     """
     Convert a string of multiple items separated by commas and spaces to a list.
     """
-    return [s.strip() for s in string.split(',')]
+    return string.split(', ')
