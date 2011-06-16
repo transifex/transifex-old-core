@@ -29,7 +29,8 @@ class ProjectResourceAPITests(BaseStorageTests):
 
         resp = self.client['maintainer'].post(reverse('api_project_files',
             args=[self.project.slug]), data, content_type="application/json")
-        self.assertEqual(eval(resp.content)['strings_added'], 3)
+        r = simplejson.loads(resp.content)
+        self.assertEqual(r['strings_added'], 3)
         self.assertEqual(resp.status_code, 200)
 
         # To be used in other tests
