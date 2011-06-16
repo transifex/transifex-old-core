@@ -11,6 +11,8 @@ from django.utils.translation import ugettext
 from transifex.languages.models import Language
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
+from transifex.resources.formats.utils.methods import get_mimetypes_for_method, \
+        get_extensions_for_method
 
 import magic
 
@@ -77,11 +79,36 @@ class StorageFile(models.Model):
         # to import the PARSERS.
         from transifex.resources.parsers import PARSERS
         parser = None
+        i18n_type = None
+        i18n_types = settings.I18N_METHODS
+        if self.name is not None:
+            for m in i18n_types:
+                file_extensions = tuple(get_extensions_for_method(m))
+                if self.name.endswith(file_extensions):
+                    i18n_type = m
+                    break
+        else:
+            for m in i18n_types:
+                mimetypes = get_mimetypes_for_method(m)
+                if self.mime_type in mimetypes :
+                    i18n_type = m
+                    break
+        if i18n_type is None:
+            msg = "Unsupported resource"
+            if self.name is not None:
+                msg = "Unsupported extension of file: %s" % self.name
+            elif self.mimetype is not None:
+                msg = "Unsupported mimetype %s" % self.mimetype
+            raise FileCheckError(msg)
         for p in PARSERS:
-            if p.accepts(filename=self.name,mime=self.mime_type):
+            if p.accepts(i18n_type):
                 parser = p
                 break
-
+        else:
+            logger.warning(
+                "Storage instance %s does not have a parser" % self.__unicode__()
+            )
+            raise FileCHeckError("Cannot find a suitable parser.")
         return parser
 
     def update_props(self):

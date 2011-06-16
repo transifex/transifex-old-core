@@ -73,13 +73,13 @@ def get_file_extension_for_method(method):
     return settings.I18N_METHODS[method]['file-extensions'].split(',')[0].strip()
 
 
-def parser_for(filename=None, mimetype=None):
+def parser_for(i18n_type):
     """
     Get the appropriate parser.
     """
     from transifex.resources.parsers import PARSERS
     for Parser in PARSERS:
-        if Parser.accepts(filename=filename,mime=mimetype):
-            return Parser(filename=filename)
+        if Parser.accepts(i18n_type):
+            return Parser()
     return None
 

@@ -87,13 +87,9 @@ class Handler(object):
     format_encoding = "UTF-8"
 
     @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(tuple(get_extensions_for_method(cls.method_name)))
-        if mime is not None:
-            accept |= mime in get_mimetypes_for_method(cls.method_name)
-        return accept
+    def accepts(cls, i18n_type):
+        """Accept only files that have the correct type specified."""
+        return i18n_type == cls.method_name
 
     def __init__(self, filename=None, resource=None, language=None, content=None):
         """

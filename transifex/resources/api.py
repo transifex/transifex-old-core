@@ -42,7 +42,6 @@ from transifex.resources.handlers import invalidate_stats_cache
 from transifex.api.utils import BAD_REQUEST
 
 
-
 class BadRequestError(Exception):
     pass
 
@@ -79,7 +78,7 @@ class ResourceHandler(BaseHandler):
         return r.source_language.code
 
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
-    default_fields = ('slug', 'name', 'mimetype', 'source_language', 'category', )
+    default_fields = ('slug', 'name', 'i18n_type', 'source_language', 'category', )
     details_fields = (
         'slug', 'name', 'created', 'available_languages', 'i18n_type',
         'source_language_code', 'project_slug', 'wordcount', 'total_entities',
@@ -88,7 +87,7 @@ class ResourceHandler(BaseHandler):
     fields = default_fields
     allowed_fields = (
         'slug', 'name', 'accept_translations', 'source_language',
-        'mimetype', 'content', 'category',
+        'i18n_type', 'content', 'category',
     )
     apiv1_fields = ('slug', 'name', 'created', 'available_languages', 'i18n_type',
                     'source_language', 'project_slug')
@@ -186,7 +185,7 @@ class ResourceHandler(BaseHandler):
         except AttributeError, e:
             return BAD_REQUEST("Field '%s' is not allowed." % e.message)
         # Check for obligatory fields
-        for field in ('name', 'slug', 'mimetype', ):
+        for field in ('name', 'slug', 'source_language', 'i18n_type', ):
             if field not in data:
                 return BAD_REQUEST("Field '%s' must be specified." % field)
 
@@ -194,16 +193,15 @@ class ResourceHandler(BaseHandler):
             project = Project.objects.get(slug=project_slug)
         except Project.DoesNotExist:
             return rc.NOT_FOUND
-
-        slang = None
-        if 'source_language' in data:
-            slang = data.get('source_language')
-            del data['source_language']
-        i18n_type = get_method_for_mimetype(data.get('mimetype', None))
-        if 'application/json' in request.content_type and i18n_type is None:
-            return BAD_REQUEST("Field 'mimetype' must be specified.")
-        if i18n_type is not None:
-            del data['mimetype']
+        # In multipart/form-encode request variables have lists
+        # as values. So we use __getitem__ isntead of pop, which returns
+        # the last value
+        slang = data['source_language']
+        del data['source_language']
+        i18n_type = data['i18n_type']
+        del data['i18n_type']
+        if i18n_type not in settings.I18N_METHODS:
+            return BAD_REQUEST("i18n_type %s is not supported." % i18n_type)
         try:
             source_language = self._get_source_lang(project, slang)
         except BadRequestError, e:
@@ -302,7 +300,7 @@ class ResourceHandler(BaseHandler):
             return rc.NOT_FOUND
         slang = data.pop('source_language', None)
         source_language = None
-        i18n_type = get_method_for_mimetype(data.pop('mimetype', None))
+        i18n_type = data.pop('i18n_type', None)
         if slang is not None:
             try:
                 source_language = Language.objects.by_code_or_alias(slang)
@@ -908,10 +906,8 @@ class FileTranslation(Translation):
                 file_.write(chunk)
             file_.close()
 
-            parser = parser_for(
-                mimetype=get_mimetype_from_method(self.resource.i18n_type)
-            )
-
+            parser = parser_for(self.resource.i18n_type)
+            parser.bind_file(file_.name)
             if parser is None:
                 raise BadRequestError("Unknown file type")
             if size == 0:
@@ -984,10 +980,10 @@ class StringTranslation(Translation):
         if 'content' not in self.data:
             raise NoContentError("No content found.")
         parser = parser_for(
-            mimetype=get_mimetypes_for_method(self.resource.i18n_type)[0]
+            self.resource.i18n_type
         )
         if parser is None:
-            raise BadRequestError("Mimetype not supported")
+            raise BadRequestError("I18n type is not supported: %s" % i18n_type)
 
         file_ = tempfile.NamedTemporaryFile(
             mode='wb',

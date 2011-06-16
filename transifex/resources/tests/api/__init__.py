@@ -235,7 +235,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertContains(res, "Field 'mimetype'", status_code=400)
+        self.assertContains(res, "Field 'i18n_type'", status_code=400)
 
     def test_post_files(self):
         self._create_project()
@@ -247,7 +247,8 @@ class TestResourceAPI(APIBaseTests):
                 'name': "resource1",
                 'slug': 'r1',
                 'source_language': 'el',
-                'mimetype': 'text/x-po',
+                'i18n_type': 'PO',
+                'name': 'name.po',
                 'attachment': f
             },
         )
@@ -310,7 +311,7 @@ class TestResourceAPI(APIBaseTests):
         res = self.client['registered'].put(
             url,
             data=simplejson.dumps({
-                    'mimetype': "text/x-po",
+                    'i18n_type': "PO",
             }),
             content_type='application/json'
         )
@@ -359,7 +360,7 @@ class TestResourceAPI(APIBaseTests):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -454,7 +455,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -468,7 +469,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
             }),
             content_type='application/json'
         )
@@ -479,7 +480,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource2",
                     'slug': 'r2',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
             }),
             content_type='application/json'
         )
@@ -835,7 +836,7 @@ class TestTranslationAPI(APIBaseTests):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'en_US',
-                    'mimetype': 'text/x-joomla-ini',
+                    'i18n_type': 'INI',
                     'content': content,
             }),
             content_type='application/json'
@@ -889,7 +890,7 @@ class TestTranslationAPI(APIBaseTests):
                     'name': "rα",
                     'slug': 'r1',
                     'source_language': 'en_US',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -929,7 +930,7 @@ class TestTranslationAPI(APIBaseTests):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -1036,13 +1037,14 @@ class TestStatsAPI(APIBaseTests):
         )
 
     def _create_resource(self):
+        self._create_project()
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': self.resource_slug,
                     'source_language': 'el',
-                    'mimetype': 'text/x-joomla-ini',
+                    'i18n_type': 'INI',
                     'content': self.content,
             }),
             content_type='application/json'

@@ -23,7 +23,7 @@ class TestJavaProperties(BaseTestCase):
 
     def test_accept(self):
         parser = JavaPropertiesHandler()
-        self.assertTrue(parser.accepts(mime='text/x-java-properties'))
+        self.assertTrue(parser.accepts('PROPERTIES'))
 
     def test_split(self):
         j = JavaPropertiesHandler()
