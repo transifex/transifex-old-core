@@ -42,7 +42,7 @@ class StorageTests(BaseStorageTests):
         upload_file = open('%s/empty.pot' % os.path.split(__file__)[0]) # hack
         data = {'language': self.language_en.code, 'file': upload_file}
         resp = self.client['registered'].post(reverse('api.storage'), data)
-        self.assertTrue('Uploaded file is empty' in resp.content)
+        self.assertIn('Uploaded file is empty', resp.content)
 
 
     def test_update_storage_language(self):

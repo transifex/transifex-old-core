@@ -1037,7 +1037,6 @@ class TestStatsAPI(APIBaseTests):
         )
 
     def _create_resource(self):
-        self._create_project()
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({

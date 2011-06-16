@@ -87,7 +87,7 @@ class POHandler(Handler):
 
         # If file is empty, the method hangs so we should bail out.
         if not content:
-            logger.warning("Pofile: File '%s' is empty." % filename)
+            logger.warning("Pofile: File '%s' is empty." % self.filename)
             raise FileCheckError("Uploaded file is empty.")
 
         # Msgfmt check
