@@ -66,13 +66,6 @@ def get_i18n_handler_from_type(i18n_type):
     return import_to_python(class_name)
 
 
-def get_file_extension_for_method(method):
-    """
-    Return a file extension for the given mimetype.
-    """
-    return settings.I18N_METHODS[method]['file-extensions'].split(',')[0].strip()
-
-
 def parser_for(i18n_type):
     """
     Get the appropriate parser.
