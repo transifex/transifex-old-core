@@ -64,15 +64,3 @@ def get_i18n_handler_from_type(i18n_type):
     class_name = settings.I18N_HANDLER_CLASS_NAMES[i18n_type]
 
     return import_to_python(class_name)
-
-
-def parser_for(i18n_type):
-    """
-    Get the appropriate parser.
-    """
-    from transifex.resources.parsers import PARSERS
-    for Parser in PARSERS:
-        if Parser.accepts(i18n_type):
-            return Parser()
-    return None
-
