@@ -30,9 +30,7 @@ from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
-from transifex.resources.formats import parser_for, get_file_extension_for_method
-from transifex.resources.formats.utils.methods import get_mimetypes_for_method, \
-        get_method_for_mimetype
+from transifex.resources.formats.registry import registry
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
 from transifex.teams.models import Team
@@ -68,7 +66,7 @@ class ResourceHandler(BaseHandler):
         """
         Return the mimetype in a GET request instead of the i18n_type.
         """
-        return get_mimetypes_for_method(r.i18n_type)[0]
+        return registry.mimetypes_for(r.i18n_type)[0]
 
     @classmethod
     def source_language_code(cls, r):
@@ -906,7 +904,7 @@ class FileTranslation(Translation):
                 file_.write(chunk)
             file_.close()
 
-            parser = parser_for(self.resource.i18n_type)
+            parser = registry.handler_for(self.resource.i18n_type)
             parser.bind_file(file_.name)
             if parser is None:
                 raise BadRequestError("Unknown file type")
@@ -979,15 +977,13 @@ class StringTranslation(Translation):
         """
         if 'content' not in self.data:
             raise NoContentError("No content found.")
-        parser = parser_for(
-            self.resource.i18n_type
-        )
+        parser = registry.handler_for(self.resource.i18n_type)
         if parser is None:
             raise BadRequestError("I18n type is not supported: %s" % i18n_type)
 
         file_ = tempfile.NamedTemporaryFile(
             mode='wb',
-            suffix=get_file_extension_for_method(self.resource.i18n_type),
+            suffix=registry.extensions_for(self.resource.i18n_type)[0],
             delete=False,
         )
         try:
