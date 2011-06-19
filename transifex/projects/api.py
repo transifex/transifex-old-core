@@ -18,7 +18,7 @@ from transifex.projects.permissions import *
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_submit_translation, post_resource_save
 from transifex.resources.decorators import method_decorator
-from transifex.resources.formats import get_i18n_type_from_file, pofile, qt
+from transifex.resources.formats.registry import registry
 from transifex.resources.models import *
 from transifex.storage.models import StorageFile
 from transifex.teams.models import Team
@@ -397,7 +397,7 @@ class ProjectResourceHandler(BaseHandler):
                     resource.save()
 
                 # update i18n_type
-                i18n_type = get_i18n_type_from_file(storagefile.get_storage_path())
+                i18n_type = registry.guess_method(storagefile.get_storage_path())
                 if not i18n_type:
                     transaction.rollback()
                     return BAD_REQUEST("File type not supported.")

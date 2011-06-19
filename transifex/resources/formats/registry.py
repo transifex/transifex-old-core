@@ -3,8 +3,11 @@
 Register the available formats and their capabilities.
 """
 
+import magic
 from django.conf import settings
 from transifex.txcommon import import_to_python
+from transifex.txcommon.log import logger
+from transifex.resources.formats import FormatsError
 
 
 class _FormatsRegistry(object):
@@ -51,6 +54,40 @@ class _FormatsRegistry(object):
             return []
         return self._string_to_list(self.methods[m]['file-extensions'])
 
+    def guess_method(self, filename):
+        """
+        Return an appropriate Handler class for given file.
+
+        The handler is selected based on libmagic and the file extension.
+
+        Args:
+            filename: The path to the file.
+
+        Returns:
+            An appropriate handler class for the file.
+        """
+        i18n_type = None
+        try:
+            m = magic.Magic(mime=True)
+            # guess mimetype and remove charset
+            mime_type = m.from_file(filename)
+        except AttributeError:
+            m = magic.open(magic.MAGIC_NONE)
+            m.load()
+            mime_type = m.file(filename)
+            m.close()
+        except Exception:
+            logger.error("Uncaught exception: %s" % e.message, exc_info=True)
+            # We don't have the actual file. Depend on the filename only
+            mime_type = None
+
+        for method, info in self.methods.items():
+            if filter(filename.endswith, info['file-extensions'].split(', ')) or\
+              mime_type in info['mimetype'].split(', '):
+                i18n_type = method
+                break
+
+        return i18n_type
 
     def mimetypes_for(self, m):
         """Get the mimetypes for the specified method.

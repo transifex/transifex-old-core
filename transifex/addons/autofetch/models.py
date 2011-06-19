@@ -3,8 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from transifex.resources.models import Resource
 from transifex.txcommon.log import logger
-from transifex.resources.formats import (get_i18n_handler_from_type,
-    get_i18n_type_from_file)
+from transifex.resources.formats.registry import registry
 
 import os
 import urllib2, urlparse
@@ -79,11 +78,11 @@ class URLInfo(models.Model):
 
         try:
             if self.resource.i18n_type:
-                parser = get_i18n_handler_from_type(self.resource.i18n_type)
+                parser = registry.handler_for(self.resource.i18n_type)
             else:
                 parser = sf.find_parser()
                 assert parser, "Could not find a suitable handler for this file."
-                i18n_type = get_i18n_type_from_file(sf.get_storage_path())
+                i18n_type = registry.guess_method(sf.get_storage_path())
                 self.resource.i18n_type = i18n_type
                 self.resource.save()
             language = sf.language

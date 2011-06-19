@@ -11,7 +11,7 @@ from transifex.languages.models import Language
 from suggestions.models import Suggestion
 from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
-from transifex.resources.formats import FormatsError, get_i18n_type_from_file
+from transifex.resources.formats import FormatsError
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.string_utils import percent_diff

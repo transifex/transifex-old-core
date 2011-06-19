@@ -17,7 +17,6 @@ from django.utils.translation import ugettext as _
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
-from transifex.resources.formats import get_i18n_handler_from_type
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
@@ -31,6 +30,7 @@ from transifex.resources.forms import ResourceForm, ResourcePseudoTranslationFor
 from transifex.resources.models import Translation, Resource, RLStats
 from transifex.resources.handlers import (invalidate_object_templates,
     invalidate_stats_cache)
+from transifex.resources.formats.registry import registry
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
@@ -389,7 +389,7 @@ def _compile_translation_template(resource=None, language=None, pseudo_type=None
     """
     Given a resource and a language we create the translation file
     """
-    parser = get_i18n_handler_from_type(resource.i18n_type)
+    parser = registry.handler_for(resource.i18n_type)
     handler = parser(resource=resource, language=language)
     if language is not None:
         if pseudo_type:

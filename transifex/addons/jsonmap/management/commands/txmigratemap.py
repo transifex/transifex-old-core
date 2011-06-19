@@ -27,7 +27,7 @@ class Command(BaseCommand):
 
         # OMG!1! Dirty fix for circular importing issues. Didn't want to dig
         # into it because it's probably not worth, once it's a tmp code.
-        from transifex.resources.formats import get_i18n_type_from_file
+        from transifex.resources.formats.registry import registry
         from transifex.resources.formats.pofile import POHandler
         from transifex.languages.models import Language
         from transifex.projects.models import Project
@@ -87,7 +87,7 @@ class Command(BaseCommand):
                                 r['source_file'])
 
                         source_file = os.path.join(path, r['source_file'])
-                        resource.i18n_type = get_i18n_type_from_file(source_file)
+                        resource.i18n_type = registry.guess_method(source_file)
                         resource.save()
 
                         resource.url_info = URLInfo(source_file_url=r['autofetch_url'])

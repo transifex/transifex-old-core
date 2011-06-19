@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.languages.models import Language
-from transifex.resources.formats import get_i18n_type_from_file
+from transifex.resources.formats.registry import registry
 from transifex.storage.fields import StorageFileField
 from transifex.storage.models import StorageFile
 from transifex.storage.widgets import StorageFileWidget
@@ -130,13 +130,9 @@ class ResourceForm(forms.ModelForm):
                 except:
                     raise
 
-                # Try to set the i18n type. Problem is that we only check
-                # filename instead of mime type. we should probably update the
-                # function to use python magic as well
-                try:
-                    m.i18n_type = get_i18n_type_from_file(file.name)
-                except:
-                    pass
+                method = registry.guess_method(file.name)
+                if method is not None:
+                    m.i18n_type = method
 
                 m.save()
 

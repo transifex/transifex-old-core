@@ -11,8 +11,7 @@ from django.utils.translation import ugettext
 from transifex.languages.models import Language
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
-from transifex.resources.formats.utils.methods import get_mimetypes_for_method, \
-        get_extensions_for_method
+from transifex.resources.formats.registry import registry
 
 import magic
 
@@ -83,13 +82,13 @@ class StorageFile(models.Model):
         i18n_types = settings.I18N_METHODS
         if self.name is not None:
             for m in i18n_types:
-                file_extensions = tuple(get_extensions_for_method(m))
+                file_extensions = tuple(registry.extensions_for(m))
                 if self.name.endswith(file_extensions):
                     i18n_type = m
                     break
         else:
             for m in i18n_types:
-                mimetypes = get_mimetypes_for_method(m)
+                mimetypes = registry.mimetypes_for(m)
                 if self.mime_type in mimetypes :
                     i18n_type = m
                     break
