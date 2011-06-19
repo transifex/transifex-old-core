@@ -71,13 +71,13 @@ class ResourceForm(forms.ModelForm):
                 raise forms.ValidationError(e.message)
             sf.save()
 
-            parser = sf.find_parser()
-            if not parser:
+            fhandler = sf.find_parser()
+            if not fhandler:
                 raise forms.ValidationError("File doesn't seem to be in a"
                     " valid format.")
             try:
                 # Try to do an actual parsing to see if file is valid
-                fhandler = parser(filename=sf.get_storage_path())
+                fhandler.bind_file(filename=sf.get_storage_path())
                 fhandler.set_language(language)
                 fhandler.is_content_valid()
                 fhandler.parse_file(is_source=True)

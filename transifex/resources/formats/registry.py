@@ -53,38 +53,49 @@ class _FormatsRegistry(object):
             return []
         return self._string_to_list(self.methods[m]['file-extensions'])
 
-    def guess_method(self, filename):
+    def guess_method(self, filename=None, mimetype=None):
         """
         Return an appropriate Handler class for given file.
 
-        The handler is selected based on libmagic and the file extension.
+        The handler is selected based on libmagic and the file extension
+        or the mime type.
 
         Args:
             filename: The path to the file.
+            mimetype: The mime type of the file.
 
         Returns:
             An appropriate handler class for the file.
         """
         i18n_type = None
-        try:
-            m = magic.Magic(mime=True)
-            # guess mimetype and remove charset
-            mime_type = m.from_file(filename)
-        except AttributeError:
-            m = magic.open(magic.MAGIC_NONE)
-            m.load()
-            mime_type = m.file(filename)
-            m.close()
-        except Exception:
-            logger.error("Uncaught exception: %s" % e.message, exc_info=True)
-            # We don't have the actual file. Depend on the filename only
-            mime_type = None
+        if filename is not None:
+            try:
+                m = magic.Magic(mime=True)
+                # guess mimetype and remove charset
+                mime_type = m.from_file(filename)
+            except AttributeError, e:
+                m = magic.open(magic.MAGIC_NONE)
+                m.load()
+                mime_type = m.file(filename)
+                m.close()
+            except IOError, e:
+                # file does not exist in the storage
+                mime_type = None
+            except Exception, e:
+                logger.error("Uncaught exception: %s" % e.message, exc_info=True)
+                # We don't have the actual file. Depend on the filename only
+                mime_type = None
 
-        for method, info in self.methods.items():
-            if filter(filename.endswith, info['file-extensions'].split(', ')) or\
-              mime_type in info['mimetype'].split(', '):
-                i18n_type = method
-                break
+            for method, info in self.methods.items():
+                if filter(filename.endswith, info['file-extensions'].split(', ')) or\
+                  mime_type in info['mimetype'].split(', '):
+                    i18n_type = method
+                    break
+        elif mimetype is not None:
+            for method in self.handlers:
+                if mimetype in self.mimetypes_for(method):
+                    i18n_type = method
+                    break
 
         return i18n_type
 

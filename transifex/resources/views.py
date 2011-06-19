@@ -389,8 +389,9 @@ def _compile_translation_template(resource=None, language=None, pseudo_type=None
     """
     Given a resource and a language we create the translation file
     """
-    parser = registry.handler_for(resource.i18n_type)
-    handler = parser(resource=resource, language=language)
+    handler = registry.handler_for(resource.i18n_type)
+    handler.bind_resource(resource)
+    handler.set_language(language)
     if language is not None:
         if pseudo_type:
             handler.bind_pseudo_type(pseudo_type)

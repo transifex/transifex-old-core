@@ -74,24 +74,7 @@ class StorageFile(models.Model):
         return (self.total_strings > 0)
 
     def find_parser(self):
-        #FIXME: Decide whether it's important to have it and find a good way
-        # to import the PARSERS.
-        from transifex.resources.parsers import PARSERS
-        parser = None
-        i18n_type = None
-        i18n_types = settings.I18N_METHODS
-        if self.name is not None:
-            for m in i18n_types:
-                file_extensions = tuple(registry.extensions_for(m))
-                if self.name.endswith(file_extensions):
-                    i18n_type = m
-                    break
-        else:
-            for m in i18n_types:
-                mimetypes = registry.mimetypes_for(m)
-                if self.mime_type in mimetypes :
-                    i18n_type = m
-                    break
+        i18n_type = registry.guess_method(self.name, self.mime_type)
         if i18n_type is None:
             msg = "Unsupported resource"
             if self.name is not None:
@@ -99,16 +82,7 @@ class StorageFile(models.Model):
             elif self.mimetype is not None:
                 msg = "Unsupported mimetype %s" % self.mimetype
             raise FileCheckError(msg)
-        for p in PARSERS:
-            if p.accepts(i18n_type):
-                parser = p
-                break
-        else:
-            logger.warning(
-                "Storage instance %s does not have a parser" % self.__unicode__()
-            )
-            raise FileCHeckError("Cannot find a suitable parser.")
-        return parser
+        return registry.handler_for(i18n_type)
 
     def update_props(self):
         """
@@ -138,12 +112,12 @@ class StorageFile(models.Model):
         if not parser:
             return
 
-        fpo = parser(filename=self.get_storage_path() )
-        fpo.set_language(self.language)
-        fpo.is_content_valid()
-        fpo.parse_file()
+        parser.bind_file(filename=self.get_storage_path())
+        parser.set_language(self.language)
+        parser.is_content_valid()
+        parser.parse_file()
 
-        stringset = fpo.stringset
+        stringset = parser.stringset
         if not stringset:
             return
 

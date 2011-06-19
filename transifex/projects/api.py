@@ -415,8 +415,8 @@ class ProjectResourceHandler(BaseHandler):
                     resource.slug))
 
                 strings_added, strings_updated = 0, 0
-                parser = storagefile.find_parser()
-                fhandler = parser(filename=storagefile.get_storage_path())
+                fhandler = storagefile.find_parser()
+                fhandler.bind_file(filename=storagefile.get_storage_path())
                 fhandler.bind_resource(resource)
                 fhandler.set_language(storagefile.language)
 
@@ -491,9 +491,9 @@ class ProjectResourceHandler(BaseHandler):
                     resource.slug))
 
                 strings_added, strings_updated = 0, 0
-                parser = storagefile.find_parser()
+                fhandler = storagefile.find_parser()
                 language = storagefile.language
-                fhandler = parser(filename=storagefile.get_storage_path())
+                fhandler.bind_file(filename=storagefile.get_storage_path())
                 fhandler.set_language(language)
                 fhandler.bind_resource(resource)
                 fhandler.is_content_valid()
