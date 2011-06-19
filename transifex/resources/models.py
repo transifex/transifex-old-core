@@ -190,6 +190,10 @@ class Resource(models.Model):
         if not self.pk:
             created=True
 
+        # PO and POT files are the same
+        if self.i18n_type == 'POT':
+            self.i18n_type == 'PO'
+
         # Update total_entries
         self.update_total_entities(save=False)
 
