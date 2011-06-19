@@ -18,7 +18,6 @@ from django.contrib.auth.models import User, AnonymousUser
 
 from transifex.languages.models import Language
 from transifex.projects.models import Project
-from transifex.storage.models import StorageFile
 from transifex.txcommon.db.models import CompressedTextField, \
     ChainerManager, ListCharField
 from transifex.txcommon.log import logger
@@ -128,10 +127,6 @@ class Resource(models.Model):
         help_text=_("A descriptive name unique inside the project."))
 
     # i18n related fields
-    source_file = models.ForeignKey(StorageFile, verbose_name=_("Source file"),
-        blank=True, null=True,
-        help_text=_("A local file used to extract the strings for "
-                    "translation."))
     i18n_type = models.CharField(_('I18n type'), max_length=20, editable=False,
         choices=((k,settings.I18N_METHODS[k]['description']) for k,v in settings.I18N_METHODS.items()),
         help_text=_("The type of i18n method used in this resource (%s)") %
