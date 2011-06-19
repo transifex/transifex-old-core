@@ -11,7 +11,7 @@ from transifex.languages.models import Language
 from suggestions.models import Suggestion
 from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
-from transifex.resources.formats import FormatsError
+from transifex.resources.formats import FormatError
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.string_utils import percent_diff
@@ -66,12 +66,12 @@ class CustomSerializer(json.JSONEncoder):
                 'strings' : obj.strings,
             }
 
-class ParseError(FormatsError):
+class ParseError(FormatError):
     """Base class for parsing errors."""
     pass
 
 
-class CompileError(FormatsError):
+class CompileError(FormatError):
     """Base class for all compiling errors."""
     pass
 
@@ -149,7 +149,7 @@ class Handler(object):
                 "Error opening file %s with encoding %s" % (filename, self.format_encoding),
                 exc_info=True
             )
-            raise FormatsError(e.message)
+            raise FormatError(e.message)
         finally:
             f.close()
 
@@ -164,10 +164,10 @@ class Handler(object):
                 self.language = Language.objects.by_code_or_alias(language)
             except Language.DoesNotExist, e:
                 logger.warning("Language.DoesNotExist: %s" % e.message, exc_info=True)
-                raise FormatsError(e.message)
+                raise FormatError(e.message)
             except Exception, e:
                 logger.error(e.message, exc_info=True)
-                raise FormatsError(e.message)
+                raise FormatError(e.message)
 
     def bind_content(self, content):
         """
@@ -185,7 +185,7 @@ class Handler(object):
         else:
             msg = "Specified file %s does not exist." % filename
             logger.error(msg)
-            raise FormatsError(msg)
+            raise FormatError(msg)
 
     def bind_resource(self, resource):
         """

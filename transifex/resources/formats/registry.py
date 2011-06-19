@@ -7,7 +7,6 @@ import magic
 from django.conf import settings
 from transifex.txcommon import import_to_python
 from transifex.txcommon.log import logger
-from transifex.resources.formats import FormatsError
 
 
 class _FormatsRegistry(object):

@@ -5,7 +5,6 @@ import unittest
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats import FormatsError
 from transifex.resources.formats.javaproperties import  JavaPropertiesHandler, \
         JavaParseError
 

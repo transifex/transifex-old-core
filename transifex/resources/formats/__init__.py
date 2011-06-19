@@ -3,6 +3,6 @@
 Transifex formats package.
 """
 
-class FormatsError(Exception):
+class FormatError(Exception):
     """Base class for all formats related errors."""
     pass
