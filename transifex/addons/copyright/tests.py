@@ -56,9 +56,8 @@ class CopyrightTests(BaseTestCase):
     def test_poheader_load_soureclang(self):
         """Test load of existing PO file with copyright headers."""
 
-        test_file = os.path.join(
-            settings.TX_ROOT, 'resources/tests/lib/pofile/copyright.po'
-        )
+        test_file = os.path.join(settings.TX_ROOT,
+                                 './resources/tests/lib/pofile/copyright.po')
         handler = POHandler(test_file)
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
