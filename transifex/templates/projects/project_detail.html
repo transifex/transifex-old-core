@@ -26,43 +26,35 @@
   <div class="details separate">
 
   <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
-  <table class="definition">
+  <dl class="definition clearfix">
     {% if request.user.is_authenticated%}
       {% url notification.views.notices as notices_url %}
       {% if notices_url %}
-   <tr>
-      <th class="i16 watch">{% trans "Watch:" %}</th>
-      <td>
-        {% watch_toggle project %}
-    </td>
-    </tr>
+
+      <dt class="i16 watch">{% trans "Watch:" %}</dt>
+      <dd>{% watch_toggle project %}</dd>
+
       {% endif %}
     {% endif %}
     {% if project.homepage %}
-    <tr>
-      <th class="homepage i16">{% trans "Homepage:" %}</th>
-      <td><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></td>
-    </tr>
+      <dt> class="homepage i16">{% trans "Homepage:" %}</dt>
+      <dd><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></dd>
+
     {% endif %}
     {% if project.bug_tracker %}
-    <tr>
-      <th class="bug i16">{% trans "Bug tracker:" %}</th>
-      <td><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></td>
-    </tr>
+      <dt class="bug i16">{% trans "Bug tracker:" %}</dt>
+      <dd><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></dd>
     {% endif %}
     {% if project.tags %}
-    <tr>
-      <th class="i16 tag">{% trans "Tags:" %}</th>
-      <td class="compact">
+      <dt class="i16 tag">{% trans "Tags:" %}</dt>
+      <dd class="compact">
         {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
-      </td>
-    </tr>
+      </dd>
     {% endif %}
     {% with project.maintainers.all as maintainers %}
     {% if maintainers %}
-    <tr>
-      <th class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</th>
-      <td>
+      <dt class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</dt>
+      <dd>
         {% for m in maintainers|slice:"0:6" %}
           <img class="border" src="{% avatar 16 m %}" style="vertical-align:middle"/>
           {% if m.first_name and m.last_name %}
@@ -75,32 +67,28 @@
           {% endif %}
             {% if not forloop.last %},{% endif %}
         {% endfor %}
-      </td>
-    </tr>
+      </dd>
     {% endif %}
     {% endwith %}
 
     {% with project.trans_instructions as instructions_url %}
     {% if instructions_url %}
-    <tr>
-      <th class="help i16">{% trans "Documentation:" %}</th>
-      <td><a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank">{% trans "Translation help pages" %}</a></td>
-    </tr>
+      <dt class="help i16">{% trans "Documentation:" %}</dt>
+      <dd><a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank">{% trans "Translation help pages" %}</a></dd>
     {% endif %}
     {% endwith %}
 
     {% hook "additional_project_details.html" %}
 
 {% comment %}
-    <tr>
-      <th class="i16 link">{% trans "External links:" %}</th>
-      <td><ul>
+      <dt class="i16 link">{% trans "External links:" %}</dt>
+      <dd><ul>
         <li>{% trans "Screenshots" %}</li>
         </ul>
-      </td>
-    </tr>
+      </dd>
+</dl>
+
 {% endcomment %}
-  </table>
   {% with project.long_description_html as long_desc %}
   {% if long_desc %}
   <div class="long_description">
