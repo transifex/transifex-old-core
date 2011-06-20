@@ -125,7 +125,7 @@ class Project(models.Model):
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
         help_text=_('A short name or very short description.'))
-    description = models.CharField(_('Description'), blank=True, max_length=255,
+    description = models.CharField(_('Description'), blank=False, max_length=255,
         help_text=_('A sentence or two describing the object (optional).'))
     long_description = models.TextField(_('Long description'), blank=True,
         max_length=1000,
