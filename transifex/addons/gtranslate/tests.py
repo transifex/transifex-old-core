@@ -9,46 +9,64 @@ from transifex.addons.gtranslate import is_gtranslate_allowed
 
 class TestGtranslate(BaseTestCase):
 
-    def test_initial_set(self):
-        settings.DISALLOWED_SLUGS = []
-        pr = Project(slug='not')
-        pr.name = "Dont'w want"
-        pr.save()
-        settings.DISALLOWED_SLUGS.append('not')
-        o = Project(slug='outsourced')
-        o.name = "Dont'w want"
-        o.save()
-        o.outsource = pr
-        o.save()
-        g = Gtranslate.objects.get(project=o)
-        self.assertTrue(g.use_gtranslate)
-        p = Project(slug='ok')
-        p.name = "Wants"
-        p.save()
-        g = Gtranslate.objects.get(project=p)
-        self.assertTrue(g.use_gtranslate)
-
     def test_is_allowed(self):
-        settings.DISALLOWED_SLUGS = []
-        p = Project(slug='yes')
-        p.name = 'Yes'
-        p.save()
-        self.assertTrue(is_gtranslate_allowed(p))
-        settings.DISALLOWED_SLUGS.append('no')
-        p = Project(slug='no')
-        p.name = 'No'
-        p.save()
-        self.assertFalse(is_gtranslate_allowed(p))
-        pout = Project(slug='out')
-        pout.name = 'Out'
-        pout.save()
-        pout.outsource = p
-        self.assertFalse(is_gtranslate_allowed(pout))
+        
+        """Test if gtranslate is allowed for a particular project."""
+        
+        outp = Project.objects.create(slug='outsourced', name='outsourced')
+        self.assertTrue(is_gtranslate_allowed(self.project))
+        Gtranslate.objects.create(use_gtranslate=True, project=self.project)
+        self.assertTrue(is_gtranslate_allowed(self.project))
+        self.project.outsource = outp
+        self.project.save()
+        self.assertTrue(is_gtranslate_allowed(self.project))
+        Gtranslate.objects.create(use_gtranslate=True, project=outp)
+        self.assertTrue(is_gtranslate_allowed(self.project))
+    
+    def test_is_not_allowed(self):
+        
+        """Test if gtranslate is not allowed for a particular project."""
+        
+        outp = Project.objects.create(slug='outsource', name='outsource')
+        g = Gtranslate.objects.create(use_gtranslate=False, project=self.project)
+        self.assertFalse(is_gtranslate_allowed(self.project))
+        self.project.outsource = outp
+        self.project.save()
+        self.assertFalse(is_gtranslate_allowed(self.project))
+        Gtranslate.objects.create(use_gtranslate=False, project=outp)
+        self.assertFalse(is_gtranslate_allowed(self.project))
+        g1 = Gtranslate.objects.get(project=outp)
+        g1.use_gtranslate=True
+        g1.save()
+        self.assertFalse(is_gtranslate_allowed(self.project))
+        g.use_translate = True
+        g.save()
+        g1.use_translate = False
+        g1.save()
+        self.assertFalse(is_gtranslate_allowed(self.project))
 
     def test_delete(self):
+        
+        """Test if a gtranslate entry is deleted when the corresponding
+        project is delete"""
+        
         p = Project(slug="rm")
         p.name = "RM me"
         p.save()
+        Gtranslate.objects.create(use_gtranslate=False, project=p)
         delete_gtranslate(p)
 
+    def test_projects_not_in_gtranslate_table(self):
+        
+        """Test the number of projects which are not in Gtranslate table"""
+        
+        self.test_is_allowed()
+        projects_list = []
+        for p in Project.objects.all():
+            try:
+                Gtranslate.objects.get(project=p)
+            except:
+                projects_list.append(p)
+                
+        self.assertEqual(len(projects_list), 6)
 
