@@ -90,31 +90,26 @@
 
   <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
 
-  <table class="definition">
-    <tr {% if not release.homepage %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
-      <th class="homepage i16">{% trans "Homepage:" %}</th>
-      <td><a href="{{ release.homepage }}">{{ release.homepage }}</a></td>
-    </tr>
-    <tr class="separator"></tr>
-    <tr class="{% if not release.release_date %}empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
-      <th class="release_date i16">{% trans "Release date:" %}</th>
-      <td>{{ release.release_date|date:"D d M Y" }}</td>
-    </tr>
-    <tr {% if not release.stringfreeze_date %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
-      <th class="freeze i16">{% trans "String freeze:" %}</th>
-      <td>{{ release.stringfreeze_date|date:"D d M Y" }}</td>
-    </tr>
-    <tr {% if not release.develfreeze_date %}class="empty {% if not request.user.is_authenticated %}nodisplay{% endif %}"{% endif %}>
-      <th class="freeze i16">{% trans "Devel freeze:" %}</th>
-      <td>{{ release.develfreeze_date|date:"D d M Y" }}</td>
-    </tr>
-    <tr class="separator"></tr>
+  <dl class="definition">
+
+      <dt class="homepage i16{% if not release.homepage %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "Homepage:" %}</dt>
+      <dd><a href="{{ release.homepage }}">{{ release.homepage }}</a></dd>
+
+      <dt class="release_date i16{% if not release.release_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "Release date:" %}</dt>
+      <dd>{{ release.release_date|date:"D d M Y" }}</dd>
+
+
+      <dt class="freeze i16 {% if not release.stringfreeze_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "String freeze:" %}</dt>
+      <dd>{{ release.stringfreeze_date|date:"D d M Y" }}</dd>
+
+      <dt class="freeze i16 {% if not release.develfreeze_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "Devel freeze:" %}</dt>
+      <dd>{{ release.develfreeze_date|date:"D d M Y" }}</dd>
+
 
     {% with resources|length as resources_number %}
     {% if resources %}
-    <tr>
-      <th class="resource i16">{% trans "Resources:" %}</th>
-      <td>
+      <dt class="resource i16">{% trans "Resources:" %}</dt>
+      <dd>
         <span id="resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
         {% blocktrans %}This release has {{ resources_number }} resources.{% endblocktrans %}
         </span>
@@ -123,16 +118,14 @@
             <li><a title="{{ r }}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
-      </td>
-    </tr>
+      </dd>
     {% endif %}
     {% endwith %}
 
     {% with private_resources|length as resources_number %}
     {% if private_resources %}
-    <tr>
-      <th class="coordinators i16">{% trans "Private Resources:" %}</th>
-      <td>
+      <dt class="coordinators i16">{% trans "Private Resources:" %}</dt>
+      <dd>
         <span id="private-resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
         {% blocktrans %}This release has {{ resources_number }} private resources you have access to.{% endblocktrans %}
         </span>
@@ -141,11 +134,10 @@
             <li><a title="{% firstof r.description|escape r.name|escape %}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
         </ul>
-      </td>
-    </tr>
+      </dd>
     {% endif %}
     {% endwith %}
-  </table>
+  </dl>
   
   {% with release.long_description_html as long_desc %}
   {% if long_desc %}
