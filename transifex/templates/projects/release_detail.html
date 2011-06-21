@@ -90,21 +90,27 @@
 
   <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
 
-  <dl class="definition">
+  <dl class="definition clearfix">
+      
+      <div class="{% if not release.homepage %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
+        <dt class="homepage i16">{% trans "Homepage:" %}</dt>
+        <dd><a href="{{ release.homepage }}">{{ release.homepage }}</a></dd>
+      </div>
+      
+      <div class="{% if not release.release_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
+        <dt class="release_date i16">{% trans "Release date:" %}</dt>
+        <dd>{{ release.release_date|date:"D d M Y" }}</dd>
+      </div>
 
-      <dt class="homepage i16{% if not release.homepage %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "Homepage:" %}</dt>
-      <dd><a href="{{ release.homepage }}">{{ release.homepage }}</a></dd>
+      <div class="{% if not release.stringfreeze_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
+        <dt class="freeze i16 ">{% trans "String freeze:" %}</dt>
+        <dd>{{ release.stringfreeze_date|date:"D d M Y" }}</dd>
+      </div>
 
-      <dt class="release_date i16{% if not release.release_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "Release date:" %}</dt>
-      <dd>{{ release.release_date|date:"D d M Y" }}</dd>
-
-
-      <dt class="freeze i16 {% if not release.stringfreeze_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "String freeze:" %}</dt>
-      <dd>{{ release.stringfreeze_date|date:"D d M Y" }}</dd>
-
-      <dt class="freeze i16 {% if not release.develfreeze_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">{% trans "Devel freeze:" %}</dt>
-      <dd>{{ release.develfreeze_date|date:"D d M Y" }}</dd>
-
+      <div class="{% if not release.develfreeze_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}" >
+        <dt class="freeze i16 ">{% trans "Devel freeze:" %}</dt>
+        <dd>{{ release.develfreeze_date|date:"D d M Y" }}</dd>
+      </div>
 
     {% with resources|length as resources_number %}
     {% if resources %}
