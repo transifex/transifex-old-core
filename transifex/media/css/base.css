@@ -485,6 +485,10 @@ a.simlink, a.simlink:hover {
 a.outsource{
   color: #AA0000;
 }
+dl.definition {margin-left: 10px;}
+dl.definition dt {padding: 3px 0px 3px 27px;float: left; width: 110px;}
+dl.definition dd {height:18px;margin:0px;padding: 3px 0;float: left;width: 320px;}
+dl.definition ul {margin:0;}
 
 table.definition th { text-align: left; color: #666; }
 table.definition td {
@@ -1367,3 +1371,16 @@ a.hover {
   padding-top:5px;
   text-align:justify;
 }
+
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
