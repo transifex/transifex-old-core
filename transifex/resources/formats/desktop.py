@@ -30,8 +30,9 @@ class DesktopHandler(Handler):
     """
 
     name = ".desktop file handler"
-    mime_types = ['application/x-desktop']
     format = ".desktop (*.desktop)"
+    method_name = 'DESKTOP'
+
     comment_chars = ('#', )
     delimiter = '='
     # We are only intrested in localestrings, see
@@ -39,60 +40,32 @@ class DesktopHandler(Handler):
     localized_keys = ['Name', 'GenericName', 'Comment', 'Icon', ]
 
     @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".desktop")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
+    def _check_content(self, content):
+        for line in content.split('\n'):
+            if self._should_skip(line):
+                continue
+            elif not '=' in line:
+                raise DesktopParseError("Invalid line %s", line)
 
-    @classmethod
-    def contents_check(cls, filename):
-        pass
-        # fh = codecs.open(filename, "r", cls.default_encoding)
-        # try:
-        #     for line in fh:
-        #         line = line.rstrip('\n')
-        #         if self._should_skip(line):
-        #             continue
-        #         elif not '=' in line:
-        #             raise DesktopParseError("Invalid line %s", line)
-        # finally:
-        #     fh.close()
-
-    def _compile_translation(self, language, *args, **kwargs):
-        """Compile a translation file."""
-        stringset = self._get_strings(self.resource)
-        for string in stringset:
-            try:
-                trans = Translation.objects.get(
-                    resource=self.resource, source_entity=string,
-                    language=language, rule=5
-                )
-                translation_string = trans.string
-            except Translation.DoesNotExist:
-                trans = None
-                translation_string = u""
-
-            self.template = u''.join([
-                    self.template,
-                    string.string,
-                    '[', language.code, ']=',
-                    translation_string,
-                    '\n',
+    def _apply_translation(self, source, trans, content):
+        return ''.join([
+                content, string.string.encode(self.default_encoding),
+                '[', language.code, ']=',
+                trans.string.encode(self.default_encoding), '\n',
             ])
-        self.compiled_template = self.template
 
-    def _compile_source(self, *args, **kwargs):
+    def _compile_translation(self, content, language, *args, **kwargs):
+        """Compile a translation file."""
+        return super(Desktophandler, self)._compile(content, language)
+
+    def _compile_source(self, content, *args, **kwargs):
         """Compile a source file."""
         all_languages = set(self.resource.available_languages_without_teams)
         source_language = set([self.resource.source_language, ])
         translated_to = all_languages - source_language
         for language in translated_to:
-            self._compile_translation(language)
-        if not self.compiled_template:
-            self.compiled_template = self.template
+            content = self._compile_translation(content, language)
+        return content
 
     def _is_comment_line(self, line):
         """Return True, if the line is a comment."""
@@ -142,9 +115,7 @@ class DesktopHandler(Handler):
                 self._is_comment_line(line) or\
                 self._is_group_header_line(line)
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source=False, lang_rules=None):
         """
         Parse a .desktop file.
 
@@ -213,22 +184,8 @@ class DesktopHandler(Handler):
         if is_source:
             self.template = template.encode(self.default_encoding)
 
-    @need_resource
-    def compile(self, language=None):
-        if not language:
-            language = self.language
-
-        self._pre_compile(language=language)
-
-        self.template = Template.objects.get(
-            resource=self.resource
-        ).content.decode(self.default_encoding)
-        self._examine_content(self.template)
-
+    def _compile(self, content, language):
         if language == self.resource.source_language:
-            self._compile_source(language)
+            return self._compile_source(content, language)
         else:
-            self._compile_translation(language)
-
-        self.compiled_template = self.compiled_template.encode('UTF-8')
-        self._post_compile(language)
+            return self._compile_translation(content, language)

@@ -11,6 +11,7 @@ from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from transifex.txcommon.notifications import NOTICE_TYPES
 
+
 # Load models
 Language = get_model('languages', 'Language')
 AuPermission = get_model('authority', 'Permission')

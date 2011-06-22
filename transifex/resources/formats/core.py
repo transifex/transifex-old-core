@@ -112,7 +112,7 @@ class Handler(object):
 
     def _check_content(self, content):
         """
-        Perform the actua lcheck of the content.
+        Perform the actual check of the content.
 
         A subclass needs to only override this method to customize the check.
         """
