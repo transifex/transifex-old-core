@@ -199,7 +199,9 @@ class ResourceHandler(BaseHandler):
         i18n_type = data['i18n_type']
         del data['i18n_type']
         if i18n_type not in settings.I18N_METHODS:
-            return BAD_REQUEST("i18n_type %s is not supported." % i18n_type)
+            return BAD_REQUEST(
+                "i18n_type %s is not supported." % self.resource.i18n_type
+            )
         try:
             source_language = self._get_source_lang(project, slang)
         except BadRequestError, e:

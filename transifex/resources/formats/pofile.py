@@ -68,7 +68,7 @@ def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
             "your system to see the errors.")
 
 
-class POHandler(Handler):
+class GettextHandler(Handler):
     """
     Translate Toolkit is using Gettext C library to parse/create PO files in Python
     TODO: Switch to Gettext C library
@@ -92,11 +92,7 @@ class POHandler(Handler):
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
-            if self.filename.endswith('.pot'):
-                is_pot = True
-            else:
-                is_pot = False # FIXME Find a way to figure this out from content
-            msgfmt_check(content, is_pot)
+            msgfmt_check(content, self.is_pot)
 
         # Check required header fields
         required_metadata = ['Content-Type', 'Content-Transfer-Encoding']
@@ -113,7 +109,7 @@ class POHandler(Handler):
         self._po = po
 
     def __init__(self, filename=None, resource=None, language=None, content=None):
-        super(POHandler, self).__init__(
+        super(GettextHandler, self).__init__(
             filename=filename, resource=resource, language=language, content=content
         )
         self.copyrights = []
@@ -159,55 +155,7 @@ class POHandler(Handler):
                 .replace('\r', r'\\r')\
                 .replace('\"', r'\\"')
 
-    @need_resource
-    def compile_pot(self):
-        self.template = Template.objects.get(resource=self.resource)
-        self.template = self.template.content
-        self._examine_content(self.template)
-
-
-        stringset = SourceEntity.objects.filter(
-            resource = self.resource)
-
-        for string in stringset:
-            # Replace strings with ""
-            self.template = self._replace_translation(
-                "%s_tr" % string.string_hash.encode('utf-8'), "", self.template
-            )
-
-        # FIXME merge with _post_compile
-        po = polib.pofile(unicode(self.template, 'utf-8'))
-
-        # Update PO file headers
-        po.metadata['Project-Id-Version'] = self.resource.project.name.encode("utf-8")
-        po.metadata['Content-Type'] = "text/plain; charset=UTF-8"
-        # The above doesn't change the charset of the actual object, so we
-        # need to do it for the pofile object as well.
-        po.encoding = "UTF-8"
-
-        if self.resource.project.bug_tracker:
-            po.metadata['Report-Msgid-Bugs-To'] = (self.resource.project.bug_tracker.encode("utf-8"))
-
-        for entry in po:
-            if entry.msgid_plural:
-                plurals = Translation.objects.filter(
-                    resource = self.resource,
-                    language = self.resource.source_language,
-                    source_entity__string = entry.msgid
-                ).order_by('rule')
-                plural_keys = {}
-                # last rule excluding other(5)
-                lang_rules = self.resource.source_language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
-                for p,n in enumerate(lang_rules):
-                    plural_keys[p] = ""
-                for n,p in enumerate(plurals):
-                    plural_keys[n] =  ""
-
-                entry.msgstr_plural = plural_keys
-        self.compiled_template = self.get_po_contents(po)
-
-    @need_compiled
+    @need_res
     def _post_compile(self, *args, **kwargs):
         """
         Here we update the PO file headers and the plurals
@@ -217,30 +165,8 @@ class POHandler(Handler):
         po = polib.pofile(template.decode(self.format_encoding))
         po = self._update_headers(po=po, language=language)
         po = self._update_plurals(po=po, language=language)
-
         # Instead of saving raw text, we save the polib Handler
         self.compiled_template = self.get_po_contents(po)
-
-        # Add copyright headers if any
-        from transifex.addons.copyright.models import Copyright
-        c = Copyright.objects.filter(
-            resource=self.resource, language=self.language
-        ).order_by('-user')
-        content_with_copyright = ""
-        copyrights_inserted = False
-        for line in self.compiled_template.split('\n'):
-            if line.startswith('#'):
-                if not line.startswith('# FIRST AUTHOR'):
-                    content_with_copyright += line + "\n"
-            elif not copyrights_inserted:
-                copyrights_inserted = True
-                for entry in c:
-                    content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
-                            ', ' + entry.years_text.encode('UTF-8') + ".\n"
-                content_with_copyright += line + "\n"
-            else:
-                content_with_copyright += line + "\n"
-        self.compiled_template = content_with_copyright
         return po
 
     def _update_headers(self, po, language):
@@ -287,15 +213,21 @@ class POHandler(Handler):
                 "%Y-%m-%d %H:%M+0000").encode(self.format_encoding) )
         return po
 
-    def _update_plurals(self, po, language):
-        """Update the plurals in the po file."""
+    def _get_plurals(self, language):
+        """Get all plural forms for the source strings."""
         translations = Translation.objects.filter(
             source_entity__resource = self.resource,
-            language = language,
-        ).order_by('source_entity__id', 'rule').values_list('source_entity__string', 'string')
+            language=language,
+        ).order_by('source_entity__id', 'rule').\
+        values_list('source_entity__string', 'string')
         plurals = defaultdict(list)
         for se, t in translations:
             plurals[se].append(t)
+        return plurals
+
+    def _update_plurals(self, po, language):
+        """Update the plurals in the po file."""
+        plurals = self._get_plurals(language)
         for entry in po:
             if entry.msgid_plural:
                 plural_keys = {}
@@ -330,7 +262,7 @@ class POHandler(Handler):
         if not hasattr(self, '_po'):
             self.is_content_valid()
 
-        self._parse_copyrights(self.filename)
+        self._parse_copyrights(self.content)
         try:
             self._po = polib.pofile(self.filename)
         except IOError, e:
@@ -440,23 +372,9 @@ class POHandler(Handler):
         self.suggestions = suggestions
         return self._po
 
-    def _parse_copyrights(self, filename):
-        """
-        Read the copyrights (if any) from a po file.
-        """
-        # TODO remove FIRST AUTHOR line
-        if filename.endswith('pot'):
-            return
-        f = open(filename)
-        try:
-            for line in f:
-                if not line.startswith('#'):
-                    break
-                c = self._get_copyright_from_line(line)
-                if c is not None:
-                    self.copyrights.append(c)
-        finally:
-            f.close()
+    def _parse_copyrights(self, content):
+        """Read the copyrights (if any) from a gettext file."""
+        pass
 
     def _get_copyright_from_line(self, line):
         """

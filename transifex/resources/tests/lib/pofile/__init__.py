@@ -6,7 +6,8 @@ from django.core.urlresolvers import reverse
 from transifex.txcommon.tests import utils
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats.pofile import POHandler, PoParseError
+from transifex.resources.formats.pofile import POHandler, POTHandler, \
+        PoParseError
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 from transifex.addons.copyright.models import Copyright
 
@@ -370,7 +371,14 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         handler.save2db(is_source=True)
         handler.compile()
         self.assertFalse("FIRST AUTHOR" in handler.compiled_template)
-        handler.compile_pot()
+        handler = POTHandler(os.path.join(
+                os.path.dirname(__file__), 'tests.pot')
+        )
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        handler.compile()
         self.assertTrue("FIRST AUTHOR" in handler.compiled_template)
 
     def test_order(self):

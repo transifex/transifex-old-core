@@ -385,20 +385,18 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
-def _compile_translation_template(resource=None, language=None, pseudo_type=None):
-    """
-    Given a resource and a language we create the translation file
-    """
-    handler = registry.handler_for(resource.i18n_type)
+def _compile_translation_template(resource=None, language=None):
+    """Given a resource and a language we create the translation file."""
+    if resource.i18n_type == 'PO' and language is None:
+        i18n_type = 'POT'
+    else:
+        i18n_type = resource.i18n_type
+    handler = registry.handler_for(i18n_type)
     handler.bind_resource(resource)
     handler.set_language(language)
-    if language is not None:
-        if pseudo_type:
-            handler.bind_pseudo_type(pseudo_type)
-        handler.compile()
-    else:
-        handler.compile_pot()
-
+    if pseudo_type:
+        handler.bind_pseudo_type(pseudo_type)
+    handler.compile()
     return handler.compiled_template
 
 

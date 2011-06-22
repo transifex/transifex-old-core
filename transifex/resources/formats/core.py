@@ -288,6 +288,26 @@ class Handler(object):
         """
         return s
 
+    def _apply_translation(self, source, trans, content):
+        """Apply a translation to text.
+
+        Usually, we do a search for the hash code of source and replace
+        with trans.
+
+        Args:
+            source: The source entity.
+            trans: The translation object.
+            content: The text for the search-&-replace.
+
+        Returns:
+            The content after the translation has been applied.
+        """
+        return self._replace_translation(
+            "%s_tr" % source.string_hash.encode(self.default_encoding),
+            trans and trans.string.encode(self.default_encoding) or "",
+            content
+        )
+
     def _examine_content(self, content):
         """
         Offer a chance to peek into the template before any string is
@@ -320,26 +340,34 @@ class Handler(object):
 
         if language is None:
             language = self.language
-
+        self._pre_compile(language)
+        content = Template.objects.get(resource=self.resource).content
+        content = self._examine_content(content)
         try:
-            # pre compile init
-            self._pre_compile(language=language)
-
-            content = Template.objects.get(resource=self.resource).content
-            content = self._examine_content(content)
-            stringset = self._get_strings(self.resource)
-            for string in stringset:
-                trans = self._get_translation(string, language, 5)
-                content = self._replace_translation(
-                    "%s_tr" % string.string_hash.encode('utf-8'),
-                    trans and trans.string.encode('utf-8') or "",
-                    content
-                )
-            self.compiled_template = content
-            self._post_compile(language)
+            self.compiled_template = self._compile(content, language)
         except Exception, e:
             logger.error("Error compiling file: %s" % e, exc_info=True)
             raise
+        self._post_compile(language)
+
+    def _compile(self, content, language):
+        """Internal compile function.
+
+        Subclasses must override this method, if they need to change
+        the compile behavior.
+
+        Args:
+            content: The content (template) of the resource.
+            language: The language for the translation.
+
+        Returns:
+            The compiled template.
+        """
+        stringset = self._get_strings(self.resource)
+        for string in stringset:
+            trans = self._get_translation(string, language, 5)
+            content = self._apply_translation(string, trans, content)
+        return content
 
     def _pre_save2db(self, *args, **kwargs):
         """
