@@ -51,9 +51,10 @@ class JoomlaINIHandler(Handler):
         suggestions = StringSet()
 
         fh = codecs.open(self.filename, "r", "utf-8")
-
-        buf = fh.read()
-        fh.close()
+        try:
+            buf = fh.read()
+        finally:
+            fh.close()
 
         for line in buf.split('\n'):
             # Skip empty lines and comments
