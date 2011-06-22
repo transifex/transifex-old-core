@@ -100,6 +100,19 @@ class NoticeTypes(object):
         super(NoticeTypes, self).setUp()
 
 
+class Languages(object):
+    """A class to create default languages.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        # TODO make a class method (setUpClass)
+        from django.core import management
+        management.call_command('txlanguages', verbosity=0)
+        super(Languages, self).setUp()
+
+
 class BaseTestCase(Users, TestCase):
     """Provide a solid test case for all tests to inherit from."""
 

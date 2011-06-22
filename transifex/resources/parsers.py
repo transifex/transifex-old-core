@@ -9,5 +9,6 @@ from transifex.resources.formats.qt import LinguistHandler # Qt4 TS files
 from transifex.resources.formats.pofile import POHandler # GNU Gettext .PO/.POT parser
 from transifex.resources.formats.joomla import JoomlaINIHandler # GNU Gettext .PO/.POT parser
 from transifex.resources.formats.javaproperties import JavaPropertiesHandler # Java .PROPERTIES parser
+from transifex.resources.formats.desktop import DesktopHandler
 
-PARSERS = [POHandler , LinguistHandler, JoomlaINIHandler, JavaPropertiesHandler] #, JavaPropertiesParser, AppleStringsParser]
+PARSERS = [POHandler , LinguistHandler, JoomlaINIHandler, JavaPropertiesHandler, DesktopHandler] #, JavaPropertiesParser, AppleStringsParser]
