@@ -84,6 +84,9 @@ class Handler(object):
     method_name = None
     format_encoding = "UTF-8"
 
+    HandlerParseError = ParseError
+    HandlerCompileError = CompileError
+
     @classmethod
     def accepts(cls, i18n_type):
         """Accept only files that have the correct type specified."""
@@ -144,12 +147,15 @@ class Handler(object):
         f = codecs.open(filename, 'r', encoding=self.format_encoding)
         try:
             return f.read()
-        except Exception, e:
+        except IOError, e:
             logger.warning(
-                "Error opening file %s with encoding %s" % (filename, self.format_encoding),
+                "Error opening file %s with encoding %s: %s" %\
+                    (filename, self.format_encoding, e.message),
                 exc_info=True
             )
             raise FormatError(e.message)
+        except Exception, e:
+            logger.warning("Unhandled exception: %s" % e.message, exc_info=True)
         finally:
             f.close()
 
