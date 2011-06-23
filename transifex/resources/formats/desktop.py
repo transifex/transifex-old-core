@@ -122,8 +122,6 @@ class DesktopHandler(Handler):
         If it is a source file, the file will have every translation in it.
         Otherwise, it will have just the translation for the specific language.
         """
-        stringset = StringSet()
-        suggestions = StringSet()
         # entries is a dictionary with the entry keys in the file
         entries = defaultdict(list)
 
@@ -174,15 +172,12 @@ class DesktopHandler(Handler):
                     continue
                 elif not is_source and language != self.language:
                     continue
-                stringset.strings.append(GenericTranslation(
+                self.stringset.strings.append(GenericTranslation(
                         key, translation, rule=5, context=context,
                         pluralized=False, fuzzy=False, obsolete=False
                 ))
 
-        self.stringset = stringset
-        self.suggestions = suggestions
-        if is_source:
-            self.template = template.encode(self.default_encoding)
+        return template
 
     def _compile(self, content, language):
         if language == self.resource.source_language:

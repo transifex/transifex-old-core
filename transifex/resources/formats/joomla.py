@@ -30,7 +30,6 @@ class JoomlaINIHandler(Handler):
         """
         Parse an INI file and create a stringset with all entries in the file.
         """
-        stringset = StringSet()
         content = self.content
         jformat = JoomlaIniVersion.create(self.content)
 
@@ -58,15 +57,13 @@ class JoomlaINIHandler(Handler):
                 # this looks fishy
                 content = re.sub(re.escape(line), new_line, content)
 
-            stringset.strings.append(GenericTranslation(source,
-                trans, rule=5, context=context,
-                pluralized=False, fuzzy=False,
-                obsolete=False))
-
-        self.stringset=stringset
-        self.suggestions = StringSet()
-        if is_source:
-            self.template = str(content.encode('utf-8'))
+            self.stringset.strings.append(GenericTranslation(
+                    source,
+                    trans, rule=5, context=context,
+                    pluralized=False, fuzzy=False,
+                    obsolete=False
+            ))
+        return content
 
 
 class JoomlaIniVersion(object):

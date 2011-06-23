@@ -187,8 +187,6 @@ class LinguistHandler(Handler):
         if root.tagName != "TS":
             raise LinguistParseError("Root element is not 'TS'")
 
-        stringset = StringSet()
-        suggestions = StringSet()
         # This needed to be commented out due the 'is_source' parameter.
         # When is_source=True we return the value of the <source> node as the
         # translation for the given file, instead of the <translation> node(s).
@@ -343,7 +341,7 @@ class LinguistHandler(Handler):
                                 _getText(translation.childNodes),
                                 context=context_name + comment,
                                 occurrences= ";".join(occurrences))
-                            suggestions.strings.append(suggestion)
+                            self.suggestions.strings.append(suggestion)
                         else:
                             logger.error("Element 'translation' attribute "\
                                 "'type' is neither 'unfinished' nor 'obsolete'")
@@ -385,7 +383,7 @@ class LinguistHandler(Handler):
 
                 if sourceString and messages:
                     for msg in messages:
-                        stringset.strings.append(GenericTranslation(sourceString,
+                        self.stringset.strings.append(GenericTranslation(sourceString,
                             msg[1], context = context_name + comment, rule=msg[0],
                             occurrences = ";".join(occurrences),
                             pluralized=pluralized, fuzzy=fuzzy,
@@ -420,14 +418,14 @@ class LinguistHandler(Handler):
                                 ("%(hash)s_tr" % {'hash': hash_tag(
                                     sourceString, context_name + comment)})
                         ))
+        return doc
 
-            if is_source:
-                # Ugly fix to revert single quotes back to the escaped version
-                template_text = doc.toxml().encode('utf-8')
-                esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
-                    r"&apos;", template_text)
-                self.template = str(esc_template_text)
+    def _generate_template(self, doc):
+        # Ugly fix to revert single quotes back to the escaped version
+        template_text = doc.toxml().encode('utf-8')
+        esc_template_text = re.sub(
+            "'(?=(?:(?!>).)*<\/source>)",
+            r"&apos;", template_text
+        )
+        return esc_template_text.encode(self.default_encoding)
 
-            self.suggestions = suggestions
-            self.stringset=stringset
-        return

@@ -182,68 +182,53 @@ class JavaPropertiesHandler(Handler):
         for details.
         """
         resource = self.resource
-        stringset = StringSet()
-        suggestions = StringSet()
 
         context = ""
-        fh = open(self.filename, "r")
-        try:
-            self.find_linesep(fh)
-            buf = u""
-            for line in fh:
-                line = line.decode(self.default_encoding)
-                line = self._prepare_line(line)
-                # Skip empty lines and comments
-                if not line or line.startswith(self.COMMENT_CHARS):
-                    if is_source:
-                        buf += line + self._linesep
-                    continue
-                # If the last character is a backslash
-                # it has to be preceded by a space in which
-                # case the next line is read as part of the
-                # same property
-                while line[-1] == '\\' and not self._is_escaped(line, -1):
-                    # Read next line
-                    nextline = self._prepare_line(fh.next())
-                    # This line will become part of the value
-                    line = line[:-1] + self._prepare_line(nextline).decode(self.ENCODING)
-                key, value = self._split(line)
-
-                if value is not None:
-                    uni_chars = re.findall(r'(\\u[0-9A-Fa-f]{4})', value)
-                    for uni_char in uni_chars:
-                        value = value.replace(
-                            uni_char, self.convert_to_unicode(uni_char)
-                        )
-
+        self._find_linesep(self.content)
+        buf = u""
+        lines = self._iter_by_line()
+        for line in lines:
+            line = self._prepare_line(line)
+            # Skip empty lines and comments
+            if not line or line.startswith(self.COMMENT_CHARS):
                 if is_source:
-                    if not value:
-                        buf += line + self._linesep
-                        # Keys with no values should not be shown to translator
-                        continue
-                    else:
-                        key_len = len(key)
-                        buf += line[:key_len] + re.sub(
-                            re.escape(value),
-                            "%(hash)s_tr" % {'hash': hash_tag(key, context)},
-                            line[key_len:]
-                        ) + self._linesep
-                elif not SourceEntity.objects.filter(resource=resource,
-                        string=key).exists() or not value:
-                    # ignore keys with no translation
+                    buf += line + self._linesep
+                continue
+            # If the last character is a backslash
+            # it has to be preceded by a space in which
+            # case the next line is read as part of the
+            # same property
+            while line[-1] == '\\' and not self._is_escaped(line, -1):
+                # Read next line
+                nextline = self._prepare_line(lines.next())
+                # This line will become part of the value
+                line = line[:-1] + self._prepare_line(nextline)
+            key, value = self._split(line)
+
+            if value is not None:
+                uni_chars = re.findall(r'(\\u[0-9A-Fa-f]{4})', value)
+                for uni_char in uni_chars:
+                    value = value.replace(
+                        uni_char, self.convert_to_unicode(uni_char)
+                    )
+
+            if is_source:
+                if not value:
+                    buf += line + self._linesep
+                    # Keys with no values should not be shown to translator
                     continue
+                else:
+                    buf += re.sub(
+                        re.escape(value),
+                        "%(hash)s_tr" % {'hash': hash_tag(key, context)},
+                        line
+                    ) + self._linesep
+            elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
+                # ignore keys with no translation
+                continue
 
-                stringset.strings.append(GenericTranslation(key,
-                    self._unescape(value), rule=5, context=context,
-                    pluralized=False, fuzzy=False,
-                    obsolete=False))
-        except UnicodeDecodeError, e:
-            raise JavaParseError(e.message)
-        finally:
-            fh.close()
-
-        self.stringset=stringset
-        self.suggestions=suggestions
-
-        if is_source:
-            self.template = str(buf.encode('utf-8'))
+            self.stringset.strings.append(GenericTranslation(key,
+                self._unescape(value), rule=5, context=context,
+                pluralized=False, fuzzy=False,
+                obsolete=False))
+        return buf

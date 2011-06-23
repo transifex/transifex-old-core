@@ -579,15 +579,46 @@ class Handler(object):
             transaction.commit()
             return strings_added, strings_updated
 
+    def _generate_template(self, obj):
+        """Generate a template from the specified object.
+
+        By default, we use the obj as a unicode string and encode it to
+        str.
+
+        Subclasses could override this.
+        """
+        return obj.encode(self.default_encoding)
+
     def _parse(self, is_source, lang_rules):
+        """The actual functions that parses the content.
+
+        Formats need to override this to provide the desired behavior.
+
+        Two stringsets are available to subclasses:
+        - self.stringset to save the translated strings
+        - self.suggestions to save suggested translations
+
+        Args:
+            is_source: Flag to determine if this is a source file or not.
+            lang_rules: rules for the language
+
+        Returns:
+            An object which, when used as an argument in
+            `self._create_template()`, the template for the resource
+            is generated.
+
+        """
         raise NotImplementedError
 
     @need_content
     @need_language
     def parse_file(self, is_source=False, lang_rules=None):
         """Parse the content."""
-        self._parse(is_source, lang_rules)
-
+        self.stringset = StringSet()
+        self.suggestions = StringSet()
+        obj = self._parse(is_source, lang_rules)
+        if is_source:
+            self.template = self._generate_template(obj)
 
 def convert_to_suggestions(source, dest, user=None, langs=None):
     """

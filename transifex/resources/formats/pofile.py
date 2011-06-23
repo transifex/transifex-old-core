@@ -251,9 +251,6 @@ class GettextHandler(Handler):
         """
         Parse a PO file and create a stringset with all PO entries in the file.
         """
-        stringset = StringSet()
-        suggestions = StringSet()
-
         if lang_rules:
             nplural = len(lang_rules)
         else:
@@ -285,7 +282,7 @@ class GettextHandler(Handler):
                             occurrences=', '.join(
                                 [':'.join([i for i in t ]) for t in
                                 entry.occurrences]))
-                        suggestions.strings.append(suggestion)
+                        self.suggestions.strings.append(suggestion)
 
                     continue
                 else:
@@ -344,7 +341,7 @@ class GettextHandler(Handler):
                         [':'.join([i for i in t ]) for t in entry.occurrences]),
                     rule=msgstr[0], pluralized=pluralized)
 
-                stringset.strings.append(translation)
+                self.stringset.strings.append(translation)
 
             if entry.comment:
                 translation.comment = entry.comment
@@ -364,13 +361,10 @@ class GettextHandler(Handler):
                                 'key':n
                             }
                         )
-
-        if is_source:
-            self.template =  self.get_po_contents(self._po)
-
-        self.stringset = stringset
-        self.suggestions = suggestions
         return self._po
+
+    def _generate_template(self, po):
+        return self.get_po_contents(po)
 
     def _parse_copyrights(self, content):
         """Read the copyrights (if any) from a gettext file."""
