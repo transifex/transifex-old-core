@@ -21,7 +21,6 @@ from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
-from suggestions.models import Suggestion
 
 from transifex.resources.formats.core import CompileError, GenericTranslation, \
         Handler, STRICT, StringSet, ParseError
@@ -277,13 +276,13 @@ class GettextHandler(Handler):
             if "fuzzy" in entry.flags:
                 if not is_source:
                     if not entry.msgid_plural:
-                        suggestion = GenericTranslation(entry.msgid, entry.msgstr,
+                        self._add_suggestion_string(
+                            entry.msgid, entry.msgstr,
                             context=escape_context(entry.msgctxt) or '',
                             occurrences=', '.join(
                                 [':'.join([i for i in t ]) for t in
-                                entry.occurrences]))
-                        self.suggestions.strings.append(suggestion)
-
+                                 entry.occurrences])
+                        )
                     continue
                 else:
                     # Drop fuzzy flag from template
@@ -335,29 +334,33 @@ class GettextHandler(Handler):
 
             # Add messages with the correct number (plural)
             for number, msgstr in enumerate(messages):
-                translation = GenericTranslation(entry.msgid, msgstr[1],
-                    context=escape_context(entry.msgctxt) or '',
+                if entry.comment:
+                    comment = entry.comment
+                else:
+                    comment = None
+                if entry.flags:
+                    flags = ', '.join( f for f in entry.flags)
+                else:
+                    flags = None
+                context=escape_context(entry.msgctxt) or ''
+                self._add_translation_string(
+                    entry.msgid, msgstr[1], context=context,
                     occurrences=', '.join(
                         [':'.join([i for i in t ]) for t in entry.occurrences]),
-                    rule=msgstr[0], pluralized=pluralized)
-
-                self.stringset.strings.append(translation)
-
-            if entry.comment:
-                translation.comment = entry.comment
-            if entry.flags:
-                translation.flags = ', '.join( f for f in entry.flags)
+                    rule=msgstr[0], pluralized=pluralized, comment=comment,
+                    flags=flags
+                )
 
             if is_source:
                 entry.msgstr = "%(hash)s_tr" % {
-                    'hash': hash_tag(translation.source_entity, translation.context)
+                    'hash': hash_tag(entry.msgid, context)
                 }
 
                 if entry.msgid_plural:
                     for n, rule in enumerate(plural_keys):
                         entry.msgstr_plural['%s' % n] = (
                             "%(hash)s_pl_%(key)s" % {
-                                'hash':hash_tag(translation.source_entity, translation.context),
+                                'hash':hash_tag(entry.msgid, context),
                                 'key':n
                             }
                         )

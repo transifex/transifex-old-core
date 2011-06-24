@@ -294,6 +294,14 @@ class Handler(object):
         """
         return s
 
+    def _add_translation_string(self, *args, **kwargs):
+        """Adds to instance a new translation string."""
+        self.stringset.strings.append(GenericTranslation(*args, **kwargs))
+
+    def _add_suggestion_string(self, *args, **kwargs):
+        """Adds to instance a new suggestion string."""
+        self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
+
     def _apply_translation(self, source, trans, content):
         """Apply a translation to text.
 

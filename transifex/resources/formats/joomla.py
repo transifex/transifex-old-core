@@ -56,13 +56,7 @@ class JoomlaINIHandler(Handler):
                 )
                 # this looks fishy
                 content = re.sub(re.escape(line), new_line, content)
-
-            self.stringset.strings.append(GenericTranslation(
-                    source,
-                    trans, rule=5, context=context,
-                    pluralized=False, fuzzy=False,
-                    obsolete=False
-            ))
+            self._add_translation_string(source, trans, context=context)
         return content
 
 

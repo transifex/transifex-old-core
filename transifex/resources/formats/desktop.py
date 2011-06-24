@@ -172,10 +172,7 @@ class DesktopHandler(Handler):
                     continue
                 elif not is_source and language != self.language:
                     continue
-                self.stringset.strings.append(GenericTranslation(
-                        key, translation, rule=5, context=context,
-                        pluralized=False, fuzzy=False, obsolete=False
-                ))
+                self._add_translation_string(key, translation, context=context)
 
         return template
 

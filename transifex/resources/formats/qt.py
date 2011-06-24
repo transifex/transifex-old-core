@@ -383,11 +383,12 @@ class LinguistHandler(Handler):
 
                 if sourceString and messages:
                     for msg in messages:
-                        self.stringset.strings.append(GenericTranslation(sourceString,
-                            msg[1], context = context_name + comment, rule=msg[0],
+                        self._add_translation_string(
+                            sourceString, msg[1],
+                            context = context_name + comment, rule=msg[0],
                             occurrences = ";".join(occurrences),
                             pluralized=pluralized, fuzzy=fuzzy,
-                            comment=extracomment, obsolete=obsolete))
+                            comment=extracomment, obsolete=obsolete)
                 i += 1
 
                 if is_source:

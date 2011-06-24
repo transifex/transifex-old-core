@@ -226,9 +226,7 @@ class JavaPropertiesHandler(Handler):
             elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
                 # ignore keys with no translation
                 continue
-
-            self.stringset.strings.append(GenericTranslation(key,
-                self._unescape(value), rule=5, context=context,
-                pluralized=False, fuzzy=False,
-                obsolete=False))
+            self._add_translation_string(
+                key, self._unescape(value), context=context
+            )
         return buf
