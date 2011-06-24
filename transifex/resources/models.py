@@ -399,7 +399,7 @@ class TranslationManager(models.Manager):
             results = self.filter(source_entity__in=source_entities)
         return results
 
-    def by_string_and_language(self, string, source_code='en', target_code=None):
+    def by_string_and_language(self, string, user, source_code='en', target_code=None):
         """
         Search translation for source strings queries and only in Public projects!
         """
@@ -413,12 +413,12 @@ class TranslationManager(models.Manager):
         if target_code:
             language = Language.objects.by_code_or_alias(target_code)
             results =  self.filter(language=language,
-                source_entity__resource__project__in=Project.public.all(),
+                source_entity__resource__project__in=Project.objects.for_user(user),
                 source_entity__id__in=self.filter(query, language=source_language).values_list(
                     'source_entity', flat=True))
         else:
             results =  self.filter(
-                source_entity__resource__project__in=Project.public.all(),
+                source_entity__resource__project__in=Project.objects.for_user(user),
                 source_entity__id__in=self.filter(query, language=source_language).values_list(
                     'source_entity', flat=True))
         return results
