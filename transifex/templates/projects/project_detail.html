@@ -37,7 +37,7 @@
       {% endif %}
     {% endif %}
     {% if project.homepage %}
-      <dt> class="homepage i16">{% trans "Homepage:" %}</dt>
+      <dt class="homepage i16">{% trans "Homepage:" %}</dt>
       <dd><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></dd>
 
     {% endif %}
