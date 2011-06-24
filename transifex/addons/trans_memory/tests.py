@@ -17,7 +17,7 @@ class MemoryViewsTests(BaseTestCase):
         """Test search for existing translations"""
         DATA = {'tq': 'me some', 'source_lang' : self.language_en.code, 'target_lang' : self.language_ar.code}
         resp = self.client['registered'].get(self.URL_PREFIX, DATA)
-        self.assertContains(resp, u'%s (%s) &rarr; %s (%s)'.encode('utf-8')%
+        self.assertContains(resp, u'%s (%s) &rarr; %s (%s)'%
                             (self.language_en.name, self.language_en.code,
                              self.language_ar.name, self.language_ar.code),
                             status_code = 200)
@@ -45,5 +45,10 @@ class MemoryViewsTests(BaseTestCase):
             user=self.user['team_member'])
         DATA = {'tq': 'test string', 'source_lang' : self.language_en.code, 'target_lang' : self.language_ar.code}
         resp = self.client['team_member'].get(self.URL_PREFIX, DATA)
+        self.assertContains(resp, u'%s (%s) &rarr; %s (%s)'%
+                            (self.language_en.name, self.language_en.code,
+                             self.language_ar.name, self.language_ar.code),
+                            status_code=200)
+        resp = self.client['registered'].get(self.URL_PREFIX, DATA)
         self.assertContains(resp,'Tough luck! No translations obtained.', status_code=200)
 
