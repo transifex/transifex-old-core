@@ -1,4 +1,6 @@
+# -*- coding: utf-8 -*-
 from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.models import SourceEntity
 
 class MemoryViewsTests(BaseTestCase):
 
@@ -17,5 +19,22 @@ class MemoryViewsTests(BaseTestCase):
 
     def test_private_project(self):
         """Test access to various methods if the project is private."""
-        raise NotImplementedError
+        source_entity = SourceEntity.objects.create(string='String2',
+            context='Context2', occurrences='Occurrences1',
+            resource=self.resource_private)
+        source_entity.translations.create(
+            string='This is a test source string',
+            rule=5,
+            source_entity=source_entity,
+            language=self.language_en,
+            user=self.user['team_member'])
+        source_entity.translations.create(
+            string=u'This is supposed to be arabic text! αβγ',
+            rule=5,
+            source_entity=source_entity,
+            language=self.language_ar,
+            user=self.user['team_member'])
+        DATA = {'tq': 'test string', 'source_lang' : self.language_en.code, 'target_lang' : self.language_ar.code}
+        resp = self.client['team_member'].get(self.URL_PREFIX, DATA)
+        self.assertContains(resp,'Tough luck! No translations obtained.', status_code=200)
 
