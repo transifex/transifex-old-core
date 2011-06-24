@@ -68,11 +68,11 @@ class ProjectAccessControlForm(forms.ModelForm):
             'label': _('Free for all'),
             'help_text': _(
                 "Allow any logged-in user to submit files to my project. "
-                "<a href="http://www.youtube.com/watch?v=okd3hLlvvLw target="_blank">Imagine</a> "
-                "all the people, sharing all the world. Recommended for quick "
-                "translations, and when a pre-commit review process is in "
-                "place, e.g. when contributions are submitted by email or to "
-                "a separate branch."),
+                "<a href=\"http://www.youtube.com/watch?v=okd3hLlvvLw\" "
+                "target=\"_blank\">Imagine</a> all the people, sharing all the "
+                "world. Recommended for quick translations, and when a "
+                "pre-commit review process is in place, e.g. when "
+                "contributions are submitted by email or to a separate branch.")
             }
         },
         {'limited_access': {
