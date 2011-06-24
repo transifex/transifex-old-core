@@ -279,9 +279,7 @@ class GettextHandler(Handler):
                         self._add_suggestion_string(
                             entry.msgid, entry.msgstr,
                             context=escape_context(entry.msgctxt) or '',
-                            occurrences=', '.join(
-                                [':'.join([i for i in t ]) for t in
-                                 entry.occurrences])
+                            occurrences=self._serialize_occurrences(entry.occurrences)
                         )
                     continue
                 else:
@@ -345,8 +343,7 @@ class GettextHandler(Handler):
                 context=escape_context(entry.msgctxt) or ''
                 self._add_translation_string(
                     entry.msgid, msgstr[1], context=context,
-                    occurrences=', '.join(
-                        [':'.join([i for i in t ]) for t in entry.occurrences]),
+                    occurrences=self._serialize_occurrences(entry.occurrences),
                     rule=msgstr[0], pluralized=pluralized, comment=comment,
                     flags=flags
                 )
@@ -391,3 +388,98 @@ class GettextHandler(Handler):
 
     def _get_copyright_lines():
         pass
+
+    def _serialize_occurrences(self, occurrences):
+        """Serialize the occurrences list for saving to db."""
+        return ', '.join(
+            [':'.join([i for i in t ]) for t in occurrences]
+        )
+
+
+
+class POHandler(GettextHandler):
+    """Actual PO file implementation."""
+
+    @property
+    def is_pot(self):
+        return False
+
+    def _post_compile(self, language):
+        # Add copyright headers if any
+        po = super(POHandler, self)._post_compile(language)
+        from transifex.addons.copyright.models import Copyright
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language
+        ).order_by('-user')
+        content_with_copyright = ""
+        copyrights_inserted = False
+        for line in self.compiled_template.split('\n'):
+            if line.startswith('#'):
+                if not line.startswith('# FIRST AUTHOR'):
+                    content_with_copyright += line + "\n"
+            elif not copyrights_inserted:
+                copyrights_inserted = True
+                for entry in c:
+                    content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
+                            ', ' + entry.years_text.encode('UTF-8') + ".\n"
+                content_with_copyright += line + "\n"
+            else:
+                content_with_copyright += line + "\n"
+        self.compiled_template = content_with_copyright
+        return po
+
+    def _parse_copyrights(self, content):
+        """Read the copyrights (if any) from a po file."""
+        # TODO remove FIRST AUTHOR line
+        for line in content.split('\n'):
+            if not line.startswith('#'):
+                break
+            c = self._get_copyright_from_line(line)
+            if c is not None:
+                self.copyrights.append(c)
+
+    def _post_save2db(self, *args, **kwargs):
+        """Emit a signal for others to catch."""
+        post_save_translation.send(
+            sender=self, resource=self.resource,
+            language=self.language, copyrights=self.copyrights
+        )
+
+
+class POTHandler(GettextHandler):
+    """Separate class for POT files, which allows extra overrides."""
+
+    name = "GNU Gettext *.POT handler"
+    method_name = 'POT'
+    format = "GNU Gettext Catalog (*.po, *.pot)"
+
+    @property
+    def is_pot(self):
+        return True
+
+    def _apply_translation(self, source, trans, content):
+        return self._replace_translation(
+            "%s_tr" % source.string_hash.encode(self.default_encoding),
+            "", content
+        )
+
+    def _get_plurals(self, language):
+        # Override to avoid a db query
+        return defaultdict(str)
+
+    def _get_translation(self, string, language, rule):
+        # Override to avoid a db query.
+        return ""
+
+    def _update_headers(self, po, language):
+        project_name = self.resource.project.name.encode(self.format_encoding)
+        content_type = "text/plain; charset=%s" % self.format_encoding
+        po.metadata['Project-Id-Version'] = project_name
+        po.metadata['Content-Type'] = content_type
+        # The above doesn't change the charset of the actual object, so we
+        # need to do it for the pofile object as well.
+        po.encoding = self.format_encoding
+        if self.resource.project.bug_tracker:
+            bug_tracker = self.resource.project.bug_tracker.encode(self.format_encoding)
+            po.metadata['Report-Msgid-Bugs-To'] = bug_tracker
+        return po
