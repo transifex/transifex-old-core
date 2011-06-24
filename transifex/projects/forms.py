@@ -66,32 +66,32 @@ class ProjectAccessControlForm(forms.ModelForm):
     access_control_options=[
         {'free_for_all': {
             'label': _('Free for all'),
-            'help_text': _("""Allow any logged-in user to submit files to my
-                              project. <a href="http://www.youtube.com/watch?v=okd3hLlvvLw"
-                              target="_blank">Imagine</a> all the people,
-                              sharing all the world. Recommended for quick
-                              translations, and when a pre-commit review
-                              process is in place, e.g. when contributions are
-                              submitted by email or to a separate branch."""),
+            'help_text': _(
+                "Allow any logged-in user to submit files to my project. "
+                "<a href="http://www.youtube.com/watch?v=okd3hLlvvLw target="_blank">Imagine</a> "
+                "all the people, sharing all the world. Recommended for quick "
+                "translations, and when a pre-commit review process is in "
+                "place, e.g. when contributions are submitted by email or to "
+                "a separate branch."),
             }
         },
         {'limited_access': {
             'label': _('Limited access'),
-            'help_text': _("""Give access to specific people. Translations
-                              teams will have access to their language's files
-                              only, and global writers will have access to all
-                              translation files. Recommended for most
-                              projects."""),
+            'help_text': _(
+                "Give access to specific people. Translations teams will have "
+                "access to their language's files only, and global writers "
+                "will have access to all translation files. Recommended for "
+                "most projects."),
             }
         },
         {'outsourced_access': {
             'label': _('Outsourced access'),
-            'help_text': _("""Re-use another project's teams and writers by
-                              delegating access control to that project. If a
-                              person can contribute to that project, it can
-                              contribute to this one as well. Recommended for
-                              non-upstream projects such as distribution
-                              packages and desktop environment modules."""),
+            'help_text': _(
+                "Re-use another project's teams and writers by delegating "
+                "access control to that project. If a person can contribute to "
+                "that project, it can contribute to this one as well. "
+                "Recommended for non-upstream projects such as distribution "
+                "packages and desktop environment modules."),
             }
         },
     ]

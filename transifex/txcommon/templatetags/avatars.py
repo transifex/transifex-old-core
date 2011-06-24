@@ -105,9 +105,9 @@ def Thumbnail(parser, token):
     bits = token.contents.split()
     username = None
     if len(bits) > 3:
-        raise TemplateSyntaxError, _(u"You have to provide only the size as \
-            an integer (both sides will be equal) and optionally, the \
-            username.")
+        raise TemplateSyntaxError, _(
+            u"You have to provide only the size as an integer (both sides "
+            "will be equal) and optionally, the username.")
     elif len(bits) == 3:
         username = bits[2]
     elif len(bits) < 2:

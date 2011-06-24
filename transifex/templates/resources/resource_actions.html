@@ -36,9 +36,7 @@
 	{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
       {% ifequal resource.source_language target_language %}
-        {% blocktrans %}
-        <span title="You cannot translate the source language strings.">This is the Source Language</span>
-        {% endblocktrans %}
+        {% blocktrans %}<span title="You cannot translate the source language strings.">This is the Source Language</span>{% endblocktrans %}
       {% else %}
         {% if can_submit_translation and resource.accept_translations or is_maintainer %}
          {% url translate_resource project.slug resource.slug target_language.code as translate_resource %}
