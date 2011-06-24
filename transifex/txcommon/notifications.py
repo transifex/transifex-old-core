@@ -91,6 +91,41 @@ NOTICE_TYPES = [
                 "default": 1,
                 "show_to_user": False,
             },
+            {   "label": "project_release_before_stringfreeze",
+                "display": _("Release about to enter the string freeze period"),
+                "description": _("when a release of a project is about to "
+                                 "enter the String Freeze period"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {   "label": "project_release_in_stringfreeze",
+                "display": _("Release is in string freeze period"),
+                "description": _("when a release of a project is on enter "
+                                 "the String Freeze period"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {   "label": "project_release_before_trans_deadline",
+                "display": _("Release about to hit the translation deadline"),
+                "description": _("when a release of a project is about to "
+                                 "hit the Translation Deadline date"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {   "label": "project_release_hit_trans_deadline",
+                "display": _("Release has hit the translation deadline"),
+                "description": _("when a release of a project hits the "
+                                 "Translation Deadline date"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {   "label": "project_release_stringfreeze_breakage",
+                "display": _("Release string freeze breakage"),
+                "description": _("when a release of a project has a "
+                                 "string freeze breakage"),
+                "default": 2,
+                "show_to_user": True,
+            },
 
             # Teams
 

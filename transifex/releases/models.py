@@ -107,6 +107,9 @@ class Release(models.Model):
         created = self.created
         super(Release, self).save(*args, **kwargs)
 
+        #TODO: Find way to update the object accordingly if *_date fields change
+        rn = ReleaseNotifications.objects.get_or_create(release=self)[0]
+
         for stat in RLStats.objects.by_release_aggregated(self):
             invalidate_template_cache("release_details",
                 self.pk, stat.object.id)
@@ -117,4 +120,46 @@ class Release(models.Model):
                 { 'project_slug': self.project.slug,
                  'release_slug': self.slug })
 
+
+class ReleaseNotifications(models.Model):
+    """The notifications sent for a given release of a project."""
+
+    before_stringfreeze = models.BooleanField(_('Before String Freeze'),
+        blank=True, default=False,
+        help_text=_("Whether the 'Before String Freeze' notification was "
+            "sent or not."))
+
+    in_stringfreeze = models.BooleanField(_('Being in String Freeze'),
+        blank=True, default=False,
+        help_text=_("Whether the 'Being in String Freeze' notification was "
+            "sent or not."))
+    
+    before_trans_deadline = models.BooleanField(
+        _('Before Translation Deadline'), blank=True, default=False,
+        help_text=_("Whether the 'Before Translation Deadline' notification "
+            "was sent or not."))
+            
+    trans_deadline = models.BooleanField(_('Hit Translation Deadline'),
+        blank=True, default=False,
+        help_text=_("Whether the 'Hit Translation Deadline' notification "
+            "was sent or not."))
+
+    # Relations
+    release = models.OneToOneField('Release', unique=True, 
+        verbose_name=_('Release'), related_name='notifications')
+
+    def __unicode__(self):
+        return u'%s' % self.release
+
+    def __repr__(self):
+        return _('<ReleaseNotification: %(rel)s (Project %(proj)s)>') % {
+            'rel': self.release.name,
+            'proj': self.release.project.name}
+
+    class Meta:
+        verbose_name = _('release notification')
+        verbose_name_plural = _('release notifications')
+
+
 log_model(Release)
+log_model(ReleaseNotifications)
