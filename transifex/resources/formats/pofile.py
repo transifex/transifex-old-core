@@ -19,7 +19,6 @@ from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 from transifex.resources.models import RLStats
-from transifex.resources.signals import post_save_translation
 from suggestions.models import Suggestion
 
 from transifex.resources.formats.core import CompileError, GenericTranslation, \
@@ -325,10 +324,9 @@ class POHandler(Handler):
 
     def _post_save2db(self, *args, **kwargs):
         """Emit a signal for others to catch."""
-        post_save_translation.send(
-            sender=self, resource=self.resource,
-            language=self.language, copyrights=self.copyrights
-        )
+        kwargs.update({'copyrights': self.copyrights})
+        super(POHandler, self)._post_save2db(*args, **kwargs)
+
 
     @need_language
     @need_file

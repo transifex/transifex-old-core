@@ -14,6 +14,7 @@ from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import get_i18n_type_from_file
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.string_utils import percent_diff
+from transifex.resources.signals import post_save_translation
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -229,12 +230,23 @@ class Handler(object):
         """
         pass
 
-    def _post_save2db(self, *args, **kwargs):
+    def _post_save2db(self, strings_added, strings_updated, strings_deleted,
+            is_source, user, overwrite_translations, **kwargs):
         """
         This is called in the end of the save2db method. Override if you need
         the behaviour changed.
         """
-        pass
+        kwargs.update({ 
+            'strings_added': strings_added,
+            'strings_updated': strings_updated,
+            'strings_deleted': strings_deleted,
+            'is_source': is_source, 
+            'user': user,
+            'overwrite_translations': overwrite_translations,
+            'resource': self.resource,
+            'language': self.language
+            })
+        post_save_translation.send(sender=self, **kwargs)
 
     @need_resource
     @need_language
@@ -374,8 +386,8 @@ class Handler(object):
                     language = self.language
                 )
 
-
-            self._post_save2db(is_source , user, overwrite_translations)
+            self._post_save2db(strings_added, strings_updated, strings_deleted,
+                is_source, user, overwrite_translations)
 
             if strings_added + strings_updated + strings_deleted > 0:
                 # Invalidate cache after saving file
