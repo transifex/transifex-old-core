@@ -12,9 +12,9 @@ def save_copyrights(sender, **kwargs):
     """
     resource = kwargs['resource']
     language = kwargs['language']
-    if resource.i18n_type != 'PO':
-        return
     copyrights = kwargs['copyrights']
+    if resource.i18n_method != 'PO':
+        return
     CModel = get_model('copyright', 'Copyright')
     for c in copyrights:
         owner = c[0]

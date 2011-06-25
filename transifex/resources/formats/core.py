@@ -506,7 +506,7 @@ class Handler(object):
                 t.content = self.template
                 t.save()
                 if created:
-                    self.resource.i18n_type = get_i18n_type_from_file(self.filename)
+                    self.resource.i18n_method = self.method_name
                     self.resource.save()
                 # See how many iterations we need for this
                 iterations = len(original_sources)*len(new_entities)

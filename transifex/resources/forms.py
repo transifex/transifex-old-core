@@ -132,7 +132,7 @@ class ResourceForm(forms.ModelForm):
 
                 method = registry.guess_method(file.name)
                 if method is not None:
-                    m.i18n_type = method
+                    m.i18n_method = method
 
                 m.save()
 

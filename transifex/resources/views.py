@@ -387,10 +387,10 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 
 def _compile_translation_template(resource=None, language=None):
     """Given a resource and a language we create the translation file."""
-    if resource.i18n_type == 'PO' and language is None:
+    if resource.i18n_method == 'PO' and language is None:
         i18n_type = 'POT'
     else:
-        i18n_type = resource.i18n_type
+        i18n_type = resource.i18n_method
     handler = registry.handler_for(i18n_type)
     handler.bind_resource(resource)
     handler.set_language(language)
@@ -426,7 +426,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         return HttpResponseRedirect(reverse('resource_detail',
             args=[resource.project.slug, resource.slug]),)
 
-    i18n_method = settings.I18N_METHODS[resource.i18n_type]
+    i18n_method = settings.I18N_METHODS[resource.i18n_method]
     response = HttpResponse(template,
         mimetype=i18n_method['mimetype'])
     _filename = "%(proj)s_%(res)s_%(lang)s%(type)s" % {
@@ -460,7 +460,7 @@ def get_pot_file(request, project_slug, resource_slug):
         return HttpResponseRedirect(reverse(
                 'resource_detail', args=[resource.project.slug, resource.slug]
         ))
-    i18n_method = settings.I18N_METHODS[resource.i18n_type]
+    i18n_method = settings.I18N_METHODS[resource.i18n_method]
     response = HttpResponse(template,
         mimetype=i18n_method['mimetype'])
     _filename = "%(proj)s_%(res)s.pot" % {

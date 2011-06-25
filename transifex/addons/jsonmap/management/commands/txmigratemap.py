@@ -87,7 +87,7 @@ class Command(BaseCommand):
                                 r['source_file'])
 
                         source_file = os.path.join(path, r['source_file'])
-                        resource.i18n_type = registry.guess_method(source_file)
+                        resource.i18n_method = registry.guess_method(source_file)
                         resource.save()
 
                         resource.url_info = URLInfo(source_file_url=r['autofetch_url'])

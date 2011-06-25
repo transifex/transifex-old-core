@@ -77,13 +77,13 @@ class URLInfo(models.Model):
         sf.save()
 
         try:
-            if self.resource.i18n_type:
-                parser = registry.handler_for(self.resource.i18n_type)
+            if self.resource.i18n_method:
+                parser = registry.handler_for(self.resource.i18n_method)
             else:
                 fhandler = sf.find_parser()
                 assert fhandler, "Could not find a suitable handler for this file."
                 i18n_type = registry.guess_method(sf.get_storage_path())
-                self.resource.i18n_type = i18n_type
+                self.resource.i18n_method = i18n_type
                 self.resource.save()
             language = sf.language
             fhandler.bind_file(filename=sf.get_storage_path())

@@ -66,7 +66,7 @@ class ResourceHandler(BaseHandler):
         """
         Return the mimetype in a GET request instead of the i18n_type.
         """
-        return registry.mimetypes_for(r.i18n_type)[0]
+        return registry.mimetypes_for(r.i18n_method)[0]
 
     @classmethod
     def source_language_code(cls, r):
@@ -200,7 +200,7 @@ class ResourceHandler(BaseHandler):
         del data['i18n_type']
         if i18n_type not in settings.I18N_METHODS:
             return BAD_REQUEST(
-                "i18n_type %s is not supported." % self.resource.i18n_type
+                "i18n_type %s is not supported." % self.resource.i18n_method
             )
         try:
             source_language = self._get_source_lang(project, slang)
@@ -212,7 +212,7 @@ class ResourceHandler(BaseHandler):
             r = Resource(
                 project=project, source_language=source_language,
             )
-            r.i18n_type = i18n_type
+            r.i18n_method = i18n_type
             for key in ifilter(lambda k: k != "content", data.iterkeys()):
                 setattr(r, key, data[key])
         except:
@@ -317,7 +317,7 @@ class ResourceHandler(BaseHandler):
             if source_language:
                 resource.source_language = source_language
             if i18n_type is not None:
-                resource.i18n_type = i18n_type
+                resource.i18n_method = i18n_type
             resource.save()
         except:
             return rc.BAD_REQUEST
@@ -519,7 +519,7 @@ class FileHandler(BaseHandler):
             logger.error(e.message, exc_info=True)
             return BAD_REQUEST("Error compiling the translation file: %s" %e )
 
-        i18n_method = settings.I18N_METHODS[resource.i18n_type]
+        i18n_method = settings.I18N_METHODS[resource.i18n_method]
         response = HttpResponse(template, mimetype=i18n_method['mimetype'])
         response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
         urllib.quote(resource.name.encode('UTF-8')), language.code,
@@ -850,7 +850,7 @@ class FileTranslation(Translation):
 
     @classmethod
     def to_http_for_get(cls, translation, result):
-        i18n_method = settings.I18N_METHODS[translation.resource.i18n_type]
+        i18n_method = settings.I18N_METHODS[translation.resource.i18n_method]
         response = HttpResponse(result, mimetype=i18n_method['mimetype'])
         response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
                 urllib.quote(translation.resource.name.encode('UTF-8')),
@@ -906,7 +906,7 @@ class FileTranslation(Translation):
                 file_.write(chunk)
             file_.close()
 
-            parser = registry.handler_for(self.resource.i18n_type)
+            parser = registry.handler_for(self.resource.i18n_method)
             parser.bind_file(file_.name)
             if parser is None:
                 raise BadRequestError("Unknown file type")
@@ -960,7 +960,7 @@ class StringTranslation(Translation):
                 "Error compiling the translation file: %s" % e
             )
 
-        i18n_method = settings.I18N_METHODS[self.resource.i18n_type]
+        i18n_method = settings.I18N_METHODS[self.resource.i18n_method]
         return {
             'content': template,
             'mimetype': i18n_method['mimetype']
@@ -979,13 +979,13 @@ class StringTranslation(Translation):
         """
         if 'content' not in self.data:
             raise NoContentError("No content found.")
-        parser = registry.handler_for(self.resource.i18n_type)
+        parser = registry.handler_for(self.resource.i18n_method)
         if parser is None:
             raise BadRequestError("I18n type is not supported: %s" % i18n_type)
 
         file_ = tempfile.NamedTemporaryFile(
             mode='wb',
-            suffix=registry.extensions_for(self.resource.i18n_type)[0],
+            suffix=registry.extensions_for(self.resource.i18n_method)[0],
             delete=False,
         )
         try:

@@ -402,7 +402,7 @@ class ProjectResourceHandler(BaseHandler):
                     transaction.rollback()
                     return BAD_REQUEST("File type not supported.")
 
-                resource.i18n_type = i18n_type
+                resource.i18n_method = i18n_type
                 resource.save()
 
                 # Set StorageFile to 'bound' status, which means that it is

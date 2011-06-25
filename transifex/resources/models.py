@@ -180,6 +180,19 @@ class Resource(models.Model):
         order_with_respect_to = 'project'
         models.get_latest_by = 'created'
 
+    # Add method property.
+    # Used to set the i18n_type of the resource so that
+    # POT files are always mapped tp PO i18n_type
+    def _get_method(self):
+        return self.i18n_type
+
+    def _set_method(self, m):
+        if m == 'POT':
+            self.i18n_type = 'PO'
+        else:
+            self.i18n_type = m
+
+    i18n_method = property(_get_method, _set_method)
 
     def save(self, *args, **kwargs):
         """
@@ -189,10 +202,6 @@ class Resource(models.Model):
         created=False
         if not self.pk:
             created=True
-
-        # PO and POT files are the same
-        if self.i18n_type == 'POT':
-            self.i18n_type == 'PO'
 
         # Update total_entries
         self.update_total_entities(save=False)
