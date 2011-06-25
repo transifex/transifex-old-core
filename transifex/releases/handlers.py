@@ -8,6 +8,7 @@ from notification import models as notification
 from txcron import signals as txcron_signals
 
 from transifex.resources.models import Resource, RLStats
+from transifex.resources.signals import post_save_translation
 from transifex.releases.models import RELEASE_ALL_DATA
 from transifex.txcommon.log import logger
 
@@ -73,6 +74,7 @@ def notify_string_freeze(sender=None, instance=None, **kwargs):
     releases = Release.objects.filter(stringfreeze_date__lte=timestamp,
         notifications__before_stringfreeze=False)
     for release in releases:
+        logger.debug("release: Sending notifications for '%s'." % release)
         project = release.project.outsource or release.project
             
         # List with project maintainers of the given release PLUS maintainers
@@ -203,18 +205,23 @@ def notify_translation_deadline(sender=None, instance=None, **kwargs):
 
 
 # TODO: Candidate for a celery task
-def check_and_notify_string_freeze_breakage(sender, instance, **kwargs):
+def check_and_notify_string_freeze_breakage(sender, **kwargs):
     """
     Handler to notify people about string freeze breakage of releases.
     
     This happens whenever a resource source file changes in the string freeze
     period.
-    """
-    # Only check it only for source language RLStats objects
-    if instance.language == instance.resource.source_language: 
+    """    
+    resource = kwargs.pop('resource')
+    language = kwargs.pop('language')
+    
+    # Check it only for source languages
+    if kwargs.pop('is_source'): 
         logger.debug("release: Checking string freeze breakage.")
-        timestamp = instance.last_update
-        resource = instance.resource
+        # FIXME: Get timestamp from RLStats last_update field, but it depends
+        # on some changes on formats/core.py. At this point the RLStats object
+        # wasn't created yet.
+        timestamp = datetime.datetime.now()
         project = resource.project.outsource or resource.project
         releases = Release.objects.filter(resources=resource, project=project,
             stringfreeze_date__lte=timestamp, develfreeze_date__gte=timestamp)
@@ -257,5 +264,4 @@ label = settings.RELEASE_NOTIFICATION_CRON['notify_translation_deadline']
 getattr(txcron_signals, label).connect(notify_translation_deadline)
 
 # Connect handler for string freeze breakage to the RLStats post_save signal
-signals.post_save.connect(check_and_notify_string_freeze_breakage,
-    sender=RLStats)
+post_save_translation.connect(check_and_notify_string_freeze_breakage)
