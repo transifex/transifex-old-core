@@ -24,7 +24,7 @@ def fetch_url(request, project_slug, resource_slug):
         response_dict = { 'status':404,
                           'message':_("URL not set for this resource."),
                           'redirect_url':reverse('resource_detail',
-                                                 args=[project_slug,])}
+                                                 args=[project_slug, resource_slug])}
     except:
         response_dict = { 'status':500,
                           'message':_("Error updating source file."),
