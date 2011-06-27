@@ -170,7 +170,7 @@
             "aaSorting": [[ 0, "asc" ]],
             "bServerSide": true,
             "bProcessing": true,
-            "iDisplayLength": 25,
+            "iDisplayLength": 50,
             {% if resource %}
                 "sAjaxSource": "{%  url stringset_handling project.slug resource.slug target_language.code %}",
             {% else %}
@@ -553,7 +553,7 @@
             //Save & exit
             stringset.push(
                 false,
-                null, 
+                null,
                 function(updated){
                     $.ajax({
                         url: "{{ url_exit_lotte }}",

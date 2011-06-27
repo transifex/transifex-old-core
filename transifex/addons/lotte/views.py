@@ -339,7 +339,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
 
     # for items displayed
     try:
-        dlength = int(post_data.get('iDisplayLength','25'))
+        dlength = int(post_data.get('iDisplayLength','50'))
         dstart = int(post_data.get('iDisplayStart','0'))
     except ValueError, e:
         return HttpResponseBadRequest()
