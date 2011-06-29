@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
 from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.utils import simplejson
-from transifex.txcommon.tests.base import BaseTestCase
-from transifex.resources.models import RLStats, Resource
+from django.test import TransactionTestCase
 from django.contrib.auth.models import User, Permission
+from transifex.txcommon.tests.base import BaseTestCase, Users, Languages, \
+        NoticeTypes
+from transifex.resources.models import RLStats, Resource
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
 from transifex.storage.tests.api import BaseStorageTests
@@ -66,6 +70,76 @@ class ProjectResourceAPITests(BaseStorageTests):
         self.assertEqual(rls.translated, 3)
         self.assertEqual(rls.total, 3)
         self.assertEqual(rls.translated_perc, 100)
+
+
+class TestTransactionProjectResourceAPI(Languages, NoticeTypes, Users,
+                                        TransactionTestCase):
+
+    def setUp(self):
+        super(TestTransactionProjectResourceAPI, self).setUp()
+        self.project = Project.objects.get(slug='project1')
+        self.project.maintainers.add(self.user['maintainer'])
+        self.project.owner = self.user['maintainer']
+        self.project.save()
+
+    def test_second_create_with_error(self):
+        """Test that calling create a second time with the same parameters
+        and a bogus source file does not delete the resource.
+        """
+        rslug = "oops"
+        self.assertEqual(Resource.objects.filter(slug=rslug).count(), 0)
+
+        upload_file = open(os.path.join(
+                settings.TX_ROOT,
+                'resources/tests/lib/qt/en.ts'
+        ))
+        data = {'language': self.language_en.code, 'file': upload_file}
+        resp = self.client['registered'].post(reverse('api.storage'), data)
+        self.assertEqual(resp.status_code, 200)
+        uuid = simplejson.loads(resp.content)['files'][0]['uuid']
+
+        resp = self.client['maintainer'].post(
+            reverse('api_project_files', args=[self.project.slug]),
+            data='{"uuid": "%s", "slug": "%s"}' % (uuid, rslug),
+            content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(Resource.objects.filter(slug=rslug).count(), 1)
+
+        upload_file = open(os.path.join(
+                settings.TX_ROOT,
+                'resources/tests/lib/qt/error.ts'
+        ))
+        data = {'language': self.language_en.code, 'file': upload_file}
+        resp = self.client['registered'].post(reverse('api.storage'), data)
+        self.assertEqual(resp.status_code, 200)
+        uuid = simplejson.loads(resp.content)['files'][0]['uuid']
+
+        resp = self.client['maintainer'].post(
+            reverse('api_project_files', args=[self.project.slug]),
+            data='{"uuid": "%s", "slug": "%s"}' % (uuid, rslug),
+            content_type="application/json"
+        )
+        self.assertEqual(Resource.objects.filter(slug=rslug).count(), 1)
+
+        rslug = 'noop'
+        upload_file = open(os.path.join(
+                settings.TX_ROOT,
+                'resources/tests/lib/qt/error.ts'
+        ))
+        data = {'language': self.language_en.code, 'file': upload_file}
+        resp = self.client['registered'].post(reverse('api.storage'), data)
+        self.assertEqual(resp.status_code, 200)
+        uuid = simplejson.loads(resp.content)['files'][0]['uuid']
+
+        resp = self.client['maintainer'].post(
+            reverse('api_project_files', args=[self.project.slug]),
+            data='{"uuid": "%s", "slug": "%s"}' % (uuid, rslug),
+            content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, 400)
+        self.assertEqual(Resource.objects.filter(slug=rslug).count(), 0)
+
 
 class TestProjectAPI(BaseTestCase):
 
