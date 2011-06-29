@@ -7,7 +7,7 @@ from transifex.resources.formats.desktop import DesktopHandler
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
 
-class TestDesktopHandler(Languages, FormatsBaseTestCase):
+class TestDesktopHandler(FormatsBaseTestCase):
     """Tests for .desktop files."""
 
     def setUp(self):
