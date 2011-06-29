@@ -110,10 +110,14 @@ class Languages(object):
         # TODO make a class method (setUpClass)
         from django.core import management
         management.call_command('txlanguages', verbosity=0)
+        self.language = Language.objects.get(code='pt_BR')
+        self.language_en = Language.objects.get(code='en_US')
+        self.language_ar = Language.objects.get(code='ar')
+        #self.language_hi_IN = Language.objects.get(code='hi_IN')
         super(Languages, self).setUp()
 
 
-class BaseTestCase(Users, TestCase):
+class BaseTestCase(Languages, Users, TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
@@ -163,11 +167,7 @@ class BaseTestCase(Users, TestCase):
             approved=True, user=self.user['writer'],
             content_object=self.project, creator=self.user['maintainer'])
 
-        # Create languages and teams
-        self.language = Language.objects.get(code='pt_BR')
-        self.language_en = Language.objects.get(code='en_US')
-        self.language_ar = Language.objects.get(code='ar')
-        #self.language_hi_IN = Language.objects.get(code='hi_IN')
+        # Create teams
         self.team = Team.objects.get_or_create(language=self.language,
             project=self.project, creator=self.user['maintainer'])[0]
         self.team_private = Team.objects.get_or_create(language=self.language,
