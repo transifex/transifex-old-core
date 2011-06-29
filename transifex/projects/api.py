@@ -338,6 +338,7 @@ class ProjectResourceHandler(BaseHandler):
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
         (Project, 'slug__exact', 'project_slug')))
+    @transaction.commit_manually
     def create(self, request, project_slug, api_version=1):
         """
         Create resource for project by UUID of StorageFile.
@@ -349,11 +350,13 @@ class ProjectResourceHandler(BaseHandler):
                 try:
                     storagefile = StorageFile.objects.get(uuid=uuid)
                 except StorageFile.DoesNotExist, e:
+                    transaction.rollback()
                     return BAD_REQUEST("Specified uuid is invalid.")
                 resource_slug = None
                 if "slug" in request.data:
                     resource_slug = request.data['slug']
                     if len(resource_slug) > 51:
+                        transaction.rollback()
                         return BAD_REQUEST("Resouce slug is too long "
                             "(Max. 50 chars).")
 
@@ -364,9 +367,11 @@ class ProjectResourceHandler(BaseHandler):
                         project = project
                     )
                 except DatabaseError, e:
+                    transaction.rollback()
                     logger.error(e.message, exc_info=True)
                     return BAD_REQUEST(e.message)
                 except IntegrityError, e:
+                    transaction.rollback()
                     logger.error(e.message, exc_info=True)
                     return BAD_REQUEST(e.message)
 
@@ -377,10 +382,16 @@ class ProjectResourceHandler(BaseHandler):
                 # update i18n_type
                 i18n_type = get_i18n_type_from_file(storagefile.get_storage_path())
                 if not i18n_type:
+                    transaction.rollback()
                     return BAD_REQUEST("File type not supported.")
 
                 resource.i18n_type = i18n_type
                 resource.save()
+
+                # Set StorageFile to 'bound' status, which means that it is
+                # bound to some translation resource
+                storagefile.bound = True
+                storagefile.save()
 
                 logger.debug("Going to insert strings from %s (%s) to %s/%s" %
                     (storagefile.name, storagefile.uuid, project.slug,
@@ -398,7 +409,7 @@ class ProjectResourceHandler(BaseHandler):
                     strings_added, strings_updated = fhandler.save2db(True,
                         user=request.user)
                 except Exception, e:
-                    resource.delete()
+                    transaction.rollback()
                     return BAD_REQUEST("Resource not created. Could not "
                         "import file: %s" % e)
                 else:
@@ -415,17 +426,15 @@ class ProjectResourceHandler(BaseHandler):
                     }
                 logger.debug("Extraction successful, returning: %s" % retval)
 
-                # Set StorageFile to 'bound' status, which means that it is
-                # bound to some translation resource
-                storagefile.bound = True
-                storagefile.save()
-
+                # transaction has been commited by save2db
                 return HttpResponse(simplejson.dumps(retval),
                     mimetype='text/plain')
 
             else:
+                transaction.rollback()
                 return BAD_REQUEST("Request data missing.")
         else:
+            transaction.rollback()
             return BAD_REQUEST("Unsupported request")
 
     def update(self, request, project_slug, resource_slug, language_code=None, api_version=1):
