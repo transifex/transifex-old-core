@@ -503,10 +503,8 @@ class Handler(object):
         sg_handler.add_from_strings(self.suggestions.strings)
         if is_source:
             strings_deleted = len(original_sources)
-            t, created = Template.objects.get_or_create(resource = self.resource)
-            t.content = self.template
-            t.save()
             sg_handler.create_suggestions(original_sources, new_entities)
+            self._update_template(self.template)
             # See how many iterations we need for this
         self._post_save2db(is_source , user, overwrite_translations)
 
@@ -514,6 +512,16 @@ class Handler(object):
             self._handle_update_of_resource(user)
         transaction.commit()
         return strings_added, strings_updated
+
+    def _update_template(self, content):
+        """Update the template of the resource.
+
+        Args:
+            content: The content of the template.
+        """
+        t, created = Template.objects.get_or_create(resource=self.resource)
+        t.content = content
+        t.save()
 
     def _update_stats_of_resource(self, resource, language, user):
         """Update the statistics for the resource.
