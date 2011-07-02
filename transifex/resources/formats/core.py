@@ -9,12 +9,12 @@ from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
 from suggestions.models import Suggestion
+from suggestions.formats import ContentSuggestionFormat
 from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import FormatError
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.string_utils import percent_diff
 from transifex.resources.signals import post_save_translation
 
 # Temporary
@@ -96,7 +96,6 @@ class Handler(object):
         """
         Initialize a formats handler.
         """
-
         self.filename = filename # Input filename for associated translation file
         self.content = self._get_content(filename=filename, content=content) # The content of the translation file
         self.stringset = None # Stringset to extract entries from files
@@ -498,65 +497,23 @@ class Handler(object):
                          "into the database. Entity: '%s'. Error: '%s'."
                          % (j.source_entity, str(e)))
             transaction.rollback()
-            return 0,0
-        else:
-            if is_source:
-                strings_deleted = len(original_sources)
-                t, created = Template.objects.get_or_create(resource = self.resource)
-                t.content = self.template
-                t.save()
-                if created:
-                    self.resource.i18n_method = self.method_name
-                    self.resource.save()
-                # See how many iterations we need for this
-                iterations = len(original_sources)*len(new_entities)
-                # If it's not over the limit, then do it
-                if iterations < settings.MAX_STRING_ITERATIONS:
-                    for se in original_sources:
-                        for ne in new_entities:
-                            try:
-                                old_trans = Translation.objects.get(source_entity=se,
-                                    language=se.resource.source_language, rule=5)
-                                new_trans = Translation.objects.get(source_entity=ne,
-                                    language=se.resource.source_language, rule=5)
-                            except Translation.DoesNotExist:
-                                # Source language translation should always exist
-                                # but just in case...
-                                continue
-                            # find Levenshtein distance
-                            if percent_diff(old_trans.string, new_trans.string) < settings.MAX_STRING_DISTANCE:
-                                convert_to_suggestions(se, ne, user)
-                                break
+            return 0, 0
 
-                        se.delete()
-                else:
-                    for se in original_sources:
-                        se.delete()
+        sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
+        sg_handler.add_from_strings(self.suggestions.strings)
+        if is_source:
+            strings_deleted = len(original_sources)
+            t, created = Template.objects.get_or_create(resource = self.resource)
+            t.content = self.template
+            t.save()
+            sg_handler.create_suggestions(original_sources, new_entities)
+            # See how many iterations we need for this
+        self._post_save2db(is_source , user, overwrite_translations)
 
-            for j in self.suggestions.strings:
-                # Check SE existence
-                try:
-                    se = SourceEntity.objects.get(
-                        string = j.source_entity,
-                        context = j.context or "None",
-                        resource = self.resource
-                    )
-                except SourceEntity.DoesNotExist:
-                    continue
-
-                tr, created = Suggestion.objects.get_or_create(
-                    string = j.translation,
-                    source_entity = se,
-                    language = self.language
-                )
-
-            self._post_save2db(strings_added, strings_updated, strings_deleted,
-                is_source, user, overwrite_translations)
-
-            if strings_added + strings_updated + strings_deleted > 0:
-                self._handle_update_of_resource(user)
-            transaction.commit()
-            return strings_added, strings_updated
+        if strings_added + strings_updated + strings_deleted > 0:
+            self._handle_update_of_resource(user)
+        transaction.commit()
+        return strings_added, strings_updated
 
     def _update_stats_of_resource(self, resource, language, user):
         """Update the statistics for the resource.
@@ -651,38 +608,6 @@ class Handler(object):
         if is_source:
             self.template = self._generate_template(obj)
 
-def convert_to_suggestions(source, dest, user=None, langs=None):
-    """
-    This function takes all translations that belong to source and adds them as
-    suggestion to dest. Both source and dest are SourceEntity objects.
-
-    The langs can contain a list of all languages for which the conversion will
-    take place. Defaults to all available languages.
-    """
-    if langs:
-        translations = Translation.objects.filter(source_entity=source,
-            language__in=langs, rule=5)
-    else:
-        translations = Translation.objects.filter(source_entity=source, rule=5)
-
-    for t in translations:
-        # Skip source language translations
-        if t.language == dest.resource.source_language:
-            continue
-
-        tr, created = Suggestion.objects.get_or_create(
-            string = t.string,
-            source_entity = dest,
-            language = t.language
-        )
-
-        # If the suggestion was created and we have a user assign him as the
-        # one who made the suggestion
-        if created and user:
-            tr.user = user
-            tr.save()
-
-    return
 
 class StringSet(object):
     """
