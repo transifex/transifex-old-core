@@ -554,38 +554,61 @@ class Handler(object):
                 is_source, user, overwrite_translations)
 
             if strings_added + strings_updated + strings_deleted > 0:
-                # Invalidate cache after saving file
-                invalidate_stats_cache(self.resource, self.language, user=user)
-
-                if self.language == self.resource.source_language:
-                    nt = 'project_resource_changed'
-                else:
-                    nt = 'project_resource_translated'
-                context = {'project': self.resource.project,
-                            'resource': self.resource,
-                            'language': self.language}
-                object_list = [self.resource.project, self.resource, self.language]
-                # if we got no user, skip the log
-                if user:
-                    action_logging(user, object_list, nt, context=context)
-
-                if settings.ENABLE_NOTICES:
-                    txnotification.send_observation_notices_for(self.resource.project,
-                            signal=nt, extra_context=context)
-
-                    # if language is source language, notify all languages for the change
-                    if self.language == self.resource.source_language:
-                        for l in self.resource.available_languages:
-                            twatch = TranslationWatch.objects.get_or_create(
-                                resource=self.resource, language=l)[0]
-                            logger.debug("addon-watches: Sending notification"
-                                " for '%s'" % twatch)
-                            txnotification.send_observation_notices_for(twatch,
-                            signal='project_resource_translation_changed',
-                                 extra_context=context)
-
+                self._handle_update_of_resource(user)
             transaction.commit()
             return strings_added, strings_updated
+
+    def _update_stats_of_resource(self, resource, language, user):
+        """Update the statistics for the resource.
+
+        Also, invalidate any caches.
+        """
+        invalidate_stats_cache(resource, language, user=user)
+
+    def _handle_update_of_resource(self, user):
+        """Do extra stuff after a source language/translation has been updated.
+
+        Args:
+            user: The user that caused the update.
+        """
+        self._update_stats_of_resource(self.resource, self.language, user)
+
+        if self.language == self.resource.source_language:
+            nt = 'project_resource_changed'
+        else:
+            nt = 'project_resource_translated'
+        context = {
+            'project': self.resource.project,
+            'resource': self.resource,
+            'language': self.language
+        }
+        object_list = [self.resource.project, self.resource, self.language]
+
+        # if we got no user, skip the log
+        if user:
+            action_logging(user, object_list, nt, context=context)
+
+        if settings.ENABLE_NOTICES:
+            self._send_notices(signal=nt, extra_context=context)
+
+    def _send_notices(self, signal, extra_context):
+        txnotification.send_observation_notices_for(
+            self.resource.project, signal, extra_context
+        )
+
+        # if language is source language, notify all languages for the change
+        if self.language == self.resource.source_language:
+            for l in self.resource.available_languages:
+                twatch = TranslationWatch.objects.get_or_create(
+                    resource=self.resource, language=l)[0]
+                logger.debug(
+                    "addon-watches: Sending notification for '%s'" % twatch
+                )
+                txnotification.send_observation_notices_for(
+                    twatch,
+                    signal='project_resource_translation_changed',
+                    extra_context=extra_context
+                )
 
     def _generate_template(self, obj):
         """Generate a template from the specified object.
