@@ -661,7 +661,7 @@ def convert_to_suggestions(source, dest, user=None, langs=None):
 
     return
 
-class StringSet:
+class StringSet(object):
     """
     Store a list of Translation objects for a given language.
     """
@@ -682,7 +682,7 @@ class StringSet:
         return json.dumps(self, cls=CustomSerializer)
 
 
-class GenericTranslation:
+class GenericTranslation(object):
     """
     Store translations of any kind of I18N type (POT, Qt, etc...).
 
