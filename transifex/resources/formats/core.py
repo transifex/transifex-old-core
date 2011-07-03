@@ -87,6 +87,8 @@ class Handler(object):
     HandlerParseError = ParseError
     HandlerCompileError = CompileError
 
+    SuggestionFormat = ContentSuggestionFormat
+
     @classmethod
     def accepts(cls, i18n_type):
         """Accept only files that have the correct type specified."""
@@ -536,7 +538,7 @@ class Handler(object):
             )
             raise
 
-        sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
+        sg_handler = self.SuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
         sg_handler.create_suggestions(original_sources, new_entities)
         self._update_template(self.template)
