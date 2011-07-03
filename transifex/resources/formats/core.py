@@ -416,7 +416,45 @@ class Handler(object):
         Saves parsed file contents to the database. duh
         """
         self._pre_save2db(is_source, user, overwrite_translations)
+        try:
+            (added, updated, deleted) = self._save(
+                is_source, user, overwrite_translations
+            )
+        except Exception, e:
+            logger.warning(
+                "Failed to save translations for language %s and resource %s."
+                "Error was %s." % (self.language, self.resource, e.message),
+                exc_info=True
+            )
+            transaction.rollback()
+            return (0, 0)
+        self._post_save2db(is_source , user, overwrite_translations)
+        if added + updated + deleted > 0:
+            self._handle_update_of_resource(user)
+        transaction.commit()
+        return (added, updated)
 
+    def _save(self, is_source, user, overwrite_translations):
+        """Save source language translations to the database.
+
+        Subclasses should override this method, if they need to customize
+        the behavior of saving translations.
+
+        Any fatal exception must be reraised.
+
+        Args:
+            is_source: A flag to indicate whether the translations are for the
+                source language or not.
+            user: The user that made the commit.
+            overwrite_translations: A flag to indicate whether translations
+                should be overrided.
+
+        Returns:
+            A tuple of number of strings added, updted and deleted.
+
+        Raises:
+            Any exception.
+        """
         if is_source:
             qs = SourceEntity.objects.filter(resource=self.resource)
             original_sources = list(qs)
@@ -493,11 +531,13 @@ class Handler(object):
                         tr.save()
                         strings_updated += 1
         except Exception, e:
-            logger.error("There was problem while importing the entries "
-                         "into the database. Entity: '%s'. Error: '%s'."
-                         % (j.source_entity, str(e)))
-            transaction.rollback()
-            return 0, 0
+            logger.error(
+                "There was a problem while importing the entries into the "
+                "database. Entity: '%s'. Error: '%s'." % (
+                    j.source_entity, e.message
+                )
+            )
+            raise
 
         sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
@@ -505,13 +545,8 @@ class Handler(object):
             strings_deleted = len(original_sources)
             sg_handler.create_suggestions(original_sources, new_entities)
             self._update_template(self.template)
-            # See how many iterations we need for this
-        self._post_save2db(is_source , user, overwrite_translations)
 
-        if strings_added + strings_updated + strings_deleted > 0:
-            self._handle_update_of_resource(user)
-        transaction.commit()
-        return strings_added, strings_updated
+        return strings_added, strings_updated, strings_deleted
 
     def _update_template(self, content):
         """Update the template of the resource.
