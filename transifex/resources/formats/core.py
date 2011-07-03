@@ -417,9 +417,14 @@ class Handler(object):
         """
         self._pre_save2db(is_source, user, overwrite_translations)
         try:
-            (added, updated, deleted) = self._save(
-                is_source, user, overwrite_translations
-            )
+            if is_source:
+                (added, updated, deleted) = self._save_source(
+                    user, overwrite_translations
+                )
+            else:
+                (added, updated, deleted) = self._save_translation(
+                    user, overwrite_translations
+                )
         except Exception, e:
             logger.warning(
                 "Failed to save translations for language %s and resource %s."
@@ -434,17 +439,15 @@ class Handler(object):
         transaction.commit()
         return (added, updated)
 
-    def _save(self, is_source, user, overwrite_translations):
+    def _save_source(self, user, overwrite_translations):
         """Save source language translations to the database.
 
         Subclasses should override this method, if they need to customize
-        the behavior of saving translations.
+        the behavior of saving translations in the source language.
 
         Any fatal exception must be reraised.
 
         Args:
-            is_source: A flag to indicate whether the translations are for the
-                source language or not.
             user: The user that made the commit.
             overwrite_translations: A flag to indicate whether translations
                 should be overrided.
@@ -455,15 +458,14 @@ class Handler(object):
         Raises:
             Any exception.
         """
-        if is_source:
-            qs = SourceEntity.objects.filter(resource=self.resource)
-            original_sources = list(qs)
-            new_entities = []
+        qs = SourceEntity.objects.filter(resource=self.resource)
+        original_sources = list(qs)
+        new_entities = []
 
+        strings_added = 0
+        strings_updated = 0
+        strings_deleted = 0
         try:
-            strings_added = 0
-            strings_updated = 0
-            strings_deleted = 0
             for j in self.stringset.strings:
                 # Check SE existence
                 try:
@@ -472,24 +474,19 @@ class Handler(object):
                         context = j.context or "None",
                         resource = self.resource
                     )
-                    if is_source:
-                        # If it's a source file, we need to update source
-                        # string attributes.
-                        se.flags = j.flags or ""
-                        se.pluralized = j.pluralized
-                        se.developer_comment = j.comment or ""
-                        se.occurrences = j.occurrences
-                        se.save()
-                        try:
-                            original_sources.remove(se)
-                        except ValueError:
-                            # When we have plurals, we can't delete the se
-                            # everytime, so we just pass
-                            pass
+                    # update source string attributes.
+                    se.flags = j.flags or ""
+                    se.pluralized = j.pluralized
+                    se.developer_comment = j.comment or ""
+                    se.occurrences = j.occurrences
+                    se.save()
+                    try:
+                        original_sources.remove(se)
+                    except ValueError:
+                        # When we have plurals, we can't delete the se
+                        # everytime, so we just pass
+                        pass
                 except SourceEntity.DoesNotExist:
-                    # Skip creation of sourceentity object for non-source files.
-                    if not is_source:
-                        continue
                     # Create the new SE
                     se = SourceEntity.objects.create(
                         string = j.source_entity,
@@ -541,11 +538,82 @@ class Handler(object):
 
         sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
-        if is_source:
-            strings_deleted = len(original_sources)
-            sg_handler.create_suggestions(original_sources, new_entities)
-            self._update_template(self.template)
+        sg_handler.create_suggestions(original_sources, new_entities)
+        self._update_template(self.template)
 
+        strings_deleted = len(original_sources)
+        return strings_added, strings_updated, strings_deleted
+
+    def _save_translation(self, user, overwrite_translations):
+        """Save other language translations to the database.
+
+        Subclasses should override this method, if they need to customize
+        the behavior of saving translations in other languages than the source
+        one.
+
+        Any fatal exception must be reraised.
+
+        Args:
+            user: The user that made the commit.
+            overwrite_translations: A flag to indicate whether translations
+                should be overrided.
+
+        Returns:
+            A tuple of number of strings added, updted and deleted.
+
+        Raises:
+            Any exception.
+        """
+        strings_added = 0
+        strings_updated = 0
+        strings_deleted = 0
+        try:
+            for j in self.stringset.strings:
+                # Check SE existence
+                try:
+                    se = SourceEntity.objects.get(
+                        string = j.source_entity,
+                        context = j.context or "None",
+                        resource = self.resource
+                    )
+                except SourceEntity.DoesNotExist:
+                    continue
+
+                # Skip storing empty strings as translations and don't save not
+                # pluralized entries in pluralized source entities
+                if not j.translation or j.pluralized != se.pluralized:
+                    continue
+
+                tr, created = Translation.objects.get_or_create(
+                    source_entity = se,
+                    language = self.language,
+                    rule = j.rule,
+                    defaults = {
+                        'string' : j.translation,
+                        'user' : user,
+                        },
+                    )
+
+                if created and j.rule==5:
+                    strings_added += 1
+
+                if not created and overwrite_translations:
+                    if tr.string != j.translation:
+                        tr.string = j.translation
+                        tr.user = user
+                        tr.save()
+                        strings_updated += 1
+        except Exception, e:
+            logger.error(
+                "There was a problem while importing the entries into the "
+                "database. Entity: '%s'. Error: '%s'." % (
+                    j.source_entity, e.message
+                )
+            )
+            raise
+
+        sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
+        sg_handler.add_from_strings(self.suggestions.strings)
         return strings_added, strings_updated, strings_deleted
 
     def _update_template(self, content):
