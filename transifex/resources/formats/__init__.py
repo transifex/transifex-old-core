@@ -32,10 +32,14 @@ def get_i18n_type_from_file(filename):
         mime_type = None
 
     for type, info in settings.I18N_METHODS.items():
-        if filter(filename.endswith, info['file-extensions'].split(', ')) or\
-          mime_type in info['mimetype'].split(', '):
+        if filter(filename.endswith, info['file-extensions'].split(', ')):
             i18n_type = type
             break
+    else:
+        for type, info in settings.I18N_METHODS.items():
+            if mime_type in info['mimetype'].split(', '):
+                i18n_type = type
+                break
 
     assert i18n_type, (
         "No suitable handler could be found for given file (%s)." % filename)
