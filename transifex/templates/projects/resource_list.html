@@ -7,13 +7,14 @@
 
 <div id="resources" class="resources separate">
  
+ <div class="clearfix">
  	{% if perms.projects.pr_resource_add_change or is_maintainer %}
 	<p class="separate-buttons">
 			<a id="create_new_resource" title="{% trans 'Add new resource' %}" class="addbutton houdini_toggler"></a>
 	</p>
 	{% endif %}
   <h3 class="separate-header">{% blocktrans %}Project Resources{% endblocktrans %}</h3>
-
+</div>
 
 
 <script type="text/javascript">
