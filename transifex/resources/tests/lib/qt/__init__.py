@@ -1,8 +1,10 @@
 import os
 import unittest
+import xml.dom.minidom
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats.qt import LinguistHandler
+from transifex.resources.formats.qt import LinguistHandler, \
+        _getElementByTagName, _getText
 from transifex.addons.suggestions.models import Suggestion
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
@@ -317,7 +319,7 @@ class QtFile(FormatsBaseTestCase):
     def test_entries_with_comment_tag(self):
         """
         Test entries with <comment>.
-        
+
         This should be treated as a uniqueness value.
         """
         testfile = os.path.join(
@@ -330,21 +332,46 @@ class QtFile(FormatsBaseTestCase):
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
 
-        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource,
             string='It exists').context_string,
             u'QCoreApplication\\:bar:QSystemSemaphore')
 
-        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource,
             string='This failed').context_string,
             u'QCoreApplication\\:bar')
 
-        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource,
             string='One Entry').context_string, u'QSystemSemaphore\\: foo')
 
-        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource,
             string='Two Entries').context_string, u'None')
-            
-        self.assertEqual(SourceEntity.objects.get(resource=self.resource, 
+
+        self.assertEqual(SourceEntity.objects.get(resource=self.resource,
             string='Unable to connect').context_string, u'QDB2Driver')
+
+    def test_context_generation(self):
+        """Test creating the context of a source entity."""
+        testfile = os.path.join(
+            os.path.dirname(__file__),
+            'comment/en.ts'
+        )
+        handler = LinguistHandler(testfile)
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        handler.compile()
+        doc = xml.dom.minidom.parseString(handler.compiled_template)
+        root = doc.documentElement
+        for message in doc.getElementsByTagName("message"):
+            source = _getElementByTagName(message, "source")
+            sourceString = _getText(source.childNodes)
+            generated_context = handler._context_value(message)
+            # this shouldn't raise any exceptions
+            se = SourceEntity.objects.get(
+                resource=self.resource, string=sourceString,
+                context=generated_context or u"None"
+            )
+
 
 

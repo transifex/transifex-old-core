@@ -122,9 +122,10 @@ class LinguistHandler(Handler):
                     sourceString = _getText(source.childNodes)
 
                 plurals = Translation.objects.filter(
-                    source_entity__resource = self.resource,
-                    language = language,
-                    source_entity__string = sourceString
+                    source_entity__resource=self.resource,
+                    language=language,
+                    source_entity__string=sourceString,
+                    source_entity__context=self._context_value(message) or u"None"
                 ).order_by('rule')
 
                 plural_keys = {}
@@ -155,6 +156,29 @@ class LinguistHandler(Handler):
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/translation>)",
             r"&apos;", esc_template_text)
         self.compiled_template = esc_template_text
+
+    def _context_value(self, message):
+        """Get the context value of a message node."""
+        context_node = message.parentNode
+        context_name_element = _getElementByTagName(context_node, "name")
+        if context_name_element.firstChild:
+            if context_name_element.firstChild.nodeValue:
+                context_name = escape_context(
+                    [context_name_element.firstChild.nodeValue])
+            else:
+                context_name = []
+        else:
+            context_name = []
+        try:
+            c_node = _getElementByTagName(message, "comment")
+            comment_text = _getText(c_node.childNodes)
+            if comment_text:
+                comment = escape_context([comment_text])
+            else:
+                comment = []
+        except LinguistParseError, e:
+            comment = []
+        return context_name + comment
 
     @need_language
     @need_file
@@ -245,7 +269,7 @@ class LinguistHandler(Handler):
                         comment = []
                 except LinguistParseError, e:
                     comment = []
-                
+
                 status = None
                 if source.firstChild:
                     sourceString = _getText(source.childNodes)
@@ -385,7 +409,7 @@ class LinguistHandler(Handler):
                                 f.appendChild(doc.createTextNode(
                                         "%(hash)s_pl_%(key)s" %
                                         {
-                                            'hash': hash_tag(sourceString, 
+                                            'hash': hash_tag(sourceString,
                                                 context_name + comment),
                                             'key': n
                                         }
