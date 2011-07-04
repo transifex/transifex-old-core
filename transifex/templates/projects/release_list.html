@@ -7,19 +7,21 @@
 {% if releases %}
 
   <div id="releases" class="releases separate">
-
+  
+  <div class="clearfix">
   {% if perms.projects.pr_release_add_change or is_maintainer %}
     <div class="editlinks">
-      <p><a class="i16 add buttonized" href="{{ release_create }}">{% trans "Add" %}</a></p>
+      <p style="display:inline;float:right; clear:right;"><a class="addbutton" href="{{ release_create }}" title="{% trans 'Add' %}"></a></p>
     </div>
   {% endif %}
 
   {% if not releases_heading %}
-    <h3>{% trans "Project Releases" %}{% render_metacount releases _("releases") %}</h3>
+    <h3 class="separate-header">{% trans "Project Releases" %}{% render_metacount releases _("releases") %}</h3>
   {% else %}
     <h3>{{ releases_heading }}{% render_metacount releases _("releases") %}</h3>
   {% endif %}
-
+  </div>
+  
   <div class="release_list">
     <ul class="simple bigthings">
     {% for release in releases %}

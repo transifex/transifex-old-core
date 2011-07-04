@@ -25,17 +25,20 @@
 
   <div class="details separate">
 
-  <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
-  <dl class="definition clearfix">
-    {% if request.user.is_authenticated%}
-      {% url notification.views.notices as notices_url %}
-      {% if notices_url %}
+  <div class="clearfix">
+  <h3 class="separate-header">{% blocktrans %}Details{% endblocktrans %}</h3>
+  {% if request.user.is_authenticated%}
+    {% url notification.views.notices as notices_url %}
+    {% if notices_url %}
 
-      <dt class="i16 watch">{% trans "Watch:" %}</dt>
-      <dd>{% watch_toggle project %}</dd>
-
-      {% endif %}
+    <p class="separate-buttons">   
+      <a>{% watch_toggle project %}</a>
+    </p>
     {% endif %}
+  {% endif %}
+  </div>
+    
+  <dl class="definition clearfix">
     {% if project.homepage %}
       <dt class="homepage i16">{% trans "Homepage:" %}</dt>
       <dd><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></dd>
