@@ -16,7 +16,7 @@ from transifex.projects.signals import (project_access_control_form_start,
                                         project_form_init, project_form_save)
 from transifex.releases.models import (Release, RELEASE_ALL_DATA,
                                        RESERVED_RELEASE_SLUGS)
-
+from transifex.txcommon.widgets import SplitSelectDateTimeWidget
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
@@ -162,6 +162,9 @@ class ReleaseForm(forms.ModelForm):
         projects = self.fields["project"].queryset.filter(slug=project.slug)
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
+        self.fields["release_date"].widget = SplitSelectDateTimeWidget()
+        self.fields["stringfreeze_date"].widget = SplitSelectDateTimeWidget()
+        self.fields["develfreeze_date"].widget = SplitSelectDateTimeWidget()
 
     def clean_slug(self):
         """Ensure that reserved slugs are not used."""
