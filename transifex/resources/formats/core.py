@@ -424,44 +424,6 @@ class Handler(object):
         if settings.ENABLE_NOTICES:
             self._send_notices(signal=nt, extra_context=context)
 
-    def _create_unique_key(self, source_string, context):
-        """Create a unique key based on the source_string and the context.
-
-        Args:
-            source_string: The source string.
-            context: The context.
-        Returns:
-            A tuple to be used as key.
-        """
-        if not context:
-            return (source_string, u'None')
-        elif isinstance(context, list):
-            return (source_string, u':'.join(x for x in context))
-        else:
-            return (source_string, context)
-
-    def _key_from_generic_translation(self, gt):
-        """Create a unique (for a specific resource) key for this
-        generic translation.
-
-        Args:
-            gt: The generic translation.
-        Returns:
-            A tuple (string, context).
-        """
-        return self._create_unique_key(gt.source_entity, gt.context)
-
-    def _key_from_source_entity(self, se):
-        """Create a unique (for a specific resource) key for this
-        generic translation.
-
-        Args:
-            se: The source entity.
-        Returns:
-            A tuple (string, context).
-        """
-        return self._create_unique_key(se.string, se.context)
-
     def _pre_save2db(self, *args, **kwargs):
         """
         This is called before doing any actual work. Override in inherited
@@ -543,18 +505,17 @@ class Handler(object):
         qs = SourceEntity.objects.filter(resource=self.resource)
         original_sources = list(qs) # TODO Use set() instead? Hash by pk
         new_entities = []
-        source_entities = {}
+        source_entities = SourceEntityCollection()
         for se in original_sources:
-            source_entities[self._key_from_source_entity(se)] = se
+            source_entities.add(se)
 
         strings_added = 0
         strings_updated = 0
         strings_deleted = 0
         try:
             for j in self.stringset.strings:
-                key = self._key_from_generic_translation(j)
-                if key in source_entities:
-                    se = source_entities[key]
+                if j in source_entities:
+                    se = source_entities.get(j)
                     # update source string attributes.
                     se.flags = j.flags or ""
                     se.pluralized = j.pluralized
@@ -581,7 +542,7 @@ class Handler(object):
                     )
                     # Add it to list with new entities
                     new_entities.append(se)
-                    source_entities[self._key_from_generic_translation(j)] = se
+                    source_entities.add(se)
 
                 if self._should_skip_translation(se, j):
                     continue
@@ -639,9 +600,11 @@ class Handler(object):
             Any exception.
         """
         qs = SourceEntity.objects.filter(resource=self.resource).iterator()
-        source_entities = {}
+        source_entities = SourceEntityCollection()
         for se in qs:
-            source_entities[self._key_from_source_entity(se)] = se
+            source_entities.add(se)
+
+        # TODO minimize Translation db requests, too
 
         strings_added = 0
         strings_updated = 0
@@ -649,12 +612,10 @@ class Handler(object):
         # TODO one query for fetching SEs
         try:
             for j in self.stringset.strings:
-                # Check SE existence
-                key = self._key_from_generic_translation(j)
-                if key not in source_entities:
+                if j not in source_entities:
                     continue
                 else:
-                    se = source_entities[key]
+                    se = source_entities.get(j)
 
                 if self._should_skip_translation(se, j):
                     continue
@@ -843,3 +804,55 @@ class GenericTranslation(object):
             self.context == other.context:
             return True
         return False
+
+
+class ResourceItems(object):
+    """base class for collections for resource items (source entities,
+    translations, etc).
+    """
+
+    def __init__(self):
+        self._items = {}
+
+    def get(self, item):
+        """Get a source entity in the collection or None."""
+        key = self._generate_key(item)
+        return self._items.get(key, None)
+
+    def add(self, item):
+        """Add a source entity to the collection."""
+        key = self._generate_key(item)
+        self._items[key] = item
+
+    def __contains__(self, item):
+        key = self._generate_key(item)
+        return key in self._items
+
+
+class SourceEntityCollection(ResourceItems):
+    """A collection of source entities."""
+
+    def _generate_key(self, se):
+        """Generate a key for this se, which is guaranteed to
+        be unique within a resource.
+        """
+        if isinstance(se, GenericTranslation):
+            return self._create_unique_key(se.source_entity, se.context)
+        elif isinstance(se, SourceEntity):
+            return self._create_unique_key(se.string, se.context)
+
+    def _create_unique_key(self, source_string, context):
+        """Create a unique key based on the source_string and the context.
+
+        Args:
+            source_string: The source string.
+            context: The context.
+        Returns:
+            A tuple to be used as key.
+        """
+        if not context:
+            return (source_string, u'None')
+        elif isinstance(context, list):
+            return (source_string, u':'.join(x for x in context))
+        else:
+            return (source_string, context)
