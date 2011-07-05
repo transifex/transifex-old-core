@@ -169,3 +169,24 @@ class ReleaseForm(forms.ModelForm):
         if slug in RESERVED_RELEASE_SLUGS:
             raise ValidationError(_("This value is reserved and cannot be used."))
         return slug
+
+    def clean(self):
+        """Check whether the dates of the release are valid."""
+        cleaned_data = self.cleaned_data
+        stringfreeze_date = cleaned_data.get('stringfreeze_date')
+        develfreeze_date = cleaned_data.get('develfreeze_date')
+        release_date = cleaned_data.get('release_date')
+
+        if develfreeze_date and stringfreeze_date and \
+            develfreeze_date <= stringfreeze_date:
+            msg = _("Devel freeze date must be after the String freeze date.")
+            self._errors["develfreeze_date"] = self.error_class([msg])
+            del cleaned_data["develfreeze_date"]
+
+        if release_date and develfreeze_date and \
+            release_date <= develfreeze_date:
+            msg = _("Release date must be after the Devel freeze date.")
+            self._errors["release_date"] = self.error_class([msg])
+            del cleaned_data["release_date"]
+
+        return cleaned_data
