@@ -43,20 +43,20 @@
          {% if stats.lock.valid %}
           {% with stats.lock.owner as lock_owner %}
            {% if lock_owner != request.user %}
-            <a class="i16 notice buttonized2 buttonized2_warning tipsy_enable" id="translate_now" href="{{ translate_resource }}" title="{% blocktrans %}Warning: This resource is currently locked by '{{ lock_owner }}'. He might be working on it right now.{% endblocktrans %}" >{% trans "Translate now" %}</a>
+            <a class="i16 notice buttonized buttonized_warning tipsy_enable" id="translate_now" href="{{ translate_resource }}" title="{% blocktrans %}Warning: This resource is currently locked by '{{ lock_owner }}'. He might be working on it right now.{% endblocktrans %}" >{% trans "Translate now" %}</a>
            {% else %}
-            <a class="i16 tick buttonized2" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
+            <a class="i16 tick buttonized" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
            {% endif %}
           {% endwith %}
          {% else %}
-          <a class="i16 tick buttonized2" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
+          <a class="i16 tick buttonized" id="translate_now" href="{{ translate_resource }}">{% trans "Translate now" %}</a>
          {% endif %}
         {% else %}
           {% if not resource.accept_translations %}
-            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now"
+            <a class="i16 tick_disabled buttonized_disabled tipsy_enable" id="translate_now"
             title="{% trans "This resource is currently not accepting translations" %}">{% trans "Translate now" %}</a>
           {% else %}
-            <a class="i16 tick_disabled buttonized2_disabled tipsy_enable" id="translate_now"
+            <a class="i16 tick_disabled buttonized_disabled tipsy_enable" id="translate_now"
             title="{% blocktrans with target_language.name as lang_name %}To translate you need to be logged in and a member of the {{ lang_name }} team{% endblocktrans %}">{% trans "Translate now" %}</a>
           {% endif %}
         {% endif %}

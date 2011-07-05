@@ -213,10 +213,10 @@ $(document).ready(function(){
         {% ifequal current_translation.string suggestion.string %}
           <div class="suggestion_select_current"><span><img title="{% trans "This is the currently accepted translation." %}" src="{{STATIC_URL}}images/icons/big_tick.png" /></span></div>
         {% else %}
-          <div class="suggestion_select_button"><a class="i16 smile buttonized2">{% trans "Use this!" %}</a></div>
+          <div class="suggestion_select_button"><a class="i16 smile buttonized">{% trans "Use this!" %}</a></div>
         {% endifequal %}
         {% else %}
-          <div class="suggestion_select_button"><a class="i16 smile buttonized2">{% trans "Use this!" %}</a></div>
+          <div class="suggestion_select_button"><a class="i16 smile buttonized">{% trans "Use this!" %}</a></div>
         {% endif %}
         <div class="nomargin nopadding clear"></div>
       </div>
