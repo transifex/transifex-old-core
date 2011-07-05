@@ -384,6 +384,84 @@ class Handler(object):
             content = self._apply_translation(string, trans, content)
         return content
 
+    #######################
+    #  save methods
+    #######################
+
+    def _context_value(self, context):
+        """Convert the context for the database.
+
+        Args:
+            context: The context value calculated
+        Returns:
+            The correct value for the context ot be used in the database.
+        """
+        return context or u'None'
+
+    def _handle_update_of_resource(self, user):
+        """Do extra stuff after a source language/translation has been updated.
+
+        Args:
+            user: The user that caused the update.
+        """
+        self._update_stats_of_resource(self.resource, self.language, user)
+
+        if self.language == self.resource.source_language:
+            nt = 'project_resource_changed'
+        else:
+            nt = 'project_resource_translated'
+        context = {
+            'project': self.resource.project,
+            'resource': self.resource,
+            'language': self.language
+        }
+        object_list = [self.resource.project, self.resource, self.language]
+
+        # if we got no user, skip the log
+        if user:
+            action_logging(user, object_list, nt, context=context)
+
+        if settings.ENABLE_NOTICES:
+            self._send_notices(signal=nt, extra_context=context)
+
+    def _create_unique_key(self, source_string, context):
+        """Create a unique key based on the source_string and the context.
+
+        Args:
+            source_string: The source string.
+            context: The context.
+        Returns:
+            A tuple to be used as key.
+        """
+        if not context:
+            return (source_string, u'None')
+        elif isinstance(context, list):
+            return (source_string, u':'.join(x for x in context))
+        else:
+            return (source_string, context)
+
+    def _key_from_generic_translation(self, gt):
+        """Create a unique (for a specific resource) key for this
+        generic translation.
+
+        Args:
+            gt: The generic translation.
+        Returns:
+            A tuple (string, context).
+        """
+        return self._create_unique_key(gt.source_entity, gt.context)
+
+    def _key_from_source_entity(self, se):
+        """Create a unique (for a specific resource) key for this
+        generic translation.
+
+        Args:
+            se: The source entity.
+        Returns:
+            A tuple (string, context).
+        """
+        return self._create_unique_key(se.string, se.context)
+
     def _pre_save2db(self, *args, **kwargs):
         """
         This is called before doing any actual work. Override in inherited
@@ -409,37 +487,39 @@ class Handler(object):
             })
         post_save_translation.send(sender=self, **kwargs)
 
-    @need_resource
-    @need_language
-    @need_stringset
-    @transaction.commit_manually
-    def save2db(self, is_source=False, user=None, overwrite_translations=True):
-        """
-        Saves parsed file contents to the database. duh
-        """
-        self._pre_save2db(is_source, user, overwrite_translations)
-        try:
-            if is_source:
-                (added, updated, deleted) = self._save_source(
-                    user, overwrite_translations
+    def _send_notices(self, signal, extra_context):
+        txnotification.send_observation_notices_for(
+            self.resource.project, signal, extra_context
+        )
+
+        # if language is source language, notify all languages for the change
+        if self.language == self.resource.source_language:
+            for l in self.resource.available_languages:
+                twatch = TranslationWatch.objects.get_or_create(
+                    resource=self.resource, language=l)[0]
+                logger.debug(
+                    "addon-watches: Sending notification for '%s'" % twatch
                 )
-            else:
-                (added, updated, deleted) = self._save_translation(
-                    user, overwrite_translations
+                txnotification.send_observation_notices_for(
+                    twatch,
+                    signal='project_resource_translation_changed',
+                    extra_context=extra_context
                 )
-        except Exception, e:
-            logger.warning(
-                "Failed to save translations for language %s and resource %s."
-                "Error was %s." % (self.language, self.resource, e.message),
-                exc_info=True
-            )
-            transaction.rollback()
-            return (0, 0)
-        self._post_save2db(is_source , user, overwrite_translations)
-        if added + updated + deleted > 0:
-            self._handle_update_of_resource(user)
-        transaction.commit()
-        return (added, updated)
+
+    def _should_skip_translation(self, se, trans):
+        """Check if current translation should be skipped, ie not saved to db.
+
+        This should happen for empty translations (ie, untranslated strings)
+        and for strings which are not correctly pluralized.
+
+        Args:
+            se: The source entity that corresponds to the translation.
+            trans: The translation itself.
+        Returns:
+            True, if the specified translation must be skipped, ie not
+            saved to database.
+        """
+        return not trans.translation or trans.pluralized != se.pluralized
 
     def _save_source(self, user, overwrite_translations):
         """Save source language translations to the database.
@@ -461,21 +541,20 @@ class Handler(object):
             Any exception.
         """
         qs = SourceEntity.objects.filter(resource=self.resource)
-        original_sources = list(qs)
+        original_sources = list(qs) # TODO Use set() instead? Hash by pk
         new_entities = []
+        source_entities = {}
+        for se in original_sources:
+            source_entities[self._key_from_source_entity(se)] = se
 
         strings_added = 0
         strings_updated = 0
         strings_deleted = 0
         try:
             for j in self.stringset.strings:
-                # Check SE existence
-                try:
-                    se = SourceEntity.objects.get(
-                        string = j.source_entity,
-                        context = j.context or "None",
-                        resource = self.resource
-                    )
+                key = self._key_from_generic_translation(j)
+                if key in source_entities:
+                    se = source_entities[key]
                     # update source string attributes.
                     se.flags = j.flags or ""
                     se.pluralized = j.pluralized
@@ -488,13 +567,12 @@ class Handler(object):
                         # When we have plurals, we can't delete the se
                         # everytime, so we just pass
                         pass
-                except SourceEntity.DoesNotExist:
+                else:
                     # Create the new SE
                     se = SourceEntity.objects.create(
                         string = j.source_entity,
-                        context = j.context or "None",
-                        resource = self.resource,
-                        pluralized = j.pluralized,
+                        context = self._context_value(j.context),
+                        resource = self.resource, pluralized = j.pluralized,
                         position = 1,
                         # FIXME: this has been tested with pofiles only
                         flags = j.flags or "",
@@ -503,27 +581,21 @@ class Handler(object):
                     )
                     # Add it to list with new entities
                     new_entities.append(se)
+                    source_entities[self._key_from_generic_translation(j)] = se
 
-                # Skip storing empty strings as translations and don't save not
-                # pluralized entries in pluralized source entities
-                if not j.translation or j.pluralized != se.pluralized:
+                if self._should_skip_translation(se, j):
                     continue
-
                 tr, created = Translation.objects.get_or_create(
-                    source_entity = se,
-                    language = self.language,
-                    rule = j.rule,
+                    source_entity=se, language=self.language, rule=j.rule,
                     defaults = {
-                        'string' : j.translation,
-                        'user' : user,
+                        'string' : j.translation, 'user' : user,
                         },
                     resource = self.resource
                     )
 
                 if created and j.rule==5:
                     strings_added += 1
-
-                if not created and overwrite_translations:
+                elif not created and overwrite_translations:
                     if tr.string != j.translation:
                         tr.string = j.translation
                         tr.user = user
@@ -566,40 +638,35 @@ class Handler(object):
         Raises:
             Any exception.
         """
+        qs = SourceEntity.objects.filter(resource=self.resource).iterator()
+        source_entities = {}
+        for se in qs:
+            source_entities[self._key_from_source_entity(se)] = se
+
         strings_added = 0
         strings_updated = 0
         strings_deleted = 0
+        # TODO one query for fetching SEs
         try:
             for j in self.stringset.strings:
                 # Check SE existence
-                try:
-                    se = SourceEntity.objects.get(
-                        string = j.source_entity,
-                        context = j.context or "None",
-                        resource = self.resource
-                    )
-                except SourceEntity.DoesNotExist:
+                key = self._key_from_generic_translation(j)
+                if key not in source_entities:
                     continue
+                else:
+                    se = source_entities[key]
 
-                # Skip storing empty strings as translations and don't save not
-                # pluralized entries in pluralized source entities
-                if not j.translation or j.pluralized != se.pluralized:
+                if self._should_skip_translation(se, j):
                     continue
-
                 tr, created = Translation.objects.get_or_create(
-                    source_entity = se,
-                    language = self.language,
-                    rule = j.rule,
+                    source_entity=se, language=self.language, rule=j.rule,
                     defaults = {
-                        'string' : j.translation,
-                        'user' : user,
-                        },
-                    )
-
+                        'string' : j.translation, 'user' : user,
+                    },
+                )
                 if created and j.rule==5:
                     strings_added += 1
-
-                if not created and overwrite_translations:
+                elif not created and overwrite_translations:
                     if tr.string != j.translation:
                         tr.string = j.translation
                         tr.user = user
@@ -613,10 +680,16 @@ class Handler(object):
                 )
             )
             raise
-
         sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
         return strings_added, strings_updated, strings_deleted
+
+    def _update_stats_of_resource(self, resource, language, user):
+        """Update the statistics for the resource.
+
+        Also, invalidate any caches.
+        """
+        invalidate_stats_cache(resource, language, user=user)
 
     def _update_template(self, content):
         """Update the template of the resource.
@@ -628,57 +701,41 @@ class Handler(object):
         t.content = content
         t.save()
 
-    def _update_stats_of_resource(self, resource, language, user):
-        """Update the statistics for the resource.
-
-        Also, invalidate any caches.
+    @need_resource
+    @need_language
+    @need_stringset
+    @transaction.commit_manually
+    def save2db(self, is_source=False, user=None, overwrite_translations=True):
         """
-        invalidate_stats_cache(resource, language, user=user)
-
-    def _handle_update_of_resource(self, user):
-        """Do extra stuff after a source language/translation has been updated.
-
-        Args:
-            user: The user that caused the update.
+        Saves parsed file contents to the database. duh
         """
-        self._update_stats_of_resource(self.resource, self.language, user)
-
-        if self.language == self.resource.source_language:
-            nt = 'project_resource_changed'
-        else:
-            nt = 'project_resource_translated'
-        context = {
-            'project': self.resource.project,
-            'resource': self.resource,
-            'language': self.language
-        }
-        object_list = [self.resource.project, self.resource, self.language]
-
-        # if we got no user, skip the log
-        if user:
-            action_logging(user, object_list, nt, context=context)
-
-        if settings.ENABLE_NOTICES:
-            self._send_notices(signal=nt, extra_context=context)
-
-    def _send_notices(self, signal, extra_context):
-        txnotification.send_observation_notices_for(
-            self.resource.project, signal, extra_context
-        )
-
-        # if language is source language, notify all languages for the change
-        if self.language == self.resource.source_language:
-            for l in self.resource.available_languages:
-                twatch = TranslationWatch.objects.get_or_create(
-                    resource=self.resource, language=l)[0]
-                logger.debug(
-                    "addon-watches: Sending notification for '%s'" % twatch
+        self._pre_save2db(is_source, user, overwrite_translations)
+        try:
+            if is_source:
+                (added, updated, deleted) = self._save_source(
+                    user, overwrite_translations
                 )
-                txnotification.send_observation_notices_for(
-                    twatch,
-                    signal='project_resource_translation_changed',
-                    extra_context=extra_context
+            else:
+                (added, updated, deleted) = self._save_translation(
+                    user, overwrite_translations
                 )
+        except Exception, e:
+            logger.warning(
+                "Failed to save translations for language %s and resource %s."
+                "Error was %s." % (self.language, self.resource, e.message),
+                exc_info=True
+            )
+            transaction.rollback()
+            return (0, 0)
+        self._post_save2db(is_source , user, overwrite_translations)
+        if added + updated + deleted > 0:
+            self._handle_update_of_resource(user)
+        transaction.commit()
+        return (added, updated)
+
+    ####################
+    # parse methods
+    ####################
 
     def _generate_template(self, obj):
         """Generate a template from the specified object.
