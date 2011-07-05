@@ -49,13 +49,13 @@
 			<li>
 				<label for="id_photo">{% trans "Select an image from disk" %}:</label>
 				<p>{{ form.photo }}
-				<input type="submit buttonized" value="{% trans 'Done' %}" />
+				<input type="submit" class="buttonized" value="{% trans 'Done' %}" />
 				</p>
 			</li>
 			<li>
 				<label for="id_url">{% trans "Select an image from a remote URL. Enter the URL in the field below and we'll retrieve the image for you" %}:</label>
 				<p>{{ form.url }}
-				<input type="submit buttonized" value="{% trans 'Done' %}" />
+				<input type="submit" class="buttonized" value="{% trans 'Done' %}" />
 				</p>
 			</li>
 			{% if AVATAR_WEBSEARCH %}
