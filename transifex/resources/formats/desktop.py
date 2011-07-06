@@ -34,6 +34,9 @@ class DesktopHandler(Handler):
     format = ".desktop (*.desktop)"
     method_name = 'DESKTOP'
 
+    HandlerParseError = DesktopParseError
+    handlerCompileError = DesktopCompileError
+
     comment_chars = ('#', )
     delimiter = '='
     # We are only intrested in localestrings, see

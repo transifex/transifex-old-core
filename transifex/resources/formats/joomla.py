@@ -35,6 +35,9 @@ class JoomlaINIHandler(Handler):
     method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
 
+    HandlerParseError = JoomlaParseError
+    HandlerCompileError = JoomlaCompileError
+
     def _parse(self, is_source=False, lang_rules=None):
         """
         Parse an INI file and create a stringset with all entries in the file.

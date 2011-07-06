@@ -35,6 +35,9 @@ class JavaPropertiesHandler(Handler):
     method_name = 'PROPERTIES'
     format_encoding = 'ISO-8859-1'
 
+    HandlerParseError = JavaParseError
+    HandlerCompileError = JavaCompileError
+
     SEPARATORS = [' ', '\t', '\f', '=', ':', ]
     COMMENT_CHARS = ('#', '!', )
 

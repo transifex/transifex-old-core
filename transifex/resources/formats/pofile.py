@@ -77,6 +77,9 @@ class GettextHandler(Handler):
     format = "GNU Gettext Catalog (*.po, *.pot)"
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
+    HandlerParseError = PoParseError
+    handlerCompileError = PoCompileError
+
     def _check_content(self, content):
         try:
             po = polib.pofile(content)

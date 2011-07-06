@@ -69,6 +69,9 @@ class LinguistHandler(Handler):
     format = "Qt4 Translation XML files (*.ts)"
     method_name = 'QT'
 
+    HandlerParseError = LinguistParseError
+    handlercompileError = LinguistCompileError
+
     def _check_content(self, content):
         """
         Check file for XML validity. No DTD checking happens here.
