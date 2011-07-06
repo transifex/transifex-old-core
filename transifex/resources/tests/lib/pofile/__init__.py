@@ -8,6 +8,7 @@ from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.pofile import POHandler, PoParseError
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
+from transifex.addons.copyright.models import Copyright
 
 from transifex.addons.suggestions.models import Suggestion
 
@@ -373,4 +374,35 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         self.assertFalse("FIRST AUTHOR" in handler.compiled_template)
         handler.compile_pot()
         self.assertTrue("FIRST AUTHOR" in handler.compiled_template)
+
+    def test_order(self):
+        handler = POHandler(os.path.join(
+                os.path.dirname(__file__), 'copyright.po')
+        )
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        handler.parse_file(is_source=True)
+        handler.save2db(is_source=True)
+        cr = Copyright.objects.assign(
+            language=self.language_en, resource=self.resource,
+            owner='CC', year='2014')
+        cr = Copyright.objects.assign(
+            language=self.language_en, resource=self.resource,
+            owner='ZZ', year='2014')
+        cr = Copyright.objects.assign(
+            language=self.language_en, resource=self.resource,
+            owner='BA', year='2015')
+        handler.compile()
+        lines_iterator = handler.compiled_template.split("\n")
+        for n, line in enumerate(lines_iterator):
+            if line == "## Translators:":
+                break
+        line = lines_iterator[n + 1]
+        self.assertTrue('AB' in line)
+        line = lines_iterator[n + 3]
+        self.assertTrue('BA' in line)
+        line = lines_iterator[n + 4]
+        self.assertTrue('CC' in line)
+        line = lines_iterator[n + 6]
+        self.assertTrue('ZZ' in line)
 
