@@ -509,6 +509,13 @@ class Handler(object):
         for se in original_sources:
             source_entities.add(se)
 
+        qs = Translation.objects.filter(
+            language=self.language, source_entity__in=source_entities.se_ids
+        ).iterator()
+        translations = TranslationCollection()
+        for t in qs:
+            translations.add(t)
+
         strings_added = 0
         strings_updated = 0
         strings_deleted = 0
@@ -546,22 +553,22 @@ class Handler(object):
 
                 if self._should_skip_translation(se, j):
                     continue
-                tr, created = Translation.objects.get_or_create(
-                    source_entity=se, language=self.language, rule=j.rule,
-                    defaults = {
-                        'string' : j.translation, 'user' : user,
-                        },
-                    resource = self.resource
+                if (se, j) in translations:
+                    if overwrite_translations:
+                        tr = translations.get((se, j))
+                        if tr.string != j.translation:
+                            tr.string = j.translation
+                            tr.user = user
+                            tr.save()
+                            strings_updated += 1
+                else:
+                    tr = Translation.objects.create(
+                        source_entity=se, language=self.language, rule=j.rule,
+                        string=j.translation, user=user, resource = self.resource
                     )
-
-                if created and j.rule==5:
-                    strings_added += 1
-                elif not created and overwrite_translations:
-                    if tr.string != j.translation:
-                        tr.string = j.translation
-                        tr.user = user
-                        tr.save()
-                        strings_updated += 1
+                    translations.add(tr)
+                    if j.rule==5:
+                        strings_added += 1
         except Exception, e:
             logger.error(
                 "There was a problem while importing the entries into the "
@@ -604,12 +611,16 @@ class Handler(object):
         for se in qs:
             source_entities.add(se)
 
-        # TODO minimize Translation db requests, too
+        qs = Translation.objects.filter(
+            language=self.language, source_entity__in=source_entities.se_ids
+        ).iterator()
+        translations = TranslationCollection()
+        for t in qs:
+            translations.add(t)
 
         strings_added = 0
         strings_updated = 0
         strings_deleted = 0
-        # TODO one query for fetching SEs
         try:
             for j in self.stringset.strings:
                 if j not in source_entities:
@@ -619,20 +630,21 @@ class Handler(object):
 
                 if self._should_skip_translation(se, j):
                     continue
-                tr, created = Translation.objects.get_or_create(
-                    source_entity=se, language=self.language, rule=j.rule,
-                    defaults = {
-                        'string' : j.translation, 'user' : user,
-                    },
-                )
-                if created and j.rule==5:
-                    strings_added += 1
-                elif not created and overwrite_translations:
-                    if tr.string != j.translation:
-                        tr.string = j.translation
-                        tr.user = user
-                        tr.save()
-                        strings_updated += 1
+                if (se, j) in translations:
+                    tr = translations.get(se, j)
+                    if overwrite_translations:
+                        if tr.string != j.translation:
+                            tr.string = j.translation
+                            tr.user = user
+                            tr.save()
+                            strings_updated += 1
+                else:
+                    tr = Translation.objects.create(
+                        source_entity=se, language=self.language, rule=j.rule,
+                        string=j.translation, user=user, resource=self.resource
+                    )
+                    if j.rule==5:
+                        strings_added += 1
         except Exception, e:
             logger.error(
                 "There was a problem while importing the entries into the "
@@ -828,6 +840,9 @@ class ResourceItems(object):
         key = self._generate_key(item)
         return key in self._items
 
+    def __iter__(self):
+        return iter(self._items)
+
 
 class SourceEntityCollection(ResourceItems):
     """A collection of source entities."""
@@ -856,3 +871,42 @@ class SourceEntityCollection(ResourceItems):
             return (source_string, u':'.join(x for x in context))
         else:
             return (source_string, context)
+
+    def se_ids(self):
+        """Return the ids of the sourc entities."""
+        return set(map(lambda se: se.id, self._items.itervalues()))
+
+
+class TranslationCollection(ResourceItems):
+    """A collection of translations."""
+
+    def _generate_key(self, t):
+        """Generate a key for this se, which is guaranteed to
+        be unique within a resource.
+
+        Args:
+            t: a translation (sort of) object.
+            se_id: The id of the source entity of this translation.
+        """
+        if isinstance(t, Translation):
+            return self._create_unique_key(t.source_entity_id, t.rule)
+        elif isinstance(t, tuple):
+            return self._create_unique_key(t[0].id, t[1].rule)
+        else:
+            return None
+
+    def _create_unique_key(self, se_id, rule):
+        """Create a unique key based on the source_string and the context.
+
+        Args:
+            se_id: The id of the source string this translation corresponds to.
+            rule: The rule of the language this translation is for.
+        Returns:
+            A tuple to be used as key.
+        """
+        assert se_id is not None
+        return (se_id, rule)
+
+    def se_ids(self):
+        """Get the ids of the source entities in the collection."""
+        return set(map(lambda t: t[0], self._items.iterkeys()))
