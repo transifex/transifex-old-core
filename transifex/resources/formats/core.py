@@ -16,6 +16,8 @@ from transifex.resources.formats import FormatError
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
+from transifex.resources.formats.resource_collections import StringSet, \
+        GenericTranslation, SourceEntityCollection, TranslationCollection
 
 # Temporary
 from transifex.txcommon import notifications as txnotification

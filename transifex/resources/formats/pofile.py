@@ -21,9 +21,9 @@ from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
-
-from transifex.resources.formats.core import CompileError, GenericTranslation, \
-        Handler, STRICT, StringSet, ParseError
+from transifex.resources.formats.core import Handler, CompileError, ParseError
+from transifex.resources.formats.resource_collections import StringSet, \
+        GenericTranslation
 
 
 class PoParseError(ParseError):

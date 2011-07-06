@@ -11,8 +11,9 @@ from transifex.languages.models import Language
 from transifex.resources.models import Translation, Template
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
-from transifex.resources.formats.core import Handler, StringSet, \
-        GenericTranslation, ParseError, CompileError
+from transifex.resources.formats.core import Handler, ParseError, CompileError
+from transifex.resources.formats.resource_collections import StringSet, \
+        GenericTranslation
 
 
 class DesktopParseError(ParseError):

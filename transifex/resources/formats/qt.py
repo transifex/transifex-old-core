@@ -13,8 +13,10 @@ from django.db.models import get_model
 from django.utils.translation import ugettext, ugettext_lazy as _
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
-from transifex.resources.formats.core import StringSet, ParseError, \
-    GenericTranslation, CompileError, Handler, STRICT
+from transifex.resources.formats.core import ParseError, CompileError, \
+        Handler, STRICT
+from transifex.resources.formats.resource_collections import StringSet, \
+        GenericTranslation
 from suggestions.models import Suggestion
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context

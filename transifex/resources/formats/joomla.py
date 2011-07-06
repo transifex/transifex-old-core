@@ -9,8 +9,17 @@ import codecs
 from transifex.txcommon.log import logger
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
-from transifex.resources.formats.core import GenericTranslation, Handler, \
-        STRICT, StringSet
+from transifex.resources.formats.core import Handler, ParseError, CompileError
+from transifex.resources.formats.resource_collections import StringSet, \
+        GenericTranslation
+
+
+class JoomlaParseError(ParseError):
+    pass
+
+
+class JoomlaCompileError(CompileError):
+    pass
 
 
 class JoomlaINIHandler(Handler):
