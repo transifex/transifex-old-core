@@ -304,7 +304,7 @@ class POHandler(Handler):
         from transifex.addons.copyright.models import Copyright
         c = Copyright.objects.filter(
             resource=self.resource, language=self.language
-        ).order_by('-user')
+        ).order_by('owner')
         content_with_copyright = ""
         copyrights_inserted = False
         for line in self.compiled_template.split('\n'):
