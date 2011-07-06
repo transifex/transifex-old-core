@@ -260,6 +260,10 @@ class Handler(object):
                 string = string.encode(self.default_encoding)
         return string
 
+    ####################
+    # Compile functions
+    ####################
+
     def _replace_translation(self, original, replacement, text):
         """
         Do a search and replace inside `text` and replaces all
@@ -424,6 +428,39 @@ class Handler(object):
         if settings.ENABLE_NOTICES:
             self._send_notices(signal=nt, extra_context=context)
 
+    def _init_source_entity_collection(self, se_list):
+        """Initialize the source entities collection.
+
+        Get a collection of source entity objects for the current resource.
+
+        Args:
+            se_list: An iterable of source entity objects.
+        Returns:
+            A SourceEntityCollection object.
+        """
+        source_entities = SourceEntityCollection()
+        for se in se_list:
+            source_entities.add(se)
+        return source_entities
+
+    def _init_translation_collection(self, se_ids):
+        """Initialize the translations collections.
+
+        Get a collection of translation objects for the current language.
+
+        Args:
+            se_ids: An iterable of source entities ids the translation
+                objects are for.
+        Returns:
+            A TranslationCollection object.
+        """
+        qs = Translation.objects.filter(
+            language=self.language, source_entity__in=se_ids).iterator()
+        translations = TranslationCollection()
+        for t in qs:
+            translations.add(t)
+        return translations
+
     def _pre_save2db(self, *args, **kwargs):
         """
         This is called before doing any actual work. Override in inherited
@@ -505,16 +542,8 @@ class Handler(object):
         qs = SourceEntity.objects.filter(resource=self.resource)
         original_sources = list(qs) # TODO Use set() instead? Hash by pk
         new_entities = []
-        source_entities = SourceEntityCollection()
-        for se in original_sources:
-            source_entities.add(se)
-
-        qs = Translation.objects.filter(
-            language=self.language, source_entity__in=source_entities.se_ids
-        ).iterator()
-        translations = TranslationCollection()
-        for t in qs:
-            translations.add(t)
+        source_entities = self._init_source_entity_collection(original_sources)
+        translations = self._init_translation_collection(source_entities.se_ids)
 
         strings_added = 0
         strings_updated = 0
@@ -554,9 +583,8 @@ class Handler(object):
                 if self._should_skip_translation(se, j):
                     continue
                 if (se, j) in translations:
-                    if overwrite_translations:
-                        tr = translations.get((se, j))
-                        if tr.string != j.translation:
+                    tr = translations.get((se, j))
+                    if overwrite_translations and tr.string != j.translation:
                             tr.string = j.translation
                             tr.user = user
                             tr.save()
@@ -607,16 +635,8 @@ class Handler(object):
             Any exception.
         """
         qs = SourceEntity.objects.filter(resource=self.resource).iterator()
-        source_entities = SourceEntityCollection()
-        for se in qs:
-            source_entities.add(se)
-
-        qs = Translation.objects.filter(
-            language=self.language, source_entity__in=source_entities.se_ids
-        ).iterator()
-        translations = TranslationCollection()
-        for t in qs:
-            translations.add(t)
+        source_entities = self._init_source_entity_collection(qs)
+        translations = self._init_translation_collection(source_entities.se_ids)
 
         strings_added = 0
         strings_updated = 0
@@ -632,8 +652,7 @@ class Handler(object):
                     continue
                 if (se, j) in translations:
                     tr = translations.get(se, j)
-                    if overwrite_translations:
-                        if tr.string != j.translation:
+                    if overwrite_translations and tr.string != j.translation:
                             tr.string = j.translation
                             tr.user = user
                             tr.save()
