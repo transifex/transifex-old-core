@@ -120,17 +120,23 @@ class Handler(object):
         """
         Perform the actual check of the content.
 
-        A subclass needs to only override this method to customize the check.
         """
         # FIXME Make all code use return values instead of exceptions
         # FIXME Needs to deprecate API v1
         return (True, None)
 
     def is_content_valid(self, content=None):
-        """
-        Check whether the content is valid for the format.
+        """Check whether the content is valid for the format.
 
-        Delegate the check to _check_content().
+        A subclass needs to override the _check_content method
+        to customize the check.
+
+        Args:
+            content: The content to check.
+        Returns:
+            A tuple with two elements. The first is a boolean, a flag whether
+            the content is valid. The second is the error message in case of
+            errors.
         """
         if content is None:
             content = self.content
