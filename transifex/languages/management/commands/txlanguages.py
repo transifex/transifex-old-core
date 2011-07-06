@@ -92,7 +92,8 @@ def import_lang(filename=None, verbose=False):
         2) Read the json data
         3) For each model's object at the json data update references in the db
     """
-    sys.stdout.write('Importing initial set of languages...\n')
+    if verbose:
+        sys.stdout.write('Importing initial set of languages...\n')
 
     if not filename:
         filename = os.path.abspath(os.path.join(settings.TX_ROOT,
@@ -100,7 +101,8 @@ def import_lang(filename=None, verbose=False):
         if not os.path.exists(filename):
             raise CommandError("Could not find fixture %s." % filename)
 
-    print (u'Importing languages from %s' % filename).encode('UTF-8')
+    if verbose:
+        print (u'Importing languages from %s' % filename).encode('UTF-8')
 
     try:
         datafile = open(filename, 'r')
