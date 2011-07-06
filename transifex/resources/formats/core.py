@@ -674,7 +674,7 @@ class Handler(object):
                 )
             )
             raise
-        sg_handler = ContentSuggestionFormat(self.resource, self.language, user)
+        sg_handler = self.SuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
         return strings_added, strings_updated, strings_deleted
 
