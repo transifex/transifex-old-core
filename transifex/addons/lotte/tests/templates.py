@@ -25,7 +25,7 @@ class LotteTemplateTests(BaseTestCase):
 
     def test_breadcrumbs(self):
         resp = self.client['team_member'].get(self.translate_view_url)
-        self.assertContains(resp, 'Translate to')
+        self.assertContains(resp, 'Translate')
 
     def test_search_translation_link(self):
         """Test that search translation link exists and points to search page."""

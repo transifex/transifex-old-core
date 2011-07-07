@@ -48,7 +48,7 @@ class LotteViewsTests(BaseTestCase):
             user=self.user["maintainer"], rule=5)
 
         # URLs
-        self.snippet_url = reverse('translation_details_snippet',
+        self.snippet_url = reverse('tab_details_snippet',
             args=[self.entity.id, self.language.code])
         self.translate_view_url = reverse('translate_resource',
             args=[self.project.slug, self.resource.slug, self.language.code])
@@ -72,10 +72,10 @@ class LotteViewsTests(BaseTestCase):
         # Test the response contents
         resp = self.client['team_member'].get(self.snippet_url)
         self.assertContains(resp, self.entity.string, status_code=200)
-        self.assertContains(resp, self.entity.context)
+        self.assertContains(resp, self.entity.context[0])
         self.assertContains(resp, self.entity.occurrences)
         self.assertContains(resp, self.entity.developer_comment)
-        self.assertTemplateUsed(resp, 'lotte_details_snippet.html')
+        self.assertTemplateUsed(resp, 'tab_details_snippet.html')
 
     def test_snippet_translation_data(self):
         """Test the translation details part of the snippet is correct."""

@@ -69,10 +69,10 @@ class LottePermissionsTests(BaseTestCase):
 
         # Create source language translation. This is needed to push
         # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
+        source_trans = Translation.objects.get(
+            source_entity=self.source_entity, language = self.language_en,
+            rule=5
+        )
         trans_lang = self.language.code
         trans = "foo"
         # Create new translation
@@ -84,7 +84,7 @@ class LottePermissionsTests(BaseTestCase):
         source_trans.delete()
 
         # Test translation details
-        page_url = reverse('translation_details_snippet',
+        page_url = reverse('tab_details_snippet',
             args=[self.entity.id, self.language.code])
         # Test the response contents
         resp = self.client['anonymous'].get(page_url)
@@ -149,10 +149,10 @@ class LottePermissionsTests(BaseTestCase):
 
         # Create source language translation. This is needed to push
         # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
+        source_trans = Translation.objects.get(
+            source_entity=self.source_entity,
+            language = self.language_en, rule=5
+        )
         trans_lang = self.language.code
         trans = "foo"
         # Create new translation
@@ -164,7 +164,7 @@ class LottePermissionsTests(BaseTestCase):
         source_trans.delete()
 
         # Test translation details
-        page_url = reverse('translation_details_snippet',
+        page_url = reverse('tab_details_snippet',
             args=[self.entity.id, self.language.code])
         # Test the response contents
         resp = self.client['registered'].get(page_url)
@@ -235,10 +235,10 @@ class LottePermissionsTests(BaseTestCase):
 
         # Create source language translation. This is needed to push
         # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
+        source_trans = Translation.objects.get(
+            source_entity=self.source_entity,
+            language = self.language_en, rule=5
+        )
         trans_lang = self.language.code
         trans = "foo"
         # Create new translation
@@ -257,7 +257,7 @@ class LottePermissionsTests(BaseTestCase):
         source_trans.delete()
 
         # Test translation details
-        page_url = reverse('translation_details_snippet',
+        page_url = reverse('tab_details_snippet',
             args=[self.entity.id, self.language.code])
         # Test the response contents
         resp = self.client['team_member'].get(page_url)
@@ -324,10 +324,10 @@ class LottePermissionsTests(BaseTestCase):
 
         # Create source language translation. This is needed to push
         # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language_en,
-            string="foobar")
-        source_trans.save()
+        source_trans = Translation.objects.get(
+            source_entity=self.source_entity,
+            language = self.language_en, rule=5
+        )
         trans_lang = self.language.code
         trans = "foo"
         # Create new translation
@@ -339,7 +339,7 @@ class LottePermissionsTests(BaseTestCase):
         source_trans.delete()
 
         # Test translation details
-        page_url = reverse('translation_details_snippet',
+        page_url = reverse('tab_details_snippet',
             args=[self.entity.id, self.language.code])
         # Test the response contents
         resp = self.client['maintainer'].get(page_url)
