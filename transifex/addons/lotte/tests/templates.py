@@ -122,7 +122,7 @@ class LotteTemplateTests(BaseTestCase):
                     ('foo]', 'Translation string doesn\'t contain the same number')],
                 'foo\n': [ ('foo\n', ''),
                     ('foo','Translation must end with a newline'),
-                    ('\nfoo', 'Translation should not start with a newline') ],
+                    ('\nfoo', 'Translation must end with a newline') ],
                 'foo 123': [
                     ('foo123', ''),
                     ('foo', 'Number 123 is in the source string but not')],
@@ -138,7 +138,7 @@ class LotteTemplateTests(BaseTestCase):
                 '%(count)s animals were hurt for this unit test': [
                     ('%(count)s animals were hurt for this unit test', '')],
             },
-            500: {
+            400: {
                 '%(count)s animals were hurt for this unit test': [
                     ('No animals were hurt for this unit test', 'The number of arguments seems to differ'),
                     ('%(count)s animals were hurt for this unit test by %(ppl)s people',
@@ -308,7 +308,7 @@ class LotteTemplateTests(BaseTestCase):
                         'one': 'foo1\n',
                         'other': 'foo5\n',},
                 }],
-            500: [{
+            400: [{
                     'one': '1 animal was hurt for this unit test',
                     'other': '%(count)s animals were hurt for this unit test',
                     'message': 'The number of arguments seems to differ',
