@@ -33,9 +33,11 @@ from transifex.resources.views import _compile_translation_template
 from transifex.resources.formats import get_i18n_method_from_mimetype, \
         parser_for, get_file_extension_for_method, get_mimetype_from_method
 from transifex.resources.formats.core import ParseError
+from transifex.resources.formats.pseudo import get_pseudo_class
 from transifex.teams.models import Team
 
 from transifex.api.utils import BAD_REQUEST
+
 
 
 class BadRequestError(Exception):
@@ -454,8 +456,8 @@ class TranslationHandler(BaseHandler):
             (Project, 'slug__exact', 'project_slug')
     ))
     def read(self, request, project_slug, resource_slug,
-             lang_code=None, api_version=2):
-        return self._read(request, project_slug, resource_slug, lang_code)
+             lang_code=None, is_pseudo=None, api_version=2):
+        return self._read(request, project_slug, resource_slug, lang_code, is_pseudo)
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
@@ -466,7 +468,7 @@ class TranslationHandler(BaseHandler):
                lang_code, api_version=2):
         return self._update(request, project_slug, resource_slug, lang_code)
 
-    def _read(self, request, project_slug, resource_slug, lang_code):
+    def _read(self, request, project_slug, resource_slug, lang_code, is_pseudo):
         try:
             r = Resource.objects.get(
                 slug=resource_slug, project__slug=project_slug
@@ -481,8 +483,20 @@ class TranslationHandler(BaseHandler):
                 language = Language.objects.by_code_or_alias(lang_code)
             except Language.DoesNotExist:
                 return rc.NOT_FOUND
+
+        # Check whether the request asked for a pseudo file, if so check if 
+        # a ``pseudo_type`` GET var was passed with a valid pseudo type.
+        if is_pseudo:
+            ptype = request.GET.get('pseudo_type', None)
+            if not ptype in settings.PSEUDO_TYPES.keys():
+                return rc.NOT_FOUND
+            # Instantiate Pseudo type object
+            pseudo_type = get_pseudo_class(ptype)(r.i18n_type)
+        else:
+            pseudo_type = None
+        
         translation = Translation.get_object("get", request, r, language)
-        res = translation.get()
+        res = translation.get(pseudo_type=pseudo_type)
         return translation.__class__.to_http_for_get(
             translation, res
         )
@@ -673,7 +687,7 @@ class FileTranslation(Translation):
         )
         return response
 
-    def get(self):
+    def get(self, pseudo_type):
         """
         Return the requested translation as a file.
 
@@ -685,7 +699,7 @@ class FileTranslation(Translation):
         """
         try:
             template = _compile_translation_template(
-                self.resource, self.language
+                self.resource, self.language, pseudo_type
             )
         except Exception, e:
             logger.error(e.message, exc_info=True)
@@ -746,7 +760,7 @@ class StringTranslation(Translation):
     Handle requests for translation as strings.
     """
 
-    def get(self, start=None, end=None):
+    def get(self, start=None, end=None, pseudo_type=None):
         """
         Return the requested translation in a json string.
 
@@ -764,7 +778,7 @@ class StringTranslation(Translation):
         """
         try:
             template = _compile_translation_template(
-                self.resource, self.language
+                self.resource, self.language, pseudo_type
             )
         except Exception, e:
             logger.error(e.message, exc_info=True)

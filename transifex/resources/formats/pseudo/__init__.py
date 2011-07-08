@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from transifex.txcommon import import_to_python
 
+def get_pseudo_class(ptype):
+    """Return pseudo type class."""
+    return import_to_python(settings.PSEUDO_TYPE_CLASSES[ptype])
+  
 class PseudoTypeMixin:
     """
     Mixin class to serve as a base for creation of Pseudo class types.

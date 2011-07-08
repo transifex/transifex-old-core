@@ -118,6 +118,11 @@ urlpatterns = patterns('',
         {'api_version': 2, 'lang_code': 'source'},
         name='apiv2_source_content',
     ), url(
+        r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/pseudo/$',
+        never_cache(translation_handler),
+        {'api_version': 2, 'lang_code': 'source', 'is_pseudo':True},
+        name='apiv2_pseudo_content',
+    ), url(
         r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/translation/(?P<lang_code>[\-_@\w]+)/$',
         never_cache(translation_handler),
         {'api_version': 2},
