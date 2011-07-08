@@ -17,6 +17,7 @@ from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.utils.html import escape
 from django.views.generic import list_detail
+from django.db import transaction
 from authority.views import permission_denied
 
 from actionlog.models import action_logging
@@ -611,9 +612,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             # If the source_string cannot be identified in the DB then go to next
             # translation pair.
             continue
-        resource = source_string.source_entity.resource
 
-        if not resource.accept_translations:
+        if not source_string.source_entity.resource.accept_translations:
             push_response_dict[source_id] = { 'status':400,
                  'message':_("The resource of this source string is not "
                     "accepting translations.") }
@@ -642,110 +642,142 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
                                "completely specified or entirely empty!"))}
                 # Skip the save as we hit on an error.
                 continue
-
-        for rule, string in row['translations'].items():
-            # Check for plural entries if we already have an error for one of
-            # the plural forms
-            if push_response_dict.has_key(source_id) and\
-              push_response_dict[source_id]['status'] == 400:
-                continue
-
-            source_language = source_string.source_entity.resource.source_language
-            if rule == "other":
-                ss = unescape(source_string.string)
+        try:
+            msgs = _save_translation(
+                source_string, row['translations'],
+                target_language, request.user
+            )
+            if not msgs:
+                push_response_dict[source_id] = {'status': 200}
             else:
-                try:
-                    source_string = Translation.objects.get(source_entity=
-                        source_string.source_entity,
-                        language = source_language,
-                        rule = source_language.get_rule_num_from_name(rule))
-                except Translation.DoesNotExist:
-                    # This shouldn't happen
-                    pass
-                finally:
-                    ss = unescape(source_string.string)
-            tr = unescape(string)
-
-            try:
-                for ErrorValidator in create_error_validators(resource.i18n_type):
-                    v = ErrorValidator(source_language, target_language, rule)
-                    v(ss, tr)
-            except ValidationError, e:
                 push_response_dict[source_id] = {
-                    'status': 400,
-                    'message': e.message
+                    'status': 200, 'message': msgs[-1]
                 }
-                continue
-            for WarningValidator in create_warning_validators(resource.i18n_type):
-                v = WarningValidator(source_language, target_language, rule)
-                try:
-                    v(ss, tr)
-                except ValidationError, e:
-                    push_response_dict[source_id] = {
-                        'status': 200,
-                        'message': e.message
-                    }
-            try:
-                # TODO: Implement get based on context and/or on context too!
-                translation_string = Translation.objects.get(
-                    source_entity = source_string.source_entity,
-                    language = target_language,
-                    source_entity__resource = source_string.source_entity.resource,
-                    rule = target_language.get_rule_num_from_name(rule))
-
-                # FIXME: Maybe we don't want to permit anyone to delete!!!
-                # If an empty string has been issued then we delete the translation.
-                if string == "":
-                    translation_string.delete()
-                else:
-                    translation_string.string = string
-                    translation_string.user = request.user
-                    translation_string.save()
-
-                _add_copyright(source_string, target_language, request)
-                invalidate_stats_cache(source_string.source_entity.resource,
-                    target_language, user=request.user)
-                if not push_response_dict.has_key(source_id):
-                    push_response_dict[source_id] = { 'status':200}
-            except Translation.DoesNotExist:
-                # Only create new if the translation string sent, is not empty!
-                if string != "":
-                    Translation.objects.create(
-                        source_entity = source_string.source_entity,
-                        language = target_language,
-                        rule = target_language.get_rule_num_from_name(rule),
-                        string = string,
-                        user = request.user) # Save the sender as last committer
-                    _add_copyright(source_string, target_language, request)
-                    invalidate_stats_cache(source_string.source_entity.resource,
-                        target_language, user=request.user)
-                    if not push_response_dict.has_key(source_id):
-                        push_response_dict[source_id] = { 'status':200}
-                else:
-                    # In cases of pluralized translations, sometimes only one
-                    # translation will exist and the rest plural forms will be
-                    # empty. If the user wants to delete all of them, we need
-                    # to let by the ones that don't already have a translation.
-                    if source_string.source_entity.pluralized:
-                        if not push_response_dict.has_key(source_id):
-                            push_response_dict[source_id] = { 'status':200}
-                    else:
-                        push_response_dict[source_id] = { 'status':400,
-                             'message':_("The translation string is empty")}
-            # catch-all. if we don't save we _MUST_ inform the user
-            except:
-                # TODO: Log or inform here
-                push_response_dict[source_id] = { 'status':400,
-                    'message':_("Error occurred while trying to save translation.")}
+        except LotteBadRequestError, e:
+            push_response_dict[source_id] = {
+                'status': 400, 'message': e.message
+            }
+        except Exception, e:
+            logger.error(
+                "Unexpected exception raised: %s" % e.message, exc_info=True
+            )
+            push_response_dict[source_id] = {
+                'status': 400, 'message': e.message
+            }
 
     json_dict = simplejson.dumps(push_response_dict)
     return HttpResponse(json_dict, mimetype='application/json')
 
 
-def _add_copyright(source_string, target_language, request):
-    user = get_profile_or_user(request.user)
-    firstname = user.first_name
-    surname = user.last_name
+@transaction.commit_on_success
+def _save_translation(source_string, translations, target_language, user):
+    """Save a translation string to the database.
+
+    This functions handle a signle source entity translation
+    (could be pluralized).
+
+    Currently, the function only returns warning strings.
+    There is no message for success.
+
+    Args:
+        source_string: A Translation object of the string in the source
+            language.
+        translations: A (rule, string) tuple.
+        target_language: The language the string is translated to.
+        user: The translator.
+    Returns:
+        A list if strings to display to the user.
+    Raises:
+        An LotteBadRequestError exception in case of errors.
+    """
+    source_id = source_string.pk
+    resource = source_string.source_entity.resource
+    source_language = resource.source_language
+    warnings = []
+
+    for rule, target_string in translations.items():
+        rule = target_language.get_rule_num_from_name(rule)
+        if rule != 5:
+            # fetch correct source string for plural rule
+            try:
+                source_string = Translation.objects.get(
+                    source_entity=source_string.source_entity,
+                    language=source_language, rule=rule
+                )
+            except Translation.DoesNotExist:
+                # target language has extra plural forms
+                pass
+        ss = unescape(source_string.string)
+        tr = unescape(target_string)
+
+        # check for errors
+        try:
+            for ErrorValidator in create_error_validators(resource.i18n_type):
+                v = ErrorValidator(source_language, target_language, rule)
+                v(ss, tr)
+        except ValidationError, e:
+            raise LotteBadRequestError(e.message)
+        # check for warnings
+        for WarningValidator in create_warning_validators(resource.i18n_type):
+            v = WarningValidator(source_language, target_language, rule)
+            try:
+                v(ss, tr)
+            except ValidationError, e:
+                warnings.append(e.message)
+        try:
+            # TODO: Implement get based on context and/or on context too!
+            translation_string = Translation.objects.get(
+                source_entity=source_string.source_entity,
+                language = target_language,
+                source_entity__resource = resource, rule = rule
+            )
+
+            # FIXME: Maybe we don't want to permit anyone to delete!!!
+            # If an empty string has been issued then we delete the translation.
+            if target_string == "":
+                translation_string.delete()
+            else:
+                translation_string.string = target_string
+                translation_string.user = user
+                translation_string.save()
+
+            _add_copyright(source_string, target_language, user)
+            invalidate_stats_cache(resource, target_language, user=user)
+        except Translation.DoesNotExist:
+            # Only create new if the translation string sent, is not empty!
+            if target_string != "":
+                Translation.objects.create(
+                    source_entity=source_string.source_entity, user=user,
+                    language=target_language, rule=rule, string=target_string
+                )
+                _add_copyright(source_string, target_language, user)
+                invalidate_stats_cache(resource, target_language, user=user)
+            else:
+                # In cases of pluralized translations, sometimes only one
+                # translation will exist and the rest plural forms will be
+                # empty. If the user wants to delete all of them, we need
+                # to let by the ones that don't already have a translation.
+                if source_string.source_entity.pluralized:
+                    if not push_response_dict.has_key(source_id):
+                        push_response_dict[source_id] = {'status':200}
+                else:
+                    raise LotteBadRequestError(
+                        _("The translation string is empty")
+                    )
+        # catch-all. if we don't save we _MUST_ inform the user
+        except Exception, e:
+            msg = _(
+                "Error occurred while trying to save translation: %s", e.message
+            )
+            logger.error(msg, exc_info=True)
+            raise LotteBadRequestError(msg)
+    return warnings
+
+
+def _add_copyright(source_string, target_language, user):
+    profile_user = get_profile_or_user(user)
+    firstname = profile_user.first_name
+    surname = profile_user.last_name
     from transifex.addons.copyright.handlers import save_copyrights
     lotte_save_translation.connect(save_copyrights)
     lotte_save_translation.send(
@@ -753,7 +785,7 @@ def _add_copyright(source_string, target_language, request):
         language=target_language,
         copyrights=([(
                     ''.join([firstname, ' ', surname,
-                             ' <', request.user.email, '>']),
+                             ' <', user.email, '>']),
                     [str(date.today().year)]
         ), ])
     )

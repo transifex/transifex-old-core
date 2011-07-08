@@ -23,7 +23,7 @@ class BaseValidator(object):
     def __init__(self, source_language=None, target_language=None, rule=None):
         self.slang = source_language
         self.tlang = target_language
-        self.rule = target_language.get_rule_num_from_name(rule)
+        self.rule = rule
 
     def __call__(self, old, new):
         """Validate the `new` translation against the `old` one.
