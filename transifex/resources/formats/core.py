@@ -12,6 +12,7 @@ from suggestions.models import Suggestion
 from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import get_i18n_type_from_file
+from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.string_utils import percent_diff
 from transifex.resources.signals import post_save_translation
@@ -144,17 +145,42 @@ class Handler(object):
             raise Exception("The specified object is not of the required type")
 
 
+    def bind_pseudo_type(self, pseudo_type):
+        if isinstance(pseudo_type, PseudoTypeMixin):
+            self.pseudo_type = pseudo_type
+        else:
+            raise Exception("pseudo_type needs to be based on type %s" %
+                PseudoTypeMixin.__class__)
+                
+
     ####################
     #  Core functions  #
     ####################
 
+    def _pseudo_decorate(self, string):
+        """
+        Modify the string accordingly to a ``pseudo_type`` set to the handler.
+        This is used to export Pseudo Localized files.
+        """
+        if hasattr(self,'pseudo_type') and self.pseudo_type:
+            nonunicode = False
+            if type(string) == str:
+                string = unicode(string)
+                nonunicode = True           
+                
+            string = self.pseudo_type.compile(string)
+            
+            if nonunicode:
+                string = string.encode('utf-8')
+        return string
 
     def _replace_translation(self, original, replacement, text):
         """
         Do a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.
         """
-        return re.sub(re.escape(original), self._escape(replacement), text)
+        return re.sub(re.escape(original), 
+            self._pseudo_decorate(self._escape(replacement)), text)
 
     def _get_strings(self, resource):
         return SourceEntity.objects.filter(

@@ -134,7 +134,7 @@ class LinguistHandler(Handler):
                 for p,n in enumerate(lang_rules):
                     plural_keys[p] = ""
                 for p,n in enumerate(plurals):
-                    plural_keys[p] = n.string
+                    plural_keys[p] = self._pseudo_decorate(n.string)
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.iterkeys():
                     e = doc.createElement("numerusform")

@@ -285,7 +285,7 @@ class POHandler(Handler):
                 for p,n in enumerate(lang_rules):
                     plural_keys[p] = ""
                 for n,p in enumerate(plurals):
-                    plural_keys[n] =  p.string
+                    plural_keys[n] =  self._pseudo_decorate(p.string)
 
                 entry.msgstr_plural = plural_keys
 
