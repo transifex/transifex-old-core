@@ -24,7 +24,7 @@ class SuggestionsViewsTests(BaseTestCase):
         raise NotImplementedError
 
     def _create_entity_suggestion(self):
-        url = reverse('entity_suggestion_create',
+        url = reverse('suggestion_create',
             args=[self.entity.id, self.language.code],)
         post_vars = {'suggestion_string': 'Hey!'}
         resp = self.client['team_member'].post(url, data=post_vars)
@@ -39,21 +39,21 @@ class SuggestionsViewsTests(BaseTestCase):
     def test_get_snippet(self):
         # Create a suggestion:
         suggestion = self._create_entity_suggestion()
-        url = reverse('entity_suggestions_snippet',
+        url = reverse('tab_suggestions_snippet',
             args=[self.entity.id, self.language.code])
         resp = self.client['anonymous'].get(url)
         self.assertContains(resp, 'Hey!', status_code=200)
         self.assertTemplateUsed(resp, 'lotte_suggestions_snippet.html')
 
     def _vote_up(self, suggestion):
-        url = reverse('entity_suggestion_vote_up',
+        url = reverse('suggestion_vote_up',
             args=[self.entity.id, self.language.code, suggestion.id],)
         resp = self.client['team_member'].post(url)
         self.assertEqual(resp.status_code, 200)
         return resp
 
     def _vote_down(self, suggestion):
-        url = reverse('entity_suggestion_vote_down',
+        url = reverse('suggestion_vote_down',
             args=[self.entity.id, self.language.code, suggestion.id],)
         resp = self.client['team_member'].post(url)
         self.assertEqual(resp.status_code, 200)
