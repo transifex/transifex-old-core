@@ -43,6 +43,11 @@ class ReleasesViewsTests(base.BaseTestCase):
         # One of the languages is totally untranslated.
         self.assertContains(resp, "Untranslated: %s" % self.resource.source_entities.count())
 
+    def test_release_language_detail(self):
+        """Test langauge detail for a release"""
+        url = reverse('release_language_detail', args=[self.project.slug, self.release.slug, self.language_ar.code])
+        resp = self.client['anonymous'].get(url)
+        self.assertContains(resp,'50%', status_code=200)
 
     def test_release_create_good_private_resources(self):
         """Test Release creation with private resources.
@@ -90,7 +95,21 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertNotContains(resp, "private resources")
         self.assertNotContains(resp, "Portuguese (Brazilian)")
 
-
+    
+    def test_release_delete(self):
+        """Test deleting a release"""
+        resp = self.client['maintainer'].post(self.urls['release_create'],
+            {'slug': 'nice-release', 'name': 'Nice Release',
+            'project': self.project.id, 'resources': '|2|',
+            'description': '', 'release_date': '', 'resources_text': '',
+            'stringfreeze_date': '', 'homepage': '', 'long_description': '',
+             'develfreeze_date': '', }, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        release = Release.objects.get(slug='nice-release', project=self.project)
+        url = reverse('release_delete', args=[self.project.slug, release.slug])
+        resp = self.client['maintainer'].post(url, {}, follow=True)
+        self.assertContains(resp, "was deleted.", status_code=200)
+        
     def test_release_create_bad_private_resources(self):
         """Test Release creation with private resource w/o access.
 
