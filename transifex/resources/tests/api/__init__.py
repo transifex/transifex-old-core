@@ -461,6 +461,135 @@ class TestTranslationAPI(APIBaseTests):
         res = self.client['registered'].get(url)
         self.assertEquals(res.status_code, 200)
 
+    def test_delete_translations(self):
+        self._create_resource()
+        f = open(self.po_file)
+        res = self.client['registered'].put(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'fi'
+                }
+            ),
+            data={
+                'name': 'name.po',
+                'attachment': f
+            },
+        )
+        f.close()
+        self.assertEquals(res.status_code, 200)
+        res = self.client['anonymous'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'fi'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 401)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'fi'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 204)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'el'
+                }
+            )
+        )
+        self.assertContains(res, "source language", status_code=400)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'no_resource',
+                    'lang_code': 'fi'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 404)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'no_project',
+                    'resource_slug': 'r1',
+                    'lang_code': 'fi'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 404)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'en_NN'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 404)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'no_project',
+                    'resource_slug': 'r1',
+                    'lang_code': 'source'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 404)
+        res = self.client['maintainer'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'fi'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 403)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                    'lang_code': 'fi'
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 404)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_source_content',
+                kwargs={
+                    'project_slug': 'new_pr',
+                    'resource_slug': 'r1',
+                }
+            )
+        )
+        self.assertContains(res, "source language", status_code=400)
+
     def test_put_translations(self):
         self._create_resource()
         # test strings

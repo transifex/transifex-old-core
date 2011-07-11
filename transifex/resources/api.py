@@ -27,7 +27,7 @@ from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_submit_translation
 
 from transifex.resources.decorators import method_decorator
-from transifex.resources.models import Resource, SourceEntity, Translation, \
+from transifex.resources.models import Resource, SourceEntity, Translation as TranslationModel, \
         RLStats
 from transifex.resources.views import _compile_translation_template
 from transifex.resources.formats import get_i18n_method_from_mimetype, \
@@ -35,6 +35,8 @@ from transifex.resources.formats import get_i18n_method_from_mimetype, \
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
 from transifex.teams.models import Team
+
+from transifex.resources.handlers import invalidate_stats_cache
 
 from transifex.api.utils import BAD_REQUEST
 
@@ -448,7 +450,7 @@ class FileHandler(BaseHandler):
 
 
 class TranslationHandler(BaseHandler):
-    allowed_methods = ('GET', 'PUT', )
+    allowed_methods = ('GET', 'PUT', 'DELETE',)
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
@@ -468,6 +470,13 @@ class TranslationHandler(BaseHandler):
                lang_code, api_version=2):
         return self._update(request, project_slug, resource_slug, lang_code)
 
+    @method_decorator(one_perm_required_or_403(
+            pr_resource_translations_delete,
+            (Project, "slug__exact", "project_slug")))
+    def delete(self, request, project_slug, resource_slug,
+               lang_code=None, api_version=2):
+        return self._delete(request, project_slug, resource_slug, lang_code)
+
     def _read(self, request, project_slug, resource_slug, lang_code, is_pseudo):
         try:
             r = Resource.objects.get(
@@ -484,7 +493,7 @@ class TranslationHandler(BaseHandler):
             except Language.DoesNotExist:
                 return rc.NOT_FOUND
 
-        # Check whether the request asked for a pseudo file, if so check if 
+        # Check whether the request asked for a pseudo file, if so check if
         # a ``pseudo_type`` GET var was passed with a valid pseudo type.
         if is_pseudo:
             ptype = request.GET.get('pseudo_type', None)
@@ -494,7 +503,7 @@ class TranslationHandler(BaseHandler):
             pseudo_type = get_pseudo_class(ptype)(r.i18n_type)
         else:
             pseudo_type = None
-        
+
         translation = Translation.get_object("get", request, r, language)
         res = translation.get(pseudo_type=pseudo_type)
         return translation.__class__.to_http_for_get(
@@ -540,6 +549,36 @@ class TranslationHandler(BaseHandler):
         except AttributeError, e:
             return BAD_REQUEST("The content type of the request is not valid.")
         return t.__class__.to_http_for_create(t, res)
+
+    def _delete(self, request, project_slug, resource_slug, lang_code):
+        try:
+            resource = Resource.objects.get(
+                slug=resource_slug, project__slug=project_slug
+            )
+        except Resource.DoesNotExist, e:
+            return rc.NOT_FOUND
+
+        # Error message to use in case user asked to
+        # delete the source translation
+        source_error_msg = "You cannot delete the translation in the" \
+                " source language."
+        if lang_code == 'source':
+            return BAD_REQUEST(source_error_msg)
+        try:
+            language = Language.objects.by_code_or_alias(lang_code)
+        except Language.DoesNotExist:
+            return rc.NOT_FOUND
+        if language == resource.source_language:
+            return BAD_REQUEST(source_error_msg)
+        if language not in resource.available_languages_without_teams:
+            return rc.NOT_FOUND
+
+        TranslationModel.objects.filter(
+            source_entity__resource=resource,
+            language=language
+        ).delete()
+        invalidate_stats_cache(resource, language, user=request.user)
+        return rc.DELETED
 
 
 class Translation(object):
