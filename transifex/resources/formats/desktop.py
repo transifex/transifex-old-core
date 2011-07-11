@@ -70,14 +70,16 @@ class DesktopHandler(Handler):
                     source_entity__resource=self.resource, source_entity=string,
                     language=language, rule=5
                 )
+                translation_string = trans.string
             except Translation.DoesNotExist:
                 trans = None
+                translation_string = u""
 
-            self.template = ''.join([
+            self.template = u''.join([
                     self.template,
-                    string.string.encode(self.default_encoding),
+                    string.string,
                     '[', language.code, ']=',
-                    trans.string.encode(self.default_encoding),
+                    translation_string,
                     '\n',
             ])
         self.compiled_template = self.template
@@ -216,12 +218,15 @@ class DesktopHandler(Handler):
 
         self._pre_compile(language=language)
 
-        self.template = Template.objects.get(resource=self.resource).content
-        self._peek_into_template()
+        self.template = Template.objects.get(
+            resource=self.resource
+        ).content.decode(self.default_encoding)
+        self._examine_content(self.template)
 
         if language == self.resource.source_language:
             self._compile_source(language)
         else:
             self._compile_translation(language)
 
+        self.compiled_template = self.compiled_template.encode('UTF-8')
         self._post_compile(language)
