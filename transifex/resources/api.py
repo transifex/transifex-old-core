@@ -27,8 +27,8 @@ from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_submit_translation
 
 from transifex.resources.decorators import method_decorator
-from transifex.resources.models import Resource, SourceEntity, Translation as TranslationModel, \
-        RLStats
+from transifex.resources.models import Resource, SourceEntity, \
+        Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
 from transifex.resources.formats import get_i18n_method_from_mimetype, \
         parser_for, get_file_extension_for_method, get_mimetype_from_method
@@ -573,11 +573,8 @@ class TranslationHandler(BaseHandler):
         if language not in resource.available_languages_without_teams:
             return rc.NOT_FOUND
 
-        TranslationModel.objects.filter(
-            source_entity__resource=resource,
-            language=language
-        ).delete()
-        invalidate_stats_cache(resource, language, user=request.user)
+        t = Translation.get_object("delete", request, resource, language)
+        t.delete()
         return rc.DELETED
 
 
@@ -601,6 +598,8 @@ class Translation(object):
                 return StringTranslation(request, *args)
             elif "multipart/form-data" in request.content_type:
                 return FileTranslation(request, *args)
+        elif type_ == "delete":
+            return Translation(request, *args)
         return None
 
 
@@ -657,6 +656,22 @@ class Translation(object):
         Create a new translation.
         """
         raise NotImplementedError
+
+    @transaction.commit_on_success
+    def delete(self):
+        """
+        Delete a specific translation.
+
+        Delete all Translation objects that belong to the specified resource
+        and are in the specified language.
+        """
+        TranslationModel.objects.filter(
+            source_entity__resource=self.resource,
+            language=self.language
+        ).delete()
+        invalidate_stats_cache(
+            self.resource, self.language, user=self.request.user
+        )
 
     def get(self):
         """
