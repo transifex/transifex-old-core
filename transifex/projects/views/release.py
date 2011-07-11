@@ -38,7 +38,9 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
     else:
         release = None
     if request.method == 'POST':
-        release_form = ReleaseForm(project, request.POST, instance=release)
+        release_form = ReleaseForm(
+            project, request.user, request.POST, instance=release
+        )
         if release_form.is_valid():
             release = release_form.save()
 
@@ -46,7 +48,7 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
                 reverse('release_detail',
                          args=[project_slug, release.slug]))
     else:
-        release_form = ReleaseForm(project, instance=release)
+        release_form = ReleaseForm(project, request.user, instance=release)
 
     return render_to_response('projects/release_form.html', {
         'form': release_form,
@@ -58,9 +60,9 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def release_detail(request, project_slug, release_slug):
-    release = get_object_or_404(Release, slug=release_slug, 
+    release = get_object_or_404(Release, slug=release_slug,
         project__slug=project_slug)
-    resources = Resource.objects.select_related('project', 
+    resources = Resource.objects.select_related('project',
         'source_language').filter(releases=release, project__private=False
         ).order_by('project__name')
     source_languages = set()
@@ -69,13 +71,13 @@ def release_detail(request, project_slug, release_slug):
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
-        private_resources = Resource.objects.select_related('project', 
+        private_resources = Resource.objects.select_related('project',
             'source_language').for_user(request.user).filter(
             releases=release, project__private=True
-            ).order_by('project__name').distinct()            
+            ).order_by('project__name').distinct()
     if not len(source_languages) == 1:
         source_languages = ()
-        
+
     statslist = RLStats.objects.select_related('language', 'last_committer'
         ).for_user(request.user).by_release_aggregated(release)
 

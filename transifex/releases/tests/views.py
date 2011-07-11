@@ -30,8 +30,7 @@ class ReleasesViewsTests(base.BaseTestCase):
 
         # Anonymous should not see anything
         resp = self.client['anonymous'].get(self.urls['project'])
-        self.assertContains(resp, "Project Releases")
-        self.assertContains(resp, "All Resources")
+        self.assertNotContains(resp, "Project Releases")
 
 
     def test_release_details_resources(self):
@@ -99,7 +98,9 @@ class ReleasesViewsTests(base.BaseTestCase):
         Use the registered user as the giunea pig.
         """
         self.project.maintainers.add(self.user['registered'])
-        self.assertFalse(self.user['registered'] in self.project_private.maintainers.all())
+        self.assertFalse(
+            self.user['registered'] in self.project_private.maintainers.all()
+        )
         r = self.client['registered'].post(self.urls['release_create'],
             {'slug': 'nice-release', 'name': 'Nice Release',
             'project': self.project.id, 'resources': '|2|',
@@ -107,9 +108,11 @@ class ReleasesViewsTests(base.BaseTestCase):
             'stringfreeze_date': '', 'homepage': '', 'long_description': '',
              'develfreeze_date': '', }, follow=True)
         # The release shouldn't even be allowed to be created.
-        self.assertFalse(self.project.releases.get(slug='nice-release'))
-        self.assertTemplateUsed(resp, "projects/release_form.html")
-        self.assertContains(resp, "Invalid...")
+        self.assertRaises(
+            Release.DoesNotExist, self.project.releases.get, slug='nice-release'
+        )
+        self.assertTemplateUsed(r, "projects/release_form.html")
+        self.assertContains(r, "unaccessible private resource")
 
     def test_add_release_button_shown_on_project_deatils_page(self):
         response = self.client['maintainer'].get(self.urls['project'])
@@ -119,7 +122,7 @@ class ReleasesViewsTests(base.BaseTestCase):
 
 class AllReleaseTests(base.BaseTestCase):
     """Test the All Release model."""
-          
+
     def test_no_resource(self):
         self.project.resources.all().delete()
         self.assertEquals(self.project.releases.filter(slug='all-resources').count(), 0)
@@ -166,7 +169,7 @@ class AllReleaseTests(base.BaseTestCase):
 
 class ReleaseFormDateFieldsTests(base.BaseTestCase):
     """
-    Test the datetime field validations for the release form as well as the 
+    Test the datetime field validations for the release form as well as the
     use of a custom widget for rendering the datetime fields.
     """
 
@@ -194,7 +197,7 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
 
     def _get_field_data(self, now, **kwargs):
         """
-        Generate data accordingly to the custom widget used for datetime 
+        Generate data accordingly to the custom widget used for datetime
         fields.
         """
         if 'release_date' in kwargs.keys():
@@ -203,7 +206,7 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
             field_name = 'stringfreeze_date'
         elif 'develfreeze_date' in kwargs.keys():
             field_name = 'develfreeze_date'
-        
+
         return {
             '%s_0_year' % field_name: now.year,
             '%s_0_month' % field_name: now.month,
@@ -212,19 +215,19 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
             '%s_1_minute' % field_name: now.minute,
             '%s_1_second' % field_name: now.second
             }
-            
+
     def test_release_date(self):
         """Test the release date field of release form."""
         # Update form data with release_date_data
         release_date = self._get_field_data(self.now, release_date=True)
         self.data.update(release_date)
-        
+
         # Add 1 day to devel freeze date
         self.now.day += 1
         # Update form data with develfreeze_date
         develfreeze_date = self._get_field_data(self.now, develfreeze_date=True)
         self.data.update(develfreeze_date)
-        
+
         resp = self.client['maintainer'].post(self.url, self.data)
         self.assertContains(resp, "Release date must be after the Devel freeze date.")
 
@@ -234,13 +237,13 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
         # Update form data with develfreeze_date
         develfreeze_date = self._get_field_data(self.now, develfreeze_date=True)
         self.data.update(develfreeze_date)
-        
+
         # Add 1 day to devel freeze date
         self.now.day += 1
         # Update form data with stringfreeze_date
         stringfreeze_date = self._get_field_data(self.now, stringfreeze_date=True)
         self.data.update(stringfreeze_date)
-        
+
         resp = self.client['maintainer'].post(self.url, self.data)
         self.assertContains(resp, "Devel freeze date must be after the String freeze date.")
 

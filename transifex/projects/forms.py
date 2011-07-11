@@ -9,6 +9,7 @@ from django.forms import widgets
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 
+from transifex.resources.models import Resource
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from transifex.projects.models import Project
@@ -157,14 +158,29 @@ class ReleaseForm(forms.ModelForm):
     class Meta:
         model = Release
 
-    def __init__(self, project, *args, **kwargs):
+    def __init__(self, project, user, *args, **kwargs):
         super(ReleaseForm, self).__init__(*args, **kwargs)
         projects = self.fields["project"].queryset.filter(slug=project.slug)
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
         self.fields["release_date"].widget = SplitSelectDateTimeWidget()
         self.fields["stringfreeze_date"].widget = SplitSelectDateTimeWidget()
-        self.fields["develfreeze_date"].widget = SplitSelectDateTimeWidget()
+        self.user = user
+
+    def clean_resources(self):
+        resources_pk_list = self.cleaned_data['resources']
+        for resource_pk in resources_pk_list:
+            try:
+                resource = Resource.objects.select_related().get(pk=resource_pk)
+            except Resource.DoesNotExist, e:
+                raise ValidationError(_("Invalid resource used."))
+            if resource.project.private:
+                if self.user not in resource.project.maintainers.all():
+                    raise ValidationError(
+                     _("%s is an unaccessible private resource."
+                       "Remove it!" % resource.name)
+                    )
+        return resources_pk_list
 
     def clean_slug(self):
         """Ensure that reserved slugs are not used."""
