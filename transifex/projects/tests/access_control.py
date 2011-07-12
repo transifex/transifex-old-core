@@ -135,3 +135,24 @@ class ProjectAccessControlTestCase(BaseTestCase):
         response = self.client[maintainer.username].get(url)
         assert_status_code(self, response, expected_code, url,
             str(maintainer.username))
+
+    def test_project_access_control_edit(self):
+        """Test edit of project access control"""
+        url = reverse('project_access_control_edit', args=[self.project.slug,])
+        resp = self.client['maintainer'].get(url)
+        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_1">', status_code=200)
+
+        #change access control to outsourced access
+        DATA = {'access_control':"outsourced_access", 'next': url, 'outsource': '22', 'submit_access_control':'Save Access Control Settings'}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_2">', status_code=200)
+
+        #change access control to free for all
+        DATA = {'access_control':"free_for_all", 'next': url, 'outsource': '', 'submit_access_control':'Save Access Control Settings'}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_0">', status_code=200)
+
+        #change access control to limited access
+        DATA = {'access_control':"limited_access", 'next': url, 'outsource': '', 'submit_access_control':'Save Access Control Settings'}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_1">', status_code=200)

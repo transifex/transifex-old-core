@@ -13,7 +13,7 @@ from django.test.client import Client
 from authority.models import Permission
 from django_addons.autodiscover import autodiscover_notifications
 
-from transifex.txcommon.tests.base import BaseTestCase, USER_ROLES
+from transifex.txcommon.tests.base import BaseTestCase, USER_ROLES, NoticeTypes
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
@@ -28,7 +28,7 @@ from transifex.teams.models import Team
 Watch = get_model('repowatch', 'Watch')
 POFileLock = get_model('locks', 'POFileLock')
 
-class PrivateProjectTest(BaseTestCase):
+class PrivateProjectTest(NoticeTypes, BaseTestCase):
     """
     Test private projects overall.
 

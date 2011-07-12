@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from transifex.txcommon.tests import base, utils
 from transifex.projects.models import Project
 
-class ProjectViewsTests(base.BaseTestCase):
+class ProjectViewsTests(base.BaseTestCase, base.NoticeTypes):
 
     # Note: The Project lookup field is tested elsewhere.
     def setUp(self, *args, **kwargs):
@@ -61,4 +61,17 @@ class ProjectViewsTests(base.BaseTestCase):
         self.assertContains(resp, "Edit Test Project", status_code=200)
         self.assertContains(resp, self.project.maintainers.all()[0])
         self.assertNotContains(resp, "Owner")
-
+        #save edited project
+        DATA = {'project-bug_tracker':'',
+                'project-description':'Test Project',
+                'project-feed':'',
+                'project-homepage':'',
+                'project-long_description':'',
+                'project-maintainers':'|%s|'%self.user['maintainer'].id,
+                'project-maintainers_text':'',
+                'project-name':'Test Project',
+                'project-slug':'project1',
+                'project-tags':'',
+                'project-trans_instructions':''}
+        resp = self.client['maintainer'].post(self.urls['project_edit'], DATA, follow=True)
+        self.assertEqual(resp.status_code, 200)
