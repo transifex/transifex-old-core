@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.db.models.loading import get_model
 from django.utils import simplejson as json
 from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.models import SourceEntity
 from utils import *
 
 
@@ -94,6 +95,8 @@ class LotteViewsTests(BaseTestCase):
             args=[self.project.slug, self.resource.slug, self.language_ar.code])
         self.push_translation = reverse('push_translation',
             args=[self.project.slug, self.language_ar.code])
+        self.translation_delete_url = reverse('delete_translation',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code])
 
     def tearDown(self):
         super(LotteViewsTests, self).tearDown()
@@ -323,3 +326,18 @@ class LotteViewsTests(BaseTestCase):
     def test_filters(self):
         """Test lotte filters one by one."""
         pass
+
+    def test_delete_translation(self):
+        """Test translation delete"""
+        to_delete = []
+        for source_entity in SourceEntity.objects.filter(resource=self.resource):
+            translations = source_entity.translations.filter(language=self.language_ar)
+            if len(translations) == 1 and translations[0].string=="":
+                pass
+            else:
+                to_delete.append(source_entity.id)
+        data = {"to_delete": to_delete}
+        resp = self.client['maintainer'].post(self.translation_delete_url,
+            json.dumps(data), content_type='application/json')
+        self.assertContains(resp, '', status_code=200)
+
