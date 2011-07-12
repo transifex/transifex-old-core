@@ -416,7 +416,7 @@ class StatsHandler(BaseHandler):
         return res
 
 class FileHandler(BaseHandler):
-    allowed_methods = ('GET')
+    allowed_methods = ('GET', 'DELETE', )
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(pr_project_private_perm,
@@ -447,6 +447,38 @@ class FileHandler(BaseHandler):
         i18n_method['file-extensions'].split(', ')[0]))
 
         return response
+
+    @method_decorator(one_perm_required_or_403(
+            pr_resource_translations_delete,
+            (Project, "slug__exact", "project_slug")))
+    def delete(self, request, project_slug, resource_slug=None,
+               language_code=None, api_version=1):
+        """
+        DELETE requests for translations.
+        """
+        try:
+            resource = Resource.objects.get(
+                slug=resource_slug, project__slug=project_slug
+            )
+        except Resource.DoesNotExist, e:
+            return rc.NOT_FOUND
+
+        # Error message to use in case user asked to
+        # delete the source translation
+        source_error_msg = "You cannot delete the translation in the" \
+                " source language."
+        try:
+            language = Language.objects.by_code_or_alias(language_code)
+        except Language.DoesNotExist:
+            return rc.NOT_FOUND
+        if language == resource.source_language:
+            return BAD_REQUEST(source_error_msg)
+        if language not in resource.available_languages_without_teams:
+            return rc.NOT_FOUND
+
+        t = Translation.get_object("delete", request, resource, language)
+        t.delete()
+        return rc.DELETED
 
 
 class TranslationHandler(BaseHandler):
