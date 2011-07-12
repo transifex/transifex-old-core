@@ -757,10 +757,7 @@ def _save_translation(source_string, translations, target_language, user):
                 # translation will exist and the rest plural forms will be
                 # empty. If the user wants to delete all of them, we need
                 # to let by the ones that don't already have a translation.
-                if source_string.source_entity.pluralized:
-                    if not push_response_dict.has_key(source_id):
-                        push_response_dict[source_id] = {'status':200}
-                else:
+                if not source_string.source_entity.pluralized:
                     raise LotteBadRequestError(
                         _("The translation string is empty")
                     )
