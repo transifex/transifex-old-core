@@ -7,6 +7,7 @@ from utils import *
 
 
 Translation = get_model('resources', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
 
 
 class LotteViewsTests(BaseTestCase):
@@ -15,10 +16,40 @@ class LotteViewsTests(BaseTestCase):
         super(LotteViewsTests, self).setUp()
         self.entity = self.resource.entities[0]
 
+        self.source_entity1 = SourceEntity.objects.create(string='String2',
+            context='Context2', occurrences='Occurrences2', resource=self.resource)
+        self.source_entity2 = SourceEntity.objects.create(string='String3',
+            context='Context3', occurrences='Occurrences3', resource=self.resource)
+        self.source_entity3 = SourceEntity.objects.create(string='String4',
+            context='Context4', occurrences='Occurrences4', resource=self.resource)
+        self.source_entity4 = SourceEntity.objects.create(string='String5',
+            context='context5',occurrences='Occurreneces5', resource=self.resource)
+
+
         self.DataTable_params = default_params()
 
         # Set some custom translation data
         # Source strings
+        self.source_string1 = self.source_entity1.translations.create(
+            string="String2",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5)
+
+        self.source_string2 = self.source_entity2.translations.create(
+            string="String3",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5)
+
+        self.source_string3 = self.source_entity3.translations.create(
+            string="String4",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5)
+
+        self.source_string4 = self.source_entity4.translations.create(
+            string="String with arguments: %s %d",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5)
+
         self.source_string_plural1 = self.source_entity_plural.translations.create(
             string="SourceArabicTrans1",
             language=self.language_en,
@@ -28,6 +59,13 @@ class LotteViewsTests(BaseTestCase):
             language=self.language_en,
             user=self.user["maintainer"], rule=5)
         # Translation strings
+        self.source_entity1.translations.create(
+            string="ArabicString2", language=self.language_ar,
+            user=self.user["maintainer"], rule=5)
+        self.source_entity2.translations.create(
+            string="", language=self.language_ar,
+            user=self.user["maintainer"], rule=5)
+
         self.source_entity_plural.translations.create(
             string="ArabicTrans0", language=self.language_ar,
             user=self.user["maintainer"], rule=0)
@@ -176,13 +214,86 @@ class LotteViewsTests(BaseTestCase):
             source_entity=self.source_entity_plural,
             language=self.language_ar).count(), 0)
 
-        # We push again the data to return to the setup state.
+        #to check that translation strings are not created for empty strings
         resp5 = self.client['maintainer'].post(self.push_translation,
+            json.dumps(data4), content_type='application/json')
+        self.assertEqual(resp5.status_code, 200)
+
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity_plural,
+            language=self.language_ar).count(), 0)
+
+        #This will try to create empty plural translations
+        resp6 = self.client['maintainer'].post(self.push_translation,
+            json.dumps(data3), content_type='application/json')
+        self.assertEqual(resp6.status_code, 200)
+
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity_plural,
+            language=self.language_ar).count(), 6)
+
+        # We push again the data to return to the setup state.
+        resp7 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data3), content_type='application/json')
         self.assertEqual(resp3.status_code, 200)
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity_plural,
             language=self.language_ar).count(), 6)
+
+    def test_push_singular_translation(self):
+        data1 = {"strings":[{"id":self.source_string3.id,
+                             "translations":{
+                                "other":"",}
+                             },]
+                }
+
+        data2 = {"strings":[{"id":self.source_string4.id,
+                             "translations":{
+                                "other":"String with arguments: %s %f",}
+                             },]
+                }
+
+        data3 = {"strings":[{"id":self.source_string3.id,
+                             "translations":{
+                                "other":"String4",}
+                             },]
+                }
+
+        data4 = {"strings":[{"id":self.source_string4.id,
+                             "translations":{
+                                "other":"String with arguments: %s %d",}
+                             },]
+                }
+
+        #This will try to create singular "" string translation
+        resp1 = self.client['maintainer'].post(self.push_translation,
+            json.dumps(data1), content_type='application/json')
+        self.assertContains(resp1, 'The translation string is empty', status_code=200)
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity3,
+            language=self.language_ar).count(), 0)
+
+        #This will try to create a translation string with arguments not equal to those in source string
+        resp2 = self.client['maintainer'].post(self.push_translation,
+            json.dumps(data2), content_type='application/json')
+        self.assertContains(resp2, "The expression '%d' is not present in thetranslation.", status_code=200)
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity4,
+            language=self.language_ar).count(), 0)
+
+        resp3 = self.client['maintainer'].post(self.push_translation,
+            json.dumps(data3), content_type='application/json')
+        self.assertEqual(resp3.status_code, 200)
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity3,
+            language=self.language_ar).count(), 1)
+
+        resp4 = self.client['maintainer'].post(self.push_translation,
+            json.dumps(data4), content_type='application/json')
+        self.assertEqual(resp4.status_code, 200)
+        self.assertEqual(Translation.objects.filter(
+            source_entity=self.source_entity4,
+            language=self.language_ar).count(), 1)
 
     def test_dt_search_string(self):
         """Test the Datatable's search."""
