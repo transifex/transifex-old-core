@@ -19,7 +19,7 @@ class TestWatches(NoticeTypes, BaseTestCase):
         self.url_project_toggle_watch = reverse('project_toggle_watch', args=[self.project.slug])
         self.url_resource_translation_toggle_watch = reverse('resource_translation_toggle_watch',
                 args = [self.project.slug, self.resource.slug, self.language.code])
-        
+
     def test_templates(self):
         """
         Test templates to see if it is properly rendered for different types of users
@@ -42,7 +42,7 @@ class TestWatches(NoticeTypes, BaseTestCase):
                 self.assertNotContains(resp, '''onclick="watch_toggle(this, '/ajax/p/%s/toggle_watch/')" title="Watch it"'''%self.project.slug, status_code=200)
                 self.assertNotContains(resp1, "watch_toggle(this, '/ajax/p/%s/resource/%s/l/%s/toggle_watch/')"%
                                     (self.project.slug, self.resource.slug, self.language.code), status_code=200)
-                
+
     def test_project_toggle_watch(self):
         """
         Test toggle watch for project
@@ -51,7 +51,7 @@ class TestWatches(NoticeTypes, BaseTestCase):
             resp = self.client[user].post(self.url_project_toggle_watch, {},)
             if user != 'anonymous':
                 self.assertEqual(resp.status_code, 200)
-                json = simplejson.loads(resp.content)        
+                json = simplejson.loads(resp.content)
                 if settings.ENABLE_NOTICES:
                     self.assertTrue(json['project'])
                     self.assertEqual(json['url'], '/ajax/p/%s/toggle_watch/'%self.project.slug)
@@ -62,7 +62,7 @@ class TestWatches(NoticeTypes, BaseTestCase):
                     self.assertEqual(json['error'], "Notification is not enabled")
             else:
                 self.assertEqual(resp.status_code, 302)
-                
+
             resp = self.client[user].post(self.url_project_toggle_watch, {},)
             if user != 'anonymous':
                 self.assertEqual(resp.status_code, 200)
@@ -77,7 +77,7 @@ class TestWatches(NoticeTypes, BaseTestCase):
                     self.assertEqual(json['error'], "Notification is not enabled")
             else:
                 self.assertEqual(resp.status_code, 302)
-    
+
     def test_resource_translation_toggle_watch(self):
         """
         Test toggle watch for resource translation
