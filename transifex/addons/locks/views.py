@@ -81,8 +81,9 @@ def resource_language_unlock(request, project_slug, resource_slug,
             except LockError, e:
                 return HttpResponseForbidden(_("You don't have permission to "
                     "unlock this file."))
-        response['status'] = "FAILED"
-        response['message'] = _("Unlock failed. Lock doesn't exist.")
+        else:
+            response['status'] = "FAILED"
+            response['message'] = _("Unlock failed. Lock doesn't exist.")
     else:
         response['status'] = "FAILED"
         response['message'] = _("Sorry, but you need to send a POST request.")
