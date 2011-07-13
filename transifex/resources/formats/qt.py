@@ -26,7 +26,6 @@ from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
-Storage = get_model('storage', 'StorageFile')
 
 
 class LinguistParseError(ParseError):
@@ -71,17 +70,6 @@ class LinguistHandler(Handler):
 
     HandlerParseError = LinguistParseError
     handlercompileError = LinguistCompileError
-
-    def _check_content(self, content):
-        """
-        Check file for XML validity. No DTD checking happens here.
-        """
-        try:
-            parser = xml.parsers.expat.ParserCreate()
-            parser.Parse(content)
-        except Exception, e:
-            raise FileCheckError, ugettext("Your file doesn't seem to contain "\
-                "valid xml: %s!" % e.message)
 
     def _escape(self, s):
         return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
@@ -182,7 +170,15 @@ class LinguistHandler(Handler):
         else:
             nplural = self.language.get_pluralrules_numbers()
 
-        doc = xml.dom.minidom.parseString(self.content.encode(self.format_encoding))
+        try:
+            doc = xml.dom.minidom.parseString(
+                self.content.encode(self.format_encoding)
+            )
+        except Exception, e:
+            logger.warning("QT parsing: %s" % e.message, exc_info=True)
+            raise LinguistParseError(
+                "Your file doesn't seem to contain valid xml: %s!" % e.message
+            )
         if hasattr(doc, 'doctype') and hasattr(doc.doctype, 'name'):
             if doc.doctype.name != "TS":
                 raise LinguistParseError("Incorrect doctype!")

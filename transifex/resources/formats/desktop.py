@@ -43,14 +43,6 @@ class DesktopHandler(Handler):
     # http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
     localized_keys = ['Name', 'GenericName', 'Comment', 'Icon', ]
 
-    @classmethod
-    def _check_content(self, content):
-        for line in content.split('\n'):
-            if self._should_skip(line):
-                continue
-            elif not '=' in line:
-                raise DesktopParseError("Invalid line %s", line)
-
     def _apply_translation(self, source, trans, content):
         return ''.join([
                 content, string.string.encode(self.default_encoding),
@@ -117,7 +109,8 @@ class DesktopHandler(Handler):
         """
         return self._is_empty_line(line) or\
                 self._is_comment_line(line) or\
-                self._is_group_header_line(line)
+                self._is_group_header_line(line) or\
+                self.delimiter not in line
 
     def _parse(self, is_source=False, lang_rules=None):
         """

@@ -779,6 +779,7 @@ class Handler(object):
         """Parse the content."""
         self.stringset = StringSet()
         self.suggestions = StringSet()
+        self.is_content_valid()
         obj = self._parse(is_source, lang_rules)
         if is_source:
             self.template = self._generate_template(obj)

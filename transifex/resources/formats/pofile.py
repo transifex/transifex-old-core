@@ -14,7 +14,6 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.contrib.sites.models import Site
 
 from transifex.txcommon.commands import run_command, CommandError
-from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
@@ -38,14 +37,12 @@ Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
-Storage = get_model('storage', 'StorageFile')
 
 
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
-    """
-    Run a `msgfmt -c` on the file contents.
+    """Run a `msgfmt -c` on the file contents.
 
-    Raise a FileCheckError in case the stderror has errors/warnings or
+    Raise a PoParseError in case the stderror has errors/warnings or
     the command execution returns Error.
     """
     try:
@@ -53,8 +50,10 @@ def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
             command = 'msgfmt -o /dev/null --check-format --check-domain -'
         else:
             command = 'msgfmt -o /dev/null -c -'
-        status, stdout, stderr = run_command(command, _input=po_contents.encode('UTF-8'),
-            with_extended_output=True, with_exceptions=with_exceptions)
+        status, stdout, stderr = run_command(
+            command, _input=po_contents.encode('UTF-8'),
+            with_extended_output=True, with_exceptions=with_exceptions
+        )
         # Not sure why msgfmt sends its output to stderr instead of stdout
         #if 'warning:' in stderr or 'too many errors, aborting' in stderr:
         if 'too many errors, aborting' in stderr:
@@ -62,7 +61,7 @@ def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
             raise CommandError(command, status, stderr)
     except CommandError, e:
         logger.warning("pofile: The 'msgfmt -c' check failed.")
-        raise FileCheckError, ugettext("Your file failed a correctness check "
+        raise PoParseError, ugettext("Your file failed a correctness check "
             "(msgfmt -c). Please run this command on "
             "your system to see the errors.")
 
@@ -90,7 +89,7 @@ class GettextHandler(Handler):
         # If file is empty, the method hangs so we should bail out.
         if not content:
             logger.warning("Pofile: File '%s' is empty." % self.filename)
-            raise FileCheckError("Uploaded file is empty.")
+            raise PoParseError("Uploaded file is empty.")
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
@@ -103,16 +102,18 @@ class GettextHandler(Handler):
                 logger.warning(
                     "pofile: Required metadata '%s' not found." % metadata
                 )
-                raise FileCheckError(
+                raise PoParseError(
                     "Uploaded file header doesn't have '%s' metadata!" % metadata
                 )
 
         # Save to avoid parsing it again
         self._po = po
 
-    def __init__(self, filename=None, resource=None, language=None, content=None):
+    def __init__(self, filename=None, resource=None, language=None,
+                 content=None):
         super(GettextHandler, self).__init__(
-            filename=filename, resource=resource, language=language, content=content
+            filename=filename, resource=resource, language=language,
+            content=content
         )
         self.copyrights = []
 
@@ -294,7 +295,7 @@ class GettextHandler(Handler):
                 if is_source:
                     nplural_file = len(entry.msgstr_plural.keys())
                     if nplural_file != 2:
-                        raise FileCheckError("Your source file is not a POT file and"
+                        raise PoParseError("Your source file is not a POT file and"
                             " the translation file you're using has more"
                             " than two plurals which is not supported.")
                     # English plural rules
@@ -397,7 +398,6 @@ class GettextHandler(Handler):
         return ', '.join(
             [':'.join([i for i in t ]) for t in occurrences]
         )
-
 
 
 class POHandler(GettextHandler):
