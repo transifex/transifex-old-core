@@ -5,7 +5,7 @@ from locks.models import Lock
 from transifex.resources.models import Resource
 from transifex.teams.models import Team
 from transifex.languages.models import Language
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase, USER_ROLES
 from transifex.txcommon.log import logger
 from notification.models import Notice
 
@@ -70,4 +70,39 @@ class TestLocking(BaseTestCase):
         self.assertContains(resp,
             "Enter your username and password to sign in", status_code=200)
 
+    def test_unlock_same_user(self):
+        """Test if the same user can unlock a resource language"""
+        resp = self.client['maintainer'].post(self.url_unlock, follow=True)
+
+        self.assertContains(resp, "Unlock failed. Lock doesn't exist.", status_code=200)
+
+        resp = self.client['maintainer'].post(self.url_lock)
+
+        #test sending a GET request
+        resp = self.client['maintainer'].get(self.url_unlock, follow=True)
+        self.assertContains(resp, "Sorry, but you need to send a POST request.", status_code=200)
+
+        resp = self.client['maintainer'].post(self.url_unlock, follow=True)
+        self.assertContains(resp, "Lock removed.", status_code=200)
+
+    def test_lock_all_users(self):
+        for user in USER_ROLES:
+            resp = self.client[user].post(self.url_lock, follow=True)
+            if user == 'anonymous':
+                self.assertContains(resp,
+                    "Enter your username and password to sign in", status_code=200)
+            elif user == 'registered':
+                self.assertContains(resp, "Forbidden access", status_code=403)
+            else:
+                self.assertContains(resp, "Lock created.", status_code=200)
+                resp = self.client[user].post(self.url_unlock, follow=True)
+                self.assertContains(resp, "Lock removed.", status_code=200)
+
+        #try sending a GET request
+        resp = self.client['maintainer'].get(self.url_lock)
+        self.assertContains(resp, "Sorry, but you need to send a POST request.", status_code=200)
+        #try creating an error
+        resp = self.client['maintainer'].post(self.url_lock)
+        resp = self.client['team_member'].post(self.url_lock)
+        self.assertContains(resp, "This resource language is already locked by 'maintainer'", status_code=200)
 
