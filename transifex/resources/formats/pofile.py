@@ -263,7 +263,7 @@ class GettextHandler(Handler):
 
         self._parse_copyrights(self.content)
         try:
-            self._po = polib.pofile(self.filename)
+            self._po = polib.pofile(self.content)
         except IOError, e:
             raise PoParseError(e.message)
 

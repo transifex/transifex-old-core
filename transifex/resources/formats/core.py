@@ -188,7 +188,7 @@ class Handler(object):
         """
         Bind some content to the handler.
         """
-        self.content = self._get_content(content)
+        self.content = self._get_content(content=content)
 
     def bind_file(self, filename):
         """
