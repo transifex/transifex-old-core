@@ -727,9 +727,14 @@ class Handler(object):
             )
             transaction.rollback()
             return (0, 0)
-        self._post_save2db(is_source , user, overwrite_translations)
-        if added + updated + deleted > 0:
-            self._handle_update_of_resource(user)
+        try:
+            self._post_save2db(is_source , user, overwrite_translations)
+            if added + updated + deleted > 0:
+                self._handle_update_of_resource(user)
+        except Exception, e:
+            logger.error("Unhandled exception: %s" % e.message, exc_info=True)
+            transaction.rollback()
+            raise FormatError(e.message)
         transaction.commit()
         return (added, updated)
 
