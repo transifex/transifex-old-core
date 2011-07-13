@@ -8,6 +8,7 @@ These are used by views and the API.
 
 from itertools import ifilter
 from django.utils.translation import ugettext as _
+from django.db import IntegrityError
 from transifex.txcommon.log import logger
 from transifex.resources.models import Resource
 from transifex.resources.formats import FormatError
@@ -58,6 +59,7 @@ class ResourceBackend(object):
         try:
             r = Resource(
                 project=project, source_language=source_language,
+                slug=slug, name=name
             )
             r.i18n_method = method
             for key in ifilter(lambda k: k != "content", extra_data.iterkeys()):
@@ -92,7 +94,7 @@ class ResourceBackend(object):
             logger.error(
                 "Unexamined exception raised: %s" % e.message, exc_info=True
             )
-            raise
+            raise ResourceBackendError(e.message)
 
 
 class FormatsBackend(object):

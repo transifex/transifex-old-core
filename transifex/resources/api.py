@@ -30,6 +30,7 @@ from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
+from transifex.resources.backends import ResourceBackend, ResourceBackendError
 from transifex.resources.formats.registry import registry
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
@@ -43,7 +44,12 @@ from transifex.api.utils import BAD_REQUEST
 class BadRequestError(Exception):
     pass
 
+
 class NoContentError(Exception):
+    pass
+
+
+class NotFoundError(Exception):
     pass
 
 
@@ -122,7 +128,17 @@ class ResourceHandler(BaseHandler):
                     "and 'source_language' must be specified,"
                     " as well as the source strings."
                 )
-            return self._create(request, project_slug, data)
+            try:
+                res = self._create(request, project_slug, data)
+            except BadRequestError, e:
+                return BAD_REQUEST(e.message)
+            except NotFoundError, e:
+                return rc.NOT_FOUND
+            t = Translation.get_object("create", request)
+            res = t.__class__.to_http_for_create(t, res)
+            if res.status_code == 200:
+                res.status_code = 201
+            return res
         else:
             return self._createv1(request, project_slug, resource_slug, data)
 
@@ -175,86 +191,64 @@ class ResourceHandler(BaseHandler):
             return False
         return True
 
-    @transaction.commit_manually
+    @transaction.commit_on_success
     def _create(self, request, project_slug, data):
         # Check for unavailable fields
         try:
             self._check_fields(data.iterkeys())
         except AttributeError, e:
-            return BAD_REQUEST("Field '%s' is not allowed." % e.message)
+            msg = "Field '%s' is not allowed." % e.message
+            logger.warning(msg)
+            raise BadRequestError(msg)
         # Check for obligatory fields
         for field in ('name', 'slug', 'source_language', 'i18n_type', ):
             if field not in data:
-                return BAD_REQUEST("Field '%s' must be specified." % field)
+                msg = "Field '%s' must be specified." % field
+                logger.warning(msg)
+                raise BadRequestError(msg)
 
         try:
             project = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist:
-            return rc.NOT_FOUND
+        except Project.DoesNotExist, e:
+            logger.warning(e.message, exc_info=True)
+            raise NotFoundError(e.message)
+
         # In multipart/form-encode request variables have lists
         # as values. So we use __getitem__ isntead of pop, which returns
         # the last value
-        slang = data['source_language']
-        del data['source_language']
-        i18n_type = data['i18n_type']
-        del data['i18n_type']
-        if i18n_type not in settings.I18N_METHODS:
-            return BAD_REQUEST(
-                "i18n_type %s is not supported." % self.resource.i18n_method
-            )
+        slang = data['source_language']; del data['source_language']
+        method = data['i18n_type']; del data['i18n_type']
+        if not registry.is_supported(method):
+            msg = "i18n_type %s is not supported." % method
+            logger.warning(msg)
+            raise BadRequestError(msg)
         try:
             source_language = self._get_source_lang(project, slang)
-        except BadRequestError, e:
-            return BAD_REQUEST(unicode(e))
+        except Language.DoesNotExist, e:
+            msg = "Language code '%s' does not exist or wrong code." % slang
+            logger.warning(msg)
+            raise BadRequestError(msg)
+        try:
+            slug = data['slug']; del data['slug']
+            name = data['name']; del data['name']
+            # TODO for all fields
+        except KeyError, e:
+            msg = "Required field is missing: %s" % e.message
+            logger.warning(msg)
+            raise BadRequestError(msg)
 
-        # save resource
         try:
-            r = Resource(
-                project=project, source_language=source_language,
-            )
-            r.i18n_method = i18n_type
-            for key in ifilter(lambda k: k != "content", data.iterkeys()):
-                setattr(r, key, data[key])
-        except:
-            return BAD_REQUEST("Invalid arguments given.")
-        try:
-            r.save()
-        except IntegrityError, e:
-            transaction.rollback()
-            logger.warning("Error creating resource %s: %s" % (r, e.message))
-            return BAD_REQUEST(
-                "A resource with the same slug exists in this project."
-            )
-        except DatabaseError, e:
-            transaction.rollback()
-            msg = "Database error creating resource %s: %s"
-            logger.error(msg % (r, e), exc_info=True)
-            return BAD_REQUEST(
-                "There was an error while creating the resource: %s" % e
-            )
+            content = self._get_content(request, data)
+        except NoContentError, e:
+            raise BadRequestError(e.message)
 
-        # save source entities
         try:
-            t = Translation.get_object("create", request, r, source_language)
-        except AttributeError, e:
-            transaction.rollback()
-            return BAD_REQUEST("The content type of the request is not valid.")
-        try:
-            res = t.create()
-        except (BadRequestError, NoContentError), e:
-            transaction.rollback()
-            return BAD_REQUEST(unicode(e))
-        except Exception, e:
-            logger.error("Unexamined exception raised: %s" % e.message, exc_info=True)
-            transaction.rollback()
-            return BAD_REQUEST(unicode(e))
-        res = t.__class__.to_http_for_create(t, res)
-        if res.status_code == 200:
-            res.status_code = 201
-        post_resource_save.send(sender=None, instance=r,
-                created=True, user=request.user)
-        transaction.commit()
-        return res
+            rb = ResourceBackend()
+            return rb.create(
+                project, slug, name, method, source_language, content
+            )
+        except ResourceBackendError, e:
+            raise BadRequestError(e.message)
 
     @require_mime('json')
     def _createv1(self, request, project_slug, resource_slug, data):
@@ -340,6 +334,36 @@ class ResourceHandler(BaseHandler):
         for field in fields:
             if not field in self.allowed_fields:
                 raise AttributeError(field)
+
+    def _get_content(self, request, data):
+        """Get the content from the request.
+
+        If it is file-based, return the contents of the file.
+
+        Args:
+            request: The django request object.
+        Returns:
+            The content of the string/file.
+        """
+        if 'application/json' in request.content_type:
+            try:
+                return data['content']
+            except KeyError, e:
+                msg = "No content provided"
+                logger.warning(msg)
+                raise NoContentError(msg)
+        elif 'multipart/form-data' in request.content_type:
+            if not request.FILES:
+                msg = "No file has been uploaded."
+                logger.warning(msg)
+                raise NoContentError(msg)
+            file_ = request.FILES.values()[0]
+            return file_.read().decode('UTF-8')
+        else:
+            msg = "No content or file found"
+            logger.warning(msg)
+            raise NoContentError(msg)
+
 
     def _is_same_source_lang(self, project, slang):
         """Check if the source language specified is the one used in
@@ -750,7 +774,7 @@ class Translation(object):
         """
         return cls._to_http_response(translation, result, status=200)
 
-    def __init__(self, request, resource, language=None):
+    def __init__(self, request, resource=None, language=None):
         """
         Initializer.
 

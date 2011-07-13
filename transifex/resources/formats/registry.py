@@ -99,6 +99,16 @@ class _FormatsRegistry(object):
 
         return i18n_type
 
+    def is_supported(self, m):
+        """Check whether the method is supported.
+
+        Args:
+            m: The method to check.
+        Returns:
+            True, if it is supported. Else, False.
+        """
+        return m in self.methods
+
     def mimetypes_for(self, m):
         """Get the mimetypes for the specified method.
 

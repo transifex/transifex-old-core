@@ -470,6 +470,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'slug': 'r1',
                     'source_language': 'el',
                     'i18n_type': 'PO',
+                    'content': content,
             }),
             content_type='application/json'
         )
