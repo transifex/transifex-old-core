@@ -41,7 +41,6 @@ class TestTimeline(BaseTestCase):
         resp = self.client['registered'].get( self.url_user_timeline )
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("Timeline" in resp.content)
-        self.assertTrue("Filter results" in resp.content)
         a = ("The query returned " in resp.content)
         b = ("None available" in resp.content)
         self.assertTrue( a or b)
