@@ -11,31 +11,10 @@ $(document).ready(function(){
     });
 
     {% if resource %}
-
-        var uuid = '{{ resource.source_file.uuid }}';
-		var resource_slug = '{{resource.slug}}';
-        $("div#notification-container div").html("{% blocktrans with resource.source_file.name as resource_name %}Extracting strings from '{{ resource_name }}'. This might take a while...{% endblocktrans %}");
-        $("div#notification-container").fadeIn("fast");
-
-        $.ajax({
-            type : 'POST',
-            url: sprintf('{{ api_project_files }}', '{{ project.slug }}'),
-            contentType : 'application/json',
-            responseType: "json",
-            data: JSON.stringify({'uuid':uuid, 'slug': resource_slug }),
-            dataType: 'json',
-            success: function(data, textStatus, XMLHttpRequest){
-                window.location = data['redirect'];
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown){
-                alert(XMLHttpRequest.responseText);
-            },
-            complete: function(XMLHttpRequest, textStatus){
-                $("div#notification-container").fadeOut("slow");
-            }
-        });
+    location.replace('{% url resource_detail project_slug=project.slug resource_slug=resource.slug %}');
     {% endif %}
 });
+
 </script>
 <!--
 <p style="text-align:center">
@@ -44,11 +23,10 @@ $(document).ready(function(){
 -->
 <div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;margin-top:1.5em;"{% endif %}>
 
- <form action='' method='post' class="microform houdini">{% csrf_token %}
+ <form action='' method='post' enctype="multipart/form-data" class="microform houdini">
+  {% csrf_token %}
 
-
-<div class="clearfix">
-  <table style="padding:0 1em;float:left;">
+  <table style="padding:0 1em">
   <tbody>
     {% comment %}
     Overridden form_as_table_rows in order to better customize it.
@@ -66,7 +44,7 @@ $(document).ready(function(){
                 {% endif %}
             {% else %}
                 <tr{% if id %} id="sub_{{ id }}{{ forloop.counter}}" style="display:none"{% endif %}>
-                <th style="margin-right:1em;">{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
+                <th>{{ field.label }}: {% if field.field.required %}<span class="required">*</span>{% endif %}</th>
                 <td>
                     <p class="fieldp">{{ field }}</p>
                     {% if field.errors %}<p class="fielderrors">{% for error in field.errors %}{{ error }}{% endfor %}</p>{% endif %}
@@ -77,10 +55,13 @@ $(document).ready(function(){
     {% endif %}
   </tbody>
   </table>
-  <p id="create-resource-btn" class="submit" style="float:left;margin-top:0.6em; display:block-inline;display:none;"><input type="submit" class="i16 submit buttonized" name="create_resource" value="{% trans "Create Resource" %}" /></p>
-</div>
+  <p class="submit" style="text-align:center"><input type="submit" class="i16 submit buttonized" name="create_resource" value="{% trans "Create Resource" %}" /></p>
+
   <p class="i16 tip">
-  {% blocktrans %}Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.{% endblocktrans %}
+  {% blocktrans %}
+  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.<br/>
+  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
+  {% endblocktrans %}
   </p>
 
  </form>

@@ -8,6 +8,7 @@ from transifex.resources.formats.registry import registry
 from transifex.storage.fields import StorageFileField
 from transifex.storage.models import StorageFile
 from transifex.storage.widgets import StorageFileWidget
+from transifex.languages.models import Language
 from transifex.resources.models import Resource
 from transifex.resources.formats.core import ParseError
 from transifex.storage.models import StorageFile
@@ -140,12 +141,28 @@ class ResourceForm(forms.ModelForm):
 
 
 class CreateResourceForm(forms.ModelForm):
-    """
-    Form to create a resource using data from StorageFileField.
-    """
+    """Form to create a new resource."""
+
+    i18n_choices = sorted(registry.descriptions(), key=lambda m: m[1])
+    i18n_choices.insert(0, ('', '-' * 10))
+    language_choices = [(l.code, l) for l in Language.objects.all()]
+
+    source_file = forms.FileField(label=_("Resource File"))
+    i18n_method = forms.ChoiceField(
+        label=_("I18N Type"), choices=i18n_choices,
+        help_text=_(
+            "The type of i18n method used in this resource (%s)" % \
+                ', '.join(sorted(m[1] for m in registry.descriptions()))
+        )
+    )
+    source_language = forms.ChoiceField(
+        label=_('Source Language'), choices=language_choices,
+        help_text=_("The source language of this Resource.")
+    )
+
     class Meta:
         model = Resource
-        fields = ('source_file',)
+        fields = ('name', 'source_file', 'i18n_method', 'source_language')
 
     def __init__(self, *args, **kwargs):
         
@@ -153,13 +170,6 @@ class CreateResourceForm(forms.ModelForm):
         super(CreateResourceForm, self).__init__(*args, **kwargs)
 
         self.source_language = project.source_language
-
-        self.fields['source_file'] = StorageFileField(
-            label=_('Resource file'),
-            help_text=_("Choose the source language for the resource and then "
-        "select a file from your file system to be used as an extracting "
-        "point of strings to be translated."), language=self.source_language,
-        display_language=True)
         
     def clean(self):
         """Check whether the language"""

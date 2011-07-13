@@ -42,6 +42,16 @@ class _FormatsRegistry(object):
         self.handlers[m] = klass
         return True
 
+    def available_methods(self):
+        """Get the available methods."""
+        return self.methods.items()
+
+    def descriptions(self):
+        """Get the available descriptions along with the
+        method they correspond to.
+        """
+        return [(m, v['description']) for m, v in self.methods.items()]
+
     def extensions_for(self, m):
         """Get the extensions for the specified method.
 

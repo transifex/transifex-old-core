@@ -135,3 +135,21 @@ class FormatsBackend(object):
             return handler.save2db(is_source=True, user=self.user)
         except FormatError, e:
             raise FormatBackendError(e.message)
+
+
+def content_from_uploaded_file(files, encoding='UTF-8'):
+    """Get the content of an uploaded file.
+
+    We only return the content of the first file.
+
+    Args:
+        files: A dictionary with file objects. Probably, request.FILES.
+        encoding: The encoding of the file.
+    Returns:
+        The content of the file as a unicode string.
+    """
+    files = files.values()
+    if not files:
+        return u''
+    return files[0].read().decode('UTF-8')
+

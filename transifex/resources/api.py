@@ -30,7 +30,8 @@ from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
-from transifex.resources.backends import ResourceBackend, ResourceBackendError
+from transifex.resources.backends import ResourceBackend, \
+        ResourceBackendError, content_from_uploaded_file
 from transifex.resources.formats.registry import registry
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
@@ -357,8 +358,7 @@ class ResourceHandler(BaseHandler):
                 msg = "No file has been uploaded."
                 logger.warning(msg)
                 raise NoContentError(msg)
-            file_ = request.FILES.values()[0]
-            return file_.read().decode('UTF-8')
+            return content_from_uploaded_file(request.FILES)
         else:
             msg = "No content or file found"
             logger.warning(msg)
