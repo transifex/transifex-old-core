@@ -23,7 +23,7 @@ class ResourceBackendError(BackendError):
     pass
 
 
-class FormatBackendError(BackendError):
+class FormatsBackendError(BackendError):
     pass
 
 
@@ -88,7 +88,7 @@ class ResourceBackend(object):
             )
         try:
             return fb.import_source(content, method)
-        except FormatBackendError, e:
+        except FormatsBackendError, e:
             raise ResourceBackendError(e.message)
         except Exception, e:
             logger.error(
@@ -134,7 +134,7 @@ class FormatsBackend(object):
             handler.parse_file(is_source=True)
             return handler.save2db(is_source=True, user=self.user)
         except FormatError, e:
-            raise FormatBackendError(e.message)
+            raise FormatsBackendError(e.message)
 
 
 def content_from_uploaded_file(files, encoding='UTF-8'):
