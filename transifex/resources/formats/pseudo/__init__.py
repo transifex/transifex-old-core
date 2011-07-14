@@ -29,3 +29,26 @@ class PseudoTypeMixin:
     def compile(self, string):
         """Run the correct method depending on the i18n_type."""
         return getattr(self, self.method_name)(string)
+
+    def _skip_char_around(self, string, char='\n'):
+        """
+        Custom pseudo method for skipping a given char around a string.
+        
+        The default char to be skipped is the new line (\n) one.
+        
+        Example: 
+            '\nHello\n' would call ``_base_compile`` with 'Hello' only.
+        """
+        starts, ends = '', ''
+        if string.startswith(char):
+            starts = string[:1]
+            string = string[1:]
+        if string.endswith(char):
+            ends = string[-1:]
+            string = string[:-1]
+        string = self._base_compile(string)
+        if starts:
+            string = starts + string
+        if ends:
+            string = string + ends
+        return string
