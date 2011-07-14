@@ -155,14 +155,14 @@ class CreateResourceForm(forms.ModelForm):
                 ', '.join(sorted(m[1] for m in registry.descriptions()))
         )
     )
-    source_language = forms.ChoiceField(
+    source_lang = forms.ChoiceField(
         label=_('Source Language'), choices=language_choices,
         help_text=_("The source language of this Resource.")
     )
 
     class Meta:
         model = Resource
-        fields = ('name', 'source_file', 'i18n_method', 'source_language')
+        fields = ('name', 'source_file', 'i18n_method', 'source_lang')
 
     def __init__(self, *args, **kwargs):
         

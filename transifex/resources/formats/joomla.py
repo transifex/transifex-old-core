@@ -34,6 +34,7 @@ class JoomlaINIHandler(Handler):
     format = "Joomla INI (*.ini)"
     method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
+    linesep = '\n'
 
     HandlerParseError = JoomlaParseError
     HandlerCompileError = JoomlaCompileError
@@ -45,7 +46,7 @@ class JoomlaINIHandler(Handler):
         content = self.content
         jformat = JoomlaIniVersion.create(self.content)
 
-        for line in content.split('\n'):
+        for line in self._iter_by_line(content):
             # Skip empty lines and comments
             if not line or line.startswith(self.comment_chars):
                 continue

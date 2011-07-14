@@ -39,7 +39,7 @@ Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
-Storage = get_model('storage', 'StorageFile')
+
 
 class CustomSerializer(json.JSONEncoder):
     def default(self, obj):
@@ -68,6 +68,7 @@ class CustomSerializer(json.JSONEncoder):
                 'strings' : obj.strings,
             }
 
+
 class ParseError(FormatError):
     """Base class for parsing errors."""
     pass
@@ -91,6 +92,8 @@ class Handler(object):
 
     SuggestionFormat = ContentSuggestionFormat
 
+    linesep = '\n'
+
     @classmethod
     def accepts(cls, i18n_type):
         """Accept only files that have the correct type specified."""
@@ -100,8 +103,10 @@ class Handler(object):
         """
         Initialize a formats handler.
         """
-        self.filename = filename # Input filename for associated translation file
-        self.content = self._get_content(filename=filename, content=content) # The content of the translation file
+        # Input filename for associated translation file
+        self.filename = filename
+        # The content of the translation file
+        self.content = self._get_content(filename=filename, content=content)
         self.stringset = None # Stringset to extract entries from files
 
         self.resource = None # Associated resource
@@ -140,7 +145,6 @@ class Handler(object):
         """
         if content is None:
             content = self.content
-            assert content is not None
         return self._check_content(content)
 
     ####################
@@ -148,7 +152,10 @@ class Handler(object):
     ####################
 
     def _get_content(self, filename=None, content=None):
-        """Read the content of the specified file."""
+        """Read the content of the specified file.
+
+        Return either the `content` or the content of the file.
+        """
         if content is not None:
             return content
         if filename is None:
@@ -169,31 +176,27 @@ class Handler(object):
             f.close()
 
     def set_language(self, language):
-        """
-        Set the language for the handler.
-        """
+        """Set the language for the handler."""
         if isinstance(language, Language):
             self.language = language
         else:
             try:
                 self.language = Language.objects.by_code_or_alias(language)
             except Language.DoesNotExist, e:
-                logger.warning("Language.DoesNotExist: %s" % e.message, exc_info=True)
+                logger.warning(
+                    "Language.DoesNotExist: %s" % e.message, exc_info=True
+                )
                 raise FormatError(e.message)
             except Exception, e:
                 logger.error(e.message, exc_info=True)
                 raise FormatError(e.message)
 
     def bind_content(self, content):
-        """
-        Bind some content to the handler.
-        """
+        """Bind some content to the handler."""
         self.content = self._get_content(content=content)
 
     def bind_file(self, filename):
-        """
-        Bind a file to an initialized POHandler.
-        """
+        """Bind a file to an initialized POHandler."""
         if os.path.isfile(filename):
             self.filename = filename
             self.content = self._get_content(filename=filename)
@@ -203,9 +206,7 @@ class Handler(object):
             raise FormatError(msg)
 
     def bind_resource(self, resource):
-        """
-        Bind a resource to an initialized POHandler.
-        """
+        """Bind a resource to an initialized POHandler."""
         if isinstance(resource, Resource):
             self.resource = resource
             try:
@@ -280,10 +281,9 @@ class Handler(object):
         return re.sub(re.escape(original),
             self._pseudo_decorate(self._escape(replacement)), text)
 
-    def _get_strings(self, resource):
-        return SourceEntity.objects.filter(
-            resource=resource
-        )
+    def _get_source_strings(self, resource):
+        """Return the source strings of the resource."""
+        return SourceEntity.objects.filter(resource=resource)
 
     def _get_translation(self, string, language, rule):
         try:
@@ -390,7 +390,7 @@ class Handler(object):
         Returns:
             The compiled template.
         """
-        stringset = self._get_strings(self.resource)
+        stringset = self._get_source_strings(self.resource)
         for string in stringset:
             trans = self._get_translation(string, language, 5)
             content = self._apply_translation(string, trans, content)
@@ -406,7 +406,7 @@ class Handler(object):
         Args:
             context: The context value calculated
         Returns:
-            The correct value for the context ot be used in the database.
+            The correct value for the context to be used in the database.
         """
         return context or u'None'
 
@@ -751,6 +751,11 @@ class Handler(object):
         Subclasses could override this.
         """
         return obj.encode(self.default_encoding)
+
+    def _iter_by_line(self, content):
+        """Iterate the content by line."""
+        for line in content.split(self.linesep):
+            yield line
 
     def _parse(self, is_source, lang_rules):
         """The actual functions that parses the content.

@@ -39,7 +39,7 @@ class JavaPropertiesHandler(Handler):
     HandlerCompileError = JavaCompileError
 
     SEPARATORS = [' ', '\t', '\f', '=', ':', ]
-    COMMENT_CHARS = ('#', '!', )
+    comment_chars = ('#', '!', )
 
     def _escape(self, s):
         """
@@ -57,11 +57,11 @@ class JavaPropertiesHandler(Handler):
     def _find_linesep(self, s):
         """Find the line separator used in the file."""
         if "\r\n" in s:         # windows line ending
-            self._linesep = "\r\n"
+            self.linesep = "\r\n"
         elif "\r" in s:         # macosx line ending
-            self._linesep = "\r"
+            self.linesep = "\r"
         else:
-            self._linesep = "\n"
+            self.linesep = "\n"
 
     def _is_escaped(self, line, index):
         """
@@ -77,11 +77,6 @@ class JavaPropertiesHandler(Handler):
             else:
                 break
         return nbackslashes % 2 == 1
-
-    def _iter_by_line(self):
-        """Iterate the content by line."""
-        for line in self.content.split(self._linesep):
-            yield line
 
     def _prepare_line(self, line):
         """
@@ -189,14 +184,14 @@ class JavaPropertiesHandler(Handler):
 
         context = ""
         self._find_linesep(self.content)
-        buf = u""
-        lines = self._iter_by_line()
+        template = u""
+        lines = self._iter_by_line(self.content)
         for line in lines:
             line = self._prepare_line(line)
             # Skip empty lines and comments
-            if not line or line.startswith(self.COMMENT_CHARS):
+            if not line or line.startswith(self.comment_chars):
                 if is_source:
-                    buf += line + self._linesep
+                    template += line + self.linesep
                 continue
             # If the last character is a backslash
             # it has to be preceded by a space in which
@@ -218,19 +213,19 @@ class JavaPropertiesHandler(Handler):
 
             if is_source:
                 if not value:
-                    buf += line + self._linesep
+                    template += line + self.linesep
                     # Keys with no values should not be shown to translator
                     continue
                 else:
-                    buf += re.sub(
+                    template += re.sub(
                         re.escape(value),
                         "%(hash)s_tr" % {'hash': hash_tag(key, context)},
                         line
-                    ) + self._linesep
+                    ) + self.linesep
             elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
                 # ignore keys with no translation
                 continue
             self._add_translation_string(
                 key, self._unescape(value), context=context
             )
-        return buf
+        return template

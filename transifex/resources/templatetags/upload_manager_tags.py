@@ -33,12 +33,12 @@ def upload_create_resource_form(request, project, prefix='create_form'):
         )
         if cr_form.is_valid():
             try:
-                lang_code = cr_form.cleaned_data['source_language']
+                lang_code = cr_form.cleaned_data['source_lang']
                 source_lang = Language.objects.by_code_or_alias(lang_code)
                 name = cr_form.cleaned_data['name']
             except Language.DoesNotExist, e:
                 msg = _("Invalid language selected.")
-                cr_form._errors['source_language'] = ErrorList([msg, ])
+                cr_form._errors['source_lang'] = ErrorList([msg, ])
             else:
                 slug = slugify(name)
 
