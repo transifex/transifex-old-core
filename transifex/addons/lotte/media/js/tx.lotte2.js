@@ -104,7 +104,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     /* hold the current editing textarea object */
     this.current_box = null;
-
+		this.current_string = null;
+		this.current_row = null;
+		this.must_push = null;
+		this.current_id = null;
 /*    The target language*/
     this.to_lang = to_lang;
     /* True if there is error during saving translations */
@@ -346,6 +349,17 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     this.bindFocusTextArea = function() {
         $('tr td textarea.translation', this.bound_table).focus(function() {
             stringset.current_box = $(this);
+            var textarea = stringset.current_box;
+            var id;
+            if(textarea.hasClass('default_translation')){
+              id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            }else{
+              id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
+            }
+            if (id != this_stringset.current_id) {
+           		this_stringset.pushModifiedString();
+            }
+            stringset.current_id = id;
         });
     }
 
@@ -367,6 +381,36 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         });
     }
 
+    // saves last modified stringset
+		this.pushModifiedString = function() {
+				if ( this_stringset.current_string && this_stringset.must_push ) {
+					if ( this_stringset.current_string.modified && this_stringset.must_push ) {
+	            /* add timeout and then submit. using the id, this timeout can be canceled */
+	            $.doTimeout(this_stringset.current_id.toString(), 1, function(){
+	                /* push the string to server */
+	                this_stringset.push(this_stringset.current_string, this_stringset.current_id);
+	            });
+	        }
+				}
+		}
+		// Auto save on some specific clicks on textarea focusout
+		this.pushOnClick = function() {
+				$(document).click(function (e) {
+						if ($(e.target).parents().filter('tr').length && $(e.target).parents('tr').children('td.trans').length){
+							var id = parseInt($(e.target).parents("tr").find("textarea.translation").attr("id").split("_")[1]);
+							switch (id) {
+								case this_stringset.current_id : break;
+							default :
+								this_stringset.pushModifiedString();
+							}
+						}
+						else {
+							if (!($(e.target).hasClass('spellcheck-badwords') || $(e.target).parents('div').hasClass('spellcheck-badwords')
+								|| ($(e.target).parents('div').hasClass('spellcheck-suggestbox'))))
+								this_stringset.pushModifiedString();
+						}
+					})
+		}
     // Bind the onblur autosave event
     this.bindBlurTextArea = function() {
         $('tr td textarea.translation', this.bound_table).blur(function() {
@@ -377,7 +421,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             }else{
               id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }
-
+			stringset.current_id = id;
             /* Auto-save should be called only if either all textareas are
                filled in or when none of them for an entry are filled. This
                is mostly helpful in cases of plural entries */
@@ -391,16 +435,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 must_push = true
             else
                 must_push = false
-
-
-            string = this_stringset.strings[id];
-            if ( string.modified && must_push ) {
-                /* add timeout and then submit. using the id, this timeout can be canceled */
-                $.doTimeout(id.toString(), 1, function(){
-                    /* push the string to server */
-                    this_stringset.push(string, id);
-                });
-            }
+            stringset.current_string = this_stringset.strings[id];
+            stringset.must_push = must_push;
+            stringset.current_row = $(this).parents('tr');
+						this_stringset.pushOnClick();
 
         });
     }

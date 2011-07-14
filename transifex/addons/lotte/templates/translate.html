@@ -400,13 +400,14 @@
 
                 if ($("#toggle_autosave").is(":checked")){
                     // Enable the save button push upstream.
-                    stringset.unbindSaveButton();
+                    //stringset.unbindSaveButton();
                     stringset.bindBlurTextArea();
                 } else {
                     stringset.unbindBlurTextArea();
-                    stringset.bindSaveButton();
+                    //stringset.bindSaveButton();
                 }
-
+                //Enable the save button
+                stringset.bindSaveButton();
                 // Enable the undo button.
                 stringset.bindUndoButton();
                 var push_url = '{% url push_translation project.slug target_language.code %}';
