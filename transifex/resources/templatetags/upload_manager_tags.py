@@ -72,7 +72,7 @@ def upload_create_resource_form(request, project, prefix='create_form'):
             display_form=True
     else:
         cr_form = CreateResourceForm(
-            prefix=prefix, initial={'source_language': 'en'}
+            prefix=prefix, initial={'source_lang': 'en'}
         )
         display_form = False
 
