@@ -134,20 +134,18 @@ class LinguistHandler(Handler):
                 for p,n in enumerate(lang_rules):
                     plural_keys[p] = ""
                 for p,n in enumerate(plurals):
-                    plural_keys[p] = self._pseudo_decorate(n.string)
+                    plural_keys[p] = n.string
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.iterkeys():
                     e = doc.createElement("numerusform")
-                    e.appendChild(doc.createTextNode(xml_escape(plural_keys[key],
-                        {"'": "&apos;", '"': '&quot;'})))
+                    e.appendChild(doc.createTextNode(self._pseudo_decorate(
+                        plural_keys[key])))
                     translation.appendChild(e)
                     if not plural_keys[key]:
                         translation.attributes['type'] = 'unfinished'
             else:
                 if not translation.childNodes:
                     translation.attributes['type'] = 'unfinished'
-
-
 
         template_text = doc.toxml()
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
