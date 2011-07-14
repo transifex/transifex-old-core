@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.dispatch import Signal
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
 from django.db.models import Count, Q, get_model, F
 from django.http import (HttpResponseRedirect, HttpResponse, Http404,
                          HttpResponseForbidden, HttpResponseBadRequest)
@@ -13,6 +14,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
+from django.forms.util import ErrorList
 
 from authority.views import permission_denied
 
@@ -31,6 +33,8 @@ from transifex.resources.models import Translation, Resource, RLStats
 from transifex.resources.handlers import (invalidate_object_templates,
     invalidate_stats_cache)
 from transifex.resources.formats.registry import registry
+from transifex.resources.backends import FormatsBackend, FormatsBackendError, \
+        content_from_uploaded_file
 
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
@@ -137,44 +141,58 @@ def resource_edit(request, project_slug, resource_slug):
         else:
             url_form = URLInfoForm(request.POST,)
         if resource_form.is_valid() and url_form.is_valid():
-            urlinfo = url_form.save(commit=False)
-            resource_new = resource_form.save(user=request.user)
-            resource_new.save()
-            urlinfo.resource = resource_new
-            invalidate_object_templates(resource_new,
-                resource_new.source_language)
-            if urlinfo.source_file_url:
-                try:
-                    urlinfo.update_source_file(fake=True)
-                except Exception, e:
-                    url_form._errors['source_file_url'] = _("The URL you provided"
-                        " doesn't link to a valid file.")
-                    return render_to_response('resources/resource_form.html', {
-                        'resource_form': resource_form,
-                        'url_form': url_form,
-                        'resource': resource,
-                    }, context_instance=RequestContext(request))
-                # If we got a URL, save the model instance
-                urlinfo.save()
-            else:
-                if urlinfo.auto_update:
-                    url_form._errors['source_file_url'] = _("You have checked"
-                        " the auto update checkbox but you haven't provided a"
-                        " valid url.")
-                    return render_to_response('resources/resource_form.html', {
-                        'resource_form': resource_form,
-                        'url_form': url_form,
-                        'resource': resource,
-                    }, context_instance=RequestContext(request))
+            try:
+                resource = resource_form.save(commit=False)
+                if resource_form.cleaned_data['sourcefile'] is not None:
+                    source_language = resource_form.cleaned_data['source_language']
+                    method = resource.i18n_method
+                    content = content_from_uploaded_file(
+                        {0: resource_form.cleaned_data['sourcefile'], }
+                    )
+                    save_source_file(
+                        resource, source_language, request.user, content, method
+                    )
+
+                urlinfo = url_form.save(commit=False)
+                resource_new = resource_form.save()
+                resource_new.save()
+                urlinfo.resource = resource_new
+                invalidate_object_templates(resource_new,
+                    resource_new.source_language)
+                if urlinfo.source_file_url:
+                    try:
+                        urlinfo.update_source_file(fake=True)
+                    except Exception, e:
+                        url_form._errors['source_file_url'] = _("The URL you provided"
+                            " doesn't link to a valid file.")
+                        return render_to_response('resources/resource_form.html', {
+                            'resource_form': resource_form,
+                            'url_form': url_form,
+                            'resource': resource,
+                        }, context_instance=RequestContext(request))
+                    # If we got a URL, save the model instance
+                    urlinfo.save()
                 else:
-                    if urlinfo.id:
-                        urlinfo.delete()
+                    if urlinfo.auto_update:
+                        url_form._errors['source_file_url'] = _("You have checked"
+                            " the auto update checkbox but you haven't provided a"
+                            " valid url.")
+                        return render_to_response('resources/resource_form.html', {
+                            'resource_form': resource_form,
+                            'url_form': url_form,
+                            'resource': resource,
+                        }, context_instance=RequestContext(request))
+                    else:
+                        if urlinfo.id:
+                            urlinfo.delete()
 
-            post_resource_save.send(sender=None, instance=resource_new,
-                created=False, user=request.user)
+                post_resource_save.send(sender=None, instance=resource_new,
+                    created=False, user=request.user)
 
-            return HttpResponseRedirect(reverse('resource_detail',
-                args=[resource.project.slug, resource.slug]))
+                return HttpResponseRedirect(reverse('resource_detail',
+                    args=[resource.project.slug, resource.slug]))
+            except FormatsBackendError, e:
+                resource_form._errors['sourcefile'] = ErrorList([e.message, ])
     else:
         if resource:
             initial_data = {}
@@ -190,6 +208,19 @@ def resource_edit(request, project_slug, resource_slug):
         'url_form': url_form,
         'resource': resource,
     }, context_instance=RequestContext(request))
+
+
+@transaction.commit_on_success
+def save_source_file(resource, source_lang, user, content, method):
+    """Save changes in a resource.
+
+    Called by the "edit resource" action.
+
+    Saves any changes to the instance, save any new source file and
+    create a URLInfo object.
+    """
+    fb = FormatsBackend(resource, source_lang, user)
+    fb.import_source(content, method)
 
 
 # Restrict access only for private projects

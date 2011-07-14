@@ -11,6 +11,8 @@ from transifex.storage.widgets import StorageFileWidget
 from transifex.languages.models import Language
 from transifex.resources.models import Resource
 from transifex.resources.formats.core import ParseError
+from transifex.resources.backends import ResourceBackend, \
+        ResourceBackendError, content_from_uploaded_file
 from transifex.storage.models import StorageFile
 
 class ResourceForm(forms.ModelForm):
@@ -25,11 +27,9 @@ class ResourceForm(forms.ModelForm):
             self.fields['source_language'].required = False
             self.fields['source_language'].widget.attrs['disabled'] = 'disabled'
 
-
-
     class Meta:
         model = Resource
-        exclude = ('project', 'resource_group', 'source_file', 'i18n_type')
+        exclude = ('project', 'resource_group', 'i18n_type')
 
     def clean_source_language(self):
         """
@@ -41,103 +41,6 @@ class ResourceForm(forms.ModelForm):
             return instance.source_language
         else:
             return self.cleaned_data.get('source_language', None)
-
-    def clean(self):
-        """
-        Check if provided file is a valid file and can be handled by Transifex
-        """
-        cleaned_data = self.cleaned_data
-        file = None
-        language = cleaned_data['source_language']
-        if cleaned_data.has_key('sourcefile'):
-            file = cleaned_data['sourcefile']
-
-        if file:
-            # Check if we can handle the file with an existing parser
-            sf = StorageFile()
-            sf.uuid = str(uuid4())
-            sf.name = file.name
-            fh = open(sf.get_storage_path(), 'wb')
-            file.seek(0)
-            fh.write(file.read())
-            fh.flush()
-            fh.close()
-
-            sf.size = file.size
-            sf.language = language
-
-            try:
-                sf.update_props()
-            except (FileCheckError, ParseError), e:
-                raise forms.ValidationError(e.message)
-            sf.save()
-
-            fhandler = sf.find_parser()
-            if not fhandler:
-                raise forms.ValidationError("File doesn't seem to be in a"
-                    " valid format.")
-            try:
-                # Try to do an actual parsing to see if file is valid
-                fhandler.bind_file(filename=sf.get_storage_path())
-                fhandler.set_language(language)
-                fhandler.is_content_valid()
-                fhandler.parse_file(is_source=True)
-            except Exception,e:
-                sf.delete()
-                raise forms.ValidationError("Could not import file: %s" % str(e))
-
-            sf.delete()
-
-        return cleaned_data
-
-    def save(self, user=None, force_insert=False, force_update=False, commit=True):
-        m = super(ResourceForm, self).save(commit=False)
-
-        if commit:
-
-
-            cleaned_data = self.cleaned_data
-            file = None
-            language = cleaned_data['source_language']
-            if cleaned_data.has_key('sourcefile'):
-                file = cleaned_data['sourcefile']
-
-            if file:
-                sf = StorageFile()
-                sf.uuid = str(uuid4())
-                sf.name = file.name
-                fh = open(sf.get_storage_path(), 'wb')
-                file.seek(0)
-                fh.write(file.read())
-                fh.flush()
-                fh.close()
-
-                sf.size = file.size
-                sf.language = language
-
-                sf.update_props()
-                sf.save()
-
-                parser = sf.find_parser()
-
-                try:
-                    # Try to do an actual parsing to see if file is valid
-                    fhandler = parser(filename=sf.get_storage_path())
-                    fhandler.set_language(language)
-                    fhandler.bind_resource(self.instance)
-                    fhandler.is_content_valid()
-                    fhandler.parse_file(is_source=True)
-                    fhandler.save2db(is_source=True, user=user)
-                except:
-                    raise
-
-                method = registry.guess_method(file.name)
-                if method is not None:
-                    m.i18n_method = method
-
-                m.save()
-
-        return m
 
 
 class CreateResourceForm(forms.ModelForm):
