@@ -15,6 +15,7 @@ from transifex.resources.backends import ResourceBackend, \
 register = template.Library()
 
 
+@transaction.commit_manually
 @register.inclusion_tag("resources/upload_create_resource_form.html")
 def upload_create_resource_form(request, project, prefix='create_form'):
     """
@@ -59,7 +60,10 @@ def upload_create_resource_form(request, project, prefix='create_form'):
                 content = content_from_uploaded_file(request.FILES)
                 rb = ResourceBackend()
                 try:
-                    rb.create(project, slug, name, method, source_lang, content)
+                    rb.create(
+                        project, slug, name, method, source_lang, content,
+                        user=request.user
+                    )
                 except ResourceBackendError, e:
                     transaction.rollback()
                     cr_form._errors['source_file'] = ErrorList([e.message, ])
