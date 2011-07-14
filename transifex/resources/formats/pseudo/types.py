@@ -2,7 +2,7 @@
 import re
 from django.conf import settings
 from transifex.resources.formats.pseudo import PseudoTypeMixin
-
+from transifex.resources.formats.pseudo.splitters import *
 
 class XxxPseudoType(PseudoTypeMixin):
     """Pseudo type for adding xxx around a string."""
@@ -16,22 +16,23 @@ class XxxPseudoType(PseudoTypeMixin):
         
         Translations must begin and end with \n if the msgid does so.
         """
-        starts, ends = '', ''
-        if string.startswith('\n'):
-            starts = string[:1]
-            string = string[1:]
-        if string.endswith('\n'):
-            ends = string[-1:]
-            string = string[:-1]
-        string = self._base_compile(string)
-        if starts:
-            string = starts + string
-        if ends:
-            string = string + ends
-        return string
+        return self._skip_char_around(string, char='\n')
+
+    def _properties(self, string):
+        """
+        Custom pseudo method for PROPERTIES based resources.
+        
+        Translations with " (quote) around it should be kept like that.
+        """
+        #FIXME: It might not be really needed for java .properties files.
+        # It was possible to find some .properties files that where using
+        # KEY="string" structure, but apparently they were PHP based files.
+        # In any case, lets keep it here until we be sure of its needed, once
+        # it shouldn't affect the real Java .properties files.
+        return self._skip_char_around(string, char='"')
 
 
-#NOTE: Inherits _po method from XxxPseudoType
+#NOTE: Inherits custom methods from XxxPseudoType
 class BracketsPseudoType(XxxPseudoType):
     """Pseudo type for adding square brackets around a string."""
 
@@ -59,8 +60,9 @@ class UnicodePseudoType(PseudoTypeMixin):
         except UnicodeDecodeError:
             return char
 
+    @SplitterDecorators([TagSplitter, HTMLSpecialEntitiesSplitter, 
+        PrintfSplitter, EscapedCharsSplitter])
     def _base_compile(self, string):
-        # FIXME: It should ignore printf vars and tags
         return "".join(map(self._transpose, string))
 
 
@@ -120,6 +122,8 @@ class PLanguagePseudoType(PseudoTypeMixin):
         """
         return cls._PSUB_RE.sub(cls.Repl, string)
 
+    @SplitterDecorators([TagSplitter, HTMLSpecialEntitiesSplitter, 
+        PrintfSplitter, EscapedCharsSplitter])
     def _base_compile(self, string):
         outstr = u''
         ix = 0
@@ -138,4 +142,3 @@ class PLanguagePseudoType(PseudoTypeMixin):
                 outstr += self._QOF
                 outstr += changed_vowels
         return outstr
-
