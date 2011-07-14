@@ -270,10 +270,16 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
             /* Toggle per string save button */
             button_save = $("span#save_"+id);
+           	button_spellcheck = $("span#spellcheck_"+id);
             if (string.modified)
                 button_save.show();
             else
                 button_save.hide();
+            str = string.translated_strings.other.toString();
+            if (enable_spellcheck && str != "")
+                button_spellcheck.show();
+            else
+                button_spellcheck.hide();
         });
     };
 
@@ -294,6 +300,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
 				textarea.parents('tr').find('span#save_' + id).show();
 				textarea.parents('tr').find('span#undo_' + id).show();
+				if (enable_spellcheck)
+               		textarea.parents('tr').find('span#spellcheck_' + id).show();
             }
         });
     }
@@ -306,6 +314,33 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         });
     }
 
+    /* Bind spellcheck button */
+    this.bindSpellcheckButton = function() {
+       $('tr td.notes span.spellcheck', this.bound_table).click(function(e) {
+            table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current spellcheck button
+            var string = this_stringset.strings[table_row_id];
+			$("textarea#translation_"+table_row_id)
+			.spellchecker({
+			        url: spellcheck_url,//"http://spellchecker.jquery.badsyntax.co.uk/checkspelling.php",       // default spellcheck url
+			        //lang: "en",                     // default language
+			        //engine: "google",               // pspell or google
+			        //addToDictionary: false,         // display option to add word to dictionary (pspell only)
+			        wordlist: {
+			                action: "after",               // which jquery dom insert action
+			                element: $("#translation_"+table_row_id)    // which object to apply above method
+			        },
+			        string: string,
+			        stringset: this_stringset,
+			        id: table_row_id,
+			        //suggestBoxPosition: "below",    // position of suggest box; above or below the highlighted word
+			        innerDocument: true            // if you want the badwords highlighted in the html then set to true
+			});
+			$("textarea#translation_"+table_row_id).spellchecker("check", function(result){
+                // if result is true then there are no incorrectly spelt words
+                if (result) alert('There are no incorrectly spelt words.');
+			});
+        });
+    }
     // Bind the current textbox focus event
     // Make the focused textarea current in the StringSet!
     this.bindFocusTextArea = function() {
@@ -482,6 +517,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                 trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                                 trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                                 // TODO: Check for autosave and handle it.
+                                if (enable_spellcheck)
+                                	$('tbody tr td.notes span#spellcheck_' + id).show();
                                 $('tbody tr td.notes span#save_' + id).show();
                                 $('tbody tr td.notes span#undo_' + id).show();
                                 trans.focus();
@@ -520,6 +557,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                     trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                     // TODO: Check for autosave and handle it.
+                    if (enable_spellcheck)
+                    	$('tbody tr td.notes span#spellcheck_' + id).show();
                     $('tbody tr td.notes span#save_' + id).show();
                     $('tbody tr td.notes span#undo_' + id).show();
                     trans.focus();

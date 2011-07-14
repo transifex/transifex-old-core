@@ -27,6 +27,7 @@ RESOURCE_LANG_URL = RESOURCE_URL + r'l/(?P<lang_code>[\-_@\w]+)/'
 
 urlpatterns += patterns('',
     # Resource-specific Lotte
+    url(RESOURCE_LANG_URL+'spellcheck/$', spellcheck, name='spellcheckurl'),
     url(RESOURCE_LANG_URL+'$', translate, name='translate_resource'),
     url(RESOURCE_LANG_URL+'view/$', view_strings, name='view_strings'),
     url(RESOURCE_URL+r'l/(?P<source_lang_code>[\-_@\w]+)/clone/(?P<target_lang_code>[\-_@\w]+)/$', clone_language, name='clone_translate'),

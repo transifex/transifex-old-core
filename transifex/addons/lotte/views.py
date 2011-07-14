@@ -34,6 +34,7 @@ from transifex.resources.formats.validators import create_error_validators, \
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.txcommon.models import get_profile_or_user
+import httplib
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -50,7 +51,9 @@ except ImportError, e:
 class LotteBadRequestError(Exception):
     pass
 
-
+#Languages suported by google-spellcheck as mentioned at
+#http://www.google.com/support/toolbar/bin/answer.py?hl=en&answer=32703
+SPELLCHECK_SUPPORTED_LANGS = ['da', 'de', 'en', 'en_US', 'es', 'fi', 'fr', 'it', 'nl', 'pl', 'pt', 'pt_BR', 'ru', 'sv']
 Suggestion = get_model('suggestions', 'Suggestion')
 
 from signals import lotte_init, lotte_done, lotte_save_translation
@@ -161,7 +164,8 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'resources': resources,
           'resource_slug': resource_slug,
           'languages': Language.objects.all(),
-          'gtranslate': is_gtranslate_allowed(project)
+          'gtranslate': is_gtranslate_allowed(project),
+          'spellcheck_supported_langs' : SPELLCHECK_SUPPORTED_LANGS,
         },
         context_instance = RequestContext(request))
 
@@ -374,6 +378,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
                 # * SourceEntity object's "context" value
                 # * SourceEntity object's "id" value
                 ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="' + _("Save the specific change") + '"></span>'
+                 '<span class="i16 spellcheck buttonized_simple" id="spellcheck_' + str(counter) + '" style="display:none;border:0" title="' + _("Check spelling") + '"></span>'
                  '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="' + _("Undo to initial text") + '"></span>'
                  '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + escape(str(s.source_entity.context_string.encode('UTF-8'))) + '</span>'
                  '<span class="source_id" id="sourceid_' + str(counter) + '"style="display:none;">' + str(s.source_entity.id) + '</span>'),
@@ -874,6 +879,42 @@ def delete_translation(request, project_slug=None, resource_slug=None,
     invalidate_stats_cache(resource, language, user=request.user)
 
     return HttpResponse(status=200)
+
+def spellcheck(request, project_slug, lang_code, resource_slug=None):
+    """
+    Shows mispelled words along with suggestions
+    """
+    data = simplejson.loads(request.raw_post_data)
+    lang_code = lang_code.encode('utf-8')
+    string = escape(data["text"])
+    string_ = string
+    string = string.encode('utf-8')
+    lang_codes = SPELLCHECK_SUPPORTED_LANGS
+    if lang_code in lang_codes:
+        xmlData = '''<?xml version="1.0" encoding="UTF-8" ?>
+                        <spellrequest textalreadyclipped="0" ignoredups="1" ignoredigits="1" ignoreallcaps="1" suggestedlang="%s">
+                            <text>%s</text>
+                        </spellrequest>'''%(lang_code, string)
+        headers = {"Content-type": "text/xml; charset=utf-8",
+                   "Request-number":"1",
+                   "Document-type":"Request",
+                   "Connection":"close"}
+        con = httplib.HTTPSConnection('www.google.com')
+        con.request('POST', '/tbproxy/spell?lang=%s'%(lang_code), xmlData, headers)
+        response = con.getresponse().read().decode('utf-8')
+        pattern = re.compile(r'<c o="(?P<o>\d*)" l="(?P<l>\d*)" s="\d*">(?P<suggestions>[^<]*)<\/c>', re.UNICODE)
+        matches = pattern.findall(response)
+        d = []
+        for i in matches:
+            o = int(i[0])
+            l = int(i[1])
+            suggestions = i[2].split('\t')
+            word = string_[o:o+l].strip()
+            d.append([word, suggestions])
+    else:
+        d = []
+    json_dict = simplejson.dumps(d, 'utf-8')
+    return HttpResponse(json_dict, mimetype='application/json')
 
 
 

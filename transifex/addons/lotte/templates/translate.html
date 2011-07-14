@@ -18,6 +18,7 @@
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
   <link media="screen" href="{{ STATIC_URL }}lotte/css/jquery.whitespaceHighlight.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}lotte/css/spellchecker.css" />
   <!--[if IE]>
     <link media="screen" href="{{ STATIC_URL }}lotte/css/ie.lotte.css" type="text/css" rel="stylesheet"/>
   <![endif]-->
@@ -33,6 +34,7 @@
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.textarea-expander.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.jeditable.mini.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.spellchecker.js"></script>
   <script type="text/javascript">
     google.load("language", "1");
   </script>
@@ -69,6 +71,13 @@
     var source_lang = '{{ resource.source_language.code }}';
     var target_lang = '{{ target_language.code }}';
     var saveError_response = false;
+    var spellcheck_langs = [{% for item in spellcheck_supported_langs %}"{{ item }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
+    if (spellcheck_langs.indexOf("{{target_language.code}}") >= 0) {
+    	var spellcheck_url = '{% url spellcheckurl project.slug resource.slug target_language.code %}';
+    	var enable_spellcheck = true;
+    }
+    else
+    	var enable_spellcheck = false;
 
     function unique(a){
         /* Drop duplicated entries from an array (list) */
@@ -400,6 +409,10 @@
 
                 // Enable the undo button.
                 stringset.bindUndoButton();
+                var push_url = '{% url push_translation project.slug target_language.code %}';
+
+                if (enable_spellcheck)
+                	stringset.bindSpellcheckButton();
 
                 if ($("#toggle_verbose").is(":checked")){
                     // Enable the save button push upstream.
