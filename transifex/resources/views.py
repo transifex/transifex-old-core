@@ -212,15 +212,12 @@ def resource_edit(request, project_slug, resource_slug):
 
 @transaction.commit_on_success
 def save_source_file(resource, source_lang, user, content, method):
-    """Save changes in a resource.
+    """Save new source file.
 
     Called by the "edit resource" action.
-
-    Saves any changes to the instance, save any new source file and
-    create a URLInfo object.
     """
     fb = FormatsBackend(resource, source_lang, user)
-    fb.import_source(content, method)
+    return fb.import_source(content, method)
 
 
 # Restrict access only for private projects

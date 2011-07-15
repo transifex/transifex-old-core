@@ -9,8 +9,8 @@ from transifex.txcommon.utils import get_url_pattern
 from transifex.languages.models import Language
 from transifex.resources.forms import CreateResourceForm, ResourceTranslationForm
 from transifex.resources.models import Resource
-from transifex.resources.backends import ResourceBackend, \
-        ResourceBackendError, content_from_uploaded_file
+from transifex.resources.backends import ResourceBackend, FormatsBackend, \
+        ResourceBackendError, FormatsBackendError, content_from_uploaded_file
 
 register = template.Library()
 
@@ -18,14 +18,7 @@ register = template.Library()
 @transaction.commit_manually
 @register.inclusion_tag("resources/upload_create_resource_form.html")
 def upload_create_resource_form(request, project, prefix='create_form'):
-    """
-    Render a form that uses StorageFile field to upload files. It creates a
-    resource after the form ve validated, extract the file strings as
-    sourceentities on the fly.
-
-    The parameter 'prefix' can be used to add a prefix to the form name and
-    its sub-fields.
-    """
+    """Form for creating a new resource."""
     resource = None
     display_form = False
     if request.method == 'POST' and request.POST.get('create_resource', None):
@@ -91,41 +84,50 @@ def upload_create_resource_form(request, project, prefix='create_form'):
 @register.inclusion_tag("resources/upload_resource_translation_button.html")
 def upload_resource_translation_button(request, resource, language=None,
      prefix='button', translate_online=False):
-    """
-    Render a StorageFile field to upload translation and insert them into a
-    resource on the fly.
-
-    If the 'language' is passed, the field won't render the language select
-    field for choosing the language.
-
-    The parameter 'prefix' can be used to add a prefix to the field name and
-    its sub-fields.
+    """Form to add a translation.
 
     If the parameter translate online is given, a new button will appear next
     to the upload button which onclick will redirect the user to lotte.
     """
+    uploaded = False
+    show_form = False
     if language:
-        initial={'resource_translation':[language.code, ""]}
+        initial={'target_language': [language.code, ]}
     else:
         initial={}
 
-    if request.method == 'POST' and request.POST.get('resource_translation', None):
-        resource_translation_form = ResourceTranslationForm(request.POST,
-            language=language, prefix=prefix, initial=initial)
-        if resource_translation_form.is_valid():
-            resource = resource_translation_form.save(commit=False)
+    if request.method == 'POST' and request.POST.get('upload_translation', None):
+        rt_form = ResourceTranslationForm(
+            request.POST, request.FILES, prefix=prefix, initial=initial
+        )
+        if rt_form.is_valid():
+            target_lang = rt_form.cleaned_data['target_language']
+            content = content_from_uploaded_file(request.FILES)
+            try:
+                save_translation(resource, target_lang, request.user, content)
+                uploaded = True
+            except FormatsBackendError, e:
+                rt_form._errors['translation_file'] = ErrorList([e.message, ])
+                show_form = True
     else:
-        resource_translation_form = ResourceTranslationForm(language=language,
-            prefix=prefix, initial=initial)
-
-    api_resource_storage = get_url_pattern(
-        'api_resource_storage')
+        rt_form = ResourceTranslationForm(
+            prefix=prefix, initial=initial
+        )
 
     return {
           'project': resource.project,
           'resource': resource,
           'language' : language,
-          'resource_translation_form': resource_translation_form,
-          'api_resource_storage': api_resource_storage,
-          'translate_online': translate_online
+          'resource_translation_form': rt_form,
+          'translate_online': translate_online,
+          'uploaded': uploaded,
+          'show_form': show_form,
     }
+
+
+@transaction.commit_on_success
+def save_translation(resource, target_language, user, content):
+    """Save a new translation file for the resource."""
+    fb = FormatsBackend(resource, target_language, user)
+    return fb.import_translation(content)
+

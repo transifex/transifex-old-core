@@ -5,9 +5,6 @@ from django.utils.translation import ugettext_lazy as _
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.languages.models import Language
 from transifex.resources.formats.registry import registry
-from transifex.storage.fields import StorageFileField
-from transifex.storage.models import StorageFile
-from transifex.storage.widgets import StorageFileWidget
 from transifex.languages.models import Language
 from transifex.resources.models import Resource
 from transifex.resources.formats.core import ParseError
@@ -67,40 +64,20 @@ class CreateResourceForm(forms.ModelForm):
         model = Resource
         fields = ('name', 'source_file', 'i18n_method', 'source_lang')
 
-    def __init__(self, *args, **kwargs):
-        
-        project = kwargs.pop('project', None)
-        super(CreateResourceForm, self).__init__(*args, **kwargs)
-
-        self.source_language = project.source_language
-        
-    def clean(self):
-        """Check whether the language"""
-        cleaned_data = self.cleaned_data
-        source_file = cleaned_data.get('source_file')
-        
-        if self.source_language and self.source_language != source_file.language:
-            msg = _("Invalid selected language.")
-            self._errors["source_file"] = self.error_class([msg])
-            del cleaned_data["source_file"]
-        return cleaned_data
-
 
 class ResourceTranslationForm(forms.Form):
     """
-    Form to to be used for creating/getting StorageFile object id on the fly,
-    using StorageFileField.
+    Form to to be used for creating new translations.
     """
-    def __init__(self, *args, **kwargs):
-        language = kwargs.pop('language', None)
-        display_language = kwargs.pop('display_language', None)
-        super(ResourceTranslationForm, self).__init__(*args, **kwargs)
 
-        self.fields['resource_translation'] = StorageFileField(
-            label=_('Resource file'),
-            help_text=_("Select a file from your file system to be used to "
-                "fill translations for this resource."), language=language,
-                display_language=display_language)
+    language_choices = [(l.code, l) for l in Language.objects.all()]
+    language_choices.insert(0, ('', '-' * 10))
+
+    translation_file = forms.FileField(label=_("Translation File"))
+    target_language = forms.ChoiceField(
+        label=_('Language'), choices=language_choices,
+        help_text=_("The language of the translation.")
+    )
 
 
 class ResourcePseudoTranslationForm(forms.Form):

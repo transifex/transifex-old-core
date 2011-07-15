@@ -1,44 +1,46 @@
 {% load i18n %}
 {% load txcommontags %}
 
+
 <div id="upload_resource_translation_button" class="generic_form">
-    {{ resource_translation_form.resource_translation }}
-    {% if translate_online %}
-    <a id="start_new_translation" class="i16 buttonized action">{% trans "Translate Online" %}</a>
-    {% endif %}
+  <form action='' method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>
+      {{ resource_translation_form.target_language.label }}:
+      <span class="fieldp" id="target_language_span">
+        {{ resource_translation_form.target_language }}
+      </span>
+      <span class="fielderrors">
+        {% for error in resource_translation_form.target_language.errors %}{{ error }}{% endfor %}
+      </span>
+    </p>
+    <p>
+      {% trans "Select a file" %}:
+      <span class="fieldp">
+        {{ resource_translation_form.translation_file }}
+      </span>
+      <span class="fielderrors">
+        {% for error in resource_translation_form.translation_file.errors %}{{ error }}{% endfor %}
+      </span>
+    </p>
+    <p class="submit" style="text-align:center">
+      <input type="submit" class="i16 submit buttonized" name="upload_translation" value="{% trans "Upload File" %}" />
+    </p>
+    <p>
+      {% trans "or" %}
+      <a id="start_new_translation" class="i16 buttonized action">{% trans "Translate Online" %}</a>
+    </p>
+  </form>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function(){
-    var prefix = "{{ resource_translation_form.prefix }}-resource_translation";
-    var project_slug = "{{ resource.project.slug }}";
-    var resource_slug = "{{ resource.slug }}";
-    $("#" + prefix + "-id-uuid").change(function(){
-        var uuid = $(this).val();
-        var language = $("[name='" + prefix + "_0']").val();
-        if(uuid != ""){
-            var url_api_project = sprintf('{{ api_resource_storage }}', project_slug, resource_slug, language);
-            $("div#notification-container div").html('{% trans "Adding translations. This might take a while..."|escapejs %}');
-            $("div#notification-container").fadeIn("fast");
-            $.ajax({
-                type : 'PUT',
-                url: url_api_project,
-                contentType : 'application/json',
-                responseType: "json",
-                data: JSON.stringify({'uuid':uuid}),
-                dataType: 'json',
-                async: false,
-                success: function(data, textStatus, XMLHttpRequest){
-                    window.location = data['redirect'];
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert(XMLHttpRequest.responseText);
-                },
-                complete: function(XMLHttpRequest, textStatus){
-                    $("div#notification-container").fadeOut("slow");
-                }
-            });
-        }
-    });
+{% if uploaded %}
+window.location.reload(true)
+{% endif %}
+
+{% if show_form %}
+$("#new_translation_box1").show();
+{% endif %}
 });
 </script>

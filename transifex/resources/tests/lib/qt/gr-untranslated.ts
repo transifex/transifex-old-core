@@ -16,7 +16,7 @@
     <message numerus="yes">
         <location filename="test.cpp" line="140"/>
         <source>%n files.</source>
-        <translation>
+        <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
     </message>
