@@ -122,7 +122,39 @@ class FormatsBackend(object):
             A two-element tuple (pair). The first element is the number of
             strings added and the second one is the number of those updated.
         """
-        handler = registry.handler_for(method)
+        handler = self._get_handler(method)
+        return self._import_content(handler, content, True)
+
+    def import_translation(self, content):
+        """Parse a translation file for a resource.
+
+        Args:
+            content: The content to parse.
+        Returns:
+            A two element tuple(pair). The first element is the number of
+            strings added and the second one is the number of those upadted.
+        """
+        handler = self._get_handler(self.resource.i18n_method)
+        return self._import_content(handler, content, False)
+
+    def _get_handler(self, method):
+        """Get the appropriate hanlder for the method.
+
+        Args:
+            The i18n method used.
+        """
+        return registry.handler_for(method)
+
+    def _import_content(self, handler, content, is_source):
+        """Import content to the database.
+
+        Args:
+            content: The content to save.
+            is_source: A flag to indicate a source or a translation file.
+        Returns:
+            A two element tuple(pair). The first element is the number of
+            strings added and the second one is the number of those upadted.
+        """
         if handler is None:
             msg = "Invalid i18n method used: %s" % method
             logger.warning(msg)
@@ -131,8 +163,8 @@ class FormatsBackend(object):
             handler.bind_resource(self.resource)
             handler.set_language(self.language)
             handler.bind_content(content)
-            handler.parse_file(is_source=True)
-            return handler.save2db(is_source=True, user=self.user)
+            handler.parse_file(is_source=is_source)
+            return handler.save2db(is_source=is_source, user=self.user)
         except FormatError, e:
             raise FormatsBackendError(e.message)
 
