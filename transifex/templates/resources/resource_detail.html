@@ -33,7 +33,7 @@
         {% endif %}
 
         $(".tablesorter_resource").tablesorter({
-            sortList: [[1,1]],
+            // sortList: [[1,1]],
             widgets: ['zebra'],
             headers: {
                 1: { sorter: 'percent' },
@@ -280,6 +280,10 @@
            });
         });
     </script>
+    {% if forloop.counter == 1 and forloop.last %}
+        </thead>
+      <tbody>
+    {% endif %}
 {% endfor %}
   </tbody>
 </table>
