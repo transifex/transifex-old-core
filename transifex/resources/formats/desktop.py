@@ -55,7 +55,10 @@ class DesktopHandler(Handler):
         return super(Desktophandler, self)._compile(content, language)
 
     def _compile_source(self, content, *args, **kwargs):
-        """Compile a source file."""
+        """Compile a source file.
+
+        Add all translations to the file.
+        """
         all_languages = set(self.resource.available_languages_without_teams)
         source_language = set([self.resource.source_language, ])
         translated_to = all_languages - source_language
@@ -122,14 +125,8 @@ class DesktopHandler(Handler):
         # entries is a dictionary with the entry keys in the file
         entries = defaultdict(list)
 
-        fh = codecs.open(self.filename, "r", self.default_encoding)
-        try:
-            buf = fh.read()
-        finally:
-            fh.close()
-
         template = u''
-        for line in buf.split("\n"):
+        for line in self._iter_by_line(self.content):
             if self._should_skip(line) :
                 template += line + "\n"
                 continue
@@ -166,8 +163,10 @@ class DesktopHandler(Handler):
         for key, value in entries.iteritems():
             for translation, language in value:
                 if is_source and language:
+                    # Skip other languages when parsing a source file
                     continue
                 elif not is_source and language != self.language:
+                    # Skip other languages than the one the parsing is for
                     continue
                 self._add_translation_string(key, translation, context=context)
 
