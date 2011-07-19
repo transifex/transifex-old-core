@@ -12,7 +12,7 @@
       </span>
     </p>
     <p>
-      <span id="upload_button" class="i16 send_file buttonized">
+      <span id="upload_button_create" class="i16 send_file buttonized">
         {% trans "Upload file" %}
       </span>
       {% trans "or" %}
@@ -23,25 +23,13 @@
   </form>
 </div>
 
-<script type="text/javascript">
-$(document).ready(function(){
-{% if uploaded %}
-window.location.reload(true)
-{% endif %}
-
-{% if show_form %}
-$("#new_translation_box1").show();
-{% endif %}
-});
-</script>
-
 {% else %}
 
 <div id="update_translation_form" class="generic_form">
   <form id="update_translation_form_element" action='' method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     {{ update_translation_form.target_language }}
-    <span id="upload_button" class="i16 send_file buttonized">
+    <span id="upload_button_update" class="i16 send_file buttonized">
       {% trans "Upload file" %}
     </span>
   </form>
@@ -53,7 +41,11 @@ $("#new_translation_box1").show();
 jQuery(document).ready(function($){
 
     /* Bind ajax upload button */
-    new AjaxUpload("upload_button", {
+    {% if language.code %}
+    new AjaxUpload("upload_button_update", {
+    {% else %}
+    new AjaxUpload("upload_button_create", {
+    {% endif %}
         {% if language.code %}
         action: "{% url update_translation project.slug resource.slug language.code %}",
         {% else %}
