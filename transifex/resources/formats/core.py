@@ -659,7 +659,7 @@ class Handler(object):
                 if self._should_skip_translation(se, j):
                     continue
                 if (se, j) in translations:
-                    tr = translations.get(se, j)
+                    tr = translations.get((se, j))
                     if overwrite_translations and tr.string != j.translation:
                             tr.string = j.translation
                             tr.user = user
