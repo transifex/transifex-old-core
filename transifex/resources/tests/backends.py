@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import codecs
 from django.conf import settings
 from django.test import TransactionTestCase
 from transifex.projects.models import Project
@@ -18,7 +17,7 @@ class TestBackend(Users, Languages, NoticeTypes, TransactionTestCase):
         file_ = os.path.join(
             settings.TX_ROOT, "resources/tests/lib/pofile/pt_BR.po"
         )
-        f = codecs.open(file_, 'r', encoding='UTF-8')
+        f = open(file_, 'r')
         try:
             self.content = f.read()
         finally:

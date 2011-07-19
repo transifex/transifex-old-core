@@ -157,7 +157,10 @@ class Handler(object):
         Return either the `content` or the content of the file.
         """
         if content is not None:
-            return content
+            if isinstance(content, str):
+                return content.decode(self.format_encoding)
+            else:
+                return content
         if filename is None:
             return None
         f = codecs.open(filename, 'r', encoding=self.format_encoding)

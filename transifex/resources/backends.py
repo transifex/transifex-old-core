@@ -186,6 +186,6 @@ def content_from_uploaded_file(files, encoding='UTF-8'):
     """
     files = files.values()
     if not files:
-        return u''
-    return files[0].read().decode('UTF-8')
+        return ''
+    return files[0].read()
 
