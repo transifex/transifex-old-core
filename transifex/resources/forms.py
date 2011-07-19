@@ -80,6 +80,18 @@ class ResourceTranslationForm(forms.Form):
     )
 
 
+class UpdateTranslationForm(forms.Form):
+    """Form used when uploading a new translation file."""
+
+    translation_file = forms.FileField(label=_("Translation File"))
+    target_language = forms.ChoiceField(
+        label=_('Language'), widget=forms.HiddenInput,
+        choices=[(l.code, l) for l in Language.objects.all()],
+        help_text=_("The language of the translation.")
+    )
+
+
+
 class ResourcePseudoTranslationForm(forms.Form):
     """Form to be used for getting pseudo translation files"""
     

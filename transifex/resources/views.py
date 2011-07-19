@@ -269,6 +269,53 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     context_instance = RequestContext(request))
 
 
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
+def resource_actions(request, project_slug=None, resource_slug=None,
+                     target_lang_code=None):
+    """
+    Ajax view that returns an fancybox template snippet for resource specific
+    actions.
+    """
+    resource = get_object_or_404(Resource.objects.select_related('project'), project__slug = project_slug,
+                                 slug = resource_slug)
+    target_language = get_object_or_404(Language, code=target_lang_code)
+    project = resource.project
+    # Get the team if exists to use it for permissions and links
+    team = Team.objects.get_or_none(project, target_lang_code)
+
+    disabled_languages_ids = RLStats.objects.filter(resource=resource
+        ).values_list('language', flat=True).distinct()
+
+    languages = Language.objects.filter()
+
+    lock = Lock.objects.get_valid(resource, target_language)
+
+    # We want the teams to check in which languages user is permitted to translate.
+    user_teams = []
+    if getattr(request, 'user') and request.user.is_authenticated():
+        user_teams = Team.objects.filter(project=resource.project).filter(
+            Q(coordinators=request.user)|
+            Q(members=request.user)).distinct()
+
+    stats = get_object_or_404(RLStats, resource=resource, language=target_language)
+    wordcount = resource.wordcount
+
+    return render_to_response("resources/resource_actions.html",
+    { 'project' : project,
+      'resource' : resource,
+      'target_language' : target_language,
+      'team' : team,
+      'languages': languages,
+      'disabled_languages_ids': disabled_languages_ids,
+      'lock': lock,
+      'user_teams': user_teams,
+      'stats': stats,
+      'wordcount': wordcount,
+      },
+    context_instance = RequestContext(request))
+
+
 # Restrict access only for private projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
@@ -567,3 +614,61 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
 
     return HttpResponse(simplejson.dumps(response), mimetype='application/json')
 
+
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
+def update_translation(request, project_slug, resource_slug, lang_code):
+    """Ajax view that gets an uploaded translation as a file and saves it.
+
+    If the language is not specified, the translation does not exist yet.
+    Othewise, this is an update.
+
+    Returns:
+        Either an error message, or nothing for success.
+    """
+    resource = get_object_or_404(
+        Resource.objects.select_related('project'),
+        project__slug=project_slug, slug=resource_slug
+    )
+    target_language = get_object_or_404(Language, code=lang_code)
+    project = resource.project
+    # Get the team if exists to use it for permissions and links
+    team = Team.objects.get_or_none(project, lang_code)
+
+    check = ProjectPermission(request.user)
+    if (not check.submit_translations(team or resource.project) or\
+            not resource.accept_translations) and not\
+            check.maintain(resource.project):
+        return HttpResponse(
+            simplejson.dumps({
+                    'msg': _("You are not allowed to upload a translation."),
+                    'status': 403,
+            }),
+            status=403, content_type='text/plain'
+        )
+
+    content = content_from_uploaded_file(request.FILES)
+    try:
+        _save_translation(resource, target_language, request.user, content)
+    except FormatsBackendError, e:
+        return HttpResponse(
+            simplejson.dumps({
+                    'msg': e.message,
+                    'status': 400,
+            }),
+            status=400, content_type='text/plain'
+        )
+    return HttpResponse(
+        simplejson.dumps({
+                'msg': "",
+                'status': 200,
+        }),
+        status=200, content_type='text/plain'
+    )
+
+
+@transaction.commit_on_success
+def _save_translation(resource, target_language, user, content):
+    """Save a new translation file for the resource."""
+    fb = FormatsBackend(resource, target_language, user)
+    return fb.import_translation(content)

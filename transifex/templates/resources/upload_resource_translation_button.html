@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load txcommontags %}
 
-
+{% if create %}
 <div id="upload_resource_translation_button" class="generic_form">
   <form action='' method='POST' enctype="multipart/form-data">
     {% csrf_token %}
@@ -44,3 +44,44 @@ $("#new_translation_box1").show();
 {% endif %}
 });
 </script>
+
+{% else %}
+
+<div id="update_translation_form" class="generic_form">
+  <form id="update_translation_form_element" action='' method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ update_translation_form.target_language }}
+    <span id="upload_button" class="i16 send_file buttonized">
+      {% trans "Upload file" %}
+    </span>
+  </form>
+</div>
+
+<script type="text/javascript">
+
+jQuery(document).ready(function($){
+
+    /* Bind ajax upload button */
+    new AjaxUpload("upload_button", {
+        action: "{% url update_translation project.slug resource.slug language.code %}",
+        responseType: "json",
+        onSubmit : function(file, extension) {
+            $("div#notification-container div").html(sprintf("Uploading '%s'", file));
+            $("div#notification-container").fadeIn("fast");
+            this.disable();
+        },
+        onComplete : function(file, response) {
+            if(typeof(response['status']) !== 'undefined' && response['status'] != 200) {
+                if (typeof(response['message']) !== 'undefined')
+                    alert(response['message']);
+            }
+            $("div#notification-container").fadeOut("fast");
+            this.enable();
+            location.replace('{{ next_url }}')
+        }
+    });
+});
+
+</script>
+
+{% endif %}

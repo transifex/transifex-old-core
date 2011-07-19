@@ -7,7 +7,8 @@ from django.template.defaultfilters import slugify
 from django.forms.util import ErrorList
 from transifex.txcommon.utils import get_url_pattern
 from transifex.languages.models import Language
-from transifex.resources.forms import CreateResourceForm, ResourceTranslationForm
+from transifex.resources.forms import CreateResourceForm, \
+        ResourceTranslationForm, UpdateTranslationForm
 from transifex.resources.models import Resource
 from transifex.resources.backends import ResourceBackend, FormatsBackend, \
         ResourceBackendError, FormatsBackendError, content_from_uploaded_file
@@ -89,16 +90,23 @@ def upload_resource_translation_button(request, resource, language=None,
     If the parameter translate online is given, a new button will appear next
     to the upload button which onclick will redirect the user to lotte.
     """
-    uploaded = False
-    show_form = False
-    if language:
-        initial={'target_language': [language.code, ]}
+    if language or (request.POST and
+                    request.POST.get('target_language', None)):
+        return update_translation_form(request, resource, language)
     else:
-        initial={}
+        return create_translation_form(request, resource, language)
+
+
+def create_translation_form(request, resource, language=None, prefix='button',
+                            translate_online=True):
+    # Flag for success in uploading a file
+    uploaded = False
+    # Flag for whether to show or hide the form by default
+    show_form = False
 
     if request.method == 'POST' and request.POST.get('upload_translation', None):
         rt_form = ResourceTranslationForm(
-            request.POST, request.FILES, prefix=prefix, initial=initial
+            request.POST, request.FILES, prefix=prefix
         )
         if rt_form.is_valid():
             target_lang = rt_form.cleaned_data['target_language']
@@ -110,9 +118,7 @@ def upload_resource_translation_button(request, resource, language=None,
                 rt_form._errors['translation_file'] = ErrorList([e.message, ])
                 show_form = True
     else:
-        rt_form = ResourceTranslationForm(
-            prefix=prefix, initial=initial
-        )
+        rt_form = ResourceTranslationForm(prefix=prefix)
 
     return {
           'project': resource.project,
@@ -122,6 +128,48 @@ def upload_resource_translation_button(request, resource, language=None,
           'translate_online': translate_online,
           'uploaded': uploaded,
           'show_form': show_form,
+          'create': True,
+    }
+
+
+def update_translation_form(request, resource, language=None,
+                            prefix='update_trans', translate_online=False):
+    """Form to add a translation.
+
+    If the parameter translate online is given, a new button will appear next
+    to the upload button which onclick will redirect the user to lotte.
+    """
+    if language:
+        initial = {"target_language": language.code, }
+    else:
+        initial = {}
+
+    if request.method == 'POST' and request.POST.get('target_language', None):
+        form = UpdateTranslationForm(
+            request.POST, request.FILES, prefix=prefix, initial=initial
+        )
+        if form.is_valid():
+            content = content_from_uploaded_file(request.FILES)
+            language = form.cleaned_data["target_language"]
+            try:
+                save_translation(resource, language, request.user, content)
+                uploaded = True
+            except FormatsBackendError, e:
+                form._errors['translation_file'] = ErrorList([e.message, ])
+    else:
+        form = UpdateTranslationForm(prefix=prefix, initial=initial)
+
+    return {
+        'project': resource.project,
+        'resource': resource,
+        'language' : language,
+        'update_translation_form': form,
+        'translate_online': False,
+        'create': False,
+        'prefix': prefix,
+        'next_url': reverse(
+            'resource_detail', args=[resource.project.slug, resource.slug]
+        )
     }
 
 
@@ -130,4 +178,3 @@ def save_translation(resource, target_language, user, content):
     """Save a new translation file for the resource."""
     fb = FormatsBackend(resource, target_language, user)
     return fb.import_translation(content)
-
