@@ -123,6 +123,10 @@ class FormatsBackend(object):
             strings added and the second one is the number of those updated.
         """
         handler = self._get_handler(method)
+        if handler is None:
+            msg = "Invalid i18n method used: %s" % method
+            logger.warning(msg)
+            raise FormatsBackendError(msg)
         return self._import_content(handler, content, True)
 
     def import_translation(self, content):
@@ -135,6 +139,10 @@ class FormatsBackend(object):
             strings added and the second one is the number of those upadted.
         """
         handler = self._get_handler(self.resource.i18n_method)
+        if handler is None:
+            msg = "Invalid i18n method used: %s" % method
+            logger.warning(msg)
+            raise FormatsBackendError(msg)
         return self._import_content(handler, content, False)
 
     def _get_handler(self, method):
@@ -155,10 +163,6 @@ class FormatsBackend(object):
             A two element tuple(pair). The first element is the number of
             strings added and the second one is the number of those upadted.
         """
-        if handler is None:
-            msg = "Invalid i18n method used: %s" % method
-            logger.warning(msg)
-            raise FormatsBackendError(msg)
         try:
             handler.bind_resource(self.resource)
             handler.set_language(self.language)
