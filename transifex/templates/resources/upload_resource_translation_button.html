@@ -10,25 +10,15 @@
       <span class="fieldp" id="target_language_span">
         {{ resource_translation_form.target_language }}
       </span>
-      <span class="fielderrors">
-        {% for error in resource_translation_form.target_language.errors %}{{ error }}{% endfor %}
-      </span>
     </p>
     <p>
-      {% trans "Select a file" %}:
-      <span class="fieldp">
-        {{ resource_translation_form.translation_file }}
+      <span id="upload_button" class="i16 send_file buttonized">
+        {% trans "Upload file" %}
       </span>
-      <span class="fielderrors">
-        {% for error in resource_translation_form.translation_file.errors %}{{ error }}{% endfor %}
-      </span>
-    </p>
-    <p class="submit" style="text-align:center">
-      <input type="submit" class="i16 submit buttonized" name="upload_translation" value="{% trans "Upload File" %}" />
-    </p>
-    <p>
       {% trans "or" %}
-      <a id="start_new_translation" class="i16 buttonized action">{% trans "Translate Online" %}</a>
+      <a id="start_new_translation" class="i16 buttonized action">
+        {% trans "Translate Online" %}
+      </a>
     </p>
   </form>
 </div>
@@ -56,6 +46,7 @@ $("#new_translation_box1").show();
     </span>
   </form>
 </div>
+{% endif %}
 
 <script type="text/javascript">
 
@@ -63,9 +54,18 @@ jQuery(document).ready(function($){
 
     /* Bind ajax upload button */
     new AjaxUpload("upload_button", {
+        {% if language.code %}
         action: "{% url update_translation project.slug resource.slug language.code %}",
+        {% else %}
+        action: "{% url add_translation project.slug resource.slug %}",
+        {% endif %}
         responseType: "json",
         onSubmit : function(file, extension) {
+            {% if not language.code %}
+            this.setData({
+                'language_code': $("#target_language_span > select").val()
+            });
+            {% endif %}
             $("div#notification-container div").html(sprintf("Uploading '%s'", file));
             $("div#notification-container").fadeIn("fast");
             this.disable();
@@ -77,11 +77,10 @@ jQuery(document).ready(function($){
             }
             $("div#notification-container").fadeOut("fast");
             this.enable();
-            location.replace('{{ next_url }}')
+            location.reload(true);
         }
     });
 });
 
 </script>
 
-{% endif %}

@@ -121,14 +121,14 @@ def create_translation_form(request, resource, language=None, prefix='button',
         rt_form = ResourceTranslationForm(prefix=prefix)
 
     return {
-          'project': resource.project,
-          'resource': resource,
-          'language' : language,
-          'resource_translation_form': rt_form,
-          'translate_online': translate_online,
-          'uploaded': uploaded,
-          'show_form': show_form,
-          'create': True,
+        'project': resource.project,
+        'resource': resource,
+        'language' : language,
+        'resource_translation_form': rt_form,
+        'translate_online': translate_online,
+        'uploaded': uploaded,
+        'show_form': show_form,
+        'create': True,
     }
 
 
@@ -167,9 +167,6 @@ def update_translation_form(request, resource, language=None,
         'translate_online': False,
         'create': False,
         'prefix': prefix,
-        'next_url': reverse(
-            'resource_detail', args=[resource.project.slug, resource.slug]
-        )
     }
 
 

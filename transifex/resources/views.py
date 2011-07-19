@@ -617,7 +617,7 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
 
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
-def update_translation(request, project_slug, resource_slug, lang_code):
+def update_translation(request, project_slug, resource_slug, lang_code=None):
     """Ajax view that gets an uploaded translation as a file and saves it.
 
     If the language is not specified, the translation does not exist yet.
@@ -630,6 +630,8 @@ def update_translation(request, project_slug, resource_slug, lang_code):
         Resource.objects.select_related('project'),
         project__slug=project_slug, slug=resource_slug
     )
+    if lang_code is None:
+        lang_code = request.POST.get('language_code', None)
     target_language = get_object_or_404(Language, code=lang_code)
     project = resource.project
     # Get the team if exists to use it for permissions and links
