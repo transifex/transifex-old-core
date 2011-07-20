@@ -460,9 +460,9 @@ class POTHandler(GettextHandler):
     def is_pot(self):
         return True
 
-    def _apply_translation(self, source, trans, content):
+    def _apply_translation(self, source_hash, trans, content):
         return self._replace_translation(
-            "%s_tr" % source.string_hash.encode(self.default_encoding),
+            "%s_tr" % source_hash.encode(self.default_encoding),
             "", content
         )
 

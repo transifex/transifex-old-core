@@ -286,7 +286,30 @@ class Handler(object):
 
     def _get_source_strings(self, resource):
         """Return the source strings of the resource."""
-        return SourceEntity.objects.filter(resource=resource)
+        return SourceEntity.objects.filter(resource=resource).values_list(
+            'id', 'string_hash'
+        )
+
+    def _get_translation_strings(self, source_entities, language):
+        """Get the translation strings that match the specified source_entities.
+
+        The returned translations are for the specified langauge and rule = 5.
+
+        Args:
+            source_entities: A list of source entity ids.
+            language: The language which the translation is for.
+        Returns:
+            A dictionary with the translated strings. The keys are the id of
+            the source entity this translation corresponds to and values are
+            the translated strings.
+        """
+        res = {}
+        translations = Translation.objects.filter(
+            source_entity__in=source_entities, language=language, rule=5
+        ).values_list('source_entity_id', 'string') .iterator()
+        for t in translations:
+            res[t[0]] = t[1]
+        return res
 
     def _get_translation(self, string, language, rule):
         try:
@@ -318,23 +341,23 @@ class Handler(object):
         """Adds to instance a new suggestion string."""
         self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
 
-    def _apply_translation(self, source, trans, content):
+    def _apply_translation(self, source_hash, trans, content):
         """Apply a translation to text.
 
         Usually, we do a search for the hash code of source and replace
         with trans.
 
         Args:
-            source: The source entity.
-            trans: The translation object.
+            source_hash: The hash string of the source entity.
+            trans: The translation string.
             content: The text for the search-&-replace.
 
         Returns:
             The content after the translation has been applied.
         """
         return self._replace_translation(
-            "%s_tr" % source.string_hash.encode(self.default_encoding),
-            trans and trans.string.encode(self.default_encoding) or "",
+            "%s_tr" % source_hash.encode(self.default_encoding),
+            trans.encode(self.default_encoding),
             content
         )
 
@@ -394,9 +417,12 @@ class Handler(object):
             The compiled template.
         """
         stringset = self._get_source_strings(self.resource)
+        translations = self._get_translation_strings(
+            (s[0] for s in stringset), language
+        )
         for string in stringset:
-            trans = self._get_translation(string, language, 5)
-            content = self._apply_translation(string, trans, content)
+            trans = translations.get(string[0], u"")
+            content = self._apply_translation(string[1], trans, content)
         return content
 
     #######################
