@@ -340,3 +340,36 @@ class LotteViewsTests(BaseTestCase):
             json.dumps(data), content_type='application/json')
         self.assertContains(resp, '', status_code=200)
 
+
+    def test_add_edit_developer_commant_extra(self):
+        """
+        Test addition and edition of developer extra comment through Lotte.
+        """
+
+        # Test access for developer_comment_extra view
+        data = {'source_entity_id':self.entity.id,
+            'comment_extra': 'Extra comment'}
+        page_url = reverse('developer_comment_extra',
+            args=[self.project.slug])
+        resp = self.client['maintainer'].post(page_url, data)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Extra comment')
+
+        # Test passing a wrong SE id
+        data = {'source_entity_id':0,
+            'comment_extra': 'Extra comment'}
+        resp = self.client['maintainer'].post(page_url, data)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'No such Source Entity for the given project.')
+
+        # Test doing a GET request
+        data = {'source_entity_id': self.entity.id,
+            'comment_extra': 'Extra comment'}
+        resp = self.client['maintainer'].get(page_url, data)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Bad request.')
+
+
+
+
+

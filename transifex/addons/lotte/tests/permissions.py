@@ -89,6 +89,16 @@ class LottePermissionsTests(BaseTestCase):
         # Test the response contents
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 200)
+       
+        # Test access for developer_comment_extra view
+        data = {'source_entity_id':self.entity.id,
+            'comment_extra': 'Extra comment'}
+        page_url = reverse('developer_comment_extra',
+            args=[self.project.slug])
+        # Test the response contents
+        resp = self.client['anonymous'].post(page_url, data)
+        self.assertEqual(resp.status_code, 302)
+        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
 
     def test_registered(self):
         """
@@ -169,6 +179,16 @@ class LottePermissionsTests(BaseTestCase):
         # Test the response contents
         resp = self.client['registered'].get(page_url)
         self.assertEqual(resp.status_code, 200)
+
+        # Test access for developer_comment_extra view
+        data = {'source_entity_id':self.entity.id,
+            'comment_extra': 'Extra comment'}
+        page_url = reverse('developer_comment_extra',
+            args=[self.project.slug])
+        # Test the response contents
+        resp = self.client['registered'].post(page_url, data)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Permission error.')
 
     def test_team_member(self):
         """
@@ -263,6 +283,17 @@ class LottePermissionsTests(BaseTestCase):
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 200)
 
+        # Test access for developer_comment_extra view
+        data = {'source_entity_id':self.entity.id,
+            'comment_extra': 'Extra comment'}
+        page_url = reverse('developer_comment_extra',
+            args=[self.project.slug])
+        # Test the response contents
+        resp = self.client['team_member'].post(page_url, data)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Permission error.')
+
+
     def test_maintainer(self):
         """
         Test maintainer permissions
@@ -344,3 +375,13 @@ class LottePermissionsTests(BaseTestCase):
         # Test the response contents
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 200)
+
+        # Test access for developer_comment_extra view
+        data = {'source_entity_id':self.entity.id,
+            'comment_extra': 'Extra comment'}
+        page_url = reverse('developer_comment_extra',
+            args=[self.project.slug])
+        # Test the response contents
+        resp = self.client['maintainer'].post(page_url, data)
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, 'Extra comment')
