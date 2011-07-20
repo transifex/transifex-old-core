@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(PROJECT_LANG_URL+'$', translate, name='translate_project'),
     url(PROJECT_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
     url(PROJECT_LANG_URL+'push_translations/$', push_translation, name='push_translation'),
+    url(PROJECT_URL+'developer_comment/$', add_edit_developer_comment_extra, name='developer_comment_extra'),
     url(PROJECT_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
     url(PROJECT_LANG_URL+'exit/$', exit, name='exit_lotte'),
 )

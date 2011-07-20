@@ -807,7 +807,8 @@ def tab_details_snippet(request, entity_id, lang_code):
         object_id=entity_id,
         template_name="tab_details_snippet.html",
         template_object_name='source_entity',
-        extra_context={"translation" : translation})
+        extra_context={"translation": translation, 
+            "project": source_entity.resource.project})
 
 
 # Restrict access only for private projects since this is used to fetch stuff
@@ -873,3 +874,51 @@ def delete_translation(request, project_slug=None, resource_slug=None,
     invalidate_stats_cache(resource, language, user=request.user)
 
     return HttpResponse(status=200)
+
+
+
+@login_required
+def add_edit_developer_comment_extra(request, project_slug, *args, **kwargs):
+    """
+    View for handling AJAX calls from Lotte in order to add/edit the 
+    developer comment for a source entity.
+    
+    Only maintainers can edit it.
+    """
+
+    # Permissions handling
+    project = get_object_or_404(Project, slug=project_slug)
+    check = ProjectPermission(request.user)
+    if not check.maintain(project):
+        content = {'error': True, 'message': _('Permission error.')}
+    elif not request.POST:
+        content = {'error': True, 'message': _('Bad request.')}
+    else:
+        previous_comment = None
+        try:
+            se = SourceEntity.objects.get(
+                id=request.POST.get('source_entity_id', None),
+                resource__project=project)
+            previous_comment_extra = se.developer_comment_extra
+            se.developer_comment_extra = request.POST.get('comment_extra', '')
+            se.save()
+            content = {
+                'error': False, 
+                'comment': se.developer_comment, 
+                'comment_extra': se.developer_comment_extra,
+                }
+        except SourceEntity.DoesNotExist:
+            content = {
+                'error': True,
+                'message': _('No such Source Entity for the given project.'),
+                }
+        except Exception, e:
+            logger.error('Lotte: Error while editing developer comment: %s' %
+                (e.message or str(e)))
+            content = {
+                'error': True,
+                'message': _('Ops! Something weird happened. The admins '
+                    'were notified about it.'),
+                }
+
+    return HttpResponse(simplejson.dumps(content), mimetype='application/json')
