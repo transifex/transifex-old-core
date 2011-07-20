@@ -318,9 +318,14 @@ class SourceEntity(models.Model):
         help_text=_("The flags which mark the source string. For example, if"
                     "there is a python formatted string this is marked as "
                     "\"#, python-format\" in gettext."))
-    developer_comment = models.TextField(_('Flags'), max_length=1000,
+    developer_comment = models.TextField(_('Comments'), max_length=1000,
         blank=True, editable=False,
         help_text=_("The comment of the developer."))
+
+    # Used for comments added from Lotte
+    developer_comment_extra = models.TextField(_('Extra comments'), 
+        max_length=1000, blank=True, editable=False,
+        help_text=_("Another comment of the developer"))
 
     pluralized = models.BooleanField(_('Pluralized'), blank=False,
         null=False, default=False,
