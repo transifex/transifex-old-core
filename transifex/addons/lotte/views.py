@@ -812,7 +812,7 @@ def tab_details_snippet(request, entity_id, lang_code):
         object_id=entity_id,
         template_name="tab_details_snippet.html",
         template_object_name='source_entity',
-        extra_context={"translation": translation, 
+        extra_context={"translation": translation,
             "project": source_entity.resource.project})
 
 
@@ -921,9 +921,9 @@ def spellcheck(request, project_slug, lang_code, resource_slug=None):
 @login_required
 def add_edit_developer_comment_extra(request, project_slug, *args, **kwargs):
     """
-    View for handling AJAX calls from Lotte in order to add/edit the 
+    View for handling AJAX calls from Lotte in order to add/edit the
     developer comment for a source entity.
-    
+
     Only maintainers can edit it.
     """
 
@@ -944,8 +944,8 @@ def add_edit_developer_comment_extra(request, project_slug, *args, **kwargs):
             se.developer_comment_extra = request.POST.get('comment_extra', '')
             se.save()
             content = {
-                'error': False, 
-                'comment': se.developer_comment, 
+                'error': False,
+                'comment': se.developer_comment,
                 'comment_extra': se.developer_comment_extra,
                 }
         except SourceEntity.DoesNotExist:

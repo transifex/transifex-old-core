@@ -117,7 +117,109 @@ class Languages(object):
         super(Languages, self).setUp()
 
 
-class BaseTestCase(Languages, Users, TestCase):
+class Projects(object):
+    """A class to create sample projects.
+
+    Use this as a mixin in tests.
+    """
+
+    fixtures = ["sample_data", ]
+
+    def setUp(self):
+        self.project = Project.objects.get(slug='project1')
+        self.project.maintainers.add(self.user['maintainer'])
+        self.project.owner = self.user['maintainer']
+        self.project.save()
+
+        self.project_private = Project.objects.get(slug='project2')
+        self.project_private.maintainers.add(self.user['maintainer'])
+        self.project_private.owner = self.user['maintainer']
+        self.project_private.save()
+
+        super(Projects, self).setUp()
+
+
+class Resources(object):
+    """A class to create sample resources.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        # Create a resource
+        self.resource = Resource.objects.create(
+            slug="resource1", name="Resource1", project=self.project,
+            source_language=self.language_en, i18n_type='PO'
+        )
+        self.resource_private = Resource.objects.create(
+            slug="resource1", name="Resource1", project=self.project_private,
+            source_language=self.language_en, i18n_type='PO'
+        )
+        super(Resources, self).setUp()
+
+
+class SourceEntities(object):
+    """A class to create some sample source entities.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        self.source_entity = SourceEntity.objects.create(
+            string='String1', context='Context1', occurrences='Occurrences1',
+            resource=self.resource
+        )
+        self.source_entity_private = SourceEntity.objects.create(
+            string='String1', context='Context1', occurrences='Occurrences1',
+            resource=self.resource_private
+        )
+        self.source_entity_plural = SourceEntity.objects.create(
+            string='pluralized_String1', context='Context1',
+            occurrences='Occurrences1_plural', resource= self.resource,
+            pluralized=True
+        )
+        self.source_entity_plural_private = SourceEntity.objects.create(
+            string='pluralized_String1', context='Context1',
+            occurrences='Occurrences1_plural', resource= self.resource_private,
+            pluralized=True
+        )
+        super(SourceEntities, self).setUp()
+
+
+class Translations(object):
+    """A class to create some sample translations.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        # Create one translation
+        self.translation_en = self.source_entity.translations.create(
+            string='Buy me some BEER :)',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_en,
+            user=self.user['registered']
+        )
+        self.translation_ar = self.source_entity.translations.create(
+            string=u'This is supposed to be arabic text! αβγ',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_ar,
+            user=self.user['registered']
+        )
+        super(Translations, self).setUp()
+
+
+class SampleData(Languages, Users, Projects, Resources, SourceEntities,
+                          Translations, NoticeTypes):
+    """A class that has all sample data defined."""
+
+    pass
+
+
+class BaseTestCase(Languages, Users, Projects, Resources, SourceEntities,
+                   Translations, TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
@@ -148,19 +250,6 @@ class BaseTestCase(Languages, Users, TestCase):
         """
         super(BaseTestCase, self).setUp()
 
-        # Create projects
-        #self.project = Project.objects.create(
-        #    slug="project1", name="Test Project")
-        self.project = Project.objects.get(slug='project1')
-        self.project.maintainers.add(self.user['maintainer'])
-        self.project.owner = self.user['maintainer']
-        self.project.save()
-
-        self.project_private = Project.objects.get(slug='project2')
-        self.project_private.maintainers.add(self.user['maintainer'])
-        self.project_private.owner = self.user['maintainer']
-        self.project_private.save()
-
         # Add django-authority permission for writer
         self.permission = AuPermission.objects.create(
             codename='project_perm.submit_translations',
@@ -176,43 +265,6 @@ class BaseTestCase(Languages, Users, TestCase):
         self.team.members.add(self.user['team_member'])
         self.team_private.coordinators.add(self.user['team_coordinator'])
         self.team_private.members.add(self.user['team_member'])
-
-        # Create a resource
-        self.resource = Resource.objects.create(slug="resource1", name="Resource1",
-            project=self.project, source_language=self.language_en,
-            i18n_type='PO')
-        self.source_entity = SourceEntity.objects.create(string='String1',
-            context='Context1', occurrences='Occurrences1', resource=self.resource)
-        self.resource_private = Resource.objects.create(slug="resource1",
-            name="Resource1", project=self.project_private,
-            source_language=self.language_en, i18n_type='PO')
-        self.source_entity_private = SourceEntity.objects.create(string='String1',
-            context='Context1', occurrences='Occurrences1',
-            resource=self.resource_private)
-
-        # Create pluralized source entity
-        self.source_entity_plural = SourceEntity.objects.create(
-            string='pluralized_String1', context='Context1',
-            occurrences='Occurrences1_plural', resource= self.resource,
-            pluralized=True)
-        self.source_entity_plural_private = SourceEntity.objects.create(
-            string='pluralized_String1', context='Context1',
-            occurrences='Occurrences1_plural', resource= self.resource_private,
-            pluralized=True)
-
-        # Create one translation
-        self.translation_en = self.source_entity.translations.create(
-            string='Buy me some BEER :)',
-            rule=5,
-            source_entity=self.source_entity,
-            language=self.language_en,
-            user=self.user['registered'])
-        self.translation_ar = self.source_entity.translations.create(
-            string=u'This is supposed to be arabic text! αβγ',
-            rule=5,
-            source_entity=self.source_entity,
-            language=self.language_ar,
-            user=self.user['registered'])
 
         # Create a release
         self.release = Release.objects.create(slug="releaseslug1",
