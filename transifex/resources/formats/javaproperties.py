@@ -174,11 +174,12 @@ class JavaPropertiesHandler(Handler):
                         # Keys with no values should not be shown to translator
                         continue
                     else:
-                        buf += re.sub(
+                        key_len = len(key)
+                        template += line[:key_len] + re.sub(
                             re.escape(value),
                             "%(hash)s_tr" % {'hash': hash_tag(key, context)},
-                            line
-                        ) + self._linesep
+                            line[key_len:]
+                        ) + self.linesep
                 elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
                     # ignore keys with no translation
                     continue
