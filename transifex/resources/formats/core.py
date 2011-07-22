@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import codecs, copy, os, re
+import copy, os, re
 from django.utils import simplejson as json
 
 from django.conf import settings
@@ -151,7 +151,7 @@ class Handler(object):
         else:
             raise Exception("pseudo_type needs to be based on type %s" %
                 PseudoTypeMixin.__class__)
-                
+
 
     ####################
     #  Core functions  #
@@ -166,10 +166,10 @@ class Handler(object):
             nonunicode = False
             if type(string) == str:
                 string = unicode(string)
-                nonunicode = True           
-                
+                nonunicode = True
+
             string = self.pseudo_type.compile(string)
-            
+
             if nonunicode:
                 string = string.encode('utf-8')
         return string
@@ -179,7 +179,7 @@ class Handler(object):
         Do a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.
         """
-        return re.sub(re.escape(original), 
+        return re.sub(re.escape(original),
             self._pseudo_decorate(self._escape(replacement)), text)
 
     def _get_strings(self, resource):
@@ -276,11 +276,11 @@ class Handler(object):
         This is called in the end of the save2db method. Override if you need
         the behaviour changed.
         """
-        kwargs.update({ 
+        kwargs.update({
             'strings_added': strings_added,
             'strings_updated': strings_updated,
             'strings_deleted': strings_deleted,
-            'is_source': is_source, 
+            'is_source': is_source,
             'user': user,
             'overwrite_translations': overwrite_translations,
             'resource': self.resource,
