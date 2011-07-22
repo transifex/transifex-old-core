@@ -461,10 +461,7 @@ class POTHandler(GettextHandler):
         return True
 
     def _apply_translation(self, source_hash, trans, content):
-        return self._replace_translation(
-            "%s_tr" % source_hash.encode(self.default_encoding),
-            "", content
-        )
+        return self._replace_translation("%s_tr" % source_hash, "", content)
 
     def _get_plurals(self, language):
         # Override to avoid a db query

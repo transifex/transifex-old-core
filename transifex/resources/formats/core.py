@@ -355,11 +355,7 @@ class Handler(object):
         Returns:
             The content after the translation has been applied.
         """
-        return self._replace_translation(
-            "%s_tr" % source_hash.encode(self.default_encoding),
-            trans.encode(self.default_encoding),
-            content
-        )
+        return self._replace_translation("%s_tr" % source_hash, trans, content)
 
     def _examine_content(self, content):
         """
@@ -394,10 +390,14 @@ class Handler(object):
         if language is None:
             language = self.language
         self._pre_compile(language)
-        content = Template.objects.get(resource=self.resource).content
+        content = Template.objects.get(
+            resource=self.resource
+        ).content.decode(self.default_encoding)
         content = self._examine_content(content)
         try:
-            self.compiled_template = self._compile(content, language)
+            self.compiled_template = self._compile(
+                content, language
+            ).encode(self.format_encoding)
         except Exception, e:
             logger.error("Error compiling file: %s" % e, exc_info=True)
             raise
