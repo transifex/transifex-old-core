@@ -55,3 +55,10 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.compile()
         self.assertTrue(r'\n' in self.parser.compiled_template)
 
+    def test_key_translation(self):
+        content = ';test\nKEY_OFFLINE="OFFLINE"'
+        self.parser.bind_content(content)
+        self.parser.parse_file(is_source=True)
+        self.assertEquals(self.parser.template.count('tr'), 1)
+        self.assertTrue('=' in self.parser.template)
+        self.assertTrue('tr' in self.parser.template)

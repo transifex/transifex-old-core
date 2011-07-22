@@ -62,10 +62,11 @@ class JoomlaINIHandler(Handler):
             context = ""        # We use empty context
 
             if is_source:
-                new_line = re.sub(
+                source_len = len(source)
+                new_line = line[:source_len] + re.sub(
                     re.escape(trans),
                     "%(hash)s_tr" % {'hash': hash_tag(source, context)},
-                    line
+                    line[source_len:]
                 )
                 # this looks fishy
                 content = re.sub(re.escape(line), new_line, content)
