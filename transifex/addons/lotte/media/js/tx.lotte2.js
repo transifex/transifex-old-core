@@ -388,7 +388,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 	            /* add timeout and then submit. using the id, this timeout can be canceled */
 	            $.doTimeout(this_stringset.current_id.toString(), 1, function(){
 	                /* push the string to server */
-	                this_stringset.push(this_stringset.current_string, this_stringset.current_id);
+	                this_stringset.push();
 	            });
 	        }
 				}
