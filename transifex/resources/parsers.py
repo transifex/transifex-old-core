@@ -10,5 +10,6 @@ from transifex.resources.formats.pofile import POHandler # GNU Gettext .PO/.POT 
 from transifex.resources.formats.joomla import JoomlaINIHandler # GNU Gettext .PO/.POT parser
 from transifex.resources.formats.javaproperties import JavaPropertiesHandler # Java .PROPERTIES parser
 from transifex.resources.formats.desktop import DesktopHandler
+from transifex.resources.formats.strings import AppleStringsHandler
 
-PARSERS = [POHandler , LinguistHandler, JoomlaINIHandler, JavaPropertiesHandler, DesktopHandler] #, JavaPropertiesParser, AppleStringsParser]
+PARSERS = [POHandler , LinguistHandler, JoomlaINIHandler, JavaPropertiesHandler, DesktopHandler, AppleStringsHandler] #, JavaPropertiesParser, AppleStringsParser]
