@@ -109,3 +109,6 @@ class JoomlaINIHandler(Handler):
             self._version = 1
         else:
             self._version = 0
+
+    def _escape(self, s):
+        return s.replace('\\', '\\\\')
