@@ -43,7 +43,7 @@ class SuggestionsViewsTests(BaseTestCase):
             args=[self.entity.id, self.language.code])
         resp = self.client['anonymous'].get(url)
         self.assertContains(resp, 'Hey!', status_code=200)
-        self.assertTemplateUsed(resp, 'lotte_suggestions_snippet.html')
+        self.assertTemplateUsed(resp, 'tab_suggestions_snippet.html')
 
     def _vote_up(self, suggestion):
         url = reverse('suggestion_vote_up',

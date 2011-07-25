@@ -48,11 +48,10 @@ class ResourcesTemplateTests(BaseTestCase):
         self.assertEqual(type(self.resource.available_languages.count()), int)
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
             resp = self.client[user].get(self.urls['resource'])
-            self.assertContains(resp,
-            "Number of languages</th>\n"\
-            "      <td>\n"\
-            "        %s\n"\
-            "      </td>" % (self.resource.available_languages.count()))
+            self.assertContains(
+                resp, "<h3>Available languages (%s)</h3>" % (
+                    self.resource.available_languages.count()
+                ))
 
     def test_total_strings_per_resource(self):
         """Test that resource.total_entities return the correct amount of
@@ -113,13 +112,13 @@ class ResourcesTemplateTests(BaseTestCase):
 
     def test_delete_translation_resource_button(self):
         """Test that delete translation resource button is rendered correctly."""
-        resp = self.client['maintainer'].get(self.urls['resource'])
-        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-        # self.assertContains(resp, 'Delete resource', status_code=200)
+        resp = self.client['maintainer'].get(self.urls['resource_edit'])
+        self.assertTemplateUsed(resp, 'resources/resource_form.html')
+        self.assertContains(resp, 'Delete resource', status_code=200)
         # In any other case of user this should not be rendered
         for user in ['anonymous', 'registered', 'team_member']:
-            resp = self.client[user].get(self.urls['resource'])
-        self.assertNotContains(resp, 'Delete resource', status_code=200)
+            resp = self.client[user].get(self.urls['resource_edit'])
+            self.assertNotContains(resp, 'Forbidden_access', status_code=403)
 
     def test_disabled_visit_team_resource_actions(self):
         """Test that languages with no team or existing translations don't have

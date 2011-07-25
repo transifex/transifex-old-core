@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
+from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.test.client import Client
 from django.utils import simplejson as json
 from transifex.languages.models import Language
-from transifex.resources.models import Resource, Translation
+from transifex.resources.models import Resource, Translation, Template, \
+        SourceEntity
 from transifex.txcommon.tests import base, utils
 
 class CoreViewsTest(base.BaseTestCase):
@@ -102,8 +105,21 @@ class CoreViewsTest(base.BaseTestCase):
             self.assertTrue(r.name in resp.content)
 
     def test_clone_language(self):
-        #TODO: complete test case when clone is implemented
-        pass
+        url = reverse(
+            'clone_translate', args=[
+                self.project.slug, self.resource.slug, self.language_ar.code,
+                self.language.code
+            ])
+        resp = self.client['maintainer'].post(url, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(
+            [i.string for i in Translation.objects.filter(
+                    source_entity__resource=self.resource, language=self.language_ar
+            )],
+            [i.string for i in Translation.objects.filter(
+                    source_entity__resource=self.resource, language=self.language
+            )]
+        )
 
     def test_push_translation(self):
         """
@@ -195,6 +211,80 @@ class CoreViewsTest(base.BaseTestCase):
         self.assertEqual(Translation.objects.filter(source_entity__resource=self.resource,
             language__code = trans_lang).count(), 0)
 
+    def test_resource_edit(self, file_handler=None, bad=False):
+        """Test editing a resource"""
+        if file_handler:
+            fh = file_handler
+        else:
+            fh = open('%s/../lib/pofile/tests.pot'% os.path.split(__file__)[0],)
+        url = reverse('resource_edit', args=[self.project.slug, self.resource.slug])
+        DATA = {'slug':'resource1', 'name':'Resource1', 'accept_translations':'on', 'sourcefile':fh, 'source_file_url':'',}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        if file_handler:
+            return resp
+        else:
+            self.assertEqual(resp.status_code, 200)
+
+    def test_get_pot_file(self):
+        """Test retrieval of pot files"""
+        self.test_resource_edit()
+        url = reverse('download_pot', args=[self.project.slug, self.resource.slug])
+        resp = self.client['registered'].get(url, follow=True)
+        self.assertContains(resp, 'msgid', status_code=200)
+
+    def test_get_translation_file(self):
+        """Test download of a translation file"""
+        self.test_resource_edit()
+        url = reverse('download_translation', args=[self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['maintainer'].post(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('project1_resource1_pt_BR.po' in resp['Content-Disposition'])
+
+    def test_lock_and_get_translation_file(self):
+        """Test lock and get translation file"""
+        self.test_resource_edit()
+        url = reverse('lock_and_download_translation',
+            args=[self.project.slug, self.resource.slug, self.language.code])
+        resp = self.client['maintainer'].post(url)
+        self.assertEqual(resp.status_code, 200)
+        json = simplejson.loads(resp.content)
+        self.assertEqual(json['status'], 'OK')
+        self.assertEqual(json['redirect'], '/projects/p/%s/resource/%s/l/%s/download/'
+                         %(self.project.slug, self.resource.slug, self.language.code))
+
+    def test_different_resource_formats(self):
+        """Test creation of resource with different source file formats"""
+        #javaproperties
+        fh = open('%s/../lib/javaproperties/complex.properties'%os.path.split(__file__)[0],)
+        resp = self.test_resource_edit(fh)
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
+        self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 25)
+
+        #Qt
+        fh = open('%s/../lib/qt/en.ts'%os.path.split(__file__)[0],)
+        resp = self.test_resource_edit(fh)
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
+        self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 43)
+
+        #Joomla
+        fh = open('%s/../lib/joomla_ini/example1.5.ini'%os.path.split(__file__)[0],)
+        resp = self.test_resource_edit(fh)
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
+        self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 1)
+
+        #Desktop
+        fh = open('%s/../lib/desktop/data/okular.desktop'%os.path.split(__file__)[0],)
+        resp = self.test_resource_edit(fh)
+        self.assertTemplateUsed(resp, 'resources/resource_detail.html')
+        self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 2)
+
+
+        #bad file
+        fh = open('%s/../lib/pofile/wrong.pot'%os.path.split(__file__)[0],)
+        resp = self.test_resource_edit(fh)
+        self.assertContains(resp, 'Syntax error in po file', status_code=200)
+        #Since source entities will not be updated
+        self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 2)
 
 
 class ResourceAutofetchTests(base.BaseTestCase):
@@ -203,8 +293,8 @@ class ResourceAutofetchTests(base.BaseTestCase):
         super(ResourceAutofetchTests, self).setUp(*args, **kwargs)
         self.SFILE = "http://meego.gitorious.org/meego-netbook-ux/abrt-netbook/blobs/raw/master/po/en_GB.po"
         self.url_edit =  reverse('resource_edit', args=[self.project.slug, self.resource.slug])
-        
-        
+
+
     def test_save_form_url(self):
         """Test that saving the form creates the source URL."""
         resp = self.client['maintainer'].post(self.url_edit, {
@@ -217,14 +307,14 @@ class ResourceAutofetchTests(base.BaseTestCase):
         resp = self.client['anonymous'].get(self.urls['resource'])
         self.assertContains(resp, self.SFILE)
 
-       
+
     def test_save_form_remove_url(self):
         """Test that saving the form without a source file URL removes it."""
 
         # First create the source file...
         self.test_save_form_url()
 
-        # Then try to remove it.            
+        # Then try to remove it.
         resp = self.client['maintainer'].post(self.url_edit,
             {'source_file_url': '', 'sourcefile': '',
              'accept_translations': 'on', 'slug': self.resource.slug,
