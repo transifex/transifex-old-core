@@ -156,12 +156,18 @@ class ReleaseForm(forms.ModelForm):
     resources = AutoCompleteSelectMultipleField('resources', required=True,
         help_text=_('Search for a resource'))
 
-    # Weird, but making it explicit here made it to display the correct 
+    # FIXME: Weird, the following message should be displayed by default, but
+    # it was necessary to make it explicit here be able to display the correct 
     # 'invalid' message for datetime fields, which has a suggestion of the 
     # format to be used.
-    release_date = forms.CharField(required=False)
-    stringfreeze_date = forms.CharField(required=False)
-    develfreeze_date = forms.CharField(required=False)
+    error_messages = {'invalid': _('Enter a valid date/time in '
+        'YYYY-MM-DD HH:MM[:ss[.uuuuuu]] format.')}
+    release_date = forms.DateTimeField(required=False,
+        error_messages=error_messages)
+    stringfreeze_date = forms.DateTimeField(required=False,
+        error_messages=error_messages)
+    develfreeze_date = forms.DateTimeField(required=False,
+        error_messages=error_messages)
 
     class Meta:
         model = Release
