@@ -1,3 +1,4 @@
+from core import *
 from pofile import *
 from qt import *
 from javaproperties import *

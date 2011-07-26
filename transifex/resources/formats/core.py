@@ -646,6 +646,8 @@ class Handler(object):
         sg_handler = self.SuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
         sg_handler.create_suggestions(original_sources, new_entities)
+        for se in original_sources:
+            se.delete()
         self._update_template(self.template)
 
         strings_deleted = len(original_sources)

@@ -115,4 +115,3 @@ class ContentSuggestionFormat(SuggestionFormat):
                     if percent_diff(old_trans.string, new_trans.string) < settings.MAX_STRING_DISTANCE:
                         self._convert_to_suggestions(se, ne, self.user)
                         break
-                se.delete()
