@@ -408,6 +408,9 @@ class Handler(object):
                                 break
 
                         se.delete()
+                else:
+                    for se in original_sources:
+                        se.delete()
 
             for j in self.suggestions.strings:
                 # Check SE existence
