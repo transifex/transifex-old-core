@@ -150,10 +150,18 @@ class ProjectAccessControlForm(forms.ModelForm):
         project_access_control_form_start.send(sender=ProjectAccessControlForm,
                                                instance=self, project=project)
 
+
 class ReleaseForm(forms.ModelForm):
 
     resources = AutoCompleteSelectMultipleField('resources', required=True,
         help_text=_('Search for a resource'))
+
+    # Weird, but making it explicit here made it to display the correct 
+    # 'invalid' message for datetime fields, which has a suggestion of the 
+    # format to be used.
+    release_date = forms.CharField(required=False)
+    stringfreeze_date = forms.CharField(required=False)
+    develfreeze_date = forms.CharField(required=False)
 
     class Meta:
         model = Release
@@ -163,8 +171,6 @@ class ReleaseForm(forms.ModelForm):
         projects = self.fields["project"].queryset.filter(slug=project.slug)
         self.fields["project"].queryset = projects
         self.fields["project"].empty_label = None
-        self.fields["release_date"].widget = SplitSelectDateTimeWidget()
-        self.fields["stringfreeze_date"].widget = SplitSelectDateTimeWidget()
         self.user = user
 
     def clean_resources(self):
@@ -202,7 +208,13 @@ class ReleaseForm(forms.ModelForm):
             self._errors["develfreeze_date"] = self.error_class([msg])
             del cleaned_data["develfreeze_date"]
 
-        if release_date and develfreeze_date and \
+        if release_date and stringfreeze_date and \
+            release_date <= stringfreeze_date:
+            msg = _("Release date must be after the String freeze date.")
+            self._errors["release_date"] = self.error_class([msg])
+            del cleaned_data["release_date"]
+
+        elif release_date and develfreeze_date and \
             release_date <= develfreeze_date:
             msg = _("Release date must be after the Devel freeze date.")
             self._errors["release_date"] = self.error_class([msg])
