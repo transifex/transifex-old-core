@@ -473,7 +473,7 @@ class FileHandler(BaseHandler):
             return rc.NOT_FOUND
         if language == resource.source_language:
             return BAD_REQUEST(source_error_msg)
-        if language not in resource.available_languages_without_teams:
+        if language not in resource.available_languages:
             return rc.NOT_FOUND
 
         t = Translation.get_object("delete", request, resource, language)
