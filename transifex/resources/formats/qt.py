@@ -248,7 +248,10 @@ class LinguistHandler(Handler):
                     pluralized = True
 
                 source = _getElementByTagName(message, "source")
-                translation = _getElementByTagName(message, "translation")
+                try:
+                    translation = _getElementByTagName(message, "translation")
+                except LinguistParseError:
+                    translation = None
                 try:
                     ec_node = _getElementByTagName(message, "extracomment")
                     extracomment = _getText(ec_node.childNodes)
@@ -285,7 +288,7 @@ class LinguistHandler(Handler):
                 messages = []
 
                 if is_source:
-                    if translation.attributes.has_key("variants") and \
+                    if translation and translation.attributes.has_key("variants") and \
                       translation.attributes['variants'].value == 'yes':
                         logger.error("Source file has unsupported"
                             " variants.")
@@ -293,38 +296,49 @@ class LinguistHandler(Handler):
                             " not yet supported.")
 
                     # Skip obsolete strings.
-                    if translation.attributes.has_key("type"):
+                    if translation and translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
                         if status == "obsolete":
                             continue
 
-                    messages = [(5, sourceStringText or sourceString)]
+                    translation_text = None
+                    if translation:
+                        translation_text = _getText(translation.childNodes)
+                    messages = [(5, translation_text or sourceStringText or sourceString)]
                     # remove unfinished/obsolete attrs from template
-                    if translation.attributes.has_key("type"):
+                    if translation and translation.attributes.has_key("type"):
                         status = translation.attributes["type"].value.lower()
                         if status == "unfinished":
                             del translation.attributes["type"]
                     if pluralized:
-                        try:
-                            numerusforms = translation.getElementsByTagName('numerusform')
-                            for n,f in enumerate(numerusforms):
-                                if numerusforms[n].attributes.has_key("variants") and \
-                                  numerusforms[n].attributes['variants'].value == 'yes':
-                                    logger.error("Source file has unsupported"
-                                        " variants.")
-                                    raise LinguistParseError("Source file"
-                                        " could not be imported: Qt Linguist"
-                                        " variants are not supported.")
-                            for n,f in enumerate(numerusforms):
-                                if numerusforms[n].attributes.has_key("variants") and \
-                                  numerusforms[n].attributes['variants'].value == 'yes':
-                                    continue
-                            for n,f in enumerate(numerusforms):
-                                nf=numerusforms[n]
-                                messages.append((nplural[n], _getText(nf.childNodes)
-                                    or sourceStringText or sourceString ))
-                        except LinguistParseError, e:
-                            pass
+                        if translation:
+                            try:
+                                numerusforms = translation.getElementsByTagName('numerusform')
+                                messages = []
+                                for n,f in enumerate(numerusforms):
+                                    if numerusforms[n].attributes.has_key("variants") and \
+                                      numerusforms[n].attributes['variants'].value == 'yes':
+                                        logger.error("Source file has unsupported"
+                                            " variants.")
+                                        raise LinguistParseError("Source file"
+                                            " could not be imported: Qt Linguist"
+                                            " variants are not supported.")
+                                for n,f in enumerate(numerusforms):
+                                    if numerusforms[n].attributes.has_key("variants") and \
+                                      numerusforms[n].attributes['variants'].value == 'yes':
+                                        continue
+                                for n,f in enumerate(numerusforms):
+                                    nf=numerusforms[n]
+                                    messages.append((nplural[n], _getText(nf.childNodes)
+                                        or sourceStringText or sourceString ))
+                            except LinguistParseError, e:
+                                pass
+                        else:
+                            plural_numbers = self.language.get_pluralrules_numbers()
+                            for p in plural_numbers:
+                                if p != 5:
+                                    messages.append((p, sourceStringText or sourceString))
+
 
                 elif translation and translation.firstChild:
                     # For messages with variants set to 'yes', we skip them
@@ -400,7 +414,7 @@ class LinguistHandler(Handler):
                     if sourceString is None:
                         continue
                     if message.attributes.has_key("numerus") and \
-                        message.attributes['numerus'].value=='yes':
+                        message.attributes['numerus'].value=='yes' and translation:
                             numerusforms = translation.getElementsByTagName('numerusform')
                             for n,f in enumerate(numerusforms):
                                 f.appendChild(doc.createTextNode(

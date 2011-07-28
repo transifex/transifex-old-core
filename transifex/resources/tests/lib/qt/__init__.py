@@ -373,5 +373,47 @@ class QtFile(FormatsBaseTestCase):
                 context=generated_context or u"None"
             )
 
-
-
+    def test_source_parsing(self):
+        """Test different forms of messages in source files."""
+        file_ = os.path.join(
+            os.path.dirname(__file__), "source_parsing/source.ts"
+        )
+        handler = LinguistHandler(file_)
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file(is_source=True)
+        strings = handler.stringset.strings
+        self.assertEquals(len(strings), 15)
+        for s in strings:
+            if s.source_entity == "PROCESSING START...":
+                self.assertEquals(
+                    s.translation, "Starting scan and copy process..."
+                )
+            elif s.source_entity == "USER ABORT.":
+                self.assertEquals(s.translation, s.source_entity)
+            elif s.source_entity == '%n FILES':
+                self.assertTrue(
+                    s.translation=='One (%n) file processed.' or\
+                        s.translation=='%n files processed.'
+                )
+            elif s.source_entity == '%n FILES PROCESSING.':
+                self.assertEquals(s.translation, '%n FILES PROCESSING.')
+            elif s.source_entity == 'asad':
+                self.assertEquals(
+                    s.translation, 'Starting scan and copy process...'
+                )
+            elif s.source_entity == 'asadasdf':
+                self.assertEquals(s.translation, "Scan")
+            elif s.source_entity == 'asaadasdf':
+                self.assertEquals(s.translation, "%n FILES PR.")
+            elif s.source_entity == 'asadfasdf':
+                self.assertTrue(
+                    s.translation == 'One (%n) file processed.' or\
+                        s.translation == '%n files processed.'
+                )
+            elif s.source_entity == 'asadgfasdf':
+                self.assertEquals(s.translation, 'asadgfasdf')
+            elif s.source_entity == 'asadfzasdf':
+                self.assertEquals(s.translation, 'asadfzasdf')
+            else:
+                self.assertTrue(False, "Not supposed to happen")
