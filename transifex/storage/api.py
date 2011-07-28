@@ -121,6 +121,14 @@ class StorageHandler(BaseHandler):
                     logger.debug("Uploaded file %s (%s)" % (sf.uuid, sf.name))
                     files.append({'uuid':sf.uuid, 'id':str(sf.id),
                         'name':sf.name})
+                except UnicodeDecodeError, e:
+                    message = _(
+                        "The encoding of the uploaded file is not UTF-8. "
+                        "Currently, transifex supports only UTF-8"
+                        "encoded files. Please, visit"
+                        "http://help.transifex.net/user-guide/formats.html#encoding"
+                        "for further information."
+                    )
                 except Exception, e:
                     if isinstance(e, (FileCheckError, ParseError)):
                         #FIXME: Custom Exception should use an extra attr for
