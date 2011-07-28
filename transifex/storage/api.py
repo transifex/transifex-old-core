@@ -128,8 +128,8 @@ class StorageHandler(BaseHandler):
                         message = e.message
                     else:
                         #TODO Send email to admins
-                        message = _("A strange error happened.")
-                        logger.debug(str(e))
+                        message = _("A strange error happened:") + e.message
+                        logger.error(str(e))
 
                     # The object is not saved yet, but it removes file from
                     # the filesystem
