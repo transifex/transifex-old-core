@@ -158,7 +158,10 @@ class Handler(object):
         """
         if content is not None:
             if isinstance(content, str):
-                return content.decode(self.format_encoding)
+                try:
+                    return content.decode(self.format_encoding)
+                except UnicodeDecodeError, e:
+                    raise FormatError(e.message)
             else:
                 return content
         if filename is None:
