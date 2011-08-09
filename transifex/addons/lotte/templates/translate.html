@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load permissions %}
 {% load txcommontags %}
+{% load addons %}
 
 {% block breadcrumb %}
 {% homelink %} »
@@ -78,6 +79,9 @@
     }
     else
     	var enable_spellcheck = false;
+    // Used to manage extra tabs
+    var toolbars = [];
+    toolbars[0] = ['lotte', lotte_tabs]
 
     function unique(a){
         /* Drop duplicated entries from an array (list) */
@@ -249,7 +253,7 @@
 
                     // Concatenate the plural indicator, the (hidden) key,
                     // the source strings and the row tabs.
-                    return '<div class="source_string_wrapper">'
+                    tabs = '<div class="source_string_wrapper">'
                            + plural_indicator
                            + ' <div class="source_entity nodisplay" id="sourceentity_'+ oObj.iDataRow +'" ><span title="{% trans "Key" %}">'+ clean_array["key"] +'</span></div>'
                            + source_divs
@@ -260,10 +264,15 @@
                            + '    </li>'
                            + '    <li>'
                            + '     <a class="tabs_trigger show_suggestions" href="#">'+(bold_flag?'<strong>':'')+'{% trans "suggestions" %}'+suggestions_num+(bold_flag?'</strong>':'')+'</a>'
-                           + '    </li>'
-                           + '  </ul>'
+                           + '    </li>';
+                           
+                    // Must contain something like: tabs += '<li><a>foo</a></li>'
+                    {% hook "tab_lotte.html" tab %}
+
+                    tabs += '  </ul>'
                            + ' </div>'
                            + '</div>';
+                    return tabs
                   }
                 },
                 // Holds the target Translation string/s mapped to the plural rules
@@ -713,6 +722,7 @@
 
 </script>
 
+{% hook "tab_lotte.html" function %}
 
 {% endblock %}
 

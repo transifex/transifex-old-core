@@ -606,78 +606,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
         // 3 Show details row trigger
         $('a.tabs_trigger').click(function(){
-                var nTr = $(this).parents('tr');
-
-                if(!$(this).hasClass('current') && $(this).hasClass('show_details')){
-
-                    // Close any previously opened tabs
-                    var previous_open = $(this).parents('.row_tabs').find('.current');
-                    if(previous_open!=0){
-                        nTr.next('tr.metatr').remove();
-                        previous_open.removeClass('current');
-                    }
-
-                    nTr.after('<tr class="metatr details"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
-                    var source_id = parseInt(nTr.find('.source_id').text());
-
-                    // Get the details and inject them.
-                    var tab_details_urlp = tab_details_urlp_tmpl.replace('1111111111', source_id)
-                    nTr.next(".details").find("td.inject_here").load(tab_details_urlp, function(response, status, xhr) {
-                      if (status == "error") {
-                        var msg = "Sorry but there was an error: ";
-                        alert(msg + xhr.status + " " + xhr.statusText);
-                      }
-                    });
-
-                    // Put 1px border around tab
-                    nTr.css({'border-bottom':'1px solid #EEE'});
-
-                    // Fix 'current' class
-                    if(!$(this).hasClass('current'))
-                        $(this).addClass('current');
-
-                }else if(!$(this).hasClass('current') && $(this).hasClass('show_suggestions')){
-
-                    // Close any previously opened tabs
-                    var previous_open = $(this).parents('.row_tabs').find('.current');
-                    if(previous_open!=0){
-                        nTr.next('tr.metatr').remove();
-                        previous_open.removeClass('current');
-                    }
-
-                    nTr.after('<tr class="metatr suggestions"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
-                    var source_id = parseInt(nTr.find('.source_id').text());
-
-                    // Get the details and inject them.
-                    var tab_suggestions_urlp = tab_suggestions_urlp_tmpl.replace('1111111111', source_id)
-                    nTr.next(".suggestions").find("td.inject_here").load(tab_suggestions_urlp, function(response, status, xhr) {
-                      if (status == "error") {
-                        var msg = "Sorry but there was an error: ";
-                        alert(msg + xhr.status + " " + xhr.statusText);
-                      }
-                    });
-
-                    // Put 1px border around tab
-                    nTr.css({'border-bottom':'1px solid #EEE'});
-
-                    // Fix 'current' class
-                    if(!$(this).hasClass('current'))
-                        $(this).addClass('current');
-
-                }else{
-                    // Close any previously opened tabs
-                    var previous_open = $(this).parents('.row_tabs').find('.current');
-                    if(previous_open!=0){
-                        nTr.next('tr.metatr').remove();
-                        previous_open.removeClass('current');
-                    }
-
-                    // Put back the 3px border
-                    nTr.css({'border-bottom':'3px solid #EEE'});
-
-                    // Fix 'current' class
-                    if($(this).hasClass('current'))
-                        $(this).removeClass('current');
+                for (var i=0; i < toolbars.length; i++) {
+                    if (toolbars[i][1](this) == true)
+                        break;
                 }
                 return false;
         });
@@ -704,4 +635,91 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     }
 
+}
+
+lotte_tabs = function(that) {
+    /*
+    Function for handling the default tabs of Lotte for each row. Extra tabs
+    from addons can be added too, requiring a piece of code like this. For
+    solving this issue, we created a global `toolbars` array that holds JS
+    functions that must be executed in order. This function must be always in 
+    the end of the list.
+    
+    See StringSet.toolbar for more details. The var `toolbars` is instantiated
+    in lotte/template/translate.html and addons can insert functions in it
+    through a hook called 'tab_lotte.html' within the 'function' block.
+    */
+    var nTr = $(that).parents('tr');
+    
+    if(!$(that).hasClass('current') && $(that).hasClass('show_details')){
+
+        // Close any previously opened tabs
+        var previous_open = $(that).parents('.row_tabs').find('.current');
+        if(previous_open!=0){
+            nTr.next('tr.metatr').remove();
+            previous_open.removeClass('current');
+        }
+
+        nTr.after('<tr class="metatr details"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
+        var source_id = parseInt(nTr.find('.source_id').text());
+
+        // Get the details and inject them.
+        var tab_details_urlp = tab_details_urlp_tmpl.replace('1111111111', source_id)
+        nTr.next(".details").find("td.inject_here").load(tab_details_urlp, function(response, status, xhr) {
+            if (status == "error") {
+            var msg = "Sorry but there was an error: ";
+            alert(msg + xhr.status + " " + xhr.statusText);
+            }
+        });
+
+        // Put 1px border around tab
+        nTr.css({'border-bottom':'1px solid #EEE'});
+
+        // Fix 'current' class
+        if(!$(that).hasClass('current'))
+            $(that).addClass('current');
+
+    }else if(!$(that).hasClass('current') && $(that).hasClass('show_suggestions')){
+
+        // Close any previously opened tabs
+        var previous_open = $(that).parents('.row_tabs').find('.current');
+        if(previous_open!=0){
+            nTr.next('tr.metatr').remove();
+            previous_open.removeClass('current');
+        }
+
+        nTr.after('<tr class="metatr suggestions"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
+        var source_id = parseInt(nTr.find('.source_id').text());
+
+        // Get the details and inject them.
+        var tab_suggestions_urlp = tab_suggestions_urlp_tmpl.replace('1111111111', source_id)
+        nTr.next(".suggestions").find("td.inject_here").load(tab_suggestions_urlp, function(response, status, xhr) {
+            if (status == "error") {
+            var msg = "Sorry but there was an error: ";
+            alert(msg + xhr.status + " " + xhr.statusText);
+            }
+        });
+
+        // Put 1px border around tab
+        nTr.css({'border-bottom':'1px solid #EEE'});
+
+        // Fix 'current' class
+        if(!$(that).hasClass('current'))
+            $(that).addClass('current');
+
+    }else{
+        // Close any previously opened tabs
+        var previous_open = $(that).parents('.row_tabs').find('.current');
+        if(previous_open!=0){
+            nTr.next('tr.metatr').remove();
+            previous_open.removeClass('current');
+        }
+
+        // Put back the 3px border
+        nTr.css({'border-bottom':'3px solid #EEE'});
+
+        // Fix 'current' class
+        if($(that).hasClass('current'))
+            $(that).removeClass('current');
+    }
 }
