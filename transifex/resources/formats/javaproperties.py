@@ -175,11 +175,11 @@ class JavaPropertiesHandler(Handler):
                         continue
                     else:
                         key_len = len(key)
-                        template += line[:key_len] + re.sub(
+                        buf += line[:key_len] + re.sub(
                             re.escape(value),
                             "%(hash)s_tr" % {'hash': hash_tag(key, context)},
                             line[key_len:]
-                        ) + self.linesep
+                        ) + self._linesep
                 elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
                     # ignore keys with no translation
                     continue
