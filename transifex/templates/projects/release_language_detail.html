@@ -18,23 +18,30 @@
 
         // Stats table sorter
         $(".tablesorter_resource").tablesorter({
-            sortList: [[1,1],[0,0]],
+            sortList: [[2,1],[1,0]],
             widgets: ['zebra'],
             headers: {
-                1: { sorter: 'percent' },
-                2: { sorter: 'number' },
-                3: { sorter: 'number' }
+                2: { sorter: 'percent' },
+                3: { sorter: 'number' },
+                4: { sorter: 'number' }
             },
             textExtraction: function(node) {  
                 switch (node.cellIndex){
+                    // Category column
+                    case 0:
+                        category = $(node).html();
+                        if(category == "None")
+                            return "zzzzzzzzzzzz";
+                        else
+                            return category;
                     // Stats column
-                    case 1:
+                    case 2:
                         return $(".stats_string_resource", node).text();
                     // Last update column
-                    case 2:
+                    case 3:
                         return $("span", node).attr('unixdate');
                     // Priority column
-                    case 3:
+                    case 4:
                         return $(".priority_sort", node).text()
                     default: return node.innerHTML;
                 }
@@ -65,6 +72,7 @@
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
+    <th><span>{% trans "Category" %}</span></th>
     <th><span>{% trans "Resource" %}</span></th>
     <th style="width:320px"><span>{% trans "Completion" %}</span></th>
     <th><span>{% trans "Last Updated" %}</span></th>
@@ -74,7 +82,8 @@
   <tbody>
   {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-        <td>
+      <td>{{ stat.resource.category }}</td>
+      <td>
         <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
@@ -85,13 +94,13 @@
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans "Not accepting translations at the moment" %}"/>
           {% endif %}
         {% endif %}
-        </td>
-        <td>
+      </td>
+      <td>
         {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
         {% endwith %}
-        </td>
-        <td>
+      </td>
+      <td>
         {% with stat.last_update as last_update %}
         <span style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
@@ -106,8 +115,8 @@
           {% endwith %}
         </span>
         {% endwith %}
-        </td>
-        <td class="priority_level" style="width:100px;text-align:center">
+      </td>
+      <td class="priority_level" style="width:100px;text-align:center">
         <span style="border:0">
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
@@ -116,7 +125,7 @@
         {% endwith %}
         {% endwith %}
         </span>
-        </td>
+      </td>
     </tr>
     <script type="text/javascript">
         $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
@@ -191,6 +200,7 @@
         });
     </script>
   {% endfor %}
+  </tbody>
   </table>
  {% endif %}
  {% if private_stats %}
@@ -324,6 +334,7 @@
         });
     </script>
   {% endfor %}
+  </tbody>
   </table>
  {% endif %}
 

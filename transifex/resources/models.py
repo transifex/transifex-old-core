@@ -101,6 +101,11 @@ class ResourceQuerySet(models.query.QuerySet):
             # RLStats.objects.private(User.objects.get(username="margie")).count()
             project__in=Project.objects.for_user(user))
 
+category_pat = re.compile(r'^[\w\d_-]+$')
+def validate_category(value):
+    if not category_pat.search(value):
+        raise ValidationError("Not a valid category name")
+
 class Resource(models.Model):
     """
     A translatable resource, such as a document, a set of strings, etc.
@@ -142,6 +147,14 @@ class Resource(models.Model):
         blank=False, null=False, editable=False, default=0,
         help_text=_('The number of words contained in the source entities in'
             ' this translation resource.'))
+
+    #categories
+    category = models.CharField(
+        _('Category'), max_length=64, blank=True, null=True,
+        validators=[validate_category],
+        help_text=_("A text field used to help organize a release's resources "\
+                    "into categories.")
+    )
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
