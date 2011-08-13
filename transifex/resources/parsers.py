@@ -11,5 +11,14 @@ from transifex.resources.formats.joomla import JoomlaINIHandler # GNU Gettext .P
 from transifex.resources.formats.javaproperties import JavaPropertiesHandler # Java .PROPERTIES parser
 from transifex.resources.formats.desktop import DesktopHandler
 from transifex.resources.formats.strings import AppleStringsHandler
+from transifex.resources.formats.xliff import XliffHandler
 
-PARSERS = [POHandler , LinguistHandler, JoomlaINIHandler, JavaPropertiesHandler, DesktopHandler, AppleStringsHandler] #, JavaPropertiesParser, AppleStringsParser]
+PARSERS = [
+    POHandler,
+    LinguistHandler,
+    JoomlaINIHandler,
+    JavaPropertiesHandler,
+    DesktopHandler,
+    AppleStringsHandler,
+    XliffHandler,
+] #, JavaPropertiesParser, AppleStringsParser]

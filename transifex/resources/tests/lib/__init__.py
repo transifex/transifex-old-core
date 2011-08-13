@@ -4,6 +4,7 @@ from javaproperties import *
 from joomla_ini import *
 from desktop import *
 from strings import *
+from xliff import *
 from pseudo import *
 from validators import *
 from info import *
