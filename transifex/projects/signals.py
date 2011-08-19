@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.dispatch import Signal
 
+pre_proj_save = Signal(providing_args=['instance', 'form'])
 post_proj_save_m2m = Signal(providing_args=['instance', 'form'])
 pre_comp_prep = Signal(providing_args=['instance'])
 post_comp_prep = Signal(providing_args=['instance'])

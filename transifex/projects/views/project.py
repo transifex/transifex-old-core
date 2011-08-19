@@ -56,6 +56,10 @@ def _project_create_update(request, project_slug=None,
             # Only here the owner is written to the project model
             if not project_id:
                 project.owner = request.user
+
+            # provide the form data to any signal handlers before project_save
+            Signal.send(signals.pre_proj_save, sender=Project, instance=project,
+                        form=project_form)
             project.save()
             project_form.save_m2m()
 
