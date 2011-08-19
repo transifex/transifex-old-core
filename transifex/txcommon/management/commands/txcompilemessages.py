@@ -30,6 +30,6 @@ class Command(BaseCommand):
             locale_dirs = filter(os.path.isdir, glob.glob('%s/*' % localedir))
             for locale_dir in locale_dirs:
                 locale = os.path.basename(locale_dir)
-                compile_messages(locale)
+                compile_messages(self.stderr, locale)
         else:
-            compile_messages(locale)
+            compile_messages(self.stderr, locale)
