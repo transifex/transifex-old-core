@@ -58,7 +58,7 @@ setup(
         "Sphinx >= 0.4.2",
     ],
     install_requires = [
-        "Django >= 1.2.3",
+        "Django == 1.2.5",
         "markdown",
         "userprofile",
         "httplib2",
