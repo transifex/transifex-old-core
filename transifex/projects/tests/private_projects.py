@@ -18,6 +18,7 @@ from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.teams.models import Team
+import unittest2
 
 # Uncomment the following and use ipython(), if you want to open ipython
 #from IPython.Shell import IPShellEmbed
@@ -28,13 +29,18 @@ from transifex.teams.models import Team
 Watch = get_model('repowatch', 'Watch')
 POFileLock = get_model('locks', 'POFileLock')
 
+def skip(func):
+    def decorator(func):
+        return unittest2.skipUnless(settings.TX_ROOT == settings.PROJECT_PATH, "")
+    return decorator
+
 class PrivateProjectTest(NoticeTypes, BaseTestCase):
     """
     Test private projects overall.
 
     Permissions, get, post return codes etc.
     """
-
+    @skip
     def test_project_list_with_anonymous_user(self):
         """
         Test that project list pages contain only the public project and not
@@ -72,7 +78,7 @@ class PrivateProjectTest(NoticeTypes, BaseTestCase):
 
         #TODO: FEATURED, OPEN TRANSLATIONS list testing
 
-
+    @skip
     def test_project_list_with_logged_in_user(self):
         """
         Test that project list pages contain only the public project and not
