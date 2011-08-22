@@ -73,5 +73,26 @@ class TestXliffParser(BaseTestCase):
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 7)
 
+        #Save updated translation file
+        handler.bind_file(os.path.join(os.path.dirname(__file__), 'translation_ar_updated.xlf'))
+        handler.set_language(l)
+        handler.parse_file()
+
+        entities = 0
+        translations = 0
+        for s in handler.stringset.strings:
+            entities += 1
+            if s.translation.strip() != '':
+                translations += 1
+        self.assertEqual(entities, 9)
+        self.assertEqual(translations, 9)
+
+        handler.save2db()
+        # Check if all Source strings are untouched
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 6)
+        # Check that all translations are there
+        self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
+            language=l)), 9)
+
         r.delete()
 

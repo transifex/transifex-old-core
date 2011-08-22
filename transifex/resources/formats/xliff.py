@@ -85,8 +85,7 @@ class XliffHandler(Handler):
                     group_node.insertBefore(clone, trans_unit_nodes[1].previousSibling)
                 if rule == 5:
                     trans_unit_nodes[1].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-        content = doc.toxml()
-        return content
+        self.content = doc.toxml()
 
     def _get_translation_strings(self, source_entities, language):
         """Modified to include a new field for translation rule"""
@@ -194,9 +193,6 @@ class XliffHandler(Handler):
 
             if root.tagName != "xliff":
                 raise XliffParseError("Root element is not 'xliff'")
-
-            self.stringset = StringSet()
-            self.suggestions = StringSet()
             for node in root.childNodes:
                 if node.nodeType == node.ELEMENT_NODE and node.localName == "file":
                     self.parse_tag_file(node, is_source)
