@@ -4,17 +4,22 @@ from django.utils import translation
 
 def site_section(request):
     """
-    Return a ContextProcessor containing the first part in the URL.
+    Return a ContextProcessor with the tokens from the URL as a list.
 
-    Eg. Templates accessed at URLs under '/projects/...' having the
-    RequestContext processor will have a ``site_section`` variable available.
+    Eg. Templates accessed at a URL '/projects/foo/' will have a
+    RequestContext processor with ``site_section`` available and equal to
+    ['projects', 'foo'].
+    
+    To access in templates, use something like:
+    
+    {% if site_section.0 == "projects" %}...
     """
 
     try:
-        ret = request.path.split('/')[1]
+        ret = request.path.split('/')
     except IndexError:
         ret = ''
-    return { 'site_section': ret }
+    return { 'site_section': ret[1:] }
 
 def site_url_prefix_processor(request):
     """
