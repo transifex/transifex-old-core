@@ -427,6 +427,8 @@ class ProjectResourceHandler(BaseHandler):
                 logger.debug("Extraction successful, returning: %s" % retval)
 
                 # transaction has been commited by save2db
+                # but logger message above marks it dirty again
+                transaction.commit()
                 return HttpResponse(simplejson.dumps(retval),
                     mimetype='text/plain')
 
