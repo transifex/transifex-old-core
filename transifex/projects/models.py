@@ -214,7 +214,7 @@ class Project(models.Model):
 
     @property
     def wordcount(self):
-        return self.resources.aggregate(Sum('wordcount'))['wordcount__sum']
+        return self.resources.aggregate(Sum('wordcount'))['wordcount__sum'] or 0
 
     @property
     def team_member_count(self):
