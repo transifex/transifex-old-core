@@ -46,7 +46,6 @@
                 <td>
                 {{ form.outsource }}
                 {% if form.outsource.errors %}<p class="fielderrors">{% for error in form.outsource.errors %}{{ error }}{% endfor %}</p>{% endif %}
-                </div>
                 </td>
                 <td><p class="helptext">{{ form.outsource.help_text|safe }}</p></td>
             </tr>
@@ -66,6 +65,7 @@
 {% endwith %}
 {% endif %}
 
+</div>
 </div>
 {% endblock %}
 
