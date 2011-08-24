@@ -212,9 +212,13 @@ def notice_type_user_filter(noticetype_list):
     from txcommon.notifications import NOTICE_TYPES
     new_list=[]
     for nt in noticetype_list:
+        add = True
         for n in NOTICE_TYPES:
-            if nt['notice_type'].label == n["label"] and n["show_to_user"]:
-                new_list.append(nt)
+            if nt['notice_type'].label == n["label"]:
+                if not n["show_to_user"]:
+                    add = False
+        if add:
+            new_list.append(nt)
     return new_list
 
 @register.filter
