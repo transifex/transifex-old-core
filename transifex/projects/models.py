@@ -220,6 +220,31 @@ class Project(models.Model):
     def team_member_count(self):
         return len(User.objects.filter(team_members__project=self))
 
+    @property
+    def source_language_id(self):
+        """Get the source language id used in this project.
+
+        Return None, if the project has no resource.
+        """
+        try:
+            return self.resources.values_list(
+                'source_language_id', flat=True
+            )[0]
+        except IndexError, e:
+            return None
+
+    @property
+    def source_language(self):
+        """Get the source language used in this project.
+
+        Return None, if the project has no resource.
+        """
+        try:
+            return self.resources.all()[0].source_language
+        except IndexError, e:
+            return None
+
+
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
 except tagging.AlreadyRegistered, e:
