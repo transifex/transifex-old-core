@@ -20,7 +20,8 @@ def upload_create_resource_form(request, project, prefix='create_form'):
     """
     resource = None
     if request.method == 'POST' and request.POST.get('create_resource', None):
-        create_resource_form = CreateResourceForm(request.POST, prefix=prefix)
+        create_resource_form = CreateResourceForm(request.POST, prefix=prefix,
+            project=project)
         if create_resource_form.is_valid():
             resource = create_resource_form.save(commit=False)
         display_form=True
@@ -44,8 +45,12 @@ def upload_create_resource_form(request, project, prefix='create_form'):
                 resource.slug = "%s_%s" % (slug, identifier)
 
     else:
+        if project.source_language:
+            initial_source_file = [project.source_language.code, '']
+        else:
+            initial_source_file = ['en', '']
         create_resource_form = CreateResourceForm(prefix=prefix,
-            initial={'source_file':['en', ""]})
+            initial={'source_file':initial_source_file}, project=project)
         display_form=False
 
 

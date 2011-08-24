@@ -18,8 +18,9 @@ class StorageFileWidget(forms.MultiWidget):
     def __init__(self, *args, **kwargs):
         attrs = kwargs.pop('attrs', {})
         language = kwargs.pop('language', {})
+        display_language = kwargs.pop('display_language', None)
 
-        if language:
+        if not display_language:
             language_field=forms.HiddenInput(attrs=attrs)
         else:
             self.language_choices = kwargs.pop('language_choices', [])

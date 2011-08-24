@@ -146,14 +146,34 @@ class CreateResourceForm(forms.ModelForm):
     """
     Form to create a resource using data from StorageFileField.
     """
-    source_file = StorageFileField(label=_('Resource file'),
-        help_text=_("Choose the source language for the resource and then "
-        "select a file from your file system to be used as an extracting "
-        "point of strings to be translated."))
-
     class Meta:
         model = Resource
         fields = ('source_file',)
+
+    def __init__(self, *args, **kwargs):
+        
+        project = kwargs.pop('project', None)
+        super(CreateResourceForm, self).__init__(*args, **kwargs)
+
+        self.source_language = project.source_language
+
+        self.fields['source_file'] = StorageFileField(
+            label=_('Resource file'),
+            help_text=_("Choose the source language for the resource and then "
+        "select a file from your file system to be used as an extracting "
+        "point of strings to be translated."), language=self.source_language,
+        display_language=True)
+        
+    def clean(self):
+        """Check whether the language"""
+        cleaned_data = self.cleaned_data
+        source_file = cleaned_data.get('source_file')
+        
+        if self.source_language and self.source_language != source_file.language:
+            msg = _("Invalid selected language.")
+            self._errors["source_file"] = self.error_class([msg])
+            del cleaned_data["source_file"]
+        return cleaned_data
 
 
 class ResourceTranslationForm(forms.Form):

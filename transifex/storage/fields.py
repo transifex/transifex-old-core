@@ -37,6 +37,8 @@ class StorageFileField(forms.MultiValueField):
         # Hard coded widget
         widget = StorageFileWidget(attrs=attrs, language=language,
             language_choices=language_choices,  *args, **kwargs)
+        # Remove unsupported kwarg
+        kwargs.pop('display_language', None)
         super(StorageFileField, self).__init__(fields, widget=widget,
             *args, **kwargs)
 
