@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import simplejson
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils import simplejson
@@ -71,6 +72,37 @@ class ProjectResourceAPITests(BaseStorageTests):
         self.assertEqual(rls.total, 3)
         self.assertEqual(rls.translated_perc, 100)
 
+    def test_same_source_language(self):
+        filename = 'pt_BR.po'
+        path = os.path.join(settings.TX_ROOT, 'storage/tests/', filename)
+
+        # same language: success
+        upload_file = open(path)
+        data = {'language': self.language_en.code, 'file': upload_file}
+        resp = self.client['registered'].post(reverse('api.storage'), data)
+        uuid = simplejson.loads(resp.content)['files'][0]['uuid']
+        data = '{"uuid": "%s"}' % uuid
+        resp = self.client['maintainer'].post(
+            reverse('api_project_files', args=[self.project.slug]),
+            data, content_type="application/json"
+        )
+        print resp.content
+        self.assertEqual(eval(resp.content)['strings_added'], 3)
+        self.assertEqual(resp.status_code, 200)
+        upload_file.close()
+
+        # different language: error
+        upload_file = open(path)
+        data = {'language': self.language_ar.code, 'file': upload_file}
+        resp = self.client['registered'].post(reverse('api.storage'), data)
+        uuid = simplejson.loads(resp.content)['files'][0]['uuid']
+        data = '{"uuid": "%s"}' % uuid
+        resp = self.client['maintainer'].post(
+            reverse('api_project_files', args=[self.project.slug]),
+            data, content_type="application/json"
+        )
+        self.assertContains(resp, "for source language", status_code=400)
+        upload_file.close()
 
 class TestTransactionProjectResourceAPI(Languages, NoticeTypes, Users,
                                         TransactionTestCase):

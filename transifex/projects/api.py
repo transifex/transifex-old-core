@@ -360,6 +360,12 @@ class ProjectResourceHandler(BaseHandler):
                         return BAD_REQUEST("Resouce slug is too long "
                             "(Max. 50 chars).")
 
+                slang = project.source_language
+                if slang is not None and storagefile.language != slang:
+                    return BAD_REQUEST(
+                        "You have to use %s for source language" % slang
+                    )
+
                 try:
                     resource, created = Resource.objects.get_or_create(
                         slug = resource_slug or slugify(storagefile.name),

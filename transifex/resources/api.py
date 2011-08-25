@@ -30,6 +30,7 @@ from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
+from transifex.resources.formats import get_i18n_type_from_file
 from transifex.resources.formats import get_i18n_method_from_mimetype, \
         parser_for, get_file_extension_for_method, get_mimetype_from_method
 from transifex.resources.formats.core import ParseError
@@ -185,7 +186,7 @@ class ResourceHandler(BaseHandler):
         except AttributeError, e:
             return BAD_REQUEST("Field '%s' is not allowed." % e.message)
         # Check for obligatory fields
-        for field in ('name', 'slug', 'source_language', ):
+        for field in ('name', 'slug', 'mimetype', ):
             if field not in data:
                 return BAD_REQUEST("Field '%s' must be specified." % field)
 
@@ -193,17 +194,18 @@ class ResourceHandler(BaseHandler):
             project = Project.objects.get(slug=project_slug)
         except Project.DoesNotExist:
             return rc.NOT_FOUND
-        slang = data.get('source_language', None)
-        i18n_type = get_i18n_method_from_mimetype(data.get('mimetype', None))
-        if 'application/json' in request.content_type and i18n_type is None:
-            return BAD_REQUEST("Field 'mimetype' must be specified.")
+
+        slang = None
+        if 'source_language' in data:
+            slang = data.get('source_language')
+            del data['source_language']
+        i18n_type = get_i18n_method_from_mimetype(data.get('mimetype'))
         if i18n_type is not None:
             del data['mimetype']
         try:
-            source_language = Language.objects.by_code_or_alias(slang)
-            del data['source_language']
-        except:
-            return BAD_REQUEST("Language code '%s' does not exist." % slang)
+            source_language = self._get_source_lang(project, slang)
+        except BadRequestError, e:
+            return BAD_REQUEST(unicode(e))
 
         # save resource
         try:
@@ -253,12 +255,12 @@ class ResourceHandler(BaseHandler):
         slang = data.pop('source_language', None)
         source_language = None
         try:
-            source_language = Language.objects.by_code_or_alias(slang)
+            source_language = self._get_source_lang(slang)
         except:
             pass
 
         if not source_language:
-            return BAD_REQUEST("No source language was specified.")
+            return BAD_REQUEST("No or wrong source language was specified.")
 
         try:
             Resource.objects.get_or_create(
@@ -321,6 +323,66 @@ class ResourceHandler(BaseHandler):
         for field in fields:
             if not field in self.allowed_fields:
                 raise AttributeError(field)
+
+    def _is_same_source_lang(self, project, slang):
+        """Check if the source language specified is the one used in
+        the project.
+
+        All resources of a project must have the same source language. So,
+        check if the source language specified (used by a new resource) is
+        the same as the one used by another resource of the project.
+        In the case the project does not have any resource yet, we return True.
+
+        Args:
+            project: The project which the resource will belong to.
+            slang: The source language used by the new resource.
+        Returns:
+            True, if the source language is valid (matches). False, otherwise.
+        """
+        slang_used = project.source_language_id
+        if slang_used is None:
+            return True
+        return slang_used == slang.id
+
+    def _get_source_lang(self, project, slang):
+        """Get the source language to use for the resource
+
+        If the source language specified does not match the one
+        used in the project, return a BadRequestError. We test this
+        condition first, because it should be the first error the user
+        should see.
+
+        If no source language is specified, return the one used in the project
+        or (in case none is used) raise a BadRequestError.
+
+        Args:
+            project: The project the resource belongs to.
+            slang: The source language for the resource.
+        Returns:
+            The source language to use.
+        Raises:
+            BadRequestError: There was a problem with the langauge
+                the user chose.
+        """
+        if slang is not None:
+            try:
+                source_language = Language.objects.by_code_or_alias(slang)
+            except Language.DoesNotExist:
+                raise BadRequestError(
+                    "Language code '%s' does not exist." % slang
+                )
+            if not self._is_same_source_lang(project, source_language):
+                raise BadRequestError(
+                    "All resources of a project must have the same "
+                    "source language."
+                )
+            return source_language
+        else:
+            slang_for_project = project.source_language
+            if slang_for_project is not None:
+                return slang_for_project
+            else:
+                raise BadRequestError("No source language specified.")
 
 
 class StatsHandler(BaseHandler):
@@ -820,7 +882,10 @@ class FileTranslation(Translation):
                 file_.write(chunk)
             file_.close()
 
-            parser = parser_for(file_.name)
+            parser = parser_for(
+                mimetype=get_mimetype_from_method(self.resource.i18n_type)
+            )
+
             if parser is None:
                 raise BadRequestError("Unknown file type")
             if size == 0:

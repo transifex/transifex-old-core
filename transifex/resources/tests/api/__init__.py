@@ -7,6 +7,7 @@ from django.conf import settings
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import Users, NoticeTypes
 from transifex.resources.models import Resource, RLStats
+from transifex.resources.api import ResourceHandler
 from transifex.resources.tests.api.base import APIBaseTests
 from transifex.projects.models import Project
 from transifex.languages.models import Language
@@ -50,6 +51,86 @@ class TestResourceAPI(APIBaseTests):
                 'lang_code': 'el'
             }
         )
+
+    def test_is_same_source_lang(self):
+        """Test the method that determines whether a source language is/is not
+        accepted in a project.
+        """
+        rh = ResourceHandler()
+        p = Project.objects.create(slug='slug', name='name')
+        self.assertTrue(rh._is_same_source_lang(p, self.language_en))
+        r = Resource.objects.create(
+            slug='rslug1', project=p, source_language=self.language_en
+        )
+        r = Resource(
+            slug='rslug2', project=p
+        )
+        self.assertFalse(rh._is_same_source_lang(p, self.language_ar))
+        self.assertTrue(rh._is_same_source_lang(p, self.language_en))
+        r.source_language = self.language_en
+        r.save()
+        r = Resource(
+            slug='rslug3', project=p
+        )
+        self.assertFalse(rh._is_same_source_lang(p, self.language_ar))
+        self.assertTrue(rh._is_same_source_lang(p, self.language_en))
+
+    def test_create_resource_same_source_language(self):
+        """Test the restriction of having the same source languages when
+        creating a resource through the API.
+        """
+        self._create_project()
+        with open(self.po_file) as f:
+            content = f.read()
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'rslug1',
+                    'source_language': 'el',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'rslug2',
+                    'source_language': 'en',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertContains(res, "same source language", status_code=400)
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'rslug2',
+                    'source_language': 'el',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'rslug3',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        r = Resource.objects.get(slug='rslug3', project__slug='new_pr')
+        self.assertEquals(r.source_language.code, 'el')
 
     def test_get(self):
         res = self.client['anonymous'].get(self.url_resources)
@@ -166,7 +247,7 @@ class TestResourceAPI(APIBaseTests):
                 'name': "resource1",
                 'slug': 'r1',
                 'source_language': 'el',
-                'name': 'name.po',
+                'mimetype': 'text/x-po',
                 'attachment': f
             },
         )
@@ -347,7 +428,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'el',
-                    'i18n_type': 'PO',
+                    'mimetype': 'text/x-po',
                     'content': content,
             }),
             content_type='application/json'
@@ -361,7 +442,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource1",
                     'slug': 'r1',
                     'source_language': 'el',
-                    'i18n_type': 'PO',
+                    'mimetype': 'text/x-po',
             }),
             content_type='application/json'
         )
@@ -372,7 +453,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource2",
                     'slug': 'r2',
                     'source_language': 'el',
-                    'i18n_type': 'PO',
+                    'mimetype': 'text/x-po',
             }),
             content_type='application/json'
         )
@@ -929,7 +1010,6 @@ class TestStatsAPI(APIBaseTests):
         )
 
     def _create_resource(self):
-        self._create_project()
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({
