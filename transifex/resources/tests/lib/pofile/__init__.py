@@ -12,7 +12,7 @@ from transifex.addons.copyright.models import Copyright
 
 from transifex.addons.suggestions.models import Suggestion
 
-TEST_FILES_PATH = os.path.join(settings.PROJECT_PATH,
+TEST_FILES_PATH = os.path.join(settings.TX_ROOT,
                                'resources/tests/lib/pofile/general')
 
 class POFile(FormatsBaseTestCase):
