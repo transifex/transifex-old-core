@@ -19,6 +19,9 @@ def site_section(request):
         ret = request.path.split('/')
     except IndexError:
         ret = ''
+    # Avoid empty last token if URL ends with /
+    if ret[-1] == '':
+        ret.pop()
     return { 'site_section': ret[1:] }
 
 def site_url_prefix_processor(request):
