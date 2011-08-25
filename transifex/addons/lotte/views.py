@@ -369,7 +369,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
                 _get_source_strings(s, source_language, language.code, more_languages),
                 # 4. Get all the Translation strings mapped with plural rules
                 # in a single dictionary (see docstring of function)
-                _get_strings(translated_strings, language.code, s.source_entity),
+                _get_strings(translated_strings, language, s.source_entity),
                 # 5. A number which indicates the number of Suggestion objects
                 # attached to this row of the table.
                 Suggestion.objects.filter(source_entity=s.source_entity, language__code=language.code).count(),
@@ -525,7 +525,7 @@ def _get_source_strings(source_string, source_language, lang_code, more_language
              'similar_lang_strings' : similar_lang_strings }
 
 
-def _get_strings(query, target_lang_code, source_entity):
+def _get_strings(query, target_language, source_entity):
     """
     Helper function for returning all the Translation strings or an empty dict.
 
@@ -537,7 +537,6 @@ def _get_strings(query, target_lang_code, source_entity):
     """
     # It includes the plural translations, too!
     translation_strings = {}
-    target_language = Language.objects.by_code_or_alias(target_lang_code)
     if source_entity.pluralized:
         translations = query.filter(source_entity=source_entity).order_by('rule')
         # Fill with empty strings to have the Untranslated entries!
