@@ -147,7 +147,7 @@ urlpatterns += patterns('',
         kwargs = {'feed_dict': feeds,
                   'slug': 'release'}),
     url(
-        regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w]+)/feed/$',
+        regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w\.]+)/feed/$',
         view = release_language_feed,
         name = 'release_language_feed',
         kwargs = {'feed_dict': feeds,
@@ -172,7 +172,7 @@ urlpatterns += patterns('',
         view = release_delete,
         name = 'release_delete',),
     url(
-        regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w]+)/$',
+        regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w\.]+)/$',
         view = release_language_detail,
         name = 'release_language_detail',
     ),
@@ -180,7 +180,7 @@ urlpatterns += patterns('',
 
 # Teams
 
-TEAM_URL = PROJECT_URL_PARTIAL + r'team/(?P<language_code>[\-_@\w]+)/'
+TEAM_URL = PROJECT_URL_PARTIAL + r'team/(?P<language_code>[\-_@\w\.]+)/'
 
 urlpatterns += patterns('',
     url(

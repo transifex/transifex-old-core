@@ -6,7 +6,7 @@ from transifex.resources.urls import RESOURCE_LANG_URL
 
 #FIXME: Move this to resource if we agree.
 ENTITY_URL = '^entities/(?P<entity_id>\d+)/'
-SUGGESTIONS_URL = ENTITY_URL + 'lang/(?P<lang_code>[\-_@\w]+)/suggestions/'
+SUGGESTIONS_URL = ENTITY_URL + 'lang/(?P<lang_code>[\-_@\w\.]+)/suggestions/'
 
 urlpatterns = patterns('',
     url(SUGGESTIONS_URL+'create/$',

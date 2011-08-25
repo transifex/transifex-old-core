@@ -22,7 +22,7 @@ RESOURCE_URL_PARTIAL = PROJECT_URL_PARTIAL + r'resource/(?P<resource_slug>[-\w]+
 RESOURCE_URL = PROJECTS_URL + RESOURCE_URL_PARTIAL[1:]
 
 # URL relative to the projects app (no '/projects' prefix)
-RESOURCE_LANG_URL_PARTIAL = RESOURCE_URL_PARTIAL + r'l/(?P<lang_code>[\-_@\w]+)/'
+RESOURCE_LANG_URL_PARTIAL = RESOURCE_URL_PARTIAL + r'l/(?P<lang_code>[\-_@\w\.]+)/'
 # URL which should be used from other addons (full with prefix)
 RESOURCE_LANG_URL = PROJECTS_URL + RESOURCE_LANG_URL_PARTIAL
 
