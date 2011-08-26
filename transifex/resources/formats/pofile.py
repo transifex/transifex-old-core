@@ -232,20 +232,20 @@ class POHandler(Handler):
         po = polib.pofile(unicode(template, 'utf-8'))
 
         # Update PO file headers
-        po.metadata['Project-Id-Version'] = self.resource.project.name.encode("utf-8")
-        po.metadata['Content-Type'] = "text/plain; charset=UTF-8"
+        po.metadata['Project-Id-Version'] = self.resource.project.name
+        po.metadata['Content-Type'] = u"text/plain; charset=UTF-8"
         # The above doesn't change the charset of the actual object, so we
         # need to do it for the pofile object as well.
-        po.encoding = "UTF-8"
+        po.encoding = u"UTF-8"
 
-        po.metadata['PO-Revision-Date'] = (datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000").encode("utf-8"))
-        po.metadata['Plural-Forms'] = ("nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)).encode("utf-8")
+        po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
+        po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but isn't being used by po
         # files. What should we do?
-        po.metadata['Language'] = (language.code.encode("utf-8"))
+        po.metadata['Language'] = language.code
 
         if self.resource.project.bug_tracker:
-            po.metadata['Report-Msgid-Bugs-To'] = (self.resource.project.bug_tracker.encode("utf-8"))
+            po.metadata['Report-Msgid-Bugs-To'] = self.resource.project.bug_tracker
 
         if 'fuzzy' in po.metadata_is_fuzzy:
             po.metadata_is_fuzzy.remove('fuzzy')
@@ -266,10 +266,9 @@ class POHandler(Handler):
         stat = RLStats.objects.by_resource(self.resource).by_language(language)
         if stat and stat[0].last_committer:
             u = stat[0].last_committer
-            po.metadata['Last-Translator'] = ("%s <%s>" %
-                (u.get_full_name() or u.username , u.email)).encode("utf-8")
-            po.metadata['PO-Revision-Date'] = ( stat[0].last_update.strftime(
-                "%Y-%m-%d %H:%M+0000").encode("utf-8") )
+            po.metadata['Last-Translator'] = "%s <%s>" % (u.get_full_name() or u.username , u.email)
+            po.metadata['PO-Revision-Date'] = stat[0].last_update.strftime(
+                "%Y-%m-%d %H:%M+0000")
 
         for entry in po:
             if entry.msgid_plural:
