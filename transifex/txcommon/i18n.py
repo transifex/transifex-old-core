@@ -4,6 +4,10 @@ import codecs
 import logging
 from django.utils.translation import ugettext as _
 
+# See https://docs.djangoproject.com/en/dev/ref/settings/#languages
+gettext = lambda s: s
+
+
 def available_languages(localedir):
     """Return available languages in the LINGUAS file."""
     available_languages = []
@@ -15,9 +19,11 @@ def available_languages(localedir):
         for lang in linguas.readlines():
             lang = lang.strip()
             if lang and not lang.startswith('#'):
-                available_languages.append((lang,lang))
+                code, name = lang.split(None, 1)
+                available_languages.append((code, gettext(name)))
     except IOError, e:
-        logging.error(_('The LINGUAS file (%(file)s) could not be opened: %(exc)s') %
-                        {'file': linguas_file,
-                         'exc': e})
+        logging.error(
+            'The LINGUAS file (%(file)s) could not be opened: %(exc)s' %
+            {'file': linguas_file, 'exc': e}
+        )
     return available_languages
