@@ -1,46 +1,45 @@
 watch_classes = Array('watch_add', 'watch_remove');
 
-function watch_handler(data, textStatus)
-{
-    j = JSON.parse(data);
+function watch_handler(data, textStatus){
+    
+    if (typeof(data) == 'object'){
+        // JQuery >= 1.5
+        j = data;
+    }else{
+        // JQuery < 1.5
+        j = JSON.parse(data);
+    }
+    
     // TODO: It's a hack
     if(j.project)
-        obj = $('#watch-project')
+        obj = $('#watch-project');
     else
-        obj = $('#watch-resource-' + String(j.id))
+        obj = $('#watch-resource-' + String(j.id));
 
-    if (j.error)
-    {
+    if (j.error){
         obj.attr('title', j.error);
         obj.removeClass('waiting');
         obj.addClass(j.style);
-    }
-    else
-    {
+    }else{
         obj.attr('title', j.title);
-        obj.click(click_function(obj, j.url))
+        obj.click(click_function(obj, j.url));
         obj.removeClass('waiting');
         obj.addClass(j.style);
-    };
+    }
 }
 
-function click_function(obj, url)
-{
-    return function()
-    {
+function click_function(obj, url){
+    return function(){
         watch_toggle(obj, url);
     }
 }
 
-function watch_toggle(obj, url)
-{
+function watch_toggle(obj, url){
     obj.onclick = null;
     o = $(obj);
     o.unbind('click');
-    for (cls in watch_classes)
-    {
-        if (o.hasClass(watch_classes[cls]))
-        {
+    for (cls in watch_classes){
+        if (o.hasClass(watch_classes[cls])){
             o.removeClass(watch_classes[cls]);
         }
     }
