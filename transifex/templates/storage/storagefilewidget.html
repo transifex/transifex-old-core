@@ -13,8 +13,8 @@ Expected context vars:
 {{ rendered_fields.0 }}
 {{ rendered_fields.1 }}
 <input id="{{ name }}-id-uuid" type="hidden" name="{{ name }}-uuid" value="{{ storagefile.uuid }}" />
-<span id="{{ name }}-upload_button" class="i16 send_file buttonized" style="{% if storagefile %}display:none;{% endif %} margin-left:1em;">{% trans "Upload file" %}</span>
-<span id="{{ name }}-uploaded_file" class="i16 delete buttonized" style="{% if not storagefile %}display:none;{% endif %} margin-left:1em;">{{ storagefile.name }}</span>
+<span id="{{ name }}-upload_button" class="i16 send_file buttonized" style="line-height:1em; {% if storagefile %}display:none;{% endif %} margin-left:1em;">{% trans "Upload file" %}</span>
+<span id="{{ name }}-uploaded_file" class="i16 delete buttonized" style="line-height:1.12em;{% if not storagefile %}display:none;{% endif %} margin-left:1em;">{{ storagefile.name }}</span>
 
 <script type="text/javascript">
 /*
