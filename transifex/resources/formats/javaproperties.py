@@ -43,7 +43,6 @@ class JavaPropertiesHandler(Handler):
         """
         return (s.replace(':', '\:')
                 .replace('=', '\=')
-                .replace(' ', '\ ')
                 .replace('\\', '\\\\')
         )
 
@@ -51,7 +50,6 @@ class JavaPropertiesHandler(Handler):
         """Reverse the escape of special characters."""
         return (value.replace('\:', ':')
                 .replace('\=', '=')
-                .replace('\ ', ' ')
                 .replace('\\\\', '\\')
         )
 
