@@ -82,17 +82,20 @@ def upload_resource_translation_button(request, resource, language=None,
     """
     if language:
         initial={'resource_translation':[language.code, ""]}
+        display_language = False
     else:
         initial={}
+        display_language = True
 
     if request.method == 'POST' and request.POST.get('resource_translation', None):
         resource_translation_form = ResourceTranslationForm(request.POST,
-            language=language, prefix=prefix, initial=initial)
+            language=language, display_language=display_language,
+            prefix=prefix, initial=initial)
         if resource_translation_form.is_valid():
             resource = resource_translation_form.save(commit=False)
     else:
         resource_translation_form = ResourceTranslationForm(language=language,
-            prefix=prefix, initial=initial)
+            display_language=display_language, prefix=prefix, initial=initial)
 
     api_resource_storage = get_url_pattern(
         'api_resource_storage')

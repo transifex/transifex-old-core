@@ -183,9 +183,11 @@ class ResourceTranslationForm(forms.Form):
     """
     def __init__(self, *args, **kwargs):
         language = kwargs.pop('language', None)
+        display_language = kwargs.pop('display_language', None)
         super(ResourceTranslationForm, self).__init__(*args, **kwargs)
 
         self.fields['resource_translation'] = StorageFileField(
             label=_('Resource file'),
             help_text=_("Select a file from your file system to be used to "
-                "fill translations for this resource."), language=language)
+                "fill translations for this resource."), language=language,
+                display_language=display_language)
