@@ -38,6 +38,4 @@ urlpatterns += patterns('',
         resource_translations_delete, name='resource_translations_delete'),
     url(RESOURCE_LANG_URL_PARTIAL+'download/$',
         get_translation_file, name='download_translation'),
-    url(RESOURCE_LANG_URL_PARTIAL+'lock_and_download/$',
-        lock_and_get_translation_file, name='lock_and_download_translation'),
 )
