@@ -396,7 +396,7 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         handler.compile()
         lines_iterator = handler.compiled_template.split("\n")
         for n, line in enumerate(lines_iterator):
-            if line == "## Translators:":
+            if line == "# Translators:":
                 break
         line = lines_iterator[n + 1]
         self.assertTrue('AB' in line)

@@ -304,7 +304,7 @@ class POHandler(Handler):
                     content_with_copyright += line + "\n"
             elif not copyrights_inserted:
                 copyrights_inserted = True
-                content_with_copyright += "## Translators:\n"
+                content_with_copyright += "# Translators:\n"
                 for entry in c:
                     content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
                             ', ' + entry.years_text.encode('UTF-8') + ".\n"
