@@ -21,10 +21,6 @@ from transifex.projects.permissions.project import ProjectPermission
 from transifex.teams.models import Team
 import unittest2
 
-# Uncomment the following and use ipython(), if you want to open ipython
-#from IPython.Shell import IPShellEmbed
-#ipython = IPShellEmbed()
-
 # TODO: POST requests should also be tested everywhere (teams, tr. actions etc.)
 
 Watch = get_model('repowatch', 'Watch')

@@ -8,9 +8,6 @@ from transifex.resources.models import *
 from transifex.txcommon.tests.base import BaseTestCase
 
 
-#from IPython.Shell import IPShellEmbed
-#ipython = IPShellEmbed()
-
 SAMPLE_STRING = 'Hello'
 SAMPLE_STRINGS = ['%s_%s' % (SAMPLE_STRING, i) for i in range(1, 11)]
 # TEXT SIZE: 9 paragraphs, 1000 words, 6701 bytes

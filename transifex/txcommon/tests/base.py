@@ -11,9 +11,6 @@ from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from transifex.txcommon.notifications import NOTICE_TYPES
 
-# Useful:
-# from IPython.Shell import IPShellEmbed; #IPShellEmbed()()
-
 # Load models
 Language = get_model('languages', 'Language')
 AuPermission = get_model('authority', 'Permission')
@@ -226,6 +223,13 @@ class BaseTestCase(Languages, Users, Projects, Resources, SourceEntities,
 
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
+        
+        # Useful for writing tests: Enter ipython anywhere w/ ``self.ipython()``
+        try:
+            from IPython.frontend.terminal.embed import InteractiveShellEmbed as shell
+            self.ipython = shell()
+        except ImportError:
+            pass
 
         #FIXME: This should not happen, since it diverges away the test suite
         # from the actual deployment.
