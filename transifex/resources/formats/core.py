@@ -153,6 +153,25 @@ class Handler(object):
                 PseudoTypeMixin.__class__)
 
 
+    def find_linesep(self, file_):
+        """Find the line separator used in the file."""
+        line = file_.readline()
+        if line.endswith("\r\n"):  # windows line ending
+            self._linesep = "\r\n"
+        elif line.endswith("\r"):  # macosx line ending
+            self._linesep = "\r"
+        else:
+            self._linesep = "\n"
+        file_.seek(0)
+
+    def _prepare_line(self, line):
+        """
+        Prepare a line for parsing.
+
+        Remove newline and whitespace characters.
+        """
+        return line.rstrip('\r\n').strip()
+
     ####################
     #  Core functions  #
     ####################

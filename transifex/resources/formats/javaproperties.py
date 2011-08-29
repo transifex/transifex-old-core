@@ -74,14 +74,6 @@ class JavaPropertiesHandler(Handler):
     def _pre_save2file(self, *args, **kwargs):
         self.compiled_template = self.compiled_template.encode(self.ENCODING)
 
-    def _prepare_line(self, line):
-        """
-        Prepare a line for parsing.
-
-        Remove newline and whitespace characters.
-        """
-        return line.strip('\r\n').strip()
-
     def _split(self, line):
         """
         Split a line in (key, value).
@@ -113,17 +105,6 @@ class JavaPropertiesHandler(Handler):
     @classmethod
     def contents_check(self, filename):
         pass
-
-    def find_linesep(self, file_):
-        """Find the line separator used in the file."""
-        line = file_.readline()
-        if line.endswith("\r\n"):  # windows line ending
-            self._linesep = "\r\n"
-        elif line.endswith("\r"):  # macosx line ending
-            self._linesep = "\r"
-        else:
-            self._linesep = "\n"
-        file_.seek(0)
 
     @need_language
     @need_file
