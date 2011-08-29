@@ -177,8 +177,8 @@
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td>
-          {{ stat.object.name }}
-          <span class="locale">(<a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.code }}</a>)</span>
+
+          <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a> <span class="locale">({{ stat.object.code }})</span>
           {% if stat.object in source_languages %}
              <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
           {% endif %}
