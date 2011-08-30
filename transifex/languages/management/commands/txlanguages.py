@@ -127,7 +127,7 @@ def fill_the_database_verbose(data):
     """
     for obj in data:
         fields = obj['fields']
-        lang, created = fields['code'])
+        lang, created = Language.objects.get_or_create(code=fields['code'])
         if created:
             print (u'Creating %s language (%s)' % (fields['name'], fields['code'])).encode('UTF-8')
         else:
