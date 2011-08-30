@@ -8,16 +8,22 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         """Remove extra space from zh_TW.Big5 code."""
-        zw_tw_big5 = orm['languages.Language'].objects.get(code='zh_TW.Big5 ')
-        zw_tw_big5.code = 'zh_TW.Big5'
-        zw_tw_big5.save()
+        try:
+            zw_tw_big5 = orm['languages.Language'].objects.get(code='zh_TW.Big5 ')
+            zw_tw_big5.code = 'zh_TW.Big5'
+            zw_tw_big5.save()
+        except orm['languages.Language'].DoesNotExist:
+            pass
 
 
     def backwards(self, orm):
         """Add the extra space to zh_TW.Big5 code."""
-        zw_tw_big5 = orm['languages.Language'].objects.get(code='zh_TW.Big5')
-        zw_tw_big5.code = 'zh_TW.Big5 '
-        zw_tw_big5.save()
+        try:
+            zw_tw_big5 = orm['languages.Language'].objects.get(code='zh_TW.Big5')
+            zw_tw_big5.code = 'zh_TW.Big5 '
+            zw_tw_big5.save()
+        except orm['languages.Language'].DoesNotExist:
+            pass
 
 
     models = {
