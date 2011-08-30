@@ -5,6 +5,7 @@ File containing the necessary mechanics for the txlanguages management command.
 from optparse import make_option, OptionParser
 import os.path
 import sys
+from django.db import transaction
 from django.utils import simplejson
 from django.core import serializers
 from django.core.management.base import (BaseCommand, LabelCommand, CommandError)
@@ -119,19 +120,21 @@ def import_lang(filename=None, verbose=False):
     else:
         fill_the_database_silently(data)
 
+@transaction.commit_on_success
 def fill_the_database_verbose(data):
     """
     Update the language object and be verbose about it.
     """
     for obj in data:
         fields = obj['fields']
-        lang, created = Language.objects.get_or_create(code=fields['code'])
+        lang, created = fields['code'])
         if created:
             print (u'Creating %s language (%s)' % (fields['name'], fields['code'])).encode('UTF-8')
         else:
             print (u'Updating %s language (%s)' % (fields['name'], fields['code'])).encode('UTF-8')
         fill_language_data(lang, fields)
 
+@transaction.commit_on_success
 def fill_the_database_silently(data):
     """
     Update the language object without producing any more noise.
