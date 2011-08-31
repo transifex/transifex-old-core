@@ -163,11 +163,6 @@ class LogEntry(models.Model):
     object_name = models.CharField(blank=True, max_length=200)
     message = models.TextField(blank=True, null=True)
 
-    # Denormalized-field (it is read-only anyway)
-    content_type_model = models.CharField(
-        _('python model class name'), max_length=100, null=True
-    )
-
     # Managers
     objects = LogEntryManager()
 
@@ -187,7 +182,6 @@ class LogEntry(models.Model):
         """Save the object in the database."""
         if self.action_time is None:
            self.action_time = datetime.datetime.now()
-        self.content_type_model = self.content_type.model
         super(LogEntry, self).save(*args, **kwargs)
 
     def message_safe(self):
