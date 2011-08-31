@@ -175,3 +175,17 @@ class TeamAccessRequest(models.Model):
         verbose_name_plural = _('team access requests')
 
 log_model(TeamAccessRequest)
+
+
+# FIXME: We could avoid monkey-patches once custom managers on reverse 
+# relations are supported in Django. https://code.djangoproject.com/ticket/3871
+# Monkey-patching Project class from here to avoid circular dependency problems
+def available_teams(self):
+    """
+    Return all available teams for the project. If the project outsources its
+    access, then the teams of the 'parent' project will be returned. The 
+    parameter `self` must be a Project instance.
+    """
+    return Team.objects.filter(project=self.outsource or self)
+
+Project.available_teams = property(available_teams)
