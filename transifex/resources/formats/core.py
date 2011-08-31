@@ -198,8 +198,9 @@ class Handler(object):
         Do a search and replace inside `text` and replaces all
         occurrences of `original` with `replacement`.
         """
-        return re.sub(re.escape(original),
-            self._pseudo_decorate(self._escape(replacement)), text)
+        return text.replace(
+            original, self._pseudo_decorate(self._escape(replacement))
+        )
 
     def _get_strings(self, resource):
         return SourceEntity.objects.filter(
