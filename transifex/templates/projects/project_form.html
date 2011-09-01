@@ -3,6 +3,7 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+{% load addons %}
 
 {% block title %}
   {% if not project %}
@@ -46,6 +47,7 @@
 {% block content_main %}
 <div id="project-form-container">
 {% include "helptext/project_form_helptext.html" %}
+{% hook "extra_helptext.html" %}
 <h3>
 {% if not project %}
     {% trans "Add the details of your project" %}
