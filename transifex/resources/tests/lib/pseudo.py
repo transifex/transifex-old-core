@@ -14,10 +14,12 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/pofile/pseudo.pot'),
         'pseudo_messages':{
-            'XXX': u'msgstr "xxxLocationsxxx"',
-            'BRACKETS': u'msgstr "[Locations]"',
-            'UNICODE': u'"Ŭşḗř %(name)s <b>ḓǿḗş ƞǿŧ</b> ħȧṽḗ ȧ',
-            'PLANGUAGE': u'"ÜקÜséקér %(name)s <b>dôéקôés nôקôt</b>'
+            'XXX': [u'msgstr "xxxLocationsxxx"'],
+            'BRACKETS': [u'msgstr "[Locations]"'],
+            'UNICODE': [u'"Ŭşḗř %(name)s <b>ḓǿḗş ƞǿŧ</b> ħȧṽḗ ȧ',
+                u'%i ḿǿŧǿřƈẏƈŀḗş ȧŧ:\n'],
+            'PLANGUAGE': [u'"ÜקÜséקér %(name)s <b>dôéקôés nôקôt</b>', 
+                u'%i môקôtôקôrcýקýcléקés åקåt:\n']
             }
 
         },
@@ -25,20 +27,20 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/qt/pseudo.ts'),
         'pseudo_messages':{
-            'XXX': u'<translation>xxxSTARTxxx</translation>',
-            'BRACKETS': u'<translation>[START]</translation>',
-            'UNICODE': u'<numerusform>&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt;</numerusform>',
-            'PLANGUAGE': u'<numerusform>&lt;b&gt;%n fïקïléקé'
+            'XXX': [u'<translation>xxxSTARTxxx</translation>'],
+            'BRACKETS': [u'<translation>[START]</translation>'],
+            'UNICODE': [u'<numerusform>&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt;</numerusform>'],
+            'PLANGUAGE': [u'<numerusform>&lt;b&gt;%n fïקïléקé']
             }
         },
     'PROPERTIES':{
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/javaproperties/pseudo.properties'),
         'pseudo_messages':{
-            'XXX': u'Key00=xxxValue00xxx',
-            'BRACKETS': u'Key00=[Value00]',
-            'UNICODE': u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s',
-            'PLANGUAGE': u'Key01=<b>Påקågéקé</b> %s ôקôf %s'
+            'XXX': u'Key00=xxxValue00xxx'],
+            'BRACKETS': u'Key00=[Value00]'],
+            'UNICODE': u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
+            'PLANGUAGE': u'Key01=<b>Påקågéקé</b> %s ôקôf %s']
             }
         },
     'INI':{
@@ -56,10 +58,10 @@ FORMATS = {
         #'file': os.path.join(settings.TX_ROOT, 
             #'resources/tests/lib/desktop/data/okular.desktop'),
         #'pseudo_messages':{
-            #'XXX': u'',
-            #'BRACKETS': u'',
-            #'UNICODE': u'',
-            #'PLANGUAGE': u''
+            #'XXX': [u''],
+            #'BRACKETS': [u''],
+            #'UNICODE': [u''],
+            #'PLANGUAGE': [u'']
             #}
         #}
     }
@@ -110,8 +112,8 @@ class PseudoTestCase(base.BaseTestCase):
                     file_content = file_content.replace('\\ ', ' ')
 
                 # Assert expected value in the generated file
-                self.assertTrue(
-                    v['pseudo_messages'][pseudo_type] in file_content)
+                for message in v['pseudo_messages'][pseudo_type]:
+                    self.assertTrue(message in file_content)
 
 
     def test_pseudo_file_api_calls(self):
