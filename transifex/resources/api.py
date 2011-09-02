@@ -310,7 +310,9 @@ class ResourceHandler(BaseHandler):
 
     def _delete(self, request, project_slug, resource_slug):
         try:
-            resource = Resource.objects.get(slug=resource_slug)
+            resource = Resource.objects.get(
+                slug=resource_slug, project__slug=project_slug
+            )
         except Resource.DoesNotExist:
             return rc.NOT_FOUND
         try:
