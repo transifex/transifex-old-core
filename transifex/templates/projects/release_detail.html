@@ -26,7 +26,7 @@
                 1: { sorter: 'percent' },
                 2: { sorter: 'number' }
             },
-            textExtraction: function(node) {  
+            textExtraction: function(node) {
                 switch (node.cellIndex){
                     // Stats column
                     case 1:
@@ -36,7 +36,7 @@
                         return $("span", node).attr('unixdate');
                     default: return node.innerHTML;
                 }
-            } 
+            }
         });
 
         // Toggle to resources list
@@ -80,9 +80,11 @@
 
   {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
   {% if perms.projects.add_release or is_maintainer %}
+    {% if release.slug != alldata_slug %}
     <div class="editlinks">
       <p><a class="i16 edit buttonized" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release" %}</a></p>
     </div>
+    {% endif %}
   {% endif %}
 
   <div class="details separate">
@@ -91,12 +93,12 @@
   <h3>{% blocktrans %}Details{% endblocktrans %}</h3>
 
   <dl class="definition clearfix">
-      
+    {% if release.slug != alldata_slug %}
       <div class="{% if not release.homepage %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
         <dt class="homepage i16">{% trans "Homepage:" %}</dt>
         <dd><a href="{{ release.homepage }}">{{ release.homepage }}</a></dd>
       </div>
-      
+
       <div class="{% if not release.release_date %} empty {% if not request.user.is_authenticated %}nodisplay{% endif %}{% endif %}">
         <dt class="release_date i16">{% trans "Release date:" %}</dt>
         <dd>{{ release.release_date|date:"D d M Y" }}</dd>
@@ -111,7 +113,7 @@
         <dt class="freeze i16 ">{% trans "Devel freeze:" %}</dt>
         <dd>{{ release.develfreeze_date|date:"D d M Y" }}</dd>
       </div>
-
+    {% endif %}
     {% with resources|length as resources_number %}
     {% if resources %}
       <dt class="resource i16">{% trans "Resources:" %}</dt>
@@ -144,7 +146,7 @@
     {% endif %}
     {% endwith %}
   </dl>
-  
+
   {% with release.long_description_html as long_desc %}
   {% if long_desc %}
   <div class="long_description">
@@ -152,7 +154,7 @@
   </div>
   {% endif %}
   {% endwith %}
-  
+
 </div>
 
 <div id="projects" class="projects">

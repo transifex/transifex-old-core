@@ -15,7 +15,7 @@ from transifex.languages.models import Language
 from transifex.projects.forms import ReleaseForm
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
-from transifex.releases.models import Release
+from transifex.releases.models import Release, RELEASE_ALL_DATA
 from transifex.resources.models import Resource, RLStats
 
 # Temporary
@@ -83,6 +83,7 @@ def release_detail(request, project_slug, release_slug):
 
     return render_to_response('projects/release_detail.html', {
         'release': release,
+        'alldata_slug': RELEASE_ALL_DATA['slug'],
         'project': release.project,
         'resources': resources,
         'private_resources': private_resources,
