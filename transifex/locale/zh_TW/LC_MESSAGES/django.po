@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-09 13:22+0000\n"
-"PO-Revision-Date: 2011-05-21 00:00+0000\n"
-"Last-Translator: mpessas <mpessas@gmail.com>\n"
+"POT-Creation-Date: 2011-09-02 19:40+0000\n"
+"PO-Revision-Date: 2011-08-31 10:23+0000\n"
+"Last-Translator: zerng07 <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <chinese-l10n@googlegroups.com>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
@@ -84,9 +84,9 @@ msgstr ""
 "布林值欄位，代表該檔案是否應透過 pull 動作自動更新，並且從給定的 URL 合併。"
 
 #: addons/autofetch/models.py:28 addons/copyright/models.py:79
-#: resources/models.py:328 templates/projects/release_language_detail.html:68
+#: resources/models.py:340 templates/projects/release_language_detail.html:68
 #: templates/projects/release_language_detail.html:198
-#: templates/teams/team_detail.html:147
+#: templates/teams/team_detail.html:141
 msgid "Resource"
 msgstr "資源"
 
@@ -188,7 +188,7 @@ msgstr ""
 
 #: addons/copyright/models.py:74 teams/models.py:38 teams/models.py:119
 #: templates/projects/release_detail.html:168
-#: templates/resources/resource_detail.html:174
+#: templates/resources/resource_detail.html:170
 msgid "Language"
 msgstr "語言"
 
@@ -210,7 +210,7 @@ msgid "The years the copyright is active in."
 msgstr ""
 
 #: addons/copyright/models.py:87
-#: addons/lotte/templates/tab_details_snippet.html:24
+#: addons/lotte/templates/tab_details_snippet.html:79
 #, fuzzy
 msgid "Comment"
 msgstr "提交者"
@@ -247,7 +247,7 @@ msgid "Enable integration with google translate service."
 msgstr ""
 
 #: addons/gtranslate/models.py:18 releases/models.py:78
-#: resources/models.py:147 teams/models.py:35 teams/models.py:116
+#: resources/models.py:153 teams/models.py:35 teams/models.py:116
 msgid "Project"
 msgstr "專案"
 
@@ -295,7 +295,7 @@ msgstr "當翻譯資源將要過期時"
 msgid "Lock created."
 msgstr "鎖已建立。"
 
-#: addons/locks/views.py:52 addons/locks/views.py:88
+#: addons/locks/views.py:52 addons/locks/views.py:89
 msgid "Sorry, but you need to send a POST request."
 msgstr "抱歉，但是您必需送出 POST 請求。"
 
@@ -307,7 +307,7 @@ msgstr "鎖已移除。"
 msgid "You don't have permission to unlock this file."
 msgstr "您沒有得到解開此鎖的許可。"
 
-#: addons/locks/views.py:85
+#: addons/locks/views.py:86
 msgid "Unlock failed. Lock doesn't exist."
 msgstr "解鎖失敗。鎖不存在。"
 
@@ -394,98 +394,59 @@ msgstr ""
 "<a href=\"http://%(current_site)s%(resource_url)s\">%(language)s 內的 "
 "%(resource)s</a> 的鎖即將於 %(expires)s 過期\n"
 
-#: addons/lotte/views.py:381
+#: addons/lotte/views.py:380
 msgid "Save the specific change"
 msgstr "儲存指定變更"
+
+#: addons/lotte/views.py:381
+msgid "Check spelling"
+msgstr ""
 
 #: addons/lotte/views.py:382
 msgid "Undo to initial text"
 msgstr "還原為初始文字"
 
-#: addons/lotte/views.py:514
+#: addons/lotte/views.py:615
 msgid "Source string cannot be identified in the DB"
 msgstr "無法於資料庫內辨識來源字串"
 
-#: addons/lotte/views.py:521
+#: addons/lotte/views.py:622
 msgid "The resource of this source string is not accepting translations."
 msgstr "此來源字串的資源並不接受翻譯。"
 
-#: addons/lotte/views.py:544
+#: addons/lotte/views.py:645
 #, fuzzy
 msgid ""
 "Cannot save unless plural translations are either completely specified or "
 "entirely empty!"
 msgstr "複數的翻譯被全部填上或全部留白前不能儲存！"
 
-#: addons/lotte/views.py:575
-msgid "Translation string only contains whitespaces."
-msgstr "翻譯字串只包含空白。"
-
-#: addons/lotte/views.py:583
-#, python-format
-msgid ""
-"Translation string doesn't contain the same number of '%s' as the source "
-"string."
-msgstr "翻譯字串的「%s」數目與來源字串不相同。"
-
-#: addons/lotte/views.py:594
-#, fuzzy, python-format
-msgid ""
-"The following url is either missing from the translation or has been "
-"translated: '%s'."
-msgstr "以下的 URL 不是不存在於翻譯中，就是被翻譯了：%s"
-
-#: addons/lotte/views.py:606
-#, fuzzy, python-format
-msgid ""
-"The following email is either missing from the translation or has been "
-"translated: '%s'."
-msgstr "以下的 email 位址不是不存在於翻譯中，就是被翻譯了：%s"
-
-#: addons/lotte/views.py:617
-msgid "Translation must start with a newline (\\n)"
-msgstr "翻譯必須以新列符起頭 (\\n)"
-
-#: addons/lotte/views.py:620
-msgid "Translation should not start with a newline (\\n)"
-msgstr "翻譯不應該以新列符起頭 (\\n)"
-
-#: addons/lotte/views.py:625
-msgid "Translation must end with a newline (\\n)"
-msgstr "翻譯必須以新列符做結尾 (\\n)"
-
-#: addons/lotte/views.py:628
-msgid "Translation should not end with a newline (\\n)"
-msgstr "翻譯不應該以新列符做結尾 (\\n)"
-
-#: addons/lotte/views.py:637
-#, python-format
-msgid "Number %s is in the source string but not in the translation."
-msgstr "數目 %s 存在於來源字串，但不存在於翻譯內。"
-
-#: addons/lotte/views.py:656
-msgid ""
-"The number of arguments seems to differ between the source string and the "
-"translation."
-msgstr "翻譯中引數的數量似乎與來源字串不同。"
-
-#: addons/lotte/views.py:664
-#, python-format
-msgid "The expression '%s' is not present in the translation."
-msgstr "翻譯內不存在表數「%s」。"
-
-#: addons/lotte/views.py:674
-#, python-format
-msgid "The expression '%s' is not present in the source string."
-msgstr "來源字串內不存在表述「%s」。"
-
-#: addons/lotte/views.py:726
+#: addons/lotte/views.py:766
 msgid "The translation string is empty"
 msgstr "翻譯字串空白"
 
-#: addons/lotte/views.py:731
-msgid "Error occurred while trying to save translation."
+#: addons/lotte/views.py:771
+#, fuzzy, python-format
+msgid "Error occurred while trying to save translation: %s"
 msgstr "當嘗試儲存翻譯時遭遇錯誤。"
+
+#: addons/lotte/views.py:933
+msgid "Permission error."
+msgstr ""
+
+#: addons/lotte/views.py:935
+#, fuzzy
+msgid "Bad request."
+msgstr "回絕請求"
+
+#: addons/lotte/views.py:953
+#, fuzzy
+msgid "No such Source Entity for the given project."
+msgstr "此專案內無資源。"
+
+#: addons/lotte/views.py:960
+msgid "Ops! Something weird happened. The admins were notified about it."
+msgstr ""
 
 #: addons/lotte/templates/filters_menu_resources.html:16
 #: addons/lotte/templates/filters_menu_users.html:16
@@ -496,25 +457,45 @@ msgstr "沒有活動中的貢獻者！"
 msgid "No active languages!"
 msgstr "無活動中的語言！"
 
-#: addons/lotte/templates/tab_details_snippet.html:8
+#: addons/lotte/templates/tab_details_snippet.html:32
+msgid "Reverted to original comment from file."
+msgstr ""
+
+#: addons/lotte/templates/tab_details_snippet.html:46
+msgid "Cancel"
+msgstr ""
+
+#: addons/lotte/templates/tab_details_snippet.html:47
+msgid "OK"
+msgstr ""
+
+#: addons/lotte/templates/tab_details_snippet.html:48
+msgid "Click to edit..."
+msgstr ""
+
+#: addons/lotte/templates/tab_details_snippet.html:49
+msgid "Click here to add a comment"
+msgstr ""
+
+#: addons/lotte/templates/tab_details_snippet.html:61
 msgid "Last Translation:"
 msgstr "最近翻譯："
 
-#: addons/lotte/templates/tab_details_snippet.html:12
+#: addons/lotte/templates/tab_details_snippet.html:65
 #, python-format
 msgid "by %(user)s"
 msgstr "由 %(user)s"
 
-#: addons/lotte/templates/tab_details_snippet.html:22
-#: addons/lotte/templates/translate.html:244
+#: addons/lotte/templates/tab_details_snippet.html:75
+#: addons/lotte/templates/translate.html:258
 msgid "Key"
 msgstr "鍵"
 
-#: addons/lotte/templates/tab_details_snippet.html:22
+#: addons/lotte/templates/tab_details_snippet.html:75
 msgid "String ID:"
 msgstr "字串 ID："
 
-#: addons/lotte/templates/tab_details_snippet.html:23
+#: addons/lotte/templates/tab_details_snippet.html:76
 #: addons/timeline/templates/timeline/timeline_base.html:37
 #: languages/models.py:54 languages/migrations/0001_initial.py:14
 #: languages/migrations/0002_added_rules_f.py:82 projects/models.py:128
@@ -524,23 +505,23 @@ msgstr "字串 ID："
 msgid "Description"
 msgstr "描述："
 
-#: addons/lotte/templates/tab_details_snippet.html:23
+#: addons/lotte/templates/tab_details_snippet.html:76
 msgid "Description:"
 msgstr "描述："
 
-#: addons/lotte/templates/tab_details_snippet.html:24
+#: addons/lotte/templates/tab_details_snippet.html:80
 msgid "Comment:"
 msgstr ""
 
-#: addons/lotte/templates/tab_details_snippet.html:25 resources/models.py:306
+#: addons/lotte/templates/tab_details_snippet.html:85 resources/models.py:313
 msgid "Occurrences"
 msgstr "出現位置"
 
-#: addons/lotte/templates/tab_details_snippet.html:25
+#: addons/lotte/templates/tab_details_snippet.html:85
 msgid "Occurrences:"
 msgstr "出現位置："
 
-#: addons/lotte/templates/translate.html:8
+#: addons/lotte/templates/translate.html:9
 #: addons/lotte/templates/view_strings.html:7 templates/base-sample.html:64
 #: templates/projects/base.html:6 templates/projects/project_list.html:14
 #: templates/resources/resource_detail.html:79
@@ -548,210 +529,210 @@ msgstr "出現位置："
 msgid "Projects"
 msgstr "專案"
 
-#: addons/lotte/templates/translate.html:11
+#: addons/lotte/templates/translate.html:12
 #: addons/lotte/templates/view_strings.html:10
 #, python-format
 msgid "Translate to %(lang)s"
 msgstr "翻譯為「%(lang)s」"
 
-#: addons/lotte/templates/translate.html:111
+#: addons/lotte/templates/translate.html:125
 msgid ""
 "There is at least one entry with error that was not saved. Do you want to "
 "continue anyway?"
 msgstr ""
 
-#: addons/lotte/templates/translate.html:151
+#: addons/lotte/templates/translate.html:165
 #: addons/lotte/templates/view_strings.html:38
 msgid "Processing..."
 msgstr "正在處理..."
 
-#: addons/lotte/templates/translate.html:152
+#: addons/lotte/templates/translate.html:166
 #: addons/lotte/templates/view_strings.html:39
 msgid "Show _MENU_ entries"
 msgstr "顯示 _MENU_ 條目"
 
-#: addons/lotte/templates/translate.html:153
+#: addons/lotte/templates/translate.html:167
 #: addons/lotte/templates/view_strings.html:40
 msgid "No matching records found"
 msgstr "找不到符合的紀錄"
 
-#: addons/lotte/templates/translate.html:154
+#: addons/lotte/templates/translate.html:168
 #: addons/lotte/templates/view_strings.html:41
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr "正在顯示 _START_ to _END_ of _TOTAL_ 項條目"
 
-#: addons/lotte/templates/translate.html:155
+#: addons/lotte/templates/translate.html:169
 #: addons/lotte/templates/view_strings.html:42
 msgid "Nothing to show"
 msgstr "沒有什麼可顯示的"
 
-#: addons/lotte/templates/translate.html:157
+#: addons/lotte/templates/translate.html:171
 #: addons/lotte/templates/view_strings.html:43
 msgid "(filtered from _MAX_ total entries)"
 msgstr "(從總共 _MAX_ 項條目中過濾)"
 
-#: addons/lotte/templates/translate.html:159
+#: addons/lotte/templates/translate.html:173
 #: addons/lotte/templates/view_strings.html:45
 msgid "Search:"
 msgstr "搜尋："
 
-#: addons/lotte/templates/translate.html:162
+#: addons/lotte/templates/translate.html:176
 #: addons/lotte/templates/view_strings.html:48
 msgid "First"
 msgstr "第一頁"
 
-#: addons/lotte/templates/translate.html:163
+#: addons/lotte/templates/translate.html:177
 #: addons/lotte/templates/view_strings.html:49
 msgid "Previous"
 msgstr "上一頁"
 
-#: addons/lotte/templates/translate.html:164
+#: addons/lotte/templates/translate.html:178
 #: addons/lotte/templates/view_strings.html:50
 msgid "Next"
 msgstr "下一頁"
 
-#: addons/lotte/templates/translate.html:165
+#: addons/lotte/templates/translate.html:179
 #: addons/lotte/templates/view_strings.html:51
 msgid "Last"
 msgstr "最後一頁"
 
-#: addons/lotte/templates/translate.html:199
-#: addons/lotte/templates/translate.html:204
+#: addons/lotte/templates/translate.html:213
+#: addons/lotte/templates/translate.html:218
 #: addons/trans_memory/templates/search_translation.html:51
 msgid "Source string"
 msgstr "來源字串"
 
-#: addons/lotte/templates/translate.html:249
+#: addons/lotte/templates/translate.html:263
 msgid "details"
 msgstr "詳細資料"
 
-#: addons/lotte/templates/translate.html:252 addons/suggestions/models.py:53
+#: addons/lotte/templates/translate.html:266 addons/suggestions/models.py:53
 msgid "suggestions"
 msgstr "建議"
 
-#: addons/lotte/templates/translate.html:271
-#: addons/lotte/templates/translate.html:276
+#: addons/lotte/templates/translate.html:290
+#: addons/lotte/templates/translate.html:295
 msgid "Fill in a new translation"
 msgstr "填入新翻譯"
 
-#: addons/lotte/templates/translate.html:298
+#: addons/lotte/templates/translate.html:317
 msgid "auto translate"
 msgstr "自動翻譯"
 
-#: addons/lotte/templates/translate.html:300
+#: addons/lotte/templates/translate.html:319
 msgid "copy source"
 msgstr "複製來源"
 
-#: addons/lotte/templates/translate.html:319
-#: addons/lotte/templates/view_strings.html:116
+#: addons/lotte/templates/translate.html:338
+#: addons/lotte/templates/view_strings.html:117
 msgid "Loading strings..."
 msgstr "正在載入字串..."
 
-#: addons/lotte/templates/translate.html:499
+#: addons/lotte/templates/translate.html:523
 msgid "Translation text will be saved automatically."
 msgstr "翻譯文字將自動儲存。"
 
-#: addons/lotte/templates/translate.html:503
+#: addons/lotte/templates/translate.html:527
 msgid "Translation text will no longer be saved automatically."
 msgstr "翻譯文字將不再自動儲存。"
 
-#: addons/lotte/templates/translate.html:521
+#: addons/lotte/templates/translate.html:545
 #, fuzzy
 msgid "There are no translations (to delete) on this page!"
 msgstr "這一頁沒有任何翻譯可被刪除！"
 
-#: addons/lotte/templates/translate.html:522
+#: addons/lotte/templates/translate.html:546
 #, fuzzy
 msgid ""
 "This will delete all translations on this page. Are you sure you want to "
 "proceed?"
 msgstr "這個動作將會刪除本頁所有翻譯。您確定要這麼做嗎？"
 
-#: addons/lotte/templates/translate.html:713
+#: addons/lotte/templates/translate.html:738
 msgid ""
 "Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr "在 Transifex 記憶內搜尋現有的翻譯 (使用新分頁或視窗)"
 
-#: addons/lotte/templates/translate.html:714
+#: addons/lotte/templates/translate.html:739
 msgid "Search translations"
 msgstr "搜尋翻譯"
 
-#: addons/lotte/templates/translate.html:723
+#: addons/lotte/templates/translate.html:748
 msgid "Show translations in<br /> the selected languages"
 msgstr "顯示所選語言<br />的翻譯"
 
-#: addons/lotte/templates/translate.html:726
+#: addons/lotte/templates/translate.html:751
 msgid "More languages"
 msgstr "更多語言"
 
-#: addons/lotte/templates/translate.html:731
+#: addons/lotte/templates/translate.html:756
 msgid "Show only the translations<br /> by the selected users"
 msgstr "只顯示所選<br />使用者的翻譯"
 
-#: addons/lotte/templates/translate.html:734
+#: addons/lotte/templates/translate.html:759
 msgid "Filter by users"
 msgstr "依使用者過濾"
 
-#: addons/lotte/templates/translate.html:740
+#: addons/lotte/templates/translate.html:765
 msgid "Show only the strings from<br /> the selected resources."
 msgstr "只顯示來自所選<br />資源的字串。"
 
-#: addons/lotte/templates/translate.html:743
+#: addons/lotte/templates/translate.html:768
 msgid "Filter by resources"
 msgstr "依資源過濾"
 
-#: addons/lotte/templates/translate.html:755
-#: addons/lotte/templates/view_strings.html:178
+#: addons/lotte/templates/translate.html:780
+#: addons/lotte/templates/view_strings.html:179
 msgid "Translated"
 msgstr "已翻譯"
 
-#: addons/lotte/templates/translate.html:763
-#: addons/lotte/templates/view_strings.html:186
+#: addons/lotte/templates/translate.html:788
+#: addons/lotte/templates/view_strings.html:187
 msgid "Untranslated"
 msgstr "未翻譯"
 
-#: addons/lotte/templates/translate.html:770
+#: addons/lotte/templates/translate.html:795
 msgid "Modified"
 msgstr "已修改"
 
-#: addons/lotte/templates/translate.html:775
-#: addons/lotte/templates/view_strings.html:193
+#: addons/lotte/templates/translate.html:800
+#: addons/lotte/templates/view_strings.html:194
 msgid "Total"
 msgstr "總共"
 
-#: addons/lotte/templates/translate.html:788
-#: addons/lotte/templates/view_strings.html:206 resources/models.py:443
+#: addons/lotte/templates/translate.html:813
+#: addons/lotte/templates/view_strings.html:207 resources/models.py:552
 msgid "Source String"
 msgstr "來源字串"
 
-#: addons/lotte/templates/translate.html:789
-#: addons/lotte/templates/view_strings.html:207
+#: addons/lotte/templates/translate.html:814
+#: addons/lotte/templates/view_strings.html:208
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr "翻譯"
 
-#: addons/lotte/templates/translate.html:797
+#: addons/lotte/templates/translate.html:822
 msgid "Save all"
 msgstr "儲存全部"
 
-#: addons/lotte/templates/translate.html:800
-#: templates/resources/resource_actions.html:212
+#: addons/lotte/templates/translate.html:825
+#: templates/resources/resource_actions.html:210
 msgid "Delete translations"
 msgstr "刪除翻譯"
 
-#: addons/lotte/templates/translate.html:802
+#: addons/lotte/templates/translate.html:827
 msgid "Save and Exit"
 msgstr "儲存並離開"
 
-#: addons/lotte/templates/translate.html:808
+#: addons/lotte/templates/translate.html:833
 msgid "General Settings"
 msgstr "一般設定值"
 
-#: addons/lotte/templates/translate.html:813
+#: addons/lotte/templates/translate.html:838
 msgid "Verbose editing"
 msgstr "詳盡編輯"
 
-#: addons/lotte/templates/translate.html:817
+#: addons/lotte/templates/translate.html:842
 msgid "Auto save"
 msgstr "自動儲存"
 
@@ -777,8 +758,8 @@ msgstr "資源優先度"
 msgid "resource priorities"
 msgstr "資源優先度"
 
-#: addons/suggestions/models.py:19 resources/models.py:292
-#: resources/models.py:421
+#: addons/suggestions/models.py:19 resources/models.py:298
+#: resources/models.py:530
 msgid "String"
 msgstr "字串"
 
@@ -786,8 +767,8 @@ msgstr "字串"
 msgid "The actual string content of suggestion."
 msgstr "建議的實際字串內容。"
 
-#: addons/suggestions/models.py:21 resources/models.py:294
-#: resources/models.py:423
+#: addons/suggestions/models.py:21 resources/models.py:300
+#: resources/models.py:532
 msgid "String Hash"
 msgstr "字串雜湊值"
 
@@ -813,11 +794,11 @@ msgstr "來源本體"
 msgid "The source entity this suggestion instance translates or affects."
 msgstr "此建議實體所翻譯或影響到的來源本體。"
 
-#: addons/suggestions/models.py:40 resources/models.py:449
+#: addons/suggestions/models.py:40 resources/models.py:558
 msgid "Target Language"
 msgstr "目標語言"
 
-#: addons/suggestions/models.py:41 resources/models.py:450
+#: addons/suggestions/models.py:41 resources/models.py:559
 #: storage/models.py:32
 msgid "The language in which this translation string is written."
 msgstr "此翻譯字串所使用的語言。"
@@ -915,12 +896,12 @@ msgid "My Timeline"
 msgstr "我的時間表"
 
 #: addons/timeline/templates/timeline/timeline_base.html:16
-#: templates/timeline.html:17 templates/resources/resource_actions.html:113
+#: templates/timeline.html:17 templates/resources/resource_actions.html:111
 msgid "Go"
 msgstr "前往"
 
 #: addons/timeline/templates/timeline/timeline_base.html:22
-#: templates/timeline.html:24 templates/teams/team_detail.html:313
+#: templates/timeline.html:24 templates/teams/team_detail.html:307
 msgid "None available"
 msgstr "無可用"
 
@@ -1072,7 +1053,7 @@ msgstr "於 %s 上所使用的語言。"
 
 #: languages/models.py:52 languages/migrations/0001_initial.py:19
 #: languages/migrations/0002_added_rules_f.py:94 projects/models.py:126
-#: releases/models.py:46 resources/models.py:115
+#: releases/models.py:46 resources/models.py:121
 #: templates/helptext/project_form_helptext.html:16
 #: templates/userprofile/profile/public.html:60
 msgid "Name"
@@ -1139,12 +1120,12 @@ msgstr "語言"
 msgid "languages"
 msgstr "語言"
 
-#: projects/api.py:398 projects/api.py:469 resources/api.py:627
+#: projects/api.py:424 projects/api.py:495 resources/api.py:796
 #, python-format
 msgid "%i strings added"
 msgstr "%i 條字串已加入"
 
-#: projects/api.py:400 projects/api.py:471 resources/api.py:629
+#: projects/api.py:426 projects/api.py:497 resources/api.py:798
 #, python-format
 msgid "%i strings updated"
 msgstr "%i 個字串已更新。"
@@ -1189,25 +1170,22 @@ msgid ""
 "Translation statistics for %(lang)s language against %(release)s release."
 msgstr "針對 %(release)s 發行的 %(lang)s 語言翻譯統計。"
 
-#: projects/forms.py:23 txpermissions/forms.py:19
+#: projects/forms.py:24 txpermissions/forms.py:19
 msgid "Search for a username"
 msgstr "搜尋使用者"
 
-#: projects/forms.py:68
+#: projects/forms.py:69
 msgid "Free for all"
 msgstr "全部免費"
 
-#: projects/forms.py:69
+#: projects/forms.py:71
+#, fuzzy
 msgid ""
-"Allow any logged-in user to submit files to my\n"
-"                              project. <a href=\"http://www.youtube.com/"
-"watch?v=okd3hLlvvLw\"\n"
-"                              target=\"_blank\">Imagine</a> all the people,\n"
-"                              sharing all the world. Recommended for quick\n"
-"                              translations, and when a pre-commit review\n"
-"                              process is in place, e.g. when contributions "
-"are\n"
-"                              submitted by email or to a separate branch."
+"Allow any logged-in user to submit files to my project. <a href=\"http://www."
+"youtube.com/watch?v=-b7qaSxuZUg\" target=\"_blank\">Imagine</a> all the "
+"people, sharing all the world. Recommended for quick translations, and when "
+"a pre-commit review process is in place, e.g. when contributions are "
+"submitted by email or to a separate branch."
 msgstr ""
 "允許任何已登入的使用者提交檔案至我的\n"
 "                              專案。<a href=\"http://www.youtube.com/watch?"
@@ -1218,39 +1196,33 @@ msgstr ""
 "                              用。例：藉由電子郵件的方式提交貢\n"
 "                              獻，或是提交貢獻到獨立的分支去。"
 
-#: projects/forms.py:79
+#: projects/forms.py:80
 msgid "Limited access"
 msgstr "存取受限制"
 
-#: projects/forms.py:80
+#: projects/forms.py:82
+#, fuzzy
 msgid ""
-"Give access to specific people. Translations\n"
-"                              teams will have access to their language's "
-"files\n"
-"                              only, and global writers will have access to "
-"all\n"
-"                              translation files. Recommended for most\n"
-"                              projects."
+"Give access to specific people. Translations teams will have access to their "
+"language's files only, and global writers will have access to all "
+"translation files. Recommended for most projects."
 msgstr ""
 "針對特定的人給予存取權。翻譯 \n"
 "                              團隊將僅擁有其語言的檔案存取權，\n"
 "                              而全域撰寫者將擁有所有翻譯檔案的\n"
 "                              存取權。建議大多數專案使用。"
 
-#: projects/forms.py:88
+#: projects/forms.py:89
 msgid "Outsourced access"
 msgstr "外部來源的存取"
 
-#: projects/forms.py:89
+#: projects/forms.py:91
+#, fuzzy
 msgid ""
-"Re-use another project's teams and writers by\n"
-"                              delegating access control to that project. If "
-"a\n"
-"                              person can contribute to that project, it can\n"
-"                              contribute to this one as well. Recommended "
-"for\n"
-"                              non-upstream projects such as distribution\n"
-"                              packages and desktop environment modules."
+"Re-use another project's teams and writers by delegating access control to "
+"that project. If a person can contribute to that project, it can contribute "
+"to this one as well. Recommended for non-upstream projects such as "
+"distribution packages and desktop environment modules."
 msgstr ""
 "信任其它專案的存取控制設定，並重複使用\n"
 "                              該專案的團隊與撰寫者。如果某人可\n"
@@ -1258,12 +1230,37 @@ msgstr ""
 "                              案提供貢獻。建議非上游專案使用，\n"
 "                              像發行版套件、桌面環境模組...等。"
 
-#: projects/forms.py:155
+#: projects/forms.py:157
 msgid "Search for a resource"
 msgstr "搜尋資源"
 
-#: projects/forms.py:170
+#: projects/forms.py:163
+msgid "Enter a valid date/time in YYYY-MM-DD HH:MM[:ss[.uuuuuu]] format."
+msgstr ""
+
+#: projects/forms.py:188
+msgid "Invalid resource used."
+msgstr ""
+
+#: projects/forms.py:192
+#, python-format
+msgid "%s is an unaccessible private resource.Remove it!"
+msgstr ""
+
+#: projects/forms.py:201
 msgid "This value is reserved and cannot be used."
+msgstr ""
+
+#: projects/forms.py:213
+msgid "Devel freeze date must be after the String freeze date."
+msgstr ""
+
+#: projects/forms.py:219
+msgid "Release date must be after the String freeze date."
+msgstr ""
+
+#: projects/forms.py:225
+msgid "Release date must be after the Devel freeze date."
 msgstr ""
 
 #: projects/models.py:119
@@ -1278,7 +1275,7 @@ msgstr ""
 "私人專案只有您與您的團隊能看見。除此之外，根據該使用者帳號的付費方案，私人專"
 "案功能已被限制。"
 
-#: projects/models.py:123 releases/models.py:43 resources/models.py:112
+#: projects/models.py:123 releases/models.py:43 resources/models.py:118
 #: templates/helptext/project_form_helptext.html:5
 msgid "Slug"
 msgstr "Slug"
@@ -1424,7 +1421,7 @@ msgstr "未翻譯："
 msgid "Total:"
 msgstr "總共："
 
-#: projects/views/release.py:137
+#: projects/views/release.py:140
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "「%s」發行已刪除。"
@@ -1582,18 +1579,74 @@ msgstr "<發行：%(rel)s (%(proj)s 專案)>"
 msgid "release"
 msgstr "發行"
 
-#: releases/models.py:100 templates/projects/release_list.html:18
-#: templates/projects/release_list.html:20
-#: templates/projects/release_list.html:39
+#: releases/models.py:100 templates/projects/release_list.html:19
+#: templates/projects/release_list.html:21
 #: templates/projects/release_list.html:41
+#: templates/projects/release_list.html:43
 msgid "releases"
 msgstr "發行"
 
-#: resources/forms.py:149 resources/forms.py:169
+#: releases/models.py:127
+#, fuzzy
+msgid "Before String Freeze"
+msgstr "字串凍結："
+
+#: releases/models.py:129
+msgid "Whether the 'Before String Freeze' notification was sent or not."
+msgstr ""
+
+#: releases/models.py:132
+#, fuzzy
+msgid "Being in String Freeze"
+msgstr "字串凍結："
+
+#: releases/models.py:134
+msgid "Whether the 'Being in String Freeze' notification was sent or not."
+msgstr ""
+
+#: releases/models.py:138
+#, fuzzy
+msgid "Before Translation Deadline"
+msgstr "資源翻譯已變更"
+
+#: releases/models.py:139
+msgid "Whether the 'Before Translation Deadline' notification was sent or not."
+msgstr ""
+
+#: releases/models.py:142
+#, fuzzy
+msgid "Hit Translation Deadline"
+msgstr "翻譯詳細資料"
+
+#: releases/models.py:144
+msgid "Whether the 'Hit Translation Deadline' notification was sent or not."
+msgstr ""
+
+#: releases/models.py:149
+#, fuzzy
+msgid "Release"
+msgstr "發行："
+
+#: releases/models.py:155
+#, fuzzy, python-format
+msgid "<ReleaseNotification: %(rel)s (Project %(proj)s)>"
+msgstr "<發行：%(rel)s (%(proj)s 專案)>"
+
+#: releases/models.py:160
+#, fuzzy
+msgid "release notification"
+msgstr "變更通知"
+
+#: releases/models.py:161
+#, fuzzy
+msgid "release notifications"
+msgstr "變更通知"
+
+#: resources/forms.py:161 resources/forms.py:190
 msgid "Resource file"
 msgstr "資源檔"
 
-#: resources/forms.py:150
+#: resources/forms.py:162
 msgid ""
 "Choose the source language for the resource and then select a file from your "
 "file system to be used as an extracting point of strings to be translated."
@@ -1601,114 +1654,120 @@ msgstr ""
 "請為資源選擇來源語言，並且從您的檔案系統選取一份檔案，它會被作為翻譯用字串的"
 "抽出點。"
 
-#: resources/forms.py:170
+#: resources/forms.py:173
+#, fuzzy
+msgid "Invalid selected language."
+msgstr "選取語言"
+
+#: resources/forms.py:191
 msgid ""
 "Select a file from your file system to be used to fill translations for this "
 "resource."
 msgstr "從您的檔案系統選取一份檔案，它會被此資源作為翻譯填寫之用。"
 
-#: resources/models.py:113
+#: resources/models.py:119
 #, fuzzy
 msgid ""
 "A short label to be used in the URL, containing only letters, numbers, "
 "underscores and hyphens."
 msgstr "用在 URL 上的簡短標籤，只能包含字母、數字、底線 (_) 或連字號 (-)。"
 
-#: resources/models.py:116
+#: resources/models.py:122
 msgid "A descriptive name unique inside the project."
 msgstr "專案內獨一的描述性名稱。"
 
-#: resources/models.py:119
+#: resources/models.py:125
 msgid "Source file"
 msgstr "來源檔"
 
-#: resources/models.py:121
+#: resources/models.py:127
 #, fuzzy
 msgid "A local file used to extract the strings for translation."
 msgstr "要被翻譯的本地字串抽出檔案。"
 
-#: resources/models.py:123
+#: resources/models.py:129
 msgid "I18n type"
 msgstr "I18n 類型"
 
-#: resources/models.py:125
+#: resources/models.py:131
 #, python-format
 msgid "The type of i18n method used in this resource (%s)"
 msgstr "此資源使用的 i18n 方法類型 (%s)"
 
-#: resources/models.py:127
+#: resources/models.py:133
 msgid "Accepting translations?"
 msgstr "接受翻譯嗎？"
 
-#: resources/models.py:129
+#: resources/models.py:135
 #, fuzzy
 msgid "Is this resource accepting translations?"
 msgstr "這個資源允許翻譯的提交嗎？"
 
-#: resources/models.py:130
+#: resources/models.py:136
 #, fuzzy
 msgid "Total source entities"
 msgstr "翻譯資源詳細資料"
 
-#: resources/models.py:132
+#: resources/models.py:138
 #, fuzzy
 msgid "The number of source strings in this translation resource."
 msgstr "包含翻譯資源的專案。"
 
-#: resources/models.py:134
+#: resources/models.py:140
 msgid "Number of words in source entities."
 msgstr ""
 
-#: resources/models.py:136
+#: resources/models.py:142
 #, fuzzy
 msgid ""
 "The number of words contained in the source entities in this translation "
 "resource."
 msgstr "包含翻譯資源的專案。"
 
-#: resources/models.py:145
+#: resources/models.py:151
 msgid "Source Language"
 msgstr "來源語言："
 
-#: resources/models.py:146
+#: resources/models.py:152
 msgid "The source language of this Resource."
 msgstr "本資源的來源語言。"
 
-#: resources/models.py:149
+#: resources/models.py:155
 msgid "The project containing the translation resource."
 msgstr "包含翻譯資源的專案。"
 
-#: resources/models.py:162
+#: resources/models.py:168
 msgid "resource"
 msgstr "資源"
 
-#: resources/models.py:163
+#: resources/models.py:169
 msgid "resources"
 msgstr "資源"
 
-#: resources/models.py:293
+#: resources/models.py:299
 msgid "The actual string content of source string."
 msgstr "來源字串的實際字串內容。"
 
-#: resources/models.py:296 resources/models.py:425
+#: resources/models.py:302 resources/models.py:534
 msgid "The hash of the translation string used for indexing"
 msgstr "翻譯字串用來作為索引之用的雜湊值"
 
-#: resources/models.py:297
+#: resources/models.py:303
 msgid "Context"
 msgstr "條目"
 
-#: resources/models.py:299
+#: resources/models.py:305
+#, fuzzy
 msgid ""
-"A description of the source string. This field specifiesthe context of the "
-"source string inside the resource."
+"A list of description of the source string. This field specifies the context "
+"of the source string inside the resource."
 msgstr "來源字串的描述。此欄位指明資源內的來源字串其情境。"
 
-#: resources/models.py:301 templates/userprofile/profile/location.html:27
+#: resources/models.py:308 templates/userprofile/profile/location.html:27
 msgid "Position"
 msgstr "位置"
 
-#: resources/models.py:302
+#: resources/models.py:309
 #, fuzzy
 msgid ""
 "The position of the source string in the Resource.For example, the specific "
@@ -1717,15 +1776,15 @@ msgstr ""
 "來源字串在資源檔裡的位置。例如，在 gettext 中的 PO 範本（.pot）裡，msgid 欄位"
 "所處的特定位置。"
 
-#: resources/models.py:308
+#: resources/models.py:315
 msgid "The occurrences of the source string in the project code."
 msgstr "來源字串在專案代碼中的出現位置。"
 
-#: resources/models.py:309 resources/models.py:314
+#: resources/models.py:316
 msgid "Flags"
 msgstr "旗標"
 
-#: resources/models.py:311
+#: resources/models.py:318
 msgid ""
 "The flags which mark the source string. For example, ifthere is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
@@ -1733,111 +1792,127 @@ msgstr ""
 "標記來源字串的旗標。舉例來說，如果有個 python 格式的字串，它就會被 gettext 標"
 "記為「#, python-format」。"
 
-#: resources/models.py:316
+#: resources/models.py:321
+msgid "Comments"
+msgstr ""
+
+#: resources/models.py:323
 msgid "The comment of the developer."
 msgstr "開發者的註解。"
 
-#: resources/models.py:318
+#: resources/models.py:326
+msgid "Extra comments"
+msgstr ""
+
+#: resources/models.py:328
+#, fuzzy
+msgid "Another comment of the developer"
+msgstr "開發者的註解。"
+
+#: resources/models.py:330
 msgid "Pluralized"
 msgstr "複數表示"
 
-#: resources/models.py:320
+#: resources/models.py:332
 #, fuzzy
 msgid "Whether the entity is pluralized."
 msgstr "驗證條目是否為複數形態。"
 
-#: resources/models.py:330
+#: resources/models.py:342
 msgid "The translation resource which owns the source string."
 msgstr "擁有該來源字串的翻譯資源。"
 
-#: resources/models.py:339
+#: resources/models.py:351
 msgid "source string"
 msgstr "來源字串"
 
-#: resources/models.py:340
+#: resources/models.py:352
 msgid "source strings"
 msgstr "來源字串"
 
-#: resources/models.py:422
+#: resources/models.py:531
 #, fuzzy
 msgid "The actual string content for translation."
-msgstr "建議的實際字串內容。"
+msgstr "翻譯的實際字串內容。"
 
-#: resources/models.py:426
+#: resources/models.py:535
 msgid "Plural rule"
 msgstr "複數規則"
 
-#: resources/models.py:428
+#: resources/models.py:537
+#, fuzzy
 msgid ""
 "Number related to the plural rule of the translation. It's 0=zero, 1=one, "
 "2=two, 3=few, 4=many and 5=other. For translations that have no plural "
 "forms, the rule must be 5 (other)."
 msgstr ""
+"與翻譯的複數規則相關的數目。0 = 零，1 = 一，2 = 貳，3 = 一些，4 = 許多，5 = "
+"其他。對於那些本體不被複數化的翻譯來說，規則必須為 5 (其他)。"
 
-#: resources/models.py:432
+#: resources/models.py:541
 #, fuzzy
 msgid "Wordcount for this string."
 msgstr "搜尋字串："
 
-#: resources/models.py:446
+#: resources/models.py:555
 msgid "The source string this translation string translates."
 msgstr "此翻譯字串所翻譯的來源字串。"
 
-#: resources/models.py:453
+#: resources/models.py:562
 msgid "Committer"
 msgstr "提交者"
 
-#: resources/models.py:454
+#: resources/models.py:563
 msgid "The user who committed the specific translation."
 msgstr "提交該翻譯的使用者。"
 
-#: resources/models.py:464
+#: resources/models.py:573
 msgid "translation string"
 msgstr "翻譯字串"
 
-#: resources/models.py:465
+#: resources/models.py:574
 msgid "translation strings"
 msgstr "翻譯字串"
 
-#: resources/models.py:628
+#: resources/models.py:737
 #, fuzzy
 msgid "Translated Entities"
 msgstr "線上翻譯"
 
-#: resources/models.py:631
+#: resources/models.py:740
 msgid "Wordcount for Translated Entities"
 msgstr ""
 
-#: resources/models.py:634
+#: resources/models.py:743
 #, fuzzy
 msgid "Untranslated Entities"
 msgstr "未翻譯："
 
-#: resources/models.py:637
+#: resources/models.py:746
 #, fuzzy
 msgid "Last Update"
 msgstr "最近更新"
 
-#: resources/models.py:641
+#: resources/models.py:750
 #, fuzzy
 msgid "Last Committer"
 msgstr "提交者"
 
-#: resources/models.py:745
+#: resources/models.py:854
 msgid "This is the actual content of the template"
 msgstr "這是模板的實際內容"
 
-#: resources/models.py:749
+#: resources/models.py:858
 msgid ""
 "This is the template of the imported source file which is used to export "
 "translation files from the db to the user."
 msgstr "這是匯入的來源檔的模板，用來從資料庫匯出翻譯檔給使用者。"
 
-#: resources/models.py:753
+#: resources/models.py:862
 msgid "Template"
 msgstr "模板"
 
-#: resources/models.py:754
+#: resources/models.py:863
 msgid "Templates"
 msgstr "模板"
 
@@ -1862,34 +1937,34 @@ msgstr "您已經勾選自動更新方框，但是您尚未提供有效的 URL�
 msgid "Deleted %(lang)s translation for resource %(resource)s."
 msgstr "刪除翻譯資源"
 
-#: resources/views.py:399
+#: resources/views.py:401
 msgid "Error compiling translation file."
 msgstr "編譯翻譯檔時發生錯誤。"
 
-#: resources/views.py:432
+#: resources/views.py:434
 #, fuzzy
 msgid "Error compiling the pot file."
 msgstr "編譯翻譯檔時發生錯誤。"
 
-#: resources/views.py:485
+#: resources/views.py:487
 #, fuzzy
 msgid "Sorry, you cannot lock this file!"
 msgstr "抱歉，您不能指派這個檔案給您自己！"
 
-#: resources/views.py:497
+#: resources/views.py:499
 msgid "Failed to lock the resource!"
 msgstr "無法上鎖該資源！"
 
-#: resources/views.py:508
+#: resources/views.py:510
 msgid "Failed to extend lock period on the resource!"
 msgstr "無法延長該資源的上鎖期限！"
 
-#: resources/views.py:513
+#: resources/views.py:515
 #, fuzzy, python-format
 msgid "You cannot lock it right now! (Locked by %s )"
 msgstr "您現在不能進行上鎖！（已被 %s 上鎖）"
 
-#: resources/formats/pofile.py:75
+#: resources/formats/pofile.py:59
 msgid ""
 "Your file failed a correctness check (msgfmt -c). Please run this command on "
 "your system to see the errors."
@@ -1897,20 +1972,90 @@ msgstr ""
 "您的檔案無法通過正確性檢查 (msgfmt -c)。請在您的系統上執行該指令以查看錯誤資"
 "訊。"
 
-#: resources/formats/qt.py:86
+#: resources/formats/qt.py:90
 #, python-format
 msgid "Your file doesn't seem to contain valid xml: %s!"
 msgstr "您的檔案似乎未包含有效的 xml：%s！"
+
+#: resources/formats/validators.py:78
+msgid "Translation string only contains whitespaces."
+msgstr "翻譯字串只包含空白。"
+
+#: resources/formats/validators.py:92
+#, python-format
+msgid ""
+"Translation string doesn't contain the same number of '%s' as the source "
+"string."
+msgstr "翻譯字串的「%s」數目與來源字串不相同。"
+
+#: resources/formats/validators.py:110
+#, fuzzy, python-format
+msgid ""
+"The following url is either missing from the translation or has been "
+"translated: '%s'."
+msgstr "以下的 URL 不是不存在於翻譯中，就是被翻譯了：%s"
+
+#: resources/formats/validators.py:126
+#, fuzzy, python-format
+msgid ""
+"The following email is either missing from the translation or has been "
+"translated: '%s'."
+msgstr "以下的 email 位址不是不存在於翻譯中，就是被翻譯了：%s"
+
+#: resources/formats/validators.py:141
+msgid "Translation must start with a newline (\\n)"
+msgstr "翻譯必須以新列符起頭 (\\n)"
+
+#: resources/formats/validators.py:143
+msgid "Translation should not start with a newline (\\n)"
+msgstr "翻譯不應該以新列符起頭 (\\n)"
+
+#: resources/formats/validators.py:157
+msgid "Translation must end with a newline (\\n)"
+msgstr "翻譯必須以新列符做結尾 (\\n)"
+
+#: resources/formats/validators.py:159
+msgid "Translation should not end with a newline (\\n)"
+msgstr "翻譯不應該以新列符做結尾 (\\n)"
+
+#: resources/formats/validators.py:174
+#, python-format
+msgid "Number %s is in the source string but not in the translation."
+msgstr "數目 %s 存在於來源字串，但不存在於翻譯內。"
+
+#: resources/formats/validators.py:201
+msgid ""
+"The number of arguments seems to differ between the source string and the "
+"translation."
+msgstr "翻譯中引數的數量似乎與來源字串不同。"
+
+#: resources/formats/validators.py:234
+#, fuzzy, python-format
+msgid "The expression '%s' is not present in thetranslation."
+msgstr "翻譯內不存在表數「%s」。"
+
+#: resources/formats/validators.py:267
+#, python-format
+msgid "The expression '%s' is not present in the source string."
+msgstr "來源字串內不存在表述「%s」。"
 
 #: simpleauth/forms.py:7
 msgid "Remember me"
 msgstr ""
 
-#: storage/api.py:131
-msgid "A strange error happened."
+#: storage/api.py:126
+msgid ""
+"The encoding of the uploaded file is not UTF-8. Currently, transifex "
+"supports only UTF-8encoded files. Please, visithttp://help.transifex.net/"
+"user-guide/formats.html#encodingfor further information."
+msgstr ""
+
+#: storage/api.py:139
+#, fuzzy
+msgid "A strange error happened:"
 msgstr "發生怪異的錯誤。"
 
-#: storage/api.py:148
+#: storage/api.py:156
 msgid "File uploaded successfully."
 msgstr "檔案已成功上傳。"
 
@@ -2040,7 +2185,7 @@ msgid ""
 "Looks like you do not have the necessary permissions for the required action."
 msgstr "看來您沒有得到要求動作的必須許可。"
 
-#: templates/403.html:15 templates/404.html:15
+#: templates/403.html:15 templates/404.html:16
 #, python-format
 msgid ""
 "Here's a link to the <a href=\"%(home)s\">homepage</a>. You know, just in "
@@ -2052,7 +2197,7 @@ msgstr ""
 msgid "Page not found"
 msgstr "找不到網頁"
 
-#: templates/404.html:12
+#: templates/404.html:13
 msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://transifex.org/newticket'>let us know</a>."
@@ -2404,8 +2549,10 @@ msgstr "尚未有註冊的語言。:-("
 
 #: templates/languages/language_list.html:35
 msgid ""
-"Couldn't find your language? Please use the feedback form and let us know!"
-msgstr "找不到您的語言？請填寫回饋表來讓我們知道！"
+"Couldn't find your language? Please use the feedback form and <a href="
+"\"http://help.transifex.net/user-guide/faq.html#where-does-the-language-list-"
+"come-from-how-can-i-add-my-own\">let us know</a>!"
+msgstr ""
 
 #: templates/notification/notices.html:6 templates/notification/notices.html:7
 #: templates/notification/notices.html:8
@@ -2501,6 +2648,58 @@ msgstr ""
 "<a href=\"%(project_url)s\">%(project)s</a> <span class=\"notice_subject\">專"
 "案</span> 已<span class=\"notice_action\">變更</span>。"
 
+#: templates/notification/project_release_before_stringfreeze/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Notification about the approaching of the <a href=\"%(release_url)s\">"
+"%(release_name)s</a> string freeze of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project has been sent"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> 資源已變更"
+
+#: templates/notification/project_release_before_trans_deadline/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Notification about the approaching of the <a href=\"%(release_url)s\">"
+"%(release_name)s</a> translation deadline of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project has been sent"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> 資源已變更"
+
+#: templates/notification/project_release_hit_trans_deadline/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Notification about translation period of the  <a href=\"%(release_url)s\">"
+"%(release_name)s</a> release of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project being over has been sent"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> 資源已變更"
+
+#: templates/notification/project_release_in_stringfreeze/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Notification about <a href=\"%(release_url)s\">%(release_name)s</a> release "
+"of the <a href=\"%(project_url)s\">%(project_name)s</a> project being in "
+"string freeze has been sent"
+msgstr ""
+"<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href="
+"\"%(resource_url)s\">%(resource_name)s</a> 資源已變更"
+
+#: templates/notification/project_release_stringfreeze_breakage/notice.html:2
+#, fuzzy, python-format
+msgid ""
+"Notification about <a href=\"%(resource_url)s\">%(resource_name)s</a> "
+"resource string freeze breakage for the <a href=\"%(release_url)s\">"
+"%(release_name)s</a> release of the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project has been sent"
+msgstr ""
+"<a href=\"%(language_url)s\">%(language_name)s</a> 的翻譯已送出至 <a href="
+"\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(resource_url)s\">"
+"%(resource_name)s</a>"
+
 #: templates/notification/project_report_weekly_maintainers/notice.html:2
 #, python-format
 msgid ""
@@ -2540,22 +2739,22 @@ msgstr ""
 "a> 專案刪除"
 
 #: templates/notification/project_resource_translated/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"A translation for <a href=\"%(language_url)s\">%(language_name)s</a> was "
-"sent to <a href=\"%(resource_url)s\">%(resource_name)s</a> of the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project"
+"A translation for %(language_name)s was sent to <a href=\"%(resource_url)s\">"
+"%(resource_name)s</a> of the <a href=\"%(project_url)s\">%(project_name)s</"
+"a> project"
 msgstr ""
 "<a href=\"%(language_url)s\">%(language_name)s</a> 的翻譯已送出至 <a href="
 "\"%(project_url)s\">%(project_name)s</a> 專案的 <a href=\"%(resource_url)s\">"
 "%(resource_name)s</a>"
 
 #: templates/notification/project_resource_translation_changed/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The <a href=\"%(language_url)s\">%(language_name)s</a> translation of the "
-"project <a href=\"%(project_url)s\">%(project_name)s</a>, resource <a href="
-"\"%(resource_url)s\">%(resource_name)s</a> has been modified."
+"The %(language_name)s translation of the project <a href=\"%(project_url)s\">"
+"%(project_name)s</a>, resource <a href=\"%(resource_url)s\">"
+"%(resource_name)s</a> has been modified."
 msgstr ""
 "<a href=\"%(project_url)s\">%(project_name)s</a> 專案的 <a href="
 "\"%(language_url)s\">%(language_name)s</a> 翻譯、<a href=\"%(resource_url)s"
@@ -2714,12 +2913,11 @@ msgstr ""
 "\"%(team_url)s\">%(team_name)s 翻譯團隊</a>"
 
 #: templates/notification/project_team_request_denied/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
-"The <span class=\"notice_subject\">request</span> to create a <a href="
-"\"%(language_url)s\">%(language_name)s</a> translation team for the <a href="
-"\"%(project_url)s\">%(project_name)s</a> project was <span class="
-"\"notice_action\">denied</span>."
+"The <span class=\"notice_subject\">request</span> to create a "
+"%(language_name)s translation team for the <a href=\"%(project_url)s\">"
+"%(project_name)s</a> project was <span class=\"notice_action\">denied</span>."
 msgstr ""
 "為 <a href=\"%(project_url)s\">%(project_name)s</a> 專案建立 <a href="
 "\"%(language_url)s\">%(language_name)s</a> 翻譯團隊的 <span class="
@@ -2727,12 +2925,11 @@ msgstr ""
 "span>。"
 
 #: templates/notification/project_team_requested/notice.html:2
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The creation of a translation <span class=\"notice_subject\">team</span> for "
-"<a href=\"%(language_url)s\">%(language_name)s</a> was <span class="
-"\"notice_action\">requested</span> for the project <a href=\"%(project_url)s"
-"\">%(project_name)s</a>."
+"%(language_name)s was <span class=\"notice_action\">requested</span> for the "
+"project <a href=\"%(project_url)s\">%(project_name)s</a>."
 msgstr ""
 "已<span class=\"notice_action\">請求</span>為 <a href=\"%(project_url)s\">"
 "%(project_name)s</a> 專案的 <a href=\"%(language_url)s\">%(language_name)s</"
@@ -2777,131 +2974,127 @@ msgstr "您確定要永久刪除已註冊的「%(project_name)s」專案嗎？"
 #: templates/projects/project_confirm_delete.html:21
 #: templates/projects/release_confirm_delete.html:22
 #: templates/resources/resource_confirm_delete.html:19
-#: templates/resources/resource_translations_confirm_delete.html:31
+#: templates/resources/resource_translations_confirm_delete.html:30
 #: templates/teams/team_confirm_delete.html:17
 msgid "Yes, I'm sure!"
 msgstr "是的，我確定！"
 
-#: templates/projects/project_detail.html:28
+#: templates/projects/project_detail.html:29
 #: templates/projects/project_form_base.html:89
-#: templates/projects/release_detail.html:91
+#: templates/projects/release_detail.html:93
 #: templates/resources/resource_detail.html:115
 msgid "Details"
 msgstr "詳細資料"
 
-#: templates/projects/project_detail.html:34
-msgid "Watch:"
-msgstr "監看："
-
-#: templates/projects/project_detail.html:43
-#: templates/projects/release_detail.html:95
+#: templates/projects/project_detail.html:42
+#: templates/projects/release_detail.html:98
 msgid "Homepage:"
 msgstr "主頁："
 
-#: templates/projects/project_detail.html:44
+#: templates/projects/project_detail.html:43
 #, python-format
 msgid "Homepage for %(project_name)s"
 msgstr "%(project_name)s 的主頁"
 
-#: templates/projects/project_detail.html:49
+#: templates/projects/project_detail.html:47
 msgid "Bug tracker:"
 msgstr "程式錯誤追蹤器："
 
-#: templates/projects/project_detail.html:50
+#: templates/projects/project_detail.html:48
 #, python-format
 msgid "Bug tracker for %(project_name)s"
 msgstr "%(project_name)s 的程式錯誤追蹤器"
 
-#: templates/projects/project_detail.html:55
+#: templates/projects/project_detail.html:51
 #: templates/projects/project_list.html:60
 msgid "Tags:"
 msgstr "標籤："
 
-#: templates/projects/project_detail.html:64
+#: templates/projects/project_detail.html:58
 msgid "Maintainer:"
 msgid_plural "Maintainers:"
 msgstr[0] "維護者："
 
-#: templates/projects/project_detail.html:86
+#: templates/projects/project_detail.html:78
 #, fuzzy
 msgid "Documentation:"
 msgstr "位置："
 
-#: templates/projects/project_detail.html:87
+#: templates/projects/project_detail.html:79
 #, fuzzy
 msgid "Documentation of the translation procedure of this project"
 msgstr "為此專案請求新的翻譯團隊"
 
-#: templates/projects/project_detail.html:87
+#: templates/projects/project_detail.html:79
 #, fuzzy
 msgid "Translation help pages"
 msgstr "翻譯團隊"
 
-#: templates/projects/project_detail.html:96
+#: templates/projects/project_detail.html:86
 msgid "External links:"
 msgstr "外部連結："
 
-#: templates/projects/project_detail.html:98
+#: templates/projects/project_detail.html:88
 msgid "Screenshots"
 msgstr "畫面捉圖"
 
-#: templates/projects/project_detail.html:131
+#: templates/projects/project_detail.html:121
 #: templates/resources/resource_detail.html:336
-#: templates/teams/team_detail.html:309
+#: templates/teams/team_detail.html:303
 msgid "History"
 msgstr "歷史"
 
-#: templates/projects/project_detail.html:135
+#: templates/projects/project_detail.html:125
 msgid "No history recorded yet."
 msgstr "尚未有歷史紀錄。"
 
-#: templates/projects/project_form.html:9
-#: templates/projects/project_form.html:17
+#: templates/projects/project_form.html:10
+#: templates/projects/project_form.html:18
 #: templates/projects/project_form_base.html:8
 #: templates/projects/project_form_base.html:13
 #: templates/projects/project_form_base.html:73
 msgid "Add a project"
 msgstr "加入專案"
 
-#: templates/projects/project_form.html:20
-#: templates/projects/project_form.html:29
+#: templates/projects/project_form.html:21
+#: templates/projects/project_form.html:30
 #: templates/projects/project_form_base.html:9
 #, python-format
 msgid "Edit %(project_name)s"
 msgstr "編輯 %(project_name)s"
 
-#: templates/projects/project_form.html:27
+#: templates/projects/project_form.html:28
 msgid "New project"
 msgstr "新專案"
 
-#: templates/projects/project_form.html:35
+#: templates/projects/project_form.html:36
 #, fuzzy
 msgid "Create a new project on Transifex"
 msgstr "Transifex 上的專案"
 
-#: templates/projects/project_form.html:37
+#: templates/projects/project_form.html:38
 #, fuzzy
 msgid "Edit your Project"
 msgstr "編輯您的專案詳細資料"
 
-#: templates/projects/project_form.html:51
+#: templates/projects/project_form.html:53
 msgid "Add the details of your project"
 msgstr "加入您的專案詳細資料"
 
-#: templates/projects/project_form.html:53
+#: templates/projects/project_form.html:55
 msgid "Edit the details of your project"
 msgstr "編輯您的專案詳細資料"
 
-#: templates/projects/project_form.html:64
+#: templates/projects/project_form.html:66
 msgid "Save project"
 msgstr "儲存專案"
 
-#: templates/projects/project_form.html:72
+#: templates/projects/project_form.html:74
 #, fuzzy
 msgid "Delete Project"
 msgstr "刪除專案"
 
-#: templates/projects/project_form.html:75
+#: templates/projects/project_form.html:77
 msgid "Delete project"
 msgstr "刪除專案"
 
@@ -2921,11 +3114,11 @@ msgid ""
 "access to your project:"
 msgstr "您可以從下方替您的專案選擇人們該擁有怎樣的提交存取權："
 
-#: templates/projects/project_form_access_control.html:58
+#: templates/projects/project_form_access_control.html:57
 msgid "Go to the project writers page."
 msgstr "前往專案撰寫者網頁。"
 
-#: templates/projects/project_form_access_control.html:62
+#: templates/projects/project_form_access_control.html:61
 msgid "Save Access Control Settings"
 msgstr "儲存存取控制設定值"
 
@@ -2984,7 +3177,7 @@ msgid "Subscribe to this feed"
 msgstr "訂閱此消息來源"
 
 #: templates/projects/project_list.html:51
-#: templates/projects/release_detail.html:116
+#: templates/projects/release_detail.html:119
 msgid "Resources:"
 msgstr "資源："
 
@@ -3046,38 +3239,38 @@ msgid ""
 "which works on %(project_name)s?"
 msgstr "您確定要永久刪除運作於 %(project_name)s 內的「%(release_name)s」發行？"
 
-#: templates/projects/release_detail.html:84
+#: templates/projects/release_detail.html:85
 #, fuzzy
 msgid "Edit release"
 msgstr "發行"
 
-#: templates/projects/release_detail.html:100
+#: templates/projects/release_detail.html:103
 msgid "Release date:"
 msgstr "發行日期："
 
-#: templates/projects/release_detail.html:104
+#: templates/projects/release_detail.html:108
 msgid "String freeze:"
 msgstr "字串凍結："
 
-#: templates/projects/release_detail.html:108
+#: templates/projects/release_detail.html:113
 msgid "Devel freeze:"
 msgstr "開發凍結："
 
-#: templates/projects/release_detail.html:118
-#: templates/projects/release_detail.html:136
+#: templates/projects/release_detail.html:121
+#: templates/projects/release_detail.html:137
 msgid "Click here to show or hide the resource list"
 msgstr "點擊此處以顯示或隱藏資源清單"
 
-#: templates/projects/release_detail.html:119
+#: templates/projects/release_detail.html:122
 #, python-format
 msgid "This release has %(resources_number)s resources."
 msgstr "本發行有 %(resources_number)s 項資源。"
 
-#: templates/projects/release_detail.html:134
+#: templates/projects/release_detail.html:135
 msgid "Private Resources:"
 msgstr "私人資源："
 
-#: templates/projects/release_detail.html:137
+#: templates/projects/release_detail.html:138
 #, python-format
 msgid ""
 "This release has %(resources_number)s private resources you have access to."
@@ -3090,8 +3283,8 @@ msgstr "翻譯統計"
 #: templates/projects/release_detail.html:169
 #: templates/projects/release_language_detail.html:69
 #: templates/projects/release_language_detail.html:199
-#: templates/resources/resource_detail.html:175
-#: templates/teams/team_detail.html:148
+#: templates/resources/resource_detail.html:171
+#: templates/teams/team_detail.html:142
 msgid "Completion"
 msgstr "完成度"
 
@@ -3104,8 +3297,8 @@ msgid "source language"
 msgstr "來源語言"
 
 #: templates/projects/release_detail.html:203
-#: templates/projects/resource_list.html:98
-#: templates/resources/resource_detail.html:211
+#: templates/projects/resource_list.html:99
+#: templates/resources/resource_detail.html:207
 #: templates/resources/resource_list_more.html:25
 msgid "no translations yet"
 msgstr "尚未有翻譯"
@@ -3157,72 +3350,72 @@ msgstr[0] "本發行下的資源"
 
 #: templates/projects/release_language_detail.html:70
 #: templates/projects/release_language_detail.html:200
-#: templates/projects/resource_list.html:78
-#: templates/resources/resource_detail.html:176
-#: templates/teams/team_detail.html:149
+#: templates/projects/resource_list.html:79
+#: templates/resources/resource_detail.html:172
+#: templates/teams/team_detail.html:143
 msgid "Last Updated"
 msgstr "最近更新"
 
 #: templates/projects/release_language_detail.html:71
 #: templates/projects/release_language_detail.html:201
-#: templates/projects/resource_list.html:79
-#: templates/teams/team_detail.html:150
+#: templates/projects/resource_list.html:80
+#: templates/teams/team_detail.html:144
 msgid "Importance"
 msgstr "重要性"
 
 #: templates/projects/release_language_detail.html:76
 #: templates/projects/release_language_detail.html:206
-#: templates/resources/resource_detail.html:183
-#: templates/teams/team_detail.html:156
+#: templates/resources/resource_detail.html:179
+#: templates/teams/team_detail.html:150
 msgid "click for translation"
 msgstr "點擊以翻譯"
 
 #: templates/projects/release_language_detail.html:80
 #: templates/projects/release_language_detail.html:210
-#: templates/resources/resource_detail.html:192
-#: templates/teams/team_detail.html:161
+#: templates/resources/resource_detail.html:188
+#: templates/teams/team_detail.html:155
 #, fuzzy
 msgid "Locked"
 msgstr "鎖已建立。"
 
 #: templates/projects/release_language_detail.html:83
 #: templates/projects/release_language_detail.html:213
-#: templates/teams/team_detail.html:164
+#: templates/teams/team_detail.html:158
 #, fuzzy
 msgid "Accepting translations"
 msgstr "接受翻譯嗎？"
 
 #: templates/projects/release_language_detail.html:85
 #: templates/projects/release_language_detail.html:215
-#: templates/teams/team_detail.html:166
+#: templates/teams/team_detail.html:160
 #, fuzzy
 msgid "Not accepting translations at the moment"
 msgstr "接受翻譯嗎？"
 
 #: templates/projects/release_language_detail.html:104
 #: templates/projects/release_language_detail.html:234
-#: templates/teams/team_detail.html:186
+#: templates/teams/team_detail.html:180
 msgid "no activity yet"
 msgstr "尚未活動"
 
 #: templates/projects/release_language_detail.html:153
 #: templates/projects/release_language_detail.html:283
 #: templates/resources/resource_detail.html:30
-#: templates/resources/resource_detail.html:250
+#: templates/resources/resource_detail.html:246
 msgid "Please select a target language first."
 msgstr "請先選取目標語言。"
 
 #: templates/projects/release_language_detail.html:163
 #: templates/projects/release_language_detail.html:293
-#: templates/resources/resource_detail.html:260
-#: templates/teams/team_detail.html:245
+#: templates/resources/resource_detail.html:256
+#: templates/teams/team_detail.html:239
 msgid "Trying to lock resource..."
 msgstr "正在嘗試上鎖資源..."
 
 #: templates/projects/release_language_detail.html:186
 #: templates/projects/release_language_detail.html:316
-#: templates/resources/resource_detail.html:283
-#: templates/teams/team_detail.html:268
+#: templates/resources/resource_detail.html:279
+#: templates/teams/team_detail.html:262
 msgid "Translation Details"
 msgstr "翻譯詳細資料"
 
@@ -3237,16 +3430,16 @@ msgstr[0] "在本發行下您可已存取的私人資源"
 msgid "click for resource details"
 msgstr "翻譯資源詳細資料"
 
-#: templates/projects/release_list.html:13
+#: templates/projects/release_list.html:14
 msgid "Add"
 msgstr "加入"
 
-#: templates/projects/release_list.html:18
-#: templates/projects/release_list.html:39
+#: templates/projects/release_list.html:19
+#: templates/projects/release_list.html:41
 msgid "Project Releases"
 msgstr "專案發行"
 
-#: templates/projects/release_list.html:44
+#: templates/projects/release_list.html:46
 #, python-format
 msgid ""
 "No releases are registered for this project yet. Why don't you <a href="
@@ -3255,48 +3448,48 @@ msgstr ""
 "此專案尚未有註冊的發行。您何不考慮就直接<a href=\"%(release_create)s\">加入一"
 "份</a>呢？"
 
-#: templates/projects/resource_list.html:12
+#: templates/projects/resource_list.html:13
 #, fuzzy
-msgid "Add New Resource"
-msgstr "建立新資源"
+msgid "Add new resource"
+msgstr "資源"
 
-#: templates/projects/resource_list.html:15
+#: templates/projects/resource_list.html:16
 msgid "Project Resources"
 msgstr "專案資源"
 
-#: templates/projects/resource_list.html:77
+#: templates/projects/resource_list.html:78
 msgid "Resource Name"
 msgstr "資源名稱"
 
-#: templates/projects/resource_list.html:79
+#: templates/projects/resource_list.html:80
 msgid "Click the flags to modify the importance of a resource."
 msgstr "點擊旗標以修改資源的重要程度。"
 
-#: templates/projects/resource_list.html:87
+#: templates/projects/resource_list.html:88
 #, fuzzy, python-format
 msgid "%(strings)s strings, %(words)s words"
 msgstr "總共：&nbsp;%(total_entities)s 條字串，%(wordcount)s 個單字"
 
-#: templates/projects/resource_list.html:91
+#: templates/projects/resource_list.html:92
 #, python-format
 msgid "Committed by %(last_committer)s"
 msgstr "由 %(last_committer)s 提交"
 
-#: templates/projects/resource_list.html:91
+#: templates/projects/resource_list.html:92
 msgid "No committers yet"
 msgstr "尚無提交者"
 
-#: templates/projects/resource_list.html:125
-#: templates/teams/team_detail.html:275
+#: templates/projects/resource_list.html:126
+#: templates/teams/team_detail.html:269
 msgid "No resources are registered for this project yet."
 msgstr "此專案尚未有任何已註冊的資源。"
 
-#: templates/projects/resource_list.html:134
+#: templates/projects/resource_list.html:135
 #: templates/resources/resource_detail.html:311
 msgid "Select Language"
 msgstr "選取語言"
 
-#: templates/projects/resource_list.html:148
+#: templates/projects/resource_list.html:149
 msgid "Translate All"
 msgstr "翻譯全部"
 
@@ -3313,72 +3506,70 @@ msgstr "總共：&nbsp;%(total_entities)s 條字串，%(wordcount)s 個單字"
 #: templates/resources/resource_actions.html:39
 #, fuzzy
 msgid ""
-"\n"
-"        <span title=\"You cannot translate the source language strings."
-"\">This is the Source Language</span>\n"
-"        "
+"<span title=\"You cannot translate the source language strings.\">This is "
+"the Source Language</span>"
 msgstr ""
 " \n"
 "        <span title=\"您不能翻譯來源語言字串。\">這是來源語言</span>\n"
 "        "
 
-#: templates/resources/resource_actions.html:48
+#: templates/resources/resource_actions.html:46
 #, fuzzy, python-format
 msgid ""
 "Warning: This resource is currently locked by '%(lock_owner)s'. He might be "
 "working on it right now."
 msgstr "此檔案未被上鎖。看起來目前沒有人在處理它。"
 
+#: templates/resources/resource_actions.html:46
 #: templates/resources/resource_actions.html:48
-#: templates/resources/resource_actions.html:50
-#: templates/resources/resource_actions.html:54
-#: templates/resources/resource_actions.html:59
-#: templates/resources/resource_actions.html:62
+#: templates/resources/resource_actions.html:52
+#: templates/resources/resource_actions.html:57
+#: templates/resources/resource_actions.html:60
 #, fuzzy
 msgid "Translate now"
 msgstr "現在翻譯"
 
-#: templates/resources/resource_actions.html:59
+#: templates/resources/resource_actions.html:57
 msgid "This resource is currently not accepting translations"
 msgstr "此資源目前不接受翻譯"
 
-#: templates/resources/resource_actions.html:62
+#: templates/resources/resource_actions.html:60
 #, python-format
 msgid ""
 "To translate you need to be logged in and a member of the %(lang_name)s team"
 msgstr "若要翻譯，您必須登入並且為 %(lang_name)s 團隊的成員之一"
 
-#: templates/resources/resource_actions.html:71
+#: templates/resources/resource_actions.html:69
 #: templates/resources/stats_bar_simple.html:4
 msgid "Translated: "
 msgstr "已翻譯："
 
-#: templates/resources/resource_actions.html:71
+#: templates/resources/resource_actions.html:69
 #: templates/resources/stats_bar_simple.html:4
 msgid "Untranslated: "
 msgstr "未翻譯："
 
-#: templates/resources/resource_actions.html:79
+#: templates/resources/resource_actions.html:77
 msgid "remaining strings"
 msgstr "條剩餘字串"
 
-#: templates/resources/resource_actions.html:87
+#: templates/resources/resource_actions.html:85
 msgid "View strings online"
 msgstr "線上檢視字串"
 
-#: templates/resources/resource_actions.html:91
+#: templates/resources/resource_actions.html:89
 msgid "Visit language team"
 msgstr "造訪語言團隊"
+
+#: templates/resources/resource_actions.html:95
+#: templates/resources/resource_actions.html:115
+#: templates/resources/resource_actions.html:121
+msgid "Clone to new language"
+msgstr "複製到新語言"
 
 #: templates/resources/resource_actions.html:97
 #: templates/resources/resource_actions.html:117
 #: templates/resources/resource_actions.html:123
-msgid "Clone to new language"
-msgstr "複製到新語言"
-
-#: templates/resources/resource_actions.html:99
-#: templates/resources/resource_actions.html:119
-#: templates/resources/resource_actions.html:125
 msgid ""
 "Copy all the translations from this language to a new (chosen) language in "
 "the specific resource. This will copy the pluralized translations too, if "
@@ -3387,58 +3578,58 @@ msgstr ""
 "在指定資源內從這個語言複製所有的翻譯至新 (選擇的) 語言。若且唯若兩個語言有完"
 "全相同的複數規則的話，它也會複製複數翻譯。"
 
+#: templates/resources/resource_actions.html:131
 #: templates/resources/resource_actions.html:133
-#: templates/resources/resource_actions.html:135
 msgid "Download for viewing"
 msgstr "下載以檢視"
 
-#: templates/resources/resource_actions.html:135
+#: templates/resources/resource_actions.html:133
 msgid "You must login to be able to download the translations."
 msgstr "您必須登入才能下載翻譯。"
 
-#: templates/resources/resource_actions.html:144
-#: templates/resources/resource_actions.html:148
+#: templates/resources/resource_actions.html:142
+#: templates/resources/resource_actions.html:146
 #, fuzzy
 msgid "Download original pot file"
 msgstr "下載以檢視"
 
-#: templates/resources/resource_actions.html:147
+#: templates/resources/resource_actions.html:145
 #, fuzzy
 msgid "You must login to be able to download the pot file."
 msgstr "您必須登入才能下載翻譯。"
 
-#: templates/resources/resource_actions.html:158
+#: templates/resources/resource_actions.html:156
 msgid "Resource cannot be locked"
 msgstr "無法上鎖資源"
 
-#: templates/resources/resource_actions.html:158
-#: templates/resources/resource_actions.html:162
+#: templates/resources/resource_actions.html:156
+#: templates/resources/resource_actions.html:160
 msgid "Download for translation"
 msgstr "下載以翻譯"
 
-#: templates/resources/resource_actions.html:162
+#: templates/resources/resource_actions.html:160
 msgid "You must login to use this action"
 msgstr "您必須登入才能使用此動作"
 
-#: templates/resources/resource_actions.html:165
+#: templates/resources/resource_actions.html:163
 msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action."
 msgstr "以您的身分上鎖檔案並且將它下載至您的機器上以編輯。"
 
-#: templates/resources/resource_actions.html:182
+#: templates/resources/resource_actions.html:180
 msgid "This resource currently is not accepting translations."
 msgstr "本資源目前不接受翻譯。"
 
-#: templates/resources/resource_actions.html:193
+#: templates/resources/resource_actions.html:191
 msgid "Translation last updated "
 msgstr "最近翻譯更新"
 
-#: templates/resources/resource_actions.html:195
+#: templates/resources/resource_actions.html:193
 msgid "by"
 msgstr "由"
 
-#: templates/resources/resource_actions.html:201
+#: templates/resources/resource_actions.html:199
 msgid "No translation yet"
 msgstr "尚未有翻譯"
 
@@ -3481,25 +3672,26 @@ msgstr "總共字串："
 msgid "words"
 msgstr "個單字"
 
-#: templates/resources/resource_detail.html:125
-msgid "Accepting Translations?"
-msgstr "接受翻譯？"
+#: templates/resources/resource_detail.html:124
+#, fuzzy
+msgid "Accepting "
+msgstr "接受翻譯嗎？"
 
-#: templates/resources/resource_detail.html:138
+#: templates/resources/resource_detail.html:135
 msgid "Priority Level"
 msgstr "優先等級"
 
-#: templates/resources/resource_detail.html:155
+#: templates/resources/resource_detail.html:151
 msgid "Release:"
 msgid_plural "Releases:"
 msgstr[0] "發行："
 
-#: templates/resources/resource_detail.html:169
+#: templates/resources/resource_detail.html:165
 #, python-format
 msgid "Available languages (%(num_of_langs)s)"
 msgstr ""
 
-#: templates/resources/resource_detail.html:189
+#: templates/resources/resource_detail.html:185
 #, fuzzy
 msgid "(source language)"
 msgstr "來源語言"
@@ -3531,6 +3723,7 @@ msgid "Edit the details of the translation resource"
 msgstr "編輯翻譯資源的詳細資料"
 
 #: templates/resources/resource_form.html:41
+#, fuzzy
 msgid ""
 "\n"
 "\t<div class=\"message\">\n"
@@ -3549,6 +3742,22 @@ msgid ""
 "\t</div>\n"
 "\t"
 msgstr ""
+"\n"
+"\t<div class=\"message\">\n"
+"\t\t<p>若要啟用透過 Transifex 自動「擷取」您的來源字串，\n"
+"\t\t請輸入您來源檔案的 URL (例：POT 檔)。請參照 \n"
+"\t\t<a href=\"http://help.transifex.net/user-guide/projects.html#projects-"
+"and-resources\">本文件</a> \n"
+"\t\t以瞭解更多資訊。</p>\n"
+"\n"
+"\t\t<p><b>警告</b>：Transifex 會以連結檔內找到的字串\n"
+"\t\t與翻譯覆寫現有的來源字串與翻譯。這可能會導致\n"
+"\t\t<b>翻譯的遺失</b>，所以在提交表格之前，\n"
+"\t\t請先確定 URL 是否連結至正確的檔案。\n"
+"\t\t</p> \n"
+"\t\t</blink>\n"
+"\t</div>\n"
+"\t"
 
 #: templates/resources/resource_form.html:57
 msgid "Save translation resource"
@@ -3591,15 +3800,13 @@ msgstr ""
 "刪除 <em>%(language_name)s</em>\n"
 
 #: templates/resources/resource_translations_confirm_delete.html:20
-#, python-format
-msgid ""
-"\n"
-"    Say goodbye to all translations for <em>%(language_name)s</em>?"
+#, fuzzy, python-format
+msgid "Say goodbye to all translations for <em>%(language_name)s</em>?"
 msgstr ""
 "\n"
 "    要對 <em>%(language_name)s</em> 的所有翻譯說再見嗎?"
 
-#: templates/resources/resource_translations_confirm_delete.html:26
+#: templates/resources/resource_translations_confirm_delete.html:25
 #, python-format
 msgid ""
 "\n"
@@ -3614,30 +3821,20 @@ msgstr ""
 msgid "Extracting strings from '%(resource_name)s'. This might take a while..."
 msgstr "正在從「%(resource_name)s」抽出字串。這會花上一些時間..."
 
-#: templates/resources/upload_create_resource_form.html:45
+#: templates/resources/upload_create_resource_form.html:42
 #, fuzzy
 msgid "Create resource..."
 msgstr "建立資源"
 
-#: templates/resources/upload_create_resource_form.html:83
+#: templates/resources/upload_create_resource_form.html:80
 msgid "Create Resource"
 msgstr "建立資源"
 
-#: templates/resources/upload_create_resource_form.html:86
-#, fuzzy
+#: templates/resources/upload_create_resource_form.html:83
 msgid ""
-"\n"
-"  Create a resource by selecting a source language and uploading a source "
-"translation file from your workstation, such as an English POT file.<br/>\n"
-"  Transifex will analyze the file, extract the strings from inside it, and "
-"create your resource based on these.\n"
-"  "
+"Transifex will analyze the file, extract the strings from inside it, and "
+"create your resource based on these."
 msgstr ""
-"\n"
-"  藉由選取來源語言，並且從您的工作站上傳來源翻譯檔 (例如英文的 POT 檔) 來加建"
-"立資源。\n"
-"  Transifex 會分析該檔案，從中抽出字串，並以它們為基礎建立您的資源。\n"
-"  "
 
 #: templates/resources/upload_resource_translation_button.html:7
 msgid "Translate Online"
@@ -3729,49 +3926,49 @@ msgstr ""
 msgid "Edit team"
 msgstr "團隊"
 
-#: templates/teams/team_detail.html:71
+#: templates/teams/team_detail.html:70
 msgid "Mainlist:"
 msgstr "主要清單："
 
-#: templates/teams/team_detail.html:79 templates/teams/team_list.html:38
+#: templates/teams/team_detail.html:76 templates/teams/team_list.html:38
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "協調者："
 
-#: templates/teams/team_detail.html:97
+#: templates/teams/team_detail.html:92
 msgid "Become a translator:"
 msgstr "成為一位翻譯者："
 
-#: templates/teams/team_detail.html:100
+#: templates/teams/team_detail.html:95
 msgid "Join this Team"
 msgstr "參與此團隊"
 
-#: templates/teams/team_detail.html:111
+#: templates/teams/team_detail.html:105
 msgid "People waiting for team membership approving:"
 msgstr "等待團隊成員身份批准的人："
 
-#: templates/teams/team_detail.html:121 templates/teams/team_list.html:76
+#: templates/teams/team_detail.html:115 templates/teams/team_list.html:76
 msgid "Approve"
 msgstr "批准"
 
-#: templates/teams/team_detail.html:125 templates/teams/team_list.html:73
+#: templates/teams/team_detail.html:119 templates/teams/team_list.html:73
 msgid "Deny"
 msgstr "回絕"
 
-#: templates/teams/team_detail.html:131
+#: templates/teams/team_detail.html:125
 msgid "Withdraw"
 msgstr "撤除"
 
-#: templates/teams/team_detail.html:142
+#: templates/teams/team_detail.html:136
 msgid "Team Translating Resource"
 msgid_plural "Team Translating Resources:"
 msgstr[0] "團隊翻譯資源"
 
-#: templates/teams/team_detail.html:286
+#: templates/teams/team_detail.html:280
 msgid "Team Members:"
 msgstr "團隊成員："
 
-#: templates/teams/team_detail.html:296
+#: templates/teams/team_detail.html:290
 msgid "Leave"
 msgstr "退出"
 
@@ -4419,11 +4616,6 @@ msgstr ""
 msgid "This value must contain only unicode letters, numbers and underscores."
 msgstr "此值必須只包含任意 unicode 字母、數字以及底線。"
 
-#: txcommon/i18n.py:20
-#, python-format
-msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
-msgstr "LINGUAS 檔案 (%(file)s)  無法開啟：%(exc)s"
-
 #: txcommon/models.py:14
 msgid "Female"
 msgstr "女性"
@@ -4563,161 +4755,209 @@ msgstr "發行已刪除"
 msgid "when a release of a project is deleted"
 msgstr "當某專案的發行被刪除"
 
-#: txcommon/notifications.py:99
+#: txcommon/notifications.py:95
+msgid "Release about to enter the string freeze period"
+msgstr ""
+
+#: txcommon/notifications.py:96
+#, fuzzy
+msgid "when a release of a project is about to enter the String Freeze period"
+msgstr "當某專案的發行被變更"
+
+#: txcommon/notifications.py:102
+msgid "Release is in string freeze period"
+msgstr ""
+
+#: txcommon/notifications.py:103
+#, fuzzy
+msgid "when a release of a project is on enter the String Freeze period"
+msgstr "當某專案的發行被變更"
+
+#: txcommon/notifications.py:109
+msgid "Release about to hit the translation deadline"
+msgstr ""
+
+#: txcommon/notifications.py:110
+#, fuzzy
+msgid ""
+"when a release of a project is about to hit the Translation Deadline date"
+msgstr "當某專案的發行被變更"
+
+#: txcommon/notifications.py:116
+#, fuzzy
+msgid "Release has hit the translation deadline"
+msgstr "翻譯字串用來作為索引之用的雜湊值"
+
+#: txcommon/notifications.py:117
+#, fuzzy
+msgid "when a release of a project hits the Translation Deadline date"
+msgstr "當某專案的發行被變更"
+
+#: txcommon/notifications.py:123
+#, fuzzy
+msgid "Release string freeze breakage"
+msgstr "字串凍結日期"
+
+#: txcommon/notifications.py:124
+#, fuzzy
+msgid "when a release of a project has a string freeze breakage"
+msgstr "當某專案的發行被變更"
+
+#: txcommon/notifications.py:134
 #, fuzzy
 msgid "New team created"
 msgstr "新團隊已加入"
 
-#: txcommon/notifications.py:100
+#: txcommon/notifications.py:135
 msgid "when a new translation team is added to a project"
 msgstr "當某專案加入新翻譯團隊"
 
-#: txcommon/notifications.py:107
+#: txcommon/notifications.py:142
 #, fuzzy
 msgid "Team modified"
 msgstr "已修改"
 
-#: txcommon/notifications.py:108
+#: txcommon/notifications.py:143
 #, fuzzy
 msgid "when a translation team of a project is modified"
 msgstr "當某專案的翻譯團隊被刪除"
 
-#: txcommon/notifications.py:115
+#: txcommon/notifications.py:150
 #, fuzzy
 msgid "Team removed"
 msgstr "團隊已刪除"
 
-#: txcommon/notifications.py:116
+#: txcommon/notifications.py:151
 #, fuzzy
 msgid "when a translation team of a project is removed"
 msgstr "當某專案的翻譯團隊被刪除"
 
-#: txcommon/notifications.py:123
+#: txcommon/notifications.py:158
 #, fuzzy
 msgid "Requested team creation"
 msgstr "請求團隊"
 
-#: txcommon/notifications.py:124
+#: txcommon/notifications.py:159
 #, fuzzy
 msgid "when the creation of a translation team is requested for a project"
 msgstr "當專案被請求成立某翻譯團隊"
 
-#: txcommon/notifications.py:131
+#: txcommon/notifications.py:166
 #, fuzzy
 msgid "Denied request for team creation"
 msgstr "您已請求建立「%s」團隊。"
 
-#: txcommon/notifications.py:132
+#: txcommon/notifications.py:167
 #, fuzzy
 msgid ""
 "when the creation of a translation team for a project is denied by a "
 "maintainer"
 msgstr "當某專案翻譯團隊其成立請求被維護者回絕"
 
-#: txcommon/notifications.py:139
+#: txcommon/notifications.py:174
 #, fuzzy
 msgid "Requested to join translation team"
 msgstr "當某使用者請求參與專案翻譯團隊"
 
-#: txcommon/notifications.py:140
+#: txcommon/notifications.py:175
 msgid "when a user requests to join a project translation team"
 msgstr "當某使用者請求參與專案翻譯團隊"
 
-#: txcommon/notifications.py:147
+#: txcommon/notifications.py:182
 #, fuzzy
 msgid "Approved to join translation team"
 msgstr "此專案不使用翻譯團隊功能"
 
-#: txcommon/notifications.py:148
+#: txcommon/notifications.py:183
 msgid "when a user is approved as a member of a project translation team"
 msgstr "當某使用者被批准為專案翻譯團隊的成員之一"
 
-#: txcommon/notifications.py:155
+#: txcommon/notifications.py:190
 #, fuzzy
 msgid "Denied to join translation team"
 msgstr "當某使用者決定不參與專案翻譯團隊"
 
-#: txcommon/notifications.py:156
+#: txcommon/notifications.py:191
 msgid "when a user is denied as a member of a project translation team"
 msgstr "當某使用者被回絕成為專案翻譯團隊的成員"
 
-#: txcommon/notifications.py:163
+#: txcommon/notifications.py:198
 #, fuzzy
 msgid "Withdrew request to join team"
 msgstr "撤除請求"
 
-#: txcommon/notifications.py:164
+#: txcommon/notifications.py:199
 msgid "when a user decides not to join a project translation team"
 msgstr "當某使用者決定不參與專案翻譯團隊"
 
-#: txcommon/notifications.py:171
+#: txcommon/notifications.py:206
 #, fuzzy
 msgid "User left translation team"
 msgstr "刪除翻譯"
 
-#: txcommon/notifications.py:172
+#: txcommon/notifications.py:207
 msgid "when a user leaves a project translation team"
 msgstr "當某使用者退出專案翻譯團隊"
 
-#: txcommon/notifications.py:182
+#: txcommon/notifications.py:217
 msgid "Weekly project report for maintainers"
 msgstr "給維護者的每週專案報告"
 
-#: txcommon/notifications.py:183
+#: txcommon/notifications.py:218
 msgid "when you receive the weekly report of projects that you maintain."
 msgstr "當您收到您維護專案的每週報告。"
 
-#: txcommon/notifications.py:190
+#: txcommon/notifications.py:225
 #, fuzzy
 msgid "User nudge"
 msgstr "使用者來電振動"
 
-#: txcommon/notifications.py:191
+#: txcommon/notifications.py:226
 msgid "when a user nudges you"
 msgstr "當某使用者對您發出來電振動"
 
-#: txcommon/notifications.py:200
+#: txcommon/notifications.py:235
 #, fuzzy
 msgid "Resource created"
 msgstr "資源已刪除"
 
-#: txcommon/notifications.py:201
+#: txcommon/notifications.py:236
 msgid "when a new resource is added to a project"
 msgstr "當新的資源被加入專案時"
 
-#: txcommon/notifications.py:207
+#: txcommon/notifications.py:242
 #, fuzzy
 msgid "Resource modified"
 msgstr "資源檔"
 
-#: txcommon/notifications.py:208
+#: txcommon/notifications.py:243
 msgid "when a resource of a project is changed"
 msgstr "當專案的資源被變更時"
 
-#: txcommon/notifications.py:214
+#: txcommon/notifications.py:249
 #, fuzzy
 msgid "Resource deleted"
 msgstr "資源已刪除"
 
-#: txcommon/notifications.py:215
+#: txcommon/notifications.py:250
 msgid "when a resource of a project is deleted"
 msgstr "當專案的資源被刪除時"
 
-#: txcommon/notifications.py:221
+#: txcommon/notifications.py:256
 #, fuzzy
 msgid "Resource translated"
 msgstr "資源已翻譯"
 
-#: txcommon/notifications.py:222
+#: txcommon/notifications.py:257
 msgid "when a translation is sent to a project resource"
 msgstr "當翻譯被傳送至專案資源時"
 
-#: txcommon/notifications.py:229
+#: txcommon/notifications.py:264
 #, fuzzy
 msgid "Resource translation updated"
 msgstr "資源翻譯已變更"
 
-#: txcommon/notifications.py:230
+#: txcommon/notifications.py:265
 msgid "when a resource translation you are watching changes"
 msgstr "當您正在監看的資源翻譯變更時"
 
@@ -4734,18 +4974,19 @@ msgstr "您無法對您自己發出來電振動。"
 msgid "You have nudged '%s'."
 msgstr "您已經發出來電振動給「%s」。"
 
-#: txcommon/db/models.py:85
+#: txcommon/db/models.py:84
 msgid "Enter 0 or more comma-separated integers in parentheses."
 msgstr "在半形括號內輸入 0，或者更多整數但要以半形逗號隔開。"
 
-#: txcommon/db/models.py:87
+#: txcommon/db/models.py:86
 msgid "You must enter at least a pair of parentheses containing nothing."
 msgstr "您必須至少輸入一對內含空白的半形括號。"
 
-#: txcommon/templatetags/avatars.py:108
+#: txcommon/templatetags/avatars.py:109
+#, fuzzy
 msgid ""
-"You have to provide only the size as             an integer (both sides will "
-"be equal) and optionally, the             username."
+"You have to provide only the size as an integer (both sides will be equal) "
+"and optionally, the username."
 msgstr "您只能提供整數形式的大小 (兩邊將相等)，以及可選擇性提供使用者名稱。"
 
 #: txcommon/templatetags/txcommontags.py:79
@@ -4821,8 +5062,15 @@ msgstr "您已移除許可請求。"
 #~ "deleted successfully."
 #~ msgstr "資源 %(resource)s 的 %(lang)s 語言翻譯已被成功的刪除。"
 
+#~ msgid ""
+#~ "Couldn't find your language? Please use the feedback form and let us know!"
+#~ msgstr "找不到您的語言？請填寫回饋表來讓我們知道！"
+
 #~ msgid "Edit"
 #~ msgstr "編輯"
+
+#~ msgid "Watch:"
+#~ msgstr "監看："
 
 #~ msgid "Total Strings: %(ts)s<br/>Available Languages: %(al)s"
 #~ msgstr "所有字串：%(ts)s<br/>可用的語言：%(al)s"
@@ -4833,14 +5081,37 @@ msgstr "您已移除許可請求。"
 #~ msgid "Number of languages:"
 #~ msgstr "語言數目："
 
+#~ msgid "Accepting Translations?"
+#~ msgstr "接受翻譯？"
+
 #~ msgid "Available translations"
 #~ msgstr "可用翻譯"
+
+#~ msgid "Create New Resource"
+#~ msgstr "建立新資源"
+
+#~ msgid ""
+#~ "\n"
+#~ "  Create a resource by selecting a source language and uploading a source "
+#~ "translation file from your workstation, such as an English POT file.\n"
+#~ "  Transifex will analyze the file, extract the strings from inside it, "
+#~ "and create your resource based on these.\n"
+#~ "  "
+#~ msgstr ""
+#~ "\n"
+#~ "  藉由選取來源語言，並且從您的工作站上傳來源翻譯檔 (例如英文的 POT 檔) 來"
+#~ "加建立資源。\n"
+#~ "  Transifex 會分析該檔案，從中抽出字串，並以它們為基礎建立您的資源。\n"
+#~ "  "
 
 #~ msgid "Add a new team"
 #~ msgstr "加入新團隊"
 
 #~ msgid "List of team requests:"
 #~ msgstr "團隊請求的清單："
+
+#~ msgid "The LINGUAS file (%(file)s) could not be opened: %(exc)s"
+#~ msgstr "LINGUAS 檔案 (%(file)s)  無法開啟：%(exc)s"
 
 #~ msgid "New Project Added"
 #~ msgstr "新專案已加入"
@@ -4865,9 +5136,6 @@ msgstr "您已移除許可請求。"
 
 #~ msgid "Release Changed"
 #~ msgstr "發行已變更"
-
-#~ msgid "when a release of a project is changed"
-#~ msgstr "當某專案的發行被變更"
 
 #~ msgid "Release Deleted from a Project"
 #~ msgstr "發行已從某專案中刪除"
