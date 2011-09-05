@@ -377,9 +377,9 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
                 # It includes the following content, wrapped in span tags:
                 # * SourceEntity object's "context" value
                 # * SourceEntity object's "id" value
-                ('<span class="i16 save buttonized_simple" id="save_' + str(counter) + '" style="display:none;border:0" title="' + _("Save the specific change") + '"></span>'
-                 '<span class="i16 spellcheck buttonized_simple" id="spellcheck_' + str(counter) + '" style="display:none;border:0" title="' + _("Check spelling") + '"></span>'
-                 '<span class="i16 undo buttonized_simple" id="undo_' + str(counter) + '" style="display:none;border:0" title="' + _("Undo to initial text") + '"></span>'
+                ('<span class="save edit-panel" id="save_' + str(counter) + '" style="display:none;border:0" title="' + _("Save the specific change") + '"></span>'
+                 '<span class="spellcheck edit-panel" id="spellcheck_' + str(counter) + '" style="display:none;border:0" title="' + _("Check spelling") + '"></span>'
+                 '<span class="undo edit-panel" id="undo_' + str(counter) + '" style="display:none;border:0" title="' + _("Undo to initial text") + '"></span>'
                  '<span class="context" id="context_' + str(counter) + '" style="display:none;">' + escape(str(s.source_entity.context_string.encode('UTF-8'))) + '</span>'
                  '<span class="source_id" id="sourceid_' + str(counter) + '"style="display:none;">' + str(s.source_entity.id) + '</span>'),
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
