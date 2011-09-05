@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load truncate %}
+{% load permissions %}
+{% load txcommontags %}
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#download_pseudo_file").click(function(){
+            if(!$('input:radio[name=pseudo_type]:checked').val()){
+                alert('{% trans "Please, select a pseudo type!"|escapejs %}');
+                return false;
+            }
+        });
+    });
+</script>
+
+<div class="actions_popup">
+    <div class="first_level">
+        <h2>{% trans "Pseudo Translation Files" %}</h2>
+        <h3>{% trans "Download Pseudo translation files to test the application." %}</h3>
+    </div>
+    
+    <div class="generic_form">
+      <form action='{% url apiv2_pseudo_content project.slug resource.slug %}' method='get'>{% csrf_token %}
+        <table>
+            <tbody>
+            {% form_as_table_rows form %}
+            </tbody>
+        </table>
+        <input type="hidden" name='file' value="true" />
+        <input id="download_pseudo_file" type="submit" class="i16 submit buttonized" value="{% trans "Download" %}" />
+        <form>
+    </div>
+</div>

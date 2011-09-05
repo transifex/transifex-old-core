@@ -1,5 +1,6 @@
 from uuid import uuid4
 from django import forms
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.languages.models import Language
@@ -191,3 +192,13 @@ class ResourceTranslationForm(forms.Form):
             help_text=_("Select a file from your file system to be used to "
                 "fill translations for this resource."), language=language,
                 display_language=display_language)
+
+
+class ResourcePseudoTranslationForm(forms.Form):
+    """Form to be used for getting pseudo translation files"""
+    
+    pseudo_type = forms.ChoiceField(label=_("Pseudo type"), required=True, 
+        choices=[(k, v) for k, v in settings.PSEUDO_TYPES.items()], 
+        widget=forms.widgets.RadioSelect,
+        help_text=_("For more info about each pseudo translation type, please "
+            "refer to the docs."))

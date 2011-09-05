@@ -129,6 +129,37 @@
             <img class="noborder" src="{{ STATIC_URL }}images/icons/delete.png" />
         {% endif %}
       </dd>
+      
+      {% if request.user.is_authenticated %}
+      <dt class="i16 get_file">{% trans "Pseudo files " %}</dt>
+      <dd>
+        <span id="resource_pseudo_translation_actions" class="clickable">{% trans "Get pseudo translations" %}</span>
+      </dd>
+     
+      <script>
+        $("#resource_pseudo_translation_actions").click(function(){
+           /* FancyBox Using custom settings */
+           $.fancybox(
+               {
+                'href': '{% url pseudo_translation_actions resource.project.slug resource.slug %}',
+                'hideOnContentClick': false,
+                'onStart':function(){
+                    // IE8 fix
+                    if(jQuery.browser.msie) {
+                      $('#fancybox-wrap').css('max-width','716px');
+                      $('#fancybox-inner').css('max-width','716px');
+                      $('#fancybox-outer').css('left','50%');
+                    }
+                },
+                'titleShow': true,
+                'titlePosition': 'float',
+                'title': '{% trans "Pseudo Translation File Actions"|escapejs %}'
+           });
+        });
+      </script>
+
+      {% endif %}
+
     {% if resource.priority %}
     {% with resource.priority.level as priority_level %}
     {% with resource.priority.display_level as display_level %}

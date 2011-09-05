@@ -27,7 +27,7 @@ from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.txcommon.log import logger
 
-from transifex.resources.forms import ResourceForm
+from transifex.resources.forms import ResourceForm, ResourcePseudoTranslationForm
 from transifex.resources.models import Translation, Resource, RLStats
 from transifex.resources.handlers import (invalidate_object_templates,
     invalidate_stats_cache)
@@ -239,6 +239,29 @@ def resource_actions(request, project_slug=None, resource_slug=None,
       'wordcount': wordcount,
       },
     context_instance = RequestContext(request))
+
+
+# Restrict access only for private projects
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
+def resource_pseudo_translation_actions(request, project_slug=None, 
+    resource_slug=None):
+    """
+    Ajax view that returns an fancybox template snippet for resource specific
+    pseudo translation file actions.
+    """
+    resource = get_object_or_404(Resource.objects.select_related('project'),
+        project__slug = project_slug, slug = resource_slug)
+    project = resource.project
+
+    form = ResourcePseudoTranslationForm()
+
+    return render_to_response("resources/resource_pseudo_translation_actions.html",
+        { 'project' : project,
+          'resource' : resource,
+          'form': form,
+        },
+        context_instance = RequestContext(request))
 
 
 # Restrict access only for private projects
