@@ -91,6 +91,8 @@ class DesktopHandler(Handler):
         translated_to = all_languages - source_language
         for language in translated_to:
             self._compile_translation(language)
+        if not self.compiled_template:
+            self.compiled_template = self.template
 
     def _is_comment_line(self, line):
         """Return True, if the line is a comment."""
