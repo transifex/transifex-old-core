@@ -409,20 +409,11 @@
 
                 if ($("#toggle_autosave").is(":checked")){
                     // Enable the save button push upstream.
-                    //stringset.unbindSaveButton();
                     stringset.bindBlurTextArea();
                 } else {
                     stringset.unbindBlurTextArea();
-                    //stringset.bindSaveButton();
                 }
-                //Enable the save button
-                stringset.bindSaveButton();
-                // Enable the undo button.
-                stringset.bindUndoButton();
                 var push_url = '{% url push_translation project.slug target_language.code %}';
-
-                if (enable_spellcheck)
-                	stringset.bindSpellcheckButton();
 
                 if ($("#toggle_verbose").is(":checked")){
                     // Enable the save button push upstream.

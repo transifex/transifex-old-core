@@ -289,6 +289,15 @@
 			);
 			this.options.string.translated_strings.other = this.$domObj.val()
 			$('textarea#translation_'+this.options.id).focus();
+			var tdNotes = $('textarea#translation_'+this.options.id).parents('td').siblings('td.notes');
+            var saveButton = tdNotes.find('span.save');
+            var undoButton = tdNotes.find('span.undo');
+            saveButton.unbind('click');
+            saveButton.bind('click', saveButtonClickHandler);
+            saveButton.removeClass('inactive');
+            undoButton.unbind('click');
+            undoButton.bind('click', undoButtonClickHandler);
+            undoButton.removeClass('inactive');
 		},
 
 		// replace word in an HTML container

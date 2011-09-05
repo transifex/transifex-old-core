@@ -11,6 +11,51 @@ function LotteStatus(){
 }
 lotteStatus = new LotteStatus();
 
+function saveButtonClickHandler() {
+    table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
+    this_stringset.strings[table_row_id].push();
+}
+
+function spellcheckButtonClickHandler(e) {
+    table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current spellcheck button
+    var string = this_stringset.strings[table_row_id];
+    $("textarea#translation_"+table_row_id)
+    .spellchecker({
+            url: spellcheck_url,//"http://spellchecker.jquery.badsyntax.co.uk/checkspelling.php",       // default spellcheck url
+            //lang: "en",                     // default language
+            //engine: "google",               // pspell or google
+            //addToDictionary: false,         // display option to add word to dictionary (pspell only)
+            wordlist: {
+                    action: "after",               // which jquery dom insert action
+                    element: $("#translation_"+table_row_id)    // which object to apply above method
+            },
+            string: string,
+            stringset: this_stringset,
+            id: table_row_id,
+            //suggestBoxPosition: "below",    // position of suggest box; above or below the highlighted word
+            innerDocument: true            // if you want the badwords highlighted in the html then set to true
+    });
+    $("textarea#translation_"+table_row_id).spellchecker("check", function(result){
+        // if result is true then there are no incorrectly spelt words
+        if (result) alert('There are no incorrectly spelt words.');
+    });
+}
+
+function undoButtonClickHandler() {
+    var table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current undo button
+    var string = this_stringset.strings[table_row_id];
+    var undo_value = string.load_default;
+    var tr = $(this).parents('tr');
+    tr.find('span.rule').each(function(i){
+        rule = $(this).text();
+        string.translate(undo_value[rule], rule);
+        $(this).next('textarea').focus().val(undo_value[rule]);
+    });
+    // Save the new value
+    string.push();
+    $(this).addClass('inactive');
+    $(this).unbind('click');
+}
 
 /* TranslationString class which stores information about one translation string */
 function TranslationString(parent, id, source_strings, translated_strings, source_entity, context, occurrence) {
@@ -274,15 +319,25 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             /* Toggle per string save button */
             button_save = $("span#save_"+id);
            	button_spellcheck = $("span#spellcheck_"+id);
-            if (string.modified)
-                button_save.show();
-            else
-                button_save.hide();
+            if (string.modified) {
+                button_save.removeClass('inactive');
+                button_save.unbind('click');
+                button_save.bind('click', saveButtonClickHandler);
+            }
+            else{
+                button_save.addClass('inactive');
+                button_save.unbind('click');
+            }
             str = string.translated_strings.other.toString();
-            if (enable_spellcheck && str != "")
-                button_spellcheck.show();
-            else
-                button_spellcheck.hide();
+            if (enable_spellcheck && str != ""){
+                button_spellcheck.removeClass('inactive');
+                button_spellcheck.unbind('click');
+                button_spellcheck.bind('click', spellcheckButtonClickHandler);
+            }
+            else{
+                button_spellcheck.addClass('inactive');
+                button_spellcheck.unbind('click');
+            }
         });
     };
 
@@ -301,48 +356,32 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             if (string.modified) {
                 // Automatically set edited textareas to fuzzy
                 textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
-				textarea.parents('tr').find('span#save_' + id).show();
-				textarea.parents('tr').find('span#undo_' + id).show();
-				if (enable_spellcheck)
-               		textarea.parents('tr').find('span#spellcheck_' + id).show();
+				var saveButton = textarea.parents('tr').find('span#save_' + id);
+                saveButton.removeClass('inactive');
+                saveButton.unbind('click');
+                saveButton.bind('click', saveButtonClickHandler);
+				var undoButton = textarea.parents('tr').find('span#undo_' + id);
+                undoButton.removeClass('inactive');
+                undoButton.unbind('click');
+                undoButton.bind('click', undoButtonClickHandler);
+				if (enable_spellcheck){
+               		var spellcheckButton = textarea.parents('tr').find('span#spellcheck_' + id);
+                    spellcheckButton.removeClass('inactive');
+                    spellcheckButton.unbind('click');
+                    spellcheckButton.bind('click', spellcheckButtonClickHandler);
+                }
             }
         });
     }
 
     /* Bind save button events */
     this.bindSaveButton = function() {
-        $('tr td.notes span.save', this.bound_table).click(function() {
-            table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
-            this_stringset.strings[table_row_id].push();
-        });
+        $('tr td.notes span.save', this.bound_table).click(saveButtonClickHandler);
     }
 
     /* Bind spellcheck button */
     this.bindSpellcheckButton = function() {
-       $('tr td.notes span.spellcheck', this.bound_table).click(function(e) {
-            table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current spellcheck button
-            var string = this_stringset.strings[table_row_id];
-			$("textarea#translation_"+table_row_id)
-			.spellchecker({
-			        url: spellcheck_url,//"http://spellchecker.jquery.badsyntax.co.uk/checkspelling.php",       // default spellcheck url
-			        //lang: "en",                     // default language
-			        //engine: "google",               // pspell or google
-			        //addToDictionary: false,         // display option to add word to dictionary (pspell only)
-			        wordlist: {
-			                action: "after",               // which jquery dom insert action
-			                element: $("#translation_"+table_row_id)    // which object to apply above method
-			        },
-			        string: string,
-			        stringset: this_stringset,
-			        id: table_row_id,
-			        //suggestBoxPosition: "below",    // position of suggest box; above or below the highlighted word
-			        innerDocument: true            // if you want the badwords highlighted in the html then set to true
-			});
-			$("textarea#translation_"+table_row_id).spellchecker("check", function(result){
-                // if result is true then there are no incorrectly spelt words
-                if (result) alert('There are no incorrectly spelt words.');
-			});
-        });
+       $('tr td.notes span.spellcheck', this.bound_table).bind('click',spellcheckButtonClickHandler);
     }
     // Bind the current textbox focus event
     // Make the focused textarea current in the StringSet!
@@ -365,20 +404,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     /* Bind undo button events */
     this.bindUndoButton = function() {
-        $('tr td.notes span.undo', this.bound_table).click(function() {
-            var table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current undo button
-            var string = this_stringset.strings[table_row_id];
-            var undo_value = string.load_default;
-            var tr = $(this).parents('tr');
-            tr.find('span.rule').each(function(i){
-                rule = $(this).text();
-                string.translate(undo_value[rule], rule);
-                $(this).next('textarea').focus().val(undo_value[rule]);
-            });
-            // Save the new value
-            string.push();
-            $(this).hide();
-        });
+        $('tr td.notes span.undo', this.bound_table).click(undoButtonClickHandler);
     }
 
     // saves last modified stringset
@@ -555,10 +581,17 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                 trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                                 trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                                 // TODO: Check for autosave and handle it.
-                                if (enable_spellcheck)
-                                	$('tbody tr td.notes span#spellcheck_' + id).show();
-                                $('tbody tr td.notes span#save_' + id).show();
-                                $('tbody tr td.notes span#undo_' + id).show();
+                                if (enable_spellcheck){
+                                	$('tbody tr td.notes span#spellcheck_' + id).removeClass('inactive');
+                                	$('tbody tr td.notes span#spellcheck_' + id).unbind('click');
+                                	$('tbody tr td.notes span#spellcheck_' + id).bind('click', spellcheckButtonClickHandler);
+                                }
+                                $('tbody tr td.notes span#save_' + id).removeClass('inactive');
+                                $('tbody tr td.notes span#save_' + id).unbind('click');
+                                $('tbody tr td.notes span#save_' + id).bind('click', saveButtonClickHandler);
+                                $('tbody tr td.notes span#undo_' + id).removeClass('inactive');
+                                $('tbody tr td.notes span#undo_' + id).unbind('click');
+                                $('tbody tr td.notes span#undo_' + id).bind('click', undoButtonClickHandler); 
                                 trans.focus();
                             }
                         } else {
@@ -595,10 +628,17 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                     trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
                     // TODO: Check for autosave and handle it.
-                    if (enable_spellcheck)
-                    	$('tbody tr td.notes span#spellcheck_' + id).show();
-                    $('tbody tr td.notes span#save_' + id).show();
-                    $('tbody tr td.notes span#undo_' + id).show();
+                    if (enable_spellcheck){
+                    	$('tbody tr td.notes span#spellcheck_' + id).removeClass('inactive');
+                    	$('tbody tr td.notes span#spellcheck_' + id).unbind('click');
+                        $('tbody tr td.notes span#spellcheck_' + id).bind('click', spellcheckButtonClickHandler);
+                    }
+                    $('tbody tr td.notes span#save_' + id).removeClass('inactive');
+                    $('tbody tr td.notes span#save_' + id).unbind('click');
+                    $('tbody tr td.notes span#save_' + id).bind('click', saveButtonClickHandler);
+                    $('tbody tr td.notes span#undo_' + id).removeClass('inactive');
+                    $('tbody tr td.notes span#undo_' + id).unbind('click');
+                    $('tbody tr td.notes span#undo_' + id).bind('click', undoButtonClickHandler);
                     trans.focus();
                 }
             });
