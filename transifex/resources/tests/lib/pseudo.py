@@ -37,10 +37,10 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/javaproperties/pseudo.properties'),
         'pseudo_messages':{
-            'XXX': u'Key00=xxxValue00xxx'],
-            'BRACKETS': u'Key00=[Value00]'],
-            'UNICODE': u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
-            'PLANGUAGE': u'Key01=<b>Påקågéקé</b> %s ôקôf %s']
+            'XXX': [u'Key00=xxxValue00xxx'],
+            'BRACKETS': [u'Key00=[Value00]'],
+            'UNICODE': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
+            'PLANGUAGE': [u'Key01=<b>Påקågéקé</b> %s ôקôf %s']
             }
         },
     'INI':{
