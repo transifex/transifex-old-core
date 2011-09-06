@@ -221,7 +221,7 @@ class Project(models.Model):
         return User.objects.filter(
             Q(team_members__project=self) | Q(team_coordinators__project=self) |\
             Q(projects_owning=self) | Q(projects_maintaining=self)
-        ).count()
+        ).distinct().count()
 
     @property
     def source_language_id(self):
