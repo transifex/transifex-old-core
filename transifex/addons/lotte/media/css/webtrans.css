@@ -86,10 +86,11 @@ table.trans_web_edit td {
   padding: 0;
 }
 
-.edit-panel{display: block;height:23px;width:21px;background: transparent url(../images/edit-panel.png) no-repeat;}
+.edit-panel{display: block;height:23px;width:21px;background: transparent url(../images/edit-panel.png) no-repeat;opacity:0.85;}
+.edit-panel:hover:not(.inactive){cursor: pointer;opacity: 1;}
 .edit-panel.inactive{opacity: 0.3;}
-.edit-panel.undo {background: transparent url(../images/edit-panel.png) -21px center no-repeat;} 
-.edit-panel.spellcheck {background: transparent url(../images/edit-panel.png) -42px center no-repeat;} 
+.edit-panel.undo {background: transparent url(../images/edit-panel.png) -42px center no-repeat;} 
+.edit-panel.spellcheck {background: transparent url(../images/edit-panel.png) -21px center no-repeat;} 
 
 table.trans_web_edit th {
   text-align: left !important;
