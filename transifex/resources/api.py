@@ -601,7 +601,10 @@ class TranslationHandler(BaseHandler):
             pseudo_type = None
 
         translation = Translation.get_object("get", request, r, language)
-        res = translation.get(pseudo_type=pseudo_type)
+        try:
+            res = translation.get(pseudo_type=pseudo_type)
+        except BadRequestError, e:
+            return BAD_REQUEST(unicode(e))
         return translation.__class__.to_http_for_get(
             translation, res
         )
@@ -853,7 +856,7 @@ class FileTranslation(Translation):
             )
         except Exception, e:
             logger.error(e.message, exc_info=True)
-            return BadRequestError("Error compiling the translation file: %s" %e )
+            raise BadRequestError("Error compiling the translation file: %s" %e )
         return template
 
     def create(self):
