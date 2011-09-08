@@ -463,7 +463,7 @@ class StatsHandler(BaseHandler):
                 'untranslated_entities': stat.untranslated,
                 'untranslated_words': stat.untranslated_wordcount,
                 'last_update': stat.last_update,
-                'last_commiter': stat.last_committer.username,
+                'last_commiter': stat.last_committer.username if stat.last_committer else '',
             }
         # statistics requested for all languages
         res = {}
@@ -475,7 +475,7 @@ class StatsHandler(BaseHandler):
                     'untranslated_entities': stat.untranslated,
                     'untranslated_words': stat.untranslated_wordcount,
                     'last_update': stat.last_update,
-                    'last_commiter': stat.last_committer.username,
+                    'last_commiter': stat.last_committer.username if stat.last_committer else '',
             }
         return res
 
