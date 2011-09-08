@@ -187,7 +187,7 @@ class Handler(object):
                 string = string.decode(self.default_encoding)
                 nonunicode = True
 
-            string = self.pseudo_type.compile(self.default_encoding)
+            string = self.pseudo_type.compile(string)
 
             if nonunicode:
                 string = string.encode(self.default_encoding)
