@@ -183,14 +183,14 @@ class Handler(object):
         """
         if hasattr(self,'pseudo_type') and self.pseudo_type:
             nonunicode = False
-            if type(string) == str:
-                string = unicode(string)
+            if isinstance(string, str):
+                string = string.decode(self.default_encoding)
                 nonunicode = True
 
-            string = self.pseudo_type.compile(string)
+            string = self.pseudo_type.compile(self.default_encoding)
 
             if nonunicode:
-                string = string.encode('utf-8')
+                string = string.encode('UTF-8')
         return string
 
     def _replace_translation(self, original, replacement, text):
