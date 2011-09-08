@@ -190,7 +190,7 @@ class Handler(object):
             string = self.pseudo_type.compile(self.default_encoding)
 
             if nonunicode:
-                string = string.encode('UTF-8')
+                string = string.encode(self.default_encoding)
         return string
 
     def _replace_translation(self, original, replacement, text):
