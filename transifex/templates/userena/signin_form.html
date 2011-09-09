@@ -29,4 +29,11 @@
   <p class="forgot-password"><a href="{% url userena_signup %}" title="{% trans "Sigh up now!" %}">{% trans "You don't have an account?" %}</a></p>
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
+
+<h3>Or sign in with</h3>
+<ul>
+  <li><a href="{% url socialauth_begin 'twitter' %}">Twitter</a></li>
+  <li><a href="{% url socialauth_begin 'google' %}">Google</a></li>
+  <li><a href="{% url socialauth_begin 'facebook' %}">Facebook</a></li>
+</ul>
 {% endblock %}

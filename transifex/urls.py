@@ -46,6 +46,11 @@ else:
         url(r'^accounts/', include('userena.urls')),
     )
 
+if settings.USE_SOCIAL_LOGIN:
+    urlpatterns += patterns('',
+        url(r'^accounts/', include('social_auth.urls')),
+    )
+
 if settings.ENABLE_NOTICES:
     urlpatterns += patterns('',
         (r'^notices/', include('notification.urls')),
