@@ -28,7 +28,7 @@ class PseudoTypeMixin:
     # Should not be overridden
     def compile(self, string):
         """Run the correct method depending on the i18n_type."""
-        return getattr(self, self.method_name)(string).replace('\\\\', '\\')
+        return getattr(self, self.method_name)(string)#.replace('\\\\', '\\')
 
     def _skip_char_around(self, string, char='\n'):
         """
