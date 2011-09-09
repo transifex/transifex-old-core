@@ -350,7 +350,7 @@ class ResourceHandler(BaseHandler):
         """Get the source language to use for the resource
 
         If the source language specified does not match the one
-        used in the project, return a BadRequestError. We test this
+        used in the project, raise a BadRequestError. We test this
         condition first, because it should be the first error the user
         should see.
 
@@ -363,7 +363,7 @@ class ResourceHandler(BaseHandler):
         Returns:
             The source language to use.
         Raises:
-            BadRequestError: There was a problem with the langauge
+            BadRequestError: There was a problem with the language
                 the user chose.
         """
         if slang is not None:
