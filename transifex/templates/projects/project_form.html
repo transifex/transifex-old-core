@@ -40,8 +40,96 @@
     </p>
 </div> 
 
-    
-    
+{% endblock %}
+
+{% block extra_head %}
+<script type="text/javascript">
+    $(document).ready(function (){
+        var $p = $('input#id_project-tags').parent('p');
+        var $tag_cloud_box = $('div.tag-cloud-box');
+        var $tag_cloud_box_ = $tag_cloud_box.clone();
+        $tag_cloud_box.remove();
+        $tag_cloud_box_.insertAfter($p);
+        $tag_cloud_box_.show();
+        $tag_cloud_box_.find('a').show();
+        var existing_tags = $('input#id_project-tags').val().split(',');
+        var $div = $('div.selected_tags');
+        for (i in existing_tags) {
+            if ($.trim(existing_tags[i]))
+                $div.append('<span><span id="delete_tag_'+existing_tags[i]+'" class="iconic delete_tag">X</span><span style="padding-right: 5px;">' + existing_tags[i] + '</span></span> ');
+        }
+
+        function getExistingTags() {
+            var existing_tags = $('input#id_project-tags').val().split(',');
+            for(i in existing_tags)
+                existing_tags[i] = $.trim(existing_tags[i]);
+            return existing_tags;
+        }
+
+        function deleteTag() {
+            var tag = $.trim($(this).attr("id").split('_')[2]);
+            var existing_tags = $('input#id_project-tags').val().split(',');
+            for(i in existing_tags)
+                existing_tags[i] = $.trim(existing_tags[i]);
+            var new_tags = new Array();
+            var count = 0;
+            for (i in existing_tags) {
+                if (existing_tags[i] != tag && $.trim(existing_tags[i])){
+                    new_tags[count] = existing_tags[i];
+                    count++;
+                }
+            }
+            $('input#id_project-tags').val(new_tags.join(', '));
+            if ($('input#id_project-tags').val())
+                $('input#id_project-tags').val($('input#id_project-tags').val() + ', ');
+            $(this).parent('span').remove();
+        }
+
+        $('span.iconic.delete_tag').bind('click', deleteTag);
+        $('a.tag_cloud').bind('click', function(e) {
+            e.preventDefault();
+            var existing_tags = getExistingTags();
+            new_tag = $.trim($(this).text());
+            if ($.inArray(new_tag, existing_tags) == -1 && new_tag) {
+                $('input#id_project-tags').val($('input#id_project-tags').val() + new_tag + ', ');
+                $('div.selected_tags').append('<span><span id="delete_tag_'+ new_tag +'" class="iconic delete_tag">X</span><span style="padding-right:5px;">' + new_tag + '</span></span> ');
+            }
+            $('span.iconic.delete_tag').bind('click', deleteTag);
+        });
+        $('a.toggle_tag_cloud').bind('click', function(e) {
+            e.preventDefault();
+            if ($('div.tag_cloud').is(':hidden'))
+                $('div.tag_cloud').show('slide');
+            else
+                $('div.tag_cloud').hide('slide');
+        });
+
+        function refreshTags() {
+            var existing_tags = getExistingTags();
+            $('div.selected_tags').children().remove();
+            tags_seen = new Array();
+            var count = 0;
+            var $div = $('div.selected_tags');
+            for (i in existing_tags){
+                if ($.inArray(existing_tags[i], tags_seen) == -1 && existing_tags[i]){
+                    tags_seen[count] = existing_tags[i];
+                    count++;
+                    $div.append('<span><span id="delete_tag_'+ existing_tags[i] +'" class="iconic delete_tag">X</span><span style="padding-right:5px;">' + existing_tags[i] + '</span></span> ');
+                }
+            }
+            $('span.delete_tag').bind('click', deleteTag);
+
+            var new_val = '';
+            for (i in tags_seen) {
+                new_val += tags_seen[i] + ', ';
+            }
+            $('input#id_project-tags').val(new_val);
+        }
+        $('input#id_project-tags').change( function(){
+            setTimeout(refreshTags, 500);
+        });
+    });
+</script>
 {% endblock %}
 
 {% block content_main %}
@@ -55,6 +143,22 @@
     {% trans "Edit the details of your project" %}
 {% endif %}
 </h3>
+
+<div class="tag-cloud-box" style="display:None; width:230px;">
+<div class="selected_tags" style="width:225px; float:left;"></div>
+{% load tag_cloud %}
+{% tag_cloud as tags %}
+{% if tags %}
+<a class="toggle_tag_cloud" href="#">Choose from the most used tags</a>
+{% endif %}
+<div class="tag_cloud" style="width:225px; display:None;">
+{% for tag in tags %}
+<a class="tag_cloud" style="font-size:{{ tag.size }}em; display:none; text-decoration:underline; padding-right:3px;" href="#">
+{{tag.name}}
+</a>
+{% endfor %}
+</div>
+</div>
 
 <div class="project_create generic_form">
   <form action='' method='post'>{% csrf_token %}
