@@ -68,6 +68,7 @@ setup(
         "contact_form >= 0.3", # hg 97559a887345 or newer
         "django-addons",
         "django-authority",
+        "django-social-auth",
         "django-filter >= 0.1",
         "django-notification >= 0.1.2",
         "django-pagination >= 1.0.5",
