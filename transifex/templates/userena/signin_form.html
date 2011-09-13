@@ -30,10 +30,13 @@
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
-<h3>Or sign in with</h3>
+{% url socialauth_begin 'twitter' as social_twitter_url %}
+{% if social_twitter_url %}
+<h3>{% trans "Or sign in with" %}</h3>
 <ul>
-  <li><a href="{% url socialauth_begin 'twitter' %}">Twitter</a></li>
-  <li><a href="{% url socialauth_begin 'google' %}">Google</a></li>
+  <li><a href="{{ social_twitter_url }}">Twitter</a></li>
+  <li><a href="{% url socialauth_begin 'google-oauth2' %}">Google</a></li>
   <li><a href="{% url socialauth_begin 'facebook' %}">Facebook</a></li>
 </ul>
+{% endif %}
 {% endblock %}
