@@ -1,6 +1,7 @@
 from pofile import *
 from qt import *
 from javaproperties import *
+from dtd import *
 from joomla_ini import *
 from desktop import *
 from strings import *
