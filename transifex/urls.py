@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib import admin
 import authority
 
+from txcommon.forms import EditProfileForm
+
 # Overriding 500 error handler
 handler500 = 'views.server_error'
 
@@ -41,9 +43,12 @@ if settings.ENABLE_SIMPLEAUTH:
     urlpatterns += patterns('',
         url(r'^accounts/', include('simpleauth.urls')),)
 else:
-    pass
     urlpatterns += patterns('',
+        # Custom EditProfileForm
+        url(r'^accounts/(?P<username>[\.\w]+)/edit/$', 'userena.views.profile_edit', 
+            {'edit_profile_form': EditProfileForm}, 'userena_profile_edit'),
         url(r'^accounts/', include('userena.urls')),
+        
     )
 
 if settings.USE_SOCIAL_LOGIN:
