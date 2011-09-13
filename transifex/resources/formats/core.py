@@ -261,26 +261,29 @@ class Handler(object):
         if not language:
             language = self.language
 
-        # pre compile init
-        self._pre_compile(language=language)
+        try:
+            # pre compile init
+            self._pre_compile(language=language)
 
-        self.content = Template.objects.get(resource=self.resource).content
-        self._examine_content(self.content)
+            self.content = Template.objects.get(resource=self.resource).content
+            self._examine_content(self.content)
 
-        stringset = self._get_strings(self.resource)
+            stringset = self._get_strings(self.resource)
 
-        for string in stringset:
-            trans = self._get_translation(string, language, 5)
-            self.content = self._replace_translation(
-                "%s_tr" % string.string_hash.encode('utf-8'),
-                trans and trans.string.encode('utf-8') or "",
-                self.content
-            )
+            for string in stringset:
+                trans = self._get_translation(string, language, 5)
+                self.content = self._replace_translation(
+                    "%s_tr" % string.string_hash.encode('utf-8'),
+                    trans and trans.string.encode('utf-8') or "",
+                    self.content
+                )
 
-        self.compiled_template = self.content
-        del self.content
-        self._post_compile(language)
-
+            self.compiled_template = self.content
+            del self.content
+            self._post_compile(language)
+        except Exception, e:
+            logger.error("Error compiling file: %s" % e, exc_info=True)
+            raise
 
     def _pre_save2db(self, *args, **kwargs):
         """
