@@ -147,6 +147,7 @@ class JavaPropertiesHandler(Handler):
                     line = line[:-1] + self._prepare_line(nextline)
                 key, value = self._split(line)
 
+                value = eval("u'" + value + "'", {"__builtins__":None}, {})
                 if is_source:
                     if not value:
                         buf += line + self._linesep
