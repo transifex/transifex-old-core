@@ -16,6 +16,7 @@
   <link media="screen" href="{{ STATIC_URL }}css/jquery.tipsy.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}css/jquery.fancybox-1.3.4.css" type="text/css" rel="stylesheet" />
   {% endblock %}
+  {% hook "base.html" headcss %}
   {% block basejs %}
   <script type="text/javascript">
     var STATIC_URL = "{{ STATIC_URL }}";
@@ -33,6 +34,8 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/ajaxcsrf.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.fancybox-1.3.4.pack.js"></script>
   {% endblock %}
+  {% hook "base.html" headjs %}
+  
   {% block shortcut_icon %}
   <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/x-icon" />
   {% endblock %}
