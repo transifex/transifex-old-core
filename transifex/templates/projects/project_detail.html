@@ -26,7 +26,7 @@
   <div class="details separate">
 
   <div class="clearfix">
-  <h3 class="separate-header">{% blocktrans %}Details{% endblocktrans %}</h3>
+  <h3 class="separate-header notopmargin">{% blocktrans %}Details{% endblocktrans %}</h3>
   {% if request.user.is_authenticated %}
     {% url notification.views.notices as notices_url %}
     {% if notices_url %}
@@ -45,33 +45,14 @@
     {% endif %}
     {% if project.bug_tracker %}
       <dt class="bug i16">{% trans "Bug tracker:" %}</dt>
-      <dd><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></dd>
+      <dd class="hideover"><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></dd>
     {% endif %}
     {% if project.tags %}
-      <dt class="i16 tag">{% trans "Tags:" %}</dt>
-      <dd class="compact">
+      	<dt class="i16 tag">{% trans "Tags:" %}</dt>
+      	<dd class="compact hideover">
         {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
-      </dd>
+	      </dd>
     {% endif %}
-    {% with project.maintainers.all as maintainers %}
-    {% if maintainers %}
-      <dt class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</dt>
-      <dd>
-        {% for m in maintainers|slice:"0:6" %}
-          <img class="border" src="{% avatar 16 m %}" style="vertical-align:middle"/>
-          {% if m.first_name and m.last_name %}
-            {{ m.first_name }} {{ m.last_name }}
-            (<a href="{% url profile_public m.username %}">{{m.username}}</a>)
-          {% else %}
-            <a href="{% url profile_public m.username %}">
-            {{m.username}}
-            </a>
-          {% endif %}
-            {% if not forloop.last %},{% endif %}
-        {% endfor %}
-      </dd>
-    {% endif %}
-    {% endwith %}
 
     {% with project.trans_instructions as instructions_url %}
     {% if instructions_url %}
@@ -82,15 +63,39 @@
 
     {% hook "additional_project_details.html" %}
 
+    {% with project.maintainers.all as maintainers %}
+    {% if maintainers %}
+	      <dt class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</dt>
+	      <dd>
+	        {% for m in maintainers|slice:"0:6" %}
+	          <img class="border" src="{% avatar 16 m %}" style="vertical-align:middle"/>
+	          {% if m.first_name and m.last_name %}
+	            {{ m.first_name }} {{ m.last_name }}
+	            (<a href="{% url profile_public m.username %}">{{m.username}}</a>)
+	          {% else %}
+	            <a href="{% url profile_public m.username %}">
+	            {{m.username}}
+	            </a>
+	          {% endif %}
+	            {% if not forloop.last %},{% endif %}
+	        {% endfor %}
+	      </dd>
+    {% endif %}
+    {% endwith %}
+
+
 {% comment %}
       <dt class="i16 link">{% trans "External links:" %}</dt>
       <dd><ul>
         <li>{% trans "Screenshots" %}</li>
         </ul>
       </dd>
-</dl>
+
 
 {% endcomment %}
+
+</dl>
+
   {% with project.long_description_html as long_desc %}
   {% if long_desc %}
   <div class="long_description">
