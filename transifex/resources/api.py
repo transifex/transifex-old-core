@@ -350,7 +350,7 @@ class ResourceHandler(BaseHandler):
         """Get the source language to use for the resource
 
         If the source language specified does not match the one
-        used in the project, return a BadRequestError. We test this
+        used in the project, raise a BadRequestError. We test this
         condition first, because it should be the first error the user
         should see.
 
@@ -363,7 +363,7 @@ class ResourceHandler(BaseHandler):
         Returns:
             The source language to use.
         Raises:
-            BadRequestError: There was a problem with the langauge
+            BadRequestError: There was a problem with the language
                 the user chose.
         """
         if slang is not None:
@@ -463,7 +463,7 @@ class StatsHandler(BaseHandler):
                 'untranslated_entities': stat.untranslated,
                 'untranslated_words': stat.untranslated_wordcount,
                 'last_update': stat.last_update,
-                'last_commiter': stat.last_committer.username,
+                'last_commiter': stat.last_committer.username if stat.last_committer else '',
             }
         # statistics requested for all languages
         res = {}
@@ -475,7 +475,7 @@ class StatsHandler(BaseHandler):
                     'untranslated_entities': stat.untranslated,
                     'untranslated_words': stat.untranslated_wordcount,
                     'last_update': stat.last_update,
-                    'last_commiter': stat.last_committer.username,
+                    'last_commiter': stat.last_committer.username if stat.last_committer else '',
             }
         return res
 
@@ -601,7 +601,10 @@ class TranslationHandler(BaseHandler):
             pseudo_type = None
 
         translation = Translation.get_object("get", request, r, language)
-        res = translation.get(pseudo_type=pseudo_type)
+        try:
+            res = translation.get(pseudo_type=pseudo_type)
+        except BadRequestError, e:
+            return BAD_REQUEST(unicode(e))
         return translation.__class__.to_http_for_get(
             translation, res
         )
@@ -853,7 +856,7 @@ class FileTranslation(Translation):
             )
         except Exception, e:
             logger.error(e.message, exc_info=True)
-            return BadRequestError("Error compiling the translation file: %s" %e )
+            raise BadRequestError("Error compiling the translation file: %s" %e )
         return template
 
     def create(self):

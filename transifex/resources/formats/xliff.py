@@ -15,7 +15,7 @@ from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import StringSet, ParseError, \
-    GenericTranslation, Handler, STRICT
+    CompileError, GenericTranslation, Handler, STRICT
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 
@@ -27,6 +27,9 @@ Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
 class XliffParseError(ParseError):
+    pass
+
+class XliffCompileError(CompileError):
     pass
 
 class XliffHandler(Handler):
@@ -50,11 +53,14 @@ class XliffHandler(Handler):
 
     def _examine_content(self, content):
         """Modify template content to handle plural data in target language"""
+        if isinstance(content, unicode):
+            content = content.encode('utf-8')
         doc = xml.dom.minidom.parseString(content)
         root = doc.documentElement
         rules = self.language.get_pluralrules_numbers()
-        if self.language != self.resource.source_language:
-            for entity in SourceEntity.objects.filter(resource = self.resource, pluralized=True):
+        plurals = SourceEntity.objects.filter(resource = self.resource, pluralized=True)
+        if self.language != self.resource.source_language and plurals:
+            for entity in plurals:
                 match = False
                 for group_node in root.getElementsByTagName("group"):
                     if group_node.attributes['restype'].value == "x-gettext-plurals":
@@ -119,45 +125,52 @@ class XliffHandler(Handler):
 
     @need_resource
     def compile(self, language=None):
-        if not language:
-            language = self.language
+        try:
+            if not language:
+                language = self.language
 
-        self._pre_compile(language=language)
-        self.content = Template.objects.get(resource=self.resource).content.decode('utf-8')
-        self._examine_content(self.content)
-        stringset = self._get_strings(self.resource)
-        translations = self._get_translation_strings(
-            (s.pk for s in stringset), language
-        )
+            self._pre_compile(language=language)
+            self.content = Template.objects.get(resource=self.resource).content.decode('utf-8')
+            self._examine_content(self.content)
+            stringset = self._get_strings(self.resource)
+            translations = self._get_translation_strings(
+                (s.pk for s in stringset), language
+            )
 
-        for string in stringset:
-            trans = translations.get(string.pk, u"")
-            if SourceEntity.objects.get(id__exact=string.pk).pluralized:
-                if type(trans) == type([]):
-                    plural_trans = trans
+            for string in stringset:
+                trans = translations.get(string.pk, u"")
+                if SourceEntity.objects.get(id__exact=string.pk).pluralized:
+                    if type(trans) == type([]):
+                        plural_trans = trans
+                    else:
+                        plural_trans = []
+                        for i in self.language.get_pluralrules_numbers():
+                            plural_trans.append((u"", i))
+                    for i in plural_trans:
+                        rule = str(i[1])
+                        trans = i[0]
+                        if SourceEntity.objects.get(id__exact=string.pk).pluralized:
+                            self.content = self._replace_translation(
+                                "%s_pl_%s"%(string.string_hash.encode('utf-8'), rule),
+                                trans or "",
+                                self.content)
                 else:
-                    plural_trans = []
-                    for i in self.language.get_pluralrules_numbers():
-                        plural_trans.append((u"", i))
-                for i in plural_trans:
-                    rule = str(i[1])
-                    trans = i[0]
-                    if SourceEntity.objects.get(id__exact=string.pk).pluralized:
-                        self.content = self._replace_translation(
-                            "%s_pl_%s"%(string.string_hash.encode('utf-8'), rule),
-                            trans or "",
-                            self.content)
-            else:
-                if trans:
-                    trans = trans[0]
-                self.content = self._replace_translation(
-                    "%s_tr" % string.string_hash.encode('utf-8'),
-                    trans or "",
-                    self.content
-                )
+                    if trans:
+                        trans = trans[0]
+                    self.content = self._replace_translation(
+                        "%s_tr" % string.string_hash.encode('utf-8'),
+                        trans or "",
+                        self.content
+                    )
 
-        self.compiled_template = self.content
-        del self.content
+            self.compiled_template = self.content
+            del self.content
+        except Exception, e:
+            if e.message:
+                raise XliffCompileError(e.message)
+            else:
+                raise XliffCompileError(e)
+
         self._post_compile(language)
 
     def _getText(self, nodelist):

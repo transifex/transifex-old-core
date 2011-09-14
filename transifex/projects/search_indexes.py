@@ -27,6 +27,31 @@ class ProjectIndex(RealTimeSearchIndex):
         return Project.objects.exclude(private=True).filter(
             modified__lte=datetime.datetime.now())
 
+    def should_update(self, instance, **kwargs):
+        """
+        Determine if an object should be updated in the index.
+        """
+        if instance.private:
+            return False
+        return True
+
+    # TODO: Newer version of django-haystack has support for .using() and this
+    # method needs to be refactored once using that.
+    def update_object(self, instance, **kwargs):
+        """
+        Update the index for a single object. Attached to the class's
+        post-save hook.
+        """
+        # Check to make sure we want to index this first.
+        if self.should_update(instance, **kwargs):
+            self.backend.update(self, [instance])
+        else:
+            # self.should_update checks whether a project is private or not.
+            # If it was open and now it's private, it should be removed from the
+            # indexing. Private projects should NOT be indexed for now.
+            self.remove_object(instance, **kwargs)
+
+
     def get_updated_field(self):
         """Project mode field used to identify new/modified object to index."""
         return 'modified'

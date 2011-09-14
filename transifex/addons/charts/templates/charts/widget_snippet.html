@@ -39,7 +39,7 @@
             code = "<a target=\"_blank\" style=\"text-decoration:none; color:black; font-size:66%\" href=\"" + base_url + "\" \n";
             code += "title=\""+tip+"\">Top translations: " +project_slug+ " » "+resource_slug+"</a><br/>\n";
             code += "<img border=\"0\" src=\""+img_url+"\"/><br/>\n";
-            code +=  "<a target=\"_blank\" href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\"><img border=\"0\" src=\"{{ SITE_URL_PREFIX }}{{ STATIC_URL }}charts/images/tx-logo-micro.png\"/></a>";
+            code +=  "<a target=\"_blank\" href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\"><img border=\"0\" src=\"{{ STATIC_URL }}charts/images/tx-logo-micro.png\"/></a>";
             return code;
         }
 

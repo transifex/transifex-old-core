@@ -3,8 +3,13 @@
 {{ body }}
 
 ===
-User:  {{ user }}
-Email: {{ user.email }}
+{% if user.is_authenticated %}
+User:  {{ user }}, {{ name }}
+Email: {{ user.email }}, {{ email }}
+{% else %}
+User:  {{ name }}
+Email: {{ email }}
+{% endif %}
 
 Address:  {{ request.META.REMOTE_ADDR }}
 Host:     {{ request.META.REMOTE_HOST }}

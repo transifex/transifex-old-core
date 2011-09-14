@@ -116,6 +116,7 @@
                 </span>
                 <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
               {% endif %}
+
             {% else %}
               <span class="i16 clone">
                 <a class="language_chooser_trigger disabled">{% trans "Clone to new language" %}</a>
@@ -149,6 +150,33 @@
             </span>
           </li>
           {% endifequal %}
+          {% if resource.source_language == target_language %}
+          <li>
+            <span id="resource_pseudo_translation_actions" class="i16 get_file clickable">{% trans "Get pseudo translations" %}</span>
+          </li>
+            <script>
+                $("#resource_pseudo_translation_actions").click(function(){
+                /* FancyBox Using custom settings */
+                $.fancybox(
+                    {
+                        'href': '{% url pseudo_translation_actions resource.project.slug resource.slug %}',
+                        'hideOnContentClick': false,
+                        'onStart':function(){
+                            // IE8 fix
+                            if(jQuery.browser.msie) {
+                            $('#fancybox-wrap').css('max-width','716px');
+                            $('#fancybox-inner').css('max-width','716px');
+                            $('#fancybox-outer').css('left','50%');
+                            }
+                        },
+                        'titleShow': true,
+                        'titlePosition': 'float',
+                        'title': '{% trans "Pseudo Translation File Actions"|escapejs %}'
+                });
+                });
+            </script>
+          {% endif %}
+          
           {% ifnotequal resource.source_language target_language %}
           <li>
             {% if request.user.is_authenticated %}
