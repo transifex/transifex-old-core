@@ -23,6 +23,7 @@ from transifex.txcommon.db.models import CompressedTextField, \
     ChainerManager, ListCharField
 from transifex.txcommon.log import logger
 from transifex.resources.utils import invalidate_template_cache
+from transifex.resources.signals import post_update_rlstats
 
 
 def _aggregate_rlstats(rlstats_query, grouping_key, total=None):
@@ -323,7 +324,7 @@ class SourceEntity(models.Model):
         help_text=_("The comment of the developer."))
 
     # Used for comments added from Lotte
-    developer_comment_extra = models.TextField(_('Extra comments'), 
+    developer_comment_extra = models.TextField(_('Extra comments'),
         max_length=1000, blank=True, editable=False,
         help_text=_("Another comment of the developer"))
 
@@ -831,6 +832,7 @@ class RLStats(models.Model):
             self._update_now(user)
         if save:
             self.save(update=False)
+        post_update_rlstats.send_robust(sender=self)
 
     def _update_now(self, user=None):
         """
