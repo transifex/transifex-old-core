@@ -17,9 +17,11 @@ FORMATS = {
             'XXX': [u'msgstr "xxxLocationsxxx"'],
             'BRACKETS': [u'msgstr "[Locations]"'],
             'UNICODE': [u'"Ŭşḗř %(name)s <b>ḓǿḗş ƞǿŧ</b> ħȧṽḗ ȧ',
-                u'%i ḿǿŧǿřƈẏƈŀḗş ȧŧ:\n'],
+                u'%i ḿǿŧǿřƈẏƈŀḗş ȧŧ:\\n'],
             'PLANGUAGE': [u'"ÜקÜséקér %(name)s <b>dôéקôés nôקôt</b>', 
-                u'%i môקôtôקôrcýקýcléקés åקåt:\n']
+                u'%i môקôtôקôrcýקýcléקés åקåt:\\n'],
+            'MIXED': [u'[Ŀôקôƈåקåŧïôקïôƞş]',
+                u'%i ḿôקôŧôקôřƈýקýƈŀéקéş åקåŧ:\\n']
             }
 
         },
@@ -30,7 +32,9 @@ FORMATS = {
             'XXX': [u'<translation>xxxSTARTxxx</translation>'],
             'BRACKETS': [u'<translation>[START]</translation>'],
             'UNICODE': [u'<numerusform>&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt;</numerusform>'],
-            'PLANGUAGE': [u'<numerusform>&lt;b&gt;%n fïקïléקé']
+            'PLANGUAGE': [u'<numerusform>&lt;b&gt;%n fïקïléקé'],
+            'MIXED': [u'<translation>[ŞŦÅקÅŘŦ]</translation>',
+                u'ŧħïקïş şýקýşŧéקéḿ&lt;/b&gt;]']
             }
         },
     'PROPERTIES':{
@@ -40,19 +44,22 @@ FORMATS = {
             'XXX': [u'Key00=xxxValue00xxx'],
             'BRACKETS': [u'Key00=[Value00]'],
             'UNICODE': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
-            'PLANGUAGE': [u'Key01=<b>Påקågéקé</b> %s ôקôf %s']
+            'PLANGUAGE': [u'Key01=<b>Påקågéקé</b> %s ôקôf %s'],
+            'MIXED': [u'Key00=[Ṽåקåŀüéקüé00]']
             }
         },
     'INI':{
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/joomla_ini/pseudo.ini'),
         'pseudo_messages':{
-            'XXX': u'KEY1="xxxTranslationxxx"',
-            'BRACKETS': u'KEY1="[Translation]"',
-            'UNICODE': u'KEY2="<b>Ƥȧɠḗ</b> %s ǿƒ %s"',
-            'PLANGUAGE': u'KEY2="<b>Påקågéקé</b> %s ôקôf %s"'
+            'XXX': [u'KEY1="xxxTranslationxxx"'],
+            'BRACKETS': [u'KEY1="[Translation]"'],
+            'UNICODE': [u'KEY2="<b>Ƥȧɠḗ</b> %s ǿƒ %s"'],
+            'PLANGUAGE': [u'KEY2="<b>Påקågéקé</b> %s ôקôf %s"'],
+            'MIXED': [u'KEY2="[<b>Ƥåקåɠéקé</b> %s ôקôƒ %s]"']
             }
         },
+
     # FIXME: Waiting for fixes in the format.
     #'DESKTOP':{
         #'file': os.path.join(settings.TX_ROOT, 
@@ -76,6 +83,8 @@ class PseudoTestCase(base.BaseTestCase):
     def test_pseudo_file(self):
         """Test Pseudo translation generation based on FORMATS var dict."""
         for i18n_type, v in FORMATS.items():
+            
+            #if i18n_type != "INI": continue
 
             # Set i18n_type for resource
             self.resource.i18n_type = i18n_type
@@ -91,6 +100,8 @@ class PseudoTestCase(base.BaseTestCase):
             # For each pseudo type that exists, try to generate files in the
             # supported i18n formats supported.
             for pseudo_type in settings.PSEUDO_TYPES.keys():
+                
+                #if pseudo_type != "MIXED": continue
 
                 # Get Pseudo type class
                 pseudo_class = import_to_python(
@@ -113,6 +124,12 @@ class PseudoTestCase(base.BaseTestCase):
 
                 # Assert expected value in the generated file
                 for message in v['pseudo_messages'][pseudo_type]:
+                    print file_content
+                    print "-----------------"
+                    print message
+                    print i18n_type
+                    print pseudo_type
+                    print "-----------------"
                     self.assertTrue(message in file_content)
 
 
