@@ -142,3 +142,24 @@ class PLanguagePseudoType(PseudoTypeMixin):
                 outstr += self._QOF
                 outstr += changed_vowels
         return outstr
+
+
+class MixedPseudoTypes(PLanguagePseudoType, UnicodePseudoType, BracketsPseudoType):
+    """
+    Pseudo type which combines three other pseudo types.
+    
+    Types:
+        PLanguagePseudoType
+        UnicodePseudoType
+        BracketsPseudoType
+        
+    Refer to theirs docstrings for more info.
+    """
+
+    def _base_compile(self, string):
+        # Execute _base_compile from each parent class
+        for c in self.__class__.__bases__:
+            string = c._base_compile(self, string)
+        return string
+
+
