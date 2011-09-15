@@ -152,7 +152,9 @@
           {% endifequal %}
           {% if resource.source_language == target_language %}
           <li>
-            <span id="resource_pseudo_translation_actions" class="i16 get_file clickable">{% trans "Get pseudo translations" %}</span>
+            <span class="i16 get_file ">
+                <a id="resource_pseudo_translation_actions" href="#" >{% trans "Get pseudo translations" %}</a>
+            </span>
           </li>
             <script>
                 $("#resource_pseudo_translation_actions").click(function(){
