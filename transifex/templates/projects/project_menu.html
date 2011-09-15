@@ -3,6 +3,7 @@
 {% load addons %}
 {% load txcommontags %}
 {% load permissions %}
+{% load watches_tags %}
 {% load txpermissions %}
 
 {% block extrajs %}
@@ -94,15 +95,26 @@ $(document).ready(
        </a>
     </li>
     
+     {% hook "project.html" menu %}
+    
     {% if perms.projects.change_project or is_maintainer %}
-    <li class="ui-state-default ui-corner-top {% ifequal request.path url_project_edit %}ui-tabs-selected ui-state-active{% endifequal %}" style="float:right;">
+    <li class="ui-state-default ui-corner-top {% ifequal request.path url_project_edit %}ui-tabs-selected ui-state-active{% endifequal %}">
        <a id="tab-link-3" href="{% url project_edit project_slug=project.slug %}">
          <span>{% trans "Edit Project" %}</span>
        </a>
     </li>
     {% endif %}
-    
-    {% hook "project.html" menu %}
+      
+  
+  	{% if request.user.is_authenticated %}
+    {% url notification.views.notices as notices_url %}
+    {% if notices_url %}
+    <p class="separate-buttons">   
+      <a>{% watch_toggle project %}</a>
+    </p>
+    {% endif %}
+  {% endif %}
+  
   </ul>
 </div>
 {% endblock %}
