@@ -307,7 +307,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
             post_data, resources, source_language, language
         )
     except LotteBadRequestError, e:
-        logger.warning("Error in lotte filters: %s" % e.message, excinfo=True)
+        logger.warning("Error in lotte filters: %s" % e.message, exc_info=True)
         return HttpResponseBadRequest()
 
     translated_strings = Translation.objects.filter(
