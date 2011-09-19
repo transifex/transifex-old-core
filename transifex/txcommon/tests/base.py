@@ -196,14 +196,16 @@ class Translations(object):
             rule=5,
             source_entity=self.source_entity,
             language=self.language_en,
-            user=self.user['registered']
+            user=self.user['registered'],
+            resource=self.resource
         )
         self.translation_ar = self.source_entity.translations.create(
             string=u'This is supposed to be arabic text! αβγ',
             rule=5,
             source_entity=self.source_entity,
             language=self.language_ar,
-            user=self.user['registered']
+            user=self.user['registered'],
+            resource=self.resource
         )
         super(Translations, self).setUp()
 
@@ -223,7 +225,7 @@ class BaseTestCase(Languages, Users, Projects, Resources, SourceEntities,
 
     def __init__(self, *args, **kwargs):
         super(BaseTestCase, self).__init__(*args, **kwargs)
-        
+
         # Useful for writing tests: Enter ipython anywhere w/ ``self.ipython()``
         try:
             from IPython.frontend.terminal.embed import InteractiveShellEmbed as shell

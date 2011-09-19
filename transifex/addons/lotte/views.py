@@ -311,7 +311,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
         return HttpResponseBadRequest()
 
     translated_strings = Translation.objects.filter(
-        source_entity__resource__in=resources,
+        resource__in=resources,
         language=language)
 
     if not isinstance(source_strings, list):
@@ -401,7 +401,7 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
     # FIXME Is this possible?
     if not post_data:
         return Translation.objects.filter(
-            source_entity__resource__in=resources,
+            resource__in=resources,
             language=source_language,
             rule=5
         )
@@ -752,7 +752,8 @@ def _save_translation(source_string, translations, target_language, user):
             if target_string != "":
                 Translation.objects.create(
                     source_entity=source_string.source_entity, user=user,
-                    language=target_language, rule=rule, string=target_string
+                    language=target_language, rule=rule, string=target_string,
+                    resource=resource
                 )
                 _add_copyright(source_string, target_language, user)
                 invalidate_stats_cache(resource, target_language, user=user)

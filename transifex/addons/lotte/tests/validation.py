@@ -261,7 +261,9 @@ class LotteValidationTest(SampleData, TransactionTestCase):
                 rule=1,
                 source_entity=self.source_entity_plural,
                 language=self.language_en,
-                user=self.user['registered'])
+                user=self.user['registered'],
+                resource=self.resource
+            )
             source_translation_1 = self.source_entity_plural.get_translation(self.language_en.code,
                 rule=1)
 
@@ -273,7 +275,9 @@ class LotteValidationTest(SampleData, TransactionTestCase):
                 rule=5,
                 source_entity=self.source_entity_plural,
                 language=self.language_en,
-                user=self.user['registered'])
+                user=self.user['registered'],
+                resource=self.resource
+            )
             source_translation_5 = self.source_entity_plural.get_translation(self.language_en.code,
                 rule=5)
 

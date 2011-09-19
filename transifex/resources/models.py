@@ -441,9 +441,7 @@ class TranslationManager(models.Manager):
         """
         source_language = get_source_language(resources)
         return self.filter(
-            source_entity__resource__in=resources,
-            language=source_language,
-            rule=5
+            resource__in=resources, language=source_language, rule=5
         )
 
     def untranslated_source_strings(self, resources, language):
@@ -463,8 +461,7 @@ class TranslationManager(models.Manager):
             resource__in=resources
         ).values_list('id', flat=True))
         translated_se_ids = frozenset(self.filter(
-            source_entity__resource__in=resources,
-            language=language, rule=5
+            resource__in=resources, language=language, rule=5
         ).values_list('source_entity_id', flat=True))
         untranslated_se_ids = all_se_ids - translated_se_ids
         return self.filter(
@@ -486,8 +483,7 @@ class TranslationManager(models.Manager):
         """
         source_language = get_source_language(resources)
         translated_se_ids = frozenset(self.filter(
-            source_entity__resource__in=resources,
-            language=language, rule=5
+            resource__in=resources, language=language, rule=5
         ).values_list('source_entity_id', flat=True))
         return self.filter(
             source_entity__id__in=translated_se_ids,

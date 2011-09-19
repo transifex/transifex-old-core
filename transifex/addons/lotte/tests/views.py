@@ -33,57 +33,85 @@ class LotteViewsTests(BaseTestCase):
         self.source_string1 = self.source_entity1.translations.create(
             string="String2",
             language = self.language_en,
-            user=self.user['maintainer'], rule=5)
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
 
         self.source_string2 = self.source_entity2.translations.create(
             string="String3",
             language = self.language_en,
-            user=self.user['maintainer'], rule=5)
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
 
         self.source_string3 = self.source_entity3.translations.create(
             string="String4",
             language = self.language_en,
-            user=self.user['maintainer'], rule=5)
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
 
         self.source_string4 = self.source_entity4.translations.create(
             string="String with arguments: %s %d",
             language = self.language_en,
-            user=self.user['maintainer'], rule=5)
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
 
         self.source_string_plural1 = self.source_entity_plural.translations.create(
             string="SourceArabicTrans1",
             language=self.language_en,
-            user=self.user["maintainer"], rule=1)
+            user=self.user["maintainer"], rule=1,
+            resource=self.resource
+        )
         self.source_string_plural2 = self.source_entity_plural.translations.create(
             string="SourceArabicTrans2",
             language=self.language_en,
-            user=self.user["maintainer"], rule=5)
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
         # Translation strings
         self.source_entity1.translations.create(
             string="ArabicString2", language=self.language_ar,
-            user=self.user["maintainer"], rule=5)
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
         self.source_entity2.translations.create(
             string="", language=self.language_ar,
-            user=self.user["maintainer"], rule=5)
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
 
         self.source_entity_plural.translations.create(
             string="ArabicTrans0", language=self.language_ar,
-            user=self.user["maintainer"], rule=0)
+            user=self.user["maintainer"], rule=0,
+            resource=self.resource
+        )
         self.source_entity_plural.translations.create(
             string="ArabicTrans1", language=self.language_ar,
-            user=self.user["maintainer"], rule=1)
+            user=self.user["maintainer"], rule=1,
+            resource=self.resource
+        )
         self.source_entity_plural.translations.create(
             string="ArabicTrans2", language=self.language_ar,
-            user=self.user["maintainer"], rule=2)
+            user=self.user["maintainer"], rule=2,
+            resource=self.resource
+        )
         self.source_entity_plural.translations.create(
             string="ArabicTrans3", language=self.language_ar,
-            user=self.user["maintainer"], rule=3)
+            user=self.user["maintainer"], rule=3,
+            resource=self.resource
+        )
         self.source_entity_plural.translations.create(
             string="ArabicTrans4", language=self.language_ar,
-            user=self.user["maintainer"], rule=4)
+            user=self.user["maintainer"], rule=4,
+            resource=self.resource
+        )
         self.source_entity_plural.translations.create(
             string="ArabicTrans5", language=self.language_ar,
-            user=self.user["maintainer"], rule=5)
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
 
         # URLs
         self.snippet_url = reverse('tab_details_snippet',
@@ -121,7 +149,9 @@ class LotteViewsTests(BaseTestCase):
         """Test the translation details part of the snippet is correct."""
         # Set some custom data
         self.entity.translations.create(string="StringTrans1",
-            language=self.language, user=self.user["team_member"])
+            language=self.language, user=self.user["team_member"],
+            resource=self.resource
+        )
         # Test the response contents
         resp = self.client['team_member'].get(self.snippet_url)
         self.assertContains(resp, '0 minutes', status_code=200)
