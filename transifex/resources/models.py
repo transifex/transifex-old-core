@@ -555,6 +555,10 @@ class Translation(models.Model):
         blank=False, null=False,
         help_text=_("The source string this translation string translates."))
 
+    resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
+        blank=False, null=False, related_name='+',
+        help_text=_("The translation resource which owns the translation."))
+
     language = models.ForeignKey(Language,
         verbose_name=_('Target Language'),blank=False, null=True,
         help_text=_("The language in which this translation string is written."))
