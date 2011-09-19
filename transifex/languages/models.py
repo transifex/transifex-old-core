@@ -2,6 +2,7 @@ from datetime import datetime
 from django.contrib import admin
 from django.db import models
 from django.db.models import permalink, get_model
+from django.core.cache import cache
 from django.http import Http404
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
@@ -15,9 +16,14 @@ class LanguageManager(models.Manager):
         """
         if not code:
             raise Language.DoesNotExist("No language matched the query.")
-        return Language.objects.get(
-            models.Q(code=code) |
-            models.Q(code_aliases__contains=' %s ' % code))
+        lang = cache.get('languages:code_or_alias:%s' % code, None)
+        if lang is None:
+            lang = Language.objects.get(
+                models.Q(code=code) |
+                models.Q(code_aliases__contains=' %s ' % code)
+            )
+            cache.set('languages:code_or_alias:%s' % code, lang)
+        return lang
 
     def by_code_or_alias_or_none(self, code):
         """
