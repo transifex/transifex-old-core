@@ -606,8 +606,8 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     for row in strings:
         source_id = int(row['id'])
         try:
-            source_string = Translation.objects.select_related().get(
-                id=source_id, source_entity__resource__project=project
+            source_string = Translation.objects.select_related(depth=1).get(
+                id=source_id, resource__project=project
             )
         except Translation.DoesNotExist:
             # TODO: Log or inform here
