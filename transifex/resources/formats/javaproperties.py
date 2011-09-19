@@ -147,12 +147,13 @@ class JavaPropertiesHandler(Handler):
                     line = line[:-1] + self._prepare_line(nextline)
                 key, value = self._split(line)
 
-                uni_chars = re.findall(r'(\\u[0-9A-Fa-f]{4})', value)
-                for uni_char in uni_chars:
-                    value = value.replace(
-                        uni_char,
-                        eval("u'" + uni_char + "'", {"__builtins__":None}, {})
-                    )
+                if value is not None:
+                    uni_chars = re.findall(r'(\\u[0-9A-Fa-f]{4})', value)
+                    for uni_char in uni_chars:
+                        value = value.replace(
+                            uni_char,
+                            eval("u'" + uni_char + "'", {"__builtins__":None}, {})
+                        )
                 if is_source:
                     if not value:
                         buf += line + self._linesep
