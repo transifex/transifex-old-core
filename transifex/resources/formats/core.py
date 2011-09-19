@@ -383,6 +383,7 @@ class Handler(object):
                         'string' : j.translation,
                         'user' : user,
                         },
+                    resource = self.resource
                     )
 
                 if created and j.rule==5:

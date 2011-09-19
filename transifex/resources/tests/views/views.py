@@ -23,10 +23,10 @@ class CoreViewsTest(base.BaseTestCase):
             args=[self.project.slug]))
         self.assertEqual(resp.status_code, 200)
         resource = self.project.resources.all()[0]
-        
+
         # Supposed to match a <option>LANG_NAME</option> tag
         self.assertContains(resp, '>%s</option>' % resource.source_language)
-        
+
         language = Language.objects.get(code='pt_BR')
         self.assertNotContains(resp, '>%s</option>' % language)
 
@@ -147,7 +147,9 @@ class CoreViewsTest(base.BaseTestCase):
         source_trans = Translation(
             source_entity=self.source_entity,
             language = self.language,
-            string="foobar")
+            string="foobar",
+            resource=self.resource
+        )
         source_trans.save()
 
         trans_lang = 'el'
@@ -184,9 +186,10 @@ class CoreViewsTest(base.BaseTestCase):
         """
         # Create primary language translation. This is needed to push
         # additional translations
-        source_trans = Translation(source_entity=self.source_entity,
-            language = self.language,
-            string="foobar")
+        source_trans = Translation(
+            source_entity=self.source_entity, language=self.language,
+            string="foobar", resource=self.resource
+        )
         source_trans.save()
 
         trans_lang = 'el'

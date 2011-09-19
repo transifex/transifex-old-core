@@ -244,7 +244,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
 # Restrict access only for private projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
-def resource_pseudo_translation_actions(request, project_slug=None, 
+def resource_pseudo_translation_actions(request, project_slug=None,
     resource_slug=None):
     """
     Ajax view that returns an fancybox template snippet for resource specific
@@ -337,10 +337,10 @@ def clone_language(request, project_slug=None, resource_slug=None,
     # clone them in new translation
     for s in strings:
         Translation.objects.get_or_create(
-                    language = target_lang,
-                    string = s.string,
-                    source_entity = s.source_entity,
-                    rule = s.rule)
+            language=target_lang, string=s.string,
+            source_entity=s.source_entity, rule=s.rule,
+            resource=s.resource
+        )
 
     invalidate_stats_cache(resource, target_lang, user=request.user)
     return HttpResponseRedirect(reverse('translate_resource', args=[project_slug,
