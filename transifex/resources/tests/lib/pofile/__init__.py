@@ -407,3 +407,12 @@ class TestPOFileCopyright(FormatsBaseTestCase):
         line = lines_iterator[n + 6]
         self.assertTrue('ZZ' in line)
 
+
+class TestPolibEmptyComments(unittest.TestCase):
+    """Check that no error is raised for empty comment lines from polib.
+
+    Polib v0.7 raised IOError for po files that had empty comments.
+    """
+
+    def test_empty_comment_file(self):
+        polib.pofile('empty_comment.po')
