@@ -571,6 +571,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
     FIXME: Document in detail the form of the 'strings' POST variable.
     """
 
+    logger.debug("POST data when saving translation: %s" % request.POST)
     # Permissions handling
     # Project should always be available
     project = get_object_or_404(Project, slug=project_slug)
