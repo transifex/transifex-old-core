@@ -3,7 +3,7 @@
 """
 Java properties file handler/compiler
 """
-import os, re
+import os, re, tempfile, chardet
 from django.utils.hashcompat import md5_constructor
 
 from transifex.txcommon.log import logger
@@ -11,10 +11,14 @@ from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
-        STRICT, StringSet, ParseError
+        STRICT, StringSet, ParseError, CompileError
+from transifex.txcommon.commands import run_command, CommandError
 
 
 class JavaParseError(ParseError):
+    pass
+
+class JavaCompileError(CompileError):
     pass
 
 
@@ -106,6 +110,52 @@ class JavaPropertiesHandler(Handler):
     def contents_check(self, filename):
         pass
 
+    def convert_to_utf8(self, filename, ENCODING):
+        if chardet.detect(open(filename, 'r').read())['encoding'] != 'ascii':
+            raise JavaParseError("Cannot import file encoded in "
+                "any format other than %s." % ENCODING)
+        try:
+            f = tempfile.NamedTemporaryFile(delete=False)
+            temp_filename = f.name
+            f.close()
+            command = "native2ascii -encoding UTF-8 -reverse %s %s" %\
+                    (filename, temp_filename)
+            status, stdout, stderr = run_command(command,
+                    with_extended_output=True, with_exceptions=True)
+            return temp_filename
+        except CommandError, e:
+            logger.warning("javaproperties: The 'native2ascii' conversion"
+                "failed. Error: %s" % unicode(e), exc_info=True)
+            raise JavaParseError(unicode(e))
+        except Exception, e:
+            logger.error("Unhandled exception in"
+                "javaproperties.JavaPropertiesHandler.convert_to_utf8(). Error: %s"
+                % unicode(e))
+            raise JavaParseError(unicode(e))
+
+    def convert_to_ascii(self, content):
+        try:
+            command = "native2ascii -encoding UTF-8"
+            status, stdout, stderr = run_command(command, _input=content,
+                    with_extended_output=True, with_exceptions=True)
+            return stdout
+        except CommandError, e:
+            logger.warning("javaproperties: The 'native2ascii' conversion \
+                failed. Error: %s" % unicode(e), exc_info=True)
+            raise JavaCompileError(unicode(e))
+        except Exception, e:
+            logger.error("Unhandled exception in \
+                javaproperties.JavaPropertiesHandler.convert_to_ascii(). Error: %s"
+                % unicode(e))
+            raise JavaCompileError(unicode(e))
+
+    @need_compiled
+    def _post_compile(self, *args, **kwargs):
+        """
+        Here we convert the compiled template to ISO-8859-1 format
+        """
+        self.compiled_template = self.convert_to_ascii(self.compiled_template)
+
     @need_language
     @need_file
     def parse_file(self, is_source=False, lang_rules=None):
@@ -124,12 +174,13 @@ class JavaPropertiesHandler(Handler):
         suggestions = StringSet()
 
         context = ""
-        fh = open(self.filename, "r")
+        filename = self.convert_to_utf8(self.filename, self.ENCODING)
+        fh = open(filename, "r")
         try:
             self.find_linesep(fh)
             buf = u""
             for line in fh:
-                line = line.decode(self.ENCODING)
+                line = line.decode('utf-8')
                 line = self._prepare_line(line)
                 # Skip empty lines and comments
                 if not line or line.startswith(self.COMMENT_CHARS):
@@ -144,16 +195,10 @@ class JavaPropertiesHandler(Handler):
                     # Read next line
                     nextline = self._prepare_line(fh.next())
                     # This line will become part of the value
-                    line = line[:-1] + self._prepare_line(nextline)
+                    line = line[:-1] + \
+                        self._prepare_line(nextline).decode('utf-8')
                 key, value = self._split(line)
 
-                if value is not None:
-                    uni_chars = re.findall(r'(\\u[0-9A-Fa-f]{4})', value)
-                    for uni_char in uni_chars:
-                        value = value.replace(
-                            uni_char,
-                            eval("u'" + uni_char + "'", {"__builtins__":None}, {})
-                        )
                 if is_source:
                     if not value:
                         buf += line + self._linesep
@@ -166,10 +211,10 @@ class JavaPropertiesHandler(Handler):
                             "%(hash)s_tr" % {'hash': hash_tag(key, context)},
                             line[key_len:]
                         ) + self._linesep
-                elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
+                elif not SourceEntity.objects.filter(resource=resource,
+                        string=key).exists() or not value:
                     # ignore keys with no translation
                     continue
-
                 stringset.strings.append(GenericTranslation(key,
                     self._unescape(value), rule=5, context=context,
                     pluralized=False, fuzzy=False,
