@@ -64,6 +64,7 @@
 	width: 50%;
 	float: right;
 	text-align: right;
+	font-size: 1.077em;
 }
 
 .dataTables_filter input{
@@ -78,10 +79,12 @@
 }
 
 .dataTables_info {
-	width: 60%;
+	width: 50%;
 	float: left;
 	color: #666;
+	font-size: 1.077em;
 }
+
 
 .dataTables_paginate {
 	width: 44px;
@@ -311,13 +314,17 @@ tbody td.notes{
  * Misc
  */
 .top, .bottom {
-	padding: 15px;
+	padding:5px;
 /*	background-color: #F5F5F5;
 	border: 1px solid #CCCCCC; */
 }
 
+.top{padding-top: 20px;}
+.bottom{padding-bottom: 40px;}
+
 .top .dataTables_info {
-	float: none;
+	float: left;
+	padding-top: 7px;
 }
 
 .clear {
@@ -376,15 +383,19 @@ td.details {
     box-shadow:1px 1px 3px #CCCCCC;
     -moz-box-shadow:1px 1px 3px #CCCCCC;
     -webkit-box-shadow:1px 1px 3px #CCCCCC;
-    background-color:#EAEBFF;
+    background-color:#f1f1f1;
+    text-shadow: #fff 1px 1px 0px;
 }
 
 .paging_full_numbers span.paginate_button:hover {
-    background-color:#DADBEF;
+    background-color:#ddd;
 }
 
 .paging_full_numbers span.paginate_active {
-	background-color: #99B3FF;
+	background-color: #5a5a5a;
+	color: #fefefe;
+	font-weight: bold;
+	border-color: #444;
 }
 
 table.display tr.even.row_selected td {
@@ -587,7 +598,7 @@ textarea.translated{
   /*background-color: #E6FFEA;
   border-left : 5px solid #E6FFEA;*/
   border: 1px solid #eee;
-  border-left : 2px solid #add605;
+  border-left : 3px solid #add605;
   background-image: url("../images/input_textarea_bg_trans.png");
   background-repeat: repeat-x;
 }
@@ -596,7 +607,7 @@ textarea.fuzzy{
   /*background-color: #FFF5E2;
   border-left: 5px solid #FFF5E2;*/
   border: 1px solid #eee;
-  border-left: 2px solid #6499F3;
+  border-left: 3px solid #6499F3;
   background-image: url("../images/input_textarea_bg_fuzzy.png");
   background-repeat: repeat-x;
 }
@@ -605,7 +616,7 @@ textarea.untranslated{
   /*background-color: #FFEDED;
   border-left: 5px solid #FFEDED;*/
   border: 1px solid #eee;
-  border-left: 2px solid #d64a05;
+  border-left: 3px solid #d64a05;
   background-image: url("../images/input_textarea_bg.png");
   background-repeat: repeat-x;
 }
