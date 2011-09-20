@@ -435,7 +435,14 @@
                 $('.source_string, .source_string_plural').whitespaceHighlight();
 
                 // Auto expanding textareas.
-                $("textarea.translation").TextAreaExpander();
+                $("textarea.translation").each(function(index) {
+                    var $row = $(this).parents('tr');
+                    var $srcDiv = $row.find('.source_string').first();
+                    var srcHeight = $srcDiv.height();
+                    var textareaHeight = $(this).height();
+                    if (textareaHeight < srcHeight)
+                        $(this).TextAreaExpander(srcHeight);
+                });
 	    }
         }).fnSetFilteringDelay(500);
 
