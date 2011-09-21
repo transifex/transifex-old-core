@@ -54,6 +54,10 @@ def release_all_pop(sender, instance, **kwargs):
     """
 
     resource = instance
+    if resource.project is None:
+        # The whole project is being deleted, so postgresql will handle the
+        # removal of relevant objects.
+        return
     try:
         rel = resource.project.releases.get(slug=RELEASE_ALL_DATA['slug'])
     except Release.DoesNotExist:
