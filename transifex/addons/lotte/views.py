@@ -770,7 +770,7 @@ def _save_translation(source_string, translations, target_language, user):
         # catch-all. if we don't save we _MUST_ inform the user
         except Exception, e:
             msg = _(
-                "Error occurred while trying to save translation: %s", e.message
+                "Error occurred while trying to save translation: %s" % unicode(e)
             )
             logger.error(msg, exc_info=True)
             raise LotteBadRequestError(msg)
