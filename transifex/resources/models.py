@@ -539,6 +539,10 @@ class Translation(models.Model):
         blank=False, null=False, default=0, help_text="The number of words "
         "contained in this translation string.")
 
+    origin = models.CharField(_('Origin'), max_length=20, editable=False,
+        null=True, choices=((k,v) for k,v in settings.TRANS_ORIGIN.items()),
+        help_text=_("The origin of the translation."))
+
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(auto_now=True, editable=False)
