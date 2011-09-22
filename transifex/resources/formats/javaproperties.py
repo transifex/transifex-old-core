@@ -3,7 +3,7 @@
 """
 Java properties file handler/compiler
 """
-import os, re, tempfile, chardet
+import os, re
 from django.utils.hashcompat import md5_constructor
 
 from transifex.txcommon.log import logger
@@ -12,11 +12,11 @@ from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
         STRICT, StringSet, ParseError, CompileError
-from transifex.txcommon.commands import run_command, CommandError
 
 
 class JavaParseError(ParseError):
     pass
+
 
 class JavaCompileError(CompileError):
     pass
@@ -110,51 +110,62 @@ class JavaPropertiesHandler(Handler):
     def contents_check(self, filename):
         pass
 
-    def convert_to_utf8(self, filename, ENCODING):
-        if chardet.detect(open(filename, 'r').read())['encoding'] != 'ascii':
-            raise JavaParseError("Cannot import file encoded in "
-                "any format other than %s." % ENCODING)
-        try:
-            f = tempfile.NamedTemporaryFile(delete=False)
-            temp_filename = f.name
-            f.close()
-            command = "native2ascii -encoding UTF-8 -reverse %s %s" %\
-                    (filename, temp_filename)
-            status, stdout, stderr = run_command(command,
-                    with_extended_output=True, with_exceptions=True)
-            return temp_filename
-        except CommandError, e:
-            logger.warning("javaproperties: The 'native2ascii' conversion"
-                "failed. Error: %s" % unicode(e), exc_info=True)
-            raise JavaParseError(unicode(e))
-        except Exception, e:
-            logger.error("Unhandled exception in"
-                "javaproperties.JavaPropertiesHandler.convert_to_utf8(). Error: %s"
-                % unicode(e))
-            raise JavaParseError(unicode(e))
+    def convert_to_unicode(self, s):
+        """Convert the string s to a proper unicode string.
 
-    def convert_to_ascii(self, content):
-        try:
-            command = "native2ascii -encoding UTF-8"
-            status, stdout, stderr = run_command(command, _input=content,
-                    with_extended_output=True, with_exceptions=True)
-            return stdout
-        except CommandError, e:
-            logger.warning("javaproperties: The 'native2ascii' conversion \
-                failed. Error: %s" % unicode(e), exc_info=True)
-            raise JavaCompileError(unicode(e))
-        except Exception, e:
-            logger.error("Unhandled exception in \
-                javaproperties.JavaPropertiesHandler.convert_to_ascii(). Error: %s"
-                % unicode(e))
-            raise JavaCompileError(unicode(e))
+        Java .properties files go through native2ascii first, which
+        converts unicode characters to \uxxxx representations, ie to a series
+        of bytes that represent the original unicode codepoint.
 
-    @need_compiled
-    def _post_compile(self, *args, **kwargs):
+        We convert each \uxxxx representation back to the unicode character
+        by finding the decimal representation of it and then
+        calling ord on the result.
+
+        Args:
+            s: A string of the form '\\uxxxx'.
+        Returns:
+            The unicode character that corresponds to that.
         """
-        Here we convert the compiled template to ISO-8859-1 format
+        assert len(s) == 6
+        char = 0
+        base = 16
+        for rank, c in enumerate(reversed(s[2:])):
+            char += int(c, base) * base ** rank
+        return unichr(char)
+
+    def convert_to_ascii(self, c):
+        """Convert the character c to a \uxxxx representation.
+
+        THe method converts a unicode character c to a series of bytes
+        that represent its codepoint.
+
+        Args:
+            c: The unicode character to convert.
+        Returns:
+            A string that represents its codepoint.
         """
-        self.compiled_template = self.convert_to_ascii(self.compiled_template)
+        assert len(c) == 1
+        s = ''
+        base = 16
+        n = ord(c)
+        for i in xrange(4):
+            (n, mod) = divmod(n, base)
+            s = ''.join([hex(mod)[2], s])
+        return ''.join(['\\u', s])
+
+
+    def _replace_translation(self, original, replacement, text):
+        """Convert unicode characters to sequence of bytes representing the
+        codepoints.
+        """
+        replacement = replacement.decode('UTF-8')
+        for char in replacement:
+            if ord(char) > 127:
+                replacement = replacement.replace(char, self.convert_to_ascii(char))
+        replacement = replacement.encode('UTF-8')
+        return super(JavaPropertiesHandler, self)._replace_translation(
+            original, replacement, text
+        )
 
     @need_language
     @need_file
@@ -174,13 +185,12 @@ class JavaPropertiesHandler(Handler):
         suggestions = StringSet()
 
         context = ""
-        filename = self.convert_to_utf8(self.filename, self.ENCODING)
-        fh = open(filename, "r")
+        fh = open(self.filename, "r")
         try:
             self.find_linesep(fh)
             buf = u""
             for line in fh:
-                line = line.decode('utf-8')
+                line = line.decode(self.ENCODING)
                 line = self._prepare_line(line)
                 # Skip empty lines and comments
                 if not line or line.startswith(self.COMMENT_CHARS):
@@ -195,9 +205,15 @@ class JavaPropertiesHandler(Handler):
                     # Read next line
                     nextline = self._prepare_line(fh.next())
                     # This line will become part of the value
-                    line = line[:-1] + \
-                        self._prepare_line(nextline).decode('utf-8')
+                    line = line[:-1] + self._prepare_line(nextline).decode(self.ENCODING)
                 key, value = self._split(line)
+
+                if value is not None:
+                    uni_chars = re.findall(r'(\\u[0-9A-Fa-f]{4})', value)
+                    for uni_char in uni_chars:
+                        value = value.replace(
+                            uni_char, self.convert_to_unicode(uni_char)
+                        )
 
                 if is_source:
                     if not value:

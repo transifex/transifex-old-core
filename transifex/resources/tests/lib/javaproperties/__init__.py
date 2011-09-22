@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os, chardet
 import unittest
 from transifex.txcommon.tests.base import BaseTestCase
@@ -54,22 +56,6 @@ class TestJavaProperties(BaseTestCase):
         res = j._split(r"Key21\:WithColon : Value21")
         self.assertEqual(res[0], r"Key21\:WithColon")
         self.assertEqual(res[1], "Value21")
-
-    def test_convert_to_utf8(self):
-        handler = JavaPropertiesHandler(
-            os.path.join(os.path.dirname(__file__), 'complex_hi_IN-ascii.properties')
-        )
-        filename = handler.convert_to_utf8(handler.filename, handler.ENCODING)
-        content = open(filename, 'r').read()
-        if content.find('\\u') >= 0:
-            raise JavaParseError("File not properly converted to UTF-8")
-
-        handler.bind_file(
-            os.path.join(os.path.dirname(__file__), 'complex_hi_IN.properties')
-        )
-        self.assertRaises(JavaParseError, handler.convert_to_utf8,
-                handler.filename, handler.ENCODING)
-
 
     def test_properties_parser(self):
         """PROPERTIES file tests."""
@@ -148,16 +134,12 @@ class TestJavaProperties(BaseTestCase):
         else:
             return r
 
-    def test_convert_to_ascii(self):
-        r = self.test_properties_save2db(delete=False)
-        handler = JavaPropertiesHandler()
-        handler.bind_resource(r)
-        handler.set_language(Language.objects.get(code='hi_IN'))
-        handler.compile()
-        compiled_template = handler.convert_to_ascii(handler.compiled_template)
-        if compiled_template.find('\\u') < 0:
-            raise JavaCompileError("Compiled template is not in %s format." %
-                    handler.ENCODING)
-        self.assertEqual(chardet.detect(compiled_template)['encoding'],
-                'ascii')
-        r.delete()
+    def test_convert_unicode(self):
+        """Test the conversion of a series of bytes that represent a unicode
+        character to the character itself.
+        """
+        parser = JavaPropertiesHandler()
+        for a in u'ΑΒΓΔΕΖΗΘ':
+            s = parser.convert_to_ascii(a)
+            c = parser.convert_to_unicode(s)
+            self.assertEquals(a, c)
