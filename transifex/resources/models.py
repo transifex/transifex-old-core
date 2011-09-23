@@ -226,16 +226,11 @@ class Resource(models.Model):
 
     def update_wordcount(self, save=True):
         """
-        Return the number of words which need translation in this resource.
-
-        The counting of the words uses the Translation objects of the SOURCE
-        LANGUAGE as set of objects. This function does not count the plural
-        strings!
+        Return the number of words in the source language in this resource.
         """
-        wc = Translation.objects.filter(source_entity__id__in=
-            SourceEntity.objects.filter(resource=self).values('id'),
-            language=self.source_language).aggregate(
-            Sum('wordcount'))['wordcount__sum'] or 0
+        wc = Translation.objects.filter(
+            resource=self, language=self.source_language
+        ).aggregate(Sum('wordcount'))['wordcount__sum'] or 0
         self.wordcount = wc
         if save:
             self.save()
