@@ -801,8 +801,8 @@ class RLStats(models.Model):
         wc = 0
         translated = SourceEntity.objects.filter(
             id__in=Translation.objects.filter(language=self.language,
-            source_entity__resource=self.resource).distinct().values_list(
-            'source_entity', flat=True))
+            resource=self.resource, rule=5).values_list(
+            'source_entity_id', flat=True))
         wordcount = Translation.objects.filter(source_entity__in=translated,
             language=self.resource.source_language).aggregate(Sum('wordcount'))['wordcount__sum']
         self.translated_wordcount = wordcount or 0
