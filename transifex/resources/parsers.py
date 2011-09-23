@@ -13,6 +13,7 @@ from transifex.resources.formats.desktop import DesktopHandler
 from transifex.resources.formats.strings import AppleStringsHandler
 from transifex.resources.formats.xliff import XliffHandler
 from transifex.resources.formats.dtd import DTDHandler # DTD format parser, used primarily by Mozilla
+from transifex.resources.formats.wiki import WikiHandler
 
 PARSERS = [
     POHandler,
@@ -23,4 +24,5 @@ PARSERS = [
     AppleStringsHandler,
     XliffHandler,
     DTDHandler,
+    WikiHandler,
 ] #, JavaPropertiesParser, AppleStringsParser]
