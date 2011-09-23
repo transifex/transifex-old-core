@@ -783,7 +783,7 @@ def _add_copyright(source_string, target_language, user):
     from transifex.addons.copyright.handlers import save_copyrights
     lotte_save_translation.connect(save_copyrights)
     lotte_save_translation.send(
-        None, resource=source_string.source_entity.resource,
+        None, resource=source_string.resource,
         language=target_language,
         copyrights=([(
                     ''.join([firstname, ' ', surname,
