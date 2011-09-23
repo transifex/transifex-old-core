@@ -608,7 +608,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
         source_id = int(row['id'])
         try:
             source_string = Translation.objects.select_related(depth=1).get(
-                id=source_id, resource__project=project
+                id=source_id
             )
         except Translation.DoesNotExist:
             # TODO: Log or inform here
@@ -618,7 +618,7 @@ def push_translation(request, project_slug, lang_code, *args, **kwargs):
             # translation pair.
             continue
 
-        if not source_string.source_entity.resource.accept_translations:
+        if not source_string.resource.accept_translations:
             push_response_dict[source_id] = { 'status':400,
                  'message':_("The resource of this source string is not "
                     "accepting translations.") }
@@ -696,7 +696,7 @@ def _save_translation(source_string, translations, target_language, user):
         An LotteBadRequestError exception in case of errors.
     """
     source_id = source_string.pk
-    resource = source_string.source_entity.resource
+    resource = source_string.resource
     source_language = resource.source_language
     warnings = []
 
@@ -733,8 +733,7 @@ def _save_translation(source_string, translations, target_language, user):
             # TODO: Implement get based on context and/or on context too!
             translation_string = Translation.objects.get(
                 source_entity=source_string.source_entity,
-                language = target_language,
-                source_entity__resource = resource, rule = rule
+                language=target_language, rule=rule
             )
 
             # FIXME: Maybe we don't want to permit anyone to delete!!!
