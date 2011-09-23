@@ -42,7 +42,8 @@ $(document).ready(function() {
         },
         { 
             type       : 'textarea',
-            cols       : 60,
+            cols       : 80,
+            rows			 : 5,
             cancel     : '{% trans "Cancel"|escapejs %}',
             submit     : '{% trans "OK"|escapejs %}',
             tooltip    : '{% trans "Click to edit..."|escapejs %}',
@@ -76,9 +77,9 @@ $(document).ready(function() {
   <li title="{% trans "Description" %}" class="i16 tag">{% trans "Description:" %} {% if source_entity.context_string %}{{ source_entity.context_string }}{% else %}-{% endif %}</li>
 {% with source_entity.developer_comment as comment %}
 {% with source_entity.developer_comment_extra as extra_comment %}
- <li title="{% trans "Comment" %}" class="i16 comment">
-    <span class="label">{% trans "Comment:" %}</span> 
-    <span id="{{ source_entity.id }}" class="label_target editable_{{ source_entity.id }}">{% if extra_comment %}{{ extra_comment|truncatewords:"150" }}{% else %}{{ comment|truncatewords:"150" }}{% endif %}</span>
+ <li title="{% trans "Comment" %}" class="i16 comment clearfix">
+    <span class="label" style="float:left;">{% trans "Comment: " %}</span> 
+    <span id="{{ source_entity.id }}" class="linklike label_target editable_{{ source_entity.id }}" style="margin-left:5px;float:left;">{% if extra_comment %}{{ extra_comment|truncatewords:"150" }}{% else %}{{ comment|truncatewords:"150" }}{% endif %}</span>
  </li>
 {% endwith %}
 {% endwith %}
