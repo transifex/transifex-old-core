@@ -212,7 +212,7 @@
         {% endwith %}
         </td>
     </tr>
-    <script>
+    <script type="text/javascript">
         $(".highlighted tr#stat_row_{{forloop.counter}}").click(function(){
            /* FancyBox Using custom settings */
            $.fancybox(
@@ -227,7 +227,10 @@
                       $('#fancybox-outer').css('left','50%');
                     }
                 },
-                'onComplete':function() {
+                'onComplete':function() {	
+	            		$("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
+	            		$("#fancybox-content").addClass('ui-corner-top'); 
+	            		$("#fancybox-outer").addClass('ui-corner-top'); 
                     // IE8 fix
                     if(jQuery.browser.msie){
                         $('.fancybox-title-outside').css('max-width','716px');
@@ -276,7 +279,7 @@
                     }
                 },
                 'titleShow': true,
-                'titlePosition': 'float',
+                'titlePosition': 'inside',
                 'title': '{% trans "Translation Details"|escapejs %}'
            });
         });

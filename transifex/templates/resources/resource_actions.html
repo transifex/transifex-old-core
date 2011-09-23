@@ -156,7 +156,7 @@
                 <a id="resource_pseudo_translation_actions" href="#" >{% trans "Get pseudo translations" %}</a>
             </span>
           </li>
-            <script>
+            <script type="text/javascript">
                 $("#resource_pseudo_translation_actions").click(function(){
                 /* FancyBox Using custom settings */
                 $.fancybox(
@@ -171,8 +171,13 @@
                             $('#fancybox-outer').css('left','50%');
                             }
                         },
+                        'onComplete':function() {
+	                    		$("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
+	                    		$("#fancybox-content").addClass('ui-corner-top'); 
+	                    		$("#fancybox-outer").addClass('ui-corner-top');
+	                    		}, 
                         'titleShow': true,
-                        'titlePosition': 'float',
+                        'titlePosition': 'inside',
                         'title': '{% trans "Pseudo Translation File Actions"|escapejs %}'
                 });
                 });
