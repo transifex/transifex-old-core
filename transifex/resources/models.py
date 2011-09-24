@@ -540,22 +540,24 @@ class Translation(models.Model):
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
-    last_update = models.DateTimeField(auto_now=True, editable=False)
+    last_update = models.DateTimeField(
+        auto_now=True, editable=False, db_index=True
+    )
 
     # Foreign Keys
     # A source string must always belong to a resource
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         related_name='translations',
-        blank=False, null=False,
+        blank=False, null=False, db_index=False,
         help_text=_("The source string this translation string translates."))
 
     resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
-        blank=False, null=False, related_name='+',
+        blank=False, null=False, related_name='+', db_index=False,
         help_text=_("The translation resource which owns the translation."))
 
     language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True,
+        verbose_name=_('Target Language'),blank=False, null=True, db_index=False,
         help_text=_("The language in which this translation string is written."))
 
     user = models.ForeignKey(User,
