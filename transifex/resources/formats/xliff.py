@@ -42,7 +42,7 @@ class XliffHandler(Handler):
     def accepts(cls, filename=None, mime=None):
         accept = False
         if filename is not None:
-            accept |= filename.endswith(".xlf")
+            accept |= filename.endswith((".xlf", ".xliff", ))
         if mime is not None:
             accept |= mime in cls.mime_types
         return accept
