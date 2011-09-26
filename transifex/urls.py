@@ -61,9 +61,3 @@ if settings.ENABLE_NOTICES:
         (r'^notices/', include('notification.urls')),
         url(r'^accounts/nudge/(?P<username>.+)/$', 'txcommon.views.user_nudge', name='user_nudge'),
     )
-
-# This is used by django-staticfiles for development process
-if settings.SERVE_MEDIA:
-    urlpatterns += patterns('',
-        (r'', include('staticfiles.urls')),
-    )
