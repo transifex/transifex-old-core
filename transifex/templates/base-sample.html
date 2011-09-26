@@ -71,14 +71,22 @@
       <!-- <span id="login">-->
           {% if user.is_authenticated %}
               {% hook "transifex_base.html" global-usernav %}
-              {% url profile_overview as user_profile %}
+              {% url userena_profile_detail user.username as user_profile %}
               {% blocktrans with user.username as user_username %}Welcome <a title="Profile settings" href="{{ user_profile }}">{{ user_username }}</a>!{% endblocktrans %}&nbsp; | &nbsp;
-              <form action="{% url logout %}?next={{request.path}}" method="POST" class="microform">{% csrf_token %}
+              {% url userena_signout as signout_url %}
+              {% if not signout_url %}
+                  {% url logout as signout_url %}
+              {% endif %}  
+              <form action="{{ signout_url }}?next={{request.path}}" method="POST" class="microform">{% csrf_token %}
                 <input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" />
               </form>
           {% else %}
-              <a href="{% url login %}?next={{request|get_next}}">{% trans "Sign in" %}</a>
-              {% url signup as signup_url %}
+              {% url userena_signin as signin_url %}
+              {% if not signin_url %}
+                  {% url login as signin_url %}
+              {% endif %}  
+              <a href="{{ signin_url }}?next={{request|get_next}}">{% trans "Sign in" %}</a>
+              {% url userena_signup as signup_url %}
               {% if signup_url %}
               &nbsp; | &nbsp; <a href="{{ signup_url }}">{% trans "Register" %}</a>
               {% endif %}

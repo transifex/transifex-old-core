@@ -60,7 +60,7 @@ setup(
     install_requires = [
         "Django == 1.2.5",
         "markdown",
-        "userprofile",
+        "django-userena",
         "httplib2",
         "polib >= 0.5.4",
         "Pygments >= 0.9",

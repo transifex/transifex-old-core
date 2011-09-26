@@ -1,7 +1,10 @@
 {% load i18n %}
 {% load txcommontags %}
-
-<form name="fauth" action="{% url login %}?next={{next}}" method="post">{% csrf_token %}
+{% url userena_signin as signin_url %}
+{% if not signin_url %}
+    {% url login as signin_url %}
+{% endif %}  
+<form name="fauth" action="{{ signin_url }}?next={{next}}" method="post">{% csrf_token %}
 <div class="generic_form" id="login_index login-block">
 <fieldset>
   <legend>{% trans "Sign in" %}</legend>

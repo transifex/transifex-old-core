@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import datetime
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models.fields.related import OneToOneField
 from django.db.models.signals import post_save
-from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
-from userprofile.models import BaseProfile
-from userprofile.countries import COUNTRIES, CountryField
+
+from userena import settings as userena_settings
+from userena.models import UserenaBaseProfile
 
 Language = models.get_model('languages', 'Language')
 
-GENDER_CHOICES = ( ('F', _('Female')), ('M', _('Male')),)
 
 def get_profile_or_user(user):
     """
@@ -25,26 +25,30 @@ def get_profile_or_user(user):
     except Profile.DoesNotExist:
         return user
 
-from south.modelsinspector import add_introspection_rules
-rules = [
-    (
-        (CountryField, ),
-        [],
-        {
-            'max_length': ['max_length', {'default': 2}],
-            'choices': ['choices', {'default': COUNTRIES}],
-        },
-    )
-]
-add_introspection_rules(rules, ["^userprofile\.countries\.CountryField"])
-
-
-class Profile(BaseProfile):
+class Profile(UserenaBaseProfile):
     """
     Profile class to used as a base for the django-profile app
     """
-    firstname = models.CharField(_('First name'), max_length=255, blank=True)
-    surname = models.CharField(_('Surname'), max_length=255, blank=True)
+    user = models.OneToOneField(User, unique=True, verbose_name=_('user'),
+        related_name='profile')
+
+    language = models.ForeignKey(Language, blank=True, 
+        verbose_name=_('Language'), null=True)
+    blog = models.URLField(_('Blog'), null=True, blank=True)
+    linked_in = models.URLField(_('LinkedIn'), null=True, blank=True)
+    twitter = models.URLField(_('Twitter'), null=True, blank=True)
+    about = models.TextField(_('About yourself'), max_length=140, null=True,
+        blank=True,
+        help_text=_('Short description of yourself (140 chars).'))
+    looking_for_work = models.BooleanField(_('Looking for work?'), 
+        default=False)
+
+    latitude = models.DecimalField(max_digits=10, decimal_places=6, 
+        null=True, blank=True, editable=False)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6, 
+        null=True, blank=True, editable=False)
+    location = models.CharField(max_length=255, null=True, blank=True, 
+        editable=False)
 
     @property
     def first_name(self):
@@ -53,15 +57,6 @@ class Profile(BaseProfile):
     @property
     def last_name(self):
         return self.surname
-
-    native_language = models.ForeignKey(Language, blank=True,
-        verbose_name=_('Native Language'), null=True)
-    blog = models.URLField(_('Blog'), blank=True)
-    linked_in = models.URLField(_('LinkedIn'), blank=True)
-    twitter = models.URLField(_('Twitter'), blank=True)
-    about = models.TextField(_('About yourself'), max_length=140, blank=True,
-        help_text=_('Short description of yourself (140 chars).'))
-    looking_for_work = models.BooleanField(_('Looking for work?'), default=False)
 
 
 

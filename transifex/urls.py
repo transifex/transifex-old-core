@@ -41,12 +41,9 @@ if settings.ENABLE_SIMPLEAUTH:
     urlpatterns += patterns('',
         url(r'^accounts/', include('simpleauth.urls')),)
 else:
+    pass
     urlpatterns += patterns('',
-        url(r'^accounts/login/$', 'simpleauth.views.login',
-            {'template_name': 'userprofile/account/login.html'},
-            name='login'
-        ),
-        url(r'^accounts/', include('userprofile.urls')),
+        url(r'^accounts/', include('userena.urls')),
     )
 
 if settings.ENABLE_NOTICES:
