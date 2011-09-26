@@ -48,7 +48,6 @@ else:
         url(r'^accounts/(?P<username>[\.\w]+)/edit/$', 'userena.views.profile_edit', 
             {'edit_profile_form': EditProfileForm}, 'userena_profile_edit'),
         url(r'^accounts/', include('userena.urls')),
-        
     )
 
 if settings.USE_SOCIAL_LOGIN:
@@ -61,3 +60,10 @@ if settings.ENABLE_NOTICES:
         (r'^notices/', include('notification.urls')),
         url(r'^accounts/nudge/(?P<username>.+)/$', 'txcommon.views.user_nudge', name='user_nudge'),
     )
+
+if settings.SERVE_MEDIA:
+    urlpatterns += patterns('',
+        url(r'^site_media/media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+   )
