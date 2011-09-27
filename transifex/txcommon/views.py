@@ -112,6 +112,15 @@ def user_nudge(request, username):
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+
+def profile_public(request, username, template_name='userena/public.html'):
+    """User public profile page."""
+    user = get_object_or_404(User, username=username)
+    return render_to_response(template_name,
+                  {'profile': user.get_profile()},
+                  context_instance=RequestContext(request))
+
+
 # Ajax response
 
 def json_result(result):

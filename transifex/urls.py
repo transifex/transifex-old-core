@@ -48,6 +48,8 @@ else:
         url(r'^accounts/(?P<username>[\.\w]+)/edit/$', 'userena.views.profile_edit', 
             {'edit_profile_form': EditProfileForm}, 'userena_profile_edit'),
         url(r'^accounts/', include('userena.urls')),
+        url(r'^accounts/profile/(?P<username>.+)/$', 'txcommon.views.profile_public',
+            name='profile_public'),
     )
 
 if settings.USE_SOCIAL_LOGIN:
