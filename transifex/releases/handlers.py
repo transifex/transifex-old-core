@@ -7,12 +7,14 @@ from django.utils.translation import ugettext_lazy as _
 from notification import models as notification
 from txcron import signals as txcron_signals
 
-from transifex.resources.models import Resource, RLStats
 from transifex.resources.signals import post_save_translation
-from transifex.releases.models import RELEASE_ALL_DATA
+from transifex.releases import RELEASE_ALL_DATA
 from transifex.txcommon.log import logger
 
+Resource = get_model('resources', 'Resource')
+RLStats = get_model('resources', 'RLStats')
 Release = get_model('releases', 'Release')
+
 
 def update_all_release(project):
     if project.resources.count():

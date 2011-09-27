@@ -15,7 +15,8 @@ from transifex.languages.models import Language
 from transifex.projects.forms import ReleaseForm
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
-from transifex.releases.models import Release, RELEASE_ALL_DATA
+from transifex.releases import RELEASE_ALL_DATA
+from transifex.releases.models import Release
 from transifex.resources.models import Resource, RLStats
 
 # Temporary

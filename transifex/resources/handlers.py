@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.db.models import get_model
 from transifex.actionlog.models import action_logging
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
 from transifex.resources.utils import invalidate_template_cache
 from transifex.teams.models import Team
-from transifex.resources.models import RLStats
+
+RLStats = get_model('resources', 'RLStats')
 
 def invalidate_stats_cache(resource, language, **kwargs):
     """

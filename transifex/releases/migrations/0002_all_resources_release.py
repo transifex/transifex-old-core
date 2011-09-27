@@ -3,7 +3,8 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 from transifex.projects.models import Project
-from transifex.releases.models import (Release, RELEASE_ALL_DATA, RESERVED_RELEASE_SLUGS)
+from transifex.releases import RELEASE_ALL_DATA, RESERVED_RELEASE_SLUGS
+from transifex.releases.models import Release
 from transifex.releases.handlers import update_all_release
 
 def get_new_slug(slug):

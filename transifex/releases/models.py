@@ -13,20 +13,8 @@ from django.utils.html import escape
 
 from transifex.txcommon.log import log_model
 from transifex.resources.utils import invalidate_template_cache
-from transifex.resources.models import RLStats
 
-# Config settings for the "All Resources" release (refer to
-# transifex.releases.handlers for more info).
-# FIXME: Some of the following strings should be i18n-ized. It seems that
-#        this isn't working right now.
-RELEASE_ALL_DATA = {
-    'slug': 'all-resources',
-    'name': 'All Resources',
-    'description': "A collection of all the resources of this project (auto-managed by Transifex)"}
-
-# List of slugs which are reserved and should not be used by users.
-RESERVED_RELEASE_SLUGS = [RELEASE_ALL_DATA['slug'],]
-
+RLStats = get_model('resources', 'RLStats')
 
 class Release(models.Model):
 

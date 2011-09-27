@@ -15,8 +15,8 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 from transifex.projects.models import Project
 from transifex.projects.signals import (project_access_control_form_start,
                                         project_form_init, project_form_save)
-from transifex.releases.models import (Release, RELEASE_ALL_DATA,
-                                       RESERVED_RELEASE_SLUGS)
+from transifex.releases import (RELEASE_ALL_DATA, RESERVED_RELEASE_SLUGS)
+from transifex.releases.models import Release
 from transifex.txcommon.widgets import SplitSelectDateTimeWidget
 
 class ProjectForm(forms.ModelForm):
