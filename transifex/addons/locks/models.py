@@ -81,10 +81,14 @@ class LockManager(models.Manager):
                 "locks" : settings.LOCKS_PER_USER})
 
         expires = now + timedelta(seconds=settings.LOCKS_LIFETIME)
-        try:
-            lock = self.get(rlstats__resource=resource,
-                rlstats__language=language)
-            # The lock is not expired and user is not the owner
+
+        rlstats, created = RLStats.objects.get_or_create(resource=resource,
+            language=language)
+
+        #Get existing lock if any, else create new one
+        lock, created = self.get_or_create(rlstats=rlstats, defaults={'owner':user, 'expires':expires})
+        # The new lock is not created and lock is not expired and user is not the owner
+        if not created:
             if lock.expires and lock.expires > now and lock.owner != user:
                 raise LockError(_("This resource language is already locked "
                     "by '%s'") % lock.owner)
@@ -93,11 +97,7 @@ class LockManager(models.Manager):
                 lock.owner = user
             # Update expiration date
             lock.expires = expires
-        except Lock.DoesNotExist:
-            # Lock didn't exist, create one
-            rlstats, created = RLStats.objects.get_or_create(resource=resource,
-                language=language)
-            lock = self.create(rlstats=rlstats, owner=user, expires=expires)
+
         # Set notified flag to False meaning that expiration notification
         # has not been sent about this lock yet
         lock.notified = False
