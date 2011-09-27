@@ -53,12 +53,12 @@ setup(
         "http://pypi.python.org/simple",
     ],
     setup_requires = [
-        "Django >= 1.2.3",
+        "Django >= 1.3.1",
         "Pygments >= 0.9",
         "Sphinx >= 0.4.2",
     ],
     install_requires = [
-        "Django == 1.2.5",
+        "Django == 1.3.1",
         "markdown",
         "django-userena",
         "httplib2",
