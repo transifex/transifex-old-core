@@ -25,6 +25,17 @@ class TestJoomlaIni(FormatsBaseTestCase):
             self.assertFalse(s.translation.startswith('"'))
         self.compare_to_actual_file(self.parser, self.file)
 
+    def test_string_count(self):
+        self.parser.parse_file(is_source=True)
+        entities = 0
+        translations = 0
+        for s in self.parser.stringset.strings:
+            entities += 1
+            if s.translation.strip() != '':
+                translations += 1
+        self.assertEqual(entities, 3)
+        self.assertEqual(translations, 3)
+
     def test_quotes_on_previous_version(self):
         file_ = os.path.join(os.path.dirname(__file__), 'example1.5.ini')
         self.parser.bind_file(file_)

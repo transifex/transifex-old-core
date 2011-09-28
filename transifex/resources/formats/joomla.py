@@ -7,6 +7,7 @@ import os, re
 import codecs
 
 from transifex.txcommon.log import logger
+from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
@@ -81,6 +82,9 @@ class JoomlaINIHandler(Handler):
                 context = ""
 
                 if is_source:
+                    if not trans.strip():
+                        buf += line + self._linesep
+                        continue
                     source_len = len(source)
                     new_line = line[:source_len] + re.sub(
                         re.escape(trans),
@@ -89,6 +93,10 @@ class JoomlaINIHandler(Handler):
                     )
                     # this looks fishy
                     buf += new_line + self._linesep
+
+                elif not SourceEntity.objects.filter(resource=self.resource, string=source).exists() or not trans.strip():
+                    #ignore keys with no translation
+                    continue
 
                 stringset.strings.append(GenericTranslation(source,
                     trans, rule=5, context=context,
