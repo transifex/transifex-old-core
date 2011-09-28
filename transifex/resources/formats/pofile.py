@@ -4,7 +4,7 @@
 GNU Gettext .PO/.POT file handler/compiler
 """
 import os, re, time
-import polib, datetime
+import polib
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
@@ -238,7 +238,7 @@ class POHandler(Handler):
         # need to do it for the pofile object as well.
         po.encoding = u"UTF-8"
 
-        po.metadata['PO-Revision-Date'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000")
+        po.metadata['PO-Revision-Date'] = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but isn't being used by po
         # files. What should we do?
