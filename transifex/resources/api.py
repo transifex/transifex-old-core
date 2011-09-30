@@ -236,10 +236,11 @@ class ResourceHandler(BaseHandler):
             res = t.create()
         except (BadRequestError, NoContentError), e:
             transaction.rollback()
-            return BAD_REQUEST(e.message)
+            return BAD_REQUEST(unicode(e))
         except Exception, e:
             logger.error("Unexamined exception raised: %s" % e.message, exc_info=True)
             transaction.rollback()
+            return BAD_REQUEST(unicode(e))
         res = t.__class__.to_http_for_create(t, res)
         if res.status_code == 200:
             res.status_code = 201
