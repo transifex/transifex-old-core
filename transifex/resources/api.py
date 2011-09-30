@@ -154,7 +154,7 @@ class ResourceHandler(BaseHandler):
         if resource_slug is None:
             try:
                 p = Project.objects.get(slug=project_slug)
-            except Project.NotFound:
+            except Project.DoesNotExist:
                 return rc.NOT_FOUND
             if not self._has_perm(request.user, p):
                 return rc.FORBIDDEN
