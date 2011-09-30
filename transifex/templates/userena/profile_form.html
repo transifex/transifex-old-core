@@ -1,24 +1,47 @@
-{% extends 'userena/base_userena.html' %}
+{% extends 'userena/userena_menu.html' %}
 {% load i18n %}
 
 {% block title %}{% trans "Account setup" %}{% endblock %}
 
-{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+{% block userena_content %}
 
-{% block content_main %}
 
-<form action="" enctype="multipart/form-data" method="post">
-  <ul id="box-nav">
-    <li class="first"><a href="{% url userena_profile_detail user.username %}"><span>{% trans 'View profile' %}</span></a></li>
-    <li class="selected"><a href="{% url userena_profile_edit user.username %}">{% trans "Edit profile" %}</a></li>
-    <li><a href="{% url userena_password_change user.username %}">{% trans "Change password" %}</a></li>
-    <li class="last"><a href="{% url userena_email_change user.username %}">{% trans "Change email" %}</a></li>
+<div class="grid_8">
+	<form id="edit-profile-form" action="" enctype="multipart/form-data" method="post">
+	 <fieldset>
+	  {% csrf_token %}
+	    {{ form.as_p }}
+	 </fieldset>
+	  <input type="submit" class="i16 tick buttonized" value="{% trans 'Save changes' %}" />
+	</form>
+</div>
+
+
+{% url socialauth_begin 'twitter' as social_twitter_url %}
+{% if social_twitter_url %}
+
+<div class="grid_8 omega">
+  {% if social_auth.associated %}
+  <h3>Associated social accounts</h3>
+  <ul>
+      {% for account in social_auth.associated %}
+      <li>
+          <span class="disconnect">
+          <a href={% url socialauth_disconnect_individual account.provider account.id %}>{{ account.provider|title }} (ID {{ account.id }})</a>
+          </span>
+      </li>
+      {% endfor %}
   </ul>
-  {% csrf_token %}
-  <fieldset>
-    <legend>{% trans "Edit Profile" %}</legend>
-    {{ form.as_p }}
-  </fieldset>
-  <input type="submit" value="{% trans "Save changes" %}" />
-</form>
+  {% endif %}
+
+  <h5>Associate new social account</h5>
+  <ul class="simple">
+  {% for name in social_auth.not_associated %}
+      <li><a rel="nofollow" href="{% url socialauth_associate_begin name %}">{{ name|title }}</a></li>
+  {% endfor %}
+  </ul>
+  </div>
+</div>
+{% endif %}
+
 {% endblock %}

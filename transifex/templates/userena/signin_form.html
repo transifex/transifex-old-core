@@ -1,13 +1,16 @@
 {% extends 'userena/base_userena.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Signin" %}{% endblock %}
+{% block content_title %}
+	<h2 style="margin:0;">{% trans "Sign in" %}</h2>
+	<div class="description"><p>{% trans "Enter your username and password to sign in." %}</p></div>
+{% endblock %}
 
 {% block content_main %}
 <form action="" method="post">
   {% csrf_token %}
-  <fieldset>
-    <legend>{% trans "Signin" %}</legend>
+
+   
     {{ form.non_field_errors }}
     {% for field in form %}
     {{ field.errors }}
@@ -18,15 +21,25 @@
     </p>
     {% else %}
     <p>
-    {{ field.label_tag }}
-    {{ field }}
+    <span class="form-label-tag">{{ field.label_tag }}</span>
+    <span class="form-field">{{ field }}</span>
     </p>
     {% endif %}
     {% endfor %}
-  </fieldset>
-  <input type="submit" value="{% trans "Signin" %}" />
-  <p class="forgot-password"><a href="{% url userena_password_reset %}" title="{% trans "Forgot your password?" %}">{% trans "Forgot your password?" %}</a></p>
-  <p class="forgot-password"><a href="{% url userena_signup %}" title="{% trans "Sigh up now!" %}">{% trans "You don't have an account?" %}</a></p>
+
+  <input type="submit" class="i16 tick buttonized" value="{% trans "Sign in" %}" />
+  
+  
+  	<div class="grid_4 omega">
+
+    {# http://code.djangoproject.com/ticket/7239 #}
+    
+    <ul id="login-utility-list">
+		  <li>{% trans "Not yet a member?" %}&nbsp;<a href="{% url userena_signup %}">{% trans "Sign up!" %}</a></li>
+		  <li><a href="{% url userena_password_reset %}">{% trans "Forgot your password?" %}</a></li>
+		</ul>
+	</div>
+
   {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
 
