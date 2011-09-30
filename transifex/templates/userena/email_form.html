@@ -2,7 +2,9 @@
 {% load i18n %}
 
 {% block content_main %}
-<form action="" method="post">
+
+<a class="back-button" href="javascript:history.go(-1)">&laquo;&nbsp;{% trans "Back" %}</a> 
+<form class="profile-form" action="" method="post">
   {% csrf_token %}
   <fieldset>
     {{ form.as_p }}
