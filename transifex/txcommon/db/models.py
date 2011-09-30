@@ -102,12 +102,12 @@ class IntegerTupleField(models.CharField):
             return None
         return tuple(int(x) for x in value.split(u':'))
 
-    def get_db_prep_value(self, value):
+    def get_db_prep_value(self, value, connection=None, prepared=False):
         if value is None:
             return None
         return u':'.join(unicode(x) for x in value)
 
-    def get_db_prep_lookup(self, lookup_type, value):
+    def get_db_prep_lookup(self, lookup_type, value, connection=None, prepared=False):
         if lookup_type == 'exact':
             return [self.get_db_prep_value(value)]
         else:
@@ -145,7 +145,7 @@ class ListCharField(models.CharField):
             return None
         return self._replace(re.split(r'(?<!\\)\:', value))
 
-    def get_db_prep_value(self, value):
+    def get_db_prep_value(self, value, connection=None, prepared=False):
         if value is None:
             return None
         assert isinstance(value, list)
@@ -159,7 +159,7 @@ class CompressedTextField(models.TextField):
     """
     __metaclass__ = models.SubfieldBase
 
-    def get_db_prep_value(self, value):
+    def get_db_prep_value(self, value, connection=None, prepared=False):
         if value is not None:
             value = base64.encodestring(compress_string(pickle.dumps(value)))
         return value
