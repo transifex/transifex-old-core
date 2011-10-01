@@ -45,11 +45,17 @@ if settings.ENABLE_SIMPLEAUTH:
 else:
     urlpatterns += patterns('',
         # Custom EditProfileForm
-        url(r'^accounts/(?P<username>[\.\w]+)/edit/$', 'userena.views.profile_edit', 
-            {'edit_profile_form': EditProfileForm}, 'userena_profile_edit'),
-        url(r'^accounts/', include('userena.urls')),
-        url(r'^accounts/profile/(?P<username>.+)/$', 'txcommon.views.profile_public',
-            name='profile_public'),
+        url(regex   =   r'^accounts/(?P<username>(?!signout|signup|signin)[\.\w]+)/$',
+            view    =   'userena.views.profile_edit', 
+            kwargs  =   {'edit_profile_form': EditProfileForm},
+            name    =   'userena_profile_edit'),
+
+        url(regex   =   r'^accounts/',
+            view    =   include('userena.urls')),
+
+        url(regex   =   r'^accounts/profile/(?P<username>.+)/$',
+            view    =   'txcommon.views.profile_public',
+            name    =   'profile_public'),
     )
 
 if settings.USE_SOCIAL_LOGIN:
