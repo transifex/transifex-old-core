@@ -41,8 +41,8 @@ function html_escape(html)
   */
 function html_unescape(html)
 {
-  return html.replace(/\&amp;/g, "&").replace(/\&lt;/g, "<")
-        .replace(/\&gt;/g, ">").replace(/\&quot;/g, "\"");
+  return html.replace(/\&lt;/g, "<").replace(/\&gt;/g, ">")
+         .replace(/\&amp;/g, "&").replace(/\&quot;/g, "\"");
 
 }
 
