@@ -1,6 +1,19 @@
 from django.contrib.auth.models import User
 from django.db.models import Q
 
+def format_user(user):
+    """
+    Format user object to be displayed as username + full name if possible.
+    """
+    user_data = [user.username]
+    
+    full_name = user.get_full_name()
+    if full_name:
+        user_data.append(full_name)
+    
+    return u' - '.join(user_data)
+
+
 class UsersLookup(object):
     """A lookup class, used by django-ajax-select app to search model data."""
 
@@ -23,13 +36,7 @@ class UsersLookup(object):
 
         It may contain html and multi-lines.
         """
-        user_data = [user.username]
-        
-        full_name = u' '.join([user.first_name, user.last_name]).strip()
-        if full_name:
-            user_data.append(full_name)
-        
-        return u' - '.join(user_data)
+        return format_user(user)
 
     def get_objects(self,ids):
         """Given a list of ids, return the objects ordered."""
