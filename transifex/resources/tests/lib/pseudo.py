@@ -135,7 +135,7 @@ class PseudoTestCase(base.BaseTestCase):
 
     def test_pseudo_file_api_calls(self):
         """Test Pseudo translation requests through the API."""
-        
+        source_language = self.project.resources.all()[0].source_language
         for i18n_type, v in FORMATS.items():
             resource_slug = 'resource_%s' % i18n_type.lower()
             resource_url = reverse('apiv2_resources', kwargs={
@@ -147,12 +147,18 @@ class PseudoTestCase(base.BaseTestCase):
                 resource_url,
                 data={
                     'slug': resource_slug,
-                    'source_language': 'en',
+                    'source_language': source_language.code,
                     'name': resource_slug,
                     'mimetype': settings.I18N_METHODS[i18n_type]['mimetype'],
                     'attachment': f},
                 )
             f.close()
+            
+            print '-----------------------'
+            print i18n_type
+            print settings.I18N_METHODS[i18n_type]['mimetype']
+            print res.content
+            print '-----------------------'
 
             # Pseudo file API URL
             url = reverse('apiv2_pseudo_content', args=[self.project.slug, 
@@ -175,5 +181,5 @@ class PseudoTestCase(base.BaseTestCase):
                     resp_content = resp_content.replace('\\ ', ' ')
 
                 # Assert expected value in the generated file
-                self.assertTrue(
-                    v['pseudo_messages'][pseudo_type] in resp_content)
+                for message in v['pseudo_messages'][pseudo_type]:
+                    self.assertTrue(message in resp_content)
