@@ -19,7 +19,7 @@ from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.teams.models import Team
-import unittest2
+from django.utils import unittest
 
 # TODO: POST requests should also be tested everywhere (teams, tr. actions etc.)
 
@@ -32,7 +32,7 @@ def skip(func):
         msg = "%s skipped. Please implement it in your project path."%func_name
         if settings.TX_ROOT != settings.PROJECT_PATH:
             logger.debug(msg)
-        return unittest2.skipUnless(settings.TX_ROOT == settings.PROJECT_PATH, msg)
+        return unittest.skipUnless(settings.TX_ROOT == settings.PROJECT_PATH, msg)
     return decorator
 
 class PrivateProjectTest(NoticeTypes, BaseTestCase):
