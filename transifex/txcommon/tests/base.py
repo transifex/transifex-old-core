@@ -91,10 +91,11 @@ class NoticeTypes(object):
     Use this as a mixin in tests.
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         from django.core import management
         management.call_command('txcreatenoticetypes', verbosity=0)
-        super(NoticeTypes, self).setUp()
+        super(NoticeTypes, cls).setUpClass()
 
 
 class Languages(object):
@@ -103,15 +104,16 @@ class Languages(object):
     Use this as a mixin in tests.
     """
 
-    def setUp(self):
+    @classmethod
+    def setUpClass(cls):
         # TODO make a class method (setUpClass)
         from django.core import management
         management.call_command('txlanguages', verbosity=0)
-        self.language = Language.objects.get(code='pt_BR')
-        self.language_en = Language.objects.get(code='en_US')
-        self.language_ar = Language.objects.get(code='ar')
+        cls.language = Language.objects.get(code='pt_BR')
+        cls.language_en = Language.objects.get(code='en_US')
+        cls.language_ar = Language.objects.get(code='ar')
         #self.language_hi_IN = Language.objects.get(code='hi_IN')
-        super(Languages, self).setUp()
+        super(Languages, cls).setUpClass()
 
 
 class Projects(object):
