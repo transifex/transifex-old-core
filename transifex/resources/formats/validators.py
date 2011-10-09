@@ -4,7 +4,7 @@ Validator classes for individual strings.
 """
 
 import re
-from polib import escape        # TODO: Fix the regex
+from polib import escape, unescape        # TODO: Fix the regex
 from django.conf import settings
 from django.utils.translation import ugettext as _
 from transifex.txcommon import import_to_python
@@ -73,6 +73,7 @@ class SpaceValidator(BaseValidator):
     """Validator that checks if the translation is just spaces."""
 
     def validate(self, old, new):
+        new = unescape(new)
         if len(new.strip()) == 0:
             raise ValidationError(
                 _("Translation string only contains whitespaces.")
@@ -86,6 +87,8 @@ class MatchingBracketsValidator(BaseValidator):
     bracket_chars = '[{()}]'
 
     def validate(self, old, new):
+        old = unescape(old)
+        new = unescape(new)
         for c in self.bracket_chars:
             if new.count(c) != old.count(c):
                 raise ValidationError(
@@ -104,6 +107,8 @@ class UrlsValidator(BaseValidator):
     )
 
     def validate(self, old, new):
+        old = unescape(old)
+        new = unescape(new)
         for url in self.urls.findall(old):
             if url not in new:
                 raise ValidationError(
@@ -120,6 +125,8 @@ class EmailAddressesValidator(BaseValidator):
     emails = re.compile("([\w\-\.+]+@[\w\w\-]+\.+[\w\-]+)")
 
     def validate(self, old, new):
+        old = unescape(old)
+        new = unescape(new)
         for email in self.emails.findall(old):
             if email not in new:
                 raise ValidationError(
@@ -134,6 +141,7 @@ class NewLineAtBeginningValidator(BaseValidator):
     """
 
     def validate(self, old, new):
+        old = unescape(old)
         old_has_newline = old[0] == '\n'
         new_has_newline = new[0] == '\n'
         if old_has_newline != new_has_newline:
@@ -150,6 +158,7 @@ class NewLineAtEndValidator(BaseValidator):
     """
 
     def validate(self, old, new):
+        old = unescape(old)
         old_has_newline = old[-1] == '\n'
         new_has_newline = new[-1] == '\n'
         if old_has_newline != new_has_newline:
@@ -168,6 +177,8 @@ class NumbersValidator(BaseValidator):
     numbers = re.compile("[-+]?[0-9]*\.?[0-9]+")
 
     def validate(self, old, new):
+        old = unescape(old)
+        new = unescape(new)
         for num in self.numbers.findall(old):
             if num not in new:
                 raise ValidationError(
@@ -194,6 +205,8 @@ class PrintfFormatNumberValidator(BaseValidator):
                 super(PrintfFormatNumberValidator, self).precondition()
 
     def validate(self, old, new):
+        old = unescape(old)
+        new = unescape(new)
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
         if len(old_matches) != len(new_matches):
@@ -224,6 +237,8 @@ class PrintfFormatSourceValidator(BaseValidator):
     )
 
     def validate(self, old, new):
+        old = unescape(old)
+        new = unescape(new)
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
         old = escape(old)
@@ -257,8 +272,6 @@ class PrintfFormatTranslationValidator(BaseValidator):
     )
 
     def validate(self, old, new):
-        old = escape(old)
-        new = escape(new)
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
         for pattern in new_matches:

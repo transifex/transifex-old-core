@@ -712,21 +712,19 @@ def _save_translation(source_string, translations, target_language, user):
             except Translation.DoesNotExist:
                 # target language has extra plural forms
                 pass
-        ss = unescape(source_string.string)
-        tr = unescape(target_string)
 
         # check for errors
         try:
             for ErrorValidator in create_error_validators(resource.i18n_type):
                 v = ErrorValidator(source_language, target_language, rule)
-                v(ss, tr)
+                v(source_string.string, target_string)
         except ValidationError, e:
             raise LotteBadRequestError(e.message)
         # check for warnings
         for WarningValidator in create_warning_validators(resource.i18n_type):
             v = WarningValidator(source_language, target_language, rule)
             try:
-                v(ss, tr)
+                v(source_string.string, target_string)
             except ValidationError, e:
                 warnings.append(e.message)
         try:
