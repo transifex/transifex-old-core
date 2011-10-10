@@ -9,6 +9,20 @@
 {% block extrajs %}
 {% endblock %}
 
+{% block content_sec %}
+  <p>
+    <a class="simlink rss_feed" href="{% url user_feed profile.user %}" title="{% trans "User feed" %}">
+      <span>{% trans "Subscribe to this feed" %}</span>&nbsp;<img border="0" src="{{ STATIC_URL }}images/icons/feed.png" />
+    </a>
+  </p>
+{% endblock %}
+
+{% block extra_head %}
+    <link rel="alternate" type="application/rss+xml"
+        title="User Activity | Activities by {{ profile.user }}"
+        href= "{% url user_feed profile.user %}" />
+{% endblock %}
+
 {% block breadcrumb %}{% homelink %} &raquo; {% trans "Profile" %} &raquo; {{ profile.user }}{% endblock %}
 
 {% block content_title %}

@@ -4,6 +4,7 @@ from django.contrib import admin
 import authority
 
 from txcommon.forms import EditProfileForm
+from txcommon.feeds import UserFeed
 
 # Overriding 500 error handler
 handler500 = 'views.server_error'
@@ -39,6 +40,10 @@ if settings.ENABLE_CONTACT_FORM:
         url(r'^contact/', include('contact_form.urls'), name='contact'),
     )
 
+urlpatterns += patterns('',
+        url(r'^accounts/profile/(?P<username>.+)/feed/$', UserFeed(), name='user_feed')
+)
+
 if settings.ENABLE_SIMPLEAUTH:
     urlpatterns += patterns('',
         url(r'^accounts/', include('simpleauth.urls')),)
@@ -46,7 +51,7 @@ else:
     urlpatterns += patterns('',
         # Custom EditProfileForm
         url(regex   =   r'^accounts/(?P<username>(?!signout|signup|signin)[\.\w]+)/$',
-            view    =   'userena.views.profile_edit', 
+            view    =   'userena.views.profile_edit',
             kwargs  =   {'edit_profile_form': EditProfileForm},
             name    =   'userena_profile_edit'),
 
