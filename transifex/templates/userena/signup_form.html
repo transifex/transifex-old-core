@@ -36,11 +36,16 @@
 
 <h2 style="margin-bottom:1em;display:inline-block;">{% trans "Register" %}</h2>
 
-<form class="profile-form" action="" method="post">
+<form id="signup-form" class="profile-form" action="" method="post">
   {% csrf_token %}
   <fieldset>
+    <div id="signup-form-global-errors">
+        {{ form.non_field_errors }}
+    </div>
     {% for field in form %}
-    {{ field.errors }}
+    <div id="signup-form-{{ field.name }}-errors">
+        {{ field.errors }}
+    </div>
     {% comment %} Displaying checkboxes differently {% endcomment %}
     {% if field.name == 'tos' %}
     <p class="checkbox">
