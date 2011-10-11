@@ -18,10 +18,15 @@ class TeamSimpleForm(forms.ModelForm):
     members = AutoCompleteSelectMultipleField('users', required=False,
         help_text=_("Members are actually people that can submit translations. "
                     "Search for usernames."))
+
+    reviewers = AutoCompleteSelectMultipleField('users', required=False,
+        help_text=_("Reviewers are team members that can proofread translations "
+                    "and mark them as reviewed. Search for usernames."))
+
     class Meta:
         model = Team
-        fields = ('language', 'coordinators', 'members', 'mainlist', 'project',
-            'creator')
+        fields = ('language', 'coordinators', 'members', 'reviewers', 'mainlist',
+            'project', 'creator')
 
     def __init__(self, project, language_code=None, *args, **kwargs):
         super(TeamSimpleForm, self).__init__(*args, **kwargs)
@@ -76,14 +81,23 @@ class TeamSimpleForm(forms.ModelForm):
         cleaned_data = self.cleaned_data
         coordinators = cleaned_data.get("coordinators")
         members = cleaned_data.get("members")
+        reviewers = cleaned_data.get("reviewers")
 
         if coordinators and members:
-            for c in coordinators:
-                if c in members:
-                    user = User.objects.get(pk=c)
-                    raise forms.ValidationError(_("You have the user '%s' in "
-                        "both coordinators and members lists. Please drop "
-                        "him/her from one of those lists.") % user)
+            intersection = set(coordinators).intersection(members)
+            if intersection:
+                users = [User.objects.get(pk=c).username for c in intersection]
+                raise forms.ValidationError(_("User(s) %s cannot be in "
+                    "both Coordinators and Members lists. Please make "
+                    "sure that the lists are unique.") % ', '.join(users))
+
+        if coordinators and reviewers:
+            intersection = set(coordinators).intersection(reviewers)
+            if intersection:
+                users = [User.objects.get(pk=c).username for c in intersection]
+                raise forms.ValidationError(_("User(s) %s cannot be in "
+                    "both Coordinators and Reviewers lists. Please make "
+                    "sure that the lists are unique.") % ', '.join(users))
 
         return cleaned_data
 

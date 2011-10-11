@@ -43,6 +43,8 @@ class Team(models.Model):
         related_name='team_coordinators', blank=False, null=False)
     members = models.ManyToManyField(User, verbose_name=_('Members'),
         related_name='team_members', blank=True, null=True)
+    reviewers = models.ManyToManyField(User, verbose_name=_('Reviewers'),
+        related_name='team_reviewers', blank=True, null=True)
 
     mainlist = models.EmailField(_('Mainlist'), max_length=50, blank=True,
         null=True, help_text=_("The main mailing list of the team."))
