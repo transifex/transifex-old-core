@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load addons %}
 
 {% block title %}{% trans "Register" %}{% endblock %}
 
@@ -58,6 +59,7 @@
     </p>
     {% endif %}
     {% endfor %}
+    {% hook "additional_signup_form_fields.html" %}
   </fieldset>
   <input type="submit" class="i16 tick buttonized" value="{% trans "Signup"%}" />
 </form>
