@@ -12,19 +12,6 @@ from userena.models import UserenaBaseProfile
 
 Language = models.get_model('languages', 'Language')
 
-
-def get_profile_or_user(user):
-    """
-    Return the Profile of the user or the User itself in the case where
-    the application is using app simpleauth.
-
-    ``user`` must be a django.contrib.auth.models.User based instance
-    """
-    try:
-        return Profile.objects.get(user__pk=user.pk)
-    except Profile.DoesNotExist:
-        return user
-
 class Profile(UserenaBaseProfile):
     """
     Profile class to used as a base for the django-profile app
@@ -49,16 +36,6 @@ class Profile(UserenaBaseProfile):
         null=True, blank=True, editable=False)
     location = models.CharField(max_length=255, null=True, blank=True, 
         editable=False)
-
-    @property
-    def first_name(self):
-        return self.firstname
-
-    @property
-    def last_name(self):
-        return self.surname
-
-
 
 def exclusive_fields(inmodel, except_fields=[]):
     '''

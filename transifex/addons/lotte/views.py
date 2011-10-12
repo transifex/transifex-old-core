@@ -33,7 +33,6 @@ from transifex.resources.formats.validators import create_error_validators, \
         create_warning_validators, ValidationError
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
-from transifex.txcommon.models import get_profile_or_user
 import httplib
 
 # Temporary
@@ -775,9 +774,8 @@ def _save_translation(source_string, translations, target_language, user):
 
 
 def _add_copyright(source_string, target_language, user):
-    profile_user = get_profile_or_user(user)
-    firstname = profile_user.first_name
-    surname = profile_user.last_name
+    firstname = user.first_name
+    surname = user.last_name
     from transifex.addons.copyright.handlers import save_copyrights
     lotte_save_translation.connect(save_copyrights)
     lotte_save_translation.send(
