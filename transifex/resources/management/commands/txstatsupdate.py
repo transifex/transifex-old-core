@@ -62,7 +62,7 @@ class Command(LabelCommand):
 
             # Get a list of the available languages
             langs = list(Translation.objects.filter(
-                source_entity__resource=r).order_by('language').values_list(
+                resource=r).order_by('language').values_list(
                 'language',flat=True).distinct())
 
             # Update stats

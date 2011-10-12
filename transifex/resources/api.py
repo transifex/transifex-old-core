@@ -766,7 +766,7 @@ class Translation(object):
         and are in the specified language.
         """
         TranslationModel.objects.filter(
-            source_entity__resource=self.resource,
+            resource=self.resource,
             language=self.language
         ).delete()
         invalidate_stats_cache(

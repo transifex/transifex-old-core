@@ -326,7 +326,7 @@ def clone_language(request, project_slug=None, resource_slug=None,
 
     # get the strings which will be cloned
     strings = Translation.objects.filter(
-                source_entity__resource = resource,
+                resource = resource,
                 language = source_lang)
 
     # If the language we want to create, has the same plural rules with the
@@ -365,7 +365,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
         is_source_language = True
 
     if request.method == 'POST':
-        Translation.objects.filter(source_entity__resource=resource,
+        Translation.objects.filter(resource=resource,
             language=language).delete()
 
         messages.success(request,

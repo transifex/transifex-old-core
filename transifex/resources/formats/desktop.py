@@ -67,7 +67,7 @@ class DesktopHandler(Handler):
         for string in stringset:
             try:
                 trans = Translation.objects.get(
-                    source_entity__resource=self.resource, source_entity=string,
+                    resource=self.resource, source_entity=string,
                     language=language, rule=5
                 )
                 translation_string = trans.string

@@ -202,7 +202,7 @@ class POHandler(Handler):
         for entry in po:
             if entry.msgid_plural:
                 plurals = Translation.objects.filter(
-                    source_entity__resource = self.resource,
+                    resource = self.resource,
                     language = self.resource.source_language,
                     source_entity__string = entry.msgid
                 ).order_by('rule')
@@ -273,7 +273,7 @@ class POHandler(Handler):
         for entry in po:
             if entry.msgid_plural:
                 plurals = Translation.objects.filter(
-                    source_entity__resource = self.resource,
+                    resource = self.resource,
                     language = language,
                     source_entity__string = entry.msgid
                 ).order_by('rule')

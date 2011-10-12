@@ -414,12 +414,12 @@ class TranslationManager(models.Manager):
         if target_code:
             language = Language.objects.by_code_or_alias(target_code)
             results =  self.filter(language=language,
-                source_entity__resource__project__in=Project.objects.for_user(user),
+                resource__project__in=Project.objects.for_user(user),
                 source_entity__id__in=self.filter(query, language=source_language).values_list(
                     'source_entity', flat=True))
         else:
             results =  self.filter(
-                source_entity__resource__project__in=Project.objects.for_user(user),
+                resource__project__in=Project.objects.for_user(user),
                 source_entity__id__in=self.filter(query, language=source_language).values_list(
                     'source_entity', flat=True))
         return results
@@ -508,7 +508,7 @@ class TranslationManager(models.Manager):
         user_translated_se_ids = frozenset(self.filter(
             language=language, rule=5,
             user__id__in=users,
-            source_entity__resource__in=resources
+            resource__in=resources
         ).values_list('source_entity_id', flat=True))
         # Add resource_id as well to reduce the search space
         # by taking advantage of the indexes in resource and language
@@ -614,7 +614,7 @@ class Translation(models.Model):
         """
         # Tweaking the translation rule, because the source translation might
         # not have the same number of plural rules.
-        source_language = self.source_entity.resource.source_language
+        source_language = self.resource.source_language
         if not self.source_entity.pluralized or \
             (self.source_entity.pluralized and
             self.rule in source_language.get_pluralrules_numbers()):
@@ -825,7 +825,7 @@ class RLStats(models.Model):
         total = SourceEntity.objects.values('id').filter(
             resource=self.resource).count()
         translated = Translation.objects.values('id').filter(rule=5,
-            language=self.language, source_entity__resource=self.resource
+            language=self.language, resource=self.resource
             ).distinct().count()
         untranslated = total - translated
         self.translated = translated

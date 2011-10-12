@@ -127,7 +127,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         resource__in = resources).count()
 
     translated_strings = Translation.objects.filter(
-        source_entity__resource__in = resources,
+        resource__in = resources,
         language = target_language,
         source_entity__pluralized=False,
         rule = 5).count()
@@ -147,7 +147,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         translation_resource = resources[0]
 
     contributors = User.objects.filter(pk__in=Translation.objects.filter(
-        source_entity__resource__in = resources,
+        resource__in = resources,
         language = target_language,
         rule = 5).values_list("user", flat=True))
 
@@ -245,7 +245,7 @@ def view_strings(request, project_slug, lang_code, resource_slug=None,
         resource=resource).count()
 
     translated_strings = Translation.objects.filter(
-        source_entity__resource=resource,
+        resource=resource,
         language=target_language,
         rule=5).count()
 

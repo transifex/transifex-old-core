@@ -209,7 +209,7 @@ class Handler(object):
     def _get_translation(self, string, language, rule):
         try:
             return Translation.objects.get(
-                source_entity__resource = self.resource, source_entity=string,
+                resource = self.resource, source_entity=string,
                 language=language, rule=rule
             )
         except Translation.DoesNotExist, e:

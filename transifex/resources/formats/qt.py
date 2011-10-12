@@ -121,7 +121,7 @@ class LinguistHandler(Handler):
                     sourceString = _getText(source.childNodes)
 
                 plurals = Translation.objects.filter(
-                    source_entity__resource=self.resource,
+                    resource=self.resource,
                     language=language,
                     source_entity__string=sourceString,
                     source_entity__context=self._context_value(message) or u"None"
