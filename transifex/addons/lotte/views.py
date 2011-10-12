@@ -195,7 +195,9 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
         resources = Resource.objects.filter(project=project)
         url = reverse('project_detail', args=[project_slug])
 
-    if request.POST.get('updated', None) == 'true':
+    data = simplejson.loads(request.raw_post_data)
+
+    if data.get('updated'):
         modified = True
         # ActionLog & Notification
         for resource in resources:
@@ -205,9 +207,6 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
                        'language': language}
             object_list = [project, resource, language]
             action_logging(request.user, object_list, nt, context=context)
-            if settings.ENABLE_NOTICES:
-                txnotification.send_observation_notices_for(project,
-                        signal=nt, extra_context=context)
     else:
         modified = False
 

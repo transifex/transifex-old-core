@@ -100,7 +100,14 @@ def project_toggle_watch(request, project_slug):
     url = reverse('project_toggle_watch', args=(project_slug,))
 
     project_signals = ['project_changed',
-                       'project_deleted',]
+                       'project_deleted',
+                       'project_release_deleted',
+                       'project_resource_deleted']
+    release_signals = ['project_release_added',
+                       'project_release_changed',]
+
+    resource_signals = ['project_resource_added',
+                        'project_resource_changed']
     try:
         result = {
             'style': 'watch_add',
@@ -112,6 +119,12 @@ def project_toggle_watch(request, project_slug):
 
         for signal in project_signals:
             notification.stop_observing(project, request.user, signal)
+        for release in project.releases.all():
+            for signal in release_signals:
+                notification.stop_observing(release, request.user, signal)
+        for resource in project.resources.all():
+            for signal in resource_signals:
+                notification.stop_observing(resource, request.user, signal)
 
     except notification.ObservedItem.DoesNotExist:
         try:
@@ -125,6 +138,12 @@ def project_toggle_watch(request, project_slug):
 
             for signal in project_signals:
                 notification.observe(project, request.user, signal, signal)
+            for release in project.releases.all():
+                for signal in release_signals:
+                    notification.observe(release, request.user, signal, signal)
+            for resource in project.resources.all():
+                for signal in resource_signals:
+                    notification.observe(resource, request.user, signal, signal)
 
         except WatchException, e:
             return json_error(e.message, result)

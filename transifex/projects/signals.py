@@ -17,6 +17,9 @@ post_set_stats = Signal(providing_args=['instance'])
 post_resource_save = Signal(providing_args=['instance', 'created', 'user'])
 post_resource_delete = Signal(providing_args=['instance', 'user'])
 
+# Release signals
+post_release_save = Signal(providing_args=['instance', 'created', 'user'])
+
 # SL Submit Translations signal
 pre_submit_translation = Signal(providing_args=['instance'])
 post_submit_translation = Signal(providing_args=['request', 'resource', 'language', 'modified'])

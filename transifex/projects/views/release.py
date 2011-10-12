@@ -14,6 +14,7 @@ from actionlog.models import action_logging
 from transifex.languages.models import Language
 from transifex.projects.forms import ReleaseForm
 from transifex.projects.models import Project
+from transifex.projects.signals import post_release_save
 from transifex.projects.permissions import *
 from transifex.releases import RELEASE_ALL_DATA
 from transifex.releases.models import Release
@@ -43,8 +44,19 @@ def release_create_update(request, project_slug, release_slug=None, *args, **kwa
             project, request.user, request.POST, instance=release
         )
         if release_form.is_valid():
+            if release:
+                nt = "project_release_changed"
+                created = False
+            else:
+                nt = "project_release_added"
+                created = True
             release = release_form.save()
-
+            context = {'project': project,
+                       'release': release,}
+            object_list = [project, release]
+            action_logging(request.user, object_list, nt, context=context)
+            post_release_save.send(sender=None, instance=release,
+                    created=created, user=request.user)
             return HttpResponseRedirect(
                 reverse('release_detail',
                          args=[project_slug, release.slug]))

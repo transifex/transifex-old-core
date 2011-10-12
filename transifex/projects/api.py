@@ -16,7 +16,7 @@ from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.permissions.project import ProjectPermission
-from transifex.projects.signals import post_submit_translation
+from transifex.projects.signals import post_submit_translation, post_resource_save
 from transifex.resources.decorators import method_decorator
 from transifex.resources.formats import get_i18n_type_from_file, pofile, qt
 from transifex.resources.models import *
@@ -432,9 +432,14 @@ class ProjectResourceHandler(BaseHandler):
                     }
                 logger.debug("Extraction successful, returning: %s" % retval)
 
+                if created:
+                    post_resource_save.send(sender=None, instance=resource,
+                            created=created, user=request.user)
+
                 # transaction has been commited by save2db
                 # but logger message above marks it dirty again
                 transaction.commit()
+
                 return HttpResponse(simplejson.dumps(retval),
                     mimetype='text/plain')
 
@@ -514,7 +519,6 @@ class ProjectResourceHandler(BaseHandler):
                     modified = True
                 else:
                     modified=False
-
                 post_submit_translation.send(None, request=request,
                     resource=resource, language=language, modified=modified)
 

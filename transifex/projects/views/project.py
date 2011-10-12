@@ -207,6 +207,10 @@ def project_delete(request, project_slug):
         nt = 'project_deleted'
         context={'project': project_}
         action_logging(request.user, [project_], nt, context=context)
+        if settings.ENABLE_NOTICES:
+            txnotification.send_observation_notices_for(project_,
+                                signal=nt, extra_context=context)
+
 
         return HttpResponseRedirect(reverse('project_list'))
     else:
