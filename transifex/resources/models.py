@@ -459,7 +459,10 @@ class TranslationManager(models.Manager):
             resource__in=resources, language=language, rule=5
         ).values_list('source_entity_id', flat=True))
         untranslated_se_ids = all_se_ids - translated_se_ids
+        # Add resource_id as well to reduce the search space
+        # by taking advantage of the indexes in resource and language
         return self.filter(
+            resource__in=resources,
             source_entity__id__in=untranslated_se_ids,
             language=source_language, rule=5
         )
@@ -480,7 +483,10 @@ class TranslationManager(models.Manager):
         translated_se_ids = frozenset(self.filter(
             resource__in=resources, language=language, rule=5
         ).values_list('source_entity_id', flat=True))
+        # Add resource_id as well to reduce the search space
+        # by taking advantage of the indexes in resource and language
         return self.filter(
+            resource__in=resources,
             source_entity__id__in=translated_se_ids,
             language=source_language, rule=5
         )
@@ -504,7 +510,10 @@ class TranslationManager(models.Manager):
             user__id__in=users,
             source_entity__resource__in=resources
         ).values_list('source_entity_id', flat=True))
+        # Add resource_id as well to reduce the search space
+        # by taking advantage of the indexes in resource and language
         return self.filter(
+            resource__in=resources,
             source_entity__id__in=user_translated_se_ids,
             language=source_language, rule=5,
         )
