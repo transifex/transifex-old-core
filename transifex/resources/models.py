@@ -564,6 +564,9 @@ class Translation(models.Model):
         null=True, choices=((k,v) for k,v in settings.TRANS_ORIGIN.items()),
         help_text=_("The origin of the translation."))
 
+    reviewed = models.NullBooleanField(_('Reviewed'), null=False, default=False,
+        help_text=_("Marks if the translation has been reviewed or not."))
+
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(
