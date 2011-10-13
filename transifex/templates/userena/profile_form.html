@@ -1,5 +1,6 @@
 {% extends 'userena/base_userena.html' %}
 {% load i18n %}
+{% load addons %}
 
 {% block title %}{% trans "Account setup" %}{% endblock %}
 
@@ -30,6 +31,7 @@
 		<ul class="simple" style="padding-left:25px;">
 		  <li><a href="{% url userena_email_change user.username %}">{% trans "Change email" %} &raquo;</a></li>
 		  <li><a href="{% url userena_password_change user.username %}">{% trans "Change password" %} &raquo;</a></li>
+          {% hook "additional_account_links.html" %}
 		</ul>
 	{% endif %}
 
