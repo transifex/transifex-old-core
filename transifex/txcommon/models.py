@@ -35,7 +35,7 @@ class Profile(UserenaBaseProfile):
     longitude = models.DecimalField(max_digits=10, decimal_places=6, 
         null=True, blank=True, editable=False)
     location = models.CharField(max_length=255, null=True, blank=True, 
-        editable=False)
+        editable=True)
 
 def exclusive_fields(inmodel, except_fields=[]):
     '''
