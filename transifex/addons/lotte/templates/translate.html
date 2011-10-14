@@ -735,7 +735,8 @@
   {% url search_translations as search_translations %}
   <p class="i16 search_translations nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">
     {% trans "Search translations" %}</a>
-  </p>
+</p>
+  {% hook "glossary_link.html" %}
 {% endblock %}
 
 {% block content_main %}
