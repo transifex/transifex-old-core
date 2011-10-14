@@ -6,106 +6,30 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
-    depends_on = (
-        ("projects", "0001_initial"),
-        ("storage", "0001_initial"),
-        ("languages", "0001_initial"),
-    )
-
     def forwards(self, orm):
-
-        # Adding model 'Resource'
-        db.create_table('resources_resource', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=50, db_index=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('source_file', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['storage.StorageFile'], null=True, blank=True)),
-            ('i18n_type', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('accept_translations', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('last_update', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('source_language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['languages.Language'])),
-            ('project', self.gf('django.db.models.fields.related.ForeignKey')(related_name='resources', null=True, to=orm['projects.Project'])),
-            ('_order', self.gf('django.db.models.fields.IntegerField')(default=0)),
-        ))
-        db.send_create_signal('resources', ['Resource'])
-
-        # Adding unique constraint on 'Resource', fields ['slug', 'project']
-        db.create_unique('resources_resource', ['project_id', 'slug'])
-
-        # Adding model 'SourceEntity'
-        db.create_table('resources_sourceentity', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('string', self.gf('django.db.models.fields.TextField')()),
-            ('string_hash', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('context', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('position', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('occurrences', self.gf('django.db.models.fields.TextField')(max_length=1000, null=True, blank=True)),
-            ('flags', self.gf('django.db.models.fields.TextField')(max_length=100, blank=True)),
-            ('developer_comment', self.gf('django.db.models.fields.TextField')(max_length=1000, blank=True)),
-            ('pluralized', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('last_update', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('resource', self.gf('django.db.models.fields.related.ForeignKey')(related_name='source_entities', to=orm['resources.Resource'])),
-            ('_order', self.gf('django.db.models.fields.IntegerField')(default=0)),
-        ))
-        db.send_create_signal('resources', ['SourceEntity'])
-
-        # Adding unique constraint on 'SourceEntity', fields ['string_hash', 'context', 'resource']
-        db.create_unique('resources_sourceentity', ['string_hash', 'context', 'resource_id'])
-
-        # Adding model 'Translation'
-        db.create_table('resources_translation', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('string', self.gf('django.db.models.fields.TextField')()),
-            ('string_hash', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('rule', self.gf('django.db.models.fields.IntegerField')(default=5)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('last_update', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
-            ('source_entity', self.gf('django.db.models.fields.related.ForeignKey')(related_name='translations', to=orm['resources.SourceEntity'])),
-            ('language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['languages.Language'], null=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
-            ('_order', self.gf('django.db.models.fields.IntegerField')(default=0)),
-        ))
-        db.send_create_signal('resources', ['Translation'])
-
-        # Adding unique constraint on 'Translation', fields ['source_entity', 'language', 'rule']
-        db.create_unique('resources_translation', ['source_entity_id', 'language_id', 'rule'])
-
-        # Adding model 'Template'
-        db.create_table('resources_template', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('content', self.gf('txcommon.db.models.CompressedTextField')(null=False, blank=False)),
-            ('resource', self.gf('django.db.models.fields.related.ForeignKey')(related_name='source_file_template', unique=True, to=orm['resources.Resource'])),
-        ))
-        db.send_create_signal('resources', ['Template'])
+        
+        # Removing index on 'Resource', fields ['project']
+        db.delete_index('resources_resource', ['project_id'])
 
 
     def backwards(self, orm):
-
-        # Removing unique constraint on 'Translation', fields ['source_entity', 'language', 'rule']
-        db.delete_unique('resources_translation', ['source_entity_id', 'language_id', 'rule'])
-
-        # Removing unique constraint on 'SourceEntity', fields ['string_hash', 'context', 'resource']
-        db.delete_unique('resources_sourceentity', ['string_hash', 'context', 'resource_id'])
-
-        # Removing unique constraint on 'Resource', fields ['slug', 'project']
-        db.delete_unique('resources_resource', ['slug', 'project_id'])
-
-        # Deleting model 'Resource'
-        db.delete_table('resources_resource')
-
-        # Deleting model 'SourceEntity'
-        db.delete_table('resources_sourceentity')
-
-        # Deleting model 'Translation'
-        db.delete_table('resources_translation')
-
-        # Deleting model 'Template'
-        db.delete_table('resources_template')
+        
+        # Adding index on 'Resource', fields ['project']
+        db.create_index('resources_resource', ['project_id'])
 
 
     models = {
+        'actionlog.logentry': {
+            'Meta': {'ordering': "('-action_time',)", 'object_name': 'LogEntry'},
+            'action_time': ('django.db.models.fields.DateTimeField', [], {}),
+            'action_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['notification.NoticeType']"}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'actionlogs'", 'null': 'True', 'to': "orm['contenttypes.ContentType']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'message': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
+            'object_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'object_name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'actionlogs'", 'null': 'True', 'to': "orm['auth.User']"})
+        },
         'auth.group': {
             'Meta': {'object_name': 'Group'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -145,7 +69,7 @@ class Migration(SchemaMigration):
         'languages.language': {
             'Meta': {'ordering': "('name',)", 'object_name': 'Language', 'db_table': "'translations_language'"},
             'code': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
-            'code_aliases': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '100', 'null': 'True'}),
+            'code_aliases': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '50'}),
@@ -159,12 +83,20 @@ class Migration(SchemaMigration):
             'rule_zero': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'specialchars': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'})
         },
+        'notification.noticetype': {
+            'Meta': {'object_name': 'NoticeType'},
+            'default': ('django.db.models.fields.IntegerField', [], {}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'display': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'label': ('django.db.models.fields.CharField', [], {'max_length': '40'})
+        },
         'projects.project': {
             'Meta': {'ordering': "('name',)", 'object_name': 'Project'},
             'anyone_submit': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'bug_tracker': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'feed': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'hidden': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -176,13 +108,14 @@ class Migration(SchemaMigration):
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'outsource': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['projects.Project']", 'null': 'True', 'blank': 'True'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'projects_owning'", 'null': 'True', 'to': "orm['auth.User']"}),
             'private': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '30', 'db_index': 'True'}),
-            'tags': ('tagging.fields.TagField', [], {})
+            'tags': ('tagging_autocomplete.models.TagAutocompleteField', [], {'null': 'True'}),
+            'trans_instructions': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
         },
         'resources.resource': {
-            'Meta': {'ordering': "('_order',)", 'unique_together': "(('slug', 'project'),)", 'object_name': 'Resource'},
+            'Meta': {'ordering': "('_order',)", 'unique_together': "(('project', 'slug'),)", 'object_name': 'Resource'},
             '_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'accept_translations': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
@@ -190,17 +123,33 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'project': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'resources'", 'null': 'True', 'to': "orm['projects.Project']"}),
+            'project': ('django.db.models.fields.related.ForeignKey', [], {'db_index': 'False', 'related_name': "'resources'", 'null': 'True', 'to': "orm['projects.Project']"}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '50', 'db_index': 'True'}),
             'source_file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['storage.StorageFile']", 'null': 'True', 'blank': 'True'}),
-            'source_language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['languages.Language']"})
+            'source_language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['languages.Language']"}),
+            'total_entities': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'wordcount': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
+        'resources.rlstats': {
+            'Meta': {'ordering': "('_order',)", 'unique_together': "(('resource', 'language'),)", 'object_name': 'RLStats'},
+            '_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['languages.Language']"}),
+            'last_committer': ('django.db.models.fields.related.ForeignKey', [], {'default': 'None', 'to': "orm['auth.User']", 'null': 'True'}),
+            'last_update': ('django.db.models.fields.DateTimeField', [], {'default': 'None', 'auto_now': 'True', 'blank': 'True'}),
+            'resource': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['resources.Resource']"}),
+            'translated': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'translated_perc': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'translated_wordcount': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'untranslated': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
+            'untranslated_perc': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         },
         'resources.sourceentity': {
-            'Meta': {'ordering': "('_order',)", 'unique_together': "(('string_hash', 'context', 'resource'),)", 'object_name': 'SourceEntity'},
-            '_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'context': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'Meta': {'ordering': "['last_update']", 'unique_together': "(('string_hash', 'context', 'resource'),)", 'object_name': 'SourceEntity'},
+            'context': ('transifex.txcommon.db.models.ListCharField', [], {'default': "''", 'max_length': '255', 'null': 'False', 'blank': 'False'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'developer_comment': ('django.db.models.fields.TextField', [], {'max_length': '1000', 'blank': 'True'}),
+            'developer_comment_extra': ('django.db.models.fields.TextField', [], {'max_length': '1000', 'blank': 'True'}),
             'flags': ('django.db.models.fields.TextField', [], {'max_length': '100', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'last_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
@@ -213,22 +162,24 @@ class Migration(SchemaMigration):
         },
         'resources.template': {
             'Meta': {'ordering': "['resource']", 'object_name': 'Template'},
-            'content': ('txcommon.db.models.CompressedTextField', [], {'null': 'False', 'blank': 'False'}),
+            'content': ('transifex.txcommon.db.models.CompressedTextField', [], {'null': 'False', 'blank': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'resource': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'source_file_template'", 'unique': 'True', 'to': "orm['resources.Resource']"})
+            'resource': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'source_file_template'", 'unique': 'True', 'to': "orm['resources.Resource']"})
         },
         'resources.translation': {
-            'Meta': {'ordering': "('_order',)", 'unique_together': "(('source_entity', 'language', 'rule'),)", 'object_name': 'Translation'},
-            '_order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'Meta': {'ordering': "['last_update']", 'unique_together': "(('source_entity', 'language', 'rule'),)", 'object_name': 'Translation'},
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'language': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['languages.Language']", 'null': 'True'}),
             'last_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'origin': ('django.db.models.fields.CharField', [], {'max_length': '20', 'null': 'True'}),
+            'resource': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'+'", 'to': "orm['resources.Resource']"}),
             'rule': ('django.db.models.fields.IntegerField', [], {'default': '5'}),
             'source_entity': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'translations'", 'to': "orm['resources.SourceEntity']"}),
             'string': ('django.db.models.fields.TextField', [], {}),
             'string_hash': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'wordcount': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'})
         },
         'storage.storagefile': {
             'Meta': {'object_name': 'StorageFile'},

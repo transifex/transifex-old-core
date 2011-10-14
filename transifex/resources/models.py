@@ -152,7 +152,7 @@ class Resource(models.Model):
         verbose_name=_('Source Language'), blank=False, null=False,
         help_text=_("The source language of this Resource."))
     project = models.ForeignKey(Project, verbose_name=_('Project'),
-        blank=False, null=True, related_name='resources',
+        blank=False, null=True, related_name='resources', db_index=False,
         help_text=_("The project containing the translation resource."))
 
     # Managers
@@ -165,7 +165,7 @@ class Resource(models.Model):
         return repr(u"<Resource: %s>" % self.slug)
 
     class Meta:
-        unique_together = ('slug', 'project',)
+        unique_together = ('project', 'slug',)
         verbose_name = _('resource')
         verbose_name_plural = _('resources')
         ordering  = ['name',]
@@ -550,7 +550,7 @@ class Translation(models.Model):
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(
-        auto_now=True, editable=False, db_index=True
+        auto_now=True, editable=False
     )
 
     # Foreign Keys
@@ -558,15 +558,15 @@ class Translation(models.Model):
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         related_name='translations',
-        blank=False, null=False, db_index=False,
+        blank=False, null=False,
         help_text=_("The source string this translation string translates."))
 
     resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
-        blank=False, null=False, related_name='+', db_index=False,
+        blank=False, null=False, related_name='+',
         help_text=_("The translation resource which owns the translation."))
 
     language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True, db_index=False,
+        verbose_name=_('Target Language'),blank=False, null=True,
         help_text=_("The language in which this translation string is written."))
 
     user = models.ForeignKey(User,
