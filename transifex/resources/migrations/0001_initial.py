@@ -31,7 +31,7 @@ class Migration(SchemaMigration):
         db.send_create_signal('resources', ['Resource'])
 
         # Adding unique constraint on 'Resource', fields ['slug', 'project']
-        db.create_unique('resources_resource', ['project_id', 'slug'])
+        db.create_unique('resources_resource', ['slug', 'project_id'])
 
         # Adding model 'SourceEntity'
         db.create_table('resources_sourceentity', (
