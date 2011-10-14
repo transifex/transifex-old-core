@@ -116,7 +116,7 @@ class Resource(models.Model):
     """
 
     # Short identifier to be used in the API URLs
-    slug = models.SlugField(_('Slug'), max_length=50,
+    slug = models.SlugField(_('Slug'), max_length=50, db_index=False,
         help_text=_("A short label to be used in the URL, containing only "
                     "letters, numbers, underscores and hyphens."))
     name = models.CharField(_('Name'), max_length=255, null=False, blank=False,
@@ -550,7 +550,7 @@ class Translation(models.Model):
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(
-        auto_now=True, editable=False, db_index=True
+        auto_now=True, editable=False
     )
 
     # Foreign Keys
@@ -558,15 +558,15 @@ class Translation(models.Model):
     source_entity = models.ForeignKey(SourceEntity,
         verbose_name=_('Source String'),
         related_name='translations',
-        blank=False, null=False, db_index=False,
+        blank=False, null=False,
         help_text=_("The source string this translation string translates."))
 
     resource = models.ForeignKey(Resource, verbose_name=_('Resource'),
-        blank=False, null=False, related_name='+', db_index=False,
+        blank=False, null=False, related_name='+',
         help_text=_("The translation resource which owns the translation."))
 
     language = models.ForeignKey(Language,
-        verbose_name=_('Target Language'),blank=False, null=True, db_index=False,
+        verbose_name=_('Target Language'),blank=False, null=True,
         help_text=_("The language in which this translation string is written."))
 
     user = models.ForeignKey(User,
