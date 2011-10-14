@@ -3,7 +3,7 @@ import os
 import tempfile
 import urllib
 from itertools import ifilter
-from django.db import transaction, IntegrityError
+from django.db import transaction, IntegrityError, DatabaseError
 from django.conf import settings
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
@@ -224,6 +224,13 @@ class ResourceHandler(BaseHandler):
             logger.warning("Error creating resource %s: %s" % (r, e.message))
             return BAD_REQUEST(
                 "A resource with the same slug exists in this project."
+            )
+        except DatabaseError, e:
+            transaction.rollback()
+            msg = "Database error creating resource %s: %s"
+            logger.error(msg % (r, e), exc_info=True)
+            return BAD_REQUEST(
+                "There was an error while creating the resource: %s" % e
             )
 
         # save source entities

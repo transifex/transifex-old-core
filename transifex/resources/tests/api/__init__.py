@@ -410,6 +410,32 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             }
         )
 
+    def test_long_slug(self):
+        """Test error in case of a very long slug."""
+        res = self.client['registered'].post(
+            self.url_new_project,
+            data=simplejson.dumps({
+                    'slug': 'new_pr', 'name': 'Project from API',
+                    'maintainers': 'registered',
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
+        with open(self.po_file) as f:
+            content = f.read()
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'a-very-long-slug' * 10,
+                    'source_language': 'el',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertContains(res, 'value too long', status_code=400)
+
     def test_post_errors(self):
         res = self.client['registered'].post(
             self.url_new_project,
