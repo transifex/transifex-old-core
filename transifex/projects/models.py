@@ -3,7 +3,6 @@ import os
 from datetime import datetime
 import tagging
 from tagging.fields import TagField
-from tagging_autocomplete.models import TagAutocompleteField
 import markdown
 
 from django.conf import settings
@@ -26,8 +25,6 @@ from transifex.actionlog.models import LogEntry
 from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
 from transifex.projects.signals import project_created, project_deleted
-from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"])
 
 class DefaultProjectQuerySet(models.query.QuerySet):
     """
@@ -153,7 +150,7 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
-    tags = TagAutocompleteField(verbose_name=_('Tags'), blank=True, null=True)
+    tags = TagField(verbose_name=_('Tags'))
 
     # Relations
     maintainers = models.ManyToManyField(User, verbose_name=_('Maintainers'),

@@ -11,8 +11,6 @@ from django.utils.safestring import mark_safe
 
 from transifex.resources.models import Resource
 from ajax_select.fields import AutoCompleteSelectMultipleField
-from tagging.forms import TagField
-from tagging_autocomplete.widgets import TagAutocomplete
 
 from transifex.projects.models import Project
 from transifex.projects.signals import (project_access_control_form_start,
@@ -24,7 +22,6 @@ from transifex.txcommon.widgets import SplitSelectDateTimeWidget
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
         help_text=_('Search for a username'))
-    tags = TagField(widget=TagAutocomplete(), required=False)
 
     class Meta:
         model = Project
@@ -38,16 +35,6 @@ class ProjectForm(forms.ModelForm):
         retval = super(ProjectForm, self).save(*args, **kwargs)
         project_form_save.send(sender=ProjectForm, form=self, instance=retval)
         return retval
-
-    def clean_tags(self):
-        project_tags_list = self.cleaned_data['tags']
-        tags = list(set([tag.strip() for tag in project_tags_list.split(',')])) or []
-        for i in tags:
-            if not i.strip():
-                tags.remove(i)
-        tags.append(u'')
-        project_tags_list = ', '.join(tags)
-        return project_tags_list
 
 class RadioFieldRenderer(widgets.RadioFieldRenderer):
     """
