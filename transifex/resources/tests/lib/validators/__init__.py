@@ -105,8 +105,8 @@ class TestValidators(unittest.TestCase):
         old = "asa0asda1as+2afd-3asdas0.12asda"
         new = "asa0asda1as+2afd-3asdas0.12asda"
         v(old, new)
-        # new = "asa0asda1as+2afd-3asdas0,12asda"
-        # v(old, new)
+        new = "asa0asda1as+2afd-3asdas0,12asda"
+        v(old, new)
         new = "asa0asda1as+2afd-3asdas012asda"
         self.assertRaises(ValidationError, v, old, new)
         new = "asaasda1as+2afd-3asdas012asda"

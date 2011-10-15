@@ -181,10 +181,12 @@ class NumbersValidator(BaseValidator):
         new = unescape(new)
         for num in self.numbers.findall(old):
             if num not in new:
-                raise ValidationError(
-                    _("Number %s is in the source string but not "
-                      "in the translation." % num)
-                )
+                num = num.replace('.', ',', 1)
+                if num not in new:
+                    raise ValidationError(
+                        _("Number %s is in the source string but not "
+                          "in the translation." % num)
+                    )
 
 
 class PrintfFormatNumberValidator(BaseValidator):
