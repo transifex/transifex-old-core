@@ -13,7 +13,7 @@ lotteStatus = new LotteStatus();
 
 function saveButtonClickHandler() {
     table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
-    this_stringset.strings[table_row_id].push();
+    this_stringset.push(this_stringset.strings[table_row_id], table_row_id);
 }
 
 function spellcheckButtonClickHandler(e) {
