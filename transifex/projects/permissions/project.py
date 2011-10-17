@@ -35,7 +35,7 @@ def _check_outsource_project(obj):
 class ProjectPermission(BasePermission):
 
     label = 'project_perm'
-    checks = ('maintain', 'coordinate_team', 'submit_translations')
+    checks = ('maintain', 'coordinate_team', 'proofread', 'submit_translations')
 
     def maintain(self, project=None):
         if project:
@@ -57,6 +57,21 @@ class ProjectPermission(BasePermission):
         return False
     coordinate_team.short_description = _("Is allowed to coordinate a "
         "team project")
+
+    def proofread(self, project=None, language=None):
+        if project:
+            if self.maintain(project):
+                # Maintainers can review
+                return True
+
+            if language:
+                team = Team.objects.get_or_none(project, language.code)
+                if team:
+                    if self.user in team.reviewers.all() or self.user in team.coordinators.all():
+                        return True
+        return False
+    proofread.short_description = _("Is allowed to review translations for "
+        "a team project")
 
     def submit_translations(self, obj, any_team=False):
         """
@@ -93,9 +108,10 @@ class ProjectPermission(BasePermission):
                 if self.has_perm(perm, project):
                     return True
                 if team:
-                    #Coordinators or members
+                    # Coordinators or members
                     if self.user in team.coordinators.all() or \
-                        self.user in team.members.all():
+                        self.user in team.members.all() or \
+                        self.user in team.reviewers.all():
                         return True
                 if any_team and not team:
                     user_teams = project.team_set.filter(

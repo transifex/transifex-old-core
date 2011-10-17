@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(PROJECT_URL+'developer_comment/$', add_edit_developer_comment_extra, name='developer_comment_extra'),
     url(PROJECT_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
     url(PROJECT_LANG_URL+'exit/$', exit, name='exit_lotte'),
+    url(PROJECT_LANG_URL+'proofread/$', proofread, name='proofread'),
 )
 
 # Resource-language URLs
@@ -33,6 +34,7 @@ urlpatterns += patterns('',
     url(RESOURCE_URL+r'l/(?P<source_lang_code>[\-_@\w\.]+)/clone/(?P<target_lang_code>[\-_@\w\.]+)/$', clone_language, name='clone_translate'),
     url(RESOURCE_LANG_URL+'stringset/$', stringset_handling, name='stringset_handling'),
     url(RESOURCE_LANG_URL+'delete/$', delete_translation, name='delete_translation'),
+    url(RESOURCE_LANG_URL+'proofread/$', proofread, name='proofread'),
     url(RESOURCE_LANG_URL+'exit/$', exit, name='exit_lotte'),
 )
 

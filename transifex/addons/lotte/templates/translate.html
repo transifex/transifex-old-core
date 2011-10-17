@@ -15,6 +15,8 @@
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 
 {% block extra_head %}
+{% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
+
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
@@ -347,7 +349,10 @@
                 // Holds the amount of Suggestions provided for this source string/s
                 { "bVisible":false, "bSortable": false, },
                 // Holds an HTML snippet for save, undo buttons and hidden context
-                { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",}
+                { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",},
+                {% if is_reviewer %}
+                { "sClass": "notes", "bSortable": false, "bVisible":true, "sWidth": "40px",},
+                {% endif %}
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
@@ -468,6 +473,31 @@
                 });
 	    }
         }).fnSetFilteringDelay(500);
+
+        {% if is_reviewer %}
+        $('.review-check').live('change', function(){
+            {% if resource %}
+            var proofread_url = '{% url proofread project.slug resource.slug target_language.code %}';
+            {% else %}
+            var proofread_url = '{% url proofread project.slug target_language.code %}';
+            {% endif %}
+
+            var sid = $(this).attr('id').split('_')[2];
+
+            var req;
+            if ($(this).attr('checked')) {
+                req = {true: [sid]};
+            } else {
+                req = {false: [sid]};
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: proofread_url,
+                data: JSON.stringify(req),
+            });
+        });
+        {% endif %}
 
         /* move to the next page */
         shortcut.add('Alt+l', function(evt) {
@@ -764,6 +794,7 @@
 
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
+{% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
 
 <div class="floatright filtermenu-wrapper">
 
@@ -836,6 +867,9 @@
         <th>{% trans "Translation" %}</th>
         <th></th>
         <th>&nbsp;</th>
+        {% if is_reviewer %}
+        <th></th>
+        {% endif %}
         </tr>
     </thead>
 </table>

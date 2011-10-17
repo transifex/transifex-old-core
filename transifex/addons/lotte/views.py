@@ -270,6 +270,9 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     Function to serve AJAX data to the datatable holding the translating
     stringset.
     """
+
+    project = get_object_or_404(Project, slug=project_slug)
+
     resources = []
     if resource_slug:
         try:
@@ -285,11 +288,16 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     except Language.DoesNotExist:
         raise Http404
 
+    # Check if user is a team reviewer so that we can
+    # send the extra info.
+    check = ProjectPermission(request.user)
+    review = check.proofread(project, language)
+
     # FIXME Do we need to check for non-POST requests and return an error?
-    return _get_stringset(request.POST, resources, language)
+    return _get_stringset(request.POST, resources, language, review=review)
 
 
-def _get_stringset(post_data, resources, language, *args, **kwargs):
+def _get_stringset(post_data, resources, language, review=False, *args, **kwargs):
     """Return the source strings for the specified resources and language
     based on the filters active in the request.
 
@@ -352,7 +360,7 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
     # NOTE: It's important to keep the translation string matching inside this
     # iteration to prevent extra un-needed queries. In this iteration only the
     # strings displayed are calculated, saving a lot of resources.
-    json = simplejson.dumps({
+    response_dict = {
         'sEcho': post_data.get('sEcho','1'),
         'iTotalRecords': total,
         'iTotalDisplayRecords': total,
@@ -382,8 +390,71 @@ def _get_stringset(post_data, resources, language, *args, **kwargs):
                  '<span class="source_id" id="sourceid_' + str(counter) + '"style="display:none;">' + str(s.source_entity.id) + '</span>'),
             ] for counter,s in enumerate(source_strings[dstart:dstart+dlength])
         ],
-        })
+    }
+
+    if review:
+        for counter, s in enumerate(source_strings[dstart:dstart+dlength]):
+            try:
+                translation = Translation.objects.get(
+                    source_entity__id=s.source_entity.id,
+                    language__code=language.code, rule=5
+                )
+                review_snippet = '<span><input class="review-check" id="review_source_' + str(s.source_entity.id) + '" type="checkbox" name="review" ' + ('checked="checked"' if translation.reviewed else '') + ' value="Review"/></span>',
+            except Translation.DoesNotExist:
+                review_snippet = '<span><input class="review-check" id="review_source_' + str(s.source_entity.id) + '" type="checkbox" name="review" disabled="disabled" value="Review"/></span>',
+
+            response_dict['aaData'][counter].append(review_snippet)
+
+    json = simplejson.dumps(response_dict)
     return HttpResponse(json, mimetype='application/json')
+
+
+def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
+    """AJAX view that sets the reviewed flag on Translations to true or false.
+
+    The request data is expected in JSON, with the following format:
+
+    {
+        'true': [1,2,3]
+        'false': [4,5]
+    }
+
+    Note: The IDs are source entity IDs.
+    """
+    if request.method != 'POST':
+        return HttpResponse(status=405)
+
+    project = get_object_or_404(Project, slug=project_slug)
+
+    try:
+        language = Language.objects.by_code_or_alias(lang_code)
+    except Language.DoesNotExist:
+        raise Http404
+
+    # Check if the user has the necessary permissions to review strings.
+    check = ProjectPermission(request.user)
+    if not check.proofread(project, language):
+        return permission_denied(request)
+
+    request_data = simplejson.loads(request.raw_post_data)
+
+    if 'true' in request_data:
+        source_entity_ids = request_data['true']
+        translations = Translation.objects.filter(
+            source_entity__id__in=source_entity_ids,
+            language__code=lang_code, rule=5
+        )
+        translations.update(reviewed=True)
+
+    if 'false' in request_data:
+        source_entity_ids = request_data['false']
+        translations = Translation.objects.filter(
+            source_entity__id__in=source_entity_ids,
+            language__code=lang_code, rule=5
+        )
+        translations.update(reviewed=False)
+
+    return HttpResponse(status=200)
 
 
 def _get_source_strings_for_request(post_data, resources, source_language, language):
