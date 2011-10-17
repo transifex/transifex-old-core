@@ -66,7 +66,7 @@ setup(
         "Pygments >= 0.9",
         "PIL >= 1.1.7",
         "contact_form >= 0.3", # hg 97559a887345 or newer
-        "django-addons",
+        "django-addons >= 0.6.6",
         "django-authority",
         "django-social-auth",
         "django-filter >= 0.1",
@@ -84,6 +84,7 @@ setup(
         "python-magic",
         "pysolr",
         "django-tagging-autocomplete >= 0.3.1",
+        "django_compressor",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
