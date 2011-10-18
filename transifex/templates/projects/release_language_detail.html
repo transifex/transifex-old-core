@@ -17,7 +17,8 @@
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
         // Stats table sorter
-        $(".tablesorter_resource").tablesorter({
+        var tablesorter_resource = $(".tablesorter_resource");
+        tablesorter_resource.tablesorter({
             sortList: [[2,1],[1,0]],
             widgets: ['zebra'],
             headers: {
@@ -47,6 +48,40 @@
                 }
             }
         });
+        var category_is_clicked = false; // holds whether the last click on a table header was on the 'category' header or not
+        var tablesorter_resource_header = $('th', tablesorter_resource); // selects all headers of the table
+        tablesorter_resource_header.click(function() {
+            // set 'category_is_clicked' depending on what was clicked
+            if($(this).attr('id') == 'category_header') {
+                category_is_clicked = true;
+            } else {
+                category_is_clicked = false;
+            }
+        });
+        tablesorter_resource.bind("sortEnd", function(event) {
+            // this is called after the sorting is done
+            if(category_is_clicked) {
+                // if 'category' was clicked
+                var odd = false; // holds whether the current line is to be "painted" as odd or event
+                var last_category = "";
+                $('tr', $(this)).each(function(index, element) {
+                    // iterate over all table lines
+                    var current_category = $('.category_td_class', $(element)).html(); // get new category name
+                    if(current_category != last_category) { // if it is a different category than the last one
+                        last_category = current_category;
+                        odd = ! odd; // toggle the odd value
+                    }
+                    var jq_element = $(element);
+                    jq_element.removeClass(); // remove all classes from the current line
+                    // and add the correct class in order to "paint" appropriately
+                    if(odd) {
+                        jq_element.addClass('odd');
+                    } else {
+                        jq_element.addClass('even');
+                    }
+                });
+            }
+        })
     });
   </script>
 
@@ -72,7 +107,7 @@
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span>{% trans "Category" %}</span></th>
+    <th id="category_header"><span>{% trans "Category" %}</span></th>
     <th><span>{% trans "Resource" %}</span></th>
     <th style="width:320px"><span>{% trans "Completion" %}</span></th>
     <th><span>{% trans "Last Updated" %}</span></th>
@@ -82,7 +117,7 @@
   <tbody>
   {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-      <td>{{ stat.resource.category }}</td>
+      <td class="category_td_class">{{ stat.resource.category }}</td>
       <td>
         <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
