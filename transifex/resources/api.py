@@ -79,16 +79,16 @@ class ResourceHandler(BaseHandler):
         return r.source_language.code
 
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
-    default_fields = ('slug', 'name', 'mimetype', 'source_language', )
+    default_fields = ('slug', 'name', 'mimetype', 'source_language', 'category', )
     details_fields = (
         'slug', 'name', 'created', 'available_languages', 'mimetype',
         'source_language_code', 'project_slug', 'wordcount', 'total_entities',
-        'accept_translations', 'last_update',
+        'accept_translations', 'last_update', 'category',
     )
     fields = default_fields
     allowed_fields = (
         'slug', 'name', 'accept_translations', 'source_language',
-        'mimetype', 'content',
+        'mimetype', 'content', 'category',
     )
     apiv1_fields = ('slug', 'name', 'created', 'available_languages', 'i18n_type',
                     'source_language', 'project_slug')
