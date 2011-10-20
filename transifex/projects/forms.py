@@ -18,8 +18,10 @@ from transifex.projects.models import Project
 from transifex.projects.signals import (project_access_control_form_start,
                                         project_form_init, project_form_save)
 from transifex.releases import (RELEASE_ALL_DATA, RESERVED_RELEASE_SLUGS)
-from transifex.releases.models import Release
 from transifex.txcommon.widgets import SplitSelectDateTimeWidget
+
+Release = models.get_model('releases', 'Release')
+
 
 class ProjectForm(forms.ModelForm):
     maintainers = AutoCompleteSelectMultipleField('users', required=True,
@@ -171,8 +173,8 @@ class ReleaseForm(forms.ModelForm):
         help_text=_('Search for a resource'))
 
     # FIXME: Weird, the following message should be displayed by default, but
-    # it was necessary to make it explicit here be able to display the correct 
-    # 'invalid' message for datetime fields, which has a suggestion of the 
+    # it was necessary to make it explicit here be able to display the correct
+    # 'invalid' message for datetime fields, which has a suggestion of the
     # format to be used.
     error_messages = {'invalid': _('Enter a valid date/time in '
         'YYYY-MM-DD HH:MM[:ss[.uuuuuu]] format.')}
