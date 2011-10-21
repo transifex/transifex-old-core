@@ -242,6 +242,15 @@ class TestProjectAPI(BaseTestCase):
         self.assertEquals(len(data), 3)
         self.assertEquals(res.status_code, 200)
 
+    def test_get_teams(self):
+        """Test the teams field for the project."""
+        url = reverse(
+            'apiv2_project', kwargs={'project_slug': self.project.slug}
+        )
+        res = self.client['registered'].get(url + '?details')
+        self.assertContains(res, 'teams', status_code=200)
+        self.assertIsInstance(simplejson.loads(res.content)['teams'], list)
+
     def test_post(self):
         res = self.client['anonymous'].post(self.url_projects, content_type='application/json')
         self.assertEquals(res.status_code, 401)

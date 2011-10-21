@@ -42,6 +42,7 @@ class ProjectHandler(BaseHandler):
         'created', 'anyone_submit', 'bug_tracker', 'trans_instructions',
         'anyone_submit', 'tags', 'outsource', ('maintainers', ('username')),
         ('owner', ('username')), ('resources', ('slug', 'name', )),
+        'teams',
     )
     default_fields = ('slug', 'name', 'description', )
     fields = default_fields
@@ -51,6 +52,16 @@ class ProjectHandler(BaseHandler):
         'trans_instructions', 'tags', 'maintainers', 'outsource',
     )
     exclude = ()
+
+    @classmethod
+    def teams(cls, p):
+        """Show the language codes for which there are teams as list.
+
+        Return an empty list in case there are no teams defined.
+        """
+        return Team.objects.filter(
+            project=p
+        ).values_list('language__code', flat=True)
 
     def read(self, request, project_slug=None, api_version=1):
         """
