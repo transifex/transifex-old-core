@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import simplejson
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils import simplejson
@@ -86,7 +85,6 @@ class ProjectResourceAPITests(BaseStorageTests):
             reverse('api_project_files', args=[self.project.slug]),
             data, content_type="application/json"
         )
-        print resp.content
         self.assertEqual(eval(resp.content)['strings_added'], 3)
         self.assertEqual(resp.status_code, 200)
         upload_file.close()
