@@ -904,10 +904,16 @@ def spellcheck(request, project_slug, lang_code, resource_slug=None):
             o = int(i[0])
             l = int(i[1])
             suggestions = i[2].split('\t')
-            word = string_[o:o+l].strip()
-            d.append([word, suggestions])
+            word_with_ws = string_[o:o+l]
+            word = word_with_ws.strip()
+            if len(word) < len(word_with_ws):
+                start, end = re.search(word, word_with_ws).span()
+                l = end - start + 1
+                o = o + start
+            d.append([(o, l), word, suggestions])
     else:
         d = []
+    d.sort()
     json_dict = simplejson.dumps(d, 'utf-8')
     return HttpResponse(json_dict, mimetype='application/json')
 

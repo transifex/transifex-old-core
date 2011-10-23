@@ -16,29 +16,154 @@ function saveButtonClickHandler() {
     this_stringset.push(this_stringset.strings[table_row_id], table_row_id);
 }
 
+function refreshSpellcheckDiv() {
+  new_str = "";
+  $.each(str_as_list, function(index, value){
+    if ($.inArray(index, error_indices) > -1) {
+      new_str += '<a class="bad_word" href="#" error_index=' + index + '>'+ value + '</a>';
+    }
+    else
+      new_str += value;
+  });
+  $spellcheckDiv.html(new_str);
+  $spellcheckDiv.html(function(index, old) {
+    return old.replace(/\n/g, '\n<br />');
+  });
+  $spellcheckDiv.whitespaceHighlight();
+  $spellcheckTextarea.val(str_as_list.join(""));
+  $spellcheckTextarea.keyup();
+  $('a.bad_word').bind('click', showSuggestionBox);
+}
+
 function spellcheckButtonClickHandler(e) {
+    if (typeof $suggestBox != 'undefined')
+      $suggestBox.remove();
+    if (typeof $spellcheckButtonClicked != 'undefined') {
+      $spellcheckButtonClicked.unbind('click');
+      $spellcheckButtonClicked.bind('click', spellcheckButtonClickHandler);
+    }
+    $('div.spellcheckdiv').siblings('textarea').show();
+    $('div.spellcheckdiv').remove();
+    $spellcheckButtonClicked = $(this);
     table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current spellcheck button
-    var string = this_stringset.strings[table_row_id];
-    $("textarea#translation_"+table_row_id)
-    .spellchecker({
-            url: spellcheck_url,//"http://spellchecker.jquery.badsyntax.co.uk/checkspelling.php",       // default spellcheck url
-            //lang: "en",                     // default language
-            //engine: "google",               // pspell or google
-            //addToDictionary: false,         // display option to add word to dictionary (pspell only)
-            wordlist: {
-                    action: "after",               // which jquery dom insert action
-                    element: $("#translation_"+table_row_id)    // which object to apply above method
-            },
-            string: string,
-            stringset: this_stringset,
-            id: table_row_id,
-            //suggestBoxPosition: "below",    // position of suggest box; above or below the highlighted word
-            innerDocument: true            // if you want the badwords highlighted in the html then set to true
+    var string = this_stringset.strings[table_row_id].translated_strings['other'];
+    $spellcheckTextarea = $(this).parents('tr').find('textarea.translation.default_translation');
+    $.ajax({
+      type: 'POST',
+      url: spellcheck_url,
+      data: JSON.stringify({'text': string}),
+      dataType: 'json',
+      cache: false,
+      error: function(XHR, status, error) {
+        alert('Sorry, there was an error in processing the request.');
+      },
+      success: function(json) {
+        if (!json.length) {
+          alert("There is no incorrectly spelled word.");
+          return;
+        }
+        str_as_list = [];
+        bad_words = {};
+        error_indices = [];
+        var start=0;
+        for (i in json) {
+          str_as_list.push(string.substr(start, json[i][0][0]-start));
+          str_as_list.push(string.substr(json[i][0][0], json[i][0][1]));
+          start = json[i][0][0] + json[i][0][1];
+          error_indices.push(str_as_list.length-1);
+          bad_words[str_as_list.length-1] = [json[i][1], json[i][2]];
+        }
+        str_as_list.push(string.substr(start));
+        $spellcheckDiv = $('<div></div>')
+          .addClass('spellcheckdiv')
+          .height($spellcheckTextarea.height())
+          .width($spellcheckTextarea.innerWidth());
+        $spellcheckTextarea.hide();
+        $spellcheckDiv.insertAfter($spellcheckTextarea);
+        refreshSpellcheckDiv();
+        $spellcheckButtonClicked.unbind('click');
+        $spellcheckButtonClicked.bind('click', destroySpellcheckDiv);
+      }
     });
-    $("textarea#translation_"+table_row_id).spellchecker("check", function(result){
-        // if result is true then there are no incorrectly spelt words
-        if (result) alert('There are no incorrectly spelt words.');
-    });
+}
+
+function destroySpellcheckDiv() {
+  if (typeof $suggestBox != 'undefined')
+    $suggestBox.remove();
+  $spellcheckDiv.siblings('textarea').show();
+  $spellcheckDiv.remove();
+  $spellcheckButtonClicked.unbind('click');
+  $spellcheckButtonClicked.bind('click', spellcheckButtonClickHandler);
+}
+
+function showSuggestionBox(e) {
+  e.preventDefault();
+  var offset = $(this).offset();
+  var index = parseInt($(this).attr('error_index'));
+  offset.top = offset.top + 16;
+  e.preventDefault();
+  $('div.spellcheck-suggestbox').remove();
+  $suggestBox = $('<div></div>').addClass('spellcheck-suggestbox');
+  $suggestBox.hide();
+  var $suggestWords = $('<div></div>').addClass('spellcheck-suggestbox-words');
+  $suggestBox.append($suggestWords);
+  var $suggestFoot = $('<div></div>').addClass('spellcheck-suggestbox-foot');
+  $suggestBox.append($suggestFoot);
+  $('body').append($suggestBox);
+  var suggested_words = bad_words[parseInt($(this).attr('error_index'))][1];
+  $.each(suggested_words, function(i, value) {
+    $suggestWords.append('<a class="suggested_word spellcheck-word-highlight" error_index=' + index + ' href="#">'+value+'</a>');
+  });
+  $suggestFoot.append('<a class="ignore spellcheck-word-highlight" bad_word="' + bad_words[index][0] + '"error_index=' + index + ' href="#">Ignore</a>');
+  $suggestFoot.append('<a class="ignore_all spellcheck-word-highlight" bad_word="' + bad_words[index][0] + '" error_index=' + index + ' href="#">Ignore all</a>');
+  $suggestBox.css({
+    opacity: 1,
+    width: "auto",
+  });
+  $suggestBox.offset(offset);
+  $suggestBox.fadeIn(200);
+  $('a.suggested_word').bind('click', replaceWord);
+  $('a.ignore').bind('click', ignoreWord);
+  $('a.ignore_all').bind('click', ignoreAll);
+  $(document).bind('click', function(e) {
+    (!$(e.target).hasClass('spellcheck-word-highlight') &&
+     !$(e.target).parents().filter('.spellcheck-suggestbox').length) &&
+     !$(e.target).hasClass('bad_word') &&
+      $suggestBox.remove();
+  });
+}
+
+function ignoreWord(e) {
+  e.preventDefault();
+  var index = parseInt($(this).attr('error_index'));
+  str_as_list[index] = bad_words[index][0];
+  error_indices.splice(error_indices.indexOf(index), 1);
+  delete bad_words[index];
+  refreshSpellcheckDiv();
+  $suggestBox.remove();
+  if (!error_indices.length)
+    destroySpellcheckDiv();
+}
+
+function ignoreAll(e) {
+  e.preventDefault();
+  error_indices = [];
+  bad_words = {};
+  refreshSpellcheckDiv();
+  $suggestBox.remove();
+  destroySpellcheckDiv();
+}
+
+function replaceWord(e) {
+  e.preventDefault();
+  var index = parseInt($(this).attr('error_index'));
+  str_as_list[index] = $(this).text();
+  error_indices.splice(error_indices.indexOf(index), 1);
+  delete bad_words[index];
+  refreshSpellcheckDiv();
+  $suggestBox.remove();
+  if (!error_indices.length)
+    destroySpellcheckDiv();
 }
 
 function undoButtonClickHandler() {
