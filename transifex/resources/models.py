@@ -274,7 +274,10 @@ class Resource(models.Model):
         languages that may have 0 translated entries.
         """
         return Language.objects.filter(
-            id__in=RLStats.objects.by_resource(self).values('language').query)
+            id__in=RLStats.objects.by_resource(
+                self
+            ).order_by().values('language').query
+        )
 
     @property
     def available_languages_without_teams(self):
@@ -282,8 +285,9 @@ class Resource(models.Model):
         All languages for the resource that have at least one translation.
         """
         return Language.objects.filter(
-            id__in=RLStats.objects.by_resource(self).filter(
-                translated__gt=0).values('language').query)
+            id__in=RLStats.objects.by_resource(
+                self
+            ).filter(translated__gt=0).order_by().values('language').query)
 
 class SourceEntityManager(models.Manager):
 
