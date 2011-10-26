@@ -6,6 +6,7 @@ from joomla_ini import *
 from desktop import *
 from strings import *
 from xliff import *
+from wiki import *
 from pseudo import *
 from validators import *
 from info import *
