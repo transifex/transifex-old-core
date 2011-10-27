@@ -76,6 +76,8 @@ class WikiHandler(Handler):
                 prev_split_pos = t_end_pos
                 continue
 
+            if not source.strip('\n'):
+                continue
             source_len = len(source)
             template = re.sub(
                 re.escape(trans),
