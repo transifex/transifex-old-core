@@ -41,6 +41,7 @@ class WikiHandler(Handler):
                 buf = fh.read().decode('utf-8')
             finally:
                 fh.close()
+            self._parse(buf)
         except Exception, e:
             logger.error("Error in wiki text: %s" % e, exc_info=True)
             raise WikiError(unicode(e))
