@@ -220,6 +220,14 @@ class Project(models.Model):
         return self.resources.aggregate(Sum('wordcount'))['wordcount__sum'] or 0
 
     @property
+    def team_members(self):
+        """Return a queryset of all memebers of a project."""
+        return User.objects.filter(
+            Q(team_members__project=self) | Q(team_coordinators__project=self) |\
+            Q(projects_owning=self) | Q(projects_maintaining=self)
+        ).distinct()
+
+    @property
     def team_member_count(self):
         return User.objects.filter(
             Q(team_members__project=self) | Q(team_coordinators__project=self) |\
