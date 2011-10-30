@@ -60,7 +60,7 @@
     /* obj for holding default values of edited text areas. works like a hastable/dict */
     var current_defaults = {};
     /* var to keep filter state */
-    var filter_var = null;
+    var filter_var = "translated,";
     var user_filters_values = null;
     var resource_filters_values = null;
     var more_languages_values = null;
@@ -780,7 +780,7 @@
 
       <td id="total_translated">{{ translated_strings }}</td>
       <td id="total_translated_perc">?</td>
-      <td><input id="translated" class="filters" type="checkbox"  checked="checked"  name="only_translated"/></td>
+      <td><input id="translated" class="filters" type="checkbox"  checked="unchecked"  name="only_translated"/></td>
   </tr>
 
   <tr>
