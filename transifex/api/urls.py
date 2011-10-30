@@ -14,6 +14,7 @@ from transifex.resources.api import ResourceHandler, FileHandler, StatsHandler, 
         TranslationHandler
 from transifex.storage.api import StorageHandler
 from transifex.releases.api import ReleaseHandler
+from transifex.actionlog.api import ActionlogHandler
 
 auth = CustomHttpBasicAuthentication(realm='Transifex API')
 
@@ -25,6 +26,7 @@ projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
 translationfile_handler = Resource(FileHandler, authentication=auth)
 stats_handler = Resource(StatsHandler, authentication=auth)
 translation_handler = Resource(TranslationHandler, authentication=auth)
+actionlog_handler = Resource(ActionlogHandler, authentication=auth)
 
 urlpatterns = patterns('',
     url(
@@ -202,5 +204,56 @@ urlpatterns = patterns('',
         storage_handler,
         {'api_version': 1},
         name='api.storage.file',
-    ),
+    ), url(
+        r'^2/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='global_actionlogs',
+    ), url(
+        r'^2/accounts/profile/(?P<username>[\w-]+)/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='user_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_actionlogs',
+    ), url(
+        r'^2/projects/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='projects_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/teams/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_teams_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/team/(?P<language_code>[\-_@\w\.]+)/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_team_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/releases/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_releases_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/r/(?P<release_slug>[\w-]+)/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_release_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/resources/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_resources_actionlogs',
+    ), url(
+        r'^2/project/(?P<project_slug>[\w-]+)/resource/(?P<resource_slug>[\w-]+)/actionlog/$',
+        actionlog_handler,
+        {'api_version': 2},
+        name='project_resource_actionlogs',
+    )
+
 )
