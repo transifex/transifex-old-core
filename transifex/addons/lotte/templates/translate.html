@@ -83,8 +83,27 @@
     var toolbars = [];
     toolbars[0] = ['lotte', lotte_tabs]
 
+    function onWindowCloseOrLoad(e) {
+        var modified = parseInt($("#total_fuzzy").text());
+        if (!$("#toggle_autosave").is(":checked") && modified > 0){
+            e = e || window.event;
+            var message = "Do you really want to leave Lotte? Data you have entered may not be saved.";
+            // For IE and Firefox prior to version 4
+            if (e) {
+                e.returnValue = message;
+            }
+
+            // For Safari
+            return message;
+        }
+    }
+
+    $(window).bind('beforeunload', onWindowCloseOrLoad);
+
     $(window).bind('unload', function() {
-        $('#save_and_exit').click();
+        if ($("#toggle_autosave").is(":checked")){
+            $('#save_and_exit').click();
+        }
     });
 
     function unique(a){
