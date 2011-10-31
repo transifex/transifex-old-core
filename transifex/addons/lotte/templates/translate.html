@@ -83,6 +83,10 @@
     var toolbars = [];
     toolbars[0] = ['lotte', lotte_tabs]
 
+    $(window).bind('unload', function() {
+        $('#save_and_exit').click();
+    });
+
     function unique(a){
         /* Drop duplicated entries from an array (list) */
         var r = new Array();
