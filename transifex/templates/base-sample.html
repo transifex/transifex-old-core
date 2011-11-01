@@ -36,7 +36,7 @@
   {% endcompress %}
   {% endblock %}
   {% hook "base.html" headjs %}
-  
+
   {% block shortcut_icon %}
   <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/x-icon" />
   {% endblock %}
@@ -77,7 +77,7 @@
               {% url userena_signout as signout_url %}
               {% if not signout_url %}
                   {% url logout as signout_url %}
-              {% endif %}  
+              {% endif %}
               <form action="{{ signout_url }}?next={{request.path}}" method="POST" class="microform">{% csrf_token %}
                 <input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" />
               </form>
@@ -85,7 +85,7 @@
               {% url userena_signin as signin_url %}
               {% if not signin_url %}
                   {% url login as signin_url %}
-              {% endif %}  
+              {% endif %}
               <a href="{{ signin_url }}?next={{request|get_next}}">{% trans "Sign in" %}</a>
               {% url userena_signup as signup_url %}
               {% if signup_url %}
@@ -165,5 +165,7 @@
     {% block extrafooter %}{% endblock %}
   {% endblock %}</div>
 {% block bodyend %}{% endblock %}
+{% block custom_js_footer %}
+{% endblock %}
 </body>
 </html>
