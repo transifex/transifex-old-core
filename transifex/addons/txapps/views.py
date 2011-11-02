@@ -41,7 +41,7 @@ def enable_app(request, project_slug, txapp_slug, **kwargs):
     # TODO don't hardcode source language for projects
     # TODO Handle content=None, status=None (no response)
     txapp = get_object_or_404(TxApp, slug=txapp_slug)
-    project = get_object_or_404(Projectm slug=project_slug)
+    project = get_object_or_404(Project, slug=project_slug)
     url = '/'.join([txapp.url, 'tx/register',  project_slug])
     method = 'POST'
     try:
@@ -69,6 +69,7 @@ def disable_app(request, project_slug, txapp_slug, **kwargs):
     Handle this as an AJAX view.
     """
     txapp = get_object_or_404(TxApp, slug=txapp_slug)
+    project = get_object_or_404(Project, slug=project_slug)
     url = '/'.join([txapp.url, 'tx/unregister',  project_slug])
     method = 'POST'
     try:
