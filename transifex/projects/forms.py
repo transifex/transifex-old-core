@@ -158,7 +158,7 @@ class ProjectAccessControlForm(forms.ModelForm):
 
         if user:
             self.fields["outsource"].queryset = Project.objects.for_user(
-                user).exclude(slug=project.slug)
+                user).exclude(slug=project.slug).only('id', 'name')
         else:
             projects = self.fields["outsource"].queryset.\
                     exclude(slug=project.slug).exclude(private=True)
