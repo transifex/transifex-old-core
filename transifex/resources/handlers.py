@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from django.db.models import get_model
+from django.db.models.signals import pre_save
 from transifex.actionlog.models import action_logging
 from transifex.projects.signals import post_resource_save, post_resource_delete
 from transifex.txcommon import notifications as txnotification
@@ -8,6 +9,7 @@ from transifex.resources.utils import invalidate_template_cache
 from transifex.teams.models import Team
 
 RLStats = get_model('resources', 'RLStats')
+Translation = get_model('resources', 'Translation')
 
 def invalidate_stats_cache(resource, language, **kwargs):
     """
@@ -114,7 +116,20 @@ def on_resource_delete(sender, instance, user,**kwargs):
         txnotification.send_observation_notices_for(instance.project,
                 signal=nt, extra_context=context)
 
+def on_translation_presave(sender, instance, **kwargs):
+    """
+    If the new translation is different from the previous one,
+    the reviewed flag should be unset.
+    """
+    if instance:
+        try:
+            old_instance = Translation.objects.get(pk=instance.id)
+            if instance.string != old_instance.string:
+                instance.reviewed = False
+        except Translation.DoesNotExist, e:
+            pass
 
 # Resource signal handlers for logging
 post_resource_save.connect(on_resource_save)
 post_resource_delete.connect(on_resource_delete)
+pre_save.connect(on_translation_presave, sender=Translation)
