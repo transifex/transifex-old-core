@@ -16,6 +16,7 @@ from transifex.projects.models import Project
 from transifex.projects.permissions import pr_project_add_change
 from txapps.models import TxApp
 from txapps.exceptions import RemoteTxAppError
+from webhooks.models import WebHook
 
 
 @one_perm_required_or_403(
@@ -40,6 +41,7 @@ def enable_app(request, project_slug, txapp_slug, **kwargs):
     # TODO don't hardcode source language for projects
     # TODO Handle content=None, status=None (no response)
     txapp = get_object_or_404(TxApp, slug=txapp_slug)
+    project = get_object_or_404(Projectm slug=project_slug)
     url = '/'.join([txapp.url, 'tx/register',  project_slug])
     method = 'POST'
     try:
@@ -52,6 +54,8 @@ def enable_app(request, project_slug, txapp_slug, **kwargs):
             msg % {'app': txapp_slug, 'project': project_slug}, exc_info=True
         )
         return HttpResponse(unicode(e))
+    url = '/'.join([txapp.url, 'tx/translated'])
+    WebHook.objects.create(project=project, url=url)
     return HttpResponse('')
 
 
@@ -77,6 +81,8 @@ def disable_app(request, project_slug, txapp_slug, **kwargs):
             msg % {'app': txapp_slug, 'project': project_slug}, exc_info=True
         )
         return HttpResponse(unicode(e))
+    url = '/'.join([txapp.url, 'tx/translated'])
+    WebHook.objects.filter(project=project, url=url).delete()
     return HttpResponse('')
 
 
