@@ -437,7 +437,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             var string = this_stringset.strings[id];
             var new_class = this_stringset.strings[id].flagString();
-
+            var source_entity_id = $('#sourceid_' + id).text();
+            var review_checkbox = $('#review_source_' + source_entity_id);
             /* Apply the new class to the default string and all its siblings! */
             textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass(new_class);
 
@@ -450,6 +451,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 button_save.bind('click', saveButtonClickHandler);
             }
             else{
+                if (string.isTranslated()) {
+                    review_checkbox.removeAttr('disabled');
+                }
                 button_save.addClass('inactive');
                 button_save.unbind('click');
             }
@@ -495,6 +499,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     spellcheckButton.unbind('click');
                     spellcheckButton.bind('click', spellcheckButtonClickHandler);
                 }
+                var source_entity_id = $('#sourceid_' + id).text();
+                var review_checkbox = $('#review_source_' + source_entity_id);
+                review_checkbox.removeAttr('checked');
+                review_checkbox.attr('disabled', 'disabled');
             }
         });
     }
