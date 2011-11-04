@@ -13,14 +13,20 @@
 
 {% block userena_content %}
 <div class="grid_11 ">
-	<form class="profile-form dual" action="" enctype="multipart/form-data" method="post">
-	 <fieldset>
-	  {% csrf_token %}
-	    {{ form.as_p }}
-	 </fieldset>
-	{% hook "additional_account_links.html" %}
-	  <input type="submit" class="i16 tick buttonized" value="{% trans 'Save changes' %}" />
-	</form>
+  <form class="profile-form dual" action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+	  <fieldset>
+      {% for field in form %}
+        <p>
+          {{ field.errors }}
+          {{ field.label_tag }}
+          {{ field }}
+        </p>
+      {% endfor %}
+	  </fieldset>
+	  {% hook "additional_account_links.html" %}
+    <input type="submit" class="i16 tick buttonized" value="{% trans 'Save changes' %}" />
+  </form>
 </div>
 
 <script type="text/javascript">
