@@ -9,17 +9,16 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 {% endblock %}
 
+{% block userena_header %}<h3>Edit Profile</h3>{% endblock %}
 
-{% block content_main %}
 {% block userena_content %}
-
-
-<div class="grid_10">
-	<form class="profile-form" action="" enctype="multipart/form-data" method="post">
+<div class="grid_11 ">
+	<form class="profile-form dual" action="" enctype="multipart/form-data" method="post">
 	 <fieldset>
 	  {% csrf_token %}
 	    {{ form.as_p }}
 	 </fieldset>
+	{% hook "additional_account_links.html" %}
 	  <input type="submit" class="i16 tick buttonized" value="{% trans 'Save changes' %}" />
 	</form>
 </div>
@@ -44,44 +43,5 @@ $(document).ready(function() {
     });
 });
 </script>
-
-
-{% url socialauth_begin 'twitter' as social_twitter_url %}
-{% if social_twitter_url %}
-
-<div class="grid_5" style="margin-top:25px;">
-	
-	{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
-		{% if user.username == profile.user.username %}
-		<h5 class="i16 orange-arrow">{{ profile.user.email }}</h5>
-		<ul class="simple" style="padding-left:25px;">
-		  <li><a href="{% url userena_email_change user.username %}">{% trans "Change email" %} &raquo;</a></li>
-		  <li><a href="{% url userena_password_change user.username %}">{% trans "Change password" %} &raquo;</a></li>
-          {% hook "additional_account_links.html" %}
-		</ul>
-	{% endif %}
-
-  {% if social_auth.associated %}
-  <h5 class="i16 orange-arrow">{% trans "Associated social accounts" %}</h5>
-  <ul class="simple" style="padding-left:25px;">
-      {% for account in social_auth.associated %}
-      <li>
-          <span class="disconnect">
-          <a href={% url socialauth_disconnect_individual account.provider account.id %}>{{ account.provider|title }} (ID {{ account.id }})</a>
-          </span>
-      </li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-	<h5 class="i16 orange-arrow">{% trans "Associate new social accounts" %}</h5>
-  <ul class="simple" style="padding-left:25px;">
-  {% for name in social_auth.not_associated %}
-      <li><a rel="nofollow" href="{% url socialauth_associate_begin name %}">{{ name|title }}</a></li>
-  {% endfor %}
-  </ul>
-  </div>
-</div>
-{% endif %}
-
 {% endblock %}
-{% endblock %}
+
