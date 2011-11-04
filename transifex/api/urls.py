@@ -140,6 +140,11 @@ urlpatterns = patterns('',
         {'api_version': 2},
         name='apiv2_stats',
     ), url(
+        r'^2/project/(?P<project_slug>[-\w]+)/release/(?P<release_slug>[-\w]+)/$',
+        never_cache(release_handler),
+        {'api_version': 2},
+        name='apiv2_release',
+    ), url(
         r'^1/languages/$',
         Resource(LanguageHandler),
         {'api_version': 1},
