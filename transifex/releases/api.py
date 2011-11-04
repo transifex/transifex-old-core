@@ -15,7 +15,7 @@ class ReleaseHandler(BaseHandler):
     fields = ('slug', 'name', 'release_date', ('resources', ('slug', 'name',)))
     exclude = ()
 
-    def read(self, request, project_slug, release_slug=None):
+    def read(self, request, project_slug, release_slug=None, api_version=1):
         """
         Get details of a release.
         """
