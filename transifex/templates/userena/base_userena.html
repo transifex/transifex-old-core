@@ -24,7 +24,7 @@
 		<ul class="simple" style="padding-left:25px;">
 		  <li><a href="{% url userena_email_change user.username %}">{% trans "Change email" %} &raquo;</a></li>
 		  <li><a href="{% url userena_password_change user.username %}">{% trans "Change password" %} &raquo;</a></li>
-		  <li><a href="{% url notifications_notices %}">{% trans "Notification settings" %} &raquo;</a></li>
+		  <li><a href="{% url notification_notices %}">{% trans "Notification settings" %} &raquo;</a></li>
           {% hook "additional_account_links.html" %}
 		</ul>
 	{% endif %}
