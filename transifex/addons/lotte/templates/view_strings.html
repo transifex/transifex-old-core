@@ -1,5 +1,6 @@
 {% extends "projects/project_detail_childs.html" %}
 {% load i18n %}
+{% load permissions %}
 {% load txcommontags %}
 
 {% block breadcrumb %}
@@ -12,6 +13,8 @@
 
 
 {% block extra_head %}
+{% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
+
   <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
   <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.min.js"></script>
@@ -110,7 +113,10 @@
                   }
                 },
                 { "bVisible":false, "bSortable": false, },
-                { "sClass": "notes", "bSortable": false, "bVisible":false, "sWidth": "40px",}
+                { "sClass": "notes", "bSortable": false, "bVisible":false, "sWidth": "40px",},
+                {% if is_reviewer %}
+                { "sClass": "notes", "bSortable": false, "bVisible":false, "sWidth": "40px",},
+                {% endif %}
             ],
             "fnServerData": function (sSource, aoData, fnCallback) {
 
@@ -170,7 +176,7 @@
 {% block body_class %}project_list{% endblock %}
 
 {% block content %}
-
+{% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
 
   <table class="definition stats_totals" id="stats_table">
   <input id="filter_entries" type="hidden" name="filter_entries"/>
@@ -208,6 +214,9 @@
         <th>{% trans "Translation" %}</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
+        {% if is_reviewer %}
+        <th></th>
+        {% endif %}
         </tr>
     </thead>
 </table>
