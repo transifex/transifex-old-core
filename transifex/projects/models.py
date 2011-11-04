@@ -11,6 +11,7 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.db import models, IntegrityError
 from django.db.models import Sum
 from django.db.models import permalink, get_model, Q
@@ -114,6 +115,11 @@ class PublicProjectManager(models.Manager):
         return self.all()
 
 
+def validate_slug_not_in_blacklisted(value):
+    blacklist = getattr(settings, "SUBDOMAIN_BLACKLIST", ())
+    if value in blacklist:
+        raise ValidationError("this slug is reverved")
+
 class Project(models.Model):
     """
     A project is a group of translatable resources.
@@ -124,6 +130,7 @@ class Project(models.Model):
                     'Moreover, private projects are limited according to billing'
                     'plans for the user account.'))
     slug = models.SlugField(_('Slug'), max_length=30, unique=True,
+        validators=[validate_slug_not_in_blacklisted],
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
