@@ -1,4 +1,4 @@
-{% extends "projects/project_menu.html" %}
+{% extends "projects/project_settings.html" %}
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block content_title %}
-  <h2 class="pagetitle">
+  <h2 class="pagetitle with_description">
   {% if not project %}
     {% trans "New project" %}
   {% else %}
@@ -40,11 +40,9 @@
     </p>
 </div> 
 
-    
-    
 {% endblock %}
 
-{% block content_main %}
+{% block project_settings_content %}
 <div id="project-form-container">
 {% include "helptext/project_form_helptext.html" %}
 {% hook "extra_helptext.html" %}

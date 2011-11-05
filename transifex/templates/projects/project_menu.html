@@ -100,7 +100,7 @@ $(document).ready(
     {% if perms.projects.change_project or is_maintainer %}
     <li class="ui-state-default ui-corner-top {% ifequal request.path url_project_edit %}ui-tabs-selected ui-state-active{% endifequal %}">
        <a id="tab-link-3" href="{% url project_edit project_slug=project.slug %}">
-         <span>{% trans "Edit Project" %}</span>
+         <span>{% trans "Project Settings" %}</span>
        </a>
     </li>
     {% endif %}

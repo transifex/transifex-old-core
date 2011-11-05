@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load tx_action_log %}
 
-{% block menu %}
+{% block settings_menu %}
 {% if is_maintainer %}
 <li class="ui-state-default ui-corner-top {% if project_timeline %}ui-tabs-selected active{% endif %}">
     <a id="tab-link-5" href="{% url project_timeline project.slug %}">
