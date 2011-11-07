@@ -625,7 +625,8 @@ class Handler(object):
                 else:
                     tr = Translation.objects.create(
                         source_entity=se, language=self.language, rule=j.rule,
-                        string=j.translation, user=user, resource = self.resource
+                        string=j.translation, user=user,
+                        resource = self.resource
                     )
                     translations.add(tr)
                     if j.rule==5:

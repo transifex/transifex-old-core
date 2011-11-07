@@ -1,6 +1,7 @@
 import os
 import unittest
 import xml.dom.minidom
+from xml.etree.ElementTree import parse
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.qt import LinguistHandler, \
@@ -8,8 +9,14 @@ from transifex.resources.formats.qt import LinguistHandler, \
 from transifex.addons.suggestions.models import Suggestion
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
-class QtFile(FormatsBaseTestCase):
+
+class TestQtFile(FormatsBaseTestCase):
     """Suite of tests for the qt lib."""
+
+    def setUp(self):
+        super(TestQtFile, self).setUp()
+        self.resource.i18n_method = 'QT'
+        self.resource.save()
 
     def test_problematic_file(self):
         filename = 'problem.ts'
@@ -23,9 +30,21 @@ class QtFile(FormatsBaseTestCase):
 
     def test_qt_parser(self):
         """TS file tests."""
+        path = os.path.join(os.path.split(__file__)[0], 'en.ts')
         # Parsing POT file
-        handler = LinguistHandler('%s/en.ts' %
-            os.path.split(__file__)[0])
+        handler = LinguistHandler(path)
+
+        # Create a dict of source_strings - translations
+        root = parse(path).getroot()
+        messages = {}
+        for context in list(root):
+            for message in list(context):
+                children = list(message)
+                if not children:
+                    continue
+                source = message.find('source').text
+                translation = message.find('translation').text
+                messages[source] = translation or source
 
         handler.set_language(self.resource.source_language)
         handler.parse_file(True)
@@ -35,7 +54,7 @@ class QtFile(FormatsBaseTestCase):
         for s in self.stringset.strings:
             # Testing if source entity and translation are the same
             if not s.pluralized:
-                self.assertEqual(s.source_entity, s.translation)
+                self.assertEqual(messages[s.source_entity], s.translation)
 
             # Testing plural number
             if s.source_entity == '%n FILES PROCESSED.':
@@ -46,7 +65,7 @@ class QtFile(FormatsBaseTestCase):
                 entities += 1
 
         # Asserting number of entities - Qt file has 43 entries +1 plural.
-        self.assertEqual(entities, 44)
+        self.assertEqual(entities, 43)
 
     def test_qt_parser_fi(self):
         """Tests for fi Qt file."""
@@ -77,8 +96,9 @@ class QtFile(FormatsBaseTestCase):
 
     def test_qt_save2db(self):
         """Test creating source strings from a Qt file works"""
-        handler = LinguistHandler('%s/en.ts' %
-            os.path.split(__file__)[0])
+        handler = LinguistHandler(
+            os.path.join(os.path.split(__file__)[0], 'en.ts')
+        )
 
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
@@ -91,11 +111,12 @@ class QtFile(FormatsBaseTestCase):
         handler.save2db(is_source=True)
 
         # Check that all 43 entities are created in the db
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 43)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 43)
 
         # Check that all source translations are there
-        self.assertEqual(len( Translation.objects.filter(source_entity__resource=r,
-            language=l)), 44)
+        self.assertEqual(
+            len(Translation.objects.filter(resource=r, language=l)), 44
+        )
 
         # Import and save the finish translation
         handler.bind_file('%s/fi.ts' % os.path.split(__file__)[0])
@@ -106,11 +127,12 @@ class QtFile(FormatsBaseTestCase):
         handler.save2db()
 
         # Check if all Source strings are untouched
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 43)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 43)
 
         # Check that all translations are there
-        self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
-            language=l)), 44)
+        self.assertEqual(
+            len(Translation.objects.filter(resource=r, language=l)), 44
+        )
 
         r.delete()
 
@@ -366,7 +388,7 @@ class QtFile(FormatsBaseTestCase):
         for message in doc.getElementsByTagName("message"):
             source = _getElementByTagName(message, "source")
             sourceString = _getText(source.childNodes)
-            generated_context = handler._context_value(message)
+            generated_context = handler._context_of_message(message)
             # this shouldn't raise any exceptions
             se = SourceEntity.objects.get(
                 resource=self.resource, string=sourceString,

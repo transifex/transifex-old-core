@@ -105,7 +105,7 @@ class LinguistHandler(Handler):
                     resource=self.resource,
                     language=language,
                     source_entity__string=sourceString,
-                    source_entity__context=self._context_value(message) or u"None"
+                    source_entity__context=self._context_of_message(message)
                 ).order_by('rule')
 
                 plural_keys = {}
@@ -119,8 +119,11 @@ class LinguistHandler(Handler):
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.iterkeys():
                     e = doc.createElement("numerusform")
-                    e.appendChild(doc.createTextNode(self._pseudo_decorate(
-                        plural_keys[key])))
+                    e.appendChild(
+                        doc.createTextNode(
+                            self._pseudo_decorate(plural_keys[key])
+                        )
+                    )
                     translation.appendChild(e)
                     if not plural_keys[key]:
                         translation.attributes['type'] = 'unfinished'
@@ -135,7 +138,7 @@ class LinguistHandler(Handler):
             r"&apos;", esc_template_text)
         self.compiled_template = esc_template_text
 
-    def _context_value(self, message):
+    def _context_of_message(self, message):
         """Get the context value of a message node."""
         context_node = message.parentNode
         context_name_element = _getElementByTagName(context_node, "name")
@@ -156,7 +159,7 @@ class LinguistHandler(Handler):
                 comment = []
         except LinguistParseError, e:
             comment = []
-        return context_name + comment
+        return (context_name + comment) or "None"
 
     def _parse(self, is_source, lang_rules):
         """
@@ -319,7 +322,6 @@ class LinguistHandler(Handler):
                             for p in plural_numbers:
                                 if p != 5:
                                     messages.append((p, sourceStringText or sourceString))
-
 
                 elif translation and translation.firstChild:
                     # For messages with variants set to 'yes', we skip them
