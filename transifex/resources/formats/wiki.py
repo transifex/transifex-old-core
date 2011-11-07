@@ -29,19 +29,7 @@ class WikiHandler(Handler):
     HandlerCompileError = WikiCompileError
 
     def _parse(self, is_source, lang_rules):
-        assert is_source
-        try:
-            fh = open(self.filename, 'r')
-            try:
-                buf = fh.read().decode('utf-8')
-            finally:
-                fh.close()
-            return self._parse_wiki(buf)
-        except Exception, e:
-            logger.error("Error in wiki text: %s" % e, exc_info=True)
-            raise self.HandlerParseError(unicode(e))
-
-    def _parse_wiki(self, content):
+        content = self.content
         par_splitter = "\n\n"
         template_open = "{{"
         template_ends = "}}"
@@ -80,6 +68,3 @@ class WikiHandler(Handler):
                 GenericTranslation(source, trans, context=context)
             )
         return template
-
-    def _generate_template(content):
-        return template.encode(self.default_encoding)
