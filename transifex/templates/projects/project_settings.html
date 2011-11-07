@@ -29,7 +29,7 @@
 		{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
 		<ul>
 			{% url project_edit project.slug as url_project_edit %}
-			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_edit_project }}">{% trans "Edit Project" %}</a></li>
+			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_project_edit }}">{% trans "Edit Project" %}</a></li>
 			{% url project_delete project.slug as url_project_delete %}
 			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'delete' %}active{% endif %}"><a href="{{ url_project_delete }}">{% trans "Delete project" %}</a></li>
 			{% url project_access_control_edit project.slug as url_project_access_control_edit %}
