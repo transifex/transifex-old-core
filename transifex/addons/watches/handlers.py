@@ -12,11 +12,9 @@ from transifex.txcommon.log import logger
 
 from models import TranslationWatch
 
-release_signals = ['project_release_added',
-                   'project_release_changed',]
+release_signals = ['project_release_changed',]
 
-resource_signals = ['project_resource_added',
-                    'project_resource_changed',]
+resource_signals = ['project_resource_changed',]
 
 def _notify_translationwatchers(resource, language):
     """
@@ -35,63 +33,79 @@ def _notify_translationwatchers(resource, language):
     txnotification.send_observation_notices_for(twatch,
         signal='project_resource_translation_changed', extra_context=context)
 
-def _notify_releasewatchers(release, signal):
+def _notify_releasewatchers(project, release, signal):
     """
     Notify watchers of a release add/change
     """
-    context = {'project': release.project,
+    context = {'project': project,
                'release': release,
     }
     logger.debug("addon-watches: Sending notification for '%s'" % release)
-    txnotification.send_observation_notices_for(release,
+    if signal == "project_release_added":
+        observed_instance = project
+    else:
+        observed_instance = release
+    txnotification.send_observation_notices_for(observed_instance,
             signal=signal, extra_context=context)
 
-def _notify_resourcewatchers(resource, signal):
+def _notify_resourcewatchers(project, resource, signal):
     """
     Notify watchers of a resource add/change
     """
-    context = {'project': resource.project,
+    context = {'project': project,
                'resource': resource,
     }
     logger.debug("addon-watches: Sending notification for '%s'" % resource)
-    txnotification.send_observation_notices_for(resource,
+    if signal == 'project_resource_added':
+        observed_instance = project
+    else:
+        observed_instance = resource
+    txnotification.send_observation_notices_for(observed_instance,
             signal=signal, extra_context=context)
 
 def post_release_save_handler(sender, instance, created, user, **kwargs):
     if settings.ENABLE_NOTICES:
         release = instance
-        try:
-            notification.ObservedItem.objects.get_for(release.project, user, "project_changed")
-            if created:
-                for signal in release_signals:
-                    try:
-                        notification.ObservedItem.objects.get_for(release, user, signal)
-                    except notification.ObservedItem.DoesNotExist:
-                        notification.observe(release, user, signal, signal)
-                nt = "project_release_added"
-            else:
-                nt = "project_release_changed"
-            _notify_releasewatchers(release, nt)
-        except notification.ObservedItem.DoesNotExist, e:
-            logger.debug("Watches: %s" % unicode(e))
+        project = release.project
+        users = [watch.user for watch in notification.ObservedItem.objects.filter(content_type__model='project', object_id = project.id, signal="project_changed").select_related('user')]
+        for user in users:
+            try:
+                notification.ObservedItem.objects.get_for(release.project, user, "project_changed")
+                if created:
+                    for signal in release_signals:
+                        try:
+                            notification.ObservedItem.objects.get_for(release, user, signal)
+                        except notification.ObservedItem.DoesNotExist:
+                            notification.observe(release, user, signal, signal)
+                    nt = "project_release_added"
+                else:
+                    nt = "project_release_changed"
+                project = release.project
+                _notify_releasewatchers(project, release, nt)
+            except notification.ObservedItem.DoesNotExist, e:
+                logger.debug("Watches: %s" % unicode(e))
 
 def post_resource_save_handler(sender, instance, created, user, **kwargs):
     if settings.ENABLE_NOTICES:
         resource = instance
-        try:
-            notification.ObservedItem.objects.get_for(resource.project, user, "project_changed")
-            if created:
-                for signal in resource_signals:
-                    try:
-                        notification.ObservedItem.objects.get_for(resource, user, signal)
-                    except notification.ObservedItem.DoesNotExist:
-                        notification.observe(resource, user, signal, signal)
-                nt = "project_resource_added"
-            else:
-                nt = "project_resource_changed"
-            _notify_resourcewatchers(resource, nt)
-        except notification.ObservedItem.DoesNotExist, e:
-            logger.debug("Watches: %s" % unicode(e))
+        project = resource.project
+        users = [watch.user for watch in notification.ObservedItem.objects.filter(content_type__model='project', object_id = project.id, signal="project_changed").select_related('user')]
+        for user in users:
+            try:
+                notification.ObservedItem.objects.get_for(resource.project, user, "project_changed")
+                if created:
+                    for signal in resource_signals:
+                        try:
+                            notification.ObservedItem.objects.get_for(resource, user, signal)
+                        except notification.ObservedItem.DoesNotExist:
+                            notification.observe(resource, user, signal, signal)
+                    nt = "project_resource_added"
+                else:
+                    nt = "project_resource_changed"
+                project = resource.project
+                _notify_resourcewatchers(project, resource, nt)
+            except notification.ObservedItem.DoesNotExist, e:
+                logger.debug("Watches: %s" % unicode(e))
 
 def lotte_done_handler(sender, request, resources, language, modified,
     **kwargs):

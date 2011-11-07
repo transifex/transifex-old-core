@@ -101,13 +101,13 @@ def project_toggle_watch(request, project_slug):
 
     project_signals = ['project_changed',
                        'project_deleted',
+                       'project_release_added',
                        'project_release_deleted',
+                       'project_resource_added',
                        'project_resource_deleted']
-    release_signals = ['project_release_added',
-                       'project_release_changed',]
+    release_signals = ['project_release_changed',]
 
-    resource_signals = ['project_resource_added',
-                        'project_resource_changed']
+    resource_signals = ['project_resource_changed']
     try:
         result = {
             'style': 'watch_add',

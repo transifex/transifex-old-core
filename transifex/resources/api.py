@@ -24,7 +24,7 @@ from transifex.projects.permissions import *
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
-from transifex.projects.signals import post_submit_translation
+from transifex.projects.signals import post_submit_translation, post_resource_save
 
 from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
@@ -251,6 +251,8 @@ class ResourceHandler(BaseHandler):
         res = t.__class__.to_http_for_create(t, res)
         if res.status_code == 200:
             res.status_code = 201
+        post_resource_save.send(sender=None, instance=r,
+                created=True, user=request.user)
         transaction.commit()
         return res
 
@@ -271,9 +273,14 @@ class ResourceHandler(BaseHandler):
             return BAD_REQUEST("No or wrong source language was specified.")
 
         try:
-            Resource.objects.get_or_create(
+            r, created = Resource.objects.get_or_create(
                 project=project, source_language=source_language, **data
             )
+
+            if created:
+                post_resource_save.send(sender=None, instance=r,
+                        created=created, user=request.user)
+
         except:
             return BAD_REQUEST("The json you provided is misformatted.")
         return rc.CREATED
