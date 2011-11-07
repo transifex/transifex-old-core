@@ -10,10 +10,14 @@ from transifex.resources.models import SourceEntity, Template
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
-        STRICT, StringSet, ParseError
+        STRICT, StringSet, ParseError, CompileError
 
 
 class StringsParseError(ParseError):
+    pass
+
+
+class StringsCompileError(ParseError):
     pass
 
 
@@ -25,52 +29,15 @@ class AppleStringsHandler(Handler):
     """
 
     name = "Apple *.STRINGS file handler"
-    mime_types = ['text/x-strings']
     format = "Apple STRINGS (*.strings)"
+    method_name = 'STRINGS'
+    format_encoding = 'UTF-16'
 
-    ENCODING = 'UTF-8'
+    HandlerParseError = StringsParseError
+    HandlerCompileError = StringsCompileError
 
     def _post_compile(self, *args, **kwargs):
         self.compiled_template = self.compiled_template.encode('utf-16')
-
-    @need_resource
-    def compile(self, language=None):
-        if not language:
-            language = self.language
-
-        # pre compile init
-        self._pre_compile(language=language)
-
-        self.content = Template.objects.get(resource=self.resource).content
-        self.content = self.content.decode(self.ENCODING)
-        self._examine_content(self.content)
-
-        stringset = self._get_strings(self.resource)
-
-        for string in stringset:
-            trans = self._get_translation(string, language, 5)
-            self.content = self._replace_translation(
-                "%s_tr" % string.string_hash,
-                trans and trans.string or "",
-                self.content
-            )
-
-        self.compiled_template = self.content
-        del self.content
-        self._post_compile(language)
-
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".strings")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
-
-    @classmethod
-    def contents_check(self, filename):
-        pass
 
     def _escape(self, s):
         return s.replace('"', '\\"')
@@ -78,11 +45,15 @@ class AppleStringsHandler(Handler):
     def _unescape(self, s):
         return s.replace('\\"', '"')
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
-        """
-        Parse an apple .strings file and create a stringset with
+    def _get_content(self, filename=None, content=None):
+        """Try decoding a file with UTF-8, too."""
+        try:
+            return super(AppleStringsHandler, self)._get_content(filename, content)
+        except UnicodeError, e:
+            return self._get_content_from_file(filename, self.default_encoding)
+
+    def _parse(self, is_source, lang_rules):
+        """Parse an apple .strings file and create a stringset with
         all entries in the file.
 
         See
@@ -90,9 +61,6 @@ class AppleStringsHandler(Handler):
         for details.
         """
         resource = self.resource
-        stringset = StringSet()
-        suggestions = StringSet()
-
         context = ""
         fh = open(self.filename, "r")
         p = re.compile(r'(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)', re.U)
@@ -100,10 +68,10 @@ class AppleStringsHandler(Handler):
         ws = re.compile(r'\s+', re.U)
         try:
             f = fh.read()
-            if chardet.detect(f)['encoding'].startswith('UTF-16'):
-                f = f.decode('utf-16')
+            if chardet.detect(f)['encoding'].startswith(self.format_encoding):
+                f = f.decode(self.format_encoding)
             else:
-                f = f.decode(self.ENCODING)
+                f = f.decode(self.default_encoding)
             buf = u""
             end=0
             start = 0
@@ -138,10 +106,10 @@ class AppleStringsHandler(Handler):
                 elif not SourceEntity.objects.filter(resource=resource, string=key).exists() or not value.strip():
                     # ignore keys with no translation
                     continue
-                stringset.strings.append(GenericTranslation(key,
+                self.stringset.strings.append(GenericTranslation(key,
                     self._unescape(value), rule=5, context=context,
                     pluralized=False, fuzzy=False,
-                    obsolete=False)) 
+                    obsolete=False))
             while len(f[end:]):
                 m = c.match(f, end) or ws.match(f, end)
                 if not m or m.start() != end:
@@ -151,15 +119,8 @@ class AppleStringsHandler(Handler):
                 end = m.end()
                 if end == 0:
                     break
-
         except UnicodeDecodeError, e:
-            raise StringsParseError(e.message)
+            raise self.HandlerParseError(unicode(e))
         finally:
             fh.close()
-
-        self.stringset=stringset
-        self.suggestions=suggestions
-
-        if is_source:
-            self.template = str(buf.encode(self.ENCODING))
-
+        return buf

@@ -12,10 +12,10 @@ from transifex.addons.suggestions.models import Suggestion
 class TestAppleStrings(BaseTestCase):
     """Suite of tests for the strings file lib."""
 
-    def test_accept(self):
-        """Test whether parser accepts STRINGS file format"""
-        parser = AppleStringsHandler()
-        self.assertTrue(parser.accepts(mime='text/x-strings'))
+    def setUp(self):
+        super(TestAppleStrings, self).setUp()
+        self.resource.i18n_method = 'STRINGS'
+        self.resource.save()
 
     def test_regex(self):
         """Test regex used in the parser"""
@@ -66,10 +66,11 @@ class TestAppleStrings(BaseTestCase):
         files = ['test_utf_16.strings', 'test_utf_8.strings',]
         for i in range(1, 9):
             files.append('bad%d.strings'%i)
-        for file in files:
-            handler = AppleStringsHandler(os.path.join(os.path.dirname(__file__), file))
+        for file_ in files:
+            handler = AppleStringsHandler()
+            handler.bind_file(os.path.join(os.path.dirname(__file__), file_))
             handler.set_language(self.resource.source_language)
-            if file in ['test_utf_16.strings', 'test_utf_8.strings']:
+            if file_ in ['test_utf_16.strings', 'test_utf_8.strings']:
                 handler.parse_file(is_source=True)
                 self.stringset = handler.stringset
                 entities = 0
@@ -87,7 +88,8 @@ class TestAppleStrings(BaseTestCase):
         """Test creating source strings from a STRINGS file works"""
         source_file = 'test_utf_16.strings'
         trans_file = 'test_translation.strings'
-        handler = AppleStringsHandler(os.path.join(os.path.dirname(__file__), source_file))
+        handler = AppleStringsHandler()
+        handler.bind_file(os.path.join(os.path.dirname(__file__), source_file))
 
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)

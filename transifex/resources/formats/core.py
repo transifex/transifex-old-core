@@ -166,7 +166,18 @@ class Handler(object):
                 return content
         if filename is None:
             return None
-        f = codecs.open(filename, 'r', encoding=self.format_encoding)
+        return self._get_content_from_file(filename, self.format_encoding)
+
+    def _get_content_from_file(self, filename, encoding):
+        """Return the content of a file encoded with ``encoding``.
+
+        Args:
+            filename: The name of the file.
+            encoding: THe encoding to use to open the file.
+        Returns:
+            The content of the file as a unicode string.
+        """
+        f = codecs.open(filename, 'r', encoding=encoding)
         try:
             return f.read()
         except IOError, e:
@@ -177,7 +188,8 @@ class Handler(object):
             )
             raise FormatError(e.message)
         except Exception, e:
-            logger.warning("Unhandled exception: %s" % e.message, exc_info=True)
+            logger.error("Unhandled exception: %s" % e.message, exc_info=True)
+            raise
         finally:
             f.close()
 
