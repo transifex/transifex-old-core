@@ -13,6 +13,11 @@ from transifex.addons.suggestions.models import Suggestion
 class TestJavaProperties(BaseTestCase):
     """Suite of tests for the propertiesfile lib."""
 
+    def setUp(self):
+        super(TestJavaProperties, self).setUp()
+        self.resource.i18n_method = 'PROPERTIES'
+        self.resource.save()
+
     def test_escaped(self):
         j = JavaPropertiesHandler()
         self.assertFalse(j._is_escaped(r"es blah", 2))

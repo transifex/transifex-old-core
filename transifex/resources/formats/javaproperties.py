@@ -54,15 +54,6 @@ class JavaPropertiesHandler(Handler):
                 .replace('\\', '\\\\')
         )
 
-    def _find_linesep(self, s):
-        """Find the line separator used in the file."""
-        if "\r\n" in s:         # windows line ending
-            self.linesep = "\r\n"
-        elif "\r" in s:         # macosx line ending
-            self.linesep = "\r"
-        else:
-            self.linesep = "\n"
-
     def _is_escaped(self, line, index):
         """
         Returns True, if the character at index is escaped by backslashes.
@@ -159,11 +150,11 @@ class JavaPropertiesHandler(Handler):
         """Convert unicode characters to sequence of bytes representing the
         codepoints.
         """
-        replacement = replacement.decode('UTF-8')
+        replacement = replacement.decode(self.default_enhcoding)
         for char in replacement:
             if ord(char) > 127:
                 replacement = replacement.replace(char, self.convert_to_ascii(char))
-        replacement = replacement.encode('UTF-8')
+        replacement = replacement.encode(self.default_encoding)
         return super(JavaPropertiesHandler, self)._replace_translation(
             original, replacement, text
         )

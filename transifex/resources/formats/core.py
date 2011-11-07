@@ -240,11 +240,16 @@ class Handler(object):
         line = file_.readline()
         if line.endswith("\r\n"):  # windows line ending
             self._linesep = "\r\n"
-        elif line.endswith("\r"):  # macosx line ending
-            self._linesep = "\r"
         else:
             self._linesep = "\n"
         file_.seek(0)
+
+    def _find_linesep(self, s):
+        """Find the line separator used in the file."""
+        if "\r\n" in s:         # windows line ending
+            self.linesep = "\r\n"
+        else:
+            self.linesep = "\n"
 
     def _prepare_line(self, line):
         """
