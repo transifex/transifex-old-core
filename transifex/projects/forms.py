@@ -8,6 +8,7 @@ from django.core.exceptions import ValidationError
 from django.forms import widgets
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
+from django.contrib.auth import authenticate
 
 from transifex.resources.models import Resource
 from ajax_select.fields import AutoCompleteSelectMultipleField
@@ -53,6 +54,27 @@ class ProjectForm(forms.ModelForm):
         tags.append(u'')
         project_tags_list = ', '.join(tags)
         return project_tags_list
+
+
+class ProjectDeleteForm(forms.Form):
+    """
+    A form used to check the user password before deleting a project.
+    """
+    password = forms.CharField(widget=forms.PasswordInput, label='Your password')
+
+    def __init__(self, request, *args, **kwargs):
+        self.request = request
+        self.user_cache = None
+        super(ProjectDeleteForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        password = self.cleaned_data.get('password')
+        if password:
+            self.user_cache = authenticate(username=self.request.user.username, password=password)
+            if self.user_cache is None:
+                raise forms.ValidationError(_("Invalid password."))
+
+        return self.cleaned_data
 
 
 class RadioFieldRenderer(widgets.RadioFieldRenderer):

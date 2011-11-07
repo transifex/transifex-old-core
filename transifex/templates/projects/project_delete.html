@@ -9,11 +9,10 @@
   	{% if project %}
 	    {% if perms.projects.delete_project or is_maintainer %}
 	    <h3 style="margin:2em 0;" >{% trans "Delete Project" %}</h3>
-	    <div class="deletelink">
-	    	<p>
-	      	<a class="i16 delete buttonized buttonized_warning" href="{% url project_delete project_slug=project.slug %}">{% trans "Delete project" %}</a>
-	      </p>
-	    </div>
+      <form action='' method='post'>{% csrf_token %}
+        {{ delete_form.as_p }}
+        <input type="submit" class="i16 submit buttonized" value="{% trans "Delete project" %}" />
+      </form>
 	    {% endif %}
     {% endif %}
     

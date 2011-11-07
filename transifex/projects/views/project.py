@@ -15,7 +15,8 @@ from actionlog.models import action_logging, LogEntry
 from actionlog.filters import LogEntryFilter
 from notification import models as notification
 from transifex.projects.models import Project
-from transifex.projects.forms import ProjectAccessControlForm, ProjectForm
+from transifex.projects.forms import ProjectAccessControlForm, \
+    ProjectForm, ProjectDeleteForm
 from transifex.projects.permissions import *
 from transifex.projects import signals
 
@@ -190,33 +191,44 @@ def handle_stats_on_access_control_edit(project):
             invalidate_template_cache("resource_details",
                 project.slug, resource.slug)
 
+
+def _delete_project(request, project):
+    import copy
+    project_ = copy.copy(project)
+    project.delete()
+
+    messages.success(request, "The project '%s' was deleted." % project.name)
+
+    # ActionLog & Notification
+    nt = 'project_deleted'
+    context = {'project': project_}
+    action_logging(request.user, [project_], nt, context=context)
+    if settings.ENABLE_NOTICES:
+        txnotification.send_observation_notices_for(project_,
+            signal=nt, extra_context=context)
+
+
 @login_required
 @one_perm_required_or_403(pr_project_delete,
     (Project, 'slug__exact', 'project_slug'))
 def project_delete(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
-        import copy
-        project_ = copy.copy(project)
-        project.delete()
-
-        messages.success(request,
-                         "The project '%s' was deleted." % project.name)
-
-        # ActionLog & Notification
-        nt = 'project_deleted'
-        context={'project': project_}
-        action_logging(request.user, [project_], nt, context=context)
-        if settings.ENABLE_NOTICES:
-            txnotification.send_observation_notices_for(project_,
-                                signal=nt, extra_context=context)
-
-
-        return HttpResponseRedirect(reverse('project_list'))
+        delete_form = ProjectDeleteForm(data=request.POST, request=request)
+        if delete_form.is_valid():
+            _delete_project(request, project)
+            return HttpResponseRedirect(reverse('project_list'))
+        else:
+            return render_to_response('projects/project_delete.html', {
+                'project': project,
+                'delete_form': delete_form,
+            }, context_instance=RequestContext(request))
     else:
-        return render_to_response(
-            'projects/project_confirm_delete.html', {'project': project,},
-            context_instance=RequestContext(request))
+        delete_form = ProjectDeleteForm(request=request)
+        return render_to_response('projects/project_delete.html', {
+            'project': project,
+            'delete_form': delete_form,
+        }, context_instance=RequestContext(request))
 
 
 @one_perm_required_or_403(pr_project_private_perm,
