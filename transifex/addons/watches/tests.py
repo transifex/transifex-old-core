@@ -1,17 +1,30 @@
 # -*- coding: utf-8 -*-
+import os
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 from transifex.projects.models import Project
 from transifex.resources.models import Resource
 from transifex.txcommon.tests.base import BaseTestCase, USER_ROLES, NoticeTypes
+from transifex.resources.models import Resource
+from transifex.releases.models import Release
 from django.utils import simplejson
 from django.conf import settings
+from notification.models import ObservedItem
 
 class TestWatches(NoticeTypes, BaseTestCase):
 
     def setUp(self):
         super(TestWatches, self).setUp()
+        self.project_signals = ['project_changed',
+                                'project_deleted',
+                                'project_release_added',
+                                'project_release_deleted',
+                                'project_resource_added',
+                                'project_resource_deleted']
 
+        self.release_signals = ['project_release_changed',]
+
+        self.resource_signals = ['project_resource_changed']
         # Sanity checks
         self.assertTrue( Project.objects.count() >= 1, msg = "Base test case didn't create any projects" )
         self.assertTrue( Resource.objects.count() >= 1, msg = "Base test case didn't create any resources")
@@ -58,11 +71,58 @@ class TestWatches(NoticeTypes, BaseTestCase):
                     self.assertEqual(json['style'], 'watch_remove')
                     self.assertEqual(json['title'], 'Stop watching this project')
                     self.assertEqual(json['error'], None)
+                    self.assertEqual(ObservedItem.objects.filter(content_type__model='project',
+                        signal__in=self.project_signals, object_id=self.project.id, user__username=user).count(), 6)
                 else:
                     self.assertEqual(json['error'], "Notification is not enabled")
             else:
                 self.assertEqual(resp.status_code, 302)
 
+        resp = self.client['maintainer'].post(self.urls['release_create'],
+            {'slug': 'nice-release', 'name': 'Nice Release',
+            'project': self.project.id, 'resources': '|2|',
+            'description': '', 'release_date': '', 'resources_text': '',
+            'stringfreeze_date': '', 'homepage': '', 'long_description': '',
+             'develfreeze_date': '', }, follow=True)
+
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, "projects/release_detail.html")
+
+        r = Release.objects.get(slug='nice-release')
+        self.assertEqual(ObservedItem.objects.filter(content_type__model='release',
+            signal__in=self.release_signals, object_id=Release.objects.get(
+                slug='nice-release', project=self.project).id,
+                 user__username='maintainer').count(), 1)
+
+        self.pofile_path = os.path.join(
+            settings.TX_ROOT, 'resources/tests/lib/pofile'
+        )
+        self.po_file = os.path.join(self.pofile_path, "tests.pot")
+        self.url_create_resource = reverse(
+            'apiv2_resources', kwargs={'project_slug': self.project.slug}
+        )
+        with open(self.po_file) as f:
+            content = f.read()
+
+        res = self.client['maintainer'].post(
+            self.url_create_resource,
+            data=simplejson.dumps({
+                    'name': "resource1",
+                    'slug': 'r1',
+                    'source_language': 'en_US',
+                    'mimetype': 'text/x-po',
+                    'content': content,
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(res.status_code, 201)
+        resource = Resource.objects.get(slug='resource1', project=self.project)
+        self.assertEqual(ObservedItem.objects.filter(content_type__model='resource',
+            signal__in=self.resource_signals, object_id=Resource.objects.get(
+                slug='resource1', project=self.project).id,
+                 user__username='maintainer').count(), 1)
+
+        for user in USER_ROLES:
             resp = self.client[user].post(self.url_project_toggle_watch, {},)
             if user != 'anonymous':
                 self.assertEqual(resp.status_code, 200)
