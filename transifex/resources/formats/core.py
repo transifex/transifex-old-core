@@ -816,7 +816,12 @@ class Handler(object):
         self.stringset = StringSet()
         self.suggestions = StringSet()
         self.is_content_valid()
-        obj = self._parse(is_source, lang_rules)
+        try:
+            obj = self._parse(is_source, lang_rules)
+        except self.HandlerParseError, e:
+            msg = "Error when parsing file for resource %s: %s"
+            logger.error(msg % (self.resource, e), exc_info=True)
+            raise
         if is_source:
             self.template = self._generate_template(obj)
 

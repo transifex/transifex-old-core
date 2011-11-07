@@ -19,21 +19,16 @@ class WikiCompileError(CompileError):
 
 
 class WikiHandler(Handler):
+    """Class for mediawiki markup."""
+
     name = "Wiki handler"
-    mime_types = ['text/x-wiki']
     format = "Files extracted from Wikipedia (.wiki)"
+    method_name = 'WIKI'
 
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        return (filename and filename.endswith('.wiki')) or mime in cls.mime_types
+    HandlerParseError = WikiParseError
+    HandlerCompileError = WikiCompileError
 
-    @classmethod
-    def contents_check(self, filename):
-        pass
-
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source, lang_rules):
         assert is_source
         try:
             fh = open(self.filename, 'r')
@@ -41,15 +36,12 @@ class WikiHandler(Handler):
                 buf = fh.read().decode('utf-8')
             finally:
                 fh.close()
-            self._parse(buf)
+            return self._parse_wiki(buf)
         except Exception, e:
             logger.error("Error in wiki text: %s" % e, exc_info=True)
-            raise WikiError(unicode(e))
+            raise self.HandlerParseError(unicode(e))
 
-    def _parse(self, content):
-        stringset = StringSet()
-        suggestions = StringSet()
-
+    def _parse_wiki(self, content):
         par_splitter = "\n\n"
         template_open = "{{"
         template_ends = "}}"
@@ -84,9 +76,10 @@ class WikiHandler(Handler):
                 "%(hash)s_tr" % {'hash': hash_tag(source, context)},
                 template
             )
-            stringset.strings.append(GenericTranslation(source,
-                trans, context=context))
+            self.stringset.strings.append(
+                GenericTranslation(source, trans, context=context)
+            )
+        return template
 
-        self.stringset = stringset
-        self.suggestions = suggestions
-        self.template = str(template.encode('utf-8'))
+    def _generate_template(content):
+        return template.encode(self.default_encoding)

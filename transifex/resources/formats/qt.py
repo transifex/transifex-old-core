@@ -69,7 +69,7 @@ class LinguistHandler(Handler):
     method_name = 'QT'
 
     HandlerParseError = LinguistParseError
-    handlercompileError = LinguistCompileError
+    HandlerCompileError = LinguistCompileError
 
     def _escape(self, s):
         return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
