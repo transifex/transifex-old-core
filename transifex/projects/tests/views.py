@@ -49,8 +49,9 @@ class ProjectViewsTests(base.BaseTestCase, base.NoticeTypes):
     def test_delete_project(self):
         url = reverse('project_delete', args=[self.project.slug])
         resp = self.client['maintainer'].get(url)
-        self.assertContains(resp, "Say goodbye")
-        resp = self.client['maintainer'].post(url, follow=True)
+        self.assertContains(resp, "Delete project")
+        user = self.user['maintainer']
+        resp = self.client['maintainer'].post(url, {'password': base.PASSWORD}, follow=True)
         self.assertContains(resp, "was deleted.")
         self.assertTrue(Project.objects.filter(slug=self.project.slug).count() == 0)
         # Test messages:
