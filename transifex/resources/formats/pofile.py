@@ -5,7 +5,7 @@ GNU Gettext .PO/.POT file handler/compiler
 """
 import os, re, time
 from collections import defaultdict
-import polib, datetime
+import polib
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
@@ -158,7 +158,6 @@ class GettextHandler(Handler):
                 .replace('\r', r'\\r')\
                 .replace('\"', r'\\"')
 
-    @need_res
     def _post_compile(self, *args, **kwargs):
         """
         Here we update the PO file headers and the plurals
@@ -182,7 +181,7 @@ class GettextHandler(Handler):
         # need to do it for the pofile object as well.
         po.encoding = self.format_encoding
 
-        po.metadata['PO-Revision-Date'] = (datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M+0000").encode(self.format_encoding))
+        po.metadata['PO-Revision-Date'] = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['Plural-Forms'] = ("nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)).encode(self.format_encoding)
         # The following is in the specification but isn't being used by po
         # files. What should we do?
@@ -247,7 +246,7 @@ class GettextHandler(Handler):
     def _post_save2db(self, *args, **kwargs):
         """Emit a signal for others to catch."""
         kwargs.update({'copyrights': self.copyrights})
-        super(POHandler, self)._post_save2db(*args, **kwargs)
+        super(GettextHandler, self)._post_save2db(*args, **kwargs)
 
 
     def _parse(self, is_source, lang_rules):
@@ -422,6 +421,7 @@ class POHandler(GettextHandler):
                     content_with_copyright += line + "\n"
             elif not copyrights_inserted:
                 copyrights_inserted = True
+                content_with_copyright += "# Translators:\n"
                 for entry in c:
                     content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
                             ', ' + entry.years_text.encode('UTF-8') + ".\n"
@@ -440,13 +440,6 @@ class POHandler(GettextHandler):
             c = self._get_copyright_from_line(line)
             if c is not None:
                 self.copyrights.append(c)
-
-    def _post_save2db(self, *args, **kwargs):
-        """Emit a signal for others to catch."""
-        post_save_translation.send(
-            sender=self, resource=self.resource,
-            language=self.language, copyrights=self.copyrights
-        )
 
 
 class POTHandler(GettextHandler):

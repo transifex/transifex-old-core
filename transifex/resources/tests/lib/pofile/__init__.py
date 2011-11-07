@@ -16,7 +16,7 @@ from transifex.addons.suggestions.models import Suggestion
 TEST_FILES_PATH = os.path.join(settings.TX_ROOT,
                                'resources/tests/lib/pofile/general')
 
-class POFile(FormatsBaseTestCase):
+class TestPoFile(FormatsBaseTestCase):
     """Suite of tests for the pofile lib."""
 
     def test_pot_parser(self):
@@ -285,7 +285,7 @@ class POFile(FormatsBaseTestCase):
         self.assertRaises(PoParseError, handler.parse_file, is_source=True)
 
 
-class POFileHeaders(FormatsBaseTestCase):
+class TestPoFileHeaders(FormatsBaseTestCase):
     """Test PO File library support for PO file headers."""
 
     def _load_pot(self):
@@ -323,7 +323,7 @@ class POFileHeaders(FormatsBaseTestCase):
         self.assertTrue(self.team.mainlist in pofile)
 
 
-class TestPOFileCopyright(FormatsBaseTestCase):
+class TestPoFileCopyright(FormatsBaseTestCase):
     """Test copyright lines for translators in po files."""
 
     def setUp(self):
@@ -340,7 +340,7 @@ class TestPOFileCopyright(FormatsBaseTestCase):
             '# Copyright, 2011, John Doe.',
             'asdas, 2011',
         ]
-        super(TestPOFileCopyright, self).setUp()
+        super(TestPoFileCopyright, self).setUp()
 
     def test_match_lines(self):
         for line in self.matched_lines:

@@ -6,41 +6,28 @@ from transifex.txcommon.log import logger
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
-        StringSet, ParseError
+        StringSet, ParseError, CompileError
 
-class DTDParseError(ParseError):
+
+class DtdParseError(ParseError):
     pass
 
-class DTDHandler(Handler):
+
+class DtdCompileError(CompileError):
+    pass
+
+
+class DtdHandler(Handler):
     """ Handler for DTD translation files. """
-    ENCODING = 'UTF-8'
-
+    default_encoding = 'UTF-8'
+    format_encoding = 'UTF-8'
     name = "DTD file handler"
-    mime_types = ['text/xml-dtd']
     format = "DTD (*.dtd)"
-
-    def _post_save2file(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.decode(self.ENCODING)
-
-    def _pre_save2file(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.encode(self.ENCODING)
-
-
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith(".dtd")
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
-
-    @classmethod
-    def contents_check(self, filename):
-        pass
+    method_name = ".DTD"
 
     def _escape(self, s):
-        """
+        """Escape format content.
+
         HTML escape quotes, ampersands and angle brackets
         single quotes are omitted,
         because double quotes around the value are forced in template
@@ -60,15 +47,8 @@ class DTDHandler(Handler):
                  .replace('&#39;',"'")
                  )
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
-        """
-        Parse a .dtd file and create a stringset with all entries in the file.
-        """
+    def _parse(self, is_source, lang_rules):
         resource = self.resource
-        stringset = StringSet()
-        suggestions = StringSet()
 
         context = ""
         # accept file-like object as an input
@@ -104,7 +84,7 @@ class DTDHandler(Handler):
         latest_comment = ""
         for (orig, key, value, comment) in re.findall(re_tag, text):
             if key:
-                stringset.strings.append(GenericTranslation(key,
+                self.stringset.strings.append(GenericTranslation(key,
                     self._unescape(value[1:-1]),
                     rule=5, # no plural forms
                     context=context, comment=latest_comment,
@@ -118,8 +98,3 @@ class DTDHandler(Handler):
 
             if comment:
                 latest_comment = comment
-
-        self.stringset=stringset
-        self.suggestions=suggestions
-        if is_source:
-            self.template = text.encode("utf-8")

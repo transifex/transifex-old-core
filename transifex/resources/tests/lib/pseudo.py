@@ -2,22 +2,22 @@
 import os
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from transifex.resources.formats import get_i18n_handler_from_type
 from transifex.resources.models import Resource
 from transifex.languages.models import Language
 from transifex.txcommon import import_to_python
+from transifex.resources.formats.registry import registry
 from transifex.txcommon.tests import base
 
 
 FORMATS = {
     'PO':{
-        'file': os.path.join(settings.TX_ROOT, 
+        'file': os.path.join(settings.TX_ROOT,
             'resources/tests/lib/pofile/pseudo.pot'),
         'pseudo_messages':{
             'BRACKETS': [u'msgstr "[Locations]"'],
             'UNICODE': [u'"Ŭşḗř %(name)s <b>ḓǿḗş ƞǿŧ</b> ħȧṽḗ ȧ',
                 u'%i ḿǿŧǿřƈẏƈŀḗş ȧŧ:\\n'],
-            'PLANGUAGE': [u'"ÜקÜséקér %(name)s <b>dôéקôés nôקôt</b>', 
+            'PLANGUAGE': [u'"ÜקÜséקér %(name)s <b>dôéקôés nôקôt</b>',
                 u'%i môקôtôקôrcýקýcléקés åקåt:\\n'],
             'MIXED': [u'[Ŀôקôƈåקåŧïôקïôƞş]',
                 u'%i ḿôקôŧôקôřƈýקýƈŀéקéş åקåŧ:\\n']
@@ -25,7 +25,7 @@ FORMATS = {
 
         },
     'QT':{
-        'file': os.path.join(settings.TX_ROOT, 
+        'file': os.path.join(settings.TX_ROOT,
             'resources/tests/lib/qt/pseudo.ts'),
         'pseudo_messages':{
             'BRACKETS': [u'<translation>[START]</translation>'],
@@ -36,7 +36,7 @@ FORMATS = {
             }
         },
     'PROPERTIES':{
-        'file': os.path.join(settings.TX_ROOT, 
+        'file': os.path.join(settings.TX_ROOT,
             'resources/tests/lib/javaproperties/pseudo.properties'),
         'pseudo_messages':{
             'BRACKETS': [u'Key00=[Value00]'],
@@ -46,7 +46,7 @@ FORMATS = {
             }
         },
     'INI':{
-        'file': os.path.join(settings.TX_ROOT, 
+        'file': os.path.join(settings.TX_ROOT,
             'resources/tests/lib/joomla_ini/pseudo.ini'),
         'pseudo_messages':{
             'BRACKETS': [u'KEY1="[Translation]"'],
@@ -58,7 +58,7 @@ FORMATS = {
 
     # FIXME: Waiting for fixes in the format.
     #'DESKTOP':{
-        #'file': os.path.join(settings.TX_ROOT, 
+        #'file': os.path.join(settings.TX_ROOT,
             #'resources/tests/lib/desktop/data/okular.desktop'),
         #'pseudo_messages':{
             #'BRACKETS': [u''],
@@ -78,7 +78,7 @@ class PseudoTestCase(base.BaseTestCase):
     def test_pseudo_file(self):
         """Test Pseudo translation generation based on FORMATS var dict."""
         for i18n_type, v in FORMATS.items():
-            
+
             #if i18n_type != "INI": continue
 
             # Set i18n_type for resource
@@ -86,7 +86,7 @@ class PseudoTestCase(base.BaseTestCase):
             self.resource.save()
 
             # Set a file, resource and language for the resource
-            parser = get_i18n_handler_from_type(i18n_type)
+            parser = registry.handler_for(i18n_type)
             handler = parser(v['file'], resource=self.resource,
                 language=self.language)
             handler.parse_file(is_source=True)
@@ -95,7 +95,7 @@ class PseudoTestCase(base.BaseTestCase):
             # For each pseudo type that exists, try to generate files in the
             # supported i18n formats supported.
             for pseudo_type in settings.PSEUDO_TYPES.keys():
-                
+
                 #if pseudo_type != "MIXED": continue
 
                 # Get Pseudo type class
@@ -111,7 +111,7 @@ class PseudoTestCase(base.BaseTestCase):
                 if type(file_content) != unicode:
                     file_content = file_content.decode('utf-8')
 
-                #FIXME: We have a bug related to spaces being escaped in 
+                #FIXME: We have a bug related to spaces being escaped in
                 # .properties files. This can be dropped after fixing it.
                 if i18n_type == 'PROPERTIES' and \
                     pseudo_type in ['PLANGUAGE', 'UNICODE']:
@@ -148,7 +148,7 @@ class PseudoTestCase(base.BaseTestCase):
                     'attachment': f},
                 )
             f.close()
-            
+
             print '-----------------------'
             print i18n_type
             print settings.I18N_METHODS[i18n_type]['mimetype']
@@ -156,12 +156,12 @@ class PseudoTestCase(base.BaseTestCase):
             print '-----------------------'
 
             # Pseudo file API URL
-            url = reverse('apiv2_pseudo_content', args=[self.project.slug, 
+            url = reverse('apiv2_pseudo_content', args=[self.project.slug,
                 resource_slug])
-            
+
             for pseudo_type in settings.PSEUDO_TYPES:
                 # Get resource file using a specific pseudo type
-                resp = self.client['registered'].get(url, 
+                resp = self.client['registered'].get(url,
                     data={'pseudo_type':pseudo_type})
 
                 # Get response and check encoding
@@ -169,7 +169,7 @@ class PseudoTestCase(base.BaseTestCase):
                 if type(resp_content) != unicode:
                     resp_content = resp_content.decode('utf-8')
 
-                #FIXME: We have a bug related to spaces being escaped in 
+                #FIXME: We have a bug related to spaces being escaped in
                 # .properties files. This can be dropped after fixing it.
                 if i18n_type == 'PROPERTIES' and \
                     pseudo_type in ['PLANGUAGE', 'UNICODE']:

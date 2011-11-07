@@ -508,22 +508,15 @@ class Handler(object):
         """
         pass
 
-    def _post_save2db(self, strings_added, strings_updated, strings_deleted,
-            is_source, user, overwrite_translations, **kwargs):
+    def _post_save2db(self, *args, **kwargs):
         """
         This is called in the end of the save2db method. Override if you need
         the behaviour changed.
         """
         kwargs.update({
-            'strings_added': strings_added,
-            'strings_updated': strings_updated,
-            'strings_deleted': strings_deleted,
-            'is_source': is_source,
-            'user': user,
-            'overwrite_translations': overwrite_translations,
             'resource': self.resource,
             'language': self.language
-            })
+        })
         post_save_translation.send(sender=self, **kwargs)
 
     def _send_notices(self, signal, extra_context):
@@ -762,7 +755,10 @@ class Handler(object):
             transaction.rollback()
             return (0, 0)
         try:
-            self._post_save2db(is_source , user, overwrite_translations)
+            self._post_save2db(
+                is_source=is_source, user=user,
+                overwrite_translations=overwrite_translations
+            )
             if added + updated + deleted > 0:
                 self._handle_update_of_resource(user)
         except Exception, e:

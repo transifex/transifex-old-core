@@ -6,7 +6,7 @@ from django.conf import settings
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats.dtd import DTDHandler, DTDParseError
+from transifex.resources.formats.dtd import DtdHandler, DtdParseError
 
 class TestDTD(BaseTestCase):
     """Suite of tests for the .DTD files."""
