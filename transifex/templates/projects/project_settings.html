@@ -1,7 +1,7 @@
 {% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load addons %}
-
+{% load permissions %}
 
 {% block content_title %}
   <h2 class="pagetitle with_description">
@@ -24,6 +24,7 @@
 
 
 {% block content_main %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 <div class="grid_4 alpha">
 	<div class="side-menu left-side">
 		{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
@@ -32,8 +33,11 @@
 			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_project_edit }}">{% trans "Edit Project" %}</a></li>
 			{% url project_delete project.slug as url_project_delete %}
 			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'delete' %}active{% endif %}"><a href="{{ url_project_delete }}">{% trans "Delete project" %}</a></li>
+
+      {% if is_maintainer %}
 			{% url project_access_control_edit project.slug as url_project_access_control_edit %}
 			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Access Control" %}</a></li>
+      {% endif %}
 
 			{% hook "project.html" settings_menu %}
   	</ul>
