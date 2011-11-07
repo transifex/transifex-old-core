@@ -22,7 +22,7 @@ class TestCoreFunctions(Users, Languages, TransactionTestCase):
         parser.bind_content(content)
         # FIXME get project/resource from parents
         p = Project.objects.create(slug="pr", name="Pr")
-        l = Language.objects.by_code_or_alias('en')
+        l = self.language_en
         r = Resource.objects.create(
             slug="core", name="Core", project=p, source_language=l
         )
