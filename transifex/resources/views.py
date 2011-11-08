@@ -460,7 +460,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
-def _compile_translation_template(resource=None, language=None):
+def _compile_translation_template(resource=None, language=None, pseudo_type=None):
     """Given a resource and a language we create the translation file."""
     if resource.i18n_method == 'PO' and language is None:
         i18n_type = 'POT'

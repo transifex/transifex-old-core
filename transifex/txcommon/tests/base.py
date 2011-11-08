@@ -107,7 +107,6 @@ class Languages(object):
 
     @classmethod
     def setUpClass(cls):
-        # TODO make a class method (setUpClass)
         from django.core import management
         management.call_command('txlanguages', verbosity=0)
         cls.language = Language.objects.get(code='pt_BR')

@@ -7,6 +7,7 @@ import os, re
 import codecs
 
 from transifex.txcommon.log import logger
+from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError

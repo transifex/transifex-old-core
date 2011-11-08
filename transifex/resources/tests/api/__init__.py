@@ -88,7 +88,7 @@ class TestResourceAPI(APIBaseTests):
                     'name': "resource1",
                     'slug': 'rslug1',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -100,7 +100,7 @@ class TestResourceAPI(APIBaseTests):
                     'name': "resource1",
                     'slug': 'rslug2',
                     'source_language': 'en',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -112,7 +112,7 @@ class TestResourceAPI(APIBaseTests):
                     'name': "resource1",
                     'slug': 'rslug2',
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -123,7 +123,7 @@ class TestResourceAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'rslug3',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'
@@ -171,7 +171,7 @@ class TestResourceAPI(APIBaseTests):
         res = self.client['maintainer'].get(self.url_resource_private)
         self.assertEquals(res.status_code, 200)
         data = simplejson.loads(res.content)
-        self.assertEquals(len(data), 4)
+        self.assertEquals(len(data), 5)
         self.assertTrue('slug' in  data)
         self.assertTrue('name' in data)
         self.assertTrue('source_language', data)
@@ -430,7 +430,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
                     'name': "resource1",
                     'slug': 'a-very-long-slug' * 10,
                     'source_language': 'el',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'

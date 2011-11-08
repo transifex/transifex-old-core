@@ -35,8 +35,3 @@ class APIBaseTests(BaseTestCase):
         handler.set_language(self.language)
         handler.parse_file()
         handler.save2db()
-
-    def tearDown(self):
-        super(APIBaseTests, self).tearDown()
-        self.resource.delete()
-        self.language_en.delete()

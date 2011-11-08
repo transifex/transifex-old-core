@@ -202,7 +202,7 @@ class ResourceHandler(BaseHandler):
             logger.warning(msg)
             raise BadRequestError(msg)
         # Check for obligatory fields
-        for field in ('name', 'slug', 'source_language', 'i18n_type', ):
+        for field in ('name', 'slug', 'i18n_type', ):
             if field not in data:
                 msg = "Field '%s' must be specified." % field
                 logger.warning(msg)
@@ -217,7 +217,10 @@ class ResourceHandler(BaseHandler):
         # In multipart/form-encode request variables have lists
         # as values. So we use __getitem__ isntead of pop, which returns
         # the last value
-        slang = data['source_language']; del data['source_language']
+        slang = None
+        if 'source_language' in data:
+            slang = data['source_language']
+            del data['source_language']
         method = data['i18n_type']; del data['i18n_type']
         if not registry.is_supported(method):
             msg = "i18n_type %s is not supported." % method
