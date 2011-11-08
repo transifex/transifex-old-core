@@ -7,6 +7,7 @@
 {% block extrajs %}
     {{ block.super }}
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+
 {% endblock %}
 
 {% block userena_header %}<h3 class="userena-header">Edit Profile</h3>{% endblock %}
@@ -17,7 +18,7 @@
     {% csrf_token %}
 	  <fieldset>
       {% for field in form %}
-        <div>
+        <div class="tx-form-field">
           {{ field.errors }}
           {{ field.label_tag }}
           {{ field }}
