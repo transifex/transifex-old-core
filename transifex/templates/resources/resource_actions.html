@@ -65,7 +65,7 @@
     </span>
 
     <div class="stats_wrapper">
-      {% with 300 as barwidth %}
+      {% with 400 as barwidth %}
       <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Untranslated: " %}{{ stats.untranslated }}">
           <div class="stats_string_resource_actions" >
               {{ stats.translated|percentage:stats.total }}
@@ -74,14 +74,10 @@
       </div>
       {% endwith %}
       <div class="details_font stats_details_string">
-      {{ stats.untranslated }} {% trans "remaining words, TM match:" %} 
-      </div>
-      <div id="action-tmbreakdown" class="clearfix">
-	      <div class="tmb-row clearfix match"><div class="tmb-label">100%</div> <div class="tmb-num">123 </div></div>
-	      <div class="tmb-row clearfix"><div class="tmb-label">95%-99%</div> <div class="tmb-num">123 </div></div>
-	      <div class="tmb-row clearfix"><div class="tmb-label">75%-94%</div> <div class="tmb-num">123 </div></div>
-	      <div class="tmb-row clearfix nmatch"><div class="tmb-label">0-74%</div> <div class="tmb-num">123 </div></div>
-      </div>
+      {{ stats.untranslated }} {% trans "remaining strings(123 words)" %}
+			</div> 
+      <div id="action-tmbreakdown" class="clearfix"><span style="font-weight:bold;">{% trans "TM matched words:&nbsp;&nbsp;</span>100%&nbsp;&nbsp;123&nbsp;|&nbsp;95%-99%&nbsp;&nbsp;123&nbsp;|&nbsp;75%-94%  123&nbsp;|&nbsp;0-74%&nbsp;&nbsp;123" %}</div>
+  
     </div>
     
   </div>
