@@ -18,7 +18,7 @@ class WebHook(models.Model):
 
     project = models.ForeignKey(
         'projects.Project', related_name='webhook', verbose_name=_('Project'),
-        help_text=_('The id of the project for the web hook.')
+        db_index=True, help_text=_('The id of the project for the web hook.')
 
     )
     url = models.URLField(
