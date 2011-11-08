@@ -4,11 +4,13 @@
 Tests for the webhook addon.
 """
 
+from __future__ import with_statement
 from django.core.exceptions import ValidationError
 from transifex.txcommon.tests.base import BaseTestCase
 from webhooks.models import WebHook
-from webhooks.handlers import visit_url
+from webhooks.handlers import visit_url, add_web_hook_field, save_web_hook
 from transifex.resources.models import RLStats
+from transifex.projects.forms import ProjectForm
 
 
 class TestWebHooks(BaseTestCase):
@@ -53,6 +55,15 @@ class TestWebHooks(BaseTestCase):
             project=self.resource.project, url='https://127.0.0.1'
         )
         self.assertTrue(visit_url(stats, post_function=_mock_successful_request))
+
+
+class TestWebHookHandlers(BaseTestCase):
+    """Test signal handlers for project edit form."""
+
+    def test_add_field(self):
+        kwargs = {'form': ProjectForm()}
+        add_web_hook_field(None, **kwargs)
+        self.assertIn('webhook', kwargs['form'].fields)
 
 
 def _mock_successful_request(*args, **kwargs):
