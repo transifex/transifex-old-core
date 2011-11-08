@@ -11,7 +11,6 @@ from django.utils.translation import ugettext
 from transifex.languages.models import Language
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
-from transifex.resources.formats.registry import registry
 
 import magic
 
@@ -74,6 +73,7 @@ class StorageFile(models.Model):
         return (self.total_strings > 0)
 
     def find_parser(self):
+        from transifex.resources.formats.registry import registry
         i18n_type = registry.guess_method(self.name, self.mime_type)
         if i18n_type is None:
             msg = "Unsupported resource"
