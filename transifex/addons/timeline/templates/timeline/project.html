@@ -4,9 +4,9 @@
 
 {% block settings_menu %}
 {% if is_maintainer %}
-<li class="ui-state-default ui-corner-top {% if project_timeline %}ui-tabs-selected active{% endif %}">
-    <a id="tab-link-5" href="{% url project_timeline project.slug %}">
-        <span>{% trans "Timeline" %}</span>
+<li class="inner-item {% if project_timeline %}active{% endif %}">
+    <a href="{% url project_timeline project.slug %}">
+        {% trans "Timeline" %}
     </a>
 </li>
 {% endif %}
