@@ -26,6 +26,12 @@ class WebHook(models.Model):
         help_text=_('The URL to send the notification to.')
     )
 
+    kind = models.CharField(
+        verbose_name=_('Kind'), choices=[('a', 'Txapp'), ('p', 'Project')],
+        default='a', max_length=1,
+        help_text=_("The kind of web hook (apps or project)")
+    )
+
     def __unicode__(self):
         return '<Webhoook for %s: %s>' % (self.project.slug, self.url)
 
