@@ -39,16 +39,22 @@ class JoomlaINIHandler(Handler):
     HandlerParseError = JoomlaParseError
     HandlerCompileError = JoomlaCompileError
 
-    def _parse(self, is_source=False, lang_rules=None):
+    def _escape(self, s):
+        return s.replace('\\', '\\\\')
+
+    def _parse(self, is_source, lang_rules):
         """
         Parse an INI file and create a stringset with all entries in the file.
         """
         content = self.content
         jformat = JoomlaIniVersion.create(self.content)
 
+        buf = ''
         for line in self._iter_by_line(content):
             # Skip empty lines and comments
             if not line or line.startswith(self.comment_chars):
+                if is_source:
+                    buf += line + self.linesep
                 continue
 
             try:
@@ -62,14 +68,19 @@ class JoomlaINIHandler(Handler):
             context = ""        # We use empty context
 
             if is_source:
+                if not trans.strip():
+                    buf += line + self.linesep
+                    continue
                 source_len = len(source)
                 new_line = line[:source_len] + re.sub(
                     re.escape(trans),
                     "%(hash)s_tr" % {'hash': hash_tag(source, context)},
                     line[source_len:]
                 )
-                # this looks fishy
-                content = re.sub(re.escape(line), new_line, content)
+                buf += new_line + self.linesep
+            elif not SourceEntity.objects.filter(resource=self.resource, string=source).exists() or not trans.strip():
+                #ignore keys with no translation
+                continue
             self._add_translation_string(source, trans, context=context)
         return content
 

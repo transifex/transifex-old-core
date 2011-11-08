@@ -29,12 +29,11 @@ class WikiHandler(Handler):
     HandlerCompileError = WikiCompileError
 
     def _parse(self, is_source, lang_rules):
-        content = self.content
         par_splitter = "\n\n"
         template_open = "{{"
         template_ends = "}}"
 
-        template = content
+        template = self.content
         context = ''
 
         prev_split_pos = 0

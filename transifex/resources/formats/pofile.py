@@ -175,20 +175,20 @@ class GettextHandler(Handler):
         """
         Update the headers of a compiled po file.
         """
-        po.metadata['Project-Id-Version'] = self.resource.project.name.encode(self.format_encoding)
+        po.metadata['Project-Id-Version'] = self.resource.project.name
         po.metadata['Content-Type'] = u"text/plain; charset=%s" % self.format_encoding
         # The above doesn't change the charset of the actual object, so we
         # need to do it for the pofile object as well.
         po.encoding = self.format_encoding
 
         po.metadata['PO-Revision-Date'] = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
-        po.metadata['Plural-Forms'] = ("nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)).encode(self.format_encoding)
+        po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
         # The following is in the specification but isn't being used by po
         # files. What should we do?
-        po.metadata['Language'] = (language.code.encode(self.format_encoding))
+        po.metadata['Language'] = language.code
 
         if self.resource.project.bug_tracker:
-            po.metadata['Report-Msgid-Bugs-To'] = (self.resource.project.bug_tracker.encode(self.format_encoding))
+            po.metadata['Report-Msgid-Bugs-To'] = self.resource.project.bug_tracker
 
         if 'fuzzy' in po.metadata_is_fuzzy:
             po.metadata_is_fuzzy.remove('fuzzy')
@@ -209,10 +209,8 @@ class GettextHandler(Handler):
         stat = RLStats.objects.by_resource(self.resource).by_language(language)
         if stat and stat[0].last_committer:
             u = stat[0].last_committer
-            po.metadata['Last-Translator'] = ("%s <%s>" %
-                (u.get_full_name() or u.username , u.email)).encode(self.format_encoding)
-            po.metadata['PO-Revision-Date'] = ( stat[0].last_update.strftime(
-                "%Y-%m-%d %H:%M+0000").encode(self.format_encoding) )
+            po.metadata['Last-Translator'] = "%s <%s>" % (u.get_full_name() or u.username , u.email)
+            po.metadata['PO-Revision-Date'] = stat[0].last_update.strftime("%Y-%m-%d %H:%M+0000")
         return po
 
     def _get_plurals(self, language):
@@ -412,7 +410,7 @@ class POHandler(GettextHandler):
         from transifex.addons.copyright.models import Copyright
         c = Copyright.objects.filter(
             resource=self.resource, language=self.language
-        ).order_by('-user')
+        ).order_by('owner')
         content_with_copyright = ""
         copyrights_inserted = False
         for line in self.compiled_template.split('\n'):

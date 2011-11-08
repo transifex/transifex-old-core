@@ -62,6 +62,7 @@ class DesktopHandler(Handler):
         all_languages = set(self.resource.available_languages_without_teams)
         source_language = set([self.resource.source_language, ])
         translated_to = all_languages - source_language
+        content = ''
         for language in translated_to:
             content = self._compile_translation(content, language)
         return content
