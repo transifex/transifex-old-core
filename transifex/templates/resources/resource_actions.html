@@ -74,9 +74,16 @@
       </div>
       {% endwith %}
       <div class="details_font stats_details_string">
-      {{ stats.untranslated }} {% trans "remaining strings" %}
+      {{ stats.untranslated }} {% trans "remaining words, TM match:" %} 
+      </div>
+      <div id="action-tmbreakdown" class="clearfix">
+	      <div class="tmb-row clearfix match"><div class="tmb-label">100%</div> <div class="tmb-num">123 </div></div>
+	      <div class="tmb-row clearfix"><div class="tmb-label">95%-99%</div> <div class="tmb-num">123 </div></div>
+	      <div class="tmb-row clearfix"><div class="tmb-label">75%-94%</div> <div class="tmb-num">123 </div></div>
+	      <div class="tmb-row clearfix nmatch"><div class="tmb-label">0-74%</div> <div class="tmb-num">123 </div></div>
       </div>
     </div>
+    
   </div>
   <div class="first_level more_actions">
         <ul class="right">
