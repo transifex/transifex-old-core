@@ -7,6 +7,7 @@
 {% load upload_manager_tags %}
 {% load watches_tags %}
 {% load txcommontags %}
+{% load addons %}
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
@@ -74,10 +75,9 @@
       </div>
       {% endwith %}
       <div class="details_font stats_details_string">
-      {{ stats.untranslated }} {% trans "remaining strings(123 words)" %}
-			</div> 
-      <div id="action-tmbreakdown" class="clearfix"><span style="font-weight:bold;">{% trans "TM matched words:&nbsp;&nbsp;</span>100%&nbsp;&nbsp;123&nbsp;|&nbsp;95%-99%&nbsp;&nbsp;123&nbsp;|&nbsp;75%-94%  123&nbsp;|&nbsp;0-74%&nbsp;&nbsp;123" %}</div>
-  
+        {% blocktrans with stats.untranslated as trans_count and stats.untranslated_wordcount as trans_wordcount %} {{ trans_count }} remaining strings ({{ trans_wordcount }} words) {% endblocktrans %}
+      </div> 
+      {% hook 'matches_overview.html' %}  
     </div>
     
   </div>
