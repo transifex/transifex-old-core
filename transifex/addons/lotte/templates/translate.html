@@ -805,9 +805,8 @@
 
 {% block content_header_sec %}
   <div class="lotte-header-link"><a href="#shortcutsdiv" class="i16 nude-button shortcuts fancy" title="Lorem ipsum dolor sit ame">{% trans "Shortcuts" %}</a></div>
-  {% url search_translations as search_translations %}
-  <div class="lotte-header-link"><a href="{{ search_translations }}" class="nude-button i16 search_translations" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">{% trans "Search translations" %}</a></div>
-    {% hook "glossary_link.html" %}
+
+  {% hook "lotte_header_link.html" %}
     
     <div style="display:none;">
     	<div id="shortcutsdiv">
