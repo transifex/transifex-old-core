@@ -195,7 +195,7 @@
 // XXX "(excluding _EXCLUDED_ entries)"
                 "sInfoFiltered": '{% trans "(filtered from _MAX_ total entries)"|escapejs %}',
                 "sInfoPostFix":  "",
-                "sSearch":       '{% trans "Search:"|escapejs %}',
+                "sSearch":       '{% trans " "|escapejs %}',
                 "sUrl":          "",
                 "oPaginate": {
                         "sFirst":    '{% trans "First"|escapejs %}',
@@ -767,6 +767,24 @@
 
         // Enable tooltips with tipsy
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        $(".lotte-header-link").each(function(){
+        	$(this).appendTo("#stringset_table_wrapper .top").show();
+        	});
+				$("a.shortcuts.fancy").fancybox({
+					'transitionIn'	: 'none',
+					'transitionOut'	: 'none',
+					'onComplete':function() {
+		      		$("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
+		      		$("#fancybox-content").addClass('ui-corner-top'); 
+		      		$("#fancybox-outer").addClass('ui-corner-top'); 
+					},			
+					'titleShow': true,
+					'titlePosition': 'inside',
+					'title': 'Releases screenshots',
+					'changeFade'        : 0		
+				});
+	
+        
 
     });
 
@@ -786,11 +804,18 @@
 {% block body_class %}project_list{% endblock %}
 
 {% block content_header_sec %}
+  <div class="lotte-header-link"><a href="#shortcutsdiv" class="i16 nude-button shortcuts fancy" title="Lorem ipsum dolor sit ame">{% trans "Shortcuts" %}</a></div>
   {% url search_translations as search_translations %}
-  <p class="i16 search_translations nomargin"><a href="{{ search_translations }}" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">
-    {% trans "Search translations" %}</a>
-</p>
-  {% hook "glossary_link.html" %}
+  <div class="lotte-header-link"><a href="{{ search_translations }}" class="nude-button i16 search_translations" target="_new" title="{% trans "Search in Transifex memory for existing translations (uses a new tab/window)" %}">{% trans "Search translations" %}</a></div>
+    {% hook "glossary_link.html" %}
+    
+    <div style="display:none;">
+    	<div id="shortcutsdiv">
+    		<p>Ctrl+b  something b</p>
+    		<p>Ctrl+b  something b</p>
+    	</div>
+    </div>
+    
 {% endblock %}
 
 {% block content_main %}

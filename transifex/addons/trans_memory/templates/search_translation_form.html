@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="searchform">
+<div class="searchform" style="border-bottom:1px solid #ddd;">
   <form action="{% url search_translations %}" method="GET" class="search_projects">
     <table>
     <tr>
@@ -35,7 +35,7 @@
     </select>
     </td>
     <td>
-    <input class="i16 submit" type="submit" value="{% trans "Search" %}">
+    <input class="i16 submit buttonized" type="submit" value="{% trans "Search" %}">
     </td></tr></table>
   </form>
 </div>
