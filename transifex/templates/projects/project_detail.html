@@ -6,7 +6,6 @@
 {% load watches_tags %}
 {% load permissions %}
 {% load upload_manager_tags %}
-{% load avatars %}
 {% load tx_action_log %}
 
 
@@ -61,7 +60,7 @@
 	      <dt class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</dt>
 	      <dd>
 	        {% for m in maintainers|slice:"0:6" %}
-	          <img class="border" src="{% avatar 16 m %}" style="vertical-align:middle"/>
+	          <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
 	          {% if m.first_name and m.last_name %}
 	            {{ m.first_name }} {{ m.last_name }}
 	            (<a href="{% url profile_public m.username %}">{{m.username}}</a>)

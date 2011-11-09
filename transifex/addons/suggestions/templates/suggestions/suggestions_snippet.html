@@ -1,6 +1,5 @@
 {% load i18n %}
 {% load truncate %}
-{% load avatars %}
 {% load suggestions_tags %}
 
 {% get_suggestions source_entity.id for lang_code as suggestions %}
@@ -192,7 +191,7 @@ $(document).ready(function(){
       {% for suggestion in suggestions %}
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
-          <img class="border top" alt="{{ suggestion.user }}" src="{% avatar 32 suggestion.user %}" />
+          <img class="border top" alt="{{ suggestion.user }}" width="32" height="32" src="{{ suggestion.user.profile.get_mugshot_url }}" />
 		{% if suggestion.user %} 
           <a href="{% url profile_public suggestion.user.username %}">
             <span>{{ suggestion.user }}</span>
@@ -227,7 +226,7 @@ $(document).ready(function(){
     <div class="title_line"><span class="title">{% trans "New Suggestion" %}</span></div>
     <div class="suggestion_create">
       <div class="suggestion_user">
-          <img class="border top" alt="{{ request.user }}" src="{% avatar 32 request.user %}" />
+          <img class="border top" alt="{{ request.user }}" width="32" height="32" src="{{ request.user.profile.get_mugshot_url }}" />
           <span>{% trans "You!" %}</span>
       </div>
       <div class="suggestion_textarea">

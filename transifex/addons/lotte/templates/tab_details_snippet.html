@@ -1,5 +1,4 @@
 {% load i18n %}
-{% load avatars %}
 {% load permissions %}
 {% load resources_common_tags %}
 
@@ -66,7 +65,7 @@ $(document).ready(function() {
           <a href="{% url profile_public translation.user.username %}">{% blocktrans with translation.user as user %}by {{ user }}{% endblocktrans %}</a>
         </span>
         &nbsp;
-        <img class="border top" alt="{{ translation.user }}" src="{% avatar 16 translation.user %}"/>
+        <img class="border top" alt="{{ translation.user }}" width="16" height="16" src="{{ translation.user.profile.get_mugshot_url }}"/>
       {% endif %}
   </li>
 </ul>

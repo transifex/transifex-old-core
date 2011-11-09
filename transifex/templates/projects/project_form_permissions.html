@@ -4,7 +4,6 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
-{% load avatars %}
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "Access Control" %}{% endblock %}
 
@@ -41,7 +40,7 @@
 <ul>
 {% for perm in all_permission_requests|dictsort:"user.username" %}
     <li>
-            <img class="border" src="{% avatar 16 perm.user %}" style="vertical-align:middle"/>
+            <img class="border" width="16" height="16" src="{{ perm.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
         <a class="name" href="{% url profile_public perm.user.username %}">
             {{ perm.user }}
         </a>
@@ -61,7 +60,7 @@
 <ul>
 {% for perm in all_permissions|dictsort:"user.username" %}
     <li>
-        <img class="border" src="{% avatar 16 perm.user %}" style="vertical-align:middle"/>
+        <img class="border" width="16" height="16" src="{{ perm.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
         <a class="name" href="{% url profile_public perm.user.username %}">
             {{ perm.user }}
         </a>

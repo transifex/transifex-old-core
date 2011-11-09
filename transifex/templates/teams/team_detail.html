@@ -5,7 +5,6 @@
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
-{% load avatars %}
 {% load addons %}
 {% load statistics_resources %}
 
@@ -76,7 +75,7 @@
       <dt class="i16 coordinators">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</dt>
       <dd>
         {% for c in coordinators|slice:"0:6" %}
-          <img class="border" src="{% avatar 16 c %}" style="vertical-align:middle"/>
+          <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
           {% if c.first_name and c.last_name %}
             {{ c.first_name }} {{ c.last_name }}
             (<a href="{% url profile_public c.username %}">{{ c.username }}</a>)
@@ -106,7 +105,7 @@
 <ul>
 {% for access_request in team_access_requests|dictsort:"user.username" %}
     <li>
-        <img class="border" src="{% avatar 16 access_request.user %}" style="vertical-align:middle"/>
+        <img class="border" width="16" height="16" src="{{ access_request.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
         <a href="{% url profile_public access_request.user.username %}">
             {{ access_request.user }}
         </a>
@@ -284,7 +283,7 @@
 <ul>
 {% for m in members|dictsort:"username" %}
     <li>
-        <img class="border" src="{% avatar 16 m %}" style="vertical-align:middle"/>
+        <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
         <a href="{% url profile_public m.username %}">
             {{ m }}
         </a>
