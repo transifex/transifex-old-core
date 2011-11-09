@@ -619,6 +619,7 @@
 
         /* Save all the updated translation and exit Lotte */
         $("#save_and_exit").click(function(){
+            $(window).unbind('unload');
             {% if resource_slug %}
                 {% url exit_lotte resource.project.slug resource_slug target_language.code as url_exit_lotte %}
             {% else%}
