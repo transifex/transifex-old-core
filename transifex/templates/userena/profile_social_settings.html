@@ -2,8 +2,34 @@
 {% load i18n %}
 
 {% block title %}{% trans "Social login settings" %}{% endblock %}
-{% block content_title %}<h2>{% trans 'Social login settings' %}</h2>{% endblock %}
 
-{% block content_main %}
-{{ profile }}
+{% block userena_header %}<h3>{% trans 'Social login settings' %}</h3>{% endblock %}
+
+{% block userena_content %}
+
+
+<ul id="profile-login-associations">
+		  {% if social_auth.associated %}
+			{% for account in social_auth.associated %}
+      <li class="{{ account|title }} associated">
+				<a href={% url socialauth_disconnect_individual account.provider account.id %}>
+        	<div class="pla-network"> {{ account.provider|title }} (ID {{ account.id }})</div>
+        	<div class="pla-state">{% trans "Associated" %}</div>
+        </a>
+      </li>
+      {% endfor %}
+		  {% endif %}
+
+		  {% for name in social_auth.not_associated %}
+      <li class="{{ name|title }} nassociated">
+        <a rel="nofollow" href="{% url socialauth_associate_begin name %}">	
+        	<div class="pla-network">{{ name|title }}</div>
+        	<div class="pla-state">{% trans "Associate" %}</div>
+      	</a>
+      </li>
+  		{% endfor %}
+
+</ul>
+
 {% endblock %}
+
