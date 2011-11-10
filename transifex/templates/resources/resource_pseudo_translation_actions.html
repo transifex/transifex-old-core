@@ -14,19 +14,26 @@
     });
 </script>
 
-<div class="actions_popup">
-    <div class="first_level">
-        <h2>{% trans "Pseudo Translation Files" %}</h2>
-        <h3>{% trans "Download Pseudo translation files to test the application." %}</h3>
-    </div>
-    
-    <div class="generic_form">
+{% block extracss %}
+	<style>
+		.actions_popup{width750px;}
+		.tx-form fieldset{margin:1em 0 2em 0;width:600px;}
+		.tx-form #download_pseudo_file {margin:10px 0;}
+	</style>
+{% endblock %}
+
+<div class="actions_popup"> 
+    <div class="tx-form">
       <form action='{% url apiv2_pseudo_content project.slug resource.slug %}' method='get'>{% csrf_token %}
-        <table>
-            <tbody>
-            {% form_as_table_rows form %}
-            </tbody>
-        </table>
+				<fieldset>
+		      {% for field in form %}
+		        <div>
+		          {{ field.errors }}
+		          {{ field.label_tag }}
+		          {{ field }}
+		        </div>
+		      {% endfor %}
+				</fieldset>
         <input type="hidden" name='file' value="true" />
         <input id="download_pseudo_file" type="submit" class="i16 submit buttonized" value="{% trans "Download" %}" />
         <form>

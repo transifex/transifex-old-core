@@ -153,7 +153,7 @@
             </span>
           </li>
           {% endifequal %}
-          {% if resource.source_language == target_language %}
+          {% if resource.source_language == target_language and request.user.is_authenticated %}
           <li>
             <span class="i16 get_file ">
                 <a id="resource_pseudo_translation_actions" href="#" >{% trans "Get pseudo translations" %}</a>
@@ -181,7 +181,7 @@
 	                    		}, 
                         'titleShow': true,
                         'titlePosition': 'inside',
-                        'title': '{% trans "Pseudo Translation File Actions"|escapejs %}'
+                        'title': '{% trans "Download Pseudo Translation File"|escapejs %}'
                 });
                 });
             </script>
