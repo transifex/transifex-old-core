@@ -92,6 +92,7 @@ class JavaPropertiesHandler(Handler):
         """Reverse the escape of special characters."""
         return (value.replace('\:', ':')
                      .replace('\=', '=')
+                     .replace('\\\\', '\\')
         )
 
     def convert_to_unicode(self, s):
