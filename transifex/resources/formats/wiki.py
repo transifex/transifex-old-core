@@ -72,7 +72,7 @@ class WikiHandler(Handler):
                 source = trans = content[prev_text_pos:par_pos].strip()
                 prev_split_pos = prev_text_pos = par_pos + 2
             else:
-                t_end_pos = content.find(template_ends, prev_split_pos)
+                t_end_pos = content.find(template_ends, prev_split_pos + 1)
                 prev_split_pos = t_end_pos
                 continue
 
