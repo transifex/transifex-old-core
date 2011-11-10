@@ -121,6 +121,15 @@ def profile_public(request, username, template_name='userena/public.html'):
                   context_instance=RequestContext(request))
 
 
+@login_required
+def profile_social_settings(request, username, template_name='userena/profile_social_settings.html'):
+    """Social login settings page under user profile."""
+    user = get_object_or_404(User, username=username)
+    return render_to_response(template_name, {
+        'profile': user.get_profile()
+    }, context_instance=RequestContext(request))
+
+
 # Ajax response
 
 def json_result(result):

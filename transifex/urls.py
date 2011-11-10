@@ -66,6 +66,8 @@ else:
 if settings.USE_SOCIAL_LOGIN:
     urlpatterns += patterns('',
         url(r'^accounts/', include('social_auth.urls')),
+        url(r'^accounts/(?P<username>(?!signout|signup|signin)[\.\w]+)/social/$',
+            view='txcommon.views.profile_social_settings', name='profile_social_settings')
     )
 
 if settings.ENABLE_NOTICES:
