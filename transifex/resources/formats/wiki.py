@@ -39,19 +39,19 @@ class WikiHandler(Handler):
         prev_split_pos = 0
         prev_text_pos = 0
         while 1:
-            par_pos = content.find(par_splitter, prev_split_pos)
-            t_open_pos = content.find(template_open, prev_split_pos)
+            par_pos = self.content.find(par_splitter, prev_split_pos)
+            t_open_pos = self.content.find(template_open, prev_split_pos)
             if prev_text_pos == -1:
                 break
             elif par_pos == -1 and t_open_pos == -1:
                 # end of document
-                source = trans = content[prev_text_pos:].strip()
+                source = trans = self.content[prev_text_pos:].strip()
                 prev_text_pos = -1
             elif par_pos < t_open_pos or t_open_pos == -1:
-                source = trans = content[prev_text_pos:par_pos].strip()
+                source = trans = self.content[prev_text_pos:par_pos].strip()
                 prev_split_pos = prev_text_pos = par_pos + 2
             else:
-                t_end_pos = content.find(template_ends, prev_split_pos + 1)
+                t_end_pos = self.content.find(template_ends, prev_split_pos + 1)
                 prev_split_pos = t_end_pos
                 continue
 

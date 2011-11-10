@@ -20,3 +20,10 @@ class TestWikiHandler(TestCase):
         handler.content = content
         handler._parse(None, None)
         self.assertEquals(len(handler.stringset.strings), 3)
+
+        handler.stringset = StringSet()
+        content = ("Text {{italics|is}} {{bold|bold}}\n\n\n\nnew "
+                   "{{italics|par\n\npar}}.\n\nTers")
+        handler.content = content
+        handler._parse(None, None)
+        self.assertEquals(len(handler.stringset.strings), 3)
