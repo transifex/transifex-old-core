@@ -33,23 +33,13 @@ class XliffCompileError(CompileError):
     pass
 
 class XliffHandler(Handler):
-    name = "XLIFF handler"
-    mime_types = ['text/x-xml']
+    name = "XLIFF *.XLF file handler"
     format = "XLIFF files (*.xlf)"
-    ENCODING = 'UTF-8'
+    method_name = 'XLIFF'
+    format_encoding = 'UTF-8'
 
-    @classmethod
-    def accepts(cls, filename=None, mime=None):
-        accept = False
-        if filename is not None:
-            accept |= filename.endswith((".xlf", ".xliff", ))
-        if mime is not None:
-            accept |= mime in cls.mime_types
-        return accept
-
-    @classmethod
-    def contents_check(self, filename):
-        pass
+    HandlerParseError = XliffParseError
+    HandlerCompileError = XliffCompileError
 
     def _examine_content(self, content):
         """Modify template content to handle plural data in target language"""
@@ -91,7 +81,8 @@ class XliffHandler(Handler):
                     group_node.insertBefore(clone, trans_unit_nodes[1].previousSibling)
                 if rule == 5:
                     trans_unit_nodes[1].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-        self.content = doc.toxml()
+        content = doc.toxml()
+        return content
 
     def _get_translation_strings(self, source_entities, language):
         """Modified to include a new field for translation rule"""
@@ -111,7 +102,7 @@ class XliffHandler(Handler):
         return res
 
     def _post_compile(self, *args, **kwargs):
-        doc = xml.dom.minidom.parseString(self.compiled_template.encode('utf-8'))
+        doc = xml.dom.minidom.parseString(self.compiled_template)
         root = doc.documentElement
         for node in root.getElementsByTagName("target"):
             value = ""
@@ -123,55 +114,39 @@ class XliffHandler(Handler):
                 parent.removeChild(node)
         self.compiled_template = doc.toxml()
 
-    @need_resource
-    def compile(self, language=None):
-        try:
-            if not language:
-                language = self.language
+    def _compile(self, content, language):
+        stringset = self._get_source_strings(self.resource)
+        translations = self._get_translation_strings(
+            (s[0] for s in stringset), language
+        )
 
-            self._pre_compile(language=language)
-            self.content = Template.objects.get(resource=self.resource).content.decode('utf-8')
-            self._examine_content(self.content)
-            stringset = self._get_strings(self.resource)
-            translations = self._get_translation_strings(
-                (s.pk for s in stringset), language
-            )
-
-            for string in stringset:
-                trans = translations.get(string.pk, u"")
-                if SourceEntity.objects.get(id__exact=string.pk).pluralized:
-                    if type(trans) == type([]):
-                        plural_trans = trans
-                    else:
-                        plural_trans = []
-                        for i in self.language.get_pluralrules_numbers():
-                            plural_trans.append((u"", i))
-                    for i in plural_trans:
-                        rule = str(i[1])
-                        trans = i[0]
-                        if SourceEntity.objects.get(id__exact=string.pk).pluralized:
-                            self.content = self._replace_translation(
-                                "%s_pl_%s"%(string.string_hash.encode('utf-8'), rule),
-                                trans or "",
-                                self.content)
+        for string in stringset:
+            trans = translations.get(string[0], u"")
+            if SourceEntity.objects.get(id__exact=string[0]).pluralized:
+                if type(trans) == type([]):
+                    plural_trans = trans
                 else:
-                    if trans:
-                        trans = trans[0]
-                    self.content = self._replace_translation(
-                        "%s_tr" % string.string_hash.encode('utf-8'),
-                        trans or "",
-                        self.content
-                    )
-
-            self.compiled_template = self.content
-            del self.content
-        except Exception, e:
-            if e.message:
-                raise XliffCompileError(e.message)
+                    plural_trans = []
+                    for i in self.language.get_pluralrules_numbers():
+                        plural_trans.append((u"", i))
+                for i in plural_trans:
+                    rule = str(i[1])
+                    trans = i[0]
+                    if SourceEntity.objects.get(id__exact=string[0]).pluralized:
+                        content = self._replace_translation(
+                            "%s_pl_%s"%(string[1].encode('utf-8'), rule),
+                            trans or "",
+                            content)
             else:
-                raise XliffCompileError(e)
+                if trans:
+                    trans = trans[0]
+                content = self._replace_translation(
+                    "%s_tr" % string[1].encode('utf-8'),
+                    trans or "",
+                    content
+                )
 
-        self._post_compile(language)
+        return content
 
     def _getText(self, nodelist):
         rc = []
@@ -190,16 +165,14 @@ class XliffHandler(Handler):
             raise self.HandlerParseError("Multiple '%s' elements found!" % tagName)
         return elements[0]
 
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source, lang_rules):
         """
         Parses XLIFF file and exports all entries as GenericTranslations.
         """
-        self.stringset_ = StringSet()
-        self.suggestions_ = StringSet()
-        fh = open(self.filename, 'r')
-        content = fh.read()
+        resource = self.resource
+
+        context = ""
+        content = self.content.encode('utf-8')
         try:
             self.doc = xml.dom.minidom.parseString(content)
             root = self.doc.documentElement
@@ -211,10 +184,8 @@ class XliffHandler(Handler):
                     self.parse_tag_file(node, is_source)
         except Exception, e:
             XliffParseError(e.message)
-        self.stringset = self.stringset_
-        self.suggestions = self.suggestions_
-        if is_source:
-            self.template = str(self.doc.toxml().encode('utf-8'))
+
+        return self.doc.toxml()
 
     def parse_tag_file(self, file_node, is_source=False):
         for node in file_node.childNodes:
@@ -339,15 +310,26 @@ class XliffHandler(Handler):
                 return
             # TODO - do something with inline elements
         if pluralized:
+            self._add_translation_string(
+                    source, translation, context=context,
+                    rule=rule, pluralized=True
+             )
+            """
              self.stringset_.strings.append(GenericTranslation(source,
                     translation, rule=rule,
                     context=context, pluralized=True, fuzzy=False,
                     obsolete=False))
+             """
         else:
-             self.stringset_.strings.append(GenericTranslation(source,
+            self._add_translation_string(
+                    source, translation, context=context
+             )
+            """
+            self.stringset_.strings.append(GenericTranslation(source,
                     translation, rule=5,
                     context=context, pluralized=False, fuzzy=False,
                     obsolete=False))
+            """
 
     def parse_tag_context_group(self, context_group_node, is_source=False):
         result = []

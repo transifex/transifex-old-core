@@ -11,15 +11,19 @@ class TestXliffParser(BaseTestCase):
 
     def setUp(self):
         super(TestXliffParser, self).setUp()
+        self.resource.i18n_method = "XLIFF"
+        self.resource.save()
         self.resource_new = Resource.objects.create(
             slug="resource_new", name="Resource New", project=self.project,
             source_language=self.language_en, i18n_type='PO'
         )
+        self.resource_new.i18n_method = "XLIFF"
+        self.resource_new.save()
 
     def test_accept(self):
         """Test whether parser accepts XLIFF file format"""
         parser = XliffHandler()
-        self.assertTrue(parser.accepts(mime='text/x-xml'))
+        self.assertTrue(parser.accepts("XLIFF"))
 
     def test_xliff_parser(self):
         """XLIFF parsing tests."""
