@@ -7,27 +7,51 @@
 
 {% block userena_content %}
 
-
 <ul id="profile-login-associations">
-		  {% if social_auth.associated %}
-			{% for account in social_auth.associated %}
-      <li class="{{ account|title }} associated">
-				<a href={% url socialauth_disconnect_individual account.provider account.id %}>
-        	<div class="pla-network"> {{ account.provider|title }} (ID {{ account.id }})</div>
-        	<div class="pla-state">{% trans "Associated" %}</div>
-        </a>
-      </li>
-      {% endfor %}
-		  {% endif %}
+    {# django-social-auth is not very flexible so we have to be hackish #}
 
-		  {% for name in social_auth.not_associated %}
-      <li class="{{ name|title }} nassociated">
-        <a rel="nofollow" href="{% url socialauth_associate_begin name %}">	
-        	<div class="pla-network">{{ name|title }}</div>
-        	<div class="pla-state">{% trans "Associate" %}</div>
-      	</a>
-      </li>
-  		{% endfor %}
+    {% if social_auth.associated %}
+        {% for account in social_auth.associated %}
+            {% if account.provider == 'google-oauth2' %}
+                <li class="google associated">
+        		    <a href="{% url socialauth_disconnect_individual account.provider account.id %}">
+                	    <div class="pla-network">Google</div>
+                	    <div class="pla-state">{% trans "Associated" %}</div>
+                    </a>
+                </li>
+            {% else %}
+                {# why is openid even in this list? #}
+                {% if account.provider != 'openid' %}
+                <li class="{{ account.provider|title }} associated">
+        		    <a href={% url socialauth_disconnect_individual account.provider account.id %}>
+                	    <div class="pla-network"> {{ account.provider|title }}</div>
+                	    <div class="pla-state">{% trans "Associated" %}</div>
+                    </a>
+                </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+	{% endif %}
+
+	{% for account in social_auth.not_associated %}
+        {% if account == 'google-oauth2' %}
+            <li class="Google nassociated">
+                <a rel="nofollow" href="{% url socialauth_associate_begin account %}">
+                    <div class="pla-network">Google</div>
+                    <div class="pla-state">{% trans "Associate" %}</div>
+                </a>
+            </li>
+        {% else %}
+            {% if account != 'openid' %}
+            <li class="{{ account|title }} nassociated">
+                <a rel="nofollow" href="{% url socialauth_associate_begin account %}">
+                    <div class="pla-network">{{ account|title }}</div>
+                    <div class="pla-state">{% trans "Associate" %}</div>
+                </a>
+            </li>
+            {% endif %}
+        {% endif %}
+  	{% endfor %}
 
 </ul>
 
