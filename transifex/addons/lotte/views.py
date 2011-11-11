@@ -425,6 +425,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
         return HttpResponse(status=405)
 
     project = get_object_or_404(Project, slug=project_slug)
+    resource = get_object_or_404(Resource, slug=resource_slug, project=project)
 
     try:
         language = Language.objects.by_code_or_alias(lang_code)
@@ -453,6 +454,8 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
             language__code=lang_code, rule=5
         )
         translations.update(reviewed=False)
+
+    invalidate_stats_cache(resource, language, user=request.user)
 
     return HttpResponse(status=200)
 

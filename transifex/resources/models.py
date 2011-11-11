@@ -774,6 +774,9 @@ class RLStats(models.Model):
     untranslated = models.PositiveIntegerField(_("Untranslated Entities"),
         blank=False, null=False, default=0, help_text="The number of "
         "untranslated entities in a language for a specific resource.")
+    reviewed = models.PositiveIntegerField(_("Reviewed Entities"),
+        blank=False, null=False, default=0, help_text="The number of "
+        "reviewed entities in a language for a specific resource.")
     last_update = models.DateTimeField(_("Last Update"), auto_now=True,
         default=None, help_text="The datetime that this language was last "
         "updated.")
@@ -792,6 +795,7 @@ class RLStats(models.Model):
     # Normalized fields
     translated_perc = models.PositiveIntegerField(default=0, editable=False)
     untranslated_perc = models.PositiveIntegerField(default=0, editable=False)
+    reviewed_perc = models.PositiveIntegerField(default=0, editable=False)
 
     #objects = generate_chainer_manager(RLStatsManager)
     objects = ChainerManager(RLStatsQuerySet)
@@ -822,9 +826,11 @@ class RLStats(models.Model):
         try:
             total = self.total
             self.translated_perc = self.translated * 100 / total
+            self.reviewed_perc = self.reviewed * 100 / total
             self.untranslated_perc = 100 - self.translated_perc
         except ZeroDivisionError:
             self.translated_perc = 0
+            self.reviewed_perc = 0
             self.untranslated_perc = 0
 
     def _calculate_translated_wordcount(self):
@@ -851,11 +857,19 @@ class RLStats(models.Model):
         self.translated = translated
         self.untranslated = untranslated
 
+    def _calculate_reviewed(self):
+        """Calculate number of reviewed translations."""
+        reviewed = Translation.objects.values('id').filter(rule=5,
+            language=self.language, resource=self.resource, reviewed=True
+        ).count()
+        self.reviewed = reviewed
+
     def update(self, user=None, save=True):
         """
         Update the RLStat object
         """
         self._calculate_translated()
+        self._calculate_reviewed()
         self._calculate_translated_wordcount()
         self._calculate_perc()
         if user:
