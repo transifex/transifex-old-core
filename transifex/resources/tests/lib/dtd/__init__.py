@@ -6,10 +6,15 @@ from django.conf import settings
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
-from transifex.resources.formats.dtd import DtdHandler, DtdParseError
+from transifex.resources.formats.dtd import DTDHandler, DTDParseError
 
 class TestDTD(BaseTestCase):
     """Suite of tests for the .DTD files."""
+
+    def setUp(self):
+        super(TestDTD, self).setUp()
+        self.resource.i18n_method = 'MOZILLA_PROPERTIES'
+        self.resource.save()
 
     def test_dtd_parser(self):
         """DTD file tests."""
@@ -65,8 +70,7 @@ class TestDTD(BaseTestCase):
             self.assertEqual(s.source_entity, content[i][0])
             self.assertEqual(s.translation, content[i][1])
 
-        handler.bind_file(os.path.join(os.path.dirname(__file__),'aboutRobots_uk_1251.dtd'))
-        self.assertRaises(DTDParseError, handler.parse_file)
+        self.assertRaises(DTDParseError, handler.bind_file, os.path.join(os.path.dirname(__file__),'aboutRobots_uk_1251.dtd'))
 
     def test_escaping(self):
         """Test escaping and unescaping"""
@@ -76,7 +80,7 @@ class TestDTD(BaseTestCase):
 
     def test_accept(self):
         parser = DTDHandler()
-        self.assertTrue(parser.accepts(mime='text/xml-dtd'))
+        self.assertTrue(parser.accepts('DTD'))
 
     def test_save2db_compile(self):
         """Test save2db and compilation of template"""
@@ -87,9 +91,8 @@ class TestDTD(BaseTestCase):
         l = self.resource.source_language
 
         handler.set_language(l)
-        handler.parse_file(is_source=True)
-
         handler.bind_resource(r)
+        handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
 
         # Import and save the finish translation

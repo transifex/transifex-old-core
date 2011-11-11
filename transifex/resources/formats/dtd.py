@@ -3,27 +3,31 @@
 import os, re
 
 from transifex.txcommon.log import logger
+from transifex.resources.formats import FormatError
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import GenericTranslation, Handler, \
         StringSet, ParseError, CompileError
 
 
-class DtdParseError(ParseError):
+class DTDParseError(ParseError):
     pass
 
 
-class DtdCompileError(CompileError):
+class DTDCompileError(CompileError):
     pass
 
 
-class DtdHandler(Handler):
+class DTDHandler(Handler):
     """ Handler for DTD translation files. """
     default_encoding = 'UTF-8'
     format_encoding = 'UTF-8'
     name = "DTD file handler"
     format = "DTD (*.dtd)"
-    method_name = ".DTD"
+    method_name = "DTD"
+
+    HandlerParseError = DTDParseError
+    HandlerCompileError = DTDCompileError
 
     def _escape(self, s):
         """Escape format content.
@@ -47,29 +51,37 @@ class DtdHandler(Handler):
                  .replace('&#39;',"'")
                  )
 
-    def _parse(self, is_source, lang_rules):
-        resource = self.resource
-
-        context = ""
-        # accept file-like object as an input
-        if hasattr(self.filename, "read"):
-            fh = self.filename
-            # filename is used for type determination on
-            self.filename = self.filename.name
-        # otherwise try to open file with given name
-        else:
-            fh = open(self.filename, "r")
+    def _get_content_from_file(self, filename, encoding):
+        fh = open(filename, "r")
         try:
-            text = fh.read().decode(self.ENCODING)
+            text = fh.read().decode(encoding)
             fh.close()
         except UnicodeDecodeError as e:
             logger.warning("Unicode decode error in DTDHandler.parse_file(): %s"
                     % unicode(e), exc_info=True)
-            raise DTDParseError(unicode(e))
+            raise self.HandlerParseError(unicode(e))
+        except IOError, e:
+            logger.warning(
+                "Error opening file %s with encoding %s: %s" %\
+                    (filename, encoding, e.message),
+                exc_info=True
+            )
+            raise FormatError(e.message)
         except Exception, e:
             logger.error("Unhandled exception in DTDHandler.parse_file(): %s"
                     % unicode(e), exc_info=True)
-            raise DTDParseError(unicode(e))
+            raise self.HandlerParseError(unicode(e))
+        finally:
+            fh.close()
+        return text
+
+
+
+    def _parse(self, is_source, lang_rules):
+        resource = self.resource
+
+        context = ""
+        text = self.content
 
         name_start_char = u':A-Z_a-z\xC0-\xD6\xD8-\xF6\xF8-\u02FF' + \
             u'\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF'+\
@@ -98,3 +110,4 @@ class DtdHandler(Handler):
 
             if comment:
                 latest_comment = comment
+        return text
