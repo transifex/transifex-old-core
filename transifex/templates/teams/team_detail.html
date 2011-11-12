@@ -100,8 +100,12 @@
 </div>
 
 {% if team_access_requests %}
-<div class="list separate ">
-<h3>{% trans "People waiting for team membership approving:" %}</h3>
+<div class="list ">
+
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label">{% trans "People waiting for team membership approving:" %}</h3>
+	</div>
+	
 <ul>
 {% for access_request in team_access_requests|dictsort:"user.username" %}
     <li>
@@ -131,9 +135,14 @@
 {% endif %}
 
 
-<div class="list separate" style="clear:both">
-  <h3>{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources:{% endblocktrans %}</h3>
+<div class="list" style="clear:both">
+
+  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources:{% endblocktrans %}</h3>
+	</div>
+	
  {% if statslist %}
+
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
   <thead>
   <tr>
@@ -278,8 +287,12 @@
 
 {% with team.members.all as members %}
 {% if members %}
-<div class="list separate" style="clear:both">
-<h3>{% trans "Team Members:" %}</h3>
+<div class="list" style="clear:both">
+
+  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  	<h3  class="sh-label">{% trans "Team Members:" %}</h3>
+	</div>
+
 <ul>
 {% for m in members|dictsort:"username" %}
     <li>

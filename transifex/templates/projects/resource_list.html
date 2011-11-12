@@ -5,15 +5,15 @@
 {% load statistics_resources %}
 {% load upload_manager_tags %}
 
-<div id="resources" class="resources separate">
- 
- <div class="clearfix">
- 	{% if perms.projects.pr_resource_add_change or is_maintainer %}
-	<p class="separate-buttons">
-			<a id="create_new_resource" title="{% trans 'Add new resource' %}" class="addbutton houdini_toggler"></a>
-	</p>
-	{% endif %}
-  <h3 class="separate-header">{% blocktrans %}Project Resources{% endblocktrans %}</h3>
+<div id="resources" class="resources">
+	
+	<div class="separate-header clearfix">
+  	<h3  class="sh-label">{% blocktrans %}Project Resources{% endblocktrans %}</h3>
+  	{% if perms.projects.pr_resource_add_change or is_maintainer %}
+  	<div class="separate-buttons"><span id="create_new_resource" title="{% trans 'Add new resource' %}" class="i16 nude-button add houdini_toggler linkstyle">{% trans "Add New Resource" %}</span></div>
+		{% endif %}
+	</div>
+	
 </div>
 
 

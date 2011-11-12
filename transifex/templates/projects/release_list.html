@@ -6,21 +6,21 @@
 
 {% if releases %}
 
-  <div id="releases" class="releases separate">
+  <div id="releases" class="releases">
   
-  <div class="clearfix">
-  {% if perms.projects.pr_release_add_change or is_maintainer %}
-    <div class="editlinks">
-      <p style="display:inline;float:right; clear:right;"><a class="addbutton" href="{{ release_create }}" title="{% trans 'Add' %}"></a></p>
-    </div>
+  {% if not releases_heading %}
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label notopmargin">{% trans "Project Releases" %}{% render_metacount releases _("releases") %}</h3>
+  	{% if perms.projects.pr_release_add_change or is_maintainer %}
+  	<div class="separate-buttons"><a class="i16 add nude-button" href="{{ release_create }}" title="{% trans 'Add' %}">{% trans "Add new release "%}</a></div>
+  	{% endif %}  
+	</div> 
+  {% else %}
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label notopmargin">{{ releases_heading }}{% render_metacount releases _("releases") %}</h3>
+	</div>
   {% endif %}
 
-  {% if not releases_heading %}
-    <h3 class="separate-header">{% trans "Project Releases" %}{% render_metacount releases _("releases") %}</h3>
-  {% else %}
-    <h3>{{ releases_heading }}{% render_metacount releases _("releases") %}</h3>
-  {% endif %}
-  </div>
   
   <div class="release_list">
     <ul class="simple bigthings">

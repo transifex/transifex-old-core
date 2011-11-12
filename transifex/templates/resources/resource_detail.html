@@ -102,17 +102,20 @@
   {% endif %}-->
  {% endcomment %}
  
-  {% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
-    <div class="editlinks">
-      <p>
-        <a class="i16 edit buttonized" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit resource" %}</a>
-      </p>
-    </div>
-  {% endif %}
+
+<div id="resource_details">
+
+  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
+  	{% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
+  	<div class="separate-buttons"><a class="i16 edit nude-button" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit resource" %}</a></div>
+  	{% endif %}  
+	</div>
+
 
 {% cache 604800 resource_details resource.project.slug resource.slug LANGUAGE_CODE %}
-<div id="resource_details" class="separate">
-  <h3>{% trans "Details" %}</h3>
+
+
   <dl class="definition clearfix">
 
       <dt class="i16 stringnum">{% trans "Total Strings" %}</dt>
@@ -163,8 +166,12 @@
   </dl>
 </div>
 
-<h3>{% blocktrans with resource.available_languages|length as num_of_langs %}Available languages ({{ num_of_langs }}){% endblocktrans %}</h3>
-<div class="list separate clear">
+
+<div class="separate-header  clearfix">
+	<h3  class="sh-label">{% blocktrans with resource.available_languages|length as num_of_langs %}Available languages ({{ num_of_langs }}){% endblocktrans %}</h3>
+</div>
+
+<div class="list clear">
 <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
   <thead>
   <tr>
@@ -336,8 +343,10 @@
 
 </div>
 
+<div class="separate-header clearfix">
+	<h3  class="sh-label">{% trans 'History' %}</h3>
+</div>
 
-<h3>{% trans 'History' %}</h3>
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object resource %}
 {% if not action_log %}

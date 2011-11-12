@@ -101,9 +101,13 @@
 
 {% block content_main %}
 
-<div class="list separate" style="clear:both">
+<div class="list" style="clear:both">
 {% if stats %}
-  <h3>{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
+
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
+	</div>
+
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>

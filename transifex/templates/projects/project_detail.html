@@ -22,12 +22,13 @@
   <div class="obj_bigdetails">
 
 
-  <div class="details separate">
+  <div class="details clearfix">
+  
+  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
+	</div>
+	
 
-  <div class="clearfix">
-  <h3 class="separate-header notopmargin">{% blocktrans %}Details{% endblocktrans %}</h3>
-
-  </div>
     
   <dl class="definition clearfix">
     {% if project.homepage %}
@@ -114,8 +115,12 @@
 
 </div>
 
-<div id="project-history">
-	<h3>{% trans 'History' %}</h3>
+<div id="project-history" class="grid_16">
+	
+	<div class="separate-header clearfix">
+  	<h3  class="sh-label notopmargin">{% trans 'History' %}</h3>
+	</div>
+	
 	{% get_log 10 as action_log for_object project %}
 	{% if not action_log %}
 	
