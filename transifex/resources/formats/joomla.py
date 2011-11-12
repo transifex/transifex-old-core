@@ -35,7 +35,6 @@ class JoomlaINIHandler(Handler):
     format = "Joomla INI (*.ini)"
     method_name = 'INI'
     comment_chars = ('#', ';', ) # '#' is for 1.5 and ';' for >1.6
-    linesep = '\n'
 
     HandlerParseError = JoomlaParseError
     HandlerCompileError = JoomlaCompileError
@@ -49,6 +48,7 @@ class JoomlaINIHandler(Handler):
         """
         content = self.content
         jformat = JoomlaIniVersion.create(self.content)
+        self._find_linesep(content)
 
         buf = ''
         for line in self._iter_by_line(content):

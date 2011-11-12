@@ -69,14 +69,6 @@ class JavaPropertiesHandler(Handler):
                 break
         return nbackslashes % 2 == 1
 
-    def _prepare_line(self, line):
-        """
-        Prepare a line for parsing.
-
-        Remove newline and whitespace characters.
-        """
-        return line.strip('\r\n').strip()
-
     def _split(self, line):
         """
         Split a line in (key, value).
