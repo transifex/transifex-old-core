@@ -8,11 +8,11 @@ from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.dtd import DTDHandler, DTDParseError
 
-class TestDTD(BaseTestCase):
+class TestDTDHandler(BaseTestCase):
     """Suite of tests for the .DTD files."""
 
     def setUp(self):
-        super(TestDTD, self).setUp()
+        super(TestDTDHandler, self).setUp()
         self.resource.i18n_method = 'MOZILLA_PROPERTIES'
         self.resource.save()
 
