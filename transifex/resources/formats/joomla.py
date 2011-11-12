@@ -83,7 +83,7 @@ class JoomlaINIHandler(Handler):
                 #ignore keys with no translation
                 continue
             self._add_translation_string(source, trans, context=context)
-        return buf
+        return buf[:buf.rfind(self.linesep)]
 
 
 class JoomlaIniVersion(object):
