@@ -33,7 +33,6 @@ class JavaPropertiesHandler(Handler):
     name = "Java *.PROPERTIES file handler"
     format = "Java PROPERTIES (*.properties)"
     method_name = 'PROPERTIES'
-    format_encoding = 'ISO-8859-1'
 
     HandlerParseError = JavaParseError
     HandlerCompileError = JavaCompileError
@@ -143,11 +142,10 @@ class JavaPropertiesHandler(Handler):
         """Convert unicode characters to sequence of bytes representing the
         codepoints.
         """
-        replacement = replacement.decode(self.default_enhcoding)
+        replacement = replacement.decode(self.default_encoding)
         for char in replacement:
             if ord(char) > 127:
                 replacement = replacement.replace(char, self.convert_to_ascii(char))
-        replacement = replacement.encode(self.default_encoding)
         return super(JavaPropertiesHandler, self)._replace_translation(
             original, replacement, text
         )
