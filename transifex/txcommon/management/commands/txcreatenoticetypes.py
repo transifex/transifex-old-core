@@ -16,6 +16,11 @@ class Command(NoArgsCommand):
     can_import_settings = False
 
     def handle_noargs(self, **options):
-        self.stdout.write("Creating or updating notice types\n")
+        verbose = int(options.get('verbosity'))
+        if verbose:
+            self.stdout.write("Creating or updating notice types\n")
         create_notice_types()
-        self.stdout.write("Default set of notice types initialized successfully.\n")
+        if verbose:
+            self.stdout.write(
+                "Default set of notice types initialized successfully.\n"
+            )
