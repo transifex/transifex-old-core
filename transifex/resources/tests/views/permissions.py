@@ -64,36 +64,36 @@ class PermissionsTest(BaseTestCase):
             args=[self.project.slug, 5]))
         self.assertEqual(resp.status_code, 200)
 
-        # Check that anonymous user is redirected to login page
+        # Check that anonymous user is redirected to signin page
         page_url = reverse('clone_translate',
             args=[self.project.slug, self.resource.slug, self.language_en.code,
                   self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         # Check lock and get translation file perms
         page_url = reverse('lock_and_download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         # Check download file perms
         page_url = reverse('download_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         #PRIVATE PROJECT CHECKS
         # Delete Translations
@@ -143,17 +143,17 @@ class PermissionsTest(BaseTestCase):
             args=[self.project_private.slug, 5]))
         self.assertEqual(resp.status_code, 403)
 
-        # Check that anonymous user is redirected to login page
+        # Check that anonymous user is redirected to signin page
         page_url = reverse('clone_translate',
             args=[self.project_private.slug, self.resource_private.slug,
                   self.language_en.code,
                   self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         # Check lock and get translation file perms
         page_url = reverse('lock_and_download_translation',
@@ -161,10 +161,10 @@ class PermissionsTest(BaseTestCase):
                   self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         # Check download file perms
         page_url = reverse('download_translation',
@@ -172,10 +172,10 @@ class PermissionsTest(BaseTestCase):
                   self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
 
     def test_registered(self):

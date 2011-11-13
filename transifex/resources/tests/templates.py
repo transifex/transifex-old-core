@@ -89,15 +89,12 @@ class ResourcesTemplateTests(BaseTestCase):
         for user in ['team_member', 'maintainer']:
             resp = self.client[user].get(self.urls['resource'])
             self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-            self.assertContains(resp,
-                '<a id="start_new_translation" class="i16 buttonized action">'\
-                'Translate Online</a>', status_code=200)
+            msg = '<a id="start_new_translation" class="i16 buttonized action">'
+            self.assertContains(resp, msg, status_code=200)
         # The anonymous users and the non-team members must not see the button
         for user in ['anonymous', 'registered']:
             resp = self.client[user].get(self.urls['resource'])
-            self.assertNotContains(resp,
-                '<a id="start_new_translation" class="i16 buttonized action">'\
-                'Translate Online</a>', status_code=200)
+            self.assertNotContains(resp, msg, status_code=200)
 
     def test_resource_edit_button(self):
         """Test that resource edit button is rendered correctly in details."""
