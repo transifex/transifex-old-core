@@ -8,7 +8,7 @@ These are used by views and the API.
 
 from itertools import ifilter
 from django.utils.translation import ugettext as _
-from django.db import IntegrityError
+from django.db import IntegrityError, DatabaseError
 from transifex.txcommon.log import logger
 from transifex.resources.models import Resource
 from transifex.resources.formats import FormatError
@@ -78,6 +78,10 @@ class ResourceBackend(object):
             raise ResourceBackendError(
                 "A resource with the same slug exists in this project."
             )
+        except DatabaseError, e:
+            msg = "Error creating resource: %s"
+            logger.warning(msg % e)
+            raise ResourceBackendError(msg % e)
 
         # save source entities
         try:
