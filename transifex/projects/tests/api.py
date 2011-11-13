@@ -207,7 +207,7 @@ class TestProjectAPI(BaseTestCase):
         public_url = "/".join([self.url_projects[:-2], self.project.slug, ''])
         res = self.client['registered'].get(public_url + "?details")
         self.assertEquals(res.status_code, 200)
-        self.assertEquals(len(simplejson.loads(res.content)), 15)
+        self.assertEquals(len(simplejson.loads(res.content)), 16)
         self.assertTrue('created' in simplejson.loads(res.content))
         public_url = "/".join(
             [self.url_projects[:-2], self.project.slug, ""]

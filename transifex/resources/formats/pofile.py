@@ -474,3 +474,7 @@ class POTHandler(GettextHandler):
             bug_tracker = self.resource.project.bug_tracker.encode(self.format_encoding)
             po.metadata['Report-Msgid-Bugs-To'] = bug_tracker
         return po
+
+    def set_language(self, language):
+        """Ignore the language option."""
+        pass
