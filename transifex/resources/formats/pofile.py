@@ -237,7 +237,7 @@ class GettextHandler(Handler):
                 for p, n in enumerate(lang_rules):
                     plural_keys[p] = ""
                 for n, p in enumerate(plurals[entry.msgid]):
-                    plural_keys[n] =  p
+                    plural_keys[n] =  self._pseudo_decorate(p)
                 entry.msgstr_plural = plural_keys
         return po
 
