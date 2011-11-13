@@ -86,9 +86,10 @@ class PseudoTestCase(base.BaseTestCase):
             self.resource.save()
 
             # Set a file, resource and language for the resource
-            parser = registry.handler_for(i18n_type)
-            handler = parser(v['file'], resource=self.resource,
-                language=self.language)
+            handler = registry.handler_for(i18n_type)
+            handler.bind_file(v['file'])
+            handler.bind_resource(self.resource)
+            handler.set_language(self.language)
             handler.parse_file(is_source=True)
             handler.save2db(is_source=True)
 
@@ -108,7 +109,7 @@ class PseudoTestCase(base.BaseTestCase):
                 # Compile file and check encoding
                 handler.compile()
                 file_content = handler.compiled_template
-                if type(file_content) != unicode:
+                if not isinstance(file_content, unicode):
                     file_content = file_content.decode('utf-8')
 
                 #FIXME: We have a bug related to spaces being escaped in
@@ -144,7 +145,7 @@ class PseudoTestCase(base.BaseTestCase):
                     'slug': resource_slug,
                     'source_language': source_language.code,
                     'name': resource_slug,
-                    'mimetype': settings.I18N_METHODS[i18n_type]['mimetype'],
+                    'i18n_type': i18n_type,
                     'attachment': f},
                 )
             f.close()
