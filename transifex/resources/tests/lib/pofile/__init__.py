@@ -421,4 +421,7 @@ class TestPolibEmptyComments(unittest.TestCase):
     """
 
     def test_empty_comment_file(self):
-        polib.pofile('empty_comment.po')
+        filename = os.path.join(
+            settings.TX_ROOT, 'resources/tests/lib/pofile/empty_comment.po'
+        )
+        polib.pofile(filename)
