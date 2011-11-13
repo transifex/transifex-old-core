@@ -7,6 +7,7 @@ from transifex.languages.models import Language
 from transifex.txcommon import import_to_python
 from transifex.resources.formats.registry import registry
 from transifex.txcommon.tests import base
+from transifex.txcommon.log import logger
 
 
 FORMATS = {
@@ -120,13 +121,13 @@ class PseudoTestCase(base.BaseTestCase):
 
                 # Assert expected value in the generated file
                 for message in v['pseudo_messages'][pseudo_type]:
-                    print file_content
-                    print "-----------------"
-                    print message
-                    print i18n_type
-                    print pseudo_type
-                    print "-----------------"
-                    self.assertTrue(message in file_content)
+                    logger.debug(file_content)
+                    logger.debug("-----------------")
+                    logger.debug(message)
+                    logger.debug(i18n_type)
+                    logger.debug(pseudo_type)
+                    logger.debug("-----------------")
+                    self.assertIn(message, file_content)
 
 
     def test_pseudo_file_api_calls(self):
@@ -150,11 +151,11 @@ class PseudoTestCase(base.BaseTestCase):
                 )
             f.close()
 
-            print '-----------------------'
-            print i18n_type
-            print settings.I18N_METHODS[i18n_type]['mimetype']
-            print res.content
-            print '-----------------------'
+            logger.debug('-----------------------')
+            logger.debug(i18n_type)
+            logger.debug(settings.I18N_METHODS[i18n_type]['mimetype'])
+            logger.debug(res.content)
+            logger.debug('-----------------------')
 
             # Pseudo file API URL
             url = reverse('apiv2_pseudo_content', args=[self.project.slug,
