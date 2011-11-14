@@ -11,7 +11,7 @@ from transifex.api.authentication import CustomHttpBasicAuthentication
 from transifex.languages.api import LanguageHandler
 from transifex.projects.api import ProjectHandler, ProjectResourceHandler
 from transifex.resources.api import ResourceHandler, FileHandler, StatsHandler, \
-        TranslationHandler
+        TranslationHandler, FormatsHandler
 from transifex.storage.api import StorageHandler
 from transifex.releases.api import ReleaseHandler
 from transifex.actionlog.api import ActionlogHandler
@@ -27,6 +27,7 @@ translationfile_handler = Resource(FileHandler, authentication=auth)
 stats_handler = Resource(StatsHandler, authentication=auth)
 translation_handler = Resource(TranslationHandler, authentication=auth)
 actionlog_handler = Resource(ActionlogHandler, authentication=auth)
+formats_handler = Resource(FormatsHandler, authentication=auth)
 
 urlpatterns = patterns('',
     url(
@@ -259,6 +260,11 @@ urlpatterns = patterns('',
         actionlog_handler,
         {'api_version': 2},
         name='project_resource_actionlogs',
+    ), url(
+       r'^2/formats/$',
+       formats_handler,
+       {'api_version': 2},
+       name='supported_formats',
     )
 
 )

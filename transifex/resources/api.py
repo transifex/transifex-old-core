@@ -1003,3 +1003,15 @@ class StringTranslation(Translation):
             os.unlink(file_.name)
         return res
 
+class FormatsHandler(BaseHandler):
+    """
+    Formats Handler for READ operation.
+    """
+    allowed_methods = ('GET',)
+
+    def read(self, request, api_version=1):
+        """
+        Get details of supported i18n formats.
+        """
+
+        return settings.I18N_METHODS
