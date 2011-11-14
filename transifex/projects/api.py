@@ -215,7 +215,7 @@ class ProjectHandler(BaseHandler):
         maintainers = data.pop('maintainers', {})
         lang = data.pop('source_language', 'en')
         try:
-            source_language = Language.objects.by_code_or_alias('en')
+            source_language = Language.objects.by_code_or_alias(lang)
         except Language.DoesNotExist:
             return BAD_REQUEST("Language %s does not exist." % lang)
         try:

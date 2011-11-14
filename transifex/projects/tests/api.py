@@ -6,7 +6,7 @@ from django.utils import simplejson
 from django.test import TransactionTestCase
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import BaseTestCase, Users, Languages, \
-        NoticeTypes
+        NoticeTypes, Projects
 from transifex.resources.models import RLStats, Resource
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
@@ -103,10 +103,11 @@ class ProjectResourceAPITests(BaseStorageTests):
         self.assertContains(resp, "for source language", status_code=400)
         upload_file.close()
 
-class TestTransactionProjectResourceAPI(Languages, NoticeTypes, Users,
-                                        TransactionTestCase):
+class TestTransactionProjectResourceAPI(Users, Projects, TransactionTestCase):
 
     def setUp(self):
+        Languages.setUpClass()
+        NoticeTypes.setUpClass()
         super(TestTransactionProjectResourceAPI, self).setUp()
         self.project = Project.objects.get(slug='project1')
         self.project.maintainers.add(self.user['maintainer'])

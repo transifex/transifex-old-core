@@ -5,8 +5,9 @@ from transifex.txcommon.notifications import NOTICE_TYPES
 
 def create_notice_types():
     for n in NOTICE_TYPES:
-            notification.create_notice_type(n["label"], n["display"],
-                                            n["description"], n["default"])
+        notification.create_notice_type(n["label"], n["display"],
+                                        n["description"], n["default"])
+
 
 class Command(NoArgsCommand):
     help = ('Create or Update the notice types used in the ActionLog and '

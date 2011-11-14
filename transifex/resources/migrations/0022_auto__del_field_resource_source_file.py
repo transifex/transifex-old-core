@@ -6,14 +6,18 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+    depends_on = (
+        ("copyright", "0002_populate_with_existing_data"),
+    )
+
     def forwards(self, orm):
-        
+
         # Deleting field 'Resource.source_file'
         db.delete_column('resources_resource', 'source_file_id')
 
 
     def backwards(self, orm):
-        
+
         # Adding field 'Resource.source_file'
         db.add_column('resources_resource', 'source_file', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['storage.StorageFile'], null=True, blank=True), keep_default=False)
 

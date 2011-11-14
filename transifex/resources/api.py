@@ -217,19 +217,9 @@ class ResourceHandler(BaseHandler):
         # In multipart/form-encode request variables have lists
         # as values. So we use __getitem__ isntead of pop, which returns
         # the last value
-        slang = None
-        if 'source_language' in data:
-            slang = data['source_language']
-            del data['source_language']
         method = data['i18n_type']; del data['i18n_type']
         if not registry.is_supported(method):
             msg = "i18n_type %s is not supported." % method
-            logger.warning(msg)
-            raise BadRequestError(msg)
-        try:
-            source_language = self._get_source_lang(project, slang)
-        except Language.DoesNotExist, e:
-            msg = "Language code '%s' does not exist or wrong code." % slang
             logger.warning(msg)
             raise BadRequestError(msg)
         try:
@@ -249,7 +239,7 @@ class ResourceHandler(BaseHandler):
         try:
             rb = ResourceBackend()
             return rb.create(
-                project, slug, name, method, source_language, content
+                project, slug, name, method, project.source_language, content
             )
         except ResourceBackendError, e:
             raise BadRequestError(e.message)
@@ -262,17 +252,13 @@ class ResourceHandler(BaseHandler):
             return rc.NOT_FOUND
         slang = data.pop('source_language', None)
         source_language = None
-        try:
-            source_language = self._get_source_lang(slang)
-        except:
-            pass
 
         if not source_language:
             return BAD_REQUEST("No or wrong source language was specified.")
 
         try:
             r, created = Resource.objects.get_or_create(
-                project=project, source_language=source_language, **data
+                project=project, **data
             )
 
             if created:
@@ -296,14 +282,7 @@ class ResourceHandler(BaseHandler):
             project = Project.objects.get(slug=project_slug)
         except Project.DoesNotExist:
             return rc.NOT_FOUND
-        slang = data.pop('source_language', None)
-        source_language = None
         i18n_type = data.pop('i18n_type', None)
-        if slang is not None:
-            try:
-                source_language = Language.objects.by_code_or_alias(slang)
-            except Language.DoesNotExist:
-                return BAD_REQUEST("Language code '%s' does not exist." % slang)
 
         try:
             resource = Resource.objects.get(slug=resource_slug)
@@ -312,8 +291,6 @@ class ResourceHandler(BaseHandler):
         try:
             for key, value in data.iteritems():
                 setattr(resource, key, value)
-            if source_language:
-                resource.source_language = source_language
             if i18n_type is not None:
                 resource.i18n_method = i18n_type
             resource.save()
@@ -366,67 +343,6 @@ class ResourceHandler(BaseHandler):
             msg = "No content or file found"
             logger.warning(msg)
             raise NoContentError(msg)
-
-
-    def _is_same_source_lang(self, project, slang):
-        """Check if the source language specified is the one used in
-        the project.
-
-        All resources of a project must have the same source language. So,
-        check if the source language specified (used by a new resource) is
-        the same as the one used by another resource of the project.
-        In the case the project does not have any resource yet, we return True.
-
-        Args:
-            project: The project which the resource will belong to.
-            slang: The source language used by the new resource.
-        Returns:
-            True, if the source language is valid (matches). False, otherwise.
-        """
-        slang_used = project.source_language_id
-        if slang_used is None:
-            return True
-        return slang_used == slang.id
-
-    def _get_source_lang(self, project, slang):
-        """Get the source language to use for the resource
-
-        If the source language specified does not match the one
-        used in the project, raise a BadRequestError. We test this
-        condition first, because it should be the first error the user
-        should see.
-
-        If no source language is specified, return the one used in the project
-        or (in case none is used) raise a BadRequestError.
-
-        Args:
-            project: The project the resource belongs to.
-            slang: The source language for the resource.
-        Returns:
-            The source language to use.
-        Raises:
-            BadRequestError: There was a problem with the language
-                the user chose.
-        """
-        if slang is not None:
-            try:
-                source_language = Language.objects.by_code_or_alias(slang)
-            except Language.DoesNotExist:
-                raise BadRequestError(
-                    "Language code '%s' does not exist." % slang
-                )
-            if not self._is_same_source_lang(project, source_language):
-                raise BadRequestError(
-                    "All resources of a project must have the same "
-                    "source language."
-                )
-            return source_language
-        else:
-            slang_for_project = project.source_language
-            if slang_for_project is not None:
-                return slang_for_project
-            else:
-                raise BadRequestError("No source language specified.")
 
 
 class StatsHandler(BaseHandler):

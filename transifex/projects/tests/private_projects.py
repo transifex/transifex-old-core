@@ -35,7 +35,7 @@ def skip(func):
         return unittest.skipUnless(settings.TX_ROOT == settings.PROJECT_PATH, msg)
     return decorator
 
-class PrivateProjectTest(NoticeTypes, BaseTestCase):
+class PrivateProjectTest(BaseTestCase):
     """
     Test private projects overall.
 
