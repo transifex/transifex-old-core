@@ -118,13 +118,28 @@ def project_toggle_watch(request, project_slug):
         }
 
         for signal in project_signals:
-            notification.stop_observing(project, request.user, signal)
+            try:
+                notification.stop_observing(project, request.user, signal)
+            except notification.ObservedItem.MultipleObjectsReturned, e:
+                notification.ObservedItem.objects.filter(user=request.user,
+                        signal=signal, content_type__model='project',
+                        object_id = project.id).delete()
         for release in project.releases.all():
             for signal in release_signals:
-                notification.stop_observing(release, request.user, signal)
+                try:
+                    notification.stop_observing(release, request.user, signal)
+                except notification.ObservedItem.MultipleObjectsReturned, e:
+                    notification.ObservedItem.objects.filter(user=request.user,
+                        signal=signal, content_type__model='release',
+                        object_id = release.id).delete()
         for resource in project.resources.all():
             for signal in resource_signals:
-                notification.stop_observing(resource, request.user, signal)
+                try:
+                    notification.stop_observing(resource, request.user, signal)
+                except notification.ObservedItem.MultipleObjectsReturned, e:
+                    notification.ObservedItem.objects.filter(user=request.user,
+                        signal=signal, content_type__model='resource',
+                        object_id=resource.id).delete()
 
     except notification.ObservedItem.DoesNotExist:
         try:
