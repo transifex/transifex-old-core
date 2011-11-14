@@ -35,12 +35,18 @@
 
 {% else %}{# No releases #}
   {% if perms.projects.pr_release_add_change or is_maintainer %}
-    <div id="releases" class="releases separate">
+    <div id="releases" class="releases">
+
+
 
     {% if not releases_heading %}
-      <h3>{% trans "Project Releases" %}{% render_metacount releases _("releases") %}</h3>
+      <div class="separate-header clearfix">
+  			<h3  class="sh-label">{% trans "Project Releases" %}{% render_metacount releases _("releases") %}</h3>
+			</div>
     {% else %}
-      <h3>{{ releases_heading }}{% render_metacount releases _("releases") %}</h3>
+      <div class="separate-header clearfix">
+  			<h3  class="sh-label">{{ releases_heading }}{% render_metacount releases _("releases") %}</h3>
+			</div>
     {% endif %}
 
     <p class="i16 tip">{% blocktrans %}No releases are registered for this project yet. Why don't you <a href="{{ release_create }}">add one</a>?{% endblocktrans %}</p>
