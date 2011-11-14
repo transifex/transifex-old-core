@@ -16,28 +16,9 @@ class ResourceForm(forms.ModelForm):
 
     sourcefile = forms.FileField(label="Source File", required=False)
 
-    def __init__(self, *args, **kwargs):
-        super(ResourceForm, self).__init__(*args, **kwargs)
-        instance = getattr(self, 'instance', None)
-        # if form is edit form, disable the source_language selection
-        if instance and instance.id:
-            self.fields['source_language'].required = False
-            self.fields['source_language'].widget.attrs['disabled'] = 'disabled'
-
     class Meta:
         model = Resource
-        exclude = ('project', 'resource_group', 'i18n_type')
-
-    def clean_source_language(self):
-        """
-        In the clean function, we make sure that it's not possible to edit the
-        source_language field from an edit form.
-        """
-        instance = getattr(self, 'instance', None)
-        if instance:
-            return instance.source_language
-        else:
-            return self.cleaned_data.get('source_language', None)
+        exclude = ('project', 'resource_group', 'i18n_type', 'source_language')
 
 
 class CreateResourceForm(forms.ModelForm):
@@ -55,14 +36,10 @@ class CreateResourceForm(forms.ModelForm):
                 ', '.join(sorted(m[1] for m in registry.descriptions()))
         )
     )
-    source_lang = forms.ChoiceField(
-        label=_('Source Language'), choices=language_choices,
-        help_text=_("The source language of this Resource.")
-    )
 
     class Meta:
         model = Resource
-        fields = ('name', 'source_file', 'i18n_method', 'source_lang')
+        fields = ('name', 'source_file', 'i18n_method', )
 
 
 class ResourceTranslationForm(forms.Form):
@@ -94,9 +71,9 @@ class UpdateTranslationForm(forms.Form):
 
 class ResourcePseudoTranslationForm(forms.Form):
     """Form to be used for getting pseudo translation files"""
-    
-    pseudo_type = forms.ChoiceField(label=_("Pseudo type"), required=True, 
-        choices=[(k, v) for k, v in settings.PSEUDO_TYPES.items()], 
+
+    pseudo_type = forms.ChoiceField(label=_("Pseudo type"), required=True,
+        choices=[(k, v) for k, v in settings.PSEUDO_TYPES.items()],
         widget=forms.widgets.RadioSelect, initial='MIXED',
         help_text=_("For more info about each pseudo translation type, please "
             "refer to the docs."))

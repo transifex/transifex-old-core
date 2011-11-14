@@ -27,51 +27,42 @@ def upload_create_resource_form(request, project, prefix='create_form'):
             request.POST, request.FILES, prefix=prefix
         )
         if cr_form.is_valid():
-            try:
-                lang_code = cr_form.cleaned_data['source_lang']
-                source_lang = Language.objects.by_code_or_alias(lang_code)
-                name = cr_form.cleaned_data['name']
-            except Language.DoesNotExist, e:
-                msg = _("Invalid language selected.")
-                cr_form._errors['source_lang'] = ErrorList([msg, ])
-            else:
-                slug = slugify(name)
+            name = cr_form.cleaned_data['name']
+            slug = slugify(name)
 
-                # Check if we already have a resource with this slug in the db.
-                try:
-                    Resource.objects.get(slug=slug, project=project)
-                except Resource.DoesNotExist:
-                    pass
-                else:
-                    # if the resource exists, modify slug in order to force the
-                    # creation of a new resource.
-                    slug = slugify(name)
-                    identifier = Resource.objects.filter(
-                        project=project, slug__icontains="%s_" % slug
-                    ).count() + 1
-                    slug = "%s_%s" % (slug, identifier)
-                method = cr_form.cleaned_data['i18n_method']
-                content = content_from_uploaded_file(request.FILES)
-                rb = ResourceBackend()
-                try:
-                    rb.create(
-                        project, slug, name, method, source_lang, content,
-                        user=request.user
-                    )
-                except ResourceBackendError, e:
-                    transaction.rollback()
-                    cr_form._errors['source_file'] = ErrorList([e.message, ])
-                    display_form=True
-                else:
-                    transaction.commit()
-                    display_form = False
-                    resource = Resource.objects.get(slug=slug, project=project)
+            # Check if we already have a resource with this slug in the db.
+            try:
+                Resource.objects.get(slug=slug, project=project)
+            except Resource.DoesNotExist:
+                pass
+            else:
+                # if the resource exists, modify slug in order to force the
+                # creation of a new resource.
+                slug = slugify(name)
+                identifier = Resource.objects.filter(
+                    project=project, slug__icontains="%s_" % slug
+                ).count() + 1
+                slug = "%s_%s" % (slug, identifier)
+            method = cr_form.cleaned_data['i18n_method']
+            content = content_from_uploaded_file(request.FILES)
+            rb = ResourceBackend()
+            try:
+                rb.create(
+                    project, slug, name, method, project.source_language,
+                    content, user=request.user
+                )
+            except ResourceBackendError, e:
+                transaction.rollback()
+                cr_form._errors['source_file'] = ErrorList([e.message, ])
+                display_form=True
+            else:
+                transaction.commit()
+                display_form = False
+                resource = Resource.objects.get(slug=slug, project=project)
         else:
             display_form=True
     else:
-        cr_form = CreateResourceForm(
-            prefix=prefix, initial={'source_lang': 'en'}
-        )
+        cr_form = CreateResourceForm(prefix=prefix)
         display_form = False
 
     return {
@@ -82,8 +73,8 @@ def upload_create_resource_form(request, project, prefix='create_form'):
     }
 
 
-@register.inclusion_tag("resources/upload_resource_translation_button.html")
-def upload_resource_translation_button(request, resource, language=None,
+@register.inclusion_tag("resources/upload_resource_translation_button.html", takes_context=True)
+def upload_resource_translation_button(context, request, resource, language=None,
      prefix='button', translate_online=False):
     """Form to add a translation.
 
@@ -92,13 +83,13 @@ def upload_resource_translation_button(request, resource, language=None,
     """
     if language or (request.POST and
                     request.POST.get('target_language', None)):
-        return update_translation_form(request, resource, language)
+        return update_translation_form(context, request, resource, language)
     else:
-        return create_translation_form(request, resource, language)
+        return create_translation_form(context, request, resource, language)
 
 
-def create_translation_form(request, resource, language=None, prefix='button',
-                            translate_online=True):
+def create_translation_form(context, request, resource, language=None,
+                            prefix='button', translate_online=True):
     form = ResourceTranslationForm(prefix=prefix)
 
     return {
@@ -108,10 +99,11 @@ def create_translation_form(request, resource, language=None, prefix='button',
         'resource_translation_form': form,
         'translate_online': translate_online,
         'create': True,
+        'static_url': context['STATIC_URL'],
     }
 
 
-def update_translation_form(request, resource, language=None,
+def update_translation_form(context, request, resource, language=None,
                             prefix='update_trans', translate_online=False):
     """Form to add a translation.
 
@@ -131,4 +123,5 @@ def update_translation_form(request, resource, language=None,
         'update_translation_form': form,
         'translate_online': False,
         'create': False,
+        'static_url': context['STATIC_URL'],
     }

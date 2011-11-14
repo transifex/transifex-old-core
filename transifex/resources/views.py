@@ -144,13 +144,12 @@ def resource_edit(request, project_slug, resource_slug):
             try:
                 resource = resource_form.save(commit=False)
                 if resource_form.cleaned_data['sourcefile'] is not None:
-                    source_language = resource_form.cleaned_data['source_language']
                     method = resource.i18n_method
                     content = content_from_uploaded_file(
                         {0: resource_form.cleaned_data['sourcefile'], }
                     )
                     save_source_file(
-                        resource, source_language, request.user, content, method
+                        resource, request.user, content, method
                     )
 
                 urlinfo = url_form.save(commit=False)
@@ -211,12 +210,12 @@ def resource_edit(request, project_slug, resource_slug):
 
 
 @transaction.commit_on_success
-def save_source_file(resource, source_lang, user, content, method):
+def save_source_file(resource, user, content, method):
     """Save new source file.
 
     Called by the "edit resource" action.
     """
-    fb = FormatsBackend(resource, source_lang, user)
+    fb = FormatsBackend(resource, resource.source_language, user)
     return fb.import_source(content, method)
 
 
@@ -230,8 +229,10 @@ def resource_actions(request, project_slug=None, resource_slug=None,
     Ajax view that returns an fancybox template snippet for resource specific
     actions.
     """
-    resource = get_object_or_404(Resource.objects.select_related('project'), project__slug = project_slug,
-                                 slug = resource_slug)
+    resource = get_object_or_404(
+        Resource.objects.select_related('project'),
+        project__slug=project_slug, slug=resource_slug
+    )
     target_language = get_object_or_404(Language, code=target_lang_code)
     project = resource.project
     # Get the team if exists to use it for permissions and links
