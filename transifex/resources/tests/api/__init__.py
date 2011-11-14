@@ -1047,3 +1047,12 @@ class TestStatsAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
+
+class TestFormatsAPI(APIBaseTests):
+    def test_formats_api(self):
+        res = self.client['registered'].get(
+            reverse('supported_formats')
+        )
+        self.assertEqual(res.status_code, 200)
+        json = simplejson.loads(res.content)
+        self.assertEqual(settings.I18N_METHODS, json)
