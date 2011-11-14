@@ -57,3 +57,19 @@ def twitter_profile_values(sender, user, response, details, **kwargs):
         profile.save()
 
     return True
+
+def linkedin_profile_values(sender, user, response, details, **kwargs):
+    """
+    For users that login through LinkedIn, set the ``linked_in`` field in
+    their profile to their public profile URL.
+
+    Must return True or False.
+    """
+    profile = user.get_profile()
+    if not profile.linked_in:
+        public_profile = response.get('public-profile-url', None)
+        if public_profile:
+            profile.linked_in = public_profile
+            profile.save()
+
+    return True

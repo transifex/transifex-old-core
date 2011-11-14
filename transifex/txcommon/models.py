@@ -12,6 +12,7 @@ from userena.models import UserenaBaseProfile
 
 from social_auth.signals import pre_update
 from social_auth.backends.twitter import TwitterBackend
+from social_auth.backends.contrib.linkedin import LinkedinBackend
 
 Language = models.get_model('languages', 'Language')
 
@@ -86,3 +87,4 @@ import listeners
 post_save.connect(listeners.add_user_to_registered_group, sender=User)
 
 pre_update.connect(listeners.twitter_profile_values, sender=TwitterBackend)
+pre_update.connect(listeners.linkedin_profile_values, sender=LinkedinBackend)
