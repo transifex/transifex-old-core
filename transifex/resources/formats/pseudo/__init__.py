@@ -40,12 +40,13 @@ class PseudoTypeMixin:
             '\nHello\n' would call ``_base_compile`` with 'Hello' only.
         """
         starts, ends = '', ''
+        n = len(char)
         if string.startswith(char):
-            starts = string[:1]
-            string = string[1:]
+            starts = string[:n]
+            string = string[n:]
         if string.endswith(char):
-            ends = string[-1:]
-            string = string[:-1]
+            ends = string[-n:]
+            string = string[:-n]
         string = self._base_compile(string)
         if starts:
             string = starts + string

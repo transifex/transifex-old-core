@@ -14,7 +14,6 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/pofile/pseudo.pot'),
         'pseudo_messages':{
-            'XXX': [u'msgstr "xxxLocationsxxx"'],
             'BRACKETS': [u'msgstr "[Locations]"'],
             'UNICODE': [u'"Ŭşḗř %(name)s <b>ḓǿḗş ƞǿŧ</b> ħȧṽḗ ȧ',
                 u'%i ḿǿŧǿřƈẏƈŀḗş ȧŧ:\\n'],
@@ -29,7 +28,6 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/qt/pseudo.ts'),
         'pseudo_messages':{
-            'XXX': [u'<translation>xxxSTARTxxx</translation>'],
             'BRACKETS': [u'<translation>[START]</translation>'],
             'UNICODE': [u'<numerusform>&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt;</numerusform>'],
             'PLANGUAGE': [u'<numerusform>&lt;b&gt;%n fïקïléקé'],
@@ -41,7 +39,6 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/javaproperties/pseudo.properties'),
         'pseudo_messages':{
-            'XXX': [u'Key00=xxxValue00xxx'],
             'BRACKETS': [u'Key00=[Value00]'],
             'UNICODE': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
             'PLANGUAGE': [u'Key01=<b>Påקågéקé</b> %s ôקôf %s'],
@@ -52,7 +49,6 @@ FORMATS = {
         'file': os.path.join(settings.TX_ROOT, 
             'resources/tests/lib/joomla_ini/pseudo.ini'),
         'pseudo_messages':{
-            'XXX': [u'KEY1="xxxTranslationxxx"'],
             'BRACKETS': [u'KEY1="[Translation]"'],
             'UNICODE': [u'KEY2="<b>Ƥȧɠḗ</b> %s ǿƒ %s"'],
             'PLANGUAGE': [u'KEY2="<b>Påקågéקé</b> %s ôקôf %s"'],
@@ -65,7 +61,6 @@ FORMATS = {
         #'file': os.path.join(settings.TX_ROOT, 
             #'resources/tests/lib/desktop/data/okular.desktop'),
         #'pseudo_messages':{
-            #'XXX': [u''],
             #'BRACKETS': [u''],
             #'UNICODE': [u''],
             #'PLANGUAGE': [u'']

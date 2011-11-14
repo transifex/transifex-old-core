@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-import re
+import re, random
 from django.conf import settings
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.pseudo.splitters import *
 
-class XxxPseudoType(PseudoTypeMixin):
-    """Pseudo type for adding xxx around a string."""
 
-    def _base_compile(self, string):
-        return u'xxx' + string + u'xxx'
+class BracketsPseudoType(PseudoTypeMixin):
+    """Pseudo type for adding square brackets around a string."""
 
     def _po(self, string):
         """
@@ -16,7 +14,7 @@ class XxxPseudoType(PseudoTypeMixin):
         
         Translations must begin and end with \n if the msgid does so.
         """
-        return self._skip_char_around(string, char='\n')
+        return self._skip_char_around(string, char='\\\\n')
 
     def _properties(self, string):
         """
@@ -30,11 +28,6 @@ class XxxPseudoType(PseudoTypeMixin):
         # In any case, lets keep it here until we be sure of its needed, once
         # it shouldn't affect the real Java .properties files.
         return self._skip_char_around(string, char='"')
-
-
-#NOTE: Inherits custom methods from XxxPseudoType
-class BracketsPseudoType(XxxPseudoType):
-    """Pseudo type for adding square brackets around a string."""
 
     def _base_compile(self, string):
         return u'[' + string + u']'
@@ -144,12 +137,80 @@ class PLanguagePseudoType(PseudoTypeMixin):
         return outstr
 
 
-class MixedPseudoTypes(PLanguagePseudoType, UnicodePseudoType, BracketsPseudoType):
+#NOTE: Inherits custom methods from BracketsPseudoType
+class ExtendPseudoType(BracketsPseudoType):
+    """
+    Pseudo type for increasing the length of a string by around 20-700% 
+    appending special chars (Greek, Chinese, etc) to the end of the string.
+    """
+
+    chars = [
+        u'\xb5',
+        u'\u0131',
+        u'\u017f',
+        u'\u01c5',
+        u'\u01c8',
+        u'\u01cb',
+        u'\u01f2',
+        u'\u0390',
+        u'\u03b0',
+        u'\u03c2',
+        u'\u03d0',
+        u'\u03d1',
+        u'\u03d5',
+        u'\u03d6',
+        u'\u03f0',
+        u'\u03f1',
+        u'\u03f5',
+        u'\u1e9b',
+        u'\u9db1',
+        u'\u9750',
+        u'\u884b'
+        ]
+
+    def create_extented_text(self, string):
+
+        size = len(string)
+        
+        # Strings bigger then 50 chars should be increased by 20%. The others
+        # should use an equation, so smaller strings can be increased more.
+        if size > 49:
+            n = int(size * 0.2)
+        else:
+            n = int(((size*(6.8/(size/3+1)**1.13+1))-size))
+        
+        # FIXME: Count [, ] and whitespace ahead of time, because it's gonna 
+        # be used in the MixedPseudoTypes class.
+        n -= 3
+        chars_lenght = len(self.chars) -1        
+        # Get list of chars to append from the string itself
+        chars_list = list(string[:n].strip())
+        
+        # If `'I'[:7]` it will return only one char, then we need to append
+        # 6 more.
+        if len(chars_list) > n:
+            n2 = len(chars_list) - n
+            chars_list += self.chars[n2:]
+
+        # For each char in chars_list replace the char with a special char 
+        # from self.chars, unless the char is a whitespace.
+        for k, c in enumerate(chars_list):
+            if chars_list[k] == ' ':
+                continue          
+            chars_list[k] = self.chars[random.randint(0, chars_lenght)]
+        
+        return u''.join(chars_list)
+
+    def _base_compile(self, string):
+        return string + ' ' + self.create_extented_text(string)
+
+
+class MixedPseudoTypes(ExtendPseudoType, UnicodePseudoType, BracketsPseudoType):
     """
     Pseudo type which combines three other pseudo types.
     
     Types:
-        PLanguagePseudoType
+        ExtendPseudoType
         UnicodePseudoType
         BracketsPseudoType
         

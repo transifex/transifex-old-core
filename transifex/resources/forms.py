@@ -199,6 +199,6 @@ class ResourcePseudoTranslationForm(forms.Form):
     
     pseudo_type = forms.ChoiceField(label=_("Pseudo type"), required=True, 
         choices=[(k, v) for k, v in settings.PSEUDO_TYPES.items()], 
-        widget=forms.widgets.RadioSelect,
+        widget=forms.widgets.RadioSelect, initial='MIXED',
         help_text=_("For more info about each pseudo translation type, please "
             "refer to the docs."))
