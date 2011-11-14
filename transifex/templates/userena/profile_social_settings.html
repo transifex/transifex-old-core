@@ -5,6 +5,23 @@
 
 {% block userena_header %}<h3>{% trans 'Social login settings' %}</h3>{% endblock %}
 
+{% block extrajs %}
+{{ block.super }}
+<script type="text/javascript">
+ $(document).ready(function(){
+ 	$('.associated').each(function(){
+ 		$(this).mouseover(function(){
+ 			$(this).find(".pla-state").addClass("unassociate").html("Unassociate");
+ 		});
+ 		$(this).mouseout(function(){
+ 			$(this).find(".pla-state").removeClass("unassociate").html("Associated");
+ 		});
+
+ 	});
+ });
+</script>
+{% endblock %}
+
 {% block userena_content %}
 
 <ul id="profile-login-associations">
