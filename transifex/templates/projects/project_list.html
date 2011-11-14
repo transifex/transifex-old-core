@@ -15,7 +15,11 @@
 
 {% block content_title %}
 <h2 class="pagetitle">
+    {% if tag %}
+    Showing projects tagged with: {{ tag.name }}
+    {% else %}
     {% trans "Projects on Transifex" %}
+    {% endif %}
     {% render_metacount project_list _("projects") %}
 </h2>
 {% endblock %}
