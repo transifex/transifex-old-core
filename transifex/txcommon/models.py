@@ -10,6 +10,9 @@ from django.utils.translation import ugettext_lazy as _
 from userena import settings as userena_settings
 from userena.models import UserenaBaseProfile
 
+from social_auth.signals import pre_update
+from social_auth.backends.twitter import TwitterBackend
+
 Language = models.get_model('languages', 'Language')
 
 class Profile(UserenaBaseProfile):
@@ -81,3 +84,5 @@ def inclusive_fields(inmodel, except_fields=[]):
 # Signal Registration
 import listeners
 post_save.connect(listeners.add_user_to_registered_group, sender=User)
+
+pre_update.connect(listeners.twitter_profile_values, sender=TwitterBackend)

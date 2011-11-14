@@ -42,3 +42,18 @@ def add_user_to_registered_group(sender, **kwargs):
             transaction.savepoint_rollback(sid)
 
     transaction.commit()
+
+def twitter_profile_values(sender, user, response, details, **kwargs):
+    """
+    For users that login through Twitter, set the ``twitter`` field in
+    their profile to their Twitter screen name.
+
+    Must return True or False.
+    """
+    profile = user.get_profile()
+    if not profile.twitter:
+        screen_name = response.get('screen_name')
+        profile.twitter = screen_name
+        profile.save()
+
+    return True
