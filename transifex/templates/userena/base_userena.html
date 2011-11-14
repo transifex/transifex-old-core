@@ -8,47 +8,36 @@
   <link media="screen" href="{{ STATIC_URL }}css/userspace.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
+{% block extrajs %}
+    <script type="text/javascript">
+			$(document).ready(function(){
+				$(".side-menu").css('height',$(".psettings-content").height());
+				$(".tx-form input[type='checkbox']").parents(".tx-form-field").addClass("txf-checkbox");
+			});
+		</script>
+{% endblock %}
 
 {% block content_main %}
 
-<div>{% block userena_content%}{% endblock %}</div>
-
-
 {% url socialauth_begin 'twitter' as social_twitter_url %}
 {% if social_twitter_url %}
-<div class="grid_5" style="margin-top:25px;">
-	
-	{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
-		{% if user.username == profile.user.username %}
-		<h5 class="i16 orange-arrow">{{ profile.user.email }}</h5>
-		<ul class="simple" style="padding-left:25px;">
-		  <li><a href="{% url userena_email_change user.username %}">{% trans "Change email" %} &raquo;</a></li>
-		  <li><a href="{% url userena_password_change user.username %}">{% trans "Change password" %} &raquo;</a></li>
-		  <li><a href="{% url notification_notices %}">{% trans "Notification settings" %} &raquo;</a></li>
-          {% hook "additional_account_links.html" %}
-		</ul>
-	{% endif %}
+	<div class="side-menu grid_4 alpha left-side">
+		{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
+		<ul>
+			<li class="head">Account</li>
+			{% url userena_profile_detail user.username as url_user_profile %}
+			<li class="inner-item {% if site_section.0 == 'accounts' and not site_section.2 %}active{% endif %}"><a href="{{ url_user_profile }}">Edit profile</a></li>
+		  <li class="inner-item {% if site_section.0 == 'accounts' and site_section.2 == 'email' %}active{% endif %}"><a href="{% url userena_email_change user.username %}">{% trans "Change email" %}</a></li>
+		  <li class="inner-item {% if site_section.0 == 'accounts' and site_section.2 == 'password' %}active{% endif %}"><a href="{% url userena_password_change user.username %}">{% trans "Change password" %}</a></li>
+		  <li class="inner-item {% if site_section.0 == 'notices' %}active{% endif %}"><a href="{% url notification_notices %}">{% trans "Notification settings" %}</a></li>
+		  {% url profile_social_settings user.username as url_profile_social_settings %}
+			<li class="inner-item {% if site_section.0 == 'accounts' and site_section.2 == 'social' %}active{% endif %}"><a href="{{ url_profile_social_settings }}">{% trans "Social login" %}</a></li>
+      
+	  </ul>
+	</div>
 
-  {% if social_auth.associated %}
-  <h5 class="i16 orange-arrow">{% trans "Associated social accounts" %}</h5>
-  <ul class="simple" style="padding-left:25px;">
-      {% for account in social_auth.associated %}
-      <li>
-          <span class="disconnect">
-          <a href={% url socialauth_disconnect_individual account.provider account.id %}>{{ account.provider|title }} (ID {{ account.id }})</a>
-          </span>
-      </li>
-      {% endfor %}
-  </ul>
-  {% endif %}
-	<h5 class="i16 orange-arrow">{% trans "Associate new social accounts" %}</h5>
-  <ul class="simple" style="padding-left:25px;">
-  {% for name in social_auth.not_associated %}
-      <li><a rel="nofollow" href="{% url socialauth_associate_begin name %}">{{ name|title }}</a></li>
-  {% endfor %}
-  </ul>
-  </div>
-</div>
 {% endif %}
+
+<div class="grid_12 omega psettings-content">{% block userena_header %}{% endblock %}{% block userena_content%}{% endblock %}</div>
 
 {% endblock %}
