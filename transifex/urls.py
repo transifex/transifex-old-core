@@ -73,7 +73,10 @@ if settings.USE_SOCIAL_LOGIN:
     urlpatterns += patterns('',
         url(r'^accounts/', include('social_auth.urls')),
         url(r'^accounts/(?P<username>(?!signout|signup|signin)[\.\w]+)/social/$',
-            view='txcommon.views.profile_social_settings', name='profile_social_settings')
+            view='txcommon.views.profile_social_settings', name='profile_social_settings'),
+        # Ugly, see comments in view
+        url(r'^profile/social/$', 'txcommon.views.profile_social_settings_redirect',
+            name='profile-social-redirect'),
     )
 
 if settings.ENABLE_NOTICES:

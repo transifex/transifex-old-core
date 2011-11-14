@@ -13,6 +13,7 @@ from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import list_detail
+from django.core.urlresolvers import reverse
 
 from notification import models as notification
 from haystack.query import SearchQuerySet
@@ -122,12 +123,24 @@ def profile_public(request, username, template_name='userena/public.html'):
 
 
 @login_required
-def profile_social_settings(request, username, template_name='userena/profile_social_settings.html'):
+def profile_social_settings(request, username,
+    template_name='userena/profile_social_settings.html'):
     """Social login settings page under user profile."""
     user = get_object_or_404(User, username=username)
     return render_to_response(template_name, {
         'profile': user.get_profile()
     }, context_instance=RequestContext(request))
+
+
+@login_required
+def profile_social_settings_redirect(request):
+    """
+    Redirect a logged in user to his social settings page. This is necessary
+    because the URL is used in a settings variable by django-social-auth that
+    doesn't support dynamics URL (i.e. with a username in it).
+    """
+    return HttpResponseRedirect(reverse('profile_social_settings',
+        args=[request.user,]))
 
 
 # Ajax response
