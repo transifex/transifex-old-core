@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from django.contrib import admin
+from django.views.generic.simple import redirect_to
 import authority
 
 from txcommon.forms import EditProfileForm
@@ -54,6 +55,11 @@ else:
             view    =   'userena.views.profile_edit',
             kwargs  =   {'edit_profile_form': EditProfileForm},
             name    =   'userena_profile_edit'),
+
+        # Don't show list of all accounts here
+        url(regex   =   r'^accounts/$',
+            view    =   redirect_to,
+            kwargs  =   {'url': '/'}),
 
         url(regex   =   r'^accounts/',
             view    =   include('userena.urls')),
