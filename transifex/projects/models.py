@@ -27,6 +27,7 @@ from transifex.actionlog.models import LogEntry
 from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
 from transifex.projects.signals import project_created, project_deleted
+from transifex.languages.models import Language
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"])
 
@@ -174,6 +175,11 @@ class Project(models.Model):
         verbose_name=_('Owner'), related_name='projects_owning',
         help_text=_('The user who owns this project.'))
 
+    source_language = models.IntegerField(
+        verbose_name=_('Source Language'), null=True, db_index=False,
+        help_text=_("The source language of this Resource.")
+    )
+
     # Normalized fields
     long_description_html = models.TextField(_('HTML Description'), blank=True,
         max_length=1000,
@@ -247,23 +253,7 @@ class Project(models.Model):
 
         Return None, if the project has no resource.
         """
-        try:
-            return self.resources.values_list(
-                'source_language_id', flat=True
-            )[0]
-        except IndexError, e:
-            return None
-
-    @property
-    def source_language(self):
-        """Get the source language used in this project.
-
-        Return None, if the project has no resource.
-        """
-        try:
-            return self.resources.all()[0].source_language
-        except IndexError, e:
-            return None
+        return self.source_language.pk
 
 
 try:
