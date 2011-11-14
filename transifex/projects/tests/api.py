@@ -207,7 +207,7 @@ class TestProjectAPI(BaseTestCase):
         public_url = "/".join([self.url_projects[:-2], self.project.slug, ''])
         res = self.client['registered'].get(public_url + "?details")
         self.assertEquals(res.status_code, 200)
-        self.assertEquals(len(simplejson.loads(res.content)), 16)
+        self.assertEquals(len(simplejson.loads(res.content)), 17)
         self.assertTrue('created' in simplejson.loads(res.content))
         public_url = "/".join(
             [self.url_projects[:-2], self.project.slug, ""]
@@ -217,7 +217,8 @@ class TestProjectAPI(BaseTestCase):
         self.assertTrue('slug' in simplejson.loads(res.content))
         self.assertTrue('name' in simplejson.loads(res.content))
         self.assertTrue('description' in simplejson.loads(res.content))
-        self.assertEquals(len(simplejson.loads(res.content)), 3)
+        self.assertTrue('source_language' in simplejson.loads(res.content))
+        self.assertEquals(len(simplejson.loads(res.content)), 4)
 
         # Test pagination
         res = self.client['registered'].get(self.url_projects + "?start=5")
@@ -263,14 +264,20 @@ class TestProjectAPI(BaseTestCase):
             self.url_projects, simplejson.dumps({'name': 'name of project'}),
             content_type="application/json"
         )
-        self.assertContains(res, "Field slug is required to create a new project.", status_code=400)
+        self.assertContains(res, "Field 'slug' is required to create", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({'slug': 'slug'}), content_type='application/json'
         )
-        self.assertContains(res, "Field name is required to create a new project.", status_code=400)
+        self.assertContains(res, "Field 'name' is required to create", status_code=400)
+        res = self.client['registered'].post(
+            self.url_projects, simplejson.dumps({'slug': 'slug', 'name': 'name'}),
+            content_type='application/json'
+        )
+        self.assertContains(res, "Field 'source_language' is required to create", status_code=400)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
-                'slug': 'slug', 'name': 'name', 'owner': 'owner'
+                'slug': 'slug', 'name': 'name', 'owner': 'owner',
+                'source_language': 'en',
             }),
             content_type='application/json'
         )
@@ -279,6 +286,7 @@ class TestProjectAPI(BaseTestCase):
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project',
                 'name': 'Project from API',
+                'source_language': 'en',
                 'outsource': 'not_exists',
             }),
             content_type='application/json'
@@ -287,7 +295,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
-                'maintainers': 'not_exists',
+                'source_language': 'en', 'maintainers': 'not_exists',
             }),
             content_type='application/json'
         )
@@ -296,6 +304,7 @@ class TestProjectAPI(BaseTestCase):
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project_maintainers',
                 'name': 'Project from API',
+                'source_language': 'en',
                 'maintainers': 'registered',
                 'none': 'none'
             }),
@@ -306,6 +315,7 @@ class TestProjectAPI(BaseTestCase):
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project_maintainers',
                 'name': 'Project from API',
+                'source_language': 'en',
                 'maintainers': 'registered'
             }),
             content_type='application/json'
@@ -315,6 +325,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
+                'source_language': 'en_US'
             }),
             content_type='application/json'
         )
@@ -323,9 +334,11 @@ class TestProjectAPI(BaseTestCase):
         self.assertTrue(user in p.maintainers.all())
         self.assertEquals(res.status_code, 201)
         self.assertEquals(len(Project.objects.all()), 9)
+        self.assertEquals(p.source_language, self.language_en)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
+                'source_language': 'en_US'
             }),
             content_type='application/json'
         )
@@ -337,6 +350,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project_2', 'name': 'Project from API - second',
+                'source_language': 'en_US'
             }),
             content_type='application/json'
         )
@@ -359,6 +373,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['maintainer'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'foo', 'name': 'Foo Project',
+                'source_language': 'en',
             }),
             content_type='application/json'
         )
@@ -410,6 +425,14 @@ class TestProjectAPI(BaseTestCase):
             content_type='application/json'
         )
         self.assertContains(res, "User", status_code=400)
+        res = self.client['registered'].put(
+            self.url_project,
+            data=simplejson.dumps({'source_language': 'en_US'}),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 200)
+        p_foo = Project.objects.get(slug="foo")
+        self.assertEquals(p_foo.source_language, self.language_en)
 
 
     def test_delete(self):
@@ -428,7 +451,7 @@ class TestProjectAPI(BaseTestCase):
         self.assertEquals(res.status_code, 404)
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
-                'slug': 'foo', 'name': 'Foo Project',
+                'slug': 'foo', 'name': 'Foo Project', 'source_language': 'en'
             }),
             content_type='application/json'
         )

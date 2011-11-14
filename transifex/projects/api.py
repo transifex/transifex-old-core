@@ -42,14 +42,15 @@ class ProjectHandler(BaseHandler):
         'created', 'anyone_submit', 'bug_tracker', 'trans_instructions',
         'tags', 'outsource', ('maintainers', ('username')),
         ('owner', ('username')), ('resources', ('slug', 'name', )),
-        'teams',
+        'teams', 'source_language',
     )
-    default_fields = ('slug', 'name', 'description', )
+    default_fields = ('slug', 'name', 'description', 'source_language', )
     fields = default_fields
     allowed_fields = (
         'name', 'slug', 'description', 'long_description', 'private',
         'homepage', 'feed', 'anyone_submit', 'hidden', 'bug_tracker',
         'trans_instructions', 'tags', 'maintainers', 'outsource',
+        'source_language',
     )
     exclude = ()
 
@@ -90,7 +91,8 @@ class ProjectHandler(BaseHandler):
                 return BAD_REQUEST("POSTing to this url is not allowed.")
             if data is None:
                 return BAD_REQUEST(
-                    "At least parameters 'slug' and 'name' are needed."
+                    "At least parameters 'slug', 'name' and "
+                    "'source_language' are needed."
                 )
             return self._create(request, data)
         else:
@@ -150,11 +152,11 @@ class ProjectHandler(BaseHandler):
         """
         Create a new project.
         """
-        # slug and name are mandatory fields for projects
-        if 'slug' not in data:
-            return BAD_REQUEST("Field slug is required to create a new project.")
-        if 'name' not in data:
-            return BAD_REQUEST("Field name is required to create a new project.")
+        mandatory_fields = ('slug', 'name', 'source_language', )
+        msg = "Field '%s' is required to create a project."
+        for field in mandatory_fields:
+            if field not in data:
+                return BAD_REQUEST(msg % field)
         if 'owner' in data:
             return BAD_REQUEST("Owner cannot be set explicitly.")
 
@@ -166,8 +168,16 @@ class ProjectHandler(BaseHandler):
         # outsource and maintainers are ForeignKey
         outsource = data.pop('outsource', {})
         maintainers = data.pop('maintainers', {})
+
+        lang = data.pop('source_language')
+        try:
+            source_language = Language.objects.by_code_or_alias(lang)
+        except Language.DoesNotExist:
+            return BAD_REQUEST("Language %s does not exist." % lang)
+
         try:
             p = Project(**data)
+            p.source_language = source_language
         except Exception:
             return BAD_REQUEST("Invalid arguments given.")
         try:
@@ -203,8 +213,14 @@ class ProjectHandler(BaseHandler):
         """
         outsource = data.pop('outsource', {})
         maintainers = data.pop('maintainers', {})
+        lang = data.pop('source_language', 'en')
         try:
-            p, created = Project.objects.get_or_create(**data)
+            source_language = Language.objects.by_code_or_alias('en')
+        except Language.DoesNotExist:
+            return BAD_REQUEST("Language %s does not exist." % lang)
+        try:
+            p, created = Project.objects.get_or_create(
+                source_language=source_language, **data)
         except:
             return BAD_REQUEST("Project not found")
 
@@ -249,6 +265,14 @@ class ProjectHandler(BaseHandler):
             p = Project.objects.get(slug=project_slug)
         except Project.DoesNotExist:
             return BAD_REQUEST("Project not found")
+
+        lang = data.pop('source_language', None)
+        if lang is not None:
+            try:
+                source_language = Language.objects.by_code_or_alias(lang)
+            except Language.DoesNotExist:
+                return BAD_REQUEST('Specified source language does not exist.')
+            p.source_language = source_language
 
         try:
             for key,value in data.items():

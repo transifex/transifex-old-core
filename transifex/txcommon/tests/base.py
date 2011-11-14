@@ -148,11 +148,11 @@ class Resources(object):
         # Create a resource
         self.resource = Resource.objects.create(
             slug="resource1", name="Resource1", project=self.project,
-            source_language=self.language_en, i18n_type='PO'
+            i18n_type='PO'
         )
         self.resource_private = Resource.objects.create(
             slug="resource1", name="Resource1", project=self.project_private,
-            source_language=self.language_en, i18n_type='PO'
+            i18n_type='PO'
         )
         super(Resources, self).setUp()
 
