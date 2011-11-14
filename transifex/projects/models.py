@@ -248,14 +248,6 @@ class Project(models.Model):
             Q(projects_owning=self) | Q(projects_maintaining=self)
         ).distinct().count()
 
-    @property
-    def source_language_id(self):
-        """Get the source language id used in this project.
-
-        Return None, if the project has no resource.
-        """
-        return self.source_language.pk
-
 
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
