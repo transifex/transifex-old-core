@@ -38,14 +38,16 @@
 
 {% block content_main %}
 
+{% if tag%}
+	
+	<div class="separate-header clearfix">
+  	<h3  class="sh-label">Projects with tag: {{ tag.name }}</h3>
     {% if request.user.is_authenticated and perms.projects.add_project %}
-
-	    <p>
-	     	<a class="i16 nude-button add right" href="{% url project_create %}">{% trans "Create new project" %}</a>
-	    </p>
-
-    {% endif %}
-
+  	<div class="separate-buttons"><a class="i16 add nude-button" href="{% url project_create %}" title="{% trans 'Add New Project' %}">{% trans "Create new project" %}</a></div>
+		{% endif %}
+	</div>
+		{% endif %}		
+		
   {% autopaginate project_list 20 %}
   <div class="project_list obj_biglist">
   <div class="pagination top">{% paginate %}</div>
