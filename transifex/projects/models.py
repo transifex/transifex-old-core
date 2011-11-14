@@ -175,8 +175,9 @@ class Project(models.Model):
         verbose_name=_('Owner'), related_name='projects_owning',
         help_text=_('The user who owns this project.'))
 
-    source_language = models.IntegerField(
-        verbose_name=_('Source Language'), null=True, db_index=False,
+    source_language = models.ForeignKey(
+        Language, verbose_name=_('Source Language'),
+        blank=False, null=False, db_index=False,
         help_text=_("The source language of this Resource.")
     )
 
