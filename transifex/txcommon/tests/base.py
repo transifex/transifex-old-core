@@ -99,6 +99,18 @@ class NoticeTypes(object):
         super(NoticeTypes, cls).setUpClass()
 
 
+class TransactionNoticeTypes(object):
+    """A class to create default notice types.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        from django.core import management
+        management.call_command('txcreatenoticetypes', verbosity=0)
+        super(TransactionNoticeTypes, self).setUp()
+
+
 class Languages(object):
     """A class to create default languages.
 
@@ -114,6 +126,21 @@ class Languages(object):
         cls.language_ar = Language.objects.get(code='ar')
         #self.language_hi_IN = Language.objects.get(code='hi_IN')
         super(Languages, cls).setUpClass()
+
+
+class TransactionLanguages(object):
+    """A class to create default languages.
+
+    Use this as a mixin in transaction-based tests.
+    """
+
+    def setUp(self):
+        from django.core import management
+        management.call_command('txlanguages', verbosity=0)
+        self.language = Language.objects.get(code='pt_BR')
+        self.language_en = Language.objects.get(code='en_US')
+        self.language_ar = Language.objects.get(code='ar')
+        super(TransactionLanguages, self).setUp()
 
 
 class Projects(object):
