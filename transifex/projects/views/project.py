@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from django.db.models import Q
+from django.db.models import Q, get_model
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -32,6 +32,9 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.views import json_result, json_error
 # To calculate user_teams
 from transifex.teams.models import Team
+
+Lock = get_model('locks', 'Lock')
+TranslationWatch = get_model('watches', 'TranslationWatch')
 
 def _project_create_update(request, project_slug=None,
     template_name='projects/project_form.html'):
@@ -258,5 +261,30 @@ def project_detail(request, project_slug):
           'languages': Language.objects.all(),
           'statslist': statslist,
         })
+
+@login_required
+def myprojects(request):
+    user = request.user
+
+    maintain = Project.objects.maintained_by(user)
+    submit_projects = Project.objects.translated_by(user)
+    watched_projects = Project.get_watched(user)
+    watched_resource_translations = TranslationWatch.get_watched(user)
+    locks = Lock.objects.valid().filter(owner=user)
+
+    context_var = {
+        'maintain_projects': maintain,
+        'submit_project_permissions': submit_projects,
+        'watched_projects': watched_projects,
+        'watched_resource_translations': watched_resource_translations,
+        'locks': locks,
+        'coordinator_teams': user.team_coordinators.all(),
+        'member_teams': user.team_members.all(),
+    }
+
+    return render_to_response("projects/project_myprojects.html",
+            context_var,
+            context_instance = RequestContext(request))
+
 
 

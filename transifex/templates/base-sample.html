@@ -65,7 +65,12 @@
       </a>
     </div>
     <div id="navmenu">
-      <a href="{% url project_list %}" title="{% trans "The projects being served" %}">{% trans "Projects" %}</a>
+      {% if request.user.is_authenticated %}
+         <a href="{% url myprojects %}" title="{% trans "My projects" %}">
+      {% else %}
+      <a href="{% url project_list %}" title="{% trans "The projects being served" %}">
+      {% endif %}
+      {% trans "Projects" %}</a>
       | <a href="{% url language_list %}" title="{% trans "The languages our service serves" %}">{% trans "Languages" %}</a>
     </div>
     <div id="header_secnav">

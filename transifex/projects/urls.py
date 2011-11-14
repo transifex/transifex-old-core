@@ -62,6 +62,10 @@ urlpatterns = patterns('',
 # Project
 urlpatterns += patterns('',
     url(
+        regex = '^myprojects/$',
+        view = myprojects,
+        name = 'myprojects'),
+    url(
         regex = '^add/$',
         view = project_create,
         name = 'project_create'),

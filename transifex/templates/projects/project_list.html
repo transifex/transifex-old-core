@@ -45,6 +45,10 @@
     {% if request.user.is_authenticated and perms.projects.add_project %}
   	<div class="separate-buttons"><a class="i16 add nude-button" href="{% url project_create %}" title="{% trans 'Add New Project' %}">{% trans "Create new project" %}</a></div>
 		{% endif %}
+ 
+        <p>
+            <a href="{% url myprojects %}" title="{% trans "My projects" %}">{% trans "My projects" %}</a>
+        </p>
 	</div>
 		{% endif %}		
 		
