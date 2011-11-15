@@ -15,8 +15,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import list_detail
 from django.core.urlresolvers import reverse
 
-from notification import models as notification
 from haystack.query import SearchQuerySet
+from notification import models as notification
+from userena.forms import AuthenticationForm
 
 from actionlog.models import LogEntry, action_logging
 from transifex.languages.models import Language
@@ -60,8 +61,12 @@ def search(request):
 
 @csrf_protect
 def index(request):
+    if settings.ENABLE_SIMPLEAUTH:
+        form = RememberMeAuthForm()
+    else:
+        form = AuthenticationForm()
     return render_to_response("index.html",
-        {'form': RememberMeAuthForm(),
+        {'form': form,
          'next': request.path,
          'num_projects': Project.objects.count(),
          'num_languages': Language.objects.count(),
