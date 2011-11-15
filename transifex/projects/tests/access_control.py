@@ -49,7 +49,9 @@ class ProjectAccessControlTestCase(BaseTestCase):
 
         # Create an extra project to use it as the outsource
         self.project_outsource = Project.objects.get_or_create(
-            slug="project1_outsource", name="Test Outsource Project")[0]
+            slug="project1_outsource", name="Test Outsource Project",
+            source_language=self.language_en
+        )[0]
         self.project_outsource.maintainers.add(self.user['outsource_maintainer'])
 
         # Add django-authority permission for outsource writer
