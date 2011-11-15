@@ -246,8 +246,8 @@ class SampleData(Languages, Users, Projects, Resources, SourceEntities,
     pass
 
 
-class BaseTestCase(Languages, Users, Projects, Resources, SourceEntities,
-                   Translations, TestCase):
+class BaseTestCase(Languages, NoticeTypes, Users, Projects, Resources,
+                   SourceEntities, Translations, TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
