@@ -276,24 +276,32 @@ class CoreViewsTest(base.BaseTestCase):
         """Test creation of resource with different source file formats"""
         #javaproperties
         fh = open('%s/../lib/javaproperties/complex.properties'%os.path.split(__file__)[0],)
+        self.resource.i18n_method = 'PROPERTIES'
+        self.resource.save()
         resp = self.test_resource_edit(fh)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 25)
 
         #Qt
         fh = open('%s/../lib/qt/en.ts'%os.path.split(__file__)[0],)
+        self.resource.i18n_method = 'QT'
+        self.resource.save()
         resp = self.test_resource_edit(fh)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 43)
 
         #Joomla
         fh = open('%s/../lib/joomla_ini/example1.5.ini'%os.path.split(__file__)[0],)
+        self.resource.i18n_method = 'INI'
+        self.resource.save()
         resp = self.test_resource_edit(fh)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 1)
 
         #Desktop
         fh = open('%s/../lib/desktop/data/okular.desktop'%os.path.split(__file__)[0],)
+        self.resource.i18n_method = 'DESKTOP'
+        self.resource.save()
         resp = self.test_resource_edit(fh)
         self.assertTemplateUsed(resp, 'resources/resource_detail.html')
         self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 2)
@@ -301,10 +309,14 @@ class CoreViewsTest(base.BaseTestCase):
 
         #bad file
         fh = open('%s/../lib/pofile/wrong.pot'%os.path.split(__file__)[0],)
+        self.resource.i18n_method = 'POT'
+        self.resource.save()
         resp = self.test_resource_edit(fh)
         self.assertContains(resp, 'Syntax error in po file', status_code=200)
         #Since source entities will not be updated
         self.assertEqual(SourceEntity.objects.filter(resource=self.resource).count(), 2)
+        self.resource.i18n_method = 'PO'
+        self.resource.save()
 
 
 class ResourceAutofetchTests(base.BaseTestCase):
