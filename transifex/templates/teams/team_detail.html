@@ -58,9 +58,9 @@
 <div class="obj_bigdetails">
 
 {% if perms.projects.change_team or is_coordinator %}
-<div class="addteam editlinks">
-    <a class="i16 buttonized edit" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit team" %}</a>
-</div>
+<p class="clearfix">
+    <a class="i16 nude-button edit right" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit team" %}</a>
+</p>
 {% endif %}
 
  <div class="team_detail separate">

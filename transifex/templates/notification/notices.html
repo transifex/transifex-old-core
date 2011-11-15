@@ -67,12 +67,10 @@
         </tbody>
         </table>
 
-        <div class="editlinks">
-            <p><a class="i16 read button buttonized" href="{% url notification_mark_all_seen %}">
-                {% trans "Mark all unseen notices seen" %}
-            </a></p>
-        </div>
-
+        <p class="clearfix">
+        	<a class="i16 read nude-button right" href="{% url notification_mark_all_seen %}">{% trans "Mark all unseen notices seen" %}</a>
+        </p>
+        
         {% paginate %}
 
     {% else %}

@@ -78,20 +78,18 @@
   <div class="obj_bigdetails">
  {% comment %} <h3 class="pagesubtitle">Release '{{ release.name }}'</h3>{% endcomment %}
 
-  {% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
-  {% if perms.projects.add_release or is_maintainer %}
-    {% if release.slug != alldata_slug %}
-    <div class="editlinks">
-      <p><a class="i16 edit buttonized" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release" %}</a></p>
-    </div>
-    {% endif %}
-  {% endif %}
 
   <div class="details">
 
 
   <div class="separate-header notopmargin clearfix" style="margin-top:0;">
   	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
+  	{% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
+  	{% if perms.projects.add_release or is_maintainer %}
+	    {% if release.slug != alldata_slug %}
+	  		<div class="separate-buttons"><a class="i16 nude-button edit" title="{% trans 'Edit release detaila' %}" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release" %}</a></div>
+	    {% endif %}
+  	{% endif %}
 	</div>
 
   <dl class="definition clearfix">

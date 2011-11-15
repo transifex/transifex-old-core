@@ -1,7 +1,4 @@
-
-
 /* General */
-
 body {
   font-family: sans-serif;
   font-size: 14px;
@@ -379,8 +376,6 @@ div.obj_bigdetails div.long_description {width: 600px;color:#888;font-size:0.9em
 .separate-buttons{display:inline;float:right; clear:right;margin: 7px 10px 0 7px;font-size: 1.077;}
 
 
-div.editlinks { float: right; clear: right; }
-div.editlinks p { float: right; clear: right; margin: 0; }
 div.deletelink { text-align: center; margin-bottom: 1em; }
 div.deletelink a:hover {
   color: #833;
@@ -864,6 +859,11 @@ span.note {
 
 
 /* Buttonized */
+.nude-button{font-size: 1.077em;padding-left: 22px !important;color:#3d658d;line-height:1;height:16px;}
+.nude-button:hover{text-decoration: underline;}
+a.nude-button:hover{color:#3d658d;}
+input.nude-button{background-color: transparent;border: none;}
+
 
 .buttonized,
 .buttonized:hover,
@@ -933,8 +933,7 @@ a.buttonized:hover {
 }
 
 /* Used for delete buttons etc. */
-.buttonized_warning,
-a.buttonized2_warning:hover {
+.buttonized_warning{
   color: #D1604F !important; #red color from notice icon16
 }
 
@@ -954,47 +953,6 @@ a .watchbutton{margin:0;}
 .separate-buttons{display:inline;float:right; clear:right;margin:0;}
 .cpanel-entry .watchbutton{height:16px;width: 16px;margin: 0px;display: block;}
 
-/* Buttonized2 (bigger font-size buttons) */
-/* This is a version for anchor tags */
-a.buttonized2,
-a.buttonized2_disabled {
-  background-position:3% 50%;
-  font-size:16px;
-  background-color:#F5F5F5;
-  border:1px solid #CCCCCC !important;
-  padding-bottom:0.2em;
-  padding-top:0.2em;
-  padding-right:0.8em;
-  padding-left:25px; /* The class is intended to be used with i16 icons! */
-  box-shadow:1px 1px 3px #ccc;
-  -moz-box-shadow:1px 1px 3px #ccc;
-  -webkit-box-shadow:1px 1px 3px #ccc;
-}
-
-a.buttonized2:hover{
-  background-color: #fafafa;
-  border: 1px solid #ccc;
-  box-shadow:1px 1px 5px #999;
-  -moz-box-shadow:1px 1px 5px #999;
-  -webkit-box-shadow:1px 1px 5px #999;
-  cursor: pointer;
-}
-
-a.buttonized2_warning{
-  color: #D1604F !important; #red color from notice icon16
-}
-
-a.buttonized2_warning:hover{
-  color: #D1604F; #red color from notice icon16
-}
-
-a.buttonized2{
-  color:#555;
-}
-
-a.buttonized2_disabled {
-  color:#AAAAAA;
-}
 
 /*List*/
 div.list ul {
@@ -1169,10 +1127,7 @@ fieldset.shinyform legend{
 }
 
 fieldset.shinyform ol{
-        margin: 0 !important;
-div.notification div.editlinks{
-  margin-top: 15px !important;
- }
+        margin: 0 !important;}
 
 div.notification div.notice_settings table{
   width: 100%;
