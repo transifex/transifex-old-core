@@ -63,7 +63,7 @@
     var current_defaults = {};
     /* var to keep filter state */
     {% if untranslated_strings %}
-        var filter_var = "translated,";
+        var filter_var = "untranslated,";
     {% else %}
         var filter_var = null;
     {% endif %}
@@ -655,7 +655,7 @@
         function traverse_filters(){
             filter_var = "";
             $(".filters").each( function() {
-                if (! $(this).attr('checked')) {
+                if ($(this).attr('checked')) {
                     filter_var += $(this).attr('id')+',';
                 }
             });
@@ -858,39 +858,43 @@
 
 </div>
 
-  <table class="definition stats_totals" id="stats_table">
+<table class="definition stats_totals" id="stats_table">
   <input id="filter_entries" type="hidden" name="filter_entries"/>
+
   {% with untranslated_strings|add:translated_strings as total_strings %}
   <tr>
     <th class="translated">{% trans "Translated" %}</th>
-
-      <td id="total_translated">{{ translated_strings }}</td>
-      <td id="total_translated_perc">?</td>
-      <td><input id="translated" class="filters" type="checkbox"
-          {% if not untranslated_strings %}
-            checked="checked"
-          {% endif %}
-          name="only_translated"/></td>
+    <td id="total_translated">{{ translated_strings }}</td>
+    <td id="total_translated_perc">?</td>
+    <td>
+      <input id="translated" class="filters" type="checkbox" {% if not untranslated_strings %}checked="checked"{% endif %} name="only_translated"/>
+    </td>
   </tr>
 
   <tr>
     <th class="untranslated">{% trans "Untranslated" %}</th>
-      <td id="total_untranslated">{{ untranslated_strings }} </td>
-      <td id="total_untranslated_perc">?</td>
+    <td id="total_untranslated">{{ untranslated_strings }} </td>
+    <td id="total_untranslated_perc">?</td>
+    <td>
+      <input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/>
+    </td>
+  </tr>
 
-      <td><input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/></td>
-  </tr>
   <tr>
-    <th class="fuzzy">{% trans "Modified" %}</th>
-      <td id="total_fuzzy">0</td>
-      <td id="total_fuzzy_perc">0.00%</td>
+    <th class="fuzzy">{% trans "Reviewed" %}</th>
+    <td id="total_reviewed">0</td>
+    <td id="total_reviewed_perc">0.00%</td>
+    <td>
+      <input id="reviewed" class="filters" type="checkbox" name="only_reviewed"/>
+    </td>
   </tr>
+
   <tr class="last">
     <th>{% trans "Total" %}</th>
       <td id="total_sum">{{ total_strings }}</td>
   </tr>
   {% endwith %}
-  </table>
+</table>
 
 
 

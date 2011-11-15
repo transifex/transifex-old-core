@@ -488,15 +488,25 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
     index = 0
     if 'filters' in post_data:
         # Handle 'translated'/'untranslated' filter
-        select = post_data['filters'].rstrip(',').split(',')
-        if len(select) == 2 and 'translated' and 'untranslated' in select:
-            index += 3
-        elif select[0] == 'translated' and len(select) == 1:
-            index += 1
-        elif select[0] == 'untranslated' and len(select) == 1:
-            index += 2
+        filters = post_data['filters'].rstrip(',').split(',')
+        if len(filters) == 1:
+            if 'translated' in filters:
+                index += 5
+            elif 'untranslated' in filters:
+                index += 1
+            elif 'reviewed' in filters:
+                index += 4
+        elif len(filters) == 2:
+            if 'translated' in filters and 'untranslated' in filters:
+                index += 0
+            if 'translated' in filters and 'reviewed' in filters:
+                index += 2
+            if 'untranslated' in filters and 'reviewed' in filters:
+                index += 6
+        elif len(filters) == 3: # translated, untranslated, reviewed
+            index += 0
         else:
-            raise LotteBadRequestError('Invalid filter: %s' % select[0])
+            raise LotteBadRequestError('Invalid filter: %s' % filters[0])
 
     users = None
     if 'user_filters' in post_data:
@@ -506,13 +516,16 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
             raise LotteBadRequestError(
                 "Invalid user id specified: %s" % post_data['user_filters']
             )
-        index += 4
+        index += 7
 
     querysets = [
         _get_all_source_strings,
         _get_untranslated_source_strings,
         _get_translated_source_strings,
         _get_none_source_strings,
+        _get_reviewed_source_strings,
+        _get_unreviewed_source_strings,
+        _get_untranslated_and_reviewed_source_strings,
         _get_user_filtered_source_strings,
         _get_user_filtered_source_strings,
         _get_none_source_strings,
@@ -545,6 +558,30 @@ def _get_translated_source_strings(resources, language, *args, **kwargs):
     in the specified language.
     """
     return Translation.objects.translated_source_strings(resources, language)
+
+
+def _get_reviewed_source_strings(resources, language, *args, **kwargs):
+    """
+    Get only the source strings that have been translated in the
+    specified language and their translations are marked as reviewed.
+    """
+    return Translation.objects.reviewed_source_strings(resources, language)
+
+
+def _get_unreviewed_source_strings(resources, language, *args, **kwargs):
+    """
+    Get only the source strings that have been translated in the
+    specified language but their translations are not yet reviewed.
+    """
+    return Translation.objects.unreviewed_source_strings(resources, language)
+
+
+def _get_untranslated_and_reviewed_source_strings(resources, language, *args, **kwargs):
+    """
+    Combine ``untranslated`` and ``reviewed`` querysets.
+    """
+    return (_get_untranslated_source_strings(resources, language) |
+        _get_reviewed_source_strings(resources, language))
 
 
 def _get_none_source_strings(*args, **kwargs):

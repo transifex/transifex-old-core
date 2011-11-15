@@ -516,6 +516,52 @@ class TranslationManager(models.Manager):
             language=source_language, rule=5
         )
 
+    def reviewed_source_strings(self, resources, language):
+        """Return the source strings which have been translated and reviewed
+        in the specified language.
+
+        Args:
+            resources: An iterable of Resource objects.
+            language: The language to search for translated strings.
+
+        Returns:
+            A queryset which returns all reviewed source strings in the
+            specified language.
+        """
+        source_language = get_source_language(resources)
+        reviewed_se_ids = frozenset(self.filter(resource__in=resources,
+            language=language, rule=5, reviewed=True,
+        ).values_list('source_entity_id', flat=True))
+
+        return self.filter(
+            resource__in=resources,
+            source_entity__id__in=reviewed_se_ids,
+            language=source_language, rule=5
+        )
+
+    def unreviewed_source_strings(self, resources, language):
+        """Return the source strings which have been translated but are not
+        reviewed in the specified language yet.
+
+        Args:
+            resources: An iterable of Resource objects.
+            language: The language to search for translated strings.
+
+        Returns:
+            A queryset which returns all reviewed source strings in the
+            specified language.
+        """
+        source_language = get_source_language(resources)
+        reviewed_se_ids = frozenset(self.filter(resource__in=resources,
+            language=language, rule=5, reviewed=False,
+        ).values_list('source_entity_id', flat=True))
+
+        return self.filter(
+            resource__in=resources,
+            source_entity__id__in=reviewed_se_ids,
+            language=source_language, rule=5
+        )
+
     def user_translated_strings(self, resources, language, users):
         """Return the source strings which have been transalted in the specified language
         by the specified users.
