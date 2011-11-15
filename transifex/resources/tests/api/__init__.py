@@ -57,7 +57,7 @@ class TestResourceAPI(APIBaseTests):
         accepted in a project.
         """
         rh = ResourceHandler()
-        p = Project.objects.create(slug='slug', name='name')
+        p = Project.objects.create(slug='slug', name='name', source_language=self.language_en)
         self.assertTrue(rh._is_same_source_lang(p, self.language_en))
         r = Resource.objects.create(
             slug='rslug1', project=p, source_language=self.language_en
@@ -344,6 +344,7 @@ class TestResourceAPI(APIBaseTests):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
+                    'source_language': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -836,7 +837,7 @@ class TestTranslationAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'en_US',
+                    'source_language': 'el',
                     'i18n_type': 'INI',
                     'content': content,
             }),
@@ -850,7 +851,7 @@ class TestTranslationAPI(APIBaseTests):
                 kwargs={
                     'project_slug': 'new_pr',
                     'resource_slug': 'r1',
-                    'lang_code': 'el',
+                    'lang_code': 'fi',
                 }
             ),
             data=simplejson.dumps({
@@ -860,7 +861,7 @@ class TestTranslationAPI(APIBaseTests):
         )
         self.assertEquals(res.status_code, 200)
         r = Resource.objects.get(slug='r1', project__slug='new_pr')
-        l = Language.objects.by_code_or_alias('el')
+        l = Language.objects.by_code_or_alias('fi')
         rl = RLStats.objects.get(resource=r, language=l)
         self.assertEquals(rl.translated_perc, 100)
         content += '\nother = other'
@@ -890,7 +891,7 @@ class TestTranslationAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "rα",
                     'slug': 'r1',
-                    'source_language': 'en_US',
+                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -915,6 +916,7 @@ class TestTranslationAPI(APIBaseTests):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
+                    'source_language': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -1032,6 +1034,7 @@ class TestStatsAPI(APIBaseTests):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': self.project_slug, 'name': 'Project from API',
+                    'source_language': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
