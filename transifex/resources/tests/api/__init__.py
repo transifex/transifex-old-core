@@ -58,7 +58,6 @@ class TestResourceAPI(APIBaseTests):
         """
         rh = ResourceHandler()
         p = Project.objects.create(slug='slug', name='name', source_language=self.language_en)
-        self.assertTrue(rh._is_same_source_lang(p, self.language_en))
         r = Resource.objects.create(
             slug='rslug1', project=p, source_language=self.language_en
         )
@@ -418,6 +417,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
+                    'source_language': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -443,6 +443,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
+                    'source_language': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'

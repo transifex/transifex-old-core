@@ -25,7 +25,8 @@ class TestBackend(Users, Languages, NoticeTypes, TransactionTestCase):
         self.source_lang = self.language_en
         self.target_lang = self.language
         self.maintainer = self.user['maintainer']
-        self.project = Project.objects.create(slug='testp', name='Test Project')
+        self.project = Project.objects.create(slug='testp', name='Test Project',
+                source_language=self.source_lang)
         self.resource = Resource.objects.create(
             slug='test', name='Test', source_language=self.source_lang,
             project=self.project

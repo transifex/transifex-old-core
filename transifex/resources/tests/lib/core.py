@@ -21,7 +21,7 @@ class TestCoreFunctions(Users, Languages, TransactionTestCase):
         parser = JoomlaINIHandler()
         parser.bind_content(content)
         # FIXME get project/resource from parents
-        p = Project.objects.create(slug="pr", name="Pr")
+        p = Project.objects.create(slug="pr", name="Pr", source_language=self.language_en)
         l = self.language_en
         r = Resource.objects.create(
             slug="core", name="Core", project=p, source_language=l
