@@ -248,6 +248,15 @@ class Project(models.Model):
             Q(projects_owning=self) | Q(projects_maintaining=self)
         ).distinct().count()
 
+    def languages(self):
+        """
+        The languages this project's resources are being translated into
+        excluding the source language, ordered by number of translations.
+        """
+        return Language.objects.filter(
+            rlstats__resource__in=self.resources.all()
+        ).exclude(code=self.source_language.code).order_by(
+            '-rlstats__translated').distinct()
 
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
