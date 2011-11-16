@@ -1,6 +1,9 @@
 {% load i18n %}
 {% load txcommontags %}
+{% load compress %}
 
+
+{% compress js %}
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -16,6 +19,9 @@ $(document).ready(function(){
 });
 
 </script>
+
+{% endcompress %}
+
 <!--
 <p style="text-align:center">
 <span id="create_new_resource" class="i16 add submit_button buttonized houdini_toggler">{% trans "Create resource..." %}</span>
