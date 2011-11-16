@@ -56,6 +56,10 @@ else:
             kwargs  =   {'edit_profile_form': EditProfileForm},
             name    =   'userena_profile_edit'),
 
+        url(regex   =   r'^accounts/(?P<username>[\.\w]+)/password/$',
+            view    =   'txcommon.views.password_change_custom',
+            name    =   'password_change_redirect'),
+
         # Don't show list of all accounts here
         url(regex   =   r'^accounts/$',
             view    =   redirect_to,

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
@@ -18,6 +19,7 @@ from django.core.urlresolvers import reverse
 from haystack.query import SearchQuerySet
 from notification import models as notification
 from userena.forms import AuthenticationForm
+from userena.views import password_change
 
 from actionlog.models import LogEntry, action_logging
 from transifex.languages.models import Language
@@ -146,6 +148,20 @@ def profile_social_settings_redirect(request):
     """
     return HttpResponseRedirect(reverse('profile_social_settings',
         args=[request.user,]))
+
+
+@login_required
+def password_change_custom(request, username):
+    """
+    This was added because users created through django-social-auth don't
+    have a usable password but we should allow them to set a new one.
+    """
+    if request.user.has_usable_password():
+        pass_form = PasswordChangeForm
+    else:
+        pass_form = SetPasswordForm
+
+    return password_change(request, username=username, pass_form=pass_form)
 
 
 # Ajax response
