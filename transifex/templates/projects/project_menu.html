@@ -81,14 +81,6 @@ $(document).ready(
        </a>
     </li>
 
-    {% if is_maintainer %}
-    <li class="ui-state-default ui-corner-top {% if project_access_control_form %}ui-tabs-selected ui-state-active{% endif %}">
-       <a id="tab-link-2" href="{% url project_access_control_edit project.slug %}">
-         <span>{% trans "Access Control" %}</span>
-       </a>
-    </li>
-    {% endif %}
-
     <li class="ui-state-default ui-corner-top {% if project_team_page %}ui-tabs-selected ui-state-active{% endif %}">
        <a id="tab-link-3" href="{% url team_list project.slug %}">
          <span>{% trans "Teams" %}</span>
