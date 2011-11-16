@@ -39,7 +39,7 @@ class CreateResourceForm(forms.ModelForm):
 
     class Meta:
         model = Resource
-        fields = ('name', 'source_file', 'i18n_method', )
+        fields = ('source_file', 'name', 'i18n_method', )
 
 
 class ResourceTranslationForm(forms.Form):
