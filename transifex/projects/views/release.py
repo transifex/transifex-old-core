@@ -12,12 +12,12 @@ from django.db.models import F
 
 from actionlog.models import action_logging
 from transifex.languages.models import Language
-from transifex.projects.forms import ReleaseForm
 from transifex.projects.models import Project
 from transifex.projects.signals import post_release_save
 from transifex.projects.permissions import *
 from transifex.releases import RELEASE_ALL_DATA
 from transifex.releases.models import Release
+from transifex.releases.forms import ReleaseForm
 from transifex.resources.models import Resource, RLStats
 
 # Temporary
