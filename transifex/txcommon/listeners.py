@@ -53,7 +53,7 @@ def twitter_profile_values(sender, user, response, details, **kwargs):
     profile = user.get_profile()
     if not profile.twitter:
         screen_name = response.get('screen_name')
-        profile.twitter = screen_name
+        profile.twitter = 'http://twitter.com/%s' % screen_name
         profile.save()
 
     return True
