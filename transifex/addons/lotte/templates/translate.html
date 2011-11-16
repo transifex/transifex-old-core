@@ -805,6 +805,12 @@
 {{resource}}
 {% endblock %}
 
+{% block content_title %}
+
+<h2 class="pagetitle header_idle {% if short_desc %} with_description{% endif %}"><a class="smooth-transition" href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2><h2 class="pagetitle">&nbsp;/&nbsp;Translate:&nbsp;</h2><h2 class="header_idle pagetitle with_description"> <a class="smooth-transition" href="{{ resource.get_absolute_url }}">{{ resource.name }}</a></h2>
+
+{% endblock %}
+
 {% block body_class %}project_list{% endblock %}
 
 {% block content_header_sec %}
@@ -824,7 +830,9 @@
     
 {% endblock %}
 
+
 {% block content_main %}
+
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 {% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
 
