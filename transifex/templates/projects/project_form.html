@@ -4,6 +4,7 @@
 {% load permissions %}
 {% load txpermissions %}
 {% load addons %}
+{% load fieldsets %}
 
 {% block title %}
   {% if not project %}
@@ -20,6 +21,17 @@
     {{ block.super }} &raquo;
     {% blocktrans with project.name as project_name %}Edit {{ project_name }}{% endblocktrans %}
   {% endif %}
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+$(document).ready(function(){
+		$('.tx-form #display-advform').click(function(){
+			$(this).toggleClass("active");
+			$(".tx-form #project-edit-advanced").slideToggle("fast",function(){$(".side-menu").css('height',$(".psettings-content").height());});
+		});
+});
+</script>
 {% endblock %}
 
 {% block content_title %}
@@ -54,18 +66,45 @@
 {% endif %}
 </h3>
 
-<div class="project_create generic_form">
-  <form action='' method='post'>{% csrf_token %}
-    <table>
-        <tbody>
-        {% form_as_table_rows project_form %}
-        </tbody>
-    </table>
-    <p class="submit"><input type="submit" class="i16 submit buttonized" value="{% trans "Save project" %}" /></p>
-  </form>
-</div>    
-    
+
+<div class="tx-form dual">
+	  <form action='' method='post'>{% csrf_token %}
+
+      <fieldset id="project-edit-simple">
+        {% get_fieldset slug,name,slug,tags,description,source_language,maintainers,private as simple_fields from project_form %}
+        {% for field in simple_fields %}
+          <div class="tx-form-field">
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {{ field }}
+        </div>
+        {% endfor %}
+      </fieldset>
+
+			<div class="clearfix advform-cont" style="width:560px;">
+				<span id="display-advform">View advanced fields</span>
+			</div>
+      <fieldset id="project-edit-advanced" style="display:none;">
+        {% get_fieldset homepage,trans_instructions,feed,bug_tracker,long_description,webhook as advanced_fields from project_form %}
+        {% for field in advanced_fields %}
+          <div class="tx-form-field">
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {{ field }}
+          </div>
+        {% endfor %}
+      </fieldset>
+
+	    <div class="submit">
+        <input type="submit" class="i16 submit buttonized" value="{% trans "Save project" %}" />
+      </div>
+
+    </form>
+</div>
+
+
   </div>
 </div>
+
 {% endblock %}
 
