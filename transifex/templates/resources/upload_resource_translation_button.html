@@ -3,24 +3,24 @@
 {% load compress %}
 
 {% if create %}
-<div id="upload_resource_translation_button" class="generic_form">
+<div id="upload_resource_translation_button" class="clearfix tx-form">
   <form action='' method='POST' enctype="multipart/form-data">
     {% csrf_token %}
-    <p>
+    <div class="left">
       {{ resource_translation_form.target_language.label }}:
       <span class="fieldp" id="target_language_span">
         {{ resource_translation_form.target_language }}
       </span>
-    </p>
-    <p>
+    </div>
+    <div class="left" style="width:300px;margin:0.4em 2em 0.4em 4em;">
       <span id="upload_button_create" class="i16 send_file buttonized">
         {% trans "Upload file" %}
       </span>
-      {% trans "or" %}
-      <a id="start_new_translation" class="i16 buttonized action">
+      <span>{% trans "&nbsp;or&nbsp;" %}</span>
+      <span id="start_new_translation" class="i16 buttonized action">
         {% trans "Translate Online" %}
-      </a>
-    </p>
+      </span>
+    </div>
   </form>
 </div>
 

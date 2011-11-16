@@ -34,10 +34,10 @@ $(document).ready(function(){
 <div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}>
 
 
-		<span src="{{ STATIC_URL }}images/icons/help.png" class="txf-helptext tipsy_enable right" title="  {% blocktrans %}
-	  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.
-	  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
-	  {% endblocktrans %}">?</span>
+	<span src="{{ STATIC_URL }}images/icons/help.png" class="txf-helptext tipsy_enable right" title="  {% blocktrans %}
+  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.
+  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
+  {% endblocktrans %}">?</span>
 
 
  <form  id="create-resource-submit" action='' method='post' enctype="multipart/form-data" class="tx-form dual houdini">
