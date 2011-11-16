@@ -70,6 +70,10 @@
     });
 </script>
 
+	{% if is_maintainer %}
+    {% upload_create_resource_form request project %}
+  {% endif %}
+
   {% for stat in statslist %}
   {% if forloop.first %}
   <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
@@ -126,33 +130,7 @@
     <p class="i16 infomsg">{% trans "No resources are registered for this project yet." %}</p>
   {% endfor %}
 
-  {% comment %}
-  {% get_permission "project_perm.submit_translations" for request.user and project,1 as "can_submit_translation" %}
-  {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  {% if can_submit_translation or request.user.is_superuser or is_maintainer %}
-  <div id="new_translation_box1">
-      <select name="translation_languages" class="language">
-          <option value="">{% trans "Select Language" %}</option>
-          {% if is_maintainer or request.user.is_superuser %}
-            {% for language in languages %}
-                <option value="{{ language.code }}">{{ language.name }}</option>
-            {% endfor %}
-          {% else %}
-            {% for team in user_teams %}
-                <option value="{{ team.language.code }}">{{ team.language.name }}</option>
-            {% endfor %}
-          {% endif %}
-      </select>
-      <a id="start_new_translation" class="i16 buttonized action">GO</a>
-  </div>
-  <p style="text-align:center;padding-top:1em">
-   <a id="new_translation1" class="buttonized i16 add">{% trans "Translate All" %}</a>
-  </p>
-  {% endif %}
-  {% endcomment %}
 
-  {% if is_maintainer %}
-    {% upload_create_resource_form request project %}
-  {% endif %}
+
 
 </div>
