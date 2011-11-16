@@ -1,20 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from tagging.views import tagged_object_list
 
-from transifex.projects.feeds import LatestProjects, ProjectFeed, ReleaseFeed, \
-    ReleaseLanguageFeed
+from transifex.projects.feeds import LatestProjects, ProjectFeed
 from transifex.projects.models import Project
 from transifex.projects.views import *
 from transifex.projects.views.project import *
 from transifex.projects.views.permission import *
 from transifex.projects.views.team import *
-from transifex.projects.views.release import *
-
 from transifex.txcommon.decorators import one_perm_required_or_403
-
 from transifex.urls import PROJECTS_URL
 
 project_list = {
@@ -31,8 +26,6 @@ public_project_list = {
 feeds = {
     'latest': LatestProjects,
     'project': ProjectFeed,
-    'release': ReleaseFeed,
-    'release_language': ReleaseLanguageFeed,
 }
 
 # Used only in urls already under projects/, such as this one and
@@ -139,49 +132,6 @@ urlpatterns += patterns('django.views.generic',
         name='project_tag_list'),
 )
 
-# Releases
-
-RELEASE_URL = PROJECT_URL_PARTIAL + r'r/(?P<release_slug>[-\w]+)/'
-
-urlpatterns += patterns('',
-    url(
-        regex = RELEASE_URL+r'feed/$',
-        view = release_feed,
-        name = 'release_feed',
-        kwargs = {'feed_dict': feeds,
-                  'slug': 'release'}),
-    url(
-        regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w\.]+)/feed/$',
-        view = release_language_feed,
-        name = 'release_language_feed',
-        kwargs = {'feed_dict': feeds,
-                  'slug': 'release_language'}),
-)
-
-urlpatterns += patterns('',
-    url(
-        regex = PROJECT_URL_PARTIAL+r'add-release/$',
-        view = release_create_update,
-        name = 'release_create',),
-    url(
-        regex = RELEASE_URL+r'$',
-        view = release_detail,
-        name = 'release_detail'),
-    url(
-        regex = RELEASE_URL+r'edit/$',
-        view = release_create_update,
-        name = 'release_edit',),
-    url(
-        regex = RELEASE_URL+r'delete/$',
-        view = release_delete,
-        name = 'release_delete',),
-    url(
-        regex = RELEASE_URL+r'l/(?P<language_code>[\-_@\w\.]+)/$',
-        view = release_language_detail,
-        name = 'release_language_detail',
-    ),
-)
-
 # Teams
 
 TEAM_URL = PROJECT_URL_PARTIAL + r'team/(?P<language_code>[\-_@\w\.]+)/'
@@ -245,4 +195,5 @@ urlpatterns += patterns('',
 # Resources
 urlpatterns += patterns('',
     url('', include('resources.urls')),
+    url('', include('releases.urls')),
 )
