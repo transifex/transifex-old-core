@@ -666,10 +666,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             pos = $(this).find("textarea.default_translation").offset();
             w = obj.width();
             // IE8 fix
-            if(jQuery.browser.msie || (jQuery.browser.webkit && jQuery.browser.version >  534.29) || jQuery.browser.opera){
-              obj.css({top: 4, left: - w + 4});
-            }else{
-              obj.css({top:pos.top - 4, left:pos.left - w - 2});
+            if (pos) {
+                if(jQuery.browser.msie || (jQuery.browser.webkit && jQuery.browser.version >  534.29) || jQuery.browser.opera){
+                  obj.css({top: 4, left: - w + 4});
+                }else{
+                  obj.css({top:pos.top - 4, left:pos.left - w - 2});
+                }
             }
 
             // show bottom tabs
