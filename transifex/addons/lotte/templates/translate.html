@@ -479,16 +479,17 @@
         }).fnSetFilteringDelay(500);
 
         {% if is_reviewer %}
+
+        {% if resource %}
+        var proofread_url = '{% url proofread project.slug resource.slug target_language.code %}';
+        {% else %}
+        var proofread_url = '{% url proofread project.slug target_language.code %}';
+        {% endif %}
+
         $('.review-check').live('change', function(){
-            {% if resource %}
-            var proofread_url = '{% url proofread project.slug resource.slug target_language.code %}';
-            {% else %}
-            var proofread_url = '{% url proofread project.slug target_language.code %}';
-            {% endif %}
-
             var sid = $(this).attr('id').split('_')[2];
-
             var req;
+
             if ($(this).attr('checked')) {
                 req = {true: [sid]};
             } else {
@@ -500,6 +501,29 @@
                 url: proofread_url,
                 data: JSON.stringify(req),
             });
+        });
+
+        $('#review-all').live('change', function() {
+          var checked = $(this).attr('checked');
+          var ids_checked = [];
+          var ids_unchecked = [];
+          $('.review-check').each(function() {
+            if (!$(this).attr('disabled')) {
+              if (checked) {
+                $(this).prop('checked', true);
+                ids_checked.push($(this).attr('id').split('_')[2]);
+              } else {
+                $(this).prop('checked', false);
+                ids_unchecked.push($(this).attr('id').split('_')[2]);
+              }
+            }
+          })
+
+          var data = {
+            'true': ids_checked,
+            'false': ids_unchecked
+          };
+          $.post(proofread_url, JSON.stringify(data));
         });
         {% endif %}
 
@@ -916,7 +940,9 @@
         <th></th>
         <th>&nbsp;</th>
         {% if is_reviewer %}
-        <th></th>
+        <th>
+          <input id="review-all" type="checkbox" name="review-all"/>
+        </th>
         {% endif %}
         </tr>
     </thead>
