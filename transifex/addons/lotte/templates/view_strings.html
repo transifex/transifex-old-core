@@ -152,7 +152,7 @@
         $(".filters").change(function() {
             filter_var = "";
             $(".filters").each( function() {
-                if (! $(this).attr('checked')) {
+                if ($(this).attr('checked')) {
                     filter_var += $(this).attr('id')+',';
                 }
             });
@@ -196,6 +196,16 @@
 
       <td><input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/></td>
   </tr>
+
+  <tr>
+    <th class="fuzzy">{% trans "Reviewed" %}</th>
+    <td id="total_reviewed">0</td>
+    <td id="total_reviewed_perc">0.00%</td>
+    <td>
+      <input id="reviewed" class="filters" type="checkbox" name="only_reviewed"/>
+    </td>
+  </tr>
+
   <tr class="last">
     <th>{% trans "Total" %}</th>
       <td id="total_sum">{{ total_strings }}</td>
