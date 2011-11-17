@@ -831,7 +831,7 @@
 
 {% block content_title %}
 
-<h2 class="pagetitle header_idle {% if short_desc %} with_description{% endif %}"><a class="smooth-transition" href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2><h2 class="pagetitle">&nbsp;/&nbsp;Translate:&nbsp;</h2><h2 class="header_idle pagetitle with_description"><a class="smooth-transition" href="{{ resource.get_absolute_url }}">{{ resource.name }}</a></h2><h2 class="pagetitle">&nbsp;&raquo;&nbsp;{{ target_language }}</h2>
+<h2 class="pagetitle header_idle {% if short_desc %} with_description{% endif %}"><a class="smooth-transition" href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2><h2 class="pagetitle">&nbsp;/&nbsp;</h2><h2 class="header_idle pagetitle with_description"><a class="smooth-transition" href="{{ resource.get_absolute_url }}">{{ resource.name }}</a></h2><h2 class="pagetitle">&nbsp;/&nbsp;{{ target_language }}</h2>
 
 {% endblock %}
 
