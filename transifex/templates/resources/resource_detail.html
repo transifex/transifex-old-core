@@ -322,7 +322,7 @@
                 },
                 'titleShow': true,
                 'titlePosition': 'inside',
-                'title': '{% trans "Translation Details"|escapejs %}'
+                'title': '{{ resource.project.name|truncate_chars:"30" }} &raquo; {{ resource.name|truncate_chars:"30" }} &raquo; {{ stat.language.name|truncate_chars:"20" }}'
            });
         });
     </script>

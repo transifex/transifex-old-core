@@ -30,8 +30,8 @@
   <form id="update_translation_form_element" action='' method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     {{ update_translation_form.target_language }}
-    <span id="upload_button_update" class="i16 send_file buttonized">
-      {% trans "Upload file" %}
+    <span id="upload_button_update" class="i16 send_file linkstyle">
+      <strong>{% trans "Upload file" %}</strong>
     </span>
   </form>
 </div>

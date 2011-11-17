@@ -12,11 +12,7 @@
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
   <div class="first_level title_wrapper">
-    <span class="breadcrumb" >
-      <a href="{% url project_detail project.slug %}">{{project.name|truncate_chars_middle:"40"}}</a> »
-      <a href="{% url resource_detail project.slug resource.slug %}">{{resource.name|truncate_chars_middle:"40"}}</a> »
-      {{ target_language }}
-    </span>
+    
     <span class="favourite_wrapper">
       {% watch_toggle resource target_language %}
     </span>
@@ -203,7 +199,7 @@
           </li>
           <li>
             {% if can_submit_translation and resource.accept_translations or is_maintainer %}
-                <div class="upload_action_wrapper" style="padding:0.5em 0">
+                <div class="upload_action_wrapper">
                 {% upload_resource_translation_button request resource target_language %}
                 </div>
             {% endif %}
