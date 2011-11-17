@@ -22,7 +22,8 @@
 	</div>
 {% endblock %}
 
-{% block extrajs%}
+{% block extrajs %}
+{{ block.super }}
 <script type="text/javascript">
 	$(document).ready(function(){
 		$(".side-menu").css('height',$(".psettings-content").height());
