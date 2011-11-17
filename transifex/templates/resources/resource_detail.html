@@ -22,10 +22,10 @@
 
         $("#start_new_translation").click( function() {
             var target_lang_code = $("#target_language_span > select").val();
-            if ( target_lang_code != "" ) {
-                request_url = window.location+'l/'+target_lang_code;
+            var translate_url_tmpl = '{% url translate_resource resource.project.slug resource.slug 111111111 %}'
 
-                window.location = request_url;
+            if ( target_lang_code != "" ) {
+                window.location = translate_url_tmpl.replace('111111111', target_lang_code);
             } else {
                 alert('{% trans "Please select a target language first."|escapejs %}');
             }
@@ -171,7 +171,7 @@
 <div class="separate-header  clearfix">
 	<h3  class="sh-label">{% blocktrans with resource.available_languages|length as num_of_langs %}Available languages ({{ num_of_langs }}){% endblocktrans %}</h3>
 	{% if can_submit_translation and resource.accept_translations or is_maintainer %}  
-  <div class="separate-buttons"><a id="new_translation1" class="i16 nude-button add tipsy_enable" title="{% blocktrans %}If you cannot see your language, click the button below to translate( You must belong to a language team of this project, to be able to translate! ){% endblocktrans %}" href="#">{% trans "Add new translation" %}</a></div>
+  <div class="separate-buttons"><a id="new_translation1" class="i16 nude-button add tipsy_enable linkstyle" title="{% blocktrans %}If you cannot see your language, click the button below to translate( You must belong to a language team of this project, to be able to translate! ){% endblocktrans %}">{% trans "Add new translation" %}</a></div>
 	{% endif %}
 </div>
 
