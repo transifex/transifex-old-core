@@ -306,7 +306,7 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 200)
+        self.assertEquals(res.status_code, 400)
         res = self.client['registered'].put(
             url,
             data=simplejson.dumps({
@@ -314,11 +314,10 @@ class TestResourceAPI(APIBaseTests):
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 200)
+        self.assertEquals(res.status_code, 400)
         res = self.client['registered'].put(
             url,
             data=simplejson.dumps({
-                    'source_language': "el",
                     'foo': 'foo',
             }),
             content_type='application/json'

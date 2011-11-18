@@ -94,6 +94,10 @@ class ResourceHandler(BaseHandler):
         'slug', 'name', 'accept_translations', 'source_language',
         'i18n_type', 'content', 'category',
     )
+    written_fields = (
+        'slug', 'name', 'accept_translations', 'content', 'category',
+    )
+
     apiv1_fields = ('slug', 'name', 'created', 'available_languages', 'i18n_type',
                     'source_language', 'project_slug')
     exclude = ()
@@ -196,7 +200,7 @@ class ResourceHandler(BaseHandler):
     def _create(self, request, project_slug, data):
         # Check for unavailable fields
         try:
-            self._check_fields(data.iterkeys())
+            self._check_fields(data.iterkeys(), self.allowed_fields)
         except AttributeError, e:
             msg = "Field '%s' is not allowed." % e.message
             logger.warning(msg)
@@ -274,7 +278,7 @@ class ResourceHandler(BaseHandler):
         if not data:            # Check for {} as well
             return BAD_REQUEST("Empty request")
         try:
-            self._check_fields(data.iterkeys())
+            self._check_fields(data.iterkeys(), self.written_fields)
         except AttributeError, e:
             return BAD_REQUEST("Field '%s' is not allowed." % e.message)
 
@@ -311,9 +315,9 @@ class ResourceHandler(BaseHandler):
             return rc.INTERNAL_ERROR
         return rc.DELETED
 
-    def _check_fields(self, fields):
+    def _check_fields(self, fields, allowed_fields):
         for field in fields:
-            if not field in self.allowed_fields:
+            if not field in allowed_fields:
                 raise AttributeError(field)
 
     def _get_content(self, request, data):
