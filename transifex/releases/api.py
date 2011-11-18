@@ -12,7 +12,7 @@ class ReleaseHandler(BaseHandler):
 
     allowed_methods = ('GET',)
     model = Release
-    fields = ('slug', 'name', 'project_slug', 'release_date', ('resources', ('slug', 'name',)))
+    fields = ('slug', 'name', 'project_slug', 'release_date', ('resources', ('slug', 'name', ('project', ('slug', )))))
     exclude = ()
 
     @classmethod
