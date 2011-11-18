@@ -3,6 +3,7 @@ import datetime
 from south.db import db
 from south.v2 import DataMigration
 from django.db import models
+from django.db.utils import DatabaseError
 
 class Migration(DataMigration):
 
@@ -12,15 +13,18 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
 
-        # Get all valid avatars images from userprofile and set them as the
-        # mugshot image for the userena profile app.
-        for a in orm['userprofile.Avatar'].objects.filter(valid=True):
-            try:
-                a.user.profile.mugshot = a.image
-                a.user.profile.save()
-            except Exception, e:
-                print "Could not migrate avatar for '%s': %s" % (a.user,
-                    e.message)
+        try:
+            # Get all valid avatars images from userprofile and set them as the
+            # mugshot image for the userena profile app.
+            for a in orm['userprofile.Avatar'].objects.filter(valid=True):
+                try:
+                    a.user.profile.mugshot = a.image
+                    a.user.profile.save()
+                except Exception, e:
+                    print "Could not migrate avatar for '%s': %s" % (a.user,
+                        e.message)
+        except DatabaseError:
+            pass
 
     def backwards(self, orm):
         
