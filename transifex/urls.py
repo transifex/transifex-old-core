@@ -60,11 +60,6 @@ else:
             view    =   'txcommon.views.password_change_custom',
             name    =   'password_change_redirect'),
 
-        # Don't show list of all accounts here
-        url(regex   =   r'^accounts/$',
-            view    =   redirect_to,
-            kwargs  =   {'url': '/'}),
-
         url(regex   =   r'^accounts/',
             view    =   include('userena.urls')),
 
