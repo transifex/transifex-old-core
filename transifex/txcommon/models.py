@@ -23,7 +23,7 @@ class Profile(UserenaBaseProfile):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'),
         related_name='profile')
 
-    language = models.ForeignKey(Language, blank=True, 
+    language = models.ForeignKey(Language, blank=True,
         verbose_name=_('Language'), null=True)
     blog = models.URLField(_('Blog'), null=True, blank=True)
     linked_in = models.URLField(_('LinkedIn'), null=True, blank=True)
@@ -31,15 +31,19 @@ class Profile(UserenaBaseProfile):
     about = models.TextField(_('About yourself'), max_length=140, null=True,
         blank=True,
         help_text=_('Short description of yourself (140 chars).'))
-    looking_for_work = models.BooleanField(_('Looking for work?'), 
+    looking_for_work = models.BooleanField(_('Looking for work?'),
         default=False)
 
-    latitude = models.DecimalField(max_digits=10, decimal_places=6, 
+    latitude = models.DecimalField(max_digits=10, decimal_places=6,
         null=True, blank=True, editable=False)
-    longitude = models.DecimalField(max_digits=10, decimal_places=6, 
+    longitude = models.DecimalField(max_digits=10, decimal_places=6,
         null=True, blank=True, editable=False)
-    location = models.CharField(max_length=255, null=True, blank=True, 
+    location = models.CharField(max_length=255, null=True, blank=True,
         editable=True)
+
+    class Meta:
+        db_table = 'txcommon_userenaprofile'
+
 
 def exclusive_fields(inmodel, except_fields=[]):
     '''
