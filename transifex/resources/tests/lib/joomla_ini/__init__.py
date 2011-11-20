@@ -62,3 +62,28 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.assertEquals(self.parser.template.count('tr'), 1)
         self.assertTrue('=' in self.parser.template)
         self.assertTrue('tr' in self.parser.template)
+
+    def test_translation_escaping(self):
+        """Test for a Joomla 1.6 INI file"""
+        content = ';test\nKEY1="Translation with "_QQ_"quotes"_QQ_""'\
+                  '\nKEY2="Translation with a quote &quot;"'
+        self.parser.bind_content(content)
+        self.parser.parse_file(is_source=True)
+        translation_strings = []
+        for s in self.parser.stringset.strings:
+            translation_strings.append(s.translation)
+        self.assertEqual(translation_strings, ['Translation with "quotes"',
+                'Translation with a quote "'])
+
+        """Test for a Joomla 1.5 INI file"""
+        content = 'KEY1=Translation with &quot;quotes&quot;'\
+                  '\nKEY2=Translation with a quote &quot;'
+        self.parser.bind_content(content)
+        self.parser.parse_file(is_source=True)
+        translation_strings = []
+        for s in self.parser.stringset.strings:
+            translation_strings.append(s.translation)
+        self.assertEqual(translation_strings, ['Translation with "quotes"',
+                'Translation with a quote "'])
+
+

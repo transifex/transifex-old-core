@@ -42,12 +42,20 @@ class JoomlaINIHandler(Handler):
     def _escape(self, s):
         return s.replace('\\', '\\\\')
 
+    def _examine_content(self, content):
+        self.jformat = JoomlaIniVersion.create(content)
+        return content
+
+    def _replace_translation(self, original, replacement, text):
+        return re.sub(re.escape(original),
+            self._pseudo_decorate(self._escape(self.jformat.get_compilation(replacement))), text)
+
     def _parse(self, is_source, lang_rules):
         """
         Parse an INI file and create a stringset with all entries in the file.
         """
         content = self.content
-        jformat = JoomlaIniVersion.create(self.content)
+        self.jformat = JoomlaIniVersion.create(self.content)
         self._find_linesep(content)
 
         buf = ''
@@ -65,7 +73,7 @@ class JoomlaINIHandler(Handler):
                 logger.warning('Could not parse line "%s". Skipping...' % line)
                 continue
 
-            trans = jformat.get_translation(trans)
+            trans = self.jformat.get_translation(trans)
             context = ""        # We use empty context
 
             if is_source:
@@ -110,13 +118,30 @@ class JoomlaIniVersion(object):
 class JoomlaIniOld(JoomlaIniVersion):
     """Format for Joomla 1.5."""
 
+    def _escape(self, value):
+        return value.replace('"', "&quot;")
+
+    def _unescape(self, value):
+        return value.replace("&quot;", '"')
+
     def get_translation(self, value):
-        return value
+        return self._unescape(value)
+
+    def get_compilation(self, value):
+        return self._escape(value)
 
 
 class JoomlaIniNew(JoomlaIniVersion):
     """Format for Joomla 1.6."""
+    def _escape(self, value):
+        return value.replace('"', '"_QQ_"')
+
+    def _unescape(self, value):
+        return value.replace("&quot;", '"').replace('"_QQ_"', '"')
 
     def get_translation(self, value):
         # Get rid of double-quote at the start and end of value
-        return value[1:-1]
+        return self._unescape(value[1:-1])
+
+    def get_compilation(self, value):
+        return self._escape(value)
