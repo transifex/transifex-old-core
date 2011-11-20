@@ -40,7 +40,10 @@ class JoomlaINIHandler(Handler):
     HandlerCompileError = JoomlaCompileError
 
     def _escape(self, s):
-        return s.replace('\\', '\\\\')
+        return  s.replace('\\', '\\\\').replace('\n', r'\\n').replace('\r', r'\\r')
+
+    def _unescape(self, s):
+        return s.replace('\\n', '\n').replace('\\r', '\r')
 
     def _examine_content(self, content):
         self.jformat = JoomlaIniVersion.create(content)
@@ -90,7 +93,8 @@ class JoomlaINIHandler(Handler):
             elif not SourceEntity.objects.filter(resource=self.resource, string=source).exists() or not trans.strip():
                 #ignore keys with no translation
                 continue
-            self._add_translation_string(source, trans, context=context)
+            self._add_translation_string(source, self._unescape(trans),
+                    context=context)
         return buf[:buf.rfind(self.linesep)]
 
 

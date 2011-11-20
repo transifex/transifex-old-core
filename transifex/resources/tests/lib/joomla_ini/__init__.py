@@ -86,4 +86,11 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.assertEqual(translation_strings, ['Translation with "quotes"',
                 'Translation with a quote "'])
 
+        """Test unescaping of new lines during parsing"""
+        content = 'KEY1=Translation\\nwith new line \\r\\n'
+        self.parser.bind_content(content)
+        self.parser.parse_file(is_source=True)
+        translation_string = self.parser.stringset.strings[0].translation
+        self.assertEqual(translation_string, 'Translation\nwith new line \r\n')
+
 
