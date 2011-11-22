@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.views.generic.simple import redirect_to
 import authority
 
-from txcommon.forms import EditProfileForm
+from txcommon.forms import EditProfileForm, CustomContactForm
 from txcommon.feeds import UserFeed
 
 # Overriding 500 error handler
@@ -34,6 +34,8 @@ urlpatterns += patterns('',
     url(r'^ajax/', include('resources.urls.ajax')),
     url(r'^api/', include('api.urls')),
     url(r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
+    url(r'^contact/$', 'contact_form.views.contact_form',
+        {'form_class': CustomContactForm}, name='contact_form'),
 )
 
 if settings.ENABLE_CONTACT_FORM:
