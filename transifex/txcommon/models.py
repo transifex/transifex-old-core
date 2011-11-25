@@ -7,12 +7,19 @@ from django.db.models.fields.related import OneToOneField
 from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
+import tagging
+from tagging.fields import TagField
+from tagging_autocomplete.models import TagAutocompleteField
+
+from transifex.txcommon.log import logger
 from userena import settings as userena_settings
 from userena.models import UserenaBaseProfile
 
 from social_auth.signals import pre_update
 from social_auth.backends.twitter import TwitterBackend
 from social_auth.backends.contrib.linkedin import LinkedinBackend
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"])
 
 Language = models.get_model('languages', 'Language')
 
@@ -25,6 +32,8 @@ class Profile(UserenaBaseProfile):
 
     languages = models.ManyToManyField(Language, verbose_name=_('Languages'),
         blank=True, null=True)
+    tags = TagAutocompleteField(verbose_name=_('Interested in'), blank=True,
+            null=True, help_text=_("Tags you may be interested in."))
     blog = models.URLField(_('Blog'), null=True, blank=True)
     linked_in = models.URLField(_('LinkedIn'), null=True, blank=True)
     twitter = models.URLField(_('Twitter'), null=True, blank=True)
@@ -44,6 +53,10 @@ class Profile(UserenaBaseProfile):
     class Meta:
         db_table = 'txcommon_userenaprofile'
 
+try:
+    tagging.register(Profile, tag_descriptor_attr='tagsobj')
+except tagging.AlreadyRegistered, e:
+    logger.debug('Tagging: %s' % str(e))
 
 def exclusive_fields(inmodel, except_fields=[]):
     '''
