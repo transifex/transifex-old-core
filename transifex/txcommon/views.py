@@ -20,6 +20,7 @@ from haystack.query import SearchQuerySet
 from notification import models as notification
 from userena.forms import AuthenticationForm
 from userena.views import password_change
+from userena.views import profile_edit as userena_profile_edit
 
 from actionlog.models import LogEntry, action_logging
 from transifex.languages.models import Language
@@ -162,6 +163,14 @@ def password_change_custom(request, username):
         pass_form = SetPasswordForm
 
     return password_change(request, username=username, pass_form=pass_form)
+
+def profile_edit(request, username, edit_profile_form=None):
+    if request.user.is_authenticated() and request.user.username == username:
+        return userena_profile_edit(request, username=username,
+                                    edit_profile_form=edit_profile_form)
+    else:
+        return HttpResponseRedirect(reverse("profile_public",
+                                            kwargs={'username': username}))
 
 
 # Ajax response

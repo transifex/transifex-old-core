@@ -1,11 +1,15 @@
-from django.conf.urls.defaults import *
 from django.conf import settings
+from django.conf.urls.defaults import *
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import redirect_to
 import authority
 
+from userena import views as userena_views
+
 from txcommon.forms import EditProfileForm, CustomContactForm
 from txcommon.feeds import UserFeed
+from txcommon.views import profile_edit as txcommon_profile_edit
 
 # Overriding 500 error handler
 handler500 = 'views.server_error'
@@ -54,7 +58,7 @@ else:
     urlpatterns += patterns('',
         # Custom EditProfileForm
         url(regex   =   r'^accounts/(?P<username>(?!signout|signup|signin)[\.\w]+)/$',
-            view    =   'userena.views.profile_edit',
+            view    =   login_required(txcommon_profile_edit),
             kwargs  =   {'edit_profile_form': EditProfileForm},
             name    =   'userena_profile_edit'),
 
@@ -62,6 +66,18 @@ else:
             view    =   'txcommon.views.password_change_custom',
             name    =   'password_change_redirect'),
 
+        url(regex   =   r'^accounts/(?P<username>[\.\w]+)/email/$',
+            view    =   login_required(userena_views.email_change),
+            name    =   'userena_email_change'),
+
+        url(regex   =   r'^accounts/(?P<username>[\.\w]+)/password/$',
+            view    =   login_required(userena_views.password_change),
+            name    =   'userena_password_change'),
+
+        url(regex   =   r'^accounts/(?P<username>[\.\w]+)/edit/$',
+            view    =   login_required(userena_views.profile_edit),
+            name    =   'userena_profile_edit'),
+ 
         url(regex   =   r'^accounts/',
             view    =   include('userena.urls')),
 
