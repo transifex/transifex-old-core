@@ -153,6 +153,11 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     lotte_init.send(None, request=request, resources=resources,
         language=target_language)
 
+    if target_language in [team.language for team in project.available_teams]:
+        team_language = True
+    else:
+        team_language = False
+
     return render_to_response("translate.html",
         { 'project' : project,
           'resource' : translation_resource,
@@ -165,6 +170,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'languages': Language.objects.all(),
           'gtranslate': is_gtranslate_allowed(project),
           'spellcheck_supported_langs' : SPELLCHECK_SUPPORTED_LANGS,
+          'team_language': team_language
         },
         context_instance = RequestContext(request))
 
