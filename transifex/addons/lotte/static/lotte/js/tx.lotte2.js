@@ -472,7 +472,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
     /* Bind textarea keyup marking */
     this.bindKeyupTextArea = function() {
-        $('tr td textarea.translation', this.bound_table).keyup(function() {
+        var edit_handler = function() {
             var textarea = $(this);
             var id;
             if(textarea.hasClass('default_translation')){
@@ -504,7 +504,10 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 review_checkbox.removeAttr('checked');
                 review_checkbox.attr('disabled', 'disabled');
             }
-        });
+        }
+
+        $('tr td textarea.translation', this.bound_table).keyup(edit_handler);
+        $('tr td textarea.translation', this.bound_table).bind('paste', edit_handler);
     }
 
     /* Bind save button events */
