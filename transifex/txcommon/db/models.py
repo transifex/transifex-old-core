@@ -138,7 +138,10 @@ class ListCharField(models.CharField):
             return self._replace(value)
         if type(value) == unicode and value.startswith('[') and \
             value.endswith(']'):
-            return self._replace(eval(value))
+            try:
+                return self._replace(eval(value))
+            except NameError:
+                pass
         if value == '':
             return []
         if value is None:
