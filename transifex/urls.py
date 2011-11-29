@@ -107,4 +107,5 @@ if settings.SERVE_MEDIA:
         url(r'^site_media/media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
         }),
+        url(r'^', include('django.contrib.staticfiles.urls'))
    )
