@@ -19,9 +19,9 @@
 	  <fieldset>
       {% for field in form %}
         <div class="tx-form-field">
-          {{ field.errors }}
           {{ field.label_tag }}
           {{ field }}
+          {{ field.errors }}
         </div>
       {% endfor %}
 	  </fieldset>

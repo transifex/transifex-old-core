@@ -27,7 +27,7 @@ $(document).ready(function(){
 	<form id="login-form" class="tx-form" action="" method="post">
 	  {% csrf_token %}
 	
-	  <fieldset>
+	  <fieldset style="  border-right:3px solid #EB8C25;">
 	    {{ form.non_field_errors }}
 	    {% for field in form %}
 	    {{ field.errors }}
