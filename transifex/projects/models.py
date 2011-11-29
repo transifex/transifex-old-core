@@ -168,8 +168,8 @@ class Project(models.Model):
         related_name='projects_maintaining', blank=False, null=True)
 
     outsource = models.ForeignKey('Project', blank=True, null=True,
-        verbose_name=_('Outsource project'),
-        help_text=_('Project that owns the access control of this project.'))
+        verbose_name=_('Outsource project'), related_name="outsourcing",
+        help_text=_('Project hub that owns the access control of this project.'))
 
     owner = models.ForeignKey(User, blank=True, null=True,
         verbose_name=_('Owner'), related_name='projects_owning',
@@ -180,6 +180,12 @@ class Project(models.Model):
         blank=False, null=False, db_index=False,
         help_text=_("The source language of this Resource.")
     )
+
+    # Denormalized fields
+    is_hub = models.BooleanField(_('Project Hub?'),
+        default=False, blank=True,
+        help_text=_('Is it a project hub that other regular projects can '
+            'use to outsource teams to receive translations?'))
 
     # Normalized fields
     long_description_html = models.TextField(_('HTML Description'), blank=True,

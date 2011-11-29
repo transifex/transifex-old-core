@@ -136,7 +136,7 @@ def project_access_control_edit(request, project_slug):
                 # TODO: Send notification for these projects, telling the
                 # maintainers that the outsource project is not accepting
                 # outsourcing anymore
-                for p in project.project_set.all():
+                for p in project.outsourcing.all():
                     p.outsource=None
                     p.save()
             # Check if cla form exists before sending the signal

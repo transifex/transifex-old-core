@@ -9,20 +9,14 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Access Control" %}{% endblock %}
 
-
-
-
-{% block content_title %}
-  <h2 class="pagetitle with_description">{% trans "Access Control" %}</h2>
-   
-   <div class="description">
-	<p>{% trans "Manage how people can have submission access to your project" %}</p>
-</div> 
-
-{% endblock %}
-
-
 {% block project_settings_content %}
+
+<div id="project-form-container" class="obj_bigdetails ui-tabs-panel">
+
+<h3 class="name">{% trans "Access Control" %}</h3>
+
+<span class="description">{% trans "You have the following choices to manage how people can have submission access to your project:" %}</span>
+
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div class="project_create generic_form">
@@ -58,6 +52,11 @@
 
         </tbody>
     </table>
+
+{% if project.is_hub %}
+    <div class="notice">{% trans "This project is set as a hub and can not outsource its access to another hub. Only 'Free for all' and 'Limited access' options are available." %}</div>
+{% endif %}
+
 {% if not project.anyone_submit and not project.outsource %}
    <div class="editlinks">
         <a class="i16 user" href="{% url project_add_permission project.slug %}">{% trans "Go to the project writers page." %}</a>
@@ -73,6 +72,5 @@
 
 </div>
 </div>
-
 {% endblock %}
 

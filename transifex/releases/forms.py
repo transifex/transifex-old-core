@@ -35,20 +35,30 @@ class ReleaseForm(forms.ModelForm):
         self.fields["project"].empty_label = None
         self.user = user
 
+        if not project.is_hub:
+            queryset = Resource.objects.filter(project=project)
+            self.fields["resources"] = forms.ModelMultipleChoiceField(
+                queryset=queryset, required=True, 
+                help_text=_('Select the resources to add to the Release. '
+                    'Once this project is not a Project Hub, it is only '
+                    'possible to choose resources that belong to this '
+                    'project.'))
+
     def clean_resources(self):
-        resources_pk_list = self.cleaned_data['resources']
-        for resource_pk in resources_pk_list:
-            try:
-                resource = Resource.objects.select_related().get(pk=resource_pk)
-            except Resource.DoesNotExist, e:
-                raise ValidationError(_("Invalid resource used."))
+        resources_list = self.cleaned_data['resources']
+        for resource in resources_list:
+            if type(resource) == int:
+                try:
+                    resource = Resource.objects.select_related().get(pk=resource)
+                except Resource.DoesNotExist, e:
+                    raise ValidationError(_("Invalid resource used."))
             if resource.project.private:
                 if self.user not in resource.project.maintainers.all():
                     raise ValidationError(
                      _("%s is an unaccessible private resource."
                        "Remove it!" % resource.name)
                     )
-        return resources_pk_list
+        return resources_list
 
     def clean_slug(self):
         """Ensure that reserved slugs are not used."""

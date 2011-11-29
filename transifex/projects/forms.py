@@ -33,7 +33,7 @@ class ProjectForm(forms.ModelForm):
         fields = (
             'name', 'slug', 'description', 'trans_instructions', 'tags',
             'long_description', 'maintainers', 'private', 'homepage', 'feed',
-            'bug_tracker', 'source_language'
+            'bug_tracker', 'source_language', 'is_hub'
         )
 
     def __init__(self, *args, **kwargs):
@@ -68,6 +68,19 @@ class ProjectForm(forms.ModelForm):
                 return self.cleaned_data['source_language']
         else:
             return self.cleaned_data['source_language']
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        is_hub = cleaned_data.get('is_hub')
+        if is_hub and self.instance and self.instance.outsource:
+            msg = _("This project is outsourcing teams from another "
+                "project, thus it can not become a Project Hub until having "
+                "its own teams. Please go to the Access Control page to "
+                "check the outsourcing settings.")
+            self._errors["is_hub"] = self.error_class([msg])
+            del cleaned_data["is_hub"]
+        return cleaned_data
+
 
 class ProjectDeleteForm(forms.Form):
     """
@@ -193,14 +206,22 @@ class ProjectAccessControlForm(forms.ModelForm):
         self.fields['access_control'].initial = access_control_initial
         self.fields['outsource'].required = outsource_required
 
-        # Filtering project list
+        # Access control can't be outsourced to another project if the 
+        # current project is already a hub. Then we drop the 
+        # 'outsourced_access' from the form options.
+        if project.is_hub:
+            choices = self.fields['access_control'].choices
+            self.fields['access_control'].choices = [c for c in choices 
+                if c[0]!='outsourced_access']
 
+        # Filtering project list
         if user:
-            self.fields["outsource"].queryset = Project.objects.for_user(
-                user).exclude(slug=project.slug).only('id', 'name')
+            projects = Project.objects.for_user(user).filter(is_hub=True
+                ).exclude(slug=project.slug).only('id', 'name')
         else:
-            projects = self.fields["outsource"].queryset.\
-                    exclude(slug=project.slug).exclude(private=True)
-            self.fields["outsource"].queryset = projects
+            projects = self.fields["outsource"].queryset.filter(is_hub=True
+                ).exclude(slug=project.slug, private=True)
+        
+        self.fields["outsource"].queryset = projects
         project_access_control_form_start.send(sender=ProjectAccessControlForm,
                                                instance=self, project=project)
