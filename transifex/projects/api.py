@@ -42,17 +42,22 @@ class ProjectHandler(BaseHandler):
         'created', 'anyone_submit', 'bug_tracker', 'trans_instructions',
         'tags', 'outsource', ('maintainers', ('username')),
         ('owner', ('username')), ('resources', ('slug', 'name', )),
-        'teams', 'source_language',
+        'teams', 'source_language_code',
     )
-    default_fields = ('slug', 'name', 'description', 'source_language', )
+    default_fields = ('slug', 'name', 'description', 'source_language_code', )
     fields = default_fields
     allowed_fields = (
         'name', 'slug', 'description', 'long_description', 'private',
         'homepage', 'feed', 'anyone_submit', 'hidden', 'bug_tracker',
         'trans_instructions', 'tags', 'maintainers', 'outsource',
-        'source_language',
+        'source_language_code',
     )
     exclude = ()
+
+    @classmethod
+    def source_language_code(cls, p):
+        """Add the source language as a field."""
+        return p.source_language.code
 
     @classmethod
     def teams(cls, p):
@@ -152,7 +157,7 @@ class ProjectHandler(BaseHandler):
         """
         Create a new project.
         """
-        mandatory_fields = ('slug', 'name', 'source_language', )
+        mandatory_fields = ('slug', 'name', 'source_language_code', )
         msg = "Field '%s' is required to create a project."
         for field in mandatory_fields:
             if field not in data:
@@ -169,7 +174,7 @@ class ProjectHandler(BaseHandler):
         outsource = data.pop('outsource', {})
         maintainers = data.pop('maintainers', {})
 
-        lang = data.pop('source_language')
+        lang = data.pop('source_language_code')
         try:
             source_language = Language.objects.by_code_or_alias(lang)
         except Language.DoesNotExist:

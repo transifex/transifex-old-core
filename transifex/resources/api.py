@@ -83,7 +83,9 @@ class ResourceHandler(BaseHandler):
         return r.source_language.code
 
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
-    default_fields = ('slug', 'name', 'i18n_type', 'source_language', 'category', )
+    default_fields = (
+        'slug', 'name', 'i18n_type', 'source_language_code', 'category',
+    )
     details_fields = (
         'slug', 'name', 'created', 'available_languages', 'i18n_type',
         'source_language_code', 'project_slug', 'wordcount', 'total_entities',
@@ -91,7 +93,7 @@ class ResourceHandler(BaseHandler):
     )
     fields = default_fields
     allowed_fields = (
-        'slug', 'name', 'accept_translations', 'source_language',
+        'slug', 'name', 'accept_translations', 'source_language_code',
         'i18n_type', 'content', 'category',
     )
     written_fields = (
