@@ -1,6 +1,5 @@
 {% load i18n %}
 {% load txcommontags %}
-{% load compress %}
 
 {% if create %}
 <div id="upload_resource_translation_button" class="clearfix tx-form">
@@ -37,7 +36,6 @@
 </div>
 {% endif %}
 
-{% compress js %}
 <script type="text/javascript" src="{{ static_url }}js/sprintf.js"></script>
 <script type="text/javascript">
 
@@ -78,5 +76,4 @@ jQuery(document).ready(function($){
 });
 
 </script>
-{% endcompress %}
 
