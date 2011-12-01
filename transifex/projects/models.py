@@ -270,3 +270,37 @@ except tagging.AlreadyRegistered, e:
     logger.debug('Tagging: %s' % str(e))
 
 log_model(Project)
+
+
+class HubRequest(models.Model):
+    """
+    Model to handle outsource requests of project to project hubs. A project
+    only can have one request for a project hub and it can only be associated
+    to a project hub once at a time.
+    """
+    project_hub = models.ForeignKey(Project, verbose_name=_('Project Hub'),
+        blank=False, null=False, related_name="hub_request",
+        help_text=_("The project hub to outsource teams from."))
+
+    project = models.ForeignKey(Project, verbose_name=_('Project'), 
+        unique=True, blank=False, null=False, related_name="hub_requesting",
+        help_text=_("The project that wants to outsource teams from "
+            "another project."))
+    user = models.ForeignKey(User, verbose_name=_('User'),
+        blank=False, null=False,
+        help_text=_("User that The project hub to outsource teams from."))
+
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+
+    def __unicode__(self):
+        return u'%s.%s' % (self.project_hub.slug,
+            self.project.slug)
+
+    def __repr__(self):
+        return '<HubRequest: %s.%s>' % (self.project_hub.slug,
+            self.project.slug)
+
+    class Meta:
+        unique_together = ("project",)
+        verbose_name = _('hub joining request')
+        verbose_name_plural = _('hub joining requests')
