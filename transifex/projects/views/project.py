@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.models import Q, get_model
 from django.http import HttpResponseRedirect
@@ -121,37 +122,64 @@ def project_access_control_edit(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
-        access_control_form = ProjectAccessControlForm(request.POST,
-            instance=project, user=request.user)
-        if access_control_form.is_valid():
-            access_control = access_control_form.cleaned_data['access_control']
-            project = access_control_form.save()
-            if 'free_for_all' == access_control:
-                project.anyone_submit=True
+        # Check wether the hub form was submit
+        if request.POST.get('hub'):
+            is_hub = request.POST.has_key('is_hub')
+            error = ''
+            if is_hub and project.outsource:
+                error = _("This project is outsourcing teams from '%s' "
+                    ", thus it can not become a project hub until having "
+                    "its own teams. Please check the Access Control settings."
+                    % project.outsource.name )
+            elif not is_hub and project.outsourcing.all():
+                error = _("This project is outsourcing teams to other "
+                    "projects, thus it can not be set as a regular project "
+                    "until having all the outsourced projects disassociated "
+                    "to it.")
+
+            if error:
+                messages.error(request, error)
             else:
-                project.anyone_submit=False
-            if 'outsourced_access' != access_control:
-                project.outsource=None
-            else:
-                # TODO: Send notification for these projects, telling the
-                # maintainers that the outsource project is not accepting
-                # outsourcing anymore
-                for p in project.outsourcing.all():
-                    p.outsource=None
-                    p.save()
-            # Check if cla form exists before sending the signal
-            if 'limited_access' == access_control and \
-              access_control_form.cleaned_data.has_key('cla_license_text'):
-                # send signal to save CLA
-                signals.cla_create.send(
-                    sender='project_access_control_edit_view',
-                    project=project,
-                    license_text=access_control_form.cleaned_data['cla_license_text'],
-                    request=request
-                )
-            project.save()
-            handle_stats_on_access_control_edit(project)
+                project.is_hub = is_hub
+                project.save()
+                if is_hub:
+                    msg = _("The project has been set as a project hub.")
+                else:
+                    msg = _("The project is no longer a project hub.")
+                messages.success(request, msg)
             return HttpResponseRedirect(request.POST['next'])
+        else:
+            access_control_form = ProjectAccessControlForm(request.POST,
+            instance=project, user=request.user)
+            if access_control_form.is_valid():
+                access_control = access_control_form.cleaned_data['access_control']
+                project = access_control_form.save()
+                if 'free_for_all' == access_control:
+                    project.anyone_submit=True
+                else:
+                    project.anyone_submit=False
+                if 'outsourced_access' != access_control:
+                    project.outsource=None
+                else:
+                    # TODO: Send notification for these projects, telling the
+                    # maintainers that the outsource project is not accepting
+                    # outsourcing anymore
+                    for p in project.outsourcing.all():
+                        p.outsource=None
+                        p.save()
+                # Check if cla form exists before sending the signal
+                if 'limited_access' == access_control and \
+                access_control_form.cleaned_data.has_key('cla_license_text'):
+                    # send signal to save CLA
+                    signals.cla_create.send(
+                        sender='project_access_control_edit_view',
+                        project=project,
+                        license_text=access_control_form.cleaned_data['cla_license_text'],
+                        request=request
+                    )
+                project.save()
+                handle_stats_on_access_control_edit(project)
+                return HttpResponseRedirect(request.POST['next'])
     else:
         access_control_form = ProjectAccessControlForm(instance=project,
             user=request.user)
@@ -161,6 +189,16 @@ def project_access_control_edit(request, project_slug):
         'project_access_control_form': access_control_form,
     }, context_instance=RequestContext(request))
 
+
+@one_perm_required_or_403(pr_project_add_change,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
+def project_outsourcing_projects(request, project_slug):
+    """"""
+    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
+
+    return render_to_response('projects/project_outsourcing_projects.html', {
+        'project': project,
+    }, context_instance=RequestContext(request))
 
 def handle_stats_on_access_control_edit(project):
     """

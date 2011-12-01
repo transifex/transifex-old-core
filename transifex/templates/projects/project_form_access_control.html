@@ -1,73 +1,107 @@
 {% extends "projects/project_settings.html" %}
 {% load i18n %}
+{% load truncate %}
 {% load pagination_tags %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+{% load fieldsets %}
 
-{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Access Control" %}{% endblock %}
+{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Outsource and Access Control" %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Access Control" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Outsource and Access Control" %}{% endblock %}
 
 {% block project_settings_content %}
 
 <div id="project-form-container" class="obj_bigdetails ui-tabs-panel">
 
-<h3 class="name">{% trans "Access Control" %}</h3>
-
-<span class="description">{% trans "You have the following choices to manage how people can have submission access to your project:" %}</span>
+<h3 class="name">{% trans "Outsource and Access Control" %}</h3>
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div class="project_create generic_form">
 
 {% if is_maintainer %}
-{% with project_access_control_form as form %}
 
-  <div class="separate">
+    <div class="separate-header clearfix">
+        <h3 class="sh-label">Project Hub</h3>
+    </div>   
+    <form name="hub" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}"/> 
+        <input type="hidden" name="hub" value="true"/>
+        <table class="access_control">
+            <tbody> 
+            {% get_fieldset is_hub as hub_form from project_access_control_form %}
+            {% form_as_table_rows hub_form %}
+            </tbody>
+        </table>
+    </form>  
+  
+    {% if project.is_hub %}
+    <div class="i16 project" style="margin-top:1em;" >
+        <span id="outsourcing_projects" class="clickable">{% trans "See projects outsourcing access to it." %}</span>
+    </div>
+
+    <script type="text/javascript">
+        $("#outsourcing_projects").click(function(){
+           /* FancyBox Using custom settings */
+           $.fancybox(
+               {
+                'href': '{% url project_outsourcing_projects project.slug %}',
+                'hideOnContentClick': false,
+                'onStart':function(){
+                    // IE8 fix
+                    if(jQuery.browser.msie) {
+                      $('#fancybox-wrap').css('max-width','716px');
+                      $('#fancybox-inner').css('max-width','716px');
+                      $('#fancybox-outer').css('left','50%');
+                    }
+                },
+                'onComplete':function() {       
+                    $("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
+                    $("#fancybox-content").addClass('ui-corner-top'); 
+                    $("#fancybox-outer").addClass('ui-corner-top'); 
+                    // IE8 fix
+                    if(jQuery.browser.msie){
+                        $('.fancybox-title-outside').css('max-width','716px');
+                    }
+                },
+                'titleShow': true,
+                'titlePosition': 'inside',
+                'title': '{{ project.name|truncate_chars:"30" }} &raquo;  {% trans "Project outsourcing"|escapejs %}'
+           });
+        });
+    </script>
+
+    {% endif %}
+  
+    <div class="separate-header clearfix">
+        <h3 class="sh-label">Access Control</h3>
+    </div>
+
+    {% if project.is_hub %}
+        <div class="notice">{% trans "This project is set as a hub and can not outsource its access to another hub. Only 'Free for all' and 'Limited access' options are available." %}</div>   
+    {% endif%}
+
     <form name="access_control" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">{% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.path }}"/>
-    <table class="access_control">
-        <tbody>
+        <input type="hidden" name="next" value="{{ request.path }}"/>
+        <table class="access_control">
+            <tbody> 
+                {% get_fieldset access_control,outsource as access_control_form from project_access_control_form %}
+                {% form_as_table_rows access_control_form %}
+            </tbody>
+        </table>
+        <p class="submit">
+            <input type="submit" class="i16 submit buttonized" name="submit_access_control" value="{% trans "Save Access Control Settings" %}" />
+        </p>
+    </form>  
 
-            {% if form.non_field_errors %}
-                <ul class="fielderrors">{{ form.non_field_errors }}</ul>
-            {% endif %}
-
-            <tr id="{{ form.access_control.name }}" >
-                <td class="fieldp" colspan="3">
-                {{ form.access_control }}
-                {% if form.access_control.errors %}<p class="fielderrors">{% for error in form.access_control.errors %}{{ error }}{% endfor %}</p>{% endif %}
-                </td>
-            </tr>
-
-            <tr id="{{ form.outsource.name }}">
-                <th class="outsource">{{ form.outsource.label }}: <span class="required">*</span></th>
-                <td>
-                {{ form.outsource }}
-                {% if form.outsource.errors %}<p class="fielderrors">{% for error in form.outsource.errors %}{{ error }}{% endfor %}</p>{% endif %}
-                </td>
-                <td><p class="helptext">{{ form.outsource.help_text|safe }}</p></td>
-            </tr>
-
-        </tbody>
-    </table>
-
-{% if project.is_hub %}
-    <div class="notice">{% trans "This project is set as a hub and can not outsource its access to another hub. Only 'Free for all' and 'Limited access' options are available." %}</div>
 {% endif %}
 
 {% if not project.anyone_submit and not project.outsource %}
    <div class="editlinks">
         <a class="i16 user" href="{% url project_add_permission project.slug %}">{% trans "Go to the project writers page." %}</a>
    </div>
-{% endif %}
-    <p class="submit">
-    	<input type="submit" class="i16 submit buttonized" name="submit_access_control" value="{% trans "Save Access Control Settings" %}" />
-    </p>
-    </form>
-  </div>
-{% endwith %}
 {% endif %}
 
 </div>

@@ -22,22 +22,22 @@
 <script type="text/javascript">
 
 function toggle_access_control(){
-    var access_control = $("input[name='access_control']:checked").val();
+    var access_control = $("select[name='access_control']").val();
     if (access_control != 'outsourced_access'){
-        $("tr#outsource").hide();
+        $("#id_outsource").parents('tr').hide();
     }else{
-        $("tr#outsource").show();
+        $("#id_outsource").parents('tr').show();
     }
 }
 
 $(document).ready(
     function ()
     {
-        $("#id_anyone_submit").change(function(){
+        $("form[name=hub] input").change(function(){
             $(this).parents("form").submit();
-            })
+        });
 
-        $("input[name='access_control']").change(function(){
+        $("select[name='access_control']").change(function(){
             toggle_access_control();
         });
 

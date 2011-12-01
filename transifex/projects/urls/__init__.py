@@ -79,6 +79,10 @@ urlpatterns += patterns('',
         view = project_add_permission,
         name = 'project_add_permission'),
     url(
+        regex = PROJECT_URL_PARTIAL+r'access/outsourcing/$',
+        view = project_outsourcing_projects,
+        name = 'project_outsourcing_projects'),
+    url(
         regex = PROJECT_URL_PARTIAL+r'access/pm/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission,
         name = 'project_delete_permission'),
@@ -162,11 +166,11 @@ urlpatterns += patterns('',
         view = team_join_request,
         name = 'team_join_request',),
     url(
-        regex = TEAM_URL+r'approve/(?P<username>[\.\-\w]+)/$',
+        regex = TEAM_URL+r'approve/(?P<username>[-\w]+)/$',
         view = team_join_approve,
         name = 'team_join_approve',),
     url(
-        regex = TEAM_URL+r'deny/(?P<username>[\.\-\w]+)/$',
+        regex = TEAM_URL+r'deny/(?P<username>[-\w]+)/$',
         view = team_join_deny,
         name = 'team_join_deny',),
     url(

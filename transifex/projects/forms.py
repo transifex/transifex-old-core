@@ -1,6 +1,6 @@
 from django import forms
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.db.models import permalink
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -33,7 +33,7 @@ class ProjectForm(forms.ModelForm):
         fields = (
             'name', 'slug', 'description', 'trans_instructions', 'tags',
             'long_description', 'maintainers', 'private', 'homepage', 'feed',
-            'bug_tracker', 'source_language', 'is_hub'
+            'bug_tracker', 'source_language',
         )
 
     def __init__(self, *args, **kwargs):
@@ -68,18 +68,6 @@ class ProjectForm(forms.ModelForm):
                 return self.cleaned_data['source_language']
         else:
             return self.cleaned_data['source_language']
-
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        is_hub = cleaned_data.get('is_hub')
-        if is_hub and self.instance and self.instance.outsource:
-            msg = _("This project is outsourcing teams from another "
-                "project, thus it can not become a Project Hub until having "
-                "its own teams. Please go to the Access Control page to "
-                "check the outsourcing settings.")
-            self._errors["is_hub"] = self.error_class([msg])
-            del cleaned_data["is_hub"]
-        return cleaned_data
 
 
 class ProjectDeleteForm(forms.Form):
@@ -167,21 +155,21 @@ class ProjectAccessControlForm(forms.ModelForm):
 
     # Setting up some vars based on the 'access_control_options' var
     access_control_types = []
-    access_control_help = {}
+    access_control_help = []
     for o in access_control_options:
         for k, v in o.items():
             access_control_types.append((k, v['label']))
-            access_control_help.update({k: v['help_text']})
+            access_control_help.append((v['label'], v['help_text']))
+    access_control_help = '<br/><br/>'.join(
+        ['<b>%s</b>: %s' % (v[0], v[1]) for v in access_control_help])
 
     # Add field
     access_control = forms.ChoiceField(choices=access_control_types,
-        required=True, widget=forms.RadioSelect(
-            renderer=RadioFieldRenderer,
-            attrs={'help_text': access_control_help }))
+        required=True, help_text=access_control_help)
 
     class Meta:
         model = Project
-        fields = ('access_control', 'outsource')
+        fields = ('is_hub','access_control', 'outsource',)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -225,3 +213,23 @@ class ProjectAccessControlForm(forms.ModelForm):
         self.fields["outsource"].queryset = projects
         project_access_control_form_start.send(sender=ProjectAccessControlForm,
                                                instance=self, project=project)
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        is_hub = cleaned_data.get('is_hub')
+        if is_hub and self.instance and self.instance.outsource:
+            msg = _("This project is outsourcing teams from another "
+                "project, thus it can not become a project hub until having "
+                "its own teams. Please go to the Access Control page to "
+                "check the outsourcing settings.")
+            self._errors["is_hub"] = self.error_class([msg])
+            del cleaned_data["is_hub"]
+
+        if not is_hub and self.instance and self.instance.outsourcing.all():
+            msg = _("This project hub is used to outsource teams to other "
+                "projects, thus it can not be set as a regular project until "
+                "having the outsourced projects disassociated to it.")
+            self._errors["is_hub"] = self.error_class([msg])
+            del cleaned_data["is_hub"]
+
+        return cleaned_data

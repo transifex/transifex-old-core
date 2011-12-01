@@ -22,7 +22,7 @@
             </td>
             <td>
                 <p class="helptext">
-                    {{ field.help_text }}
+                    {{ field.help_text|safe }}
                     {% if helptext_ext %}
                         {% print_helptext field.name %}
                     {% endif %}

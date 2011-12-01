@@ -45,7 +45,7 @@
 
     {% if is_maintainer %}
 		{% url project_access_control_edit project.slug as url_project_access_control_edit %}
-		<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Access Control" %}</a></li>
+		<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Outsource and Access Control" %}</a></li>
     {% endif %}
 
 		{% hook "project.html" settings_menu %}
