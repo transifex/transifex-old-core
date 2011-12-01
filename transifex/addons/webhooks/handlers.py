@@ -82,7 +82,7 @@ def add_web_hook_field(sender, **kwargs):
 
     form.fields['webhook'] = forms.URLField(
         verify_exists=False, required=False, initial=url,
-        label="Web hook URL", validators=[validate_http_url, ],
+        label=_("Web hook URL"), validators=[validate_http_url, ],
         help_text=_("You can specify a URL which Transifex will visit whenever "
                     "a translation of a resource of the project is changed.")
     )

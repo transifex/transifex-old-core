@@ -60,7 +60,8 @@ class ProjectDeleteForm(forms.Form):
     """
     A form used to check the user password before deleting a project.
     """
-    password = forms.CharField(widget=forms.PasswordInput, label='Your password')
+    password = forms.CharField(widget=forms.PasswordInput,
+                               label=_('Your password'))
 
     def __init__(self, request, *args, **kwargs):
         self.request = request

@@ -65,7 +65,7 @@
        {% with project.resources.all|slice:"0:4" as resources %}
         <span class="i16 resource compact">{% trans "Resources:" %}
           {% for resource in resources %}
-            <a class="resource" title='Go to resource "{{ resource.name }}"' href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
+            <a class="resource" title='{% blocktrans with resource=resource.name %}Go to resource "{{ resource }}"{% endblocktrans %}' href="{{ resource.get_absolute_url }}">{{ resource.name }}</a>
             {% if not forloop.last %},{% endif %}
           {% empty %}
 			{% trans "No resources in this project." %}

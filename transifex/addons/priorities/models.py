@@ -5,9 +5,9 @@ from django.utils.translation import ugettext_lazy as _
 from transifex.resources.models import Resource
 
 PRIORITY_LEVELS = (
-    ('0', 'Normal'),
-    ('1', 'High'),
-    ('2', 'Urgent'),
+    ('0', _('Normal')),
+    ('1', _('High')),
+    ('2', _('Urgent')),
 )
 
 

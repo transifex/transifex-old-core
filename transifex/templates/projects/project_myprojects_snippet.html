@@ -30,7 +30,7 @@
                    {% comment %} {% ifequal mproject.owner user %}
                     <img class="icon_owner tipsy_enable explain" title='{% trans "You are the \"Owner\" of the project." %}' src="{{ STATIC_URL }}images/icons/bkey.png" style="border:0">
                     {% endifequal %}{% endcomment %}
-                    <a href="{% url project_edit mproject.slug %}">Edit</a>
+                    <a href="{% url project_edit mproject.slug %}">{% trans "Edit" %}</a>
                     </span>
                     {% endwith %}
 

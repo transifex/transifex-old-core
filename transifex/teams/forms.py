@@ -11,17 +11,24 @@ from ajax_select.fields import AutoCompleteField, AutoCompleteSelectMultipleFiel
 
 
 class TeamSimpleForm(forms.ModelForm):
-    coordinators = AutoCompleteSelectMultipleField('users', required=True,
-        help_text=_("Coordinators are people that can manage the members of the "
-                    "team, for example. Search for usernames."))
+    coordinators = AutoCompleteSelectMultipleField(
+        'users', label=_("Coordinators"), required=True,
+        help_text=_("Coordinators are people that can manage the members of "\
+                    "the team, for example. Search for usernames.")
+                )
 
-    members = AutoCompleteSelectMultipleField('users', required=False,
-        help_text=_("Members are actually people that can submit translations. "
-                    "Search for usernames."))
+    members = AutoCompleteSelectMultipleField(
+        'users', label=_("Members"), required=False,
+        help_text=_("Members are actually people that can submit "\
+                    "translations. Search for usernames.")
+    )
 
-    reviewers = AutoCompleteSelectMultipleField('users', required=False,
-        help_text=_("Reviewers are team members that can proofread translations "
-                    "and mark them as reviewed. Search for usernames."))
+    reviewers = AutoCompleteSelectMultipleField(
+        'users', label=_("Reviewers"), required=False,
+        help_text=_("Reviewers are team members that can proofread "\
+                    "translations and mark them as reviewed. Search for "\
+                    "usernames.")
+    )
 
     class Meta:
         model = Team
