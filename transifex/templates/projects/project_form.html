@@ -83,7 +83,7 @@ $(document).ready(function(){
       </fieldset>
 
 			<div class="clearfix advform-cont" style="width:560px;">
-				<span id="display-advform">View advanced fields</span>
+				<span id="display-advform">{% trans "View advanced fields" %}</span>
 			</div>
       <fieldset id="project-edit-advanced" style="display:none;">
         {% get_fieldset homepage,trans_instructions,feed,bug_tracker,long_description,webhook as advanced_fields from project_form %}

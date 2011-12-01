@@ -21,9 +21,11 @@ from transifex.txcommon.widgets import SplitSelectDateTimeWidget
 
 
 class ProjectForm(forms.ModelForm):
-    maintainers = AutoCompleteSelectMultipleField('users', required=True,
-        help_text=_('Search for a username'))
-    tags = TagField(widget=TagAutocomplete(), required=False)
+    maintainers = AutoCompleteSelectMultipleField(
+        label=_("Maintainers"), 'users', required=True,
+        help_text=_('Search for a username')
+    )
+    tags = TagField(label=_("Tags"), widget=TagAutocomplete(), required=False)
 
     class Meta:
         model = Project
