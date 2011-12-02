@@ -25,7 +25,12 @@ from webhooks.models import WebHook
 )
 def apps_list(request, project_slug, **kwargs):
     """List the tx apps."""
-    kwargs['extra_context'] = {'project_slug': project_slug}
+    kwargs['extra_context'] = {
+        'project_slug': project_slug,
+        'apps_for_p': Project.objects.get(
+            slug=project_slug).apps.values_list('slug', flat=True)
+    }
+
     return object_list(request, **kwargs)
 
 
@@ -56,6 +61,7 @@ def enable_app(request, project_slug, txapp_slug, **kwargs):
         return HttpResponse(unicode(e))
     url = '/'.join([txapp.url, 'tx/translated'])
     WebHook.objects.create(project=project, url=url)
+    txapp.projects.add(project)
     return HttpResponse('')
 
 
@@ -84,6 +90,7 @@ def disable_app(request, project_slug, txapp_slug, **kwargs):
         return HttpResponse(unicode(e))
     url = '/'.join([txapp.url, 'tx/translated'])
     WebHook.objects.filter(project=project, url=url).delete()
+    txapp.projects.remove(project)
     return HttpResponse('')
 
 

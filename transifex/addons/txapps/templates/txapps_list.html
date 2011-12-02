@@ -5,7 +5,11 @@
 <ul>
 {% for app in txapps_list %}
   <li>
-    <input id="{{ app.slug }}" class="txapp" type="checkbox" name="vehicle" value="Bike" /> {{ app.name }}
+    {% if app.slug in apps_for_p %}
+    <input id="{{ app.slug }}" class="txapp" type="checkbox" checked="checked"/> {{ app.name }}
+    {% else %}
+    <input id="{{ app.slug }}" class="txapp" type="checkbox" /> {{ app.name }}
+    {% endif %}
   </li>
 {% endfor %}
 </ul>
