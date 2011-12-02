@@ -142,7 +142,6 @@ class JavaPropertiesHandler(Handler):
         """Convert unicode characters to sequence of bytes representing the
         codepoints.
         """
-        replacement = replacement.decode(self.default_encoding)
         for char in replacement:
             if ord(char) > 127:
                 replacement = replacement.replace(char, self.convert_to_ascii(char))
