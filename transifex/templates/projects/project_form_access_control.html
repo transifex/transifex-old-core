@@ -25,16 +25,26 @@
 
     <div class="separate-header clearfix">
         <h3 class="sh-label">Project Hub</h3>
-    </div>   
+    </div>
+
+    {% if project.outsource %}
+        <div class="notice">
+        {% blocktrans with project.outsource.name as project_name %}This project is outsourcing its access to '{{ project_name }}', thus it can not become a project hub.{% endblocktrans %}
+        </div>   
+    {% endif%}
+
     <form name="hub" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">{% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}"/> 
-        <input type="hidden" name="hub" value="true"/>
         <table class="access_control">
             <tbody> 
             {% get_fieldset is_hub as hub_form from project_access_control_form %}
             {% form_as_table_rows hub_form %}
             </tbody>
         </table>
+        </table>
+        <p class="submit">
+            <input type="submit" class="i16 submit buttonized" name="hub" value="{% trans "Save Hub Settings" %}" />
+        </p>
     </form>  
   
     {% if project.is_hub %}

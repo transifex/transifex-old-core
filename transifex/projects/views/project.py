@@ -142,11 +142,6 @@ def project_access_control_edit(request, project_slug):
             else:
                 project.is_hub = is_hub
                 project.save()
-                if is_hub:
-                    msg = _("The project has been set as a project hub.")
-                else:
-                    msg = _("The project is no longer a project hub.")
-                messages.success(request, msg)
             return HttpResponseRedirect(request.POST['next'])
         else:
             access_control_form = ProjectAccessControlForm(request.POST,

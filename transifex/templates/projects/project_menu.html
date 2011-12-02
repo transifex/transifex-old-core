@@ -33,16 +33,19 @@ function toggle_access_control(){
 $(document).ready(
     function ()
     {
-        $("form[name=hub] input").change(function(){
-            $(this).parents("form").submit();
-        });
-
+        {% if project.outsource %}          
+            $("form[name=hub]").submit(function(){
+                // On submit disable its submit button
+                $('input[type=submit]', this).attr('disabled', 'disabled');
+            });
+            $("form[name=hub] input").addClass('tick_disabled');
+        {% endif %}
+        
         $("select[name='access_control']").change(function(){
             toggle_access_control();
         });
 
         toggle_access_control();
-
     }
 );
 </script>

@@ -193,6 +193,9 @@ class ProjectAccessControlForm(forms.ModelForm):
 
         self.fields['access_control'].initial = access_control_initial
         self.fields['outsource'].required = outsource_required
+        
+        if outsource_required:
+            self.fields['is_hub'].widget.attrs['disabled'] = True
 
         # Access control can't be outsourced to another project if the 
         # current project is already a hub. Then we drop the 
