@@ -14,8 +14,10 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
-from transifex.resources.formats.core import StringSet, ParseError, \
-    CompileError, GenericTranslation, Handler, STRICT
+from transifex.resources.formats.core import Handler, ParseError, CompileError, \
+        STRICT
+from transifex.resources.formats.resource_collections import StringSet, \
+        GenericTranslation
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 
