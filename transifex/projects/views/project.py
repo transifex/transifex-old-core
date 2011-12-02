@@ -121,9 +121,11 @@ def project_update(request, project_slug):
 def project_access_control_edit(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
+    access_control_form = None
+
     if request.method == 'POST':
         # Check wether the hub form was submit
-        if request.POST.get('hub'):
+        if request.POST.has_key('hub'):
             is_hub = request.POST.has_key('is_hub')
             error = ''
             if is_hub and project.outsource:
@@ -143,7 +145,7 @@ def project_access_control_edit(request, project_slug):
                 project.is_hub = is_hub
                 project.save()
             return HttpResponseRedirect(request.POST['next'])
-        else:
+        elif request.POST.has_key('access_control'):
             access_control_form = ProjectAccessControlForm(request.POST,
             instance=project, user=request.user)
             if access_control_form.is_valid():
@@ -175,9 +177,11 @@ def project_access_control_edit(request, project_slug):
                 project.save()
                 handle_stats_on_access_control_edit(project)
                 return HttpResponseRedirect(request.POST['next'])
-    else:
+
+    if not access_control_form:
         access_control_form = ProjectAccessControlForm(instance=project,
             user=request.user)
+
     return render_to_response('projects/project_form_access_control.html', {
         'project_permission': True,
         'project': project,

@@ -36,8 +36,9 @@ $(document).ready(
         {% if project.outsource %}          
             $("form[name=hub]").submit(function(){
                 // On submit disable its submit button
-                $('input[type=submit]', this).attr('disabled', 'disabled');
+                $("input[type=submit]", this).attr('disabled', 'disabled');
             });
+            $("form[name=hub] input").attr('disabled', 'disabled');
             $("form[name=hub] input").addClass('tick_disabled');
         {% endif %}
         
