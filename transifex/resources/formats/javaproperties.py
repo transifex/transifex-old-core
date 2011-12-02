@@ -165,8 +165,6 @@ class JavaPropertiesHandler(Handler):
         context = ""
         self._find_linesep(self.content)
         template = u""
-        key_dict = {}
-        rule = 5
         lines = self._iter_by_line(self.content)
         for line in lines:
             line = self._prepare_line(line)
@@ -208,20 +206,7 @@ class JavaPropertiesHandler(Handler):
             elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
                 # ignore keys with no translation
                 continue
-
-            if key in key_dict and key_dict[key].get(rule, None):
-                g = GenericTranslation(key, self._unescape(
-                    key_dict[key][rule]['translation']),
-                    context=key_dict[key][rule]['context'])
-                self.stringset.strings.remove(g)
-
             self._add_translation_string(
                 key, self._unescape(value), context=context
             )
-
-            key_dict[key][rule] = {
-                                    'translation':self._unescape(value),
-                                    'context': context
-                                  }
         return template
-
