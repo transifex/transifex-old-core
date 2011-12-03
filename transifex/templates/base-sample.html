@@ -120,9 +120,12 @@
   <div id="content">
     <div id="content_header">
     {% block content_header %}
+      
+      {% comment %}
       <div id="breadcrumbs">
         {% block breadcrumb %}{% homelink %}{% endblock %}
       </div>
+      {% endcomment %}
       <div id="content_title">
         {% block content_title %}{% endblock %}
       </div>
