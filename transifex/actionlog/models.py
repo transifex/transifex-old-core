@@ -10,6 +10,13 @@ from django.template import loader, Context, TemplateDoesNotExist
 from django.utils.translation import get_language, activate
 from notification.models import NoticeType
 from transifex.txcommon.log import logger
+try:
+    from datastores import TxRedisMapper, ConnectionError
+    USE_REDIS = True
+except ImportError, e:
+    logger.debug("Redis backend not imported.")
+    USE_REDIS = False
+
 
 def _get_formatted_message(label, context):
     """
@@ -256,5 +263,53 @@ def action_logging(user, object_list, action_type, message=None, context=None):
                     action_time = time,
                     message = message)
             l.save()
+            if USE_REDIS:
+                _log_to_queues(object, user.pk, time, message)
+
+
+def _log_to_queues(o, user_id, action_time, message):
+    """Log actions to redis' queues."""
+    from transifex.projects.models import Project
+
+    try:
+        if isinstance(o, Project):
+            _log_to_recent_project_actions(o, user_id, action_time, message)
+    except ConnectionError, e:
+        logger.critical("Cannot connect to redis: %s" % e, exc_info=True)
+        return
+
+
+def _log_to_recent_project_actions(p, user_id, action_time, message):
+    """Log actions that refer to projects to a queue of most recent actions.
+
+    We use redis' list for that. We skip actions that refer to private projects.
+    """
+    from transifex.projects.models import Project
+    if p.private:
+        return
+    private_slugs = Project.objects.filter(
+        private=True
+    ).values_list('slug', flat=True)
+    for slug in private_slugs:
+        if ('/projects/p/%s/' % slug) in message:
+            return
+
+    key = 'event_feed'
+    data = {
+        'name': force_unicode(p)[:200],
+        'user_id': user_id,
+        'action_time': action_time,
+        'message': message
+    }
+    try:
+        r = TxRedisMapper()
+        r.lpush(key, data=data)
+        r.ltrim(key, 0, 11)
+    except ConnectionError, e:
+        logger.critical("Cannot connect to redis: %s" % e, exc_info=True)
+        raise
+    except Exception, e:
+        msg = "Error saving latest event to redis: %s"
+        logger.error(msg % e, exc_info=True)
     except TypeError:
         raise TypeError("The 'object_list' parameter must be iterable")
