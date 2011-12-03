@@ -117,11 +117,11 @@
     {% with resources|length as resources_number %}
     {% if resources %}
       <dt class="resource i16">{% trans "Resources:" %}</dt>
-      <dd>
+      <dd class="clearfix">
         <span id="resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
         {% blocktrans %}This release has {{ resources_number }} resources.{% endblocktrans %}
         </span>
-        <ul id="resource-list" class="simple links" style="display:none;">
+        <ul id="resource-list" class="simple links clearfix" style="display:none;">
           {% for r in resources %}
             <li><a title="{{ r }}" href="{{ r.get_absolute_url }}">{{ r }}</a></li>
           {% endfor %}
