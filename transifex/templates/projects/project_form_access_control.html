@@ -1,4 +1,4 @@
-{% extends "projects/project_menu.html" %}
+{% extends "projects/project_settings.html" %}
 {% load i18n %}
 {% load pagination_tags %}
 {% load txcommontags %}
@@ -9,14 +9,20 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Access Control" %}{% endblock %}
 
-{% block content_main %}
 
-<div class="obj_bigdetails ui-tabs-panel">
 
-<h2 class="name">{% trans "Access Control" %}</h2>
 
-<p class="description">{% trans "You have the following choices to manage how people can have submission access to your project:" %}</p>
+{% block content_title %}
+  <h2 class="pagetitle with_description">{% trans "Access Control" %}</h2>
+   
+   <div class="description">
+	<p>{% trans "Manage how people can have submission access to your project" %}</p>
+</div> 
 
+{% endblock %}
+
+
+{% block project_settings_content %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div class="project_create generic_form">
@@ -67,5 +73,6 @@
 
 </div>
 </div>
+
 {% endblock %}
 
