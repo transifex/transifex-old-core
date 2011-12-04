@@ -11,6 +11,8 @@
 
 <div id="my_projects">
         {% if maintain_projects %}
+        <h3>{% trans "YOUR PROJECTS" %}</h3>
+	        <div class="panel-area">
 
         	<h4><p style="margin-right:12em;">{% blocktrans with maintain_projects|length|apnumber as num_of_projects count maintain_projects|length as counter %}Maintaining {{ num_of_projects }} project{% plural %}Maintaining {{ num_of_projects }} projects{% endblocktrans %}</p></h4>
             <div id="dashboard_projects">
@@ -143,7 +145,8 @@
         {% endif %}
         </p>
         </div>
-
+        </div>
+        
         <h3>{% trans "YOUR TRANSLATION TEAMS" %}</h3>
 
         <div class="panel-area">
