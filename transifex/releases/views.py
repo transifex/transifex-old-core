@@ -26,8 +26,6 @@ from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.txcommon.log import logger
 
 from django.contrib.syndication.views import feed
-from transifex.projects.models import Project
-from transifex.releases.models import Release
 from transifex.projects.permissions import pr_project_private_perm
 
 @login_required
