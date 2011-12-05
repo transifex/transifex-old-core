@@ -23,8 +23,8 @@ class Profile(UserenaBaseProfile):
     user = models.OneToOneField(User, unique=True, verbose_name=_('user'),
         related_name='profile')
 
-    language = models.ForeignKey(Language, blank=True,
-        verbose_name=_('Language'), null=True)
+    languages = models.ManyToManyField(Language, verbose_name=_('Languages'),
+        blank=True, null=True)
     blog = models.URLField(_('Blog'), null=True, blank=True)
     linked_in = models.URLField(_('LinkedIn'), null=True, blank=True)
     twitter = models.URLField(_('Twitter'), null=True, blank=True)
