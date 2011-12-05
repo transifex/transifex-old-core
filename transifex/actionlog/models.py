@@ -265,6 +265,8 @@ def action_logging(user, object_list, action_type, message=None, context=None):
             l.save()
             if USE_REDIS:
                 _log_to_queues(object, user.pk, time, message)
+    except TypeError:
+        raise TypeError("The 'object_list' parameter must be iterable")
 
 
 def _log_to_queues(o, user_id, action_time, message):
@@ -311,5 +313,3 @@ def _log_to_recent_project_actions(p, user_id, action_time, message):
     except Exception, e:
         msg = "Error saving latest event to redis: %s"
         logger.error(msg % e, exc_info=True)
-    except TypeError:
-        raise TypeError("The 'object_list' parameter must be iterable")
