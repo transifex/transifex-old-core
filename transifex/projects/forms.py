@@ -216,23 +216,3 @@ class ProjectAccessControlForm(forms.ModelForm):
         self.fields["outsource"].queryset = projects
         project_access_control_form_start.send(sender=ProjectAccessControlForm,
                                                instance=self, project=project)
-
-    def clean(self):
-        cleaned_data = self.cleaned_data
-        is_hub = cleaned_data.get('is_hub')
-        if is_hub and self.instance and self.instance.outsource:
-            msg = _("This project is outsourcing teams from another "
-                "project, thus it can not become a project hub until having "
-                "its own teams. Please go to the Access Control page to "
-                "check the outsourcing settings.")
-            self._errors["is_hub"] = self.error_class([msg])
-            del cleaned_data["is_hub"]
-
-        if not is_hub and self.instance and self.instance.outsourcing.all():
-            msg = _("This project hub is used to outsource teams to other "
-                "projects, thus it can not be set as a regular project until "
-                "having the outsourced projects disassociated to it.")
-            self._errors["is_hub"] = self.error_class([msg])
-            del cleaned_data["is_hub"]
-
-        return cleaned_data
