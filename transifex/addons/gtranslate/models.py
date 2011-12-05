@@ -9,9 +9,20 @@ class Gtranslate(models.Model):
     Control integration with google translate service.
     """
 
-    use_gtranslate = models.BooleanField(
-        default=False, verbose_name=_("Enable google translate"),
-        help_text=_("Enable integration with google translate service.")
+    available_services=(
+        ('', '-' * 20),
+        ('GT', 'Google Translate'),
+        # ('BT', 'Bing Translator'),
+    )
+
+    api_key = models.CharField(
+        max_length=255, verbose_name=_("API key"), blank=True,
+        help_text=_("The API key for the auto-translate service.")
+    )
+    service_type=models.CharField(
+        max_length=2, verbose_name=_("Service"),
+        choices=available_services, blank=True,
+        help_text=_("The service you want to use for auto-translation.")
     )
     project = models.OneToOneField(
         Project, unique=True,

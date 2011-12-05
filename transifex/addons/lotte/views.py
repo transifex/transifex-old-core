@@ -38,14 +38,6 @@ import httplib
 # Temporary
 from transifex.txcommon import notifications as txnotification
 
-try:
-    from transifex.addons.gtranslate import is_gtranslate_allowed
-except ImportError, e:
-    # gtranslate addon is not available
-    # create a dummy function that always returns True
-    def is_gtranslate_allowed(project):
-        return True
-
 
 class LotteBadRequestError(Exception):
     pass
@@ -158,6 +150,12 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     else:
         team_language = False
 
+    GtModel = get_model('gtranslate', 'Gtranslate')
+    try:
+        auto_translate = GtModel.objects.get(project=project)
+    except GtModel.DoesNotExist:
+        auto_translate = None
+
     return render_to_response("translate.html",
         { 'project' : project,
           'resource' : translation_resource,
@@ -168,7 +166,7 @@ def translate(request, project_slug, lang_code, resource_slug=None,
           'resources': resources,
           'resource_slug': resource_slug,
           'languages': Language.objects.all(),
-          'gtranslate': is_gtranslate_allowed(project),
+          'auto_translate': auto_translate,
           'spellcheck_supported_langs' : SPELLCHECK_SUPPORTED_LANGS,
           'team_language': team_language
         },
