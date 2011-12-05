@@ -246,9 +246,10 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
-    statslist = RLStats.objects.select_related('resource',
-        'resource__project', 'last_committer','resource__priority'
-        ).by_project_aggregated(project)
+    statslist = RLStats.objects.select_related(
+        'resource', 'resource__project', 'resource__category',
+        'last_committer', 'resource__priority'
+    ).by_project_aggregated(project)
 
     return list_detail.object_detail(
         request,

@@ -20,20 +20,62 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-        $(".tablesorter_resource_list").tablesorter({
+        var tablesorter_resource = $(".tablesorter_resource_list");
+        tablesorter_resource.tablesorter({
             widgets: ['zebra'],
             textExtraction: { // Take value inside an object for the columns
               0: function(node) {
-                  return $("a", node).text();
+                  var category = $(node).html();
+                  if(category == "None")
+                    return "zzzzzzzzzzzz"; 
+                  else
+                    return category;
               },
               1: function(node) {
-                  return $(".origin_format", node).text();
+                  return $("a", node).text();
               },
               2: function(node) {
+                  return $(".origin_format", node).text();
+              },
+              3: function(node) {
                   return parseInt($(".priority_sort", node).text());
               }
             }
         });
+        var category_is_clicked = false; // holds whether the last click on a table header was on the 'category' header or not
+        var tablesorter_resource_header = $('th', tablesorter_resource); // selects all headers of the table
+        tablesorter_resource_header.click(function() {
+            // set 'category_is_clicked' depending on what was clicked
+            if($(this).attr('id') == 'category_header') {
+                category_is_clicked = true;
+            } else {
+                category_is_clicked = false;
+            }
+        });
+        tablesorter_resource.bind("sortEnd", function(event) {
+            // this is called after the sorting is done
+            if(category_is_clicked) {
+                // if 'category' was clicked
+                var odd = false; // holds whether the current line is to be "painted" as odd or event
+                var last_category = "";
+                $('tr', $(this)).each(function(index, element) {
+                    // iterate over all table lines
+                    var current_category = $('.category_td_class', $(element)).html(); // get new category name
+                    if(current_category != last_category) { // if it is a different category than the last one
+                        last_category = current_category;
+                        odd = ! odd; // toggle the odd value
+                    }
+                    var jq_element = $(element);
+                    jq_element.removeClass(); // remove all classes from the current line
+                    // and add the correct class in order to "paint" appropriately
+                    if(odd) {
+                        jq_element.addClass('odd');
+                    } else {
+                        jq_element.addClass('even');
+                    }
+                });
+            }
+        })
         {% if request.user.is_authenticated %}
         $("#new_translation1").click( function (){
             $("#new_translation_box1").toggle();
@@ -79,6 +121,7 @@
   <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
   <thead>
    <tr>
+    <th id="category_header"><span>{% trans "Category" %}</span></th>
     <th class="ui-corner-topleft"><span>{% trans "Resource Name" %}</span</th>
     <th><span>{% trans "Last Updated" %}</span></th>
     <th class="ui-corner-topright"><span {% if is_maintainer %}class="res_tipsy_enable" title="{% trans "Click the flags to modify the importance of a resource." %}" {% else %} {% endif %}style="border:0">{% trans "Importance" %}</span></th>
@@ -88,6 +131,7 @@
   {% endif %}
     <tr>
 		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
+        <td class="category_td_class">{{ stat.object.category }}</td>
         <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}&nbsp;&raquo;</a>
         </td>
