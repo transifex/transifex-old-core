@@ -11,6 +11,40 @@ function LotteStatus(){
 }
 lotteStatus = new LotteStatus();
 
+function google_translate_wrapper(text, src_lang, dest_lang, callback) {
+    var result = '';
+    data = {
+        'q': text,
+        'source': src_lang,
+        'target': dest_lang,
+    };
+    $.getJSON(autotranslate_url, data, function(response) {
+        if (response.error) {
+           result = {
+               'error': response.error.message
+           }
+        } else {
+           result = {
+               'translation': response.data.translations[0].translatedText
+           }
+        }
+        callback(result);
+    });
+}
+
+function google_translate_supported(source, target, callback) {
+    $.getJSON(supportedlangs_url, {'target': target}, function(response) {
+        if (!response.error) {
+            $.each(response.data.languages, function(k, v) {
+                if (source == v.language) {
+                    callback();
+                    return false;
+                }
+            })
+        }
+    });
+}
+
 function saveButtonClickHandler() {
     table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current save button
     this_stringset.push(this_stringset.strings[table_row_id], table_row_id);
@@ -693,7 +727,9 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
         // Bind click events for tools
         // 1.Machine translation
-        if (is_supported_lang && is_supported_source_lang) {
+        $('.lotte-actions a.suggest').hide();
+        google_translate_supported(source_lang, target_lang, function() {
+            $('.lotte-actions a.suggest').show();
             $('.lotte-actions a.suggest').click(function() {
                 var a=$(this), str=a.html();
                 a.removeClass("action");
@@ -710,7 +746,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 $('textarea.translation', a.parents('tr')).each(function(){
                     var trans=$(this);
                     orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
-                    google.language.translate(orig, source_lang, target_lang, function(result) {
+                    google_translate_wrapper(orig, source_lang, target_lang, function(result) {
                         if (!result.error) {
                             trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
                             /* Mark the translated field as modified */
@@ -733,7 +769,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                 trans.focus();
                             }
                         } else {
-                            a.before($('<span class="alert">'+result.error.message+'</span>'));
+                            a.before($('<span class="alert">' + result.error + '</span>'));
                         }
                         a.removeClass("action_go");
                         a.addClass("action");
@@ -741,9 +777,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 });
                 return false;
             });
-        }else{
-            $('.lotte-actions a.suggest').hide();
-        }
+        });
 
         // 2. Copy source string
         $('.lotte-actions a.copy_source').click(function() {

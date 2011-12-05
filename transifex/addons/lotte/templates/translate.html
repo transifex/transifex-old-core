@@ -38,13 +38,12 @@
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.jeditable.mini.js"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.spellchecker.js"></script>
-  <script type="text/javascript">
-    google.load("language", "1");
-  </script>
 
 <script type="text/javascript">
 
     /* Global variables */
+    var autotranslate_url = '{% url autotranslate_proxy project.slug %}';
+    var supportedlangs_url = '{% url supported_langs project.slug %}';
 
     /* The instance of the StringSet class which has references to all the objects of the table */
     var stringset = null;
@@ -124,24 +123,6 @@
         return r;
     }
 
-    function supported_language(code_aliases){
-        // Drop spaces in the beginning/end of the string
-        code_aliases = code_aliases.replace(/^ /,'').replace(/ $/,'');
-        // Transform codes like 'pt_BR' into 'pt', dropping the locale, which is not supported by google translate
-        code_aliases = code_aliases.replace(/\-+[\w]+/,'').replace(/_+[\w]+/,'').replace(/@+[\w]+/,'')
-        // Remove duplicated elements
-        code_list = unique(code_aliases.split(' '));
-        for (i=0; i<code_list.length; i++){
-            if (google.language.isTranslatable(code_list[i])){
-                return code_list[i];
-            }
-        }
-    }
-
-    // Concatenate the code and aliases to check all of them one by one for availability.
-    target_source_codes = source_lang + ' {{ resource.source_language.code_aliases }}';
-    target_codes = target_lang + ' {{ target_language.code_aliases }}';
-
     function saveError(){
         /*
         Global function used by the custom jquery.dataTables pagination plugin
@@ -173,18 +154,6 @@
         $("div.dataTables_wrapper").show('slow');
     }
 
-
-    google.setOnLoadCallback(function() {
-        /* Global variables */
-        source_lang = supported_language(target_source_codes)
-        target_lang = supported_language(target_codes)
-        if(source_lang && target_lang){
-            is_supported_source_lang = true;
-            is_supported_lang = true;
-        }else{
-            is_supported_source_lang = false;
-            is_supported_lang = false;
-        }
 
     /* document ready. do stuff */
     $(document).ready(function(){
@@ -342,7 +311,7 @@
                       // Concatenate translation textareas with action buttons
                       textareas += '<div class="error_notes"></div>'
                       + '<div class="lotte-actions">'
-                      {% if gtranslate %}
+                      {% if auto_translate %}
                            textareas += '  <p id="auto_translate_wrapper"><a class="i16 buttonized action suggest">{% trans "auto translate" %}</a></p>'
                       {% endif %}
                       textareas += '  <p id="copy_source_wrapper"><a class="i16 buttonized  copy_source">{% trans "copy source" %}</a></p>'
@@ -812,10 +781,6 @@
 					'changeFade'        : 0		
 				});
 	
-        
-
-    });
-
     });
 
 </script>
