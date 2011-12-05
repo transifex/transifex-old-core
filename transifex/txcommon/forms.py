@@ -12,7 +12,7 @@ class EditProfileForm(UserenaEditProfileForm):
     class Meta:
         model = get_profile_model()
         exclude = ('user', 'privacy',)
-        fields = ('first_name', 'last_name', 'location', 'language', 'mugshot', 'blog',
+        fields = ('first_name', 'last_name', 'location', 'languages', 'mugshot', 'blog',
             'linked_in', 'twitter', 'about', 'looking_for_work')
             
 
