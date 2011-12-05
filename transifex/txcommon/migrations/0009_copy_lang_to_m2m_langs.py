@@ -9,7 +9,7 @@ class Migration(DataMigration):
     def forwards(self, orm):
         for profile in orm['txcommon.Profile'].objects.all():
             if profile.language != None:
-                profile.languages.add(profile.langauge)
+                profile.languages.add(profile.language)
 
     def backwards(self, orm):
         raise Exception("M2M Language field cannot be reversed to M2O.")
