@@ -93,8 +93,8 @@ class ResourceHandler(BaseHandler):
     )
     fields = default_fields
     allowed_fields = (
-        'slug', 'name', 'accept_translations', 'source_language_code',
-        'i18n_type', 'content', 'category',
+        'slug', 'name', 'accept_translations', 'i18n_type',
+        'content', 'category',
     )
     written_fields = (
         'slug', 'name', 'accept_translations', 'content', 'category',
@@ -428,6 +428,8 @@ class StatsHandler(BaseHandler):
                 'untranslated_words': stat.untranslated_wordcount,
                 'last_update': stat.last_update,
                 'last_commiter': stat.last_committer.username if stat.last_committer else '',
+                'reviewed': stat.reviewed,
+                'reviewed_percentage': '%s%%' % stat.reviewed_perc,
             }
         # statistics requested for all languages
         res = {}
@@ -440,6 +442,8 @@ class StatsHandler(BaseHandler):
                     'untranslated_words': stat.untranslated_wordcount,
                     'last_update': stat.last_update,
                     'last_commiter': stat.last_committer.username if stat.last_committer else '',
+                    'reviewed': stat.reviewed,
+                    'reviewed_percentage': '%s%%' % stat.reviewed_perc,
             }
         return res
 
