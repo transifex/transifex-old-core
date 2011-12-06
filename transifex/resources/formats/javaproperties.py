@@ -33,6 +33,7 @@ class JavaPropertiesHandler(Handler):
     name = "Java *.PROPERTIES file handler"
     format = "Java PROPERTIES (*.properties)"
     method_name = 'PROPERTIES'
+    format_encoding = 'ISO-8859-1'
 
     HandlerParseError = JavaParseError
     HandlerCompileError = JavaCompileError
