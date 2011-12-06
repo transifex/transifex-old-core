@@ -38,6 +38,10 @@ class ProjectForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
+        # Disable the source_language widget when updating
+        if self.instance and self.instance.id:
+            self.fields['source_language'].required = False
+            self.fields['source_language'].widget.attrs['disabled'] = 'disabled'
         project_form_init.send(sender=ProjectForm, form=self)
 
     def save(self, *args, **kwargs):
@@ -55,6 +59,11 @@ class ProjectForm(forms.ModelForm):
         project_tags_list = ', '.join(tags)
         return project_tags_list
 
+    def clean_source_language(self):
+        if self.instance and self.instance.id:
+            return self.instance.source_language
+        else:
+            return self.cleaned_data['source_language']
 
 class ProjectDeleteForm(forms.Form):
     """
