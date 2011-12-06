@@ -144,7 +144,8 @@ class JavaPropertiesHandler(Handler):
         codepoints.
         """
         for char in replacement:
-            if ord(char) > 127:
+            if ord(char) in range(127, 160) or\
+                    ord(char) > 255:
                 replacement = replacement.replace(char, self.convert_to_ascii(char))
         return super(JavaPropertiesHandler, self)._replace_translation(
             original, replacement, text
