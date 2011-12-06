@@ -33,9 +33,12 @@
 </script>
 {% endblock %}
 
-{% block content_main %}
+{% block content_title%}
+<h2 class="pagetitle with_description">{% trans "Register" %}</h2>
+<div class="description"></div>
+{% endblock %}
 
-<h2 style="margin-bottom:1em;display:inline-block;">{% trans "Register" %}</h2>
+{% block content_main %}
 
 <form id="signup-form" class="tx-form" action="" method="post">
   {% csrf_token %}
