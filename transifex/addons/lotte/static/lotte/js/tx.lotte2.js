@@ -51,7 +51,7 @@ function google_translate_supported(source, target, callback) {
               })
             }
             else if (autotranslate_type == "BT"){
-              if ($.inArray(source, response) && $.inArray(target, response)) {
+              if ($.inArray(source, response) && $.inArray(target, response)>=0) {
                 callback();
                 return false;
               }
