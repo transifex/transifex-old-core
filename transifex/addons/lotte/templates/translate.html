@@ -44,7 +44,11 @@
     /* Global variables */
     var autotranslate_url = '{% url autotranslate_proxy project.slug %}';
     var supportedlangs_url = '{% url supported_langs project.slug %}';
-
+    {% if auto_translate %}
+    var autotranslate_type = "{{ auto_translate.service_type }}";
+    {% else %}
+    var autotranslate_type = "";
+    {% endif %}
     /* The instance of the StringSet class which has references to all the objects of the table */
     var stringset = null;
     /* Flags used for the auto-suggest function */

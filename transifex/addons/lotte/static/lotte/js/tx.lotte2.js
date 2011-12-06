@@ -24,8 +24,15 @@ function google_translate_wrapper(text, src_lang, dest_lang, callback) {
                'error': response.error.message
            }
         } else {
-           result = {
-               'translation': response.data.translations[0].translatedText
+           if (autotranslate_type == 'GT'){
+             result = {
+                 'translation': response.data.translations[0].translatedText
+             }
+           }
+           else if (autotranslate_type = 'BT'){
+             result = {
+                'translation': response[0].TranslatedText
+             }
            }
         }
         callback(result);
@@ -35,12 +42,20 @@ function google_translate_wrapper(text, src_lang, dest_lang, callback) {
 function google_translate_supported(source, target, callback) {
     $.getJSON(supportedlangs_url, {'target': target}, function(response) {
         if (!response.error) {
-            $.each(response.data.languages, function(k, v) {
-                if (source == v.language) {
-                    callback();
-                    return false;
-                }
-            })
+            if (autotranslate_type == "GT"){
+              $.each(response.data.languages, function(k, v) {
+                  if (source == v.language) {
+                      callback();
+                      return false;
+                  }
+              })
+            }
+            else if (autotranslate_type == "BT"){
+              if ($.inArray(source, response) && $.inArray(target, response)) {
+                callback();
+                return false;
+              }
+            }
         }
     });
 }

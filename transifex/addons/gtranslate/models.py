@@ -12,7 +12,7 @@ class Gtranslate(models.Model):
     available_services=(
         ('', '-' * 20),
         ('GT', 'Google Translate'),
-        # ('BT', 'Bing Translator'),
+        ('BT', 'Bing Translator'),
     )
 
     api_key = models.CharField(
