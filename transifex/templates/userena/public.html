@@ -54,12 +54,18 @@
                     <td>{{ profile.user.get_full_name }}</td>
                 </tr>
                 {% endif %}
-                {% if profile.language %}
-                <tr>
-                    <th class="i16 language">{% trans "Native language" %}:</th>
-                    <td>{{ profile.language }}</td>
-                </tr>
+                {% with profile.languages.all as all_languages %}
+                {% if all_languages %}
+                  <tr>
+                    <th class="i16 language">{% trans "Languages" %}:</th>
+                    <td>
+                      {% for language in all_languages %}
+                          {{ language.name }}{% if not forloop.last %}, {% endif %}
+                      {% endfor %}
+                    </td>
+                  </tr>
                 {% endif %}
+                {% endwith %}
                 {% if profile.blog %}
                 <tr>
                     <th class="i16 homepage">{% trans "Blog/Site" %}:</th>
@@ -81,7 +87,7 @@
                 {% if profile.location %}
                 <tr>
                     <th class="i16 location">{% trans "Location" %}:</th>
-                    <td>{{ profile.location }} - {{ profile.get_country_display }}</td>
+                    <td>{{ profile.location }}</td>
                 </tr>
                 {% endif %}
             </table>
