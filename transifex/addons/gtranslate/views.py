@@ -4,6 +4,12 @@ from django.shortcuts import get_object_or_404
 from gtranslate.models import Gtranslate
 import requests
 
+def _get_canonical_name(target_lang):
+    if '_' in target_lang or '-' in target_lang:
+        return target_lang[:2]
+    return target_lang
+
+
 def autotranslate_proxy(request, project_slug):
     source_lang = request.GET.get('source')
     target_lang = request.GET.get('target')
@@ -12,6 +18,7 @@ def autotranslate_proxy(request, project_slug):
     if not all([source_lang, target_lang, term]):
         return HttpResponse(status=400)
 
+    target_lang = _get_canonical_name(target_lang)
     service = get_object_or_404(Gtranslate, project__slug=project_slug)
     if service.service_type == 'GT':
         base_url = 'https://www.googleapis.com/language/translate/v2'
@@ -39,6 +46,7 @@ def supported_langs(request, project_slug):
     if service.service_type == 'GT':
         base_url = 'https://www.googleapis.com/language/translate/v2/languages'
         target_lang = request.GET.get('target')
+        target_lang = _get_canonical_name(target_lang)
         if not target_lang:
             return HttpResponse(status=400)
         params = {
