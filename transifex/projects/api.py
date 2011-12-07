@@ -40,8 +40,8 @@ class ProjectHandler(BaseHandler):
     details_fields = (
         'slug', 'name', 'description', 'long_description', 'homepage', 'feed',
         'created', 'anyone_submit', 'bug_tracker', 'trans_instructions',
-        'tags', 'outsource', ('maintainers', ('username')),
-        ('owner', ('username')), ('resources', ('slug', 'name', )),
+        'tags', 'outsource', ('maintainers', ('username', )),
+        ('owner', ('username', )), ('resources', ('slug', 'name', )),
         'teams', 'source_language_code',
     )
     default_fields = ('slug', 'name', 'description', 'source_language_code', )
