@@ -19,6 +19,7 @@ from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_submit_translation, post_resource_save
 from transifex.resources.decorators import method_decorator
 from transifex.resources.formats.registry import registry
+from transifex.resources.handlers import get_project_teams
 from transifex.resources.models import *
 from transifex.storage.models import StorageFile
 from transifex.teams.models import Team
@@ -65,9 +66,8 @@ class ProjectHandler(BaseHandler):
 
         Return an empty list in case there are no teams defined.
         """
-        return Team.objects.filter(
-            project=p
-        ).values_list('language__code', flat=True)
+        team_set = get_project_teams(p)
+        return team_set.values_list('language__code', flat=True)
 
     def read(self, request, project_slug=None, api_version=1):
         """
