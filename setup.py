@@ -77,7 +77,7 @@ setup(
         "django-tagging >= 0.3",
         "django-haystack >= 1.2",
         "South >= 0.7.2",
-        "django-ajax-selects",
+        "django-ajax-selects == 1.2.1",
         "django-threadedcomments >= 0.9",
         "django-staticfiles < 0.4",
         "pygooglechart",
