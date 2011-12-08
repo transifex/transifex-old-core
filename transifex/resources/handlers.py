@@ -28,7 +28,8 @@ def invalidate_stats_cache(resource, language, **kwargs):
         is_source = True
         language = resource.source_language
 
-    team_set = get_project_teams(resource.project)
+    team_languages = get_project_teams(resource.project).values_list(
+            'language', flat=True)
 
     if not is_source:
         # Get or create new RLStat object
@@ -38,8 +39,7 @@ def invalidate_stats_cache(resource, language, **kwargs):
         # Check to see if the lang has zero translations and is not a team
         # lang. If yes, delete RLStats object
         if rl.translated == 0 and rl.language.id not in\
-          team_set.all().values_list('language',
-          flat=True):
+          team_languages:
             rl.delete()
     else:
         rl, created = RLStats.objects.get_or_create(resource=resource,
@@ -49,8 +49,7 @@ def invalidate_stats_cache(resource, language, **kwargs):
         for s in stats:
             s.update(kwargs['user'] if kwargs.has_key('user') else None)
             if s.translated == 0 and s.language.id not in\
-              team_set.all().values_list('language',
-              flat=True):
+              team_languages:
                 s.delete()
 
         # Update resource wordcount and total entities
