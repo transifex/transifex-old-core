@@ -11,6 +11,12 @@ from transifex.teams.models import Team
 RLStats = get_model('resources', 'RLStats')
 Translation = get_model('resources', 'Translation')
 
+def get_project_teams(project):
+    if project.outsource:
+        return project.outsource.team_set.all()
+    else:
+        return project.team_set.all()
+
 def invalidate_stats_cache(resource, language, **kwargs):
     """
     Invalidate template caches and handle the updating of the persistent
@@ -22,6 +28,8 @@ def invalidate_stats_cache(resource, language, **kwargs):
         is_source = True
         language = resource.source_language
 
+    team_set = get_project_teams(resource.project)
+
     if not is_source:
         # Get or create new RLStat object
         rl, created = RLStats.objects.get_or_create(resource=resource,
@@ -30,7 +38,7 @@ def invalidate_stats_cache(resource, language, **kwargs):
         # Check to see if the lang has zero translations and is not a team
         # lang. If yes, delete RLStats object
         if rl.translated == 0 and rl.language.id not in\
-          rl.resource.project.team_set.all().values_list('language',
+          team_set.all().values_list('language',
           flat=True):
             rl.delete()
     else:
@@ -41,7 +49,7 @@ def invalidate_stats_cache(resource, language, **kwargs):
         for s in stats:
             s.update(kwargs['user'] if kwargs.has_key('user') else None)
             if s.translated == 0 and s.language.id not in\
-              s.resource.project.team_set.all().values_list('language',
+              team_set.all().values_list('language',
               flat=True):
                 s.delete()
 
