@@ -18,7 +18,7 @@ function _canonical_lang_code(lang_code) {
     return lang_code;
 }
 
-function google_translate_wrapper(text, src_lang, dest_lang, callback) {
+function auto_translate_wrapper(text, src_lang, dest_lang, callback) {
     var result = '';
     data = {
         'q': text,
@@ -47,7 +47,7 @@ function google_translate_wrapper(text, src_lang, dest_lang, callback) {
     });
 }
 
-function google_translate_supported(source, target, callback) {
+function auto_translate_supported(source, target, callback) {
     $.getJSON(supportedlangs_url, {'target': target}, function(response) {
         if (!response.error) {
             if (autotranslate_type == "GT"){
@@ -751,7 +751,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         // Bind click events for tools
         // 1.Machine translation
         $('.lotte-actions a.suggest').hide();
-        google_translate_supported(source_lang, target_lang, function() {
+        auto_translate_supported(source_lang, target_lang, function() {
             $('.lotte-actions a.suggest').show();
             $('.lotte-actions a.suggest').click(function() {
                 var a=$(this), str=a.html();
@@ -769,7 +769,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 $('textarea.translation', a.parents('tr')).each(function(){
                     var trans=$(this);
                     orig = unescape(orig).replace(/<br\s?\/?>/g,'\n').replace(/<code>/g,'').replace(/<\/code>/g,'').replace(/&gt;/g,'>').replace(/&lt;/g,'<');
-                    google_translate_wrapper(orig, source_lang, target_lang, function(result) {
+                    auto_translate_wrapper(orig, source_lang, target_lang, function(result) {
                         if (!result.error) {
                             trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
                             /* Mark the translated field as modified */
