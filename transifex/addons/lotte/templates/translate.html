@@ -93,8 +93,7 @@
     toolbars[0] = ['lotte', lotte_tabs]
 
     function onWindowCloseOrLoad(e) {
-        var modified = parseInt($("#total_fuzzy").text());
-        if (!$("#toggle_autosave").is(":checked") && modified > 0){
+        if (!$("#toggle_autosave").is(":checked") && lotteStatus.updated){
             e = e || window.event;
             var message = "Do you really want to leave Lotte? Data you have entered may not be saved.";
             // For IE and Firefox prior to version 4
