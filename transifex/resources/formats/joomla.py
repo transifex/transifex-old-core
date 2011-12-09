@@ -60,6 +60,7 @@ class JoomlaINIHandler(Handler):
         content = self.content
         self.jformat = JoomlaIniVersion.create(self.content)
         self._find_linesep(content)
+        comment = ""
 
         buf = ''
         for line in self._iter_by_line(content):
@@ -67,6 +68,8 @@ class JoomlaINIHandler(Handler):
             if not line or line.startswith(self.comment_chars):
                 if is_source:
                     buf += line + self.linesep
+                    if line.startswith(self.comment_chars):
+                        comment += line[1:] + self.linesep
                 continue
 
             try:
@@ -92,9 +95,11 @@ class JoomlaINIHandler(Handler):
                 buf += new_line + self.linesep
             elif not SourceEntity.objects.filter(resource=self.resource, string=source).exists() or not trans.strip():
                 #ignore keys with no translation
+                context=""
                 continue
             self._add_translation_string(source, self._unescape(trans),
-                    context=context)
+                    context=context, comment=comment)
+            comment = ""
         return buf[:buf.rfind(self.linesep)]
 
 
