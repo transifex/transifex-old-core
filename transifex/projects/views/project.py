@@ -220,7 +220,8 @@ def project_delete(request, project_slug):
         delete_form = ProjectDeleteForm(data=request.POST, request=request)
         if delete_form.is_valid():
             _delete_project(request, project)
-            return HttpResponseRedirect(reverse('project_list'))
+            return HttpResponseRedirect(reverse(getattr(settings,
+                    "REDIRECT_AFTER_PROJECT_DELETE", "project_list")))
         else:
             return render_to_response('projects/project_delete.html', {
                 'project': project,
