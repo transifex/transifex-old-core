@@ -6,13 +6,12 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-
 		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 		$("span.required").each(function(){
 			$(this).parents('.tx-form-field').find('label').append($(this));
 			});
     $("#create_new_resource").toggle(function(){
-        $("#create_new_resource_form").slideDown();
+        $("#create_new_resource_form").slideDown(function(){$(".tx-form select").chosen();});
     }, function(){
         $("#create_new_resource_form").slideUp();
     });
@@ -25,13 +24,11 @@ $(document).ready(function(){
 			$("div#notification-container div").html("Uploading Resource");
 			$("div#notification-container").fadeIn("fast");
     });
-
-
 });
 </script>
 {% endcompress %}
 
-<div id="create_new_resource_form" class="generic_form" {% if not display_form %}style="display:none;"{% endif %}>
+<div id="create_new_resource_form" class="generic_form {% if not display_form %}no-display{% endif %}" >
 
 
 	<span src="{{ STATIC_URL }}images/icons/help.png" class="txf-helptext tipsy_enable right" title="  {% blocktrans %}
