@@ -17,11 +17,16 @@
   {% endblock %}
   {% hook "base.html" headcss %}
   {% block basejs %}
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
   <script type="text/javascript">
     var STATIC_URL = "{{ STATIC_URL }}";
     var csrf_token = "{% csrf_token %}";
+    if (typeof jQuery == 'undefined') {
+        document.write(unescape("%3Cscript src='{{ STATIC_URL }}js/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+    }
   </script>
-  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+
   {% compress js %}
   <script type="text/javascript" src="{{ STATIC_URL }}js/json2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
