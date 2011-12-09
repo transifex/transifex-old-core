@@ -11,11 +11,18 @@ function LotteStatus(){
 }
 lotteStatus = new LotteStatus();
 
+function _canonical_lang_code(lang_code) {
+    if (lang_code.indexOf('_') != -1 || lang_code.indexOf('-') != -1) {
+        lang_code = lang_code.substring(0, 2);
+    }
+    return lang_code;
+}
+
 function google_translate_wrapper(text, src_lang, dest_lang, callback) {
     var result = '';
     data = {
         'q': text,
-        'source': src_lang,
+        'source': _canonical_lang_code(src_lang),
         'target': dest_lang,
     };
     $.getJSON(autotranslate_url, data, function(response) {
@@ -24,16 +31,17 @@ function google_translate_wrapper(text, src_lang, dest_lang, callback) {
                'error': response.error.message
            }
         } else {
-           if (autotranslate_type == 'GT'){
-             result = {
-                 'translation': response.data.translations[0].translatedText
-             }
-           }
-           else if (autotranslate_type = 'BT'){
-             result = {
-                'translation': response[0].TranslatedText
-             }
-           }
+            source = _canonical_lang_code(source);
+            if (autotranslate_type == 'GT') {
+              result = {
+                  'translation': response.data.translations[0].translatedText
+              }
+            }
+            else if (autotranslate_type = 'BT'){
+              result = {
+                 'translation': response[0].TranslatedText
+              }
+            }
         }
         callback(result);
     });
