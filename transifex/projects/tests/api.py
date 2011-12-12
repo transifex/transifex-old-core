@@ -428,15 +428,27 @@ class TestProjectAPI(BaseTestCase):
             content_type='application/json'
         )
         self.assertContains(res, "User", status_code=400)
+
+        # update source language for project with no resources
         res = self.client['registered'].put(
             self.url_project,
-            data=simplejson.dumps({'source_language_code': 'en_US'}),
+            data=simplejson.dumps({'source_language_code': 'en'}),
             content_type='application/json'
         )
         self.assertEquals(res.status_code, 200)
         p_foo = Project.objects.get(slug="foo")
-        self.assertEquals(p_foo.source_language, self.language_en)
-
+        self.assertEquals(p_foo.source_language.code, 'en')
+        url = reverse(
+            'apiv2_project', kwargs={'project_slug': self.project.slug}
+        )
+        res = self.client['registered'].put(
+            url,
+            data=simplejson.dumps({'source_language_code': 'en'}),
+            content_type='application/json'
+        )
+        self.assertContains(
+            res, "source language is not allowed", status_code=400
+        )
 
     def test_delete(self):
         res = self.client['anonymous'].delete(self.url_project)

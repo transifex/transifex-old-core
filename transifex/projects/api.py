@@ -271,13 +271,20 @@ class ProjectHandler(BaseHandler):
         except Project.DoesNotExist:
             return BAD_REQUEST("Project not found")
 
-        lang = data.pop('source_language', None)
+        lang = data.pop('source_language_code', None)
         if lang is not None:
             try:
                 source_language = Language.objects.by_code_or_alias(lang)
             except Language.DoesNotExist:
                 return BAD_REQUEST('Specified source language does not exist.')
-            p.source_language = source_language
+            if p.resources.count() == 0:
+                p.source_language = source_language
+            else:
+                msg = (
+                    "The project has resources. Changing its source "
+                    "language is not allowed."
+                )
+                return BAD_REQUEST(msg)
 
         try:
             for key,value in data.items():
