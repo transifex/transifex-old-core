@@ -565,6 +565,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
         $('tr td textarea.translation', this.bound_table).keyup(edit_handler);
         $('tr td textarea.translation', this.bound_table).bind('paste', edit_handler);
+        $('tr td textarea.translation', this.bound_table).onchange(edit_handler);
     }
 
     /* Bind save button events */
@@ -788,7 +789,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                                 $('tbody tr td.notes span#save_' + id).bind('click', saveButtonClickHandler);
                                 $('tbody tr td.notes span#undo_' + id).removeClass('inactive');
                                 $('tbody tr td.notes span#undo_' + id).unbind('click');
-                                $('tbody tr td.notes span#undo_' + id).bind('click', undoButtonClickHandler); 
+                                $('tbody tr td.notes span#undo_' + id).bind('click', undoButtonClickHandler);
                                 trans.focus();
                             }
                         } else {
@@ -877,15 +878,15 @@ lotte_tabs = function(that) {
     Function for handling the default tabs of Lotte for each row. Extra tabs
     from addons can be added too, requiring a piece of code like this. For
     solving this issue, we created a global `toolbars` array that holds JS
-    functions that must be executed in order. This function must be always in 
+    functions that must be executed in order. This function must be always in
     the end of the list.
-    
+
     See StringSet.toolbar for more details. The var `toolbars` is instantiated
     in lotte/template/translate.html and addons can insert functions in it
     through a hook called 'tab_lotte.html' within the 'function' block.
     */
     var nTr = $(that).parents('tr');
-    
+
     if(!$(that).hasClass('current') && $(that).hasClass('show_details')){
 
         // Close any previously opened tabs
