@@ -703,26 +703,25 @@ class ProjectLookupsTests(BaseTestCase):
 
         This AJAX lookup/dropdown is present in the Team Outsource form.
         """
-
         public_project = "Test Project"
         private_project = "Test Private Project"
 
         # Test that a private project is not visible to a random user
         self.assertTrue(self.user['registered'] not in self.project_private.maintainers.all())
-        resp = self.client['registered'].get('/ajax/ajax_lookup/projects', {'q': 'p', 'limit': '150', })
+        resp = self.client['registered'].get('/ajax/ajax_lookup/projects', {'term': 'p', 'limit': '150', })
         self.assertContains(resp, public_project, status_code=200)
         self.assertNotContains(resp, private_project, status_code=200)
 
         # Test that a private project is visible to its maintainer
         self.assertTrue(self.user['maintainer'] in self.project_private.maintainers.all())
-        resp = self.client['maintainer'].get('/ajax/ajax_lookup/projects', {'q': 'p', 'limit': '150', })
+        resp = self.client['maintainer'].get('/ajax/ajax_lookup/projects', {'term': 'p', 'limit': '150', })
         self.assertContains(resp, public_project, status_code=200)
         self.assertContains(resp, private_project, status_code=200)
 
         # Test that a private project is visible to a member of its teams
         self.assertTrue(self.user['team_member'] in self.team_private.members.all())
         self.assertFalse(self.user['team_member'] in self.project_private.maintainers.all())
-        resp = self.client['team_member'].get('/ajax/ajax_lookup/projects', {'q': 'p', 'limit': '150', })
+        resp = self.client['team_member'].get('/ajax/ajax_lookup/projects', {'term': 'p', 'limit': '150', })
         self.assertContains(resp, public_project, status_code=200)
         self.assertContains(resp, private_project, status_code=200)
 
