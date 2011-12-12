@@ -12,18 +12,7 @@ To use the common logger, use something like the following::
   logger.debug("foo")
 """
 
-DEFAULT_LOG_LEVEL = logging.INFO
-
-log_level = getattr(settings, 'LOG_LEVEL', DEFAULT_LOG_LEVEL)
-
-# Define a common logger for all Tx apps.
 _logger = logging.getLogger('tx')
-_hdlr = logging.StreamHandler()
-_formatter = logging.Formatter(
-    '[%(asctime)s %(name)s %(levelname)s] %(message)s')
-_hdlr.setFormatter(_formatter)
-_logger.addHandler(_hdlr)
-_logger.setLevel(log_level)
 
 
 def log_model(model):
