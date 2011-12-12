@@ -190,59 +190,32 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
     use of a custom widget for rendering the datetime fields.
     """
 
-    url = '/projects/p/project1/add-release/'
-
-    class Now:
-        """Somehow a mutable datetime object."""
-        def __init__(self):
-            now = datetime.datetime.now()
-            self.year = now.year
-            self.month = now.month
-            self.day = now.day
-            self.hour = now.hour
-            self.minute = now.minute
-            self.second = now.second
+    url = reverse('release_create', args=['project1'])
 
     def setUp(self):
         super(ReleaseFormDateFieldsTests, self).setUp()
-        self.now = self.Now()
-        self.data = {'slug': 'r1', 'project': '1', 'name': 'release'}
+        self.data = {
+            'slug': 'r1',
+            'project': '1',
+            'name': 'release',
+        }
 
     def tearDown(self):
         super(ReleaseFormDateFieldsTests, self).tearDown()
         Release.objects.filter(slug='r1', project__id=1).delete()
 
-    def _get_field_data(self, now, **kwargs):
-        """
-        Generate data accordingly to the custom widget used for datetime
-        fields.
-        """
-        if 'release_date' in kwargs.keys():
-            field_name = 'release_date'
-        elif 'stringfreeze_date' in kwargs.keys():
-            field_name = 'stringfreeze_date'
-        elif 'develfreeze_date' in kwargs.keys():
-            field_name = 'develfreeze_date'
-
-        return {
-            '%s_0_year' % field_name: now.year,
-            '%s_0_month' % field_name: now.month,
-            '%s_0_day' % field_name: now.day,
-            '%s_1_hour' % field_name: now.hour,
-            '%s_1_minute' % field_name: now.minute,
-            '%s_1_second' % field_name: now.second
-            }
-
     def test_release_date(self):
         """Test the release date field of release form."""
-        # Update form data with release_date_data
-        release_date = self._get_field_data(self.now, release_date=True)
+        now = datetime.datetime.now()
+        release_date = {
+            'release_date': now.strftime('%Y-%m-%d')
+        }
         self.data.update(release_date)
 
-        # Add 1 day to devel freeze date
-        self.now.day += 1
-        # Update form data with develfreeze_date
-        develfreeze_date = self._get_field_data(self.now, develfreeze_date=True)
+        now = now + datetime.timedelta(days=1)
+        develfreeze_date = {
+            'develfreeze_date': now.strftime('%Y-%m-%d')
+        }
         self.data.update(develfreeze_date)
 
         resp = self.client['maintainer'].post(self.url, self.data)
@@ -252,13 +225,16 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
     def test_develfreeze_date(self):
         """Test the devel freeze date field of release form."""
         # Update form data with develfreeze_date
-        develfreeze_date = self._get_field_data(self.now, develfreeze_date=True)
+        now = datetime.datetime.now()
+        develfreeze_date = {
+            'develfreeze_date': now.strftime('%Y-%m-%d')
+        }
         self.data.update(develfreeze_date)
 
-        # Add 1 day to devel freeze date
-        self.now.day += 1
-        # Update form data with stringfreeze_date
-        stringfreeze_date = self._get_field_data(self.now, stringfreeze_date=True)
+        now = now + datetime.timedelta(days=1)
+        stringfreeze_date = {
+            'stringfreeze_date': now.strftime('%Y-%m-%d')
+        }
         self.data.update(stringfreeze_date)
 
         resp = self.client['maintainer'].post(self.url, self.data)
