@@ -22,12 +22,14 @@ class LottePermissionsTests(BaseTestCase):
         """
         Test anonymous user
         """
+        login_url = reverse('userena_signin')
+
         # Test main lotte page
         page_url = reverse('translate_resource', args=[
             self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '%s?next=%s' % (login_url, page_url))
 
         # Test view_strings
         page_url = reverse('view_strings', args=[
@@ -41,11 +43,11 @@ class LottePermissionsTests(BaseTestCase):
         # GET
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '%s?next=%s' % (login_url, page_url))
         # POST
         resp = self.client['anonymous'].post(page_url)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '%s?next=%s' % (login_url, page_url))
 
         # Test delete translation
         page_url = reverse('delete_translation', args=[
@@ -98,7 +100,7 @@ class LottePermissionsTests(BaseTestCase):
         # Test the response contents
         resp = self.client['anonymous'].post(page_url, data)
         self.assertEqual(resp.status_code, 302)
-        self.assertRedirects(resp, '/accounts/login/?next=%s' % page_url)
+        self.assertRedirects(resp, '%s?next=%s' % (login_url, page_url))
 
     def test_registered(self):
         """

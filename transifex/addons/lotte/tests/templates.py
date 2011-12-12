@@ -65,7 +65,7 @@ class LotteTemplateTests(BaseTestCase):
         self.assertContains(resp, 'Modified')
         self.assertContains(resp, 'Total')
         self.assertContains(resp, ('<input id="translated" class="filters" '
-            'type="checkbox"  checked="checked"  name="only_translated"/>'))
+            'type="checkbox"  name="only_translated"/>'))
         self.assertContains(resp, ('<input id="untranslated" class="filters" '
             'type="checkbox" checked="checked" name="only_untranslated"/>'))
 
