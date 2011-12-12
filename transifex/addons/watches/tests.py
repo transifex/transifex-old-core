@@ -11,7 +11,7 @@ from django.utils import simplejson
 from django.conf import settings
 from notification.models import ObservedItem
 
-class TestWatches(BaseTestCase, NoticeTypes):
+class TestWatches(BaseTestCase):
 
     def setUp(self):
         super(TestWatches, self).setUp()
@@ -109,8 +109,7 @@ class TestWatches(BaseTestCase, NoticeTypes):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'en_US',
-                    'mimetype': 'text/x-po',
+                    'i18n_type': 'PO',
                     'content': content,
             }),
             content_type='application/json'

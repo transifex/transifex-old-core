@@ -20,7 +20,6 @@ class ReleasesViewsTests(base.BaseTestCase):
         resp = self.client['maintainer'].get(self.urls['project'])
         self.assertContains(resp, self.release.name)
 
-
     def test_release_list_noreleases(self):
         self.project.releases.all().delete()
 
@@ -30,8 +29,7 @@ class ReleasesViewsTests(base.BaseTestCase):
 
         # Anonymous should not see anything
         resp = self.client['anonymous'].get(self.urls['project'])
-        self.assertNotContains(resp, "Project Releases")
-
+        self.assertNotContains(resp, "PROJECT RELEASES")
 
     def test_release_details_resources(self):
         """Test whether the right resources show up on details page."""
@@ -95,7 +93,7 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertNotContains(resp, "private resources")
         self.assertNotContains(resp, "Portuguese (Brazilian)")
 
-    
+
     def test_release_delete(self):
         """Test deleting a release"""
         resp = self.client['maintainer'].post(self.urls['release_create'],
@@ -109,7 +107,7 @@ class ReleasesViewsTests(base.BaseTestCase):
         url = reverse('release_delete', args=[self.project.slug, release.slug])
         resp = self.client['maintainer'].post(url, {}, follow=True)
         self.assertContains(resp, "was deleted.", status_code=200)
-        
+
     def test_release_create_bad_private_resources(self):
         """Test Release creation with private resource w/o access.
 
@@ -195,7 +193,7 @@ class ReleaseFormDateFieldsTests(base.BaseTestCase):
     url = '/projects/p/project1/add-release/'
 
     class Now:
-        """Somehow a mutable datatime object."""
+        """Somehow a mutable datetime object."""
         def __init__(self):
             now = datetime.datetime.now()
             self.year = now.year

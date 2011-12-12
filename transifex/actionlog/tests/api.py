@@ -4,7 +4,7 @@ from django.utils import simplejson
 from transifex.txcommon.tests import base
 from transifex.actionlog.models import *
 
-class ActionlogAPITests(base.BaseTestCase, base.NoticeTypes):
+class ActionlogAPITests(base.BaseTestCase):
     def setUp(self, *args, **kwargs):
         super(ActionlogAPITests, self).setUp(*args, **kwargs)
 
