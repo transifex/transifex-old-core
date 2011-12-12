@@ -79,9 +79,9 @@ class CopyrightTests(BaseTestCase):
             owner='Test Test <test@test.org>', year='2010')
         self.assertTrue(cr.user == u)
 
-    def poheader_load_test(self):
-        raise NotImplementedError
+    #def poheader_load_test(self):
+    #    raise NotImplementedError
 
-    def poheader_update_test(self):
-        """Test load of existing PO file with copyright headers."""
-        raise NotImplementedError
+    #def poheader_update_test(self):
+    #    """Test load of existing PO file with copyright headers."""
+    #    raise NotImplementedError

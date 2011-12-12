@@ -20,8 +20,8 @@ class SuggestionsViewsTests(BaseTestCase):
                  404: [(self.URL_PREFIX + '2/vote-up/'),]}
         self.assert_url_statuses(pages, self.client["anonymous"])
 
-    def testMemberPagesStatusCode(self):
-        raise NotImplementedError
+    #def testMemberPagesStatusCode(self):
+    #    raise NotImplementedError
 
     def _create_entity_suggestion(self):
         url = reverse('suggestion_create',
@@ -84,9 +84,9 @@ class SuggestionsViewsTests(BaseTestCase):
         self.assertEqual(s.score_rounded, 0)
 
 
-    def test_private_project(self):
-        """Test access to various methods if the project is private."""
-        raise NotImplementedError
+    #def test_private_project(self):
+    #    """Test access to various methods if the project is private."""
+    #    raise NotImplementedError
 
 
 
