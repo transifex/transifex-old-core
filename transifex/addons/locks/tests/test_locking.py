@@ -67,8 +67,9 @@ class TestLocking(BaseTestCase):
             "Forbidden access", status_code=403)
 
         resp = self.client['anonymous'].post(self.url_unlock, follow=True)
-        self.assertContains(resp,
-            "Enter your username and password to sign in", status_code=200)
+        # Check that we are indeed in the login page
+        self.assertTemplateUsed(resp, 'userena/signin_form.html')
+        self.assertContains(resp, "Sign in", status_code=200)
 
     def test_unlock_same_user(self):
         """Test if the same user can unlock a resource language"""
@@ -89,8 +90,9 @@ class TestLocking(BaseTestCase):
         for user in USER_ROLES:
             resp = self.client[user].post(self.url_lock, follow=True)
             if user == 'anonymous':
-                self.assertContains(resp,
-                    "Enter your username and password to sign in", status_code=200)
+                # Check that we are indeed in the login page
+                self.assertTemplateUsed(resp, 'userena/signin_form.html')
+                self.assertContains(resp, "Sign in", status_code=200)
             elif user == 'registered':
                 self.assertContains(resp, "Forbidden access", status_code=403)
             else:

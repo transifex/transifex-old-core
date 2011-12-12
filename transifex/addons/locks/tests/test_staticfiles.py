@@ -13,7 +13,7 @@ class TestStaticfiles(unittest.TestCase):
     def tearDown(self):
         pass
 
-    #FIXME: Why test the configuration of django_staticfiles in the locks app?
+    # FIXME: Why test the configuration of django_staticfiles in the locks app?
     def test_staticfiles(self):
         """
         Test whether django-staticfiles is properly configured.
@@ -27,11 +27,10 @@ class TestStaticfiles(unittest.TestCase):
         """
         suffix = 'css/icons.css'
         for addons_root in settings.ADDONS_ROOTS:
-            ref = os.path.realpath('%s/locks/media/%s' % (addons_root, suffix))
+            ref = os.path.realpath('%s/locks/static/locks/%s' % (addons_root, suffix))
             if os.path.exists(ref):
                 break
         path = 'locks/%s' % suffix
-        r = AppDirectoriesResolver()
-        self.assertEqual(ref, r.find_in_app(get_app('locks'), path, False))
+        r = AppDirectoriesFinder()
         self.assertEqual(ref, r.find(path))
 
