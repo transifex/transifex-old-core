@@ -19,3 +19,4 @@ class TestGtranslate(BaseTestCase):
         p.save()
         Gtranslate.objects.create(project=p)
         p.delete()
+        self.assertEquals(Gtranslate.objects.all().count(), 0)
