@@ -15,8 +15,6 @@
 	</div>
 	
 
-
-
 <script type="text/javascript">
     $(document).ready(function(){
         $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
@@ -121,8 +119,8 @@
   <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
   <thead>
    <tr>
-    <th id="category_header"><span>{% trans "Category" %}</span></th>
-    <th class="ui-corner-topleft"><span>{% trans "Resource Name" %}</span</th>
+    <th id="category_header"><span>{% trans "Resource name" %}</span></th>
+    <th class="ui-corner-topleft"><span>{% trans "Category" %}</span</th>
     <th><span>{% trans "Last Updated" %}</span></th>
     <th class="ui-corner-topright"><span {% if is_maintainer %}class="res_tipsy_enable" title="{% trans "Click the flags to modify the importance of a resource." %}" {% else %} {% endif %}style="border:0">{% trans "Importance" %}</span></th>
    </tr>
@@ -131,10 +129,11 @@
   {% endif %}
     <tr>
 		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
-        <td class="category_td_class">{{ stat.object.category }}</td>
+        
         <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}&nbsp;&raquo;</a>
         </td>
+        <td class="category_td_class">{{ stat.object.category }}</td>
         <td class="last_updated">
           {% with stat.last_committer as last_committer %}
             <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
