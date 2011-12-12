@@ -14,7 +14,7 @@ from transifex.releases.handlers import notify_string_freeze, \
 from transifex.txcommon.utils import key_sort
 
 
-class ReleaseNotificationTests(base.NoticeTypes, base.BaseTestCase):
+class ReleaseNotificationTests(base.BaseTestCase, base.Languages, base.NoticeTypes):
     """Test notification of events around releases."""
 
     def setUp(self):
@@ -29,7 +29,8 @@ class ReleaseNotificationTests(base.NoticeTypes, base.BaseTestCase):
         self.maintainer3 = User.objects.create_user('maintainer3', 
             'maintainer3@localhost', 'PASSWORD')
         self.project3 = Project.objects.create(slug="project3", 
-            name="Project3", owner=self.maintainer3)
+            name="Project3", owner=self.maintainer3,
+            source_language=self.__class__.language_en)
         self.project3.maintainers.add(self.maintainer3)
         self.project3.outsource = self.project
         self.project3.save()
@@ -44,7 +45,8 @@ class ReleaseNotificationTests(base.NoticeTypes, base.BaseTestCase):
         self.maintainer4 = User.objects.create_user('maintainer4', 
             'maintainer4@localhost', 'PASSWORD')
         self.project4 = Project.objects.create(slug="project4", 
-            name="Project4", owner=self.maintainer4)
+            name="Project4", owner=self.maintainer4,
+            source_language=self.__class__.language_en)
         self.project4.maintainers.add(self.maintainer4)
         self.project4.save()
         self.resource4 = Resource.objects.create(slug="resource4", 

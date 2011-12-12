@@ -7,7 +7,7 @@ from transifex.teams.models import TeamRequest
 from transifex.teams.models import Team
 from txcommon.tests import base, utils
 
-class TestTeams(base.NoticeTypes, base.BaseTestCase):
+class TestTeams(base.BaseTestCase, base.NoticeTypes):
 
     def setUp(self):
         super(TestTeams, self).setUp()

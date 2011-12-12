@@ -11,7 +11,7 @@ from django.utils import simplejson
 from django.conf import settings
 from notification.models import ObservedItem
 
-class TestWatches(NoticeTypes, BaseTestCase):
+class TestWatches(BaseTestCase, NoticeTypes):
 
     def setUp(self):
         super(TestWatches, self).setUp()

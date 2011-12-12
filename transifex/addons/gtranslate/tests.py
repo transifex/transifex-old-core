@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase, Languages
 from transifex.projects.models import Project
 from handlers import *
 from models import Gtranslate
 from transifex.addons.gtranslate import is_gtranslate_allowed
 
-class TestGtranslate(BaseTestCase):
+class TestGtranslate(BaseTestCase, Languages):
 
     def test_is_allowed(self):
         """Test if gtranslate is allowed for a particular project."""
-        outp = Project.objects.create(slug='outsourced', name='outsourced')
+        outp = Project.objects.create(slug='outsourced', name='outsourced',
+                source_language=self.__class__.language_en)
         self.assertTrue(is_gtranslate_allowed(self.project))
         Gtranslate.objects.create(use_gtranslate=True, project=self.project)
         self.assertTrue(is_gtranslate_allowed(self.project))
@@ -23,7 +24,8 @@ class TestGtranslate(BaseTestCase):
 
     def test_is_not_allowed(self):
         """Test if gtranslate is not allowed for a particular project."""
-        outp = Project.objects.create(slug='outsource', name='outsource')
+        outp = Project.objects.create(slug='outsource', name='outsource',
+                source_language=self.__class__.language_en)
         g = Gtranslate.objects.create(use_gtranslate=False, project=self.project)
         self.assertFalse(is_gtranslate_allowed(self.project))
         self.project.outsource = outp
@@ -47,6 +49,7 @@ class TestGtranslate(BaseTestCase):
         """
         p = Project(slug="rm")
         p.name = "RM me"
+        p.source_language = self.__class__.language_en
         p.save()
         Gtranslate.objects.create(use_gtranslate=False, project=p)
         delete_gtranslate(p)
@@ -69,7 +72,8 @@ class TestGtranslate(BaseTestCase):
         """
         self.assertTrue(is_gtranslate_allowed(self.project))
         outp = Project.objects.create(
-            slug='outp', name='A new project'
+            slug='outp', name='A new project',
+            source_language=self.__class__.language_en
         )
         self.project.outsource = outp
         self.project.save()

@@ -2,7 +2,7 @@ from transifex.projects.models import Project
 from transifex.teams.models import Team
 from transifex.txcommon.tests import base
 
-class TestTeamModels(base.BaseTestCase):
+class TestTeamModels(base.BaseTestCase, base.Languages):
 
     def test_available_teams(self):
         """
@@ -18,7 +18,8 @@ class TestTeamModels(base.BaseTestCase):
         
         # Create a secondary project and set it to outsource access to self.project
         project = Project.objects.get_or_create(slug="foo",
-            defaults={'name':"Foo Project"})[0]  
+            defaults={'name':"Foo Project"},
+            source_language=self.__class__.language_en)[0]  
         project.outsource = self.project
         
         # There must be 2 teams. One 'pt_BR' and a 'ar' one.
