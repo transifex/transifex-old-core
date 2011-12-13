@@ -178,6 +178,9 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     Exiting Lotte
     """
 
+    if request.method != 'POST':
+        return HttpResponse(status=405)
+
     # Permissions handling
     # Project should always be available
     project = get_object_or_404(Project, slug=project_slug)

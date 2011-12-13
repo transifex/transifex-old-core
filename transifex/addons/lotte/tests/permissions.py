@@ -134,7 +134,7 @@ class LottePermissionsTests(BaseTestCase):
             self.project.slug, self.language.code])
         # GET
         resp = self.client['registered'].get(page_url, follow=True)
-        self.assertEqual(resp.status_code, 403)
+        self.assertEqual(resp.status_code, 405)
         # POST
         resp = self.client['registered'].post(page_url, follow=True)
         self.assertEqual(resp.status_code, 403)
@@ -224,9 +224,10 @@ class LottePermissionsTests(BaseTestCase):
             self.project.slug, self.language.code])
         # GET
         resp = self.client['team_member'].get(page_url, follow=True)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 405)
         # POST
-        resp = self.client['team_member'].post(page_url, follow=True)
+        resp = self.client['team_member'].post(page_url, '{"updated": "updated"}',
+            content_type='application/json', follow=True)
         self.assertEqual(resp.status_code, 200)
 
         # Test delete translation
@@ -328,9 +329,10 @@ class LottePermissionsTests(BaseTestCase):
             self.project.slug, self.language.code])
         # GET
         resp = self.client['maintainer'].get(page_url, follow=True)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 405)
         # POST
-        resp = self.client['maintainer'].post(page_url, follow=True)
+        resp = self.client['maintainer'].post(page_url, '{"updated": "updated"}',
+            content_type='application/json', follow=True)
         self.assertEqual(resp.status_code, 200)
 
         # Test delete translation
