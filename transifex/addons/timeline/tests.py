@@ -10,35 +10,41 @@ class TestTimeline(BaseTestCase):
         super(TestTimeline, self).setUp()
 
         # Sanity checks
-        self.assertTrue( Project.objects.count() >= 1, msg = "Base test case didn't create any projects" )
+        self.assertTrue(Project.objects.count() >= 1,
+            msg="Base test case didn't create any projects"
+        )
 
-        # Generate timeline URLs
-        self.url_user_timeline = reverse("user_timeline")
-        self.url_user_profile = reverse("profile_overview")
-        self.url_project_timeline = reverse('project_timeline', args=[self.project.slug])
+        self.url_user_timeline = reverse('user_timeline')
+        self.url_user_profile = reverse('userena_profile_detail',
+            args=[self.user['registered'].username])
 
+        self.url_project_timeline = reverse('project_timeline',
+            args=[self.project.slug])
+        self.url_private_project_timeline = reverse('project_timeline',
+            args=[self.project_private.slug])
+        self.url_project_edit = reverse('project_edit',
+            args=[self.project.slug])
 
     def test_anon(self):
-        """
-        Test anonymous user
-        """
+        """Test anonymous user."""
+
         # Check user timeline page as anonymous user
-        resp = self.client['anonymous'].get( self.url_user_timeline, follow = True )
+        resp = self.client['anonymous'].get(self.url_user_timeline, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue("Enter your username and password to sign in." in resp.content)
+        self.assertTemplateUsed(resp, 'userena/signin_form.html')
+        self.assertContains(resp, 'Sign in', status_code=200)
 
         # Check project timeline page as anonymous user
-        resp = self.client['anonymous'].get( self.url_project_timeline, follow = True )
+        resp = self.client['anonymous'].get(self.url_project_timeline, follow=True)
         self.assertEqual(resp.status_code, 200)
-        self.assertTrue("Enter your username and password to sign in." in resp.content)
+        self.assertTemplateUsed(resp, 'userena/signin_form.html')
+        self.assertContains(resp, 'Sign in', status_code=200)
 
     def test_regular(self):
-        """
-        Test regular registered user
-        """
+        """Test regular registered user."""
 
         # Check user timeline page as regular user
-        resp = self.client['registered'].get( self.url_user_timeline )
+        resp = self.client['registered'].get(self.url_user_timeline)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue("Timeline" in resp.content)
         a = ("The query returned " in resp.content)
@@ -46,43 +52,36 @@ class TestTimeline(BaseTestCase):
         self.assertTrue( a or b)
 
         # Check project timeline page as regular user
-        resp = self.client['registered'].get( self.url_project_timeline )
+        resp = self.client['registered'].get(self.url_project_timeline)
         self.assertEqual(resp.status_code, 200)
 
         # Check private project timeline page as regular user
-        resp = self.client['registered'].get(
-            reverse('project_timeline', args=[self.project_private.slug]))
+        resp = self.client['registered'].get(self.url_private_project_timeline)
         self.assertEqual(resp.status_code, 403)
 
         # Anonymous should require a login
-        resp = self.client['anonymous'].get( self.url_project_timeline, follow=True)
-        self.assertTrue("Enter your username and password to sign in." in resp.content)
+        resp = self.client['anonymous'].get(self.url_project_timeline, follow=True)
+        self.assertTemplateUsed(resp, 'userena/signin_form.html')
+        self.assertContains(resp, 'Sign in', status_code=200)
 
         # Check whether link to user timeline is injected to profile page
-        resp = self.client['registered'].get( self.url_user_profile )
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue("My Timeline" in resp.content)
+        # Comment out since user timeline is not visible in the user profile
+        # resp = self.client['registered'].get(self.url_user_profile)
+        # self.assertEqual(resp.status_code, 200)
+        # self.assertTrue("My Timeline" in resp.content)
 
     def test_maint(self):
-        """
-        Test maintainer
-        """
+        """Test maintainer."""
 
         # Check user timeline page as regular user
-        resp = self.client['registered'].get( self.url_user_timeline )
+        resp = self.client['registered'].get(self.url_user_timeline)
         self.assertEqual(resp.status_code, 200)
 
         # Check project timeline as maintainer
-        resp = self.client['maintainer'].get( self.url_project_timeline )
+        resp = self.client['maintainer'].get(self.url_project_timeline)
         self.assertEqual(resp.status_code, 200)
 
-        # Fetch project overview page
-        resp = self.client['maintainer'].get(self.urls['project'])
+        # Fetch project edit page and check that timeline is there
+        resp = self.client['maintainer'].get(self.url_project_edit)
         self.assertEqual(resp.status_code, 200)
-
-        # Check whether link to timeline page is found on the page
-        self.assertTrue( self.url_project_timeline in resp.content )
-
-        # Check whether injected History block is included
-        self.assertTrue( "History" in resp.content )
-
+        self.assertTrue(self.url_project_timeline in resp.content)
