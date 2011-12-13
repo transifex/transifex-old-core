@@ -49,7 +49,7 @@ class ResourcesTemplateTests(BaseTestCase):
         for user in ['anonymous', 'registered','team_member', 'maintainer']:
             resp = self.client[user].get(self.urls['resource'])
             self.assertContains(
-                resp, "<h3>Available languages (%s)</h3>" % (
+                resp, "Available languages (%s)" % (
                     self.resource.available_languages.count()
                 ))
 
@@ -89,7 +89,7 @@ class ResourcesTemplateTests(BaseTestCase):
         for user in ['team_member', 'maintainer']:
             resp = self.client[user].get(self.urls['resource'])
             self.assertTemplateUsed(resp, 'resources/resource_detail.html')
-            msg = '<a id="start_new_translation" class="i16 buttonized action">'
+            msg = 'id="start_new_translation" class="i16 buttonized action"'
             self.assertContains(resp, msg, status_code=200)
         # The anonymous users and the non-team members must not see the button
         for user in ['anonymous', 'registered']:

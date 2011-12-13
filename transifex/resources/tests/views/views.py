@@ -13,23 +13,6 @@ from transifex.txcommon.tests import base, utils
 class CoreViewsTest(base.BaseTestCase):
     """Test basic view function"""
 
-    def test_resource_creation_language_options(self):
-        """
-        Test whether only the language chosen on an already created resource
-        is available to be used for creating a new resource. Resources under
-        a project must have the same source language.
-        """
-        resp = self.client['maintainer'].get(reverse('project_detail',
-            args=[self.project.slug]))
-        self.assertEqual(resp.status_code, 200)
-        resource = self.project.resources.all()[0]
-
-        # Supposed to match a <option>LANG_NAME</option> tag
-        self.assertContains(resp, '>%s</option>' % resource.source_language)
-
-        language = Language.objects.get(code='pt_BR')
-        self.assertNotContains(resp, '>%s</option>' % language)
-
     def test_resource_details(self):
         """
         Test resource details of a resource.
