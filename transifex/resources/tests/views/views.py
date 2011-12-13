@@ -336,9 +336,6 @@ class ResourceAutofetchTests(base.BaseTestCase):
         self.assertEquals(self.resource.url_info.source_file_url, self.SFILE)
         resp = self.client['maintainer'].get(self.url_edit)
         self.assertContains(resp, self.SFILE)
-        resp = self.client['anonymous'].get(self.urls['resource'])
-        self.assertContains(resp, self.SFILE)
-
 
     def test_save_form_remove_url(self):
         """Test that saving the form without a source file URL removes it."""
