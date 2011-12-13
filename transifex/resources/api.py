@@ -244,9 +244,13 @@ class ResourceHandler(BaseHandler):
 
         try:
             rb = ResourceBackend()
-            return rb.create(
+            rb_create =  rb.create(
                 project, slug, name, method, project.source_language, content
             )
+            post_resource_save.send(sender=None, instance=Resource.objects.get(
+                slug=slug, project=project),
+                    created=True, user=request.user)
+            return rb_create
         except ResourceBackendError, e:
             raise BadRequestError(e.message)
 
