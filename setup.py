@@ -61,6 +61,7 @@ setup(
         "Django == 1.3.1",
         "markdown",
         "django-userena",
+        "userprofile", # Needed by txcommon.models.Profile migration
         "httplib2",
         "polib >= 0.5.4",
         "Pygments >= 0.9",
