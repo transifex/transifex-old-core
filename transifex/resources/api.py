@@ -236,6 +236,11 @@ class ResourceHandler(BaseHandler):
             msg = "Required field is missing: %s" % e.message
             logger.warning(msg)
             raise BadRequestError(msg)
+        if len(slug) > 50:
+            raise BadRequestError(
+                "The value for slug is too long. It should be less than "
+                "50 characters."
+            )
 
         try:
             content = self._get_content(request, data)

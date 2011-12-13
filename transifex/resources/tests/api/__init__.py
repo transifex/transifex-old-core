@@ -5,7 +5,7 @@ from django.utils import simplejson
 from django.test import TransactionTestCase
 from django.conf import settings
 from django.contrib.auth.models import User, Permission
-from transifex.txcommon.tests.base import Users, NoticeTypes
+from transifex.txcommon.tests.base import Users, TransactionNoticeTypes
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.api import ResourceHandler
 from transifex.resources.tests.api.base import APIBaseTests
@@ -270,7 +270,8 @@ class TestResourceAPI(APIBaseTests):
         self.assertEquals(len(r.available_languages_without_teams), 1)
 
 
-class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
+class TestTransactionResourceCreate(Users, TransactionNoticeTypes,
+                                    TransactionTestCase):
 
     def setUp(self):
         super(TestTransactionResourceCreate, self).setUp()
@@ -335,7 +336,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             }),
             content_type='application/json'
         )
-        self.assertContains(res, 'value too long', status_code=400)
+        self.assertContains(res, 'value for slug is too long', status_code=400)
 
     def test_post_errors(self):
         res = self.client['registered'].post(
