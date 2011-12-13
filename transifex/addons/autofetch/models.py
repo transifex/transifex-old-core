@@ -41,17 +41,17 @@ class URLInfo(models.Model):
         entries.
         """
         try:
-            file = urllib2.urlopen(self.source_file_url)
+            source_file = urllib2.urlopen(self.source_file_url)
         except:
             logger.error("Could not pull source file for resource %s (%s)" %
                 (self.resource.full_name, self.source_file_url))
             raise
 
         filename = ''
-        if file.info().has_key('Content-Disposition'):
+        if source_file.info().has_key('Content-Disposition'):
                 # If the response has Content-Disposition, we try to take
                 # filename from it
-                content = file.info()['Content-Disposition']
+                content = source_file.info()['Content-Disposition']
                 if 'filename' in content:
                     filename = content.split('filename')[1]
                     filename = filename.replace('"', '').replace("'", ""
@@ -62,38 +62,22 @@ class URLInfo(models.Model):
             #FIXME: This still might end empty
             filename = parts.path.split('/')[-1]
 
-        sf = StorageFile()
-        sf.uuid = str(uuid4())
-        sf.name = filename
-        fh = open(sf.get_storage_path(), 'wb')
-        fh.write(file.read())
-        fh.flush()
-        fh.close()
-
-        sf.size = os.path.getsize(sf.get_storage_path())
-        sf.language = self.resource.source_language
-
-        sf.update_props()
-        sf.save()
-
         try:
-            if self.resource.i18n_method:
-                parser = registry.handler_for(self.resource.i18n_method)
-            else:
-                fhandler = sf.find_parser()
-                assert fhandler, "Could not find a suitable handler for this file."
-                i18n_type = registry.guess_method(sf.get_storage_path())
-                self.resource.i18n_method = i18n_type
-                self.resource.save()
-            language = sf.language
-            fhandler.bind_file(filename=sf.get_storage_path())
-            fhandler.set_language(language)
-            fhandler.bind_resource(self.resource)
-            fhandler.is_content_valid()
-            fhandler.parse_file(is_source=True)
+            if not self.resource.i18n_method:
+                msg = "No i18n method defined for resource %s"
+                logger.error(msg % self.resource)
+                return
+            parser = registry.handler_for(self.resource.i18n_method)
+            language = self.resource.source_language
+            content = source_file.read()
+            parser.bind_content(content)
+            parser.set_language(language)
+            parser.bind_resource(self.resource)
+            parser.is_content_valid()
+            parser.parse_file(is_source=True)
             strings_added, strings_updated = 0, 0
             if not fake:
-                strings_added, strings_updated = fhandler.save2db(is_source=True)
+                strings_added, strings_updated = parser.save2db(is_source=True)
         except Exception,e:
             logger.error("Error importing source file for resource %s.%s (%s): %s" %
                 ( self.resource.project.slug, self.resource.slug,
