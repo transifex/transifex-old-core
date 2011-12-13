@@ -52,85 +52,6 @@ class TestResourceAPI(APIBaseTests):
             }
         )
 
-    def test_is_same_source_lang(self):
-        """Test the method that determines whether a source language is/is not
-        accepted in a project.
-        """
-        rh = ResourceHandler()
-        p = Project.objects.create(slug='slug', name='name', source_language=self.language_en)
-        r = Resource.objects.create(
-            slug='rslug1', project=p, source_language=self.language_en
-        )
-        r = Resource(
-            slug='rslug2', project=p
-        )
-        self.assertFalse(rh._is_same_source_lang(p, self.language_ar))
-        self.assertTrue(rh._is_same_source_lang(p, self.language_en))
-        r.source_language = self.language_en
-        r.save()
-        r = Resource(
-            slug='rslug3', project=p
-        )
-        self.assertFalse(rh._is_same_source_lang(p, self.language_ar))
-        self.assertTrue(rh._is_same_source_lang(p, self.language_en))
-
-    def test_create_resource_same_source_language(self):
-        """Test the restriction of having the same source languages when
-        creating a resource through the API.
-        """
-        self._create_project()
-        with open(self.po_file) as f:
-            content = f.read()
-        res = self.client['registered'].post(
-            self.url_create_resource,
-            data=simplejson.dumps({
-                    'name': "resource1",
-                    'slug': 'rslug1',
-                    'source_language': 'el',
-                    'i18n_type': 'PO',
-                    'content': content,
-            }),
-            content_type='application/json'
-        )
-        self.assertEquals(res.status_code, 201)
-        res = self.client['registered'].post(
-            self.url_create_resource,
-            data=simplejson.dumps({
-                    'name': "resource1",
-                    'slug': 'rslug2',
-                    'source_language': 'en',
-                    'i18n_type': 'PO',
-                    'content': content,
-            }),
-            content_type='application/json'
-        )
-        self.assertContains(res, "same source language", status_code=400)
-        res = self.client['registered'].post(
-            self.url_create_resource,
-            data=simplejson.dumps({
-                    'name': "resource1",
-                    'slug': 'rslug2',
-                    'source_language': 'el',
-                    'i18n_type': 'PO',
-                    'content': content,
-            }),
-            content_type='application/json'
-        )
-        self.assertEquals(res.status_code, 201)
-        res = self.client['registered'].post(
-            self.url_create_resource,
-            data=simplejson.dumps({
-                    'name': "resource1",
-                    'slug': 'rslug3',
-                    'i18n_type': 'PO',
-                    'content': content,
-            }),
-            content_type='application/json'
-        )
-        self.assertEquals(res.status_code, 201)
-        r = Resource.objects.get(slug='rslug3', project__slug='new_pr')
-        self.assertEquals(r.source_language.code, 'el')
-
     def test_get(self):
         res = self.client['anonymous'].get(self.url_resources)
         self.assertEquals(res.status_code, 401)
@@ -182,7 +103,7 @@ class TestResourceAPI(APIBaseTests):
         res = self.client['registered'].get(self.url_new_resource)
         self.assertEquals(res.status_code, 200)
         data = simplejson.loads(res.content)
-        self.assertTrue('source_language' in data)
+        self.assertTrue('source_language_code' in data)
         res = self.client['registered'].get(
             self.url_new_resource + "content/"
         )
@@ -218,7 +139,6 @@ class TestResourceAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'foo': 'foo'
             }),
             content_type='application/json'
@@ -230,7 +150,6 @@ class TestResourceAPI(APIBaseTests):
                     'name': "resource1",
                     'name': "resource2",
                     'slug': 'r2',
-                    'source_language': 'el',
             }),
             content_type='application/json'
         )
@@ -245,7 +164,6 @@ class TestResourceAPI(APIBaseTests):
             data={
                 'name': "resource1",
                 'slug': 'r1',
-                'source_language': 'el',
                 'i18n_type': 'PO',
                 'name': 'name.po',
                 'attachment': f
@@ -294,22 +212,6 @@ class TestResourceAPI(APIBaseTests):
         res = self.client['registered'].put(
             url,
             data=simplejson.dumps({
-                    'source_language': "el_NN",
-            }),
-            content_type='application/json'
-        )
-        self.assertEquals(res.status_code, 400)
-        res = self.client['registered'].put(
-            url,
-            data=simplejson.dumps({
-                    'source_language': "el",
-            }),
-            content_type='application/json'
-        )
-        self.assertEquals(res.status_code, 400)
-        res = self.client['registered'].put(
-            url,
-            data=simplejson.dumps({
                     'i18n_type': "PO",
             }),
             content_type='application/json'
@@ -342,7 +244,7 @@ class TestResourceAPI(APIBaseTests):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
-                    'source_language': 'el',
+                    'source_language_code': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -358,7 +260,6 @@ class TestResourceAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -416,7 +317,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
-                    'source_language': 'el',
+                    'source_language_code': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -429,7 +330,6 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'a-very-long-slug' * 10,
-                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -442,7 +342,7 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
-                    'source_language': 'el',
+                    'source_language_code': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -455,7 +355,6 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -469,7 +368,6 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -481,7 +379,6 @@ class TestTransactionResourceCreate(Users, NoticeTypes, TransactionTestCase):
             data=simplejson.dumps({
                     'name': "resource2",
                     'slug': 'r2',
-                    'source_language': 'el',
                     'i18n_type': 'PO',
             }),
             content_type='application/json'
@@ -837,7 +734,6 @@ class TestTranslationAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'i18n_type': 'INI',
                     'content': content,
             }),
@@ -891,7 +787,6 @@ class TestTranslationAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "rα",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -916,7 +811,7 @@ class TestTranslationAPI(APIBaseTests):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': 'new_pr', 'name': 'Project from API',
-                    'source_language': 'el',
+                    'source_language_code': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -932,7 +827,6 @@ class TestTranslationAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': 'r1',
-                    'source_language': 'el',
                     'i18n_type': 'PO',
                     'content': content,
             }),
@@ -1034,7 +928,7 @@ class TestStatsAPI(APIBaseTests):
             self.url_new_project,
             data=simplejson.dumps({
                     'slug': self.project_slug, 'name': 'Project from API',
-                    'source_language': 'el',
+                    'source_language_code': 'el',
                     'maintainers': 'registered',
             }),
             content_type='application/json'
@@ -1046,7 +940,6 @@ class TestStatsAPI(APIBaseTests):
             data=simplejson.dumps({
                     'name': "resource1",
                     'slug': self.resource_slug,
-                    'source_language': 'el',
                     'i18n_type': 'INI',
                     'content': self.content,
             }),
