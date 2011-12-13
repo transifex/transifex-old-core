@@ -35,12 +35,14 @@ class MemoryViewsTests(BaseTestCase):
             string='This is a test source string',
             rule=5,
             source_entity=source_entity,
+            resource=self.resource_private,
             language=self.language_en,
             user=self.user['team_member'])
         source_entity.translations.create(
             string=u'This is supposed to be arabic text! αβγ',
             rule=5,
             source_entity=source_entity,
+            resource=self.resource_private,
             language=self.language_ar,
             user=self.user['team_member'])
         DATA = {'tq': 'test string', 'source_lang' : self.language_en.code, 'target_lang' : self.language_ar.code}
