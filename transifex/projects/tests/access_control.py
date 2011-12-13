@@ -158,3 +158,24 @@ class ProjectAccessControlTestCase(BaseTestCase):
         DATA = {'access_control':"limited_access", 'next': url, 'outsource': '', 'submit_access_control':'Save Access Control Settings'}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
         self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_1">', status_code=200)
+
+    def test_public_project_can_outsource_from_my_private_project(self):
+        response = self.client['maintainer'].get(
+            reverse('project_access_control_edit',
+                    kwargs={'project_slug': self.project.slug})
+        )
+        self.assertContains(response, self.project_private.name)
+
+        response = self.client['maintainer'].post(
+            reverse('project_access_control_edit',
+                    kwargs={'project_slug': self.project.slug}),
+            {'access_control': "outsourced_access",
+             'outsource': self.project_private.id,
+             'next': reverse('project_access_control_edit',
+                             kwargs={'project_slug': self.project.slug})}
+        )
+        self.assertRedirects(
+            response,
+            reverse('project_access_control_edit',
+                    kwargs={'project_slug': self.project.slug})
+        )

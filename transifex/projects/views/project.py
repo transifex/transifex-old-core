@@ -122,7 +122,7 @@ def project_access_control_edit(request, project_slug):
     project = get_object_or_404(Project, slug=project_slug)
     if request.method == 'POST':
         access_control_form = ProjectAccessControlForm(request.POST,
-            instance=project)
+            instance=project, user=request.user)
         if access_control_form.is_valid():
             access_control = access_control_form.cleaned_data['access_control']
             project = access_control_form.save()
