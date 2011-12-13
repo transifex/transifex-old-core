@@ -243,10 +243,12 @@ class PrintfFormatSourceValidator(BaseValidator):
         new = unescape(new)
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
-        old = escape(old)
-        new = escape(new)
+        new_conv_specifiers = [pattern.group('type') for pattern in new_matches]
         for pattern in old_matches:
-            if pattern.group(0) not in new:
+            conversion_specifier = pattern.group('type')
+            try:
+                new_conv_specifiers.remove(conversion_specifier)
+            except ValueError:
                 msg = "The expression '%s' is not present in the translation."
                 raise ValidationError( _(msg  % pattern.group(0)))
 
@@ -274,12 +276,14 @@ class PrintfFormatTranslationValidator(BaseValidator):
     def validate(self, old, new):
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
+        old_conv_specifiers = [pattern.group('type') for pattern in old_matches]
         for pattern in new_matches:
-            if pattern.group(0) not in old:
-                raise ValidationError(
-                    _('The expression \'%s\' is not present '
-                      'in the source string.' % pattern.group(0))
-                )
+            conversion_specifier = pattern.group('type')
+            try:
+                old_conv_specifiers.remove(conversion_specifier)
+            except ValueError:
+                msg = "The expression '%s' is not present in the source string."
+                raise ValidationError( _(msg  % pattern.group(0)))
 
 
 def create_error_validators(i18n_type):

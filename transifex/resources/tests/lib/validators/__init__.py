@@ -145,6 +145,9 @@ class TestValidators(unittest.TestCase):
         self.assertRaises(ValidationError, v, old, new)
         new = "%s"
         self.assertRaises(ValidationError, v, old, new)
+        old = "%s %d"
+        new = "%2$d %1$s"
+        v(old, new)
 
     def test_translation_printf_format(self):
         v = PrintfFormatTranslationValidator()
@@ -155,6 +158,9 @@ class TestValidators(unittest.TestCase):
         self.assertRaises(ValidationError, v, old, new)
         old = "%s %d asda %k"
         self.assertRaises(ValidationError, v, old, new)
+        old = "%s %d"
+        new = "%2$d %1$s"
+        v(old, new)
 
     def test_singular_printf_number(self):
 
