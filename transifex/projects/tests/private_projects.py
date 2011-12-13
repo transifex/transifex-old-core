@@ -261,31 +261,31 @@ class PrivateProjectTest(BaseTestCase):
                     '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
                 ],
             },
-#            'writer' : {
-#                200 : [
-#                    '/projects/p/%s/teams/',
-#                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code)
-#                ],
-#                302 : [
-#                    '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
-#                    '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-#                    '/projects/p/%s/teams/request/'
-#                ],
-#                404 : [
-#                    '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code)
-#                ],
-#                403 : [
-#                    '/projects/p/%s/teams/add/',
-#                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
-#                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
-#                    '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
-#                        self.user['team_member'].username),
-#                    '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
-#                        self.user['team_member'].username),
-#                    '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
-#                    '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
-#                ]
-#            },
+            #'writer' : {
+            #    200 : [
+            #        '/projects/p/%s/teams/',
+            #        '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code)
+            #    ],
+            #    302 : [
+            #        '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/teams/request/'
+            #    ],
+            #    404 : [
+            #        '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code)
+            #    ],
+            #    403 : [
+            #        '/projects/p/%s/teams/add/',
+            #        '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+            #            self.user['team_member'].username),
+            #        '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+            #            self.user['team_member'].username),
+            #        '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
+            #    ]
+            #},
             'team_coordinator' : {
                 200 : [
                     '/projects/p/%s/teams/' % self.project_private.slug,
@@ -468,62 +468,62 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 200)
 
-#    def test_submit_file(self):
-#        """
-#        Check access to submit pofile in a component of a private project.
-#        """
-#        URL = reverse('component_edit_file', kwargs={'project_slug':self.project_private.slug,
-#            'component_slug':'priv_component',
-#            'filename': self.FILEPATHS[0] })
-#
-#        # POST Requests
-#        # Anonymous user should not have access to submit files!
-#        response = self.client.post(URL, follow=True)
-#        # Login required will redirect use to the login page
-#        self.failUnlessEqual(response.status_code, 200)
-#        self.failUnlessEqual(('http://testserver/accounts/login/?next=%s' %
-#            (URL), 302), response.redirect_chain[0])
-#
-#        # Logged in user without permissions should not have acces too!
-#        test_user = User.objects.create_user('test_login', 'test@transifex.net',
-#            'test_login')
-#        self.assertTrue(self.client.login(username='test_login',
-#            password='test_login'))
-#        response = self.client.post(URL)
-#        self.failUnlessEqual(response.status_code, 403)
-#        self.client.logout()
-#
-#        # Maintainer should have permission to submit files
-#        # (Owner should have been put to maintainers!)
-#        self.assertTrue(self.client.login(username='priv_owner',
-#            password='priv_owner'))
-#        response = self.client.post(URL, follow=True)
-#        self.failUnlessEqual(response.status_code, 200)
-#        self.client.logout()
-#
-#        # Check that a submitter (writer) has access to submit file.
-#        self.assertTrue(self.client.login(username='priv_submitter',
-#            password='priv_submitter'))
-#        response = self.client.post(URL, follow=True)
-#        self.failUnlessEqual(response.status_code, 200)
-#        self.client.logout()
-#
-#        #TODO: ONLY team members and coordinators of the specific team where
-#        # the file belongs to must have access to it.
-#
-#        # Check that a team coordinator (writer) has access to submit a file of his team
-#        self.assertTrue(self.client.login(username='priv_coordinator',
-#            password='priv_coordinator'))
-#        response = self.client.post(URL, follow=True)
-#        self.failUnlessEqual(response.status_code, 200)
-#        self.client.logout()
-#
-#        # Check that a team member (writer) has access to submit a file of his team.
-#        self.assertTrue(self.client.login(username='priv_member',
-#            password='priv_member'))
-#        response = self.client.post(URL, follow=True)
-#        self.failUnlessEqual(response.status_code, 200)
-#        self.client.logout()
+    #def test_submit_file(self):
+        #"""
+        #Check access to submit pofile in a component of a private project.
+        #"""
+        #URL = reverse('component_edit_file', kwargs={'project_slug':self.project_private.slug,
+        #    'component_slug':'priv_component',
+        #    'filename': self.FILEPATHS[0] })
+        #
+        ## POST Requests
+        ## Anonymous user should not have access to submit files!
+        #response = self.client.post(URL, follow=True)
+        ## Login required will redirect use to the login page
+        #self.failUnlessEqual(response.status_code, 200)
+        #self.failUnlessEqual(('http://testserver/accounts/login/?next=%s' %
+        #    (URL), 302), response.redirect_chain[0])
+        #
+        ## Logged in user without permissions should not have acces too!
+        #test_user = User.objects.create_user('test_login', 'test@transifex.net',
+        #    'test_login')
+        #self.assertTrue(self.client.login(username='test_login',
+        #    password='test_login'))
+        #response = self.client.post(URL)
+        #self.failUnlessEqual(response.status_code, 403)
+        #self.client.logout()
+        #
+        ## Maintainer should have permission to submit files
+        ## (Owner should have been put to maintainers!)
+        #self.assertTrue(self.client.login(username='priv_owner',
+        #    password='priv_owner'))
+        #response = self.client.post(URL, follow=True)
+        #self.failUnlessEqual(response.status_code, 200)
+        #self.client.logout()
+        #
+        ## Check that a submitter (writer) has access to submit file.
+        #self.assertTrue(self.client.login(username='priv_submitter',
+        #    password='priv_submitter'))
+        #response = self.client.post(URL, follow=True)
+        #self.failUnlessEqual(response.status_code, 200)
+        #self.client.logout()
+        #
+        ##TODO: ONLY team members and coordinators of the specific team where
+        ## the file belongs to must have access to it.
+        #
+        ## Check that a team coordinator (writer) has access to submit a file of his team
+        #self.assertTrue(self.client.login(username='priv_coordinator',
+        #    password='priv_coordinator'))
+        #response = self.client.post(URL, follow=True)
+        #self.failUnlessEqual(response.status_code, 200)
+        #self.client.logout()
+        #
+        ## Check that a team member (writer) has access to submit a file of his team.
+        #self.assertTrue(self.client.login(username='priv_member',
+        #    password='priv_member'))
+        #response = self.client.post(URL, follow=True)
+        #self.failUnlessEqual(response.status_code, 200)
+        #self.client.logout()
 
 
     def test_lock_unlock_file(self):
