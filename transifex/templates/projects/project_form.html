@@ -71,6 +71,8 @@ $(document).ready(function(){
 <div class="tx-form dual">
 	  <form action='' method='post'>{% csrf_token %}
 
+      {{ project_form.non_field_errors }}
+
       <fieldset id="project-edit-simple">
         {% get_fieldset slug,name,slug,tags,description,source_language,maintainers,private as simple_fields from project_form %}
         {% for field in simple_fields %}
