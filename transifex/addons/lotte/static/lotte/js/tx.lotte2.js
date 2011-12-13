@@ -565,7 +565,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
         $('tr td textarea.translation', this.bound_table).keyup(edit_handler);
         $('tr td textarea.translation', this.bound_table).bind('paste', edit_handler);
-        $('tr td textarea.translation', this.bound_table).onchange(edit_handler);
+        $('tr td textarea.translation', this.bound_table).change(edit_handler);
     }
 
     /* Bind save button events */
