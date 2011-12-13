@@ -20,8 +20,8 @@ FORMATS = {
                 u'%i ḿǿŧǿřƈẏƈŀḗş ȧŧ:\\n'],
             'PLANGUAGE': [u'"ÜקÜséקér %(name)s <b>dôéקôés nôקôt</b>',
                 u'%i môקôtôקôrcýקýcléקés åקåt:\\n'],
-            'MIXED': [u'[Ŀôקôƈåקåŧïôקïôƞş]',
-                u'%i ḿôקôŧôקôřƈýקýƈŀéקéş åקåŧ:\\n']
+            'MIXED': [u'"[Ŀǿƈȧŧīǿƞş ',],
+            'EXTEND': [u'"Ŀǿƈȧŧīǿƞş ',]
             }
 
         },
@@ -32,8 +32,10 @@ FORMATS = {
             'BRACKETS': [u'<translation>[START]</translation>'],
             'UNICODE': [u'<numerusform>&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt;</numerusform>'],
             'PLANGUAGE': [u'<numerusform>&lt;b&gt;%n fïקïléקé'],
-            'MIXED': [u'<translation>[ŞŦÅקÅŘŦ]</translation>',
-                u'ŧħïקïş şýקýşŧéקéḿ&lt;/b&gt;]']
+            'MIXED': [u'<translation>[ŞŦȦŘŦ ',
+                u'<numerusform>[&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt; '],
+            'EXTEND': [u'<translation>ŞŦȦŘŦ ',
+                u'<numerusform>&lt;b&gt;%n ƒīŀḗ.&lt;/b&gt; ']
             }
         },
     'PROPERTIES':{
@@ -43,7 +45,8 @@ FORMATS = {
             'BRACKETS': [u'Key00=[Value00]'],
             'UNICODE': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
             'PLANGUAGE': [u'Key01=<b>Påקågéקé</b> %s ôקôf %s'],
-            'MIXED': [u'Key00=[Ṽåקåŀüéקüé00]']
+            'MIXED': [u'Key01=[<b>Ƥȧɠḗ</b> %s ǿƒ %s '],
+            'EXTEND': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s ']
             }
         },
     'INI':{
@@ -53,7 +56,8 @@ FORMATS = {
             'BRACKETS': [u'KEY1="[Translation]"'],
             'UNICODE': [u'KEY2="<b>Ƥȧɠḗ</b> %s ǿƒ %s"'],
             'PLANGUAGE': [u'KEY2="<b>Påקågéקé</b> %s ôקôf %s"'],
-            'MIXED': [u'KEY2="[<b>Ƥåקåɠéקé</b> %s ôקôƒ %s]"']
+            'MIXED': [u'KEY2="[<b>Ƥȧɠḗ</b> %s ǿƒ %s '],
+            'EXTEND': [u'KEY2="<b>Ƥȧɠḗ</b> %s ǿƒ %s ']
             }
         },
 
@@ -144,7 +148,6 @@ class PseudoTestCase(base.BaseTestCase):
                 resource_url,
                 data={
                     'slug': resource_slug,
-                    'source_language': source_language.code,
                     'name': resource_slug,
                     'i18n_type': i18n_type,
                     'attachment': f},
