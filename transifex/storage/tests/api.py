@@ -32,12 +32,6 @@ class StorageTests(BaseStorageTests):
     def test_create_storage_with_invalid_file(self):
         """Create StorageFile with invalid file."""
 
-        # Test unsupported file
-        upload_file = open('%s/__init__.py' % os.path.split(__file__)[0],)
-        data = {'language': self.language_en.code, 'file': upload_file}
-        resp = self.client['registered'].post(reverse('api.storage'), data)
-        self.assertTrue('Unsupported extension' in resp.content)
-
         # Test empty file
         upload_file = open('%s/empty.pot' % os.path.split(__file__)[0]) # hack
         data = {'language': self.language_en.code, 'file': upload_file}
