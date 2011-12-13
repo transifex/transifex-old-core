@@ -308,7 +308,7 @@ class LotteViewsTests(BaseTestCase):
         #This will try to create a translation string with arguments not equal to those in source string
         resp2 = self.client['maintainer'].post(self.push_translation,
             json.dumps(data2), content_type='application/json')
-        self.assertContains(resp2, "The expression '%d' is not present in thetranslation.", status_code=200)
+        self.assertContains(resp2, "The expression '%d' is not present in the translation.", status_code=200)
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity4,
             language=self.language_ar).count(), 0)

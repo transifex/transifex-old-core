@@ -247,10 +247,8 @@ class PrintfFormatSourceValidator(BaseValidator):
         new = escape(new)
         for pattern in old_matches:
             if pattern.group(0) not in new:
-                raise ValidationError(
-                    _('The expression \'%s\' is not present in the'
-                      'translation.' % pattern.group(0))
-                )
+                msg = "The expression '%s' is not present in the translation."
+                raise ValidationError( _(msg  % pattern.group(0)))
 
 
 class PrintfFormatPluralizedSourceValidator(PluralOnlyValidator, \
