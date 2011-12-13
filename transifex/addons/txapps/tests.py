@@ -24,6 +24,10 @@ class TestTxApp(Users, TestCase):
         cls.root_path = 'root/path/'
         cls.namespace_path = ''.join([cls.root_path, app_slug])
 
+    @classmethod
+    def tearDownClass(cls):
+        cls.app.delete()
+
     def test_finding_root_namespace(self):
         """Test root namespaces."""
         path = '/'.join([self.namespace_path, 'overview'])
