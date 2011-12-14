@@ -143,13 +143,12 @@ class JavaPropertiesHandler(Handler):
         """Convert unicode characters to sequence of bytes representing the
         codepoints.
         """
+        replacement = self._pseudo_decorate(self._escape(replacement))
         for char in replacement:
-            if ord(char) in range(127, 160) or\
-                    ord(char) > 255:
+            if ord(char) in range(127, 160) or ord(char) > 255:
                 replacement = replacement.replace(char, self.convert_to_ascii(char))
-        return super(JavaPropertiesHandler, self)._replace_translation(
-            original, replacement, text
-        )
+        return re.sub(re.escape(original), replacement, text)
+
 
     def _parse(self, is_source, lang_rules):
         """
