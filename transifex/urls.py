@@ -98,7 +98,6 @@ if settings.USE_SOCIAL_LOGIN:
 
 if settings.ENABLE_NOTICES:
     urlpatterns += patterns('',
-        url(r'^notices/feed/$', 'txcommon.views.feed_for_user', name="notification_feed_for_user"),
         (r'^notices/', include('notification.urls')),
         url(r'^accounts/nudge/(?P<username>.+)/$', 'txcommon.views.user_nudge', name='user_nudge'),
     )
