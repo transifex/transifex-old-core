@@ -15,6 +15,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import list_detail
 from django.core.urlresolvers import reverse
+from django.contrib.syndication.views import feed
 
 from haystack.query import SearchQuerySet
 from notification import models as notification
@@ -30,6 +31,17 @@ from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
 from transifex.txcommon.haystack_utils import prepare_solr_query_string, \
     fulltext_fuzzy_match_filter
+from transifex.txcommon.feeds import TxNoticeUserFeed
+
+from notification.decorators import basic_auth_required, simple_basic_auth_callback
+
+@basic_auth_required(realm='Notices Feed', callback_func=simple_basic_auth_callback)
+def feed_for_user(request):
+    url = "feed/%s" % request.user.username
+    return feed(request, url, {
+        "feed": TxNoticeUserFeed,
+    })
+
 
 def permission_denied(request, template_name=None, extra_context={}, *args,
     **kwargs):
