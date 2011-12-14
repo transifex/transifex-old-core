@@ -238,21 +238,58 @@ class PrintfFormatSourceValidator(BaseValidator):
             '(?:\.\d+)?(hh\|h\|l\|ll)?(?P<type>[\w%])))'
     )
 
-    def validate(self, old, new):
-        old = unescape(old)
-        new = unescape(new)
-        old_matches = list(self.printf_re.finditer(old))
-        new_matches = list(self.printf_re.finditer(new))
-        new_conv_specifiers = [pattern.group('type') for pattern in new_matches]
-        new_keys = [pattern.group('key') for pattern in new_matches]
-        for pattern in old_matches:
+    def validate(self, source_trans, target_trans):
+        """Check, if all printf-format expressions in the source translation
+        are in the target translation, too.
+
+        We are interested in the conversion specifier and the positional
+        key (if any). See ``printf(3)`` for details.
+
+        So, we check, whether *every* conversion specifier found in
+        the source translation exists in the target translation, too.
+        Additionally, if there are positional keys, whether those
+        found in the source translation exist in the target translation,
+        as well.
+
+        We raise a ``ValidationError``, whenever one of the
+        conditions is not met.
+
+        Args:
+            source_trans: The source translation.
+            target_trans: The target translation.
+        Raises:
+            ValidationError, in case the translation is not valid.
+        """
+        source_trans = unescape(source_trans)
+        target_trans = unescape(target_trans)
+        source_matches = list(self.printf_re.finditer(source_trans))
+        target_matches = list(self.printf_re.finditer(target_trans))
+
+        # We could use just one list comprehension:
+        #
+        # target_data = [
+        #     (pattern.group('type'), pattern.group('key'))
+        #     for pattern in target_matches
+        # ]
+        # target_specifiers, target_keys = map(
+        #     list, zip(*target_data)
+        # ) or [[], []]
+        #
+        # but that would probably be less efficient, since target_matches
+        # should ususally have 0 - 5 elements, and much less readable.
+        # So, we do it in two steps.
+        target_specifiers = [pat.group('type') for pat in target_matches]
+        target_keys = [pattern.group('key') for pattern in target_matches]
+
+        for pattern in source_matches:
             key = pattern.group('key')
-            if key not in new_keys:
+            if key not in target_keys:
                 msg = "The expression '%s' is not present in the translation."
                 raise ValidationError( _(msg  % pattern.group(0)))
+
             conversion_specifier = pattern.group('type')
             try:
-                new_conv_specifiers.remove(conversion_specifier)
+                target_specifiers.remove(conversion_specifier)
             except ValueError:
                 msg = "The expression '%s' is not present in the translation."
                 raise ValidationError( _(msg  % pattern.group(0)))
@@ -278,19 +315,45 @@ class PrintfFormatTranslationValidator(BaseValidator):
             '(?:\.\d+)?(hh\|h\|l\|ll)?(?P<type>[\w%])))'
     )
 
-    def validate(self, old, new):
-        old_matches = list(self.printf_re.finditer(old))
-        new_matches = list(self.printf_re.finditer(new))
-        old_conv_specifiers = [pattern.group('type') for pattern in old_matches]
-        old_keys = [pattern.group('key') for pattern in old_matches]
-        for pattern in new_matches:
+    def validate(self, source_trans, target_trans):
+        """Check, if all printf-format expressions in the target translation
+        are in the source translation, too.
+
+        We are interested in the conversion specifier and the positional
+        key (if any). See ``printf(3)`` for details.
+
+        So, we check, whether *every* conversion specifier found in
+        the target translation exists in the source translation, too.
+        Additionally, if there are positional keys, whether those
+        found in the target translation exist in the source translation,
+        as well.
+
+        We raise a ``ValidationError``, whenever one of the
+        conditions is not met.
+
+        Args:
+            source_trans: The source translation.
+            target_trans: The target translation.
+        Raises:
+            ValidationError, in case the translation is not valid.
+        """
+        source_matches = list(self.printf_re.finditer(source_trans))
+        target_trans_matches = list(self.printf_re.finditer(target_trans))
+
+
+        # Look at PrintfFormatSourceValidator for a comment on optimizing this
+        source_conv_specifiers = [pat.group('type') for pat in source_matches]
+        source_keys = [pattern.group('key') for pattern in source_matches]
+
+        for pattern in target_trans_matches:
             key = pattern.group('key')
-            if key not in old_keys:
+            if key not in source_keys:
                 msg = "The expression '%s' is not present in the source_string."
                 raise ValidationError( _(msg  % pattern.group(0)))
+
             conversion_specifier = pattern.group('type')
             try:
-                old_conv_specifiers.remove(conversion_specifier)
+                source_conv_specifiers.remove(conversion_specifier)
             except ValueError:
                 msg = "The expression '%s' is not present in the source string."
                 raise ValidationError( _(msg  % pattern.group(0)))
