@@ -50,7 +50,7 @@ class _FormatsRegistry(object):
         """Get the available descriptions along with the
         method they correspond to.
         """
-        return [(m, v['description']) for m, v in self.methods.items()]
+        return [(m, '%s (%s)' % (v['description'], v['file-extensions'])) for m, v in self.methods.items()]
 
     def extensions_for(self, m):
         """Get the extensions for the specified method.
