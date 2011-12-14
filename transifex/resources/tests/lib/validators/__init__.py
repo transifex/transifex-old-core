@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import unittest
+from __future__ import with_statement
+from django.test import TestCase
 from transifex.languages.models import Language
 from transifex.resources.formats.validators import *
 
 
-class TestValidators(unittest.TestCase):
+class TestValidators(TestCase):
 
     def test_empty_translation(self):
         old = 'old'
@@ -149,6 +150,22 @@ class TestValidators(unittest.TestCase):
         new = "%2$d %1$s"
         v(old, new)
 
+        old = "%(foo)s %(bar)s"
+        new = "%(fo0)s %(bar)s"
+        with self.assertRaises(ValidationError) as cm:
+            v(old, new)
+        self.assertIn('foo', unicode(cm.exception))
+        new = "%(foo)s"
+        with self.assertRaises(ValidationError) as cm:
+            v(old, new)
+        self.assertIn('bar', unicode(cm.exception))
+        new = "%(bar)s"
+        with self.assertRaises(ValidationError) as cm:
+            v(old, new)
+        self.assertIn('foo', unicode(cm.exception))
+        new = "%(bar)s %(foo)s"
+        v(old, new)
+
     def test_translation_printf_format(self):
         v = PrintfFormatTranslationValidator()
         old = "%s %d asda %f"
@@ -158,8 +175,21 @@ class TestValidators(unittest.TestCase):
         self.assertRaises(ValidationError, v, old, new)
         old = "%s %d asda %k"
         self.assertRaises(ValidationError, v, old, new)
+
         old = "%s %d"
         new = "%2$d %1$s"
+        v(old, new)
+
+        old = "%(foo)s %(bar)s"
+        new = "%(fo0)s %(bar)s"
+        with self.assertRaises(ValidationError) as cm:
+            v(old, new)
+        self.assertIn('fo0', unicode(cm.exception))
+        new = "%(baz)s"
+        with self.assertRaises(ValidationError) as cm:
+            v(old, new)
+        self.assertIn('baz', unicode(cm.exception))
+        new = "%(bar)s %(foo)s"
         v(old, new)
 
     def test_singular_printf_number(self):

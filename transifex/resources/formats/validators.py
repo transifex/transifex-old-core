@@ -244,7 +244,12 @@ class PrintfFormatSourceValidator(BaseValidator):
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
         new_conv_specifiers = [pattern.group('type') for pattern in new_matches]
+        new_keys = [pattern.group('key') for pattern in new_matches]
         for pattern in old_matches:
+            key = pattern.group('key')
+            if key not in new_keys:
+                msg = "The expression '%s' is not present in the translation."
+                raise ValidationError( _(msg  % pattern.group(0)))
             conversion_specifier = pattern.group('type')
             try:
                 new_conv_specifiers.remove(conversion_specifier)
@@ -277,7 +282,12 @@ class PrintfFormatTranslationValidator(BaseValidator):
         old_matches = list(self.printf_re.finditer(old))
         new_matches = list(self.printf_re.finditer(new))
         old_conv_specifiers = [pattern.group('type') for pattern in old_matches]
+        old_keys = [pattern.group('key') for pattern in old_matches]
         for pattern in new_matches:
+            key = pattern.group('key')
+            if key not in old_keys:
+                msg = "The expression '%s' is not present in the source_string."
+                raise ValidationError( _(msg  % pattern.group(0)))
             conversion_specifier = pattern.group('type')
             try:
                 old_conv_specifiers.remove(conversion_specifier)
