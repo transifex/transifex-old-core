@@ -162,10 +162,10 @@ def error_contacting_app(request, url, app, exception):
                 url, app.name, exception.status_code, exception.content
             )
         )
-        view_msg = "TxApp responded with an error: %s" % exception.content
+        view_msg = _("TxApp responded with an error: %s" % exception.content)
     else:
         log_msg = "Error contacting remote server: url is %s" % url
-        view_msg = "Error contacting app."
+        view_msg = _("Error contacting app.")
     logger.error(log_msg)
     return render_to_response(
         'txapp_error.html',

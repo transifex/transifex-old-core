@@ -46,7 +46,7 @@ def add_auto_translate_field(sender, **kwargs):
         )
     )
     form.fields['auto_translate_api_key'] = forms.CharField(
-        max_length=255, required=False, label="Auto Translate API Key",
+        max_length=255, required=False, label=_("Auto Translate API Key"),
         initial=api_key, help_text=_(
             "Enter the API key that Transifex will use for the auto-translate "
             "service you have chosen."
@@ -58,12 +58,12 @@ def add_auto_translate_field(sender, **kwargs):
         service_type = form.cleaned_data['auto_translate_select_service']
         api_key = form.cleaned_data['auto_translate_api_key']
         if service_type and not api_key:
-            raise ValidationError("You have to select an API key, too.")
+            raise ValidationError(_("You have to select an API key, too."))
         elif not service_type and api_key:
-            raise ValidationError(
+            raise ValidationError(_(
                 "You have to select a service for the auto-translate "
                 "feature, too."
-            )
+            ))
         if old_clean:
             return old_clean()
         else:

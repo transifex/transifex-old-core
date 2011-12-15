@@ -75,11 +75,11 @@ class ResourceBackend(object):
             r.save()
         except IntegrityError, e:
             logger.warning("Error creating resource %s: %s" % (r, e.message))
-            raise ResourceBackendError(
+            raise ResourceBackendError(_(
                 "A resource with the same slug exists in this project."
-            )
+            ))
         except DatabaseError, e:
-            msg = "Error creating resource: %s"
+            msg = _("Error creating resource: %s")
             logger.warning(msg % e)
             raise ResourceBackendError(msg % e)
 
@@ -87,9 +87,9 @@ class ResourceBackend(object):
         try:
             fb = FormatsBackend(r, source_language, user)
         except AttributeError, e:
-            raise ResourceBackendError(
+            raise ResourceBackendError(_(
                 "The content type of the request is not valid."
-            )
+            ))
         try:
             return fb.import_source(content, method)
         except FormatsBackendError, e:
@@ -128,7 +128,7 @@ class FormatsBackend(object):
         """
         handler = self._get_handler(method)
         if handler is None:
-            msg = "Invalid i18n method used: %s" % method
+            msg = _("Invalid i18n method used: %s") % method
             logger.warning(msg)
             raise FormatsBackendError(msg)
         return self._import_content(handler, content, True)
@@ -144,7 +144,7 @@ class FormatsBackend(object):
         """
         handler = self._get_handler(self.resource.i18n_method)
         if handler is None:
-            msg = "Invalid i18n method used: %s" % method
+            msg = _("Invalid i18n method used: %s") % method
             logger.warning(msg)
             raise FormatsBackendError(msg)
         return self._import_content(handler, content, False)

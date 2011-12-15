@@ -5,6 +5,7 @@ Handler for .desktop files.
 
 import re
 import codecs
+from django.utils.translation import ugettext as _
 from collections import defaultdict
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
@@ -145,7 +146,7 @@ class DesktopHandler(Handler):
                 try:
                     lang = Language.objects.by_code_or_alias(lang_code)
                 except Language.DoesNotExist, e:
-                    msg = "Unknown language specified: %s" % lang_code
+                    msg = _("Unknown language specified: %s" % lang_code)
                     logger.warning(msg)
                     raise DesktopParseError(msg)
             else:

@@ -200,7 +200,7 @@ def _delete_project(request, project):
     project_ = copy.copy(project)
     project.delete()
 
-    messages.success(request, "The project '%s' was deleted." % project.name)
+    messages.success(request, _("The project '%s' was deleted." % project.name))
 
     # ActionLog & Notification
     nt = 'project_deleted'

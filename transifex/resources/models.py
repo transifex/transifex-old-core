@@ -820,31 +820,31 @@ class RLStats(models.Model):
 
     # Fields
     translated = models.PositiveIntegerField(_("Translated Entities"),
-        blank=False, null=False, default=0, help_text="The number of "
-        "translated entities in a language for a specific resource.")
+        blank=False, null=False, default=0, help_text=_("The number of "
+        "translated entities in a language for a specific resource."))
     translated_wordcount = models.PositiveIntegerField(_("Wordcount for Translated Entities"),
-        blank=False, null=False, default=0, help_text="The number of words "
-        "containing translated entities in a language for a specific resource.")
+        blank=False, null=False, default=0, help_text=_("The number of words "
+        "containing translated entities in a language for a specific resource."))
     untranslated = models.PositiveIntegerField(_("Untranslated Entities"),
-        blank=False, null=False, default=0, help_text="The number of "
-        "untranslated entities in a language for a specific resource.")
+        blank=False, null=False, default=0, help_text=_("The number of "
+        "untranslated entities in a language for a specific resource."))
     reviewed = models.PositiveIntegerField(_("Reviewed Entities"),
-        blank=False, null=False, default=0, help_text="The number of "
-        "reviewed entities in a language for a specific resource.")
+        blank=False, null=False, default=0, help_text=_("The number of "
+        "reviewed entities in a language for a specific resource."))
     last_update = models.DateTimeField(_("Last Update"), auto_now=True,
-        default=None, help_text="The datetime that this language was last "
-        "updated.")
+        default=None, help_text=_("The datetime that this language was last "
+        "updated."))
     last_committer = models.ForeignKey(User, blank=False, null=True,
-        default=None, verbose_name=_('Last Committer'), help_text="The user "
-        "associated with the last change for this language.")
+        default=None, verbose_name=_('Last Committer'), help_text=_("The user "
+        "associated with the last change for this language."))
 
     # Foreign Keys
     resource = models.ForeignKey(Resource, blank=False, null=False,
-        verbose_name="Resource", help_text="The resource to which the "
-        "statistics are associated.")
+        verbose_name=_("Resource", help_text="The resource to which the "
+        "statistics are associated."))
     language = models.ForeignKey(Language, blank=False, null=False,
-        verbose_name="Language", help_text="The language to which these "
-        "statistics refer.")
+        verbose_name=_("Language", help_text="The language to which these "
+        "statistics refer."))
 
     # Normalized fields
     translated_perc = models.PositiveIntegerField(default=0, editable=False)
@@ -953,7 +953,7 @@ class Template(models.Model):
     content = CompressedTextField(null=False, blank=False,
         help_text=_("This is the actual content of the template"))
     resource = models.OneToOneField(Resource,
-        verbose_name="Resource",unique=True,
+        verbose_name=_("Resource"),unique=True,
         blank=False, null=False,related_name="source_file_template",
         help_text=_("This is the template of the imported source file which is"
             " used to export translation files from the db to the user."))

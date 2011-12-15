@@ -14,7 +14,7 @@ from transifex.storage.models import StorageFile
 
 class ResourceForm(forms.ModelForm):
 
-    sourcefile = forms.FileField(label="Source File", required=False)
+    sourcefile = forms.FileField(label=_("Source File"), required=False)
 
     class Meta:
         model = Resource

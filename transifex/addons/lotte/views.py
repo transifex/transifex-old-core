@@ -80,10 +80,10 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         # Return a page explaining that the project has multiple source langs and
         # cannot be translated as a whole.
         if resource_list.values('source_language').distinct().count() > 1:
-            messages.info(request,
+            messages.info(request,_(
                           "There are multiple source languages for this project. "
                           "You will only be able to translate resources for one "
-                          "source language at a time.")
+                          "source language at a time."))
             return HttpResponseRedirect(reverse('project_detail',
                                         args=[project_slug]),)
 
@@ -101,11 +101,11 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     # If it is an attempt to edit the source language, redirect the user to
     # resource_detail and show him a message explaining the reason.
     if target_language == get_source_language(resources):
-        messages.error(request,
+        messages.error(request,_(
                        "Cannot edit the source language because this would "
                        "result in translation mismatches! If you want to "
                        "update the source strings consider using the transifex "
-                       "command-line client.")
+                       "command-line client."))
         if resource_slug:
             return HttpResponseRedirect(reverse('resource_detail',
                                                 args=[project_slug,

@@ -39,17 +39,17 @@ class LinguistCompileError(CompileError):
 def _getElementByTagName(element, tagName, noneAllowed = False):
     elements = element.getElementsByTagName(tagName)
     if not noneAllowed and not elements:
-        raise LinguistParseError("Element '%s' not found!" % tagName)
+        raise LinguistParseError(_("Element '%s' not found!" % tagName))
     if len(elements) > 1:
-        raise LinguistParseError("Multiple '%s' elements found!" % tagName)
+        raise LinguistParseError(_("Multiple '%s' elements found!" % tagName))
     return elements[0]
 
 def _get_attribute(element, key, die = False):
     if element.attributes.has_key(key):
         return element.attributes[key].value
     elif die:
-        raise LinguistParseError("Could not find attribute '%s' "\
-            "for element '%s'" % (key, element.tagName))
+        raise LinguistParseError(_("Could not find attribute '%s' "\
+            "for element '%s'" % (key, element.tagName)))
     else:
         return None
 
@@ -179,17 +179,17 @@ class LinguistHandler(Handler):
             )
         except Exception, e:
             logger.warning("QT parsing: %s" % e.message, exc_info=True)
-            raise LinguistParseError(
+            raise LinguistParseError(_(
                 "Your file doesn't seem to contain valid xml: %s!" % e.message
-            )
+            ))
         if hasattr(doc, 'doctype') and hasattr(doc.doctype, 'name'):
             if doc.doctype.name != "TS":
-                raise LinguistParseError("Incorrect doctype!")
+                raise LinguistParseError(_("Incorrect doctype!"))
         else:
-            raise LinguistParseError("Uploaded file has no Doctype!")
+            raise LinguistParseError(_("Uploaded file has no Doctype!"))
         root = doc.documentElement
         if root.tagName != "TS":
-            raise LinguistParseError("Root element is not 'TS'")
+            raise LinguistParseError(_("Root element is not 'TS'"))
 
         # This needed to be commented out due the 'is_source' parameter.
         # When is_source=True we return the value of the <source> node as the
@@ -224,7 +224,7 @@ class LinguistHandler(Handler):
                             location.attributes["filename"].value,
                             int(location.attributes["line"].value)))
                     elif STRICT:
-                        raise LinguistParseError("Malformed 'location' element")
+                        raise LinguistParseError(_("Malformed 'location' element"))
 
                 pluralized = False
                 if message.attributes.has_key("numerus") and \
@@ -276,8 +276,8 @@ class LinguistHandler(Handler):
                       translation.attributes['variants'].value == 'yes':
                         logger.error("Source file has unsupported"
                             " variants.")
-                        raise LinguistParseError("Qt Linguist variants are"
-                            " not yet supported.")
+                        raise LinguistParseError(_("Qt Linguist variants are"
+                            " not yet supported."))
 
                     # Skip obsolete strings.
                     if translation and translation.attributes.has_key("type"):
@@ -304,9 +304,9 @@ class LinguistHandler(Handler):
                                       numerusforms[n].attributes['variants'].value == 'yes':
                                         logger.error("Source file has unsupported"
                                             " variants.")
-                                        raise LinguistParseError("Source file"
+                                        raise LinguistParseError(_("Source file"
                                             " could not be imported: Qt Linguist"
-                                            " variants are not supported.")
+                                            " variants are not supported."))
                                 for n,f in enumerate(numerusforms):
                                     if numerusforms[n].attributes.has_key("variants") and \
                                       numerusforms[n].attributes['variants'].value == 'yes':

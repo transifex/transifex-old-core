@@ -56,8 +56,8 @@ def lotte_init_handler(sender, request, resources=None, language=None,
         except LockError, e:
             logger.debug("lock-addon: %s" % e.message)
             messages.error(request,
-                           "This translation is "
-                           "locked by someone else.")
+                           _("This translation is "
+                           "locked by someone else."))
 
 
 def lotte_done_handler(sender, request, resources=None, language=None,

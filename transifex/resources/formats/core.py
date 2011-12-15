@@ -6,6 +6,7 @@ from django.utils import simplejson as json
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
+from django.utils.translation import ugettext as _
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
 from suggestions.models import Suggestion
@@ -219,7 +220,7 @@ class Handler(object):
             self.filename = filename
             self.content = self._get_content(filename=filename)
         else:
-            msg = "Specified file %s does not exist." % filename
+            msg = _("Specified file %s does not exist." % filename)
             logger.error(msg)
             raise FormatError(msg)
 
@@ -234,7 +235,7 @@ class Handler(object):
             self.compiled_template = self.compiled_template or resource_template
             self.language = self.language or resource.source_language
         else:
-            msg = "The specified object %s is not of type Resource" % resource
+            msg = _("The specified object %s is not of type Resource" % resource)
             logger.error(msg)
             raise FormatsError(msg)
 
@@ -243,8 +244,8 @@ class Handler(object):
         if isinstance(pseudo_type, PseudoTypeMixin):
             self.pseudo_type = pseudo_type
         else:
-            raise Exception("pseudo_type needs to be based on type %s" %
-                PseudoTypeMixin.__class__)
+            raise Exception(_("pseudo_type needs to be based on type %s" %
+                PseudoTypeMixin.__class__))
 
 
     def _find_linesep(self, s):
@@ -827,7 +828,7 @@ class Handler(object):
         try:
             obj = self._parse(is_source, lang_rules)
         except self.HandlerParseError, e:
-            msg = "Error when parsing file for resource %s: %s"
+            msg = _("Error when parsing file for resource %s: %s")
             logger.error(msg % (self.resource, e), exc_info=True)
             raise
         if is_source:

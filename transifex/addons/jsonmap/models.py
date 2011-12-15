@@ -17,16 +17,16 @@ class JSONMap(models.Model):
     Store the JSON mapping used to among resources and its translation files
     """
     slug = models.SlugField(null=False, blank=False, max_length=50,
-        help_text="Slug for the mapping. Usually the same as the old "
-        "component slug.")
+        help_text=_("Slug for the mapping. Usually the same as the old "
+        "component slug."))
     content = CompressedTextField(null=False, blank=False,
-        help_text="Mapping in JSON format.")
+        help_text=_("Mapping in JSON format."))
     created = models.DateTimeField(auto_now_add=True, editable=False)
     modified = models.DateTimeField(auto_now=True, editable=False)
 
     # ForeignKeys
     project = models.ForeignKey('projects.Project', null=False, blank=False,
-        help_text="Project to which the JSON mapping belongs.")
+        help_text=_("Project to which the JSON mapping belongs."))
 
     def __unicode__(self):
         return '%s.%s' % (self.project.slug, self.slug)
@@ -36,8 +36,8 @@ class JSONMap(models.Model):
 
     class Meta:
         unique_together = ("project", "slug")
-        verbose_name = 'JSONMap'
-        verbose_name_plural = 'JSONMaps'
+        verbose_name = _('JSONMap')
+        verbose_name_plural = _('JSONMaps')
         ordering  = ('project__name',)
         get_latest_by = 'created'
 

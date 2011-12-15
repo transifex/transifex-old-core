@@ -162,9 +162,9 @@ class XliffHandler(Handler):
     def getElementByTagName(self, element, tagName, noneAllowed = False):
         elements = element.getElementsByTagName(tagName)
         if not noneAllowed and not elements:
-            raise self.HandlerParseError("Element '%s' not found!" % tagName)
+            raise self.HandlerParseError(_("Element '%s' not found!" % tagName))
         if len(elements) > 1:
-            raise self.HandlerParseError("Multiple '%s' elements found!" % tagName)
+            raise self.HandlerParseError(_("Multiple '%s' elements found!" % tagName))
         return elements[0]
 
     def _parse(self, is_source, lang_rules):
@@ -180,7 +180,7 @@ class XliffHandler(Handler):
             root = self.doc.documentElement
 
             if root.tagName != "xliff":
-                raise XliffParseError("Root element is not 'xliff'")
+                raise XliffParseError(_("Root element is not 'xliff'"))
             for node in root.childNodes:
                 if node.nodeType == node.ELEMENT_NODE and node.localName == "file":
                     self.parse_tag_file(node, is_source)
@@ -224,7 +224,7 @@ class XliffHandler(Handler):
                 source = source_node.firstChild.data
             if is_source:
                 if nplural_file != 2:
-                    raise self.HandlerParseError("Your source file has more than two plurals which is not supported.")
+                    raise self.HandlerParseError(_("Your source file has more than two plurals which is not supported."))
                 for n, node in enumerate(trans_unit_nodes):
                     if n == 0:
                         rule = 1
@@ -233,7 +233,7 @@ class XliffHandler(Handler):
                     self.parse_tag_trans_unit(node, is_source, [i for i in context], source_string = source, rule=rule)
             else:
                 if nplural_file != len(nplural):
-                    raise self.HandlerParseError("Your translation file does not have the supported number of plurals.")
+                    raise self.HandlerParseError(_("Your translation file does not have the supported number of plurals."))
 
                 for n, node in enumerate(trans_unit_nodes):
                     self.parse_tag_trans_unit(node, is_source, [i for i in context], source_string = source, rule=nplural[n])

@@ -25,10 +25,10 @@ def suggestion_create(request, entity_id, lang_code):
 
     #FIXME: All basic POST checks could be done in a decorator.
     if not request.method == "POST":
-        return HttpResponseBadRequest("POST method only allowed.")
+        return HttpResponseBadRequest(_("POST method only allowed."))
     suggestion_string = request.POST['suggestion_string']
     if not suggestion_string:
-        return HttpResponseBadRequest("POST variable 'suggestion_string' missing.")
+        return HttpResponseBadRequest(_("POST variable 'suggestion_string' missing."))
 
     language = Language.objects.by_code_or_alias(lang_code)
     source_entity.suggestions.create(language=language,
@@ -51,7 +51,7 @@ def suggestion_vote(request, entity_id, lang_code, suggestion_id, direction):
 
     #FIXME: All basic POST checks could be done in a decorator.
     if not request.method == "POST":
-        return HttpResponseBadRequest("POST method only allowed.")
+        return HttpResponseBadRequest(_("POST method only allowed."))
 
     if direction == 'up':
         suggestion.vote_up(request.user)

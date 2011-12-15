@@ -89,7 +89,7 @@ class GettextHandler(Handler):
         # If file is empty, the method hangs so we should bail out.
         if not content:
             logger.warning("Pofile: File '%s' is empty." % self.filename)
-            raise PoParseError("Uploaded file is empty.")
+            raise PoParseError(_("Uploaded file is empty."))
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
@@ -102,9 +102,9 @@ class GettextHandler(Handler):
                 logger.warning(
                     "pofile: Required metadata '%s' not found." % metadata
                 )
-                raise PoParseError(
+                raise PoParseError(_(
                     "Uploaded file header doesn't have '%s' metadata!" % metadata
-                )
+                ))
 
         # Save to avoid parsing it again
         self._po = po
@@ -292,9 +292,9 @@ class GettextHandler(Handler):
                 if is_source:
                     nplural_file = len(entry.msgstr_plural.keys())
                     if nplural_file != 2:
-                        raise PoParseError("Your source file is not a POT file and"
+                        raise PoParseError(_("Your source file is not a POT file and"
                             " the translation file you're using has more"
-                            " than two plurals which is not supported.")
+                            " than two plurals which is not supported."))
                     # English plural rules
                     messages = [(1, entry.msgstr_plural['0'] or entry.msgid),
                                 (5, entry.msgstr_plural['1'] or entry.msgid_plural)]
