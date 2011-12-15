@@ -86,6 +86,8 @@ setup(
         "pysolr",
         "django-tagging-autocomplete >= 0.3.1",
         "django_compressor",
+        "redis",
+        "hiredis",
     ],
     data_files=[
         ('templates', glob.glob('transifex/templates/*.html')),
