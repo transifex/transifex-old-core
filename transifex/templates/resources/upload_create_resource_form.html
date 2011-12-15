@@ -31,21 +31,27 @@ $(document).ready(function(){
 <div id="create_new_resource_form" class="generic_form {% if not display_form %}no-display{% endif %}" >
 
 
-	<span src="{{ STATIC_URL }}images/icons/help.png" class="txf-helptext tipsy_enable right" title="  {% blocktrans %}
-  Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.
-  Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
-  {% endblocktrans %}">?</span>
 
 
- <form  id="create-resource-submit" action='' method='post' enctype="multipart/form-data" class="tx-form dual houdini">
+
+ <form  id="create-resource-submit" action='' method='post' enctype="multipart/form-data" class="tx-form houdini">
+
+
   {% csrf_token %}
 
     {% comment %}
     Overridden form_as_table_rows in order to better customize it.
     {% endcomment %}
+
     {% if create_resource_form %}
+
+				<span class="grid_6 infobox">{% blocktrans %}
+				Create a resource by selecting a source language and uploading a source translation file from your workstation, such as an English POT file.
+				Transifex will analyze the file, extract the strings from inside it, and create your resource based on these.
+				{% endblocktrans %}</span>
+				
         {% if create_resource_form.non_field_errors %}
-            <ul class="fielderrors">{{ create_resource_form.non_field_errors }}</ul>
+         <ul class="fielderrors">{{ create_resource_form.non_field_errors }}</ul>
         {% endif %}
          <fieldset class="clearfix">
         {% for field in create_resource_form %}
