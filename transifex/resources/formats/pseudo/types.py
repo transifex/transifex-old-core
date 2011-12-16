@@ -145,7 +145,6 @@ class ExtendPseudoType(BracketsPseudoType):
     """
 
     chars = [
-        u'\xb5',
         u'\u0131',
         u'\u017f',
         u'\u01c5',
