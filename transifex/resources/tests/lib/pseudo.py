@@ -45,8 +45,8 @@ FORMATS = {
             'BRACKETS': [u'Key00=[Value00]'],
             'UNICODE': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s'],
             'PLANGUAGE': [u'Key01=<b>Påקågéקé</b> %s ôקôf %s'],
-            'MIXED': [u'Key01=[<b>Ƥȧɠḗ</b> %s ǿƒ %s '],
-            'EXTEND': [u'Key01=<b>Ƥȧɠḗ</b> %s ǿƒ %s ']
+            'MIXED': [u'Key01=[<b>\\u01a4\\u0227\\u0260\\u1e17</b> %s \\u01ff\\u0192 %s '],
+            'EXTEND': [u'Key01=<b>\\u01a4\\u0227\\u0260\\u1e17</b> %s \\u01ff\\u0192 %s ']
             }
         },
     'INI':{
@@ -115,7 +115,11 @@ class PseudoTestCase(base.BaseTestCase):
                 handler.compile()
                 file_content = handler.compiled_template
                 if not isinstance(file_content, unicode):
-                    file_content = file_content.decode('utf-8')
+                    try:
+                        file_content = file_content.decode('utf-8')
+                    except UnicodeDecodeError:
+                        file_content = file_content.decode('iso-8859-1')
+
 
                 #FIXME: We have a bug related to spaces being escaped in
                 # .properties files. This can be dropped after fixing it.
@@ -166,13 +170,15 @@ class PseudoTestCase(base.BaseTestCase):
 
             for pseudo_type in settings.PSEUDO_TYPES:
                 # Get resource file using a specific pseudo type
-                resp = self.client['registered'].get(url,
-                    data={'pseudo_type':pseudo_type})
+                resp = self.client['registered'].get(url, data={'pseudo_type':pseudo_type})
 
                 # Get response and check encoding
                 resp_content = eval(resp.content)['content']
                 if type(resp_content) != unicode:
-                    resp_content = resp_content.decode('utf-8')
+                    try:
+                        resp_content = resp_content.decode('utf-8')
+                    except UnicodeDecodeError:
+                        resp_content = resp_content.decode('iso-8859-1')
 
                 #FIXME: We have a bug related to spaces being escaped in
                 # .properties files. This can be dropped after fixing it.
