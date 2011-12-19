@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs, copy, os, re
+import gc
 from django.utils import simplejson as json
 
 from django.conf import settings
@@ -764,6 +765,8 @@ class Handler(object):
             )
             transaction.rollback()
             return (0, 0)
+        finally:
+            gc.collect()
         try:
             self._post_save2db(
                 is_source=is_source, user=user,
@@ -775,6 +778,8 @@ class Handler(object):
             logger.error("Unhandled exception: %s" % e.message, exc_info=True)
             transaction.rollback()
             raise FormatError(e.message)
+        finally:
+            gc.collect()
         transaction.commit()
         return (added, updated)
 

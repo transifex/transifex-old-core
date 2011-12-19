@@ -1,3 +1,4 @@
+import gc
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -76,12 +77,15 @@ class URLInfo(models.Model):
             parser.is_content_valid()
             parser.parse_file(is_source=True)
             strings_added, strings_updated = 0, 0
-            if not fake:
-                strings_added, strings_updated = parser.save2db(is_source=True)
+            # if not fake:
+            #     strings_added, strings_updated = parser.save2db(is_source=True)
         except Exception,e:
             logger.error("Error importing source file for resource %s.%s (%s): %s" %
                 ( self.resource.project.slug, self.resource.slug,
                     self.source_file_url, str(e)))
             raise
+        finally:
+            source_file.close()
+            gc.collect()
 
         return strings_added, strings_updated
