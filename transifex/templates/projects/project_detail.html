@@ -68,9 +68,7 @@
 	          {% else %}
 	            <a href="{% url profile_public m.username %}">
 	            {{m.username}}
-	            </a>
-	          {% endif %}
-	            {% if not forloop.last %},{% endif %}
+	            </a>{% endif %}{% if not forloop.last %},{% endif %}
 	        {% endfor %}
 	      </dd>
     {% endif %}
