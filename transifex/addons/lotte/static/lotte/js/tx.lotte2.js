@@ -31,7 +31,6 @@ function auto_translate_wrapper(text, src_lang, dest_lang, callback) {
                'error': response.error.message
            }
         } else {
-            source = _canonical_lang_code(source);
             if (autotranslate_type == 'GT') {
               result = {
                   'translation': response.data.translations[0].translatedText

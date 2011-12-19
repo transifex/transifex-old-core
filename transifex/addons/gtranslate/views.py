@@ -1,62 +1,47 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.utils import simplejson
+from transifex.projects.models import Project
 from gtranslate.models import Gtranslate
-import requests
 
 def _get_canonical_name(target_lang):
     if '_' in target_lang or '-' in target_lang:
         return target_lang[:2]
     return target_lang
 
-
-def autotranslate_proxy(request, project_slug):
-    source_lang = request.GET.get('source')
-    target_lang = request.GET.get('target')
-    term = request.GET.get('q')
+def translate(request, project_slug):
+    """Wrapper view over the supported translation APIs. Captures the GET
+    parameters and forwards the request to the suitable service."""
+    source_lang = request.GET.get('source', None)
+    target_lang = request.GET.get('target', None)
+    term = request.GET.get('q', None)
 
     if not all([source_lang, target_lang, term]):
         return HttpResponse(status=400)
 
     target_lang = _get_canonical_name(target_lang)
-    service = get_object_or_404(Gtranslate, project__slug=project_slug)
-    if service.service_type == 'GT':
-        base_url = 'https://www.googleapis.com/language/translate/v2'
-        params = {
-            'key': service.api_key,
-            'q': term,
-            'source': source_lang,
-            'target': target_lang,
-        }
-    elif service.service_type == 'BT':
-        base_url = 'http://api.microsofttranslator.com/V2/Ajax.svc/TranslateArray'
-        params = {
-            'appId': service.api_key,
-            'texts': '["' + term + '"]',
-            'from': source_lang,
-            'to': target_lang,
-            'options': '{"State": ""}'
-        }
-    r = requests.get(base_url, params=params)
-    return HttpResponse(r.content)
 
+    try:
+        service = Gtranslate.objects.get(project__slug=project_slug)
+        resp = service.translate(term, source_lang, target_lang)
+        return HttpResponse(resp)
+    except Gtranslate.DoesNotExist:
+        return HttpResponse(simplejson.dumps({"error": "Auto-translate not available."}))
 
-def supported_langs(request, project_slug):
-    service = get_object_or_404(Gtranslate, project__slug=project_slug)
-    if service.service_type == 'GT':
-        base_url = 'https://www.googleapis.com/language/translate/v2/languages'
-        target_lang = request.GET.get('target')
+def languages(request, project_slug):
+    """Thin wrapper over the translation APIs to check if the requested language
+    is supported. If no services are enabled for the project, it has the ability
+    to fallback to a common Transifex key for use by all projects.
+    """
+    target_lang = request.GET.get('target', None)
+    if target_lang:
         target_lang = _get_canonical_name(target_lang)
-        if not target_lang:
-            return HttpResponse(status=400)
-        params = {
-            'key': service.api_key,
-            'target': target_lang,
-        }
-    elif service.service_type == 'BT':
-        base_url = 'http://api.microsofttranslator.com/V2/Ajax.svc/GetLanguagesForTranslate'
-        params = {
-            'appId': service.api_key,
-        }
-    r = requests.get(base_url, params=params)
-    return HttpResponse(r.content)
+
+    try:
+        service = Gtranslate.objects.get(project__slug=project_slug)
+        resp = service.languages(target_lang)
+        return HttpResponse(resp)
+    except Gtranslate.DoesNotExist:
+        return HttpResponse(simplejson.dumps({"error": "Auto-translate not available."}))
