@@ -99,7 +99,7 @@
         {% if projects %}
         <div class="list">
         <h4>
-        {% blocktrans count projects|length as counter %}Maintainer of the following project:{% plural %}Member of the following projects:{% endblocktrans %}
+        {% blocktrans count projects|length as counter %}Maintainer of the following project{% plural %}Member of the following projects{% endblocktrans %}
         </h4>
         <ul>
         {% for project in projects|dictsort:"project.name" %}
@@ -118,7 +118,7 @@
         {% if projects %}
         <div class="list">
         <h4>
-        {% blocktrans count projects|length as counter %}Maintainer of the following project:{% plural %}Member of the following projects:{% endblocktrans %}
+        {% blocktrans count projects|length as counter %}Maintainer of the following project{% plural %}Member of the following projects{% endblocktrans %}
         </h4>
         <ul>
         {% for project in projects|dictsort:"project.name" %}
@@ -138,7 +138,7 @@
         {% autopaginate teams 20 %}
         <div class="list">
         <h4>
-        {% blocktrans count teams|length as counter %}Coordinator of the following team:{% plural %}Coordinator of the following teams:{% endblocktrans %}
+        {% blocktrans count teams|length as counter %}Coordinator of the following team{% plural %}Coordinator of the following teams{% endblocktrans %}
         </h4>
         <ul>
         {% for team in teams|dictsort:"language.name" %}
@@ -159,7 +159,7 @@
         {% autopaginate teams 20 %}
         <div class="list">
         <h4>
-        {% blocktrans count teams|length as counter %}Member of the following team:{% plural %}Member of the following teams:{% endblocktrans %}
+        {% blocktrans count teams|length as counter %}Member of the following team{% plural %}Member of the following teams{% endblocktrans %}
         </h4>
         <ul>
         {% for team in teams|dictsort:"language.name" %}
