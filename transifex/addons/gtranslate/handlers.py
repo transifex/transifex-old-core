@@ -90,6 +90,12 @@ def save_auto_translate(sender, **kwargs):
         except Exception, e:
             msg = "Error saving auto-translate service for project %s: %s"
             logger.error(msg % (project, e))
+    else:
+        try:
+            auto_translate = GtModel.objects.get(project=project)
+            auto_translate.delete()
+        except GtModel.DoesNotExist:
+            pass
 
 
 def connect():
