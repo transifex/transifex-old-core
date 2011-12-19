@@ -22,31 +22,23 @@
 <script type="text/javascript">
 
 function toggle_access_control(){
-    var access_control = $("select[name='access_control']").val();
-    if (access_control != 'outsourced_access'){
-        $("#id_outsource").parents('tr').hide();
+    var access_control = $("input[name='project_type']:checked").val();
+    if (access_control != 'outsourced'){
+        $("input[name='access_control']").attr('disabled', false);
+        $("select[name='outsource']").attr('disabled', 'disabled');
     }else{
-        $("#id_outsource").parents('tr').show();
+        $("input[name='access_control']").attr('disabled', 'disabled');
+        $("select[name='outsource']").attr('disabled', false);
     }
 }
 
-$(document).ready(
-    function ()
-    {
-        {% if project.outsource %}          
-            $("form[name=hub]").submit(function(){
-                // On submit disable its submit button
-                $("input[type=submit]", this).attr('disabled', 'disabled');
-            });
-            $("form[name=hub] input").attr('disabled', 'disabled');
-            $("form[name=hub] input").addClass('tick_disabled');
-        {% endif %}
-        
-        $("select[name='access_control']").change(function(){
-            toggle_access_control();
-        });
-
+$(document).ready(function(){
+    $("input[name='project_type']").change(function(){
         toggle_access_control();
+    });
+
+    toggle_access_control();
+
     }
 );
 </script>

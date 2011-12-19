@@ -15,38 +15,39 @@
 
 <div id="project-form-container" class="obj_bigdetails ui-tabs-panel">
 
-<h3 class="name">{% trans "Outsource and Access Control" %}</h3>
-
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div class="project_create generic_form">
 
 {% if is_maintainer %}
+    <h3/>{% trans "Outsource and Access Control Settings" %}</h3>
 
-    <div class="separate-header clearfix">
-        <h3 class="sh-label">Project Hub</h3>
-    </div>
-
-    {% if project.outsource %}
-        <div class="notice">
-        {% blocktrans with project.outsource.name as project_name %}This project is outsourcing its access to '{{ project_name }}', thus it can not become a project hub.{% endblocktrans %}
-        </div>   
-    {% endif%}
-
-    <form name="hub" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">{% csrf_token %}
+    <form name="hub" action='' method='post' class="microform">{% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}"/> 
-        <table class="access_control">
-            <tbody> 
-            {% get_fieldset is_hub as hub_form from project_access_control_form %}
-            {% form_as_table_rows hub_form %}
-            </tbody>
-        </table>
-        </table>
+        {% if form.non_field_errors %}
+            <ul class="fielderrors">{{ form.non_field_errors }}</ul>
+        {% endif %}
+        <div class="tx-form-field">
+            {{ form.project_type.label }}: {% if form.project_type.field.required %}<span class="required">*</span>{% endif %}
+            {{ form.project_type }}
+            {% if form.project_type.errors %}<p class="fielderrors">{% for error in form.project_type.errors %}{{ error }}{% endfor %}</p>{% endif %}
+            <p class="helptext">{{ form.project_type.help_text|safe }}</p>
+
+            {{ form.outsource.label }}: {% if form.outsource.field.required %}<span class="required">*</span>{% endif %}
+            {{ form.outsource }}
+            {% if form.outsource.errors %}<p class="fielderrors">{% for error in form.outsource.errors %}{{ error }}{% endfor %}</p>{% endif %}
+            <p class="helptext">{{ form.outsource.help_text|safe }}</p>
+
+            {{ form.access_control.label }}: {% if form.access_control.field.required %}<span class="required">*</span>{% endif %}
+            {{ form.access_control }}
+            {% if form.access_control.errors %}<p class="fielderrors">{% for error in form.access_control.errors %}{{ error }}{% endfor %}</p>{% endif %}
+            <p class="helptext">{{ form.access_control.help_text|safe }}</p>
+
         <p class="submit">
-            <input type="submit" class="i16 submit buttonized" name="hub" value="{% trans "Save Hub Settings" %}" />
+            <input type="submit" class="i16 submit buttonized" name="hub" value="{% trans "Save" %}" />
         </p>
     </form>  
-  
+
     {% if project.is_hub %}
     <div class="i16 project" style="margin-top:1em;" >
         <span id="outsourcing_projects" class="clickable">{% trans "See projects outsourcing access to it." %}</span>
@@ -84,27 +85,6 @@
     </script>
 
     {% endif %}
-  
-    <div class="separate-header clearfix">
-        <h3 class="sh-label">Access Control</h3>
-    </div>
-
-    {% if project.is_hub %}
-        <div class="notice">{% trans "This project is set as a hub and can not outsource its access to another hub. Only 'Free for all' and 'Limited access' options are available." %}</div>   
-    {% endif%}
-
-    <form name="access_control" action='{% url project_access_control_edit project.slug %}' method='post' class="microform">{% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.path }}"/>
-        <table class="access_control">
-            <tbody> 
-                {% get_fieldset access_control,outsource as access_control_form from project_access_control_form %}
-                {% form_as_table_rows access_control_form %}
-            </tbody>
-        </table>
-        <p class="submit">
-            <input type="submit" class="i16 submit buttonized" name="submit_access_control" value="{% trans "Save Access Control Settings" %}" />
-        </p>
-    </form>  
 
 {% endif %}
 
