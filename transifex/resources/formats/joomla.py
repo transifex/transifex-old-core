@@ -69,7 +69,9 @@ class JoomlaINIHandler(Handler):
                 if is_source:
                     buf += line + self.linesep
                     if line.startswith(self.comment_chars):
-                        comment += line[1:] + self.linesep
+                        comment = line[1:] + self.linesep
+                    else:
+                        comment = ""
                 continue
 
             try:
