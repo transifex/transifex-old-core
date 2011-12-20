@@ -41,7 +41,7 @@ def visit_url(sender, **kwargs):
         post_function = requests.post
 
     try:
-        hook = WebHook.objects.get(project=project)
+        hooks = WebHook.objects.filter(project=project)
     except WebHook.DoesNotExist:
         logger.debug("Project %s has no web hooks" % project.slug)
         return False
@@ -56,19 +56,16 @@ def visit_url(sender, **kwargs):
         "POST data for %s: %s" % (stats.resource.project.slug, event_info)
     )
 
-    res = post_function(
-        hook.url, data=event_info, allow_redirects=False, timeout=2.0
-    )
-    if res.ok:
-        logger.debug("POST for project %s successful." % project)
-        return True
-    else:
-        msg = "Error visiting webhook %s: HTTP code is %s" % (
-            hook, res.status_code
-        )
-        logger.error(msg)
-        return False
+    for hook in hooks:
+        res = post_function(hook.url,
+          data=event_info, allow_redirects=False, timeout=2.0)
 
+        if res.ok:
+            logger.debug("POST for project %s successful." % project)
+        else:
+            msg = "Error visiting webhook %s: HTTP code is %s" % (
+              hook, res.status_code)
+            logger.error(msg)
 
 def add_web_hook_field(sender, **kwargs):
     """Add the field for a web hook to the project edit form."""

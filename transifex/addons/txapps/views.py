@@ -60,7 +60,7 @@ def enable_app(request, project_slug, txapp_slug, **kwargs):
         )
         return HttpResponse(unicode(e))
     url = '/'.join([txapp.url, 'tx/translated'])
-    WebHook.objects.create(project=project, url=url)
+    WebHook.objects.get_or_create(project=project, url=url, kind='a')
     txapp.projects.add(project)
     return HttpResponse('')
 
