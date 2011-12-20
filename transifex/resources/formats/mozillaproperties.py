@@ -13,14 +13,23 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
-from transifex.resources.formats.javaproperties import JavaPropertiesHandler
+from transifex.resources.formats.properties import PropertiesHandler, \
+        PropertiesParseError, PropertiesCompileError
 
-class MozillaPropertiesHandler(JavaPropertiesHandler):
+class MozillaPropertiesParseError(PropertiesParseError):
+    pass
+
+class MozillaPropertiesCompileError(PropertiesCompileError):
+    pass
+
+class MozillaPropertiesHandler(PropertiesHandler):
     name = "Mozilla *.PROPERTIES file handler"
     format = "Mozilla PROPERTIES (*.properties)"
     method_name = 'MOZILLAPROPERTIES'
     format_encoding = 'UTF-8'
 
+    HandlerParseError = MozillaPropertiesParseError
+    HandlerCompileError = MozillaPropertiesCompileError
 
     def _escape(self, s):
         """
@@ -41,54 +50,4 @@ class MozillaPropertiesHandler(JavaPropertiesHandler):
             original, self._pseudo_decorate(self._escape(replacement))
         )
 
-    def _parse(self, is_source, lang_rules):
-        """
-        Parse a mozilla .properties content and create a stringset with
-        all entries in it.
 
-        See http://www-archive.mozilla.org/projects/l10n/mlp_what2.html
-        for details.
-        """
-        resource = self.resource
-
-        context = ""
-        self._find_linesep(self.content)
-        template = u""
-        lines = self._iter_by_line(self.content)
-        for line in lines:
-            line = self._prepare_line(line)
-            # Skip empty lines and comments
-            if not line or line.startswith(self.comment_chars):
-                if is_source:
-                    template += line + self.linesep
-                continue
-            # If the last character is a backslash
-            # it has to be preceded by a space in which
-            # case the next line is read as part of the
-            # same property
-            while line[-1] == '\\' and not self._is_escaped(line, -1):
-                # Read next line
-                nextline = self._prepare_line(lines.next())
-                # This line will become part of the value
-                line = line[:-1] + self._prepare_line(nextline)
-            key, value = self._split(line)
-
-            if is_source:
-                if not value:
-                    template += line + self.linesep
-                    # Keys with no values should not be shown to translator
-                    continue
-                else:
-                    key_len = len(key)
-                    template += line[:key_len] + re.sub(
-                        re.escape(value),
-                        "%(hash)s_tr" % {'hash': hash_tag(key, context)},
-                        line[key_len:]
-                    ) + self.linesep
-            elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
-                # ignore keys with no translation
-                continue
-            self._add_translation_string(
-                key, self._unescape(value), context=context
-            )
-        return template
