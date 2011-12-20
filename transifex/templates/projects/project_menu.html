@@ -33,11 +33,27 @@ function toggle_access_control(){
 }
 
 $(document).ready(function(){
-    $("input[name='project_type']").change(function(){
-        toggle_access_control();
-    });
+    
+    {# If project has a hub request open, do not execute form toggler #}
+    {% if not project.hub_request %}
+    
+        $("input[name='project_type']").change(function(){
+            toggle_access_control();
+        });
 
-    toggle_access_control();
+        toggle_access_control();
+
+    {% else %}
+
+        $("form[name=hub]").submit(function(){
+            // On submit disable its submit button
+            $("input[type=submit]", this).attr('disabled', 'disabled');
+        });
+        $("form[name=hub] input[type=submit]").attr('disabled', 'disabled');
+        $("form[name=hub] input[type=submit]").addClass('tick_disabled');
+
+
+    {% endif %}
 
     }
 );

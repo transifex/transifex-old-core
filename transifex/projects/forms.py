@@ -221,14 +221,21 @@ class ProjectAccessControlForm(forms.ModelForm):
         self.user = kwargs.pop('user', None)
         super(ProjectAccessControlForm, self).__init__(*args, **kwargs)       
         self.project = kwargs.get('instance', None)
-               
+
         outsource_required = False
         access_control_required = True
         project_type_initial = None
         access_control_initial = None
-        
+
+        self.hub_request = self.project.hub_request
+
+        # Disable all form fields if there is a open hub request
+        if self.hub_request:
+            for f in self.fields:
+                self.fields[f].widget.attrs['disabled'] = 'disabled'
+
         if args:
-            if 'outsourced' == args[0]['project_type']:
+            if 'outsourced' == getattr(args[0], 'project_type', None):
                 outsource_required = True
                 access_control_required = False
         elif self.project:

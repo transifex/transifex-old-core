@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q, get_model
 from django.http import HttpResponseRedirect
@@ -15,7 +16,7 @@ from django.contrib.auth.decorators import login_required
 from actionlog.models import action_logging, LogEntry
 from actionlog.filters import LogEntryFilter
 from notification import models as notification
-from transifex.projects.models import Project
+from transifex.projects.models import Project, HubRequest
 from transifex.projects.forms import ProjectAccessControlForm, \
     ProjectForm, ProjectDeleteForm
 from transifex.projects.permissions import *
@@ -121,6 +122,7 @@ def project_update(request, project_slug):
 def project_access_control_edit(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
+    hub_request = None
 
     if request.method == 'POST':
         form = ProjectAccessControlForm(request.POST, instance=project,
@@ -132,31 +134,43 @@ def project_access_control_edit(request, project_slug):
                 
             if 'outsourced' != project_type:
                 project.outsource = None
+            else:
+                # Now it does not associate the outsource project directly.
+                # It does a request instead.
+                try:
+                    hub_request = HubRequest.objects.get(project=project)
+                except ObjectDoesNotExist:
+                    hub_request = HubRequest(project=project)
+                hub_request.project_hub = project.outsource
+                hub_request.user = request.user
+                hub_request.save()
+                    
+            if not hub_request:
+                if 'hub' == project_type:
+                    project.is_hub = True
+                else:
+                    project.is_hub = False
                 
-            if 'hub' == project_type:
-                project.is_hub = True
-            else:
-                project.is_hub = False
-            
-            if ('free_for_all' == access_control and 
-                project_type != "outsourced"):
-                project.anyone_submit = True
-            else:
-                project.anyone_submit = False
+                if ('free_for_all' == access_control and 
+                    project_type != "outsourced"):
+                    project.anyone_submit = True
+                else:
+                    project.anyone_submit = False
 
-            # Check if cla form exists before sending the signal
-            if 'limited_access' == access_control and \
-            form.cleaned_data.has_key('cla_license_text'):
-                # send signal to save CLA
-                signals.cla_create.send(
-                    sender='project_access_control_edit_view',
-                    project=project,
-                    license_text=form.cleaned_data['cla_license_text'],
-                    request=request
-                )
-            project.save()
-            form.save_m2m()
-            handle_stats_on_access_control_edit(project)
+                # Check if cla form exists before sending the signal
+                if 'limited_access' == access_control and \
+                form.cleaned_data.has_key('cla_license_text'):
+                    # send signal to save CLA
+                    signals.cla_create.send(
+                        sender='project_access_control_edit_view',
+                        project=project,
+                        license_text=form.cleaned_data['cla_license_text'],
+                        request=request
+                    )
+                
+                project.save()
+                form.save_m2m()
+                handle_stats_on_access_control_edit(project)
             return HttpResponseRedirect(request.POST['next'])
 
     else:

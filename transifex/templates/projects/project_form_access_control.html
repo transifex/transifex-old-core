@@ -20,6 +20,13 @@
 <div class="project_create generic_form">
 
 {% if is_maintainer %}
+
+    {% if project.hub_request %}
+        <div class="notice">
+        {% blocktrans with project.hub_request.project_hub as project_name %}This project has an outsource request pending to the '{{ project_name }}' hub, thus it can not change its access control settings while the request is open.{% endblocktrans %}
+        </div>   
+    {% endif%}
+
     <h3/>{% trans "Outsource and Access Control Settings" %}</h3>
 
     <form name="hub" action='' method='post' class="microform">{% csrf_token %}
@@ -50,7 +57,9 @@
 
     {% if project.is_hub %}
     <div class="i16 project" style="margin-top:1em;" >
-        <span id="outsourcing_projects" class="clickable">{% trans "See projects outsourcing access to it." %}</span>
+        <span id="outsourcing_projects" class="clickable">
+        {% blocktrans count project.outsourcing.count as counter %} {{ counter }} project outsourcing access to it{% plural %}{{ counter }} projects outsourcing access to it{% endblocktrans %}
+        </span>
     </div>
 
     <script type="text/javascript">

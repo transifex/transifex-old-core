@@ -236,6 +236,17 @@ class Project(models.Model):
         return ('project_detail', None, { 'project_slug': self.slug })
 
     @property
+    def hub_request(self):
+        """
+        Return a HubRequest object if a request to join a project hub exists.
+        Otherwise it returns None.
+        """
+        try:
+            return self.hub_requesting.all()[0]
+        except IndexError:
+            return None
+
+    @property
     def wordcount(self):
         return self.resources.aggregate(Sum('wordcount'))['wordcount__sum'] or 0
 
@@ -279,7 +290,7 @@ class HubRequest(models.Model):
     to a project hub once at a time.
     """
     project_hub = models.ForeignKey(Project, verbose_name=_('Project Hub'),
-        blank=False, null=False, related_name="hub_request",
+        blank=False, null=False, related_name="hub_requests",
         help_text=_("The project hub to outsource teams from."))
 
     project = models.ForeignKey(Project, verbose_name=_('Project'), 

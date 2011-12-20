@@ -1,5 +1,5 @@
 from django.contrib import admin
-from transifex.projects.models import Project
+from transifex.projects.models import Project, HubRequest
 from authority.admin import PermissionInline
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -7,3 +7,5 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ['name', 'description']
 
 admin.site.register(Project, ProjectAdmin, inlines=(PermissionInline,))
+admin.site.register(HubRequest)
+
