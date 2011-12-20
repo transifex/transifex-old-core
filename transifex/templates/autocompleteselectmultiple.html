@@ -3,7 +3,8 @@
 <p id="{{html_id}}_on_deck" class="results_on_deck"></p>
 <input type="hidden" name="{{name}}" id="{{html_id}}" value="{{current_ids}}" />
 <script type="text/javascript">
-jQuery(document).ready(function($){
+jQuery(document).ready(function($) {
+    if (window.already_run === undefined) {
         function formatItem_{{html_id|cut:"-"}}(row) {
                 return row[2];
         }
@@ -48,6 +49,8 @@ jQuery(document).ready(function($){
         currentRepr.forEach(function(its){
                 addKiller_{{html_id|cut:"-"}}(its[0],its[1]);
         });
+    }
+    window.already_run = true;
 });
 </script>
 
