@@ -39,7 +39,7 @@ class Release(models.Model):
     long_description = models.TextField(_('Long description'),
         blank=True, max_length=1000,
         help_text=_('Use Markdown syntax.'))
-    homepage = models.URLField(blank=True, verify_exists=False)
+    homepage = models.URLField(_("Homepage"), blank=True, verify_exists=False)
 
     release_date = models.DateTimeField(_('Release date'),
         blank=True, null=True,

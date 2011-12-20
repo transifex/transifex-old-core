@@ -21,7 +21,7 @@ $(document).ready(function(){
     {% endif %}
     
     $("#create-resource-submit").submit(function(){
-			$("div#notification-container div").html("Uploading Resource");
+      $("div#notification-container div").html("{% trans "Uploading Resource" %}");
 			$("div#notification-container").fadeIn("fast");
     });
 });
