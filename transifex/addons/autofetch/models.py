@@ -68,7 +68,10 @@ class URLInfo(models.Model):
                 msg = "No i18n method defined for resource %s"
                 logger.error(msg % self.resource)
                 return
-            parser = registry.handler_for(self.resource.i18n_method)
+            parser = registry.handler_for_resource(
+                self.resource, language=self.resource.source_language,
+                filename=filename
+            )
             language = self.resource.source_language
             content = source_file.read()
             parser.bind_content(content)
@@ -77,8 +80,8 @@ class URLInfo(models.Model):
             parser.is_content_valid()
             parser.parse_file(is_source=True)
             strings_added, strings_updated = 0, 0
-            # if not fake:
-            #     strings_added, strings_updated = parser.save2db(is_source=True)
+            if not fake:
+                strings_added, strings_updated = parser.save2db(is_source=True)
         except Exception,e:
             logger.error("Error importing source file for resource %s.%s (%s): %s" %
                 ( self.resource.project.slug, self.resource.slug,
