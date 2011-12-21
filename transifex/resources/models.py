@@ -840,10 +840,10 @@ class RLStats(models.Model):
 
     # Foreign Keys
     resource = models.ForeignKey(Resource, blank=False, null=False,
-        verbose_name=_("Resource", help_text="The resource to which the "
+        verbose_name=_("Resource"), help_text=_("The resource to which the "
         "statistics are associated."))
     language = models.ForeignKey(Language, blank=False, null=False,
-        verbose_name=_("Language", help_text="The language to which these "
+        verbose_name=_("Language"), help_text=_("The language to which these "
         "statistics refer."))
 
     # Normalized fields
