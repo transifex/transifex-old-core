@@ -233,9 +233,8 @@ class ProjectAccessControlForm(forms.ModelForm):
         if self.hub_request:
             for f in self.fields:
                 self.fields[f].widget.attrs['disabled'] = 'disabled'
-
         if args:
-            if 'outsourced' == getattr(args[0], 'project_type', None):
+            if 'outsourced' == args[0].get('project_type'):
                 outsource_required = True
                 access_control_required = False
         elif self.project:

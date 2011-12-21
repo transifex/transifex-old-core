@@ -69,6 +69,48 @@ NOTICE_TYPES = [
                 "show_to_user": True,
             },
 
+            # Outsourcing requests
+            {
+                "label": "project_hub_join_requested",
+                "display": _("Requested to join a project hub"),
+                "description": _("when a project requests to join a "
+                                 "project hub"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_hub_join_approved",
+                "display": _("Approved to join project hub"),
+                "description": _("when a project is approved to join a "
+                                 "project hub"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_hub_join_denied",
+                "display": _("Denied to join project hub"),
+                "description": _("when a proejct is denied to join a "
+                                 "project  hub"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_hub_join_withdrawn",
+                "display": _("Withdrew request to join project hub"),
+                "description": _("when a project decides not to "
+                                 "join a project hub"),
+                "default": 2,
+                "show_to_user": True,
+            },
+            {
+                "label": "project_hub_left",
+                "display": _("Project left project hub"),
+                "description": _("when a project leaves a "
+                                 "project hub"),
+                "default": 2,
+                "show_to_user": True,
+            },
+
             # Project releases
 
             {

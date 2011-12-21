@@ -23,6 +23,7 @@ from transifex.projects.permissions import *
 from transifex.projects import signals
 
 from transifex.languages.models import Language
+from transifex.projects.permissions.project import ProjectPermission
 from transifex.resources.models import RLStats
 from transifex.resources.utils import invalidate_template_cache
 
@@ -122,7 +123,6 @@ def project_update(request, project_slug):
 def project_access_control_edit(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
-    hub_request = None
 
     if request.method == 'POST':
         form = ProjectAccessControlForm(request.POST, instance=project,
@@ -131,46 +131,66 @@ def project_access_control_edit(request, project_slug):
             access_control = form.cleaned_data['access_control']
             project_type = form.cleaned_data['project_type']
             project = form.save(commit=False)
-                
+            project_hub = project.outsource
+            hub_request = None
+            
             if 'outsourced' != project_type:
                 project.outsource = None
             else:
-                # Now it does not associate the outsource project directly.
-                # It does a request instead.
-                try:
-                    hub_request = HubRequest.objects.get(project=project)
-                except ObjectDoesNotExist:
-                    hub_request = HubRequest(project=project)
-                hub_request.project_hub = project.outsource
-                hub_request.user = request.user
-                hub_request.save()
+                check = ProjectPermission(request.user)
+                if not (check.maintain(project) and check.maintain(project_hub)):
+                    # If the user is not maintainer of both projects it does 
+                    # not associate the outsource project directly.
+                    # It does a request instead.
+                    try:
+                        hub_request = HubRequest.objects.get(project=project)
+                    except ObjectDoesNotExist:
+                        hub_request = HubRequest(project=project)
+                    hub_request.project_hub = project_hub
+                    hub_request.user = request.user
+                    hub_request.save()
                     
-            if not hub_request:
-                if 'hub' == project_type:
-                    project.is_hub = True
-                else:
-                    project.is_hub = False
-                
-                if ('free_for_all' == access_control and 
-                    project_type != "outsourced"):
-                    project.anyone_submit = True
-                else:
-                    project.anyone_submit = False
+                    messages.success(request,
+                        _("Requested to join the '%s' project hub.") % project_hub)
+                    # ActionLog & Notification
+                    # TODO: Use signals
+                    nt = 'project_hub_join_requested'
+                    context = {'hub_request': hub_request}
 
-                # Check if cla form exists before sending the signal
-                if 'limited_access' == access_control and \
-                form.cleaned_data.has_key('cla_license_text'):
-                    # send signal to save CLA
-                    signals.cla_create.send(
-                        sender='project_access_control_edit_view',
-                        project=project,
-                        license_text=form.cleaned_data['cla_license_text'],
-                        request=request
-                    )
+                    # Logging action
+                    action_logging(request.user, [project, project_hub], nt, context=context)
+
+                    if settings.ENABLE_NOTICES:
+                        # Send notification for project hub maintainers 
+                        notification.send(project_hub.maintainers.all(), nt, context)
+
+                    return HttpResponseRedirect(request.POST['next'])
                 
-                project.save()
-                form.save_m2m()
-                handle_stats_on_access_control_edit(project)
+            if 'hub' == project_type:
+                project.is_hub = True
+            else:
+                project.is_hub = False
+            
+            if ('free_for_all' == access_control and 
+                project_type != "outsourced"):
+                project.anyone_submit = True
+            else:
+                project.anyone_submit = False
+
+            # Check if cla form exists before sending the signal
+            if 'limited_access' == access_control and \
+            form.cleaned_data.has_key('cla_license_text'):
+                # send signal to save CLA
+                signals.cla_create.send(
+                    sender='project_access_control_edit_view',
+                    project=project,
+                    license_text=form.cleaned_data['cla_license_text'],
+                    request=request
+                )
+            
+            project.save()
+            form.save_m2m()
+            handle_stats_on_access_control_edit(project)
             return HttpResponseRedirect(request.POST['next'])
 
     else:
