@@ -181,6 +181,8 @@ class TestPoFile(FormatsBaseTestCase):
         self.assertEqual(pt_trans.string, "Holas, Amigos!")
         self.assertEqual(source.string, "source_1")
 
+    @unittest.skipIf(settings.MAX_STRING_ITERATIONS == 0,
+            "Skipping because MAX_STRING_ITERATIONS = 0")
     def test_convert_to_suggestions(self):
         """Test convert to suggestions when importing new source files"""
 
