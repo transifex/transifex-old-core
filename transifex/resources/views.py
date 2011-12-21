@@ -148,8 +148,9 @@ def resource_edit(request, project_slug, resource_slug):
                     content = content_from_uploaded_file(
                         {0: resource_form.cleaned_data['sourcefile'], }
                     )
+                    filename = resource_form.cleaned_data['sourcefile'].name
                     save_source_file(
-                        resource, request.user, content, method
+                        resource, request.user, content, method, filename
                     )
 
                 urlinfo = url_form.save(commit=False)
@@ -210,13 +211,13 @@ def resource_edit(request, project_slug, resource_slug):
 
 
 @transaction.commit_on_success
-def save_source_file(resource, user, content, method):
+def save_source_file(resource, user, content, method, filename=None):
     """Save new source file.
 
     Called by the "edit resource" action.
     """
     fb = FormatsBackend(resource, resource.source_language, user)
-    return fb.import_source(content, method)
+    return fb.import_source(content, method, filename)
 
 
 # Restrict access only for private projects

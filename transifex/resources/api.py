@@ -868,7 +868,11 @@ class FileTranslation(Translation):
                 file_.write(chunk)
             file_.close()
 
-            parser = registry.handler_for(self.resource.i18n_method)
+            parser = registry.handler_for_resource(
+                self.resource,
+                language=self.language,
+                filename=name
+            )
             parser.bind_file(file_.name)
             if parser is None:
                 raise BadRequestError("Unknown file type")
@@ -941,7 +945,9 @@ class StringTranslation(Translation):
         """
         if 'content' not in self.data:
             raise NoContentError("No content found.")
-        parser = registry.handler_for(self.resource.i18n_method)
+        parser = registry.handler_for_resource(
+            self.resource, language=self.language
+        )
         if parser is None:
             raise BadRequestError("I18n type is not supported: %s" % i18n_type)
 

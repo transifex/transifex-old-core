@@ -4,13 +4,15 @@ import os
 from django.conf import settings
 from django.test import TransactionTestCase
 from transifex.projects.models import Project
-from transifex.txcommon.tests.base import Languages, Users, NoticeTypes
+from transifex.txcommon.tests.base import TransactionLanguages, Users, \
+        TransactionNoticeTypes
 from transifex.languages.models import Language
 from transifex.resources.models import Resource, SourceEntity, Translation
 from transifex.resources.backends import *
 
 
-class TestBackend(Users, Languages, NoticeTypes, TransactionTestCase):
+class TestBackend(Users, TransactionLanguages, TransactionNoticeTypes,
+                  TransactionTestCase):
 
     def setUp(self):
         super(TestBackend, self).setUp()
@@ -29,7 +31,7 @@ class TestBackend(Users, Languages, NoticeTypes, TransactionTestCase):
                 source_language=self.source_lang)
         self.resource = Resource.objects.create(
             slug='test', name='Test', source_language=self.source_lang,
-            project=self.project
+            project=self.project, i18n_type='PO'
         )
         self.method = 'PO'
 

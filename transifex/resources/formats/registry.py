@@ -136,7 +136,8 @@ class _FormatsRegistry(object):
         """Return a handler for the i18n type specified.
 
         Args:
-            m: A i18n_method
+            m: A i18n_method.
+            filename: The filename (if available).
 
         Returns:
             A particular handler for the method or None, in case the method
@@ -145,5 +146,28 @@ class _FormatsRegistry(object):
         if m not in self.handlers:
             return None
         return self.handlers[m]()
+
+    def handler_for_resource(self, resource, language=None, filename=None):
+        """Return a handler for a resource.
+
+        Args:
+            resource: A resource.
+            language: A language.
+            filename: The filename of the content.
+        Returns:
+            A particular handler for the method or None, in case the method
+            has not been registered.
+        """
+        m = resource.i18n_type
+        slang = resource.source_language
+        suffix_is_pot = filename is not None and filename.endswith('pot')
+        suffix_is_po = filename is not None and filename.endswith('po')
+        if m == 'POT' and suffix_is_po:
+            m = 'PO'
+        elif m == 'POT' and language is not None and language != slang:
+            m = 'PO'
+        elif m == 'PO' and suffix_is_pot:
+            m = 'POT'
+        return self.handler_for(m)
 
 registry = _FormatsRegistry()

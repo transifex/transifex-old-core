@@ -82,7 +82,7 @@ class StorageFile(models.Model):
             elif self.mimetype is not None:
                 msg = "Unsupported mimetype %s" % self.mimetype
             raise FileCheckError(msg)
-        return registry.handler_for(i18n_type)
+        return registry.handler_for(i18n_type, filename=self.name)
 
     def update_props(self):
         """

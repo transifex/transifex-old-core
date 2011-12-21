@@ -1,11 +1,13 @@
-import polib
 import os
-import unittest
+import polib
+from django.utils import unittest
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.test.client import Client
 from transifex.txcommon.tests import utils
 from transifex.languages.models import Language
 from transifex.resources.models import *
+from transifex.resources.backends import ResourceBackend, FormatsBackend
 from transifex.resources.formats.pofile import POHandler, POTHandler, \
         PoParseError
 from transifex.resources.tests.lib.base import FormatsBaseTestCase

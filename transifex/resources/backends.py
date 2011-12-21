@@ -115,7 +115,7 @@ class FormatsBackend(object):
         self.language = language
         self.user = user
 
-    def import_source(self, content, method):
+    def import_source(self, content, method, filename=None):
         """Parse some content which is of a particular i18n type and save
         it to the database.
 
@@ -126,7 +126,9 @@ class FormatsBackend(object):
             A two-element tuple (pair). The first element is the number of
             strings added and the second one is the number of those updated.
         """
-        handler = self._get_handler(method)
+        handler = self._get_handler(
+            self.resource, self.language, filename=filename
+        )
         if handler is None:
             msg = _("Invalid i18n method used: %s") % method
             logger.warning(msg)
@@ -142,20 +144,18 @@ class FormatsBackend(object):
             A two element tuple(pair). The first element is the number of
             strings added and the second one is the number of those upadted.
         """
-        handler = self._get_handler(self.resource.i18n_method)
+        handler = self._get_handler(self.resource, self.language)
         if handler is None:
             msg = _("Invalid i18n method used: %s") % method
             logger.warning(msg)
             raise FormatsBackendError(msg)
         return self._import_content(handler, content, False)
 
-    def _get_handler(self, method):
-        """Get the appropriate hanlder for the method.
-
-        Args:
-            The i18n method used.
-        """
-        return registry.handler_for(method)
+    def _get_handler(self, resource, language, filename=None):
+        """Get the appropriate hanlder for the resource."""
+        return registry.handler_for_resource(
+            resource, language, filename=filename
+        )
 
     def _import_content(self, handler, content, is_source):
         """Import content to the database.

@@ -187,10 +187,11 @@ class Resource(models.Model):
         return self.i18n_type
 
     def _set_method(self, m):
-        if m == 'POT':
-            self.i18n_type = 'PO'
-        else:
-            self.i18n_type = m
+        self.i18n_type = m
+        # if m == 'POT':
+        #     self.i18n_type = 'PO'
+        # else:
+        #     self.i18n_type = m
 
     i18n_method = property(_get_method, _set_method)
 
