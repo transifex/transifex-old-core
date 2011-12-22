@@ -28,7 +28,10 @@
             userid: "#id_username",//required override
             messageloc: 1//before == 0 or after == 1
         });
-        $("#recaptcha_container").appendTo()
+        $("#recaptcha_container").appendTo();
+
+        $("fieldset").prepend('<div class="separate-header clearfix" style="width:556px;"><div class="sh-label">{% trans "Credentials"%}</div></div>');        
+        $("#id_billing_name").parents(".tx-form-field").prev().append('<div class="separate-header clearfix" style="width:556px;"><div class="sh-label">{% trans "Billing information"%}</div></div>'); 
     });
 </script>
 {% endblock %}
@@ -40,12 +43,17 @@
 
 {% block content_main %}
 
-<form id="signup-form" class="tx-form" action="" method="post">
+<div id="billing-separator" class="nodisplay" style="border-bottom:1px solid red;">
+{% trans "Billing information" %}
+</div>
+
+<form id="signup-form" class="tx-form dual" action="" method="post" style="width:700px;">
   {% csrf_token %}
   <fieldset>
     <div id="signup-form-global-errors">
         {{ form.non_field_errors }}
     </div>
+    <div class="clearfix">
     {% for field in form %}
     <div id="signup-form-{{ field.name }}-errors">
         {{ field.errors }}
@@ -56,15 +64,17 @@
     <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
     </p>
     {% else %}
-    <p>
+    <div class="tx-form-field">
     {{ field.label_tag }} 
     {{ field }}
-    </p>
+    </div>
     {% endif %}
     {% endfor %}
+    </div>
     {% hook "additional_signup_form_fields.html" %}
   </fieldset>
-  <input type="submit" class="i16 tick buttonized" value="{% trans "Signup"%}" />
+  <p style="font-size:1.077em;margin-top:1em;">{% trans "By signing-up i agree to the Transifex Terms of service:" %}</p>
+  <input type="submit" class="i16 tick buttonized" value="{% trans "Sign up"%}" />
 </form>
 
 
