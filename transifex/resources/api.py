@@ -31,7 +31,7 @@ from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
 from transifex.resources.views import _compile_translation_template
 from transifex.resources.backends import ResourceBackend, \
-        ResourceBackendError, content_from_uploaded_file
+        ResourceBackendError, content_from_uploaded_file, FormatsBackend
 from transifex.resources.formats.registry import registry
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
@@ -580,6 +580,10 @@ class TranslationHandler(BaseHandler):
         translation = Translation.get_object("get", request, r, language)
         try:
             res = translation.get(pseudo_type=pseudo_type)
+            fb = FormatsBackend(r, language, request.user)
+            handler = fb._get_handler(r, language)
+            if handler.format_encoding == 'ISO-8859-1':
+                res['content'] = res['content'].decode('ISO-8859-1')
         except BadRequestError, e:
             return BAD_REQUEST(unicode(e))
         return translation.__class__.to_http_for_get(
