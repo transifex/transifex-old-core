@@ -4,7 +4,7 @@
 <input type="hidden" name="{{name}}" id="{{html_id}}" value="{{current_ids}}" />
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-    if (window.already_run_{{html_id}} === undefined) {
+    if (window.already_run_{{html_id|cut:"-"}} === undefined) {
         function formatItem_{{html_id|cut:"-"}}(row) {
                 return row[2];
         }
@@ -50,7 +50,7 @@ jQuery(document).ready(function($) {
                 addKiller_{{html_id|cut:"-"}}(its[0],its[1]);
         });
     }
-    window.already_run_{{html_id}} = true;
+    window.already_run_{{html_id|cut:"-"}} = true;
 });
 </script>
 
