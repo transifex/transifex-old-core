@@ -15,6 +15,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.hashcompat import md5_constructor
 from django.utils import simplejson as json
 from django.contrib.auth.models import User, AnonymousUser
+from django.forms import ValidationError
 
 from transifex.languages.models import Language
 from transifex.projects.models import Project
