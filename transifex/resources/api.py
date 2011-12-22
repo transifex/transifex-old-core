@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import tempfile
-import chardet
 import urllib
 from itertools import ifilter
 from django.db import transaction, IntegrityError, DatabaseError
@@ -581,8 +580,6 @@ class TranslationHandler(BaseHandler):
         translation = Translation.get_object("get", request, r, language)
         try:
             res = translation.get(pseudo_type=pseudo_type)
-            if chardet.detect(res['content'])['encoding'].startswith('ISO-8859'):
-                res['content'] = res['content'].decode('ISO-8859-1')
         except BadRequestError, e:
             return BAD_REQUEST(unicode(e))
         return translation.__class__.to_http_for_get(
