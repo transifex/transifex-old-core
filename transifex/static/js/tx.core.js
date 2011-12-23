@@ -28,29 +28,25 @@ Access control page.
 associate_classes = Array('connect', 'undo');
 
 function hub_associate_project_toggler_handler(data, textStatus){
-    
-    if (typeof(data) == 'object'){
-        // JQuery >= 1.5
-        j = data;
+
+    obj = $('#association-' + String(data.outsourced_project_slug));
+
+    if (data.error){
+        obj.attr('title', data.error);
+        obj.removeClass('waiting');
+        obj.addClass(data.style);
     }else{
-        // JQuery < 1.5
-        j = JSON.parse(data);
+        obj.attr('title', data.title);
+        obj.click(bind_hub_associate_project_toggler(obj, data.outsourced_project_slug, data.url))
+        obj.removeClass('waiting');
+        obj.addClass(data.style);
+        obj.html(data.title);
     }
+}
 
-    obj = $('#association-' + String(j.outsourced_project_slug));
-
-    if (j.error){
-        obj.attr('title', j.error);
-        obj.removeClass('waiting');
-        obj.addClass(j.style);
-    }else{
-        obj.attr('title', j.title);
-        obj.click(function(){
-            hub_associate_project_toggler(obj, j.outsourced_project_slug, j.url)
-            });
-        obj.removeClass('waiting');
-        obj.addClass(j.style);
-        obj.html(j.title);
+function bind_hub_associate_project_toggler(obj, project_slug, url){
+    return function(){
+        hub_associate_project_toggler(obj, project_slug, url);
     }
 }
 
