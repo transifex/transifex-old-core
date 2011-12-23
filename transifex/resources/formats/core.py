@@ -163,7 +163,7 @@ class Handler(object):
                 try:
                     return content.decode(self.format_encoding)
                 except UnicodeDecodeError, e:
-                    raise FormatError(e.message)
+                    raise FormatError(unicode(e))
             else:
                 return content
         if filename is None:
@@ -185,12 +185,12 @@ class Handler(object):
         except IOError, e:
             logger.warning(
                 "Error opening file %s with encoding %s: %s" %\
-                    (filename, self.format_encoding, e.message),
+                    (filename, self.format_encoding, e),
                 exc_info=True
             )
-            raise FormatError(e.message)
+            raise FormatError(unicode(e))
         except Exception, e:
-            logger.error("Unhandled exception: %s" % e.message, exc_info=True)
+            logger.error("Unhandled exception: %s" % e, exc_info=True)
             raise
         finally:
             f.close()
@@ -204,12 +204,12 @@ class Handler(object):
                 self.language = Language.objects.by_code_or_alias(language)
             except Language.DoesNotExist, e:
                 logger.warning(
-                    "Language.DoesNotExist: %s" % e.message, exc_info=True
+                    "Language.DoesNotExist: %s" % e, exc_info=True
                 )
-                raise FormatError(e.message)
+                raise FormatError(unicode(e))
             except Exception, e:
-                logger.error(e.message, exc_info=True)
-                raise FormatError(e.message)
+                logger.error(unicode(e), exc_info=True)
+                raise FormatError(unicode(e))
 
     def bind_content(self, content):
         """Bind some content to the handler."""
@@ -645,7 +645,7 @@ class Handler(object):
             logger.error(
                 "There was a problem while importing the entries into the "
                 "database. Entity: '%s'. Error: '%s'." % (
-                    j.source_entity, e.message
+                    j.source_entity, e
                 )
             )
             raise
@@ -714,7 +714,7 @@ class Handler(object):
             logger.error(
                 "There was a problem while importing the entries into the "
                 "database. Entity: '%s'. Error: '%s'." % (
-                    j.source_entity, e.message
+                    j.source_entity, e
                 )
             )
             raise
@@ -760,7 +760,7 @@ class Handler(object):
         except Exception, e:
             logger.warning(
                 "Failed to save translations for language %s and resource %s."
-                "Error was %s." % (self.language, self.resource, e.message),
+                "Error was %s." % (self.language, self.resource, e),
                 exc_info=True
             )
             transaction.rollback()
@@ -775,9 +775,9 @@ class Handler(object):
             if added + updated + deleted > 0:
                 self._handle_update_of_resource(user)
         except Exception, e:
-            logger.error("Unhandled exception: %s" % e.message, exc_info=True)
+            logger.error("Unhandled exception: %s" % e, exc_info=True)
             transaction.rollback()
-            raise FormatError(e.message)
+            raise FormatError(unicode(e))
         finally:
             gc.collect()
         transaction.commit()

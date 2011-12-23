@@ -138,7 +138,7 @@ class ResourceHandler(BaseHandler):
             try:
                 res = self._create(request, project_slug, data)
             except BadRequestError, e:
-                return BAD_REQUEST(e.message)
+                return BAD_REQUEST(unicode(e))
             except NotFoundError, e:
                 return rc.NOT_FOUND
             t = Translation.get_object("create", request)
@@ -204,7 +204,7 @@ class ResourceHandler(BaseHandler):
         try:
             self._check_fields(data.iterkeys(), self.allowed_fields)
         except AttributeError, e:
-            msg = "Field '%s' is not allowed." % e.message
+            msg = "Field '%s' is not allowed." % e
             logger.warning(msg)
             raise BadRequestError(msg)
         # Check for obligatory fields
@@ -217,8 +217,8 @@ class ResourceHandler(BaseHandler):
         try:
             project = Project.objects.get(slug=project_slug)
         except Project.DoesNotExist, e:
-            logger.warning(e.message, exc_info=True)
-            raise NotFoundError(e.message)
+            logger.warning(unicode(e), exc_info=True)
+            raise NotFoundError(unicode(e))
 
         # In multipart/form-encode request variables have lists
         # as values. So we use __getitem__ isntead of pop, which returns
@@ -233,7 +233,7 @@ class ResourceHandler(BaseHandler):
             name = data['name']; del data['name']
             # TODO for all fields
         except KeyError, e:
-            msg = "Required field is missing: %s" % e.message
+            msg = "Required field is missing: %s" % e
             logger.warning(msg)
             raise BadRequestError(msg)
         if len(slug) > 50:
@@ -245,7 +245,7 @@ class ResourceHandler(BaseHandler):
         try:
             content = self._get_content(request, data)
         except NoContentError, e:
-            raise BadRequestError(e.message)
+            raise BadRequestError(unicode(e))
 
         try:
             rb = ResourceBackend()
@@ -257,7 +257,7 @@ class ResourceHandler(BaseHandler):
                     created=True, user=request.user)
             return rb_create
         except ResourceBackendError, e:
-            raise BadRequestError(e.message)
+            raise BadRequestError(unicode(e))
 
     @require_mime('json')
     def _createv1(self, request, project_slug, resource_slug, data):
@@ -291,7 +291,7 @@ class ResourceHandler(BaseHandler):
         try:
             self._check_fields(data.iterkeys(), self.written_fields)
         except AttributeError, e:
-            return BAD_REQUEST("Field '%s' is not allowed." % e.message)
+            return BAD_REQUEST("Field '%s' is not allowed." % e)
 
         try:
             project = Project.objects.get(slug=project_slug)
@@ -478,7 +478,7 @@ class FileHandler(BaseHandler):
         try:
             template = _compile_translation_template(resource, language)
         except Exception, e:
-            logger.error(e.message, exc_info=True)
+            logger.error(unicode(e), exc_info=True)
             return BAD_REQUEST("Error compiling the translation file: %s" %e )
 
         i18n_method = settings.I18N_METHODS[resource.i18n_method]
@@ -619,9 +619,9 @@ class TranslationHandler(BaseHandler):
             t = Translation.get_object("create", request, resource, language)
             res = t.create()
         except BadRequestError, e:
-            return BAD_REQUEST(e.message)
+            return BAD_REQUEST(unicode(e))
         except NoContentError, e:
-            return BAD_REQUEST(e.message)
+            return BAD_REQUEST(unicode(e))
         except AttributeError, e:
             return BAD_REQUEST("The content type of the request is not valid.")
         return t.__class__.to_http_for_create(t, res)
@@ -836,7 +836,7 @@ class FileTranslation(Translation):
                 self.resource, self.language, pseudo_type
             )
         except Exception, e:
-            logger.error(e.message, exc_info=True)
+            logger.error(unicode(e), exc_info=True)
             raise BadRequestError("Error compiling the translation file: %s" %e )
         return template
 
@@ -883,9 +883,9 @@ class FileTranslation(Translation):
                 parser.is_content_valid()
                 logger.debug("Uploaded file %s" % file_.name)
             except (FileCheckError, ParseError), e:
-                raise BadRequestError("Error uploading file: %s" % e.message)
+                raise BadRequestError("Error uploading file: %s" % e)
             except Exception, e:
-                logger.error(e.message, exc_info=True)
+                logger.error(unicode(e), exc_info=True)
                 raise BadRequestError("A strange error happened.")
 
             parser.bind_file(file_.name)
@@ -921,7 +921,7 @@ class StringTranslation(Translation):
                 self.resource, self.language, pseudo_type
             )
         except Exception, e:
-            logger.error(e.message, exc_info=True)
+            logger.error(unicode(e), exc_info=True)
             raise BadRequestError(
                 "Error compiling the translation file: %s" % e
             )
@@ -965,9 +965,9 @@ class StringTranslation(Translation):
                 parser.bind_file(file_.name)
                 parser.is_content_valid()
             except (FileCheckError, ParseError), e:
-                raise BadRequestError(e.message)
+                raise BadRequestError(unicode(e))
             except Exception, e:
-                logger.error(e.message, exc_info=True)
+                logger.error(unicode(e), exc_info=True)
                 raise BadRequestError("A strange error has happened.")
 
             parser.bind_file(file_.name)

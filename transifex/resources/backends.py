@@ -67,14 +67,14 @@ class ResourceBackend(object):
         except Exception, e:
             logger.warning(
                 "Error while creating resource %s for project %s: %s" % (
-                    slug, project.slug, e.message
+                    slug, project.slug, e
                 ), exc_info=True
             )
             raise ResourceBackendError(_("Invalid arguments given."))
         try:
             r.save()
         except IntegrityError, e:
-            logger.warning("Error creating resource %s: %s" % (r, e.message))
+            logger.warning("Error creating resource %s: %s" % (r, e))
             raise ResourceBackendError(_(
                 "A resource with the same slug exists in this project."
             ))
@@ -93,12 +93,12 @@ class ResourceBackend(object):
         try:
             return fb.import_source(content, method)
         except FormatsBackendError, e:
-            raise ResourceBackendError(e.message)
+            raise ResourceBackendError(unicode(e))
         except Exception, e:
             logger.error(
-                "Unexamined exception raised: %s" % e.message, exc_info=True
+                "Unexamined exception raised: %s" % e, exc_info=True
             )
-            raise ResourceBackendError(e.message)
+            raise ResourceBackendError(unicode(e))
 
 
 class FormatsBackend(object):
@@ -174,7 +174,7 @@ class FormatsBackend(object):
             handler.parse_file(is_source=is_source)
             return handler.save2db(is_source=is_source, user=self.user)
         except FormatError, e:
-            raise FormatsBackendError(e.message)
+            raise FormatsBackendError(unicode(e))
 
 
 def content_from_uploaded_file(files, encoding='UTF-8'):

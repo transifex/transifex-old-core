@@ -192,7 +192,7 @@ def resource_edit(request, project_slug, resource_slug):
                 return HttpResponseRedirect(reverse('resource_detail',
                     args=[resource.project.slug, resource.slug]))
             except FormatsBackendError, e:
-                resource_form._errors['sourcefile'] = ErrorList([e.message, ])
+                resource_form._errors['sourcefile'] = ErrorList([unicode(e), ])
     else:
         if resource:
             initial_data = {}
@@ -532,7 +532,7 @@ def get_pot_file(request, project_slug, resource_slug):
     except Exception, e:
         messages.error(request, _("Error compiling the pot file."))
         logger.error(
-            "Error compiling the pot file for %s: %s" % (resource, e.message)
+            "Error compiling the pot file for %s: %s" % (resource, e)
         )
         return HttpResponseRedirect(reverse(
                 'resource_detail', args=[resource.project.slug, resource.slug]
@@ -657,7 +657,7 @@ def update_translation(request, project_slug, resource_slug, lang_code=None):
     except FormatsBackendError, e:
         return HttpResponse(
             simplejson.dumps({
-                    'msg': e.message,
+                    'msg': unicode(e),
                     'status': 400,
             }),
             status=400, content_type='text/plain'

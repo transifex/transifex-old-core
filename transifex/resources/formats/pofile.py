@@ -83,8 +83,8 @@ class GettextHandler(Handler):
         try:
             po = polib.pofile(content)
         except IOError, e:
-            logger.warning("Parse error: %s" % e.message, exc_info=True)
-            raise PoParseError(e.message)
+            logger.warning("Parse error: %s" % e, exc_info=True)
+            raise PoParseError(unicode(e))
 
         # If file is empty, the method hangs so we should bail out.
         if not content:
@@ -263,7 +263,7 @@ class GettextHandler(Handler):
         try:
             self._po = polib.pofile(self.content)
         except IOError, e:
-            raise PoParseError(e.message)
+            raise PoParseError(unicode(e))
 
         for entry in self._po:
             pluralized = False
