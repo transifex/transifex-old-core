@@ -48,8 +48,8 @@ def _get_attribute(element, key, die = False):
     if element.attributes.has_key(key):
         return element.attributes[key].value
     elif die:
-        raise LinguistParseError(_("Could not find attribute '%s' "\
-            "for element '%s'" % (key, element.tagName)))
+        raise LinguistParseError("Could not find attribute '%s' "\
+            "for element '%s'" % (key, element.tagName))
     else:
         return None
 
