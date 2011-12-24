@@ -339,6 +339,8 @@ def _get_stringset(post_data, resources, language, review=False, *args, **kwargs
             query = Q()
             for term in sSearch.split(' '):
                 query &= Q(string__icontains=term)
+	    source_entities = translated_strings.filter(query).values('source_entity')
+	    query |= Q(source_entity__in=source_entities)
             source_strings = source_strings.filter(query)
 
         # sorting
