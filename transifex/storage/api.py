@@ -112,6 +112,10 @@ class StorageHandler(BaseHandler):
                             % lang_code)
                         return BAD_REQUEST("Selected language code (%s) does "
                             "not match with any language in the database." % lang_code)
+                else:
+                    return BAD_REQUEST(
+                        "Language for the file has not been specified."
+                    )
 
                 try:
                     sf.update_props()
