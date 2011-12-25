@@ -523,7 +523,7 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
             raise LotteBadRequestError(
                 "Invalid user id specified: %s" % post_data['user_filters']
             )
-        index += 7
+        index += 4
 
     querysets = [
         _get_all_source_strings,
