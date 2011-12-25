@@ -24,7 +24,8 @@ def need_file(fn):
 def need_language(fn):
     def language_fn(self, *args, **kw):
         if not self.language:
-            raise FormatError("Language not specified")
+            import traceback
+            raise FormatError("Language not specified: %s" % traceback.print_stack())
         return fn(self, *args, **kw)
     return language_fn
 
