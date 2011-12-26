@@ -9,6 +9,8 @@ from transifex.resources.models import Resource
 from transifex.resources.formats.pofile import POHandler
 from transifex.txcommon.tests.base import BaseTestCase
 
+from copyright.handlers import lotte_copyrights, save_copyrights
+
 Copyright = get_model('copyright', 'Copyright')
 
 class CopyrightTests(BaseTestCase):
@@ -79,9 +81,76 @@ class CopyrightTests(BaseTestCase):
             owner='Test Test <test@test.org>', year='2010')
         self.assertTrue(cr.user == u)
 
-    #def poheader_load_test(self):
-    #    raise NotImplementedError
+    def test_lotte_copyrights(self):
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language_en
+        )
+        self.assertEquals(len(c), 0)
+        lotte_copyrights(
+            sender=None, resource=self.resource, language=self.language_en,
+            user=self.user['maintainer']
+        )
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language_en
+        )
+        self.assertEquals(len(c), 1)
+        lotte_copyrights(
+            sender=None, resource=self.resource, language=self.language_en,
+            user=self.user['maintainer']
+        )
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language_en
+        )
+        self.assertEquals(len(c), 1)
 
-    #def poheader_update_test(self):
-    #    """Test load of existing PO file with copyright headers."""
-    #    raise NotImplementedError
+    def test_multiple_emails(self):
+        u1 = User.objects.create(
+            username='copy1', email='copy@copy.org'
+        )
+        u2 = User.objects.create(
+            username='copy2', email='copy@copy.org',
+            first_name='Copy', last_name='Cat'
+        )
+        lotte_copyrights(
+            None, resource=self.resource, language=self.language_en, user=u1
+        )
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language_en
+        )
+        self.assertEquals(len(c), 1)
+        self.assertEquals(c[0].user, u1)
+        lotte_copyrights(
+            None, resource=self.resource, language=self.language_en, user=u2
+        )
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language_en
+        )
+        self.assertEquals(len(c), 2)
+        self.assertIn(c[0].user, [u1, u2])
+        self.assertIn(c[1].user, [u1, u2])
+        save_copyrights(
+            None, resource=self.resource, language=self.language_en,
+            copyrights=[('Copy Cat <copy@copy.org>', ['2011', ]), ]
+        )
+        c = Copyright.objects.filter(
+            resource=self.resource, language=self.language_en
+        )
+        self.assertEquals(len(c), 2)
+
+        # no first/last names
+        u1 = User.objects.create(
+            username='copycat1', email='copy@cat.org'
+        )
+        u2 = User.objects.create(
+            username='copycat2', email='copy@cat.org'
+        )
+        save_copyrights(
+            None, resource=self.resource_private, language=self.language_en,
+            copyrights=[('Copy Cat <copy@cat.org>', ['2011', ]), ]
+        )
+        c = Copyright.objects.filter(
+            resource=self.resource_private, language=self.language_en
+        )
+        self.assertEquals(len(c), 1)
+        self.assertEquals(c[0].user, u2)
+

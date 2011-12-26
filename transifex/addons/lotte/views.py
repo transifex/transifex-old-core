@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import date
 import re
 from polib import escape, unescape
 from django.conf import settings
@@ -898,18 +897,11 @@ def _save_translation(source_string, translations, target_language, user):
 
 
 def _add_copyright(source_string, target_language, user):
-    firstname = user.first_name
-    surname = user.last_name
-    from transifex.addons.copyright.handlers import save_copyrights
-    lotte_save_translation.connect(save_copyrights)
+    from transifex.addons.copyright.handlers import lotte_copyrights
+    lotte_save_translation.connect(lotte_copyrights)
     lotte_save_translation.send(
         None, resource=source_string.resource,
-        language=target_language,
-        copyrights=([(
-                    ''.join([firstname, ' ', surname,
-                             ' <', user.email, '>']),
-                    [str(date.today().year)]
-        ), ])
+        language=target_language, user=user
     )
 
 
