@@ -3,12 +3,14 @@ from datetime import date
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from django.core.exceptions import MultipleObjectsReturned
 
 from transifex.languages.models import Language
 from transifex.resources.models import Resource
 
+
 class CopyrightManager(models.Manager):
-    def assign(self, language, resource, owner, year=date.today().year):
+    def assign(self, language, resource, owner, year=None, user=None):
         """Add copyright for a specific year to an object.
 
         If there is no copyright object, create. Otherwise, update if
@@ -18,15 +20,23 @@ class CopyrightManager(models.Manager):
         won't work.
         """
 
-        # FIXME work for User/Profile objects as well
-        # Find if the email is registered to the db
-        user = None
-        email = re.search('<(.*?)>', owner)
-        if email is not None and email.group(1):
-            try:
-                user = User.objects.get(email=email.group(1))
-            except User.DoesNotExist, e:
-                pass
+        if year is None:
+            year = date.today().year
+        if user is None:
+            # Find if the email is registered to the db
+            email = re.search('<(.*?)>', owner)
+            if email is not None and email.group(1):
+                try:
+                    user = User.objects.get(email=email.group(1))
+                except User.DoesNotExist, e:
+                    pass
+                except MultipleObjectsReturned:
+                    users = User.objects.filter(email=email.group(1))
+                    for u in users:
+                        if u.first_name and u.last_name:
+                            user = u
+                            break
+                        user = u
 
         #FIXME: Make this work with foreign-key calls, for example:
         #       tresource.objects.assign(owner=, year=)
