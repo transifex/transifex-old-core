@@ -102,7 +102,7 @@ function spellcheckButtonClickHandler(e) {
     $('div.spellcheckdiv').remove();
     $spellcheckButtonClicked = $(this);
     table_row_id = parseInt($(this).attr("id").split("_")[1]); // Get the id of current spellcheck button
-    var string = this_stringset.strings[table_row_id].translated_strings['other'];
+    var string = this_stringset.strings[table_row_id].translated_strings.other;
     $spellcheckTextarea = $(this).parents('tr').find('textarea.translation.default_translation');
     $.ajax({
       type: 'POST',
@@ -228,7 +228,7 @@ function undoButtonClickHandler() {
     var undo_value = string.load_default;
     var tr = $(this).parents('tr');
     tr.find('span.rule').each(function(i){
-        rule = $(this).text();
+        rule = $(this).attr('rule');
         string.translate(undo_value[rule], rule);
         $(this).next('textarea').focus().val(undo_value[rule]);
     });
@@ -537,7 +537,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
               id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }
             string = this_stringset.strings[id];
-            string.translate(textarea.val(), textarea.prev('span.rule').text());
+            string.translate(textarea.val(), textarea.prev('span.rule').attr('rule'));
             if (string.modified) {
                 // Automatically set edited textareas to fuzzy
                 textarea.parents('td.trans').find('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
@@ -773,7 +773,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                         if (!result.error) {
                             trans.val(unescape(result.translation).replace(/&#39;/g,'\'').replace(/&quot;/g,'"').replace(/%\s+(\([^\)]+\))\s*s/g,' %$1s '));
                             /* Mark the translated field as modified */
-                            string.translate(trans.val(), trans.prev('span.rule').text());
+                            string.translate(trans.val(), trans.prev('span.rule').attr('rule'));
                             if (string.modified) {
                                 trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                                 trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
@@ -818,7 +818,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 var trans=$(this);
                 trans.val(html_unescape(orig));
                 /* Mark the translated field as modified */
-                string.translate(trans.val(), trans.prev('span.rule').text());
+                string.translate(trans.val(), trans.prev('span.rule').attr('rule'));
                 if (string.modified) {
                     trans.removeClass("fuzzy translated untranslated").addClass("fuzzy"); // Automatically set edited textarea to fuzzy
                     trans.siblings('textarea').removeClass("fuzzy translated untranslated").addClass("fuzzy");
