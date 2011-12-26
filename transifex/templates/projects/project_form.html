@@ -27,6 +27,10 @@
 {{ block.super }}
 <script type="text/javascript">
 $(document).ready(function(){
+		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+		$('.tx-form .required, .tx-form .field-helptext').each(function(){
+			$(this).appendTo($(this).siblings('label'));
+		});
 		$('.tx-form #display-advform').click(function(){
 			$(this).toggleClass("active");
 			$(".tx-form #project-edit-advanced").slideToggle("fast",function(){$(".side-menu").css('height',$(".psettings-content").height());});
@@ -77,9 +81,10 @@ $(document).ready(function(){
         {% get_fieldset slug,name,slug,tags,description,source_language,maintainers,private as simple_fields from project_form %}
         {% for field in simple_fields %}
           <div class="tx-form-field">
-            {{ field.errors }}
-            {{ field.label_tag }}
+            {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+	          {% if field.field.help_text %}<span class="field-helptext tipsy_enable" title="{{ field.help_text }}">?</span>{% endif %}
             {{ field }}
+            {{ field.errors }}
         </div>
         {% endfor %}
       </fieldset>
@@ -91,10 +96,10 @@ $(document).ready(function(){
         {% get_fieldset homepage,trans_instructions,feed,bug_tracker,long_description,webhook,auto_translate_select_service,auto_translate_api_key as advanced_fields from project_form %}
         {% for field in advanced_fields %}
           <div class="tx-form-field">
-            {{ field.errors }}
-            {{ field.label_tag }}
+            {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+	          {% if field.field.help_text %}<span class="field-helptext tipsy_enable" title="{{ field.help_text }}">?</span>{% endif %}
             {{ field }}
-          </div>
+            {{ field.errors }}          </div>
         {% endfor %}
       </fieldset>
 

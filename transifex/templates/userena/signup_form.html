@@ -14,7 +14,15 @@
 {{ block.super }}
   <script type="text/javascript" src="{{ STATIC_URL }}js/password_strength_plugin.js"></script>
   <script type="text/javascript">
+		$(document).ready(function(){
+		  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+			$('.tx-form span.required, .tx-form .field-helptext').each(function(){
+				$(this).appendTo($(this).siblings('label'));
+			});
+		});
+		
     $(function() {
+    
         $("input#id_username").focus();
         $("input[type='text'], input[type='password']").addClass("text");
 
@@ -65,7 +73,8 @@
     </p>
     {% else %}
     <div class="tx-form-field">
-    {{ field.label_tag }} 
+    {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+    {% if field.field.help_text %}<span class="field-helptext tipsy_enable" title="{{ field.help_text }}">?</span>{% endif %} 
     {{ field }}
     </div>
     {% endif %}
