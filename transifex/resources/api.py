@@ -988,4 +988,6 @@ class FormatsHandler(BaseHandler):
         Get details of supported i18n formats.
         """
 
-        return settings.I18N_METHODS
+        formats_info = settings.I18N_METHODS
+        formats_info['POT']['file-extensions'] = '.po'
+        return formats_info
