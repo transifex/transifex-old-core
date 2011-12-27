@@ -96,17 +96,6 @@ $(document).ready(
        </a>
     </li>
     {% endif %}
-      
-  
-  	{% if request.user.is_authenticated %}
-    {% url notification.views.notices as notices_url %}
-    {% if notices_url %}
-    <p class="separate-buttons">   
-      <a>{% watch_toggle project %}</a>
-    </p>
-    {% endif %}
-  {% endif %}
-  
   </ul>
 </div>
 {% endblock %}

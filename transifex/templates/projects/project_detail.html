@@ -26,6 +26,12 @@
   
   <div class="separate-header notopmargin clearfix" style="margin-top:0;">
   	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
+  	{% if request.user.is_authenticated %}
+	    {% url notification.views.notices as notices_url %}
+	    {% if notices_url %}
+	      <div class="separate-buttons"><a class="nude-button">{% watch_toggle project %}</a></div>
+	    {% endif %}
+		{% endif %}
 	</div>
 	
 
