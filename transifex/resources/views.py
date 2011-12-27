@@ -468,6 +468,10 @@ def _compile_translation_template(resource=None, language=None, pseudo_type=None
         i18n_type = 'POT'
     else:
         i18n_type = resource.i18n_method
+
+    if resource.i18n_method == 'POT' and language is not None:
+        i18n_type = 'PO'
+
     handler = registry.handler_for(i18n_type)
     handler.bind_resource(resource)
     handler.set_language(language)
