@@ -162,11 +162,11 @@ urlpatterns += patterns('',
         view = team_join_request,
         name = 'team_join_request',),
     url(
-        regex = TEAM_URL+r'approve/(?P<username>[-\w]+)/$',
+        regex = TEAM_URL+r'approve/(?P<username>[\.\-\w]+)/$',
         view = team_join_approve,
         name = 'team_join_approve',),
     url(
-        regex = TEAM_URL+r'deny/(?P<username>[-\w]+)/$',
+        regex = TEAM_URL+r'deny/(?P<username>[\.\-\w]+)/$',
         view = team_join_deny,
         name = 'team_join_deny',),
     url(
