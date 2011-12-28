@@ -169,14 +169,21 @@ def team_detail(request, project_slug, language_code):
     statslist = RLStats.objects.select_related('resource',
         'resource__priority').by_project_and_language(project, language)
 
-    return render_to_response("teams/team_detail.html",
-                              {"project": project,
-                               "team": team,
-                               "team_access_requests": team_access_requests,
-                               "user_access_request": user_access_request,
-                               "project_team_page": True,
-                               "statslist": statslist, },
-                               context_instance=RequestContext(request))
+    team_members = team.members.all()
+    team_reviewers = team.reviewers.all()
+    team_all = team_members | team_reviewers
+
+    return render_to_response("teams/team_detail.html", {
+        "project": project,
+        "team": team,
+        "team_members": team_members,
+        "team_reviewers": team_reviewers,
+        "team_all": team_all,
+        "team_access_requests": team_access_requests,
+        "user_access_request": user_access_request,
+        "project_team_page": True,
+        "statslist": statslist,
+    }, context_instance=RequestContext(request))
 
 
 pr_team_delete=(("granular", "project_perm.maintain"),
