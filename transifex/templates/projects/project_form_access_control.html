@@ -71,32 +71,7 @@
 
     <script type="text/javascript">
         $("#outsourcing_projects").click(function(){
-           /* FancyBox Using custom settings */
-           $.fancybox(
-               {
-                'href': '{% url project_hub_projects project.slug %}',
-                'hideOnContentClick': false,
-                'onStart':function(){
-                    // IE8 fix
-                    if(jQuery.browser.msie) {
-                      $('#fancybox-wrap').css('max-width','716px');
-                      $('#fancybox-inner').css('max-width','716px');
-                      $('#fancybox-outer').css('left','50%');
-                    }
-                },
-                'onComplete':function() {       
-                    $("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
-                    $("#fancybox-content").addClass('ui-corner-top'); 
-                    $("#fancybox-outer").addClass('ui-corner-top'); 
-                    // IE8 fix
-                    if(jQuery.browser.msie){
-                        $('.fancybox-title-outside').css('max-width','716px');
-                    }
-                },
-                'titleShow': true,
-                'titlePosition': 'inside',
-                'title': '{{ project.name|truncate_chars:"30" }} &raquo;  {% trans "Project outsourcing"|escapejs %}'
-           });
+           jQuery.facebox({ ajax: '{% url project_hub_projects project.slug %}' });
         });
     </script>
 
