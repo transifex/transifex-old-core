@@ -82,6 +82,8 @@ class JoomlaINIHandler(Handler):
                 continue
 
             escaped_trans = self.jformat.get_translation(trans)
+            if isinstance(self.jformat, JoomlaIniNew):
+                trans = trans[1:-1]
             context = ""        # We use empty context
 
             if is_source:
