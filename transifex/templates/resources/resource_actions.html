@@ -18,7 +18,7 @@
     <div class="details_font">
              {% blocktrans with stats.total|intcomma as total_entities and wordcount|intcomma as wordcount %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
              {% blocktrans with stats.translated|intcomma as trans_count and stats.translated_wordcount|intcomma as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}<br/>
-             {% blocktrans with stats.untranslated|intcomma as trans_count and stats.untranslated_wordcount|intcomma as trans_wordcount %} {{ trans_count }} remaining strings ({{ trans_wordcount }} words) {% endblocktrans %}<br/>
+             {% blocktrans with stats.untranslated|intcomma as trans_count and stats.untranslated_wordcount|intcomma as trans_wordcount %} Remaining:&nbsp;{{ trans_count }} strings ({{ trans_wordcount }} words) {% endblocktrans %}<br/>
              {% hook 'matches_overview.html' %}  
     </div>
     <span class="translate_button_wrapper">
@@ -61,7 +61,7 @@
     </span>
 
     <div class="stats_wrapper">
-      {% with 400 as barwidth %}
+      {% with 390 as barwidth %}
       <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Untranslated: " %}{{ stats.untranslated }}">
           <div class="stats_string_resource_actions">
               {{ stats.translated|percentage:stats.total }}
@@ -80,10 +80,11 @@
             <a href="{% url view_strings resource.project.slug resource.slug target_language.code %}">{% trans "View strings online" %}</a>
             </span>
           </li>
-          <li>
+
           <li>
           	{% watch_toggle resource target_language %}
           </li>
+          <li>
             <span class="i16 team"><a {% if team %} href="{% url team_detail project.slug target_language.code %}"{% else %}class="disabled" title="There is no project team for this language."{% endif %}>{% trans "Visit language team" %}</a></span>
           </li>
           <li>
