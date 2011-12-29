@@ -58,6 +58,8 @@ function auto_translate_supported(source, target, callback) {
               })
             }
             else if (autotranslate_type == "BT"){
+              source = _canonical_lang_code(source)
+              target = _canonical_lang_code(target)
               if ($.inArray(source, response)>=0 && $.inArray(target, response)>=0) {
                 callback();
                 return false;
