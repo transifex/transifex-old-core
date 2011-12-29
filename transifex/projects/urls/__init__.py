@@ -7,6 +7,7 @@ from transifex.projects.feeds import LatestProjects, ProjectFeed
 from transifex.projects.models import Project
 from transifex.projects.views import *
 from transifex.projects.views.project import *
+from transifex.projects.views.hub import *
 from transifex.projects.views.permission import *
 from transifex.projects.views.team import *
 from transifex.txcommon.decorators import one_perm_required_or_403
@@ -79,13 +80,28 @@ urlpatterns += patterns('',
         view = project_add_permission,
         name = 'project_add_permission'),
     url(
-        regex = PROJECT_URL_PARTIAL+r'access/outsourcing/$',
-        view = project_outsourcing_projects,
-        name = 'project_outsourcing_projects'),
+        regex = PROJECT_URL_PARTIAL+r'access/outsource/$',
+        view = project_hub_projects,
+        name = 'project_hub_projects'),
     url(
         regex = PROJECT_URL_PARTIAL+r'access/pm/(?P<permission_pk>\d+)/delete/$',
         view = project_delete_permission,
         name = 'project_delete_permission'),
+    
+    # Outsource / Hub
+    url(
+        regex = PROJECT_URL_PARTIAL+r'access/outsource/withdraw/$',
+        view = project_hub_join_withdraw,
+        name = 'project_hub_join_withdraw'),
+    url(
+        regex = PROJECT_URL_PARTIAL+r'access/outsource/(?P<outsourced_project_slug>[-\w]+)/approve/$',
+        view = project_hub_join_approve,
+        name = "project_hub_join_approve"),
+    url(
+        regex = PROJECT_URL_PARTIAL+r'access/outsource/(?P<outsourced_project_slug>[-\w]+)/deny/$',
+        view = project_hub_join_deny,
+        name = "project_hub_join_deny"),
+
     #url(
         #regex = PROJECT_URL_PARTIAL+r'access/rq/add/$',
         #view = project_add_permission_request,

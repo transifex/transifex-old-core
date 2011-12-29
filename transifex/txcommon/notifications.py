@@ -108,7 +108,7 @@ NOTICE_TYPES = [
                 "description": _("when a project leaves a "
                                  "project hub"),
                 "default": 2,
-                "show_to_user": True,
+                "show_to_user": False,
             },
 
             # Project releases

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import copy
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -123,7 +124,7 @@ def project_update(request, project_slug):
 def project_access_control_edit(request, project_slug):
 
     project = get_object_or_404(Project, slug=project_slug)
-
+    outsourced = project.outsource
     if request.method == 'POST':
         form = ProjectAccessControlForm(request.POST, instance=project,
             user=request.user)
@@ -165,7 +166,7 @@ def project_access_control_edit(request, project_slug):
                         notification.send(project_hub.maintainers.all(), nt, context)
 
                     return HttpResponseRedirect(request.POST['next'])
-                
+
             if 'hub' == project_type:
                 project.is_hub = True
             else:
@@ -187,10 +188,17 @@ def project_access_control_edit(request, project_slug):
                     license_text=form.cleaned_data['cla_license_text'],
                     request=request
                 )
-            
+
             project.save()
             form.save_m2m()
             handle_stats_on_access_control_edit(project)
+
+            if outsourced and not project.outsource:
+                # Logging action
+                nt = 'project_hub_left'
+                context = {'project': project, 'project_hub': outsourced}
+                action_logging(request.user, [project, outsourced], nt, context=context)
+
             return HttpResponseRedirect(request.POST['next'])
 
     else:
@@ -202,16 +210,6 @@ def project_access_control_edit(request, project_slug):
         'form': form,
     }, context_instance=RequestContext(request))
 
-
-@one_perm_required_or_403(pr_project_add_change,
-    (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
-def project_outsourcing_projects(request, project_slug):
-    """"""
-    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
-
-    return render_to_response('projects/project_outsourcing_projects.html', {
-        'project': project,
-    }, context_instance=RequestContext(request))
 
 def handle_stats_on_access_control_edit(project):
     """
@@ -247,7 +245,6 @@ def handle_stats_on_access_control_edit(project):
 
 
 def _delete_project(request, project):
-    import copy
     project_ = copy.copy(project)
     project.delete()
 

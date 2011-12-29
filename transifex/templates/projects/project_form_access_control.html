@@ -22,8 +22,15 @@
 {% if is_maintainer %}
 
     {% if project.hub_request %}
-        <div class="notice">
+        <div class="notice clearfix">
+        <span>
         {% blocktrans with project.hub_request.project_hub as project_name %}This project has an outsource request pending to the '{{ project_name }}' hub, thus it can not change its access control settings while the request is open.{% endblocktrans %}
+        </span>
+        
+        <form class="microform" method="post" action="{% url project_hub_join_withdraw project.slug %}">{% csrf_token %}
+            <input class="i16 delete buttonized" type="submit" style="float:right;"  value="{% trans "Withdraw" %}"/>
+        </form>
+
         </div>   
     {% endif%}
 
@@ -67,7 +74,7 @@
            /* FancyBox Using custom settings */
            $.fancybox(
                {
-                'href': '{% url project_outsourcing_projects project.slug %}',
+                'href': '{% url project_hub_projects project.slug %}',
                 'hideOnContentClick': false,
                 'onStart':function(){
                     // IE8 fix

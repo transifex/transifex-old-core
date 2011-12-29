@@ -7,6 +7,7 @@
 {% load permissions %}
 {% load upload_manager_tags %}
 {% load tx_action_log %}
+{% load project_hub %}
 
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
@@ -87,6 +88,8 @@
   {% endwith %}
 	
 </div>
+
+{% include "projects/project_hub_join_requests.html" %}
 
 {% if project.resources.count or not project.releases.count %}
 
