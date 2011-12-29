@@ -769,20 +769,7 @@
         $(".lotte-header-link").each(function(){
         	$(this).appendTo("#stringset_table_wrapper .top").show();
         	});
-				$("a.shortcuts.fancy").fancybox({
-					'transitionIn'	: 'none',
-					'transitionOut'	: 'none',
-					'onComplete':function() {
-		      		$("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
-		      		$("#fancybox-content").addClass('ui-corner-top'); 
-		      		$("#fancybox-outer").addClass('ui-corner-top'); 
-					},			
-					'titleShow': true,
-					'titlePosition': 'inside',
-                    'title': '{% trans 'Lotte keyboard shortcuts' %}',
-					'changeFade'        : 0		
-				});
-	
+				$("a.shortcuts.fancy").facebox({});
     });
 
 </script>
@@ -810,12 +797,13 @@
   {% hook "lotte_header_link.html" %}
     
     <div style="display:none;">
-    	<div id="shortcutsdiv">
-    		<div><div class="shortcut-label">Alt-l</div> <div class="shortcut-action">Moves to the next translations page.</div></div>
-    		<div><div class="shortcut-label">Alt-j</div> <div class="shortcut-action">Moves to the previous translations page.</div></div>
-    		<div><div class="shortcut-label">Alt-i</div> <div class="shortcut-action">Moves focus one row upwards.</div></div>
-    		<div><div class="shortcut-label">Alt-k</div> <div class="shortcut-action">Moves focus one row downwards.</div></div>
-    		<div><div class="shortcut-label">Alt-g</div> <div class="shortcut-action">Fill in the translation textarea with the content of the source string. (Copy the source string as it is, to the translation area.)</div></div>
+    	<div id="shortcutsdiv" class="facebox-content">
+    		<h4>{% trans "Lotte Keyboard Shortcuts" %}</h4>
+    		<div><div class="shortcut-label">Alt-l</div> <div class="shortcut-action">{% trans "Moves to the next translations page." %}</div></div>
+    		<div><div class="shortcut-label">Alt-j</div> <div class="shortcut-action">{% trans "Moves to the previous translations page." %}</div></div>
+    		<div><div class="shortcut-label">Alt-i</div> <div class="shortcut-action">{% trans "Moves focus one row upwards." %}</div></div>
+    		<div><div class="shortcut-label">Alt-k</div> <div class="shortcut-action">{% trans "Moves focus one row downwards." %}</div></div>
+    		<div><div class="shortcut-label">Alt-g</div> <div class="shortcut-action">{% trans "Fill in the translation textarea with the content of the source string. (Copy the source string as it is, to the translation area.)" %}</div></div>
     	</div>
     </div>
     

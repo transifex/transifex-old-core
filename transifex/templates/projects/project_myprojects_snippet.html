@@ -58,82 +58,65 @@
 
                     <a href="{% url resource_detail lock.rlstats.resource.project.slug lock.rlstats.resource.slug %}">
                     {{ lock.rlstats.resource.name|truncate_chars:"30" }}</a> &raquo; {{ lock.rlstats.language.name|truncate_chars:"20" }}
-                    <span id="detail_{{ lock.rlstats.resource.id }}_{{ lock.rlstats.language.code }}" class="linkstyle" style="float:right;margin-right:2px;cursor:pointer">
+                    <a href="{% url resource_actions lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}" id="detail_{{ forloop.counter }}" style="float:right;margin-right:2px;">
                          {% trans "Details" %}
-                    </span>
-                    <script type="text/javascript">
-                        $("#detail_{{ lock.rlstats.resource.id }}_"+jqescape("{{ lock.rlstats.language.code }}")).click(function(){
-                        /* FancyBox Using custom settings */
-                        $.fancybox(
-                            {
-                                'href': '{% url resource_actions lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}',
-                                'hideOnContentClick': false,
-                                'onStart':function(){
-                                    // IE8 fix
-                                    if(jQuery.browser.msie) {
-                                      $('#fancybox-wrap').css('max-width','716px');
-                                      $('#fancybox-inner').css('max-width','716px');
-                                      $('#fancybox-outer').css('left','50%');
-                                    }
-                                },
-                                'onComplete':function() {
-                                		$("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
-                                		$("#fancybox-content").addClass('ui-corner-top');
-                                		$("#fancybox-outer").addClass('ui-corner-top');
-                                    // IE8 fix
-                                    if(jQuery.browser.msie){
-                                        $('.fancybox-title-outside').css('max-width','716px');
-                                    }
-                                    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-                                    $("a.language_chooser_trigger").toggle(function(){
-                                        $("div.language_chooser").css({'visibility':'visible'});
-                                    },function(){
-                                        $("div.language_chooser").css({'visibility':'hidden'});
-                                    });
-                                    $("div.language_chooser a").click( function(){
-                                        var target_lang_code = $("div.language_chooser select").val();
-                                        if ( target_lang_code != "" ) {
-                                            request_url = window.location+'l/{{ lock.rlstats.language.code }}/clone/'+target_lang_code+'/';
-                                            window.location = request_url;
-                                        } else {
-                                            alert('{% trans "Please select a target language first." %}');
-                                        }
-                                    });
-                                    if(!$("#download_for_translation a").hasClass('disabled')){
-                                    $("#download_for_translation").click(function(){
-                                        $.ajax({
-                                            url : '{% url lock_and_download_translation lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}',
-                                            contentType : 'application/json',
-                                            type : 'POST',
-                                            beforeSend: function(){
-                                            $("div#notification-container div").html('{% trans "Trying to lock resource..." %}');
-                                            $("div#notification-container").fadeIn("fast");
-                                            },
-                                            complete : function(xmlhttpreq, textStatus) {
-                                                if (textStatus=='success'){
-                                                    response = JSON.parse(xmlhttpreq.responseText);
-                                                    if(response['status']=='FAILED'){
-                                                        $("#download_for_translation").siblings("div.error_notes").text(response['message']);
-                                                        $("#download_for_translation").siblings("div.error_notes").show();
-                                                    }else{
-                                                        if(response['redirect']){
-                                                            window.location = response['redirect'];
-                                                        }
-                                                    }
-                                                    $("div#notification-container").fadeOut("fast");
-                                                }
-                                            }
-                                        });
-                                    });
-                                    }
-                                },
-                                'titleShow': true,
-                                'titlePosition': 'inside',
-                                'title': '{% trans "Translation Details"%}'
-                        });
-                        });
-                    </script>
-
+                    </a>
+                  
+                  	<script type="text/javascript">
+								      jQuery(document).ready(function($){
+								      	
+								        $("#detail_{{forloop.counter}}").facebox({ ajax: '{% url resource_actions lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}'});
+												
+												
+												$(document).bind('reveal.facebox', function() { 
+														
+													$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});	
+														
+								          $("a.language_chooser_trigger").click(function(){
+								            $("div.language_chooser").slideToggle();
+								           });
+								          
+								          $("div.language_chooser a").click( function(){
+								            var target_lang_code = $("div.language_chooser select").val();
+								            if ( target_lang_code != "" ) {
+								                request_url = window.location+'l/{{ stat.language.code }}/clone/'+target_lang_code+'/';
+								                window.location = request_url;
+								            } else {
+								                alert('{% trans "Please select a target language first."|escapejs %}');
+								            }
+								           });
+								
+								          
+													if(!$("#download_for_translation a").hasClass('disabled')){
+	                          $("#download_for_translation").click(function(){
+	                              $.ajax({
+	                                  url : '{% url lock_and_download_translation lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}',
+	                                  contentType : 'application/json',
+	                                  type : 'POST',
+	                                  beforeSend: function(){
+	                                  $("div#notification-container div").html('{% trans "Trying to lock resource..." %}');
+	                                  $("div#notification-container").fadeIn("fast");
+	                                  },
+	                                  complete : function(xmlhttpreq, textStatus) {
+	                                      if (textStatus=='success'){
+	                                          response = JSON.parse(xmlhttpreq.responseText);
+	                                          if(response['status']=='FAILED'){
+	                                              $("#download_for_translation").siblings("div.error_notes").text(response['message']);
+	                                              $("#download_for_translation").siblings("div.error_notes").show();
+	                                          }else{
+	                                              if(response['redirect']){
+	                                                  window.location = response['redirect'];
+	                                              }
+	                                          }
+	                                          $("div#notification-container").fadeOut("fast");
+	                                      }
+	                                  }
+	                              });
+	                          });
+	                        }                 
+											  }) 
+											})
+								    </script>
                 </li>
             {% endfor %}
             </ul>

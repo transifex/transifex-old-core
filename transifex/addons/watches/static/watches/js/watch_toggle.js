@@ -27,10 +27,10 @@ function watch_handler(data, textStatus){
         obj.addClass(j.style);
         
         if (j.style == "watch_add")
-        	obj.find(".projectlabel").html(gettext("Watch project"));
+        	obj.find(".projectlabel").html(gettext("Watch"));
 
         if (j.style == "watch_remove")
-        	obj.find(".projectlabel").html(gettext("Stop watching project"));
+        	obj.find(".projectlabel").html(gettext("Stop watching"));
 
     }
 }

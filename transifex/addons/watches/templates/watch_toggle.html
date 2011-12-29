@@ -9,12 +9,17 @@
       
       {% if obj.is_project %}
   			{% if obj.is_watched %}
-  			  <span class="projectlabel">{% trans "Stop watching project" %}</span>
+  			  <span class="projectlabel">{% trans "Stop watching" %}</span>
       	{% else %}
-      		<span class="projectlabel">{% trans "Watch project" %}</span>
+      		<span class="projectlabel">{% trans "Watch" %}</span>
       	{% endif %}
       {% else %}
-      
+      	{% if obj.is_watched %}
+  			  <span class="projectlabel">{% trans "Stop watching" %}</span>
+      	{% else %}
+      		<span class="projectlabel">{% trans "Watch" %}</span>
+      {% endif %}
+            	
       {% endif %}
       </span>
 {% endif %}
