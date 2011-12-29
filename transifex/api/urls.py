@@ -216,7 +216,7 @@ urlpatterns = patterns('',
         {'api_version': 2},
         name='global_actionlogs',
     ), url(
-        r'^2/accounts/profile/(?P<username>[\w-]+)/actionlog/$',
+        r'^2/accounts/profile/(?P<username>[\.\w-]+)/actionlog/$',
         actionlog_handler,
         {'api_version': 2},
         name='user_actionlogs',

@@ -81,7 +81,7 @@ class JoomlaINIHandler(Handler):
                 logger.warning('Could not parse line "%s". Skipping...' % line)
                 continue
 
-            trans = self.jformat.get_translation(trans)
+            escaped_trans = self.jformat.get_translation(trans)
             context = ""        # We use empty context
 
             if is_source:
@@ -95,11 +95,12 @@ class JoomlaINIHandler(Handler):
                     line[source_len:]
                 )
                 buf += new_line + self.linesep
-            elif not SourceEntity.objects.filter(resource=self.resource, string=source).exists() or not trans.strip():
+            elif not SourceEntity.objects.filter(resource=self.resource, string=source).exists()\
+                    or not escaped_trans.strip():
                 #ignore keys with no translation
                 context=""
                 continue
-            self._add_translation_string(source, self._unescape(trans),
+            self._add_translation_string(source, self._unescape(escaped_trans),
                     context=context, comment=comment)
             comment = ""
         return buf[:buf.rfind(self.linesep)]

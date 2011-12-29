@@ -1,4 +1,5 @@
 {% extends "projects/project_detail_childs.html" %}
+{% load humanize %}
 {% load i18n %}
 {% load permissions %}
 {% load txcommontags %}
@@ -58,8 +59,8 @@
     /* vars for string calcs */
     var translated;
     var untranslated;
-    var translated_strings = {{ translated_strings }}
-    var untranslated_strings = {{ untranslated_strings }}
+    var translated_strings = {{ translated_strings|intcomma }}
+    var untranslated_strings = {{ untranslated_strings|intcomma }}
     var total_strings = translated_strings + untranslated_strings;
     /* obj for holding default values of edited text areas. works like a hastable/dict */
     var current_defaults = {};
@@ -851,7 +852,7 @@
   {% with untranslated_strings|add:translated_strings as total_strings %}
   <tr>
     <th class="translated">{% trans "Translated" %}</th>
-    <td id="total_translated">{{ translated_strings }}</td>
+    <td id="total_translated">{{ translated_strings|intcomma }}</td>
     <td id="total_translated_perc">?</td>
     <td>
       <input id="translated" class="filters" type="checkbox" {% if not untranslated_strings %}checked="checked"{% endif %} name="only_translated"/>
@@ -860,7 +861,7 @@
 
   <tr>
     <th class="untranslated">{% trans "Untranslated" %}</th>
-    <td id="total_untranslated">{{ untranslated_strings }} </td>
+    <td id="total_untranslated">{{ untranslated_strings|intcomma }} </td>
     <td id="total_untranslated_perc">?</td>
     <td>
       <input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/>
@@ -878,7 +879,7 @@
 
   <tr class="last">
     <th>{% trans "Total" %}</th>
-      <td id="total_sum">{{ total_strings }}</td>
+      <td id="total_sum">{{ total_strings|intcomma }}</td>
   </tr>
   {% endwith %}
 </table>

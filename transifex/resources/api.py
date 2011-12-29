@@ -29,7 +29,8 @@ from transifex.projects.signals import post_submit_translation, post_resource_sa
 from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
-from transifex.resources.views import _compile_translation_template
+from transifex.resources.views import _compile_translation_template, \
+        get_file_extension
 from transifex.resources.backends import ResourceBackend, \
         ResourceBackendError, content_from_uploaded_file
 from transifex.resources.formats.registry import registry
@@ -817,7 +818,7 @@ class FileTranslation(Translation):
         response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
                 urllib.quote(translation.resource.name.encode('UTF-8')),
                 translation.language.code,
-                i18n_method['file-extensions'].split(', ')[0])
+                get_file_extension(translation.resource, translation.language))
         )
         return response
 
@@ -987,4 +988,6 @@ class FormatsHandler(BaseHandler):
         Get details of supported i18n formats.
         """
 
-        return settings.I18N_METHODS
+        formats_info = settings.I18N_METHODS
+        formats_info['POT']['file-extensions'] = '.po'
+        return formats_info

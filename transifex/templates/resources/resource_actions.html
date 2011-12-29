@@ -8,6 +8,7 @@
 {% load watches_tags %}
 {% load txcommontags %}
 {% load addons %}
+{% load humanize%}
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
@@ -15,9 +16,9 @@
   <div class="first_level title_wrapper" style="padding-top:0;border-top:none;">
     
     <div class="details_font">
-             {% blocktrans with stats.total as total_entities %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
-             {% blocktrans with stats.translated as trans_count and stats.translated_wordcount as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}<br/>
-             {% blocktrans with stats.untranslated as trans_count and stats.untranslated_wordcount as trans_wordcount %}Remaining: {{ trans_count }} strings ({{ trans_wordcount }} words) {% endblocktrans %}<br/>
+             {% blocktrans with stats.total|intcomma as total_entities and wordcount|intcomma as wordcount %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
+             {% blocktrans with stats.translated|intcomma as trans_count and stats.translated_wordcount|intcomma as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}<br/>
+             {% blocktrans with stats.untranslated|intcomma as trans_count and stats.untranslated_wordcount|intcomma as trans_wordcount %} {{ trans_count }} remaining strings ({{ trans_wordcount }} words) {% endblocktrans %}<br/>
              {% hook 'matches_overview.html' %}  
     </div>
     <span class="translate_button_wrapper">

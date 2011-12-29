@@ -468,6 +468,10 @@ def _compile_translation_template(resource=None, language=None, pseudo_type=None
         i18n_type = 'POT'
     else:
         i18n_type = resource.i18n_method
+
+    if resource.i18n_method == 'POT' and language is not None:
+        i18n_type = 'PO'
+
     handler = registry.handler_for(i18n_type)
     handler.bind_resource(resource)
     handler.set_language(language)
@@ -475,6 +479,14 @@ def _compile_translation_template(resource=None, language=None, pseudo_type=None
         handler.bind_pseudo_type(pseudo_type)
     handler.compile()
     return handler.compiled_template
+
+def get_file_extension(resource, language):
+    i18n_method = settings.I18N_METHODS[resource.i18n_method]
+    if resource.i18n_method == 'POT' and \
+            resource.source_language != language:
+        return '.po'
+    else:
+        return i18n_method['file-extensions'].split(', ')[0]
 
 
 # Restrict access only for private projects
@@ -510,7 +522,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         'proj': smart_unicode(resource.project.slug),
         'res': smart_unicode(resource.slug),
         'lang': language.code,
-        'type': i18n_method['file-extensions'].split(', ')[0]}
+        'type': get_file_extension(resource, language)}
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 

@@ -138,7 +138,7 @@
 <div class="list" style="clear:both">
 
   <div class="separate-header notopmargin clearfix" style="margin-top:0;">
-  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources:{% endblocktrans %}</h3>
+  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources{% endblocktrans %}</h3>
 	</div>
 	
  {% if statslist %}
@@ -270,12 +270,12 @@
   {% include "projects/release_list.html" %}
 {% endif %}
 
-{% with team.members.all as members %}
+{% with team_all as members %}
 {% if members %}
 <div class="list" style="clear:both">
 
   <div class="separate-header notopmargin clearfix" style="margin-top:0;">
-  	<h3  class="sh-label">{% trans "Team Members:" %}</h3>
+  	<h3  class="sh-label">{% trans "Team Members" %}</h3>
 	</div>
 
 <ul>
@@ -285,6 +285,9 @@
         <a href="{% url profile_public m.username %}">
             {{ m }}
         </a>
+        {% if m in team_reviewers %}
+          <sup>Reviewer</sup>
+        {% endif %}
         {% ifequal request.user.pk m.pk %}
         <form class="microform" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
             <input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/>
