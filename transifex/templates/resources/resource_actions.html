@@ -1,3 +1,4 @@
+{% load humanize %}
 {% load i18n %}
 {% load statistics_resources %}
 {% load truncate %}
@@ -17,8 +18,8 @@
       {% watch_toggle resource target_language %}
     </span>
     <div class="details_font">
-             {% blocktrans with stats.total as total_entities %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
-             {% blocktrans with stats.translated as trans_count and stats.translated_wordcount as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}
+             {% blocktrans with stats.total|intcomma as total_entities and wordcount|intcomma as wordcount %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
+             {% blocktrans with stats.translated|intcomma as trans_count and stats.translated_wordcount|intcomma as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}
     </div>
   </div>
   <div class="first_level">
@@ -71,7 +72,7 @@
       </div>
       {% endwith %}
       <div class="details_font stats_details_string">
-        {% blocktrans with stats.untranslated as trans_count and stats.untranslated_wordcount as trans_wordcount %} {{ trans_count }} remaining strings ({{ trans_wordcount }} words) {% endblocktrans %}
+        {% blocktrans with stats.untranslated|intcomma as trans_count and stats.untranslated_wordcount|intcomma as trans_wordcount %} {{ trans_count }} remaining strings ({{ trans_wordcount }} words) {% endblocktrans %}
       </div> 
       {% hook 'matches_overview.html' %}  
     </div>
