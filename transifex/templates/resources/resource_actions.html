@@ -152,35 +152,9 @@
           {% if resource.source_language == target_language and request.user.is_authenticated %}
           <li>
             <span class="i16 get_file ">
-                <a id="resource_pseudo_translation_actions" href="#" >{% trans "Get pseudo translations" %}</a>
+                <a id="resource_pseudo_translation_actions" href="{% url apiv2_pseudo_content project.slug resource.slug %}?pseudo_type=MIXED&file=true" >{% trans "Get pseudo translations" %}</a>
             </span>
           </li>
-            <script type="text/javascript">
-                $("#resource_pseudo_translation_actions").click(function(){
-                /* FancyBox Using custom settings */
-                $.fancybox(
-                    {
-                        'href': '{% url pseudo_translation_actions resource.project.slug resource.slug %}',
-                        'hideOnContentClick': false,
-                        'onStart':function(){
-                            // IE8 fix
-                            if(jQuery.browser.msie) {
-                            $('#fancybox-wrap').css('max-width','716px');
-                            $('#fancybox-inner').css('max-width','716px');
-                            $('#fancybox-outer').css('left','50%');
-                            }
-                        },
-                        'onComplete':function() {
-	                    		$("#fancybox-title").css({'top':'0px', 'bottom':'auto', 'position':'absolute', 'margin':'0', 'width':'100%'}).addClass('ui-corner-top');
-	                    		$("#fancybox-content").addClass('ui-corner-top'); 
-	                    		$("#fancybox-outer").addClass('ui-corner-top');
-	                    		}, 
-                        'titleShow': true,
-                        'titlePosition': 'inside',
-                        'title': '{% trans "Download Pseudo Translation File"|escapejs %}'
-                });
-                });
-            </script>
           {% endif %}
           
           {% ifnotequal resource.source_language target_language %}
