@@ -474,3 +474,12 @@ class POTHandler(GettextHandler):
             bug_tracker = self.resource.project.bug_tracker.encode(self.format_encoding)
             po.metadata['Report-Msgid-Bugs-To'] = bug_tracker
         return po
+
+    def set_language(self, language):
+        """Accept a language set to None.
+
+        This is useful when trying to GET a pot file.
+        """
+        if language is None:
+            return
+        super(POTHandler, self).set_language(language)

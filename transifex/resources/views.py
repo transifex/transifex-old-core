@@ -540,7 +540,7 @@ def get_pot_file(request, project_slug, resource_slug):
         Resource, project__slug=project_slug, slug=resource_slug
     )
     try:
-        template = _compile_translation_template(resource, resource.source_language)
+        template = _compile_translation_template(resource, None)
     except Exception, e:
         messages.error(request, _("Error compiling the pot file."))
         logger.error(
