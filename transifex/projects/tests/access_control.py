@@ -174,22 +174,17 @@ class ProjectAccessControlTestCase(BaseTestCase):
         self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
 
     def test_public_project_can_outsource_from_my_private_project(self):
-        response = self.client['maintainer'].get(
-            reverse('project_access_control_edit',
-                    kwargs={'project_slug': self.project.slug})
-        )
-        self.assertContains(response, self.project_private.name)
+        
+        url = reverse('project_access_control_edit',
+            kwargs={'project_slug': self.project.slug})
+        
+        self.project_private.is_hub = True
+        self.project_private.save()
 
-        response = self.client['maintainer'].post(
-            reverse('project_access_control_edit',
-                    kwargs={'project_slug': self.project.slug}),
-            {'access_control': "outsourced_access",
-             'outsource': self.project_private.id,
-             'next': reverse('project_access_control_edit',
-                             kwargs={'project_slug': self.project.slug})}
-        )
-        self.assertRedirects(
-            response,
-            reverse('project_access_control_edit',
-                    kwargs={'project_slug': self.project.slug})
-        )
+        response = self.client['maintainer'].post(url, {
+            'project_type': "outsourced",
+            'outsource': self.project_private.id,
+            'next': url}
+            )
+        
+        self.assertRedirects(response, url)
