@@ -439,7 +439,7 @@ class ProjectResourceHandler(BaseHandler):
                     resource.i18n_method = i18n_type
                     resource.save()
                 else:
-                    i18n_type = registry.i18n_method
+                    i18n_type = resource.i18n_method
 
                 # Set StorageFile to 'bound' status, which means that it is
                 # bound to some translation resource
