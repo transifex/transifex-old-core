@@ -504,13 +504,15 @@ class FileHandler(BaseHandler):
             logger.error(unicode(e), exc_info=True)
             return BAD_REQUEST("Error compiling the translation file: %s" %e )
 
-        i18n_method = settings.I18N_METHODS[resource.i18n_method]
         response = HttpResponse(
             template, mimetype=registry.mimetypes_for(resource.i18n_method)[0]
         )
-        response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
-        urllib.quote(resource.name.encode('UTF-8')), language.code,
-        i18n_method['file-extensions'].split(', ')[0]))
+        response['Content-Disposition'] = (
+            'attachment; filename*="UTF-8\'\'%s_%s%s"' % (
+                urllib.quote(resource.name.encode('UTF-8')), language.code,
+                registry.file_extension_for(resource, language)
+            )
+        )
 
         return response
 

@@ -489,9 +489,9 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         return HttpResponseRedirect(reverse('resource_detail',
             args=[resource.project.slug, resource.slug]),)
 
-    i18n_method = settings.I18N_METHODS[resource.i18n_method]
-    response = HttpResponse(template,
-        mimetype=i18n_method['mimetype'])
+    response = HttpResponse(
+        template, mimetype=registry.mimetypes_for(resource.i18n_method)[0]
+    )
     _filename = "%(proj)s_%(res)s_%(lang)s%(type)s" % {
         'proj': smart_unicode(resource.project.slug),
         'res': smart_unicode(resource.slug),
@@ -525,9 +525,9 @@ def get_pot_file(request, project_slug, resource_slug):
         return HttpResponseRedirect(reverse(
                 'resource_detail', args=[resource.project.slug, resource.slug]
         ))
-    i18n_method = settings.I18N_METHODS[resource.i18n_method]
-    response = HttpResponse(template,
-        mimetype=i18n_method['mimetype'])
+    response = HttpResponse(
+        template, mimetype=registry.mimetypes_for(resource.i18n_method)[0]
+    )
     _filename = "%(proj)s_%(res)s.pot" % {
         'proj': smart_unicode(resource.project.slug),
         'res': smart_unicode(resource.slug),
