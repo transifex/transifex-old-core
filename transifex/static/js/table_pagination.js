@@ -42,7 +42,7 @@ function table_pagination(table_node){
             $table.trigger('repaginate');
             $(this).addClass('active').siblings().removeClass('active');
           })
-          .appendTo($pager).addClass('clickable');
+          .appendTo($pager).addClass('linkstyle');
         }
         $pager.find('span.page-number:first').addClass('active');
         $pager.insertAfter($table);

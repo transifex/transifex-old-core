@@ -123,7 +123,7 @@
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
       <td class="category_td_class">{{ stat.resource.category }}</td>
       <td>
-        <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% else %}
@@ -196,7 +196,7 @@
   {% for stat in private_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
         <td>
-        <span class="clickable">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% else %}

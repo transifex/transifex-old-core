@@ -78,7 +78,7 @@ $(document).ready(function() {
 {% with source_entity.developer_comment_extra as extra_comment %}
  <li title="{% trans "Comment" %}" class="i16 comment clearfix">
     <span class="label" style="float:left;">{% trans "Comment: " %}</span> 
-    <span id="{{ source_entity.id }}" class="linklike label_target editable_{{ source_entity.id }}" style="margin-left:5px;float:left;">{% if extra_comment %}{{ extra_comment|truncatewords:"150" }}{% else %}{{ comment|truncatewords:"150" }}{% endif %}</span>
+    <span id="{{ source_entity.id }}" class="linkstyle label_target editable_{{ source_entity.id }}" style="margin-left:5px;float:left;">{% if extra_comment %}{{ extra_comment|truncatewords:"150" }}{% else %}{{ comment|truncatewords:"150" }}{% endif %}</span>
  </li>
 {% endwith %}
 {% endwith %}
