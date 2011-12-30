@@ -245,13 +245,15 @@ class ResourceHandler(BaseHandler):
 
         try:
             content = self._get_content(request, data)
+            filename = self._get_filename(request, data)
         except NoContentError, e:
             raise BadRequestError(unicode(e))
 
         try:
             rb = ResourceBackend()
             rb_create =  rb.create(
-                project, slug, name, method, project.source_language, content
+                project, slug, name, method, project.source_language, content,
+                extra_data={'filename': filename}
             )
             post_resource_save.send(sender=None, instance=Resource.objects.get(
                 slug=slug, project=project),
@@ -359,6 +361,26 @@ class ResourceHandler(BaseHandler):
             msg = "No content or file found"
             logger.warning(msg)
             raise NoContentError(msg)
+
+    def _get_filename(self, request, data):
+        """Get the filename of the uploaded file.
+
+        Returns:
+            The filename or None, if the request used json.
+        """
+        if 'application/json' in request.content_type:
+            return None
+        elif 'multipart/form-data' in request.content_type:
+            if not request.FILES:
+                msg = "No file has been uploaded."
+                logger.warning(msg)
+                raise NoContentError(msg)
+            return filename_of_uploaded_file(request.FILES)
+        else:
+            msg = "No content or file found"
+            logger.warning(msg)
+            raise NoContentError(msg)
+
 
 
 class StatsHandler(BaseHandler):
