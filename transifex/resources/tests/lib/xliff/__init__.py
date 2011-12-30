@@ -28,7 +28,7 @@ class TestXliffParser(BaseTestCase):
     def test_xliff_parser(self):
         """XLIFF parsing tests."""
         # Parsing XLIFF content
-        files = ['example.xlf']
+        files = ['example.xlf','example.xml']
         for file in files:
             handler = XliffHandler(os.path.join(os.path.dirname(__file__), file))
             handler.set_language(self.resource.source_language)
