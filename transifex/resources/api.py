@@ -308,8 +308,8 @@ class ResourceHandler(BaseHandler):
         try:
             for key, value in data.iteritems():
                 setattr(resource, key, value)
-            if i18n_type is not None:
-                resource.i18n_method = i18n_type
+            # if i18n_type is not None:
+            #     resource.i18n_method = i18n_type
             resource.save()
         except:
             return rc.BAD_REQUEST
