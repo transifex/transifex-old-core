@@ -133,13 +133,21 @@ class StorageHandler(BaseHandler):
                         "for further information."
                     )
                 except Exception, e:
-                    if isinstance(e, (FileCheckError, ParseError)):
+                    if isinstance(e, UnicodeDecodeError):
+                        message = _(
+                            "The encoding of the uploaded file is not UTF-8. "
+                            "Currently, transifex supports only UTF-8"
+                            "encoded files. Please, visit"
+                            "http://help.transifex.net/user-guide/formats.html#encoding"
+                            "for further information."
+                        )
+                    elif isinstance(e, (FileCheckError, ParseError)):
                         #FIXME: Custom Exception should use an extra attr for
                         # localized string.
-                        message = e.message
+                        message = "%s" % e
                     else:
                         message = _("A strange error happened.")
-                        logger.error("Unhandled exception raised: %s" % e.message)
+                        logger.error("Unhandled exception raised: %s" % e)
 
                     # The object is not saved yet, but it removes file from
                     # the filesystem

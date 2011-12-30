@@ -89,7 +89,7 @@ class GettextHandler(Handler):
         # If file is empty, the method hangs so we should bail out.
         if not content:
             logger.warning("Pofile: File '%s' is empty." % self.filename)
-            raise PoParseError(_("Uploaded file is empty."))
+            raise PoParseError("Uploaded file is empty.")
 
         # Msgfmt check
         if settings.FILECHECKS['POFILE_MSGFMT']:
