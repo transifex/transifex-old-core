@@ -63,9 +63,9 @@ class UserExperienceTest(CLAMixin):
         self.post_url = reverse("project_access_control_edit",
                 args=[self.project.slug])
         resp = self.client['maintainer'].post(self.post_url, {
-            'access_control': "limited_access", 'cla_enable': True,
+            'project_type': "typical", 'access_control': "limited_access",
+            'cla_enable': True, 'next': self.post_url,
             'cla_license_text': "this is the CLA of project kbairak",
-            'next': self.post_url
         })
 
     def test_cla_sign(self):
@@ -200,10 +200,11 @@ class UserExperienceTest(CLAMixin):
         self.assertEqual(response.status_code, 403)
 
     def test_outsourced_project_save(self):
+        self.project_private.is_hub = True
+        self.project_private.save()
         response = self.client['maintainer'].post(self.post_url, {
             'project_type': "outsourced",
             'outsource': self.project_private.id,
-            'submit_access_control': 'Save Access Control Settings',
             'next': self.post_url,
             'cla_license_text': ''
         }, follow=True)
