@@ -505,7 +505,9 @@ class FileHandler(BaseHandler):
             return BAD_REQUEST("Error compiling the translation file: %s" %e )
 
         i18n_method = settings.I18N_METHODS[resource.i18n_method]
-        response = HttpResponse(template, mimetype=i18n_method['mimetype'])
+        response = HttpResponse(
+            template, mimetype=registry.mimetypes_for(resource.i18n_method)[0]
+        )
         response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
         urllib.quote(resource.name.encode('UTF-8')), language.code,
         i18n_method['file-extensions'].split(', ')[0]))
@@ -835,9 +837,13 @@ class FileTranslation(Translation):
 
     @classmethod
     def to_http_for_get(cls, translation, result):
-        i18n_method = settings.I18N_METHODS[translation.resource.i18n_method]
-        response = HttpResponse(result, mimetype=i18n_method['mimetype'])
-        response['Content-Disposition'] = ('attachment; filename*="UTF-8\'\'%s_%s%s"' % (
+        response = HttpResponse(
+            result, mimetype=registry.mimetypes_for(
+                translation.resource.i18n_method
+            )[0]
+        )
+        response['Content-Disposition'] = (
+            'attachment; filename*="UTF-8\'\'%s_%s%s"' % (
                 urllib.quote(translation.resource.name.encode('UTF-8')),
                 translation.language.code,
                 get_file_extension(translation.resource, translation.language))
@@ -949,12 +955,11 @@ class StringTranslation(Translation):
                 "Error compiling the translation file: %s" % e
             )
 
-        i18n_method = settings.I18N_METHODS[self.resource.i18n_method]
         if self.resource.i18n_method == 'PROPERTIES':
             template = template.decode('ISO-8859-1')
         return {
             'content': template,
-            'mimetype': i18n_method['mimetype']
+            'mimetype': registry.mimetypes_for(self.resource.i18n_method)[0]
         }
 
     def create(self):
@@ -1009,7 +1014,4 @@ class FormatsHandler(BaseHandler):
         """
         Get details of supported i18n formats.
         """
-
-        formats_info = settings.I18N_METHODS
-        formats_info['POT']['file-extensions'] = '.po'
-        return formats_info
+        return registry.available_methods
