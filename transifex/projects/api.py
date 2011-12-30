@@ -431,15 +431,15 @@ class ProjectResourceHandler(BaseHandler):
                 if created:
                     resource.name = resource_slug or storagefile.name
                     resource.save()
-
-                # update i18n_type
-                i18n_type = registry.guess_method(storagefile.get_storage_path())
-                if not i18n_type:
-                    transaction.rollback()
-                    return BAD_REQUEST("File type not supported.")
-
-                resource.i18n_method = i18n_type
-                resource.save()
+                    # update i18n_type
+                    i18n_type = registry.guess_method(storagefile.get_storage_path())
+                    if not i18n_type:
+                        transaction.rollback()
+                        return BAD_REQUEST("File type not supported.")
+                    resource.i18n_method = i18n_type
+                    resource.save()
+                else:
+                    i18n_type = registry.i18n_method
 
                 # Set StorageFile to 'bound' status, which means that it is
                 # bound to some translation resource
