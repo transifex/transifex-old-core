@@ -13,6 +13,12 @@ class _FormatsRegistry(object):
     """Registry class for the formats."""
 
     def __init__(self, methods=None, handlers=None):
+        """It initializes the variables of the registry.
+
+        The variables are:
+            methods: A dictionary of the available methods.
+            handlers: A dictionary of the available handlers.
+        """
         self.methods = methods or settings.I18N_METHODS
         self.handlers = {}
         handlers = handlers or settings.I18N_HANDLER_CLASS_NAMES
