@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 from django.core.urlresolvers import reverse
+from django.utils import unittest
 from django.conf import settings
 from django.utils import simplejson
 from django.test import TransactionTestCase
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import BaseTestCase, Users, Languages, \
         NoticeTypes, Projects, TransactionNoticeTypes, TransactionLanguages
+from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import RLStats, Resource
 from transifex.projects.models import Project
 from transifex.storage.models import StorageFile
@@ -103,6 +105,10 @@ class ProjectResourceAPITests(BaseStorageTests):
         self.assertContains(resp, "for source language", status_code=400)
         upload_file.close()
 
+@unittest.skipUnless(settings.DATABASES['default']['ENGINE'].endswith(
+        'postgresql_psycopg2'), log_skip_transaction_test(
+            "Skipping transaction test because database backend"
+            " is not postgres."))
 class TestTransactionProjectResourceAPI(TransactionNoticeTypes,
                                         TransactionLanguages,
                                         Projects, TransactionTestCase):

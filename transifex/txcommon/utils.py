@@ -1,5 +1,12 @@
 import gc
 from django.core.urlresolvers import get_resolver
+from transifex.txcommon.log import logger
+from django.conf import settings
+
+def log_skip_transaction_test(msg):
+    if not settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
+        logger.info(msg)
+    return msg
 
 def get_url_pattern(urlname, args=[]):
     """

@@ -4,8 +4,10 @@ from django.core.urlresolvers import reverse
 from django.utils import simplejson
 from django.test import TransactionTestCase
 from django.conf import settings
+from django.utils import unittest
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import Users, TransactionNoticeTypes
+from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.api import ResourceHandler
 from transifex.resources.formats.registry import registry
@@ -271,6 +273,10 @@ class TestResourceAPI(APIBaseTests):
         self.assertEquals(len(r.available_languages_without_teams), 1)
 
 
+@unittest.skipUnless(settings.DATABASES['default']['ENGINE'].endswith(
+        'postgresql_psycopg2'), log_skip_transaction_test(
+            "Skipping transaction test because database backend"
+            " is not postgres."))
 class TestTransactionResourceCreate(Users, TransactionNoticeTypes,
                                     TransactionTestCase):
 
