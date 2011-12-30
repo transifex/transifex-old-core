@@ -143,7 +143,7 @@ class TransactionLanguages(object):
         super(TransactionLanguages, self).setUp()
 
 
-class Projects(object):
+class Projects(Users):
     """A class to create sample projects.
 
     Use this as a mixin in tests.
@@ -152,6 +152,7 @@ class Projects(object):
     fixtures = ["sample_data", ]
 
     def setUp(self):
+        super(Projects, self).setUp()
         self.project = Project.objects.get(slug='project1')
         self.project.maintainers.add(self.user['maintainer'])
         self.project.owner = self.user['maintainer']
@@ -162,10 +163,8 @@ class Projects(object):
         self.project_private.owner = self.user['maintainer']
         self.project_private.save()
 
-        super(Projects, self).setUp()
 
-
-class Resources(object):
+class Resources(Projects):
     """A class to create sample resources.
 
     Use this as a mixin in tests.
@@ -173,6 +172,7 @@ class Resources(object):
 
     def setUp(self):
         # Create a resource
+        super(Resources, self).setUp()
         self.resource = Resource.objects.create(
             slug="resource1", name="Resource1", project=self.project,
             i18n_type='PO'
@@ -181,16 +181,16 @@ class Resources(object):
             slug="resource1", name="Resource1", project=self.project_private,
             i18n_type='PO'
         )
-        super(Resources, self).setUp()
 
 
-class SourceEntities(object):
+class SourceEntities(Resources):
     """A class to create some sample source entities.
 
     Use this as a mixin in tests.
     """
 
     def setUp(self):
+        super(SourceEntities, self).setUp()
         self.source_entity = SourceEntity.objects.create(
             string='String1', context='Context1', occurrences='Occurrences1',
             resource=self.resource
@@ -209,10 +209,9 @@ class SourceEntities(object):
             occurrences='Occurrences1_plural', resource= self.resource_private,
             pluralized=True
         )
-        super(SourceEntities, self).setUp()
 
 
-class Translations(object):
+class Translations(SourceEntities):
     """A class to create some sample translations.
 
     Use this as a mixin in tests.
@@ -220,6 +219,7 @@ class Translations(object):
 
     def setUp(self):
         # Create one translation
+        super(Translations, self).setUp()
         self.translation_en = self.source_entity.translations.create(
             string='Buy me some BEER :)',
             rule=5,
@@ -236,18 +236,13 @@ class Translations(object):
             user=self.user['registered'],
             resource=self.resource
         )
-        super(Translations, self).setUp()
 
 
-class SampleData(Languages, Users, Projects, Resources, SourceEntities,
-                          Translations, NoticeTypes):
+class SampleData(Languages, Translations, NoticeTypes):
     """A class that has all sample data defined."""
 
-    pass
 
-
-class BaseTestCase(Languages, NoticeTypes, Users, Projects, Resources,
-                   SourceEntities, Translations, TestCase):
+class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
     """Provide a solid test case for all tests to inherit from."""
 
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]

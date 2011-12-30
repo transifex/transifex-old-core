@@ -105,7 +105,7 @@ class ProjectResourceAPITests(BaseStorageTests):
 
 class TestTransactionProjectResourceAPI(TransactionNoticeTypes,
                                         TransactionLanguages,
-                                        Users, Projects, TransactionTestCase):
+                                        Projects, TransactionTestCase):
 
     def setUp(self):
         # Have to run now, because the TransactionTestCase resets
@@ -469,7 +469,8 @@ class TestProjectAPI(BaseTestCase):
         self.assertEquals(res.status_code, 204)
 
 
-class TestTransactionProjectAPI(BaseTestCase):
+class TestTransactionProjectAPI(Users, TransactionLanguages,
+                                TransactionTestCase):
 
     def setUp(self):
         super(TestTransactionProjectAPI, self).setUp()

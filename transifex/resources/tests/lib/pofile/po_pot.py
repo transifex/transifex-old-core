@@ -29,7 +29,7 @@ from transifex.resources.api import Translation
 from transifex.resources.formats.pofile import POHandler, POTHandler
 
 
-class TestApiInvocations(Users, Languages, Projects, Resources, TestCase):
+class TestApiInvocations(Languages, Resources, TestCase):
     """Test PO/POT Handler invokations in the API.
 
     We need to test POST for resources and GET and PUT for translations and
@@ -135,7 +135,7 @@ class TestApiInvocations(Users, Languages, Projects, Resources, TestCase):
                 self.assertIsInstance(used_handler, pot_class)
 
 
-class TestViewsInvocations(Users, Languages, NoticeTypes, Projects, Resources, TestCase):
+class TestViewsInvocations(Languages, NoticeTypes, Resources, TestCase):
     """Test PO/POT Handler invokations in the views.
 
     Test for both source content and translations, json and file
