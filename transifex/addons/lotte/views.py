@@ -837,13 +837,13 @@ def _save_translation(source_string, translations, target_language, user):
 
         # check for errors
         try:
-            for ErrorValidator in create_error_validators(resource.i18n_type):
+            for ErrorValidator in create_error_validators(resource.i18n_method):
                 v = ErrorValidator(source_language, target_language, rule)
                 v(source_string.string, target_string)
         except ValidationError, e:
             raise LotteBadRequestError(e.message)
         # check for warnings
-        for WarningValidator in create_warning_validators(resource.i18n_type):
+        for WarningValidator in create_warning_validators(resource.i18n_method):
             v = WarningValidator(source_language, target_language, rule)
             try:
                 v(source_string.string, target_string)
