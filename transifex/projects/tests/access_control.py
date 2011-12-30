@@ -149,6 +149,11 @@ class ProjectAccessControlTestCase(BaseTestCase):
         resp = self.client['maintainer'].post(url, DATA, follow=True)
         self.assertContains(resp, '<label for="id_project_type_2"><input checked="checked" type="radio"', status_code=200)
 
+        #change access control to outsourced with not outsource field filled
+        DATA = {'project_type':'outsourced', 'next': url, 'outsource': ''}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, 'This field is required', status_code=200)
+
         #change access control to typical and free for all
         DATA = {'project_type':'typical', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
@@ -161,6 +166,11 @@ class ProjectAccessControlTestCase(BaseTestCase):
         self.assertContains(resp, '<label for="id_project_type_0"><input checked="checked" type="radio"', status_code=200)
         self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
 
+        #change access control to typical with not access_control field filled
+        DATA = {'project_type':'typical', 'next': url, 'outsource': ''}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, 'This field is required', status_code=200)
+
         #change access control as hub and free for all
         DATA = {'project_type':'hub', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
@@ -172,6 +182,11 @@ class ProjectAccessControlTestCase(BaseTestCase):
         resp = self.client['maintainer'].post(url, DATA, follow=True)
         self.assertContains(resp, '<label for="id_project_type_1"><input checked="checked" type="radio"', status_code=200)
         self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
+
+        #change access control as hub with not access_control field filled
+        DATA = {'project_type':'hub', 'next': url, 'outsource': ''}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, 'This field is required', status_code=200)
 
     def test_public_project_can_outsource_from_my_private_project(self):
         
