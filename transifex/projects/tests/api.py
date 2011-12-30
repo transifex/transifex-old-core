@@ -338,14 +338,7 @@ class TestProjectAPI(BaseTestCase):
         self.assertEquals(res.status_code, 201)
         self.assertEquals(len(Project.objects.all()), 9)
         self.assertEquals(p.source_language, self.language_en)
-        res = self.client['registered'].post(
-            self.url_projects, simplejson.dumps({
-                'slug': 'api_project', 'name': 'Project from API',
-                'source_language_code': 'en_US'
-            }),
-            content_type='application/json'
-        )
-        self.assertEquals(res.status_code, 409)
+
         # Check permissions
         user = User.objects.get(username='registered')
         user.groups = []
@@ -474,3 +467,27 @@ class TestProjectAPI(BaseTestCase):
         self.assertEquals(res.status_code, 201)
         res = self.client['registered'].delete(self.url_project)
         self.assertEquals(res.status_code, 204)
+
+
+class TestTransactionProjectAPI(BaseTestCase):
+
+    def setUp(self):
+        super(TestTransactionProjectAPI, self).setUp()
+        self.url_projects = reverse('apiv2_projects')
+
+    def test_duplciate_entry(self):
+        res = self.client['registered'].post(
+            self.url_projects, simplejson.dumps({
+                'slug': 'api_project', 'name': 'Project from API',
+                'source_language_code': 'en_US'
+            }),
+            content_type='application/json'
+        )
+        res = self.client['registered'].post(
+            self.url_projects, simplejson.dumps({
+                'slug': 'api_project', 'name': 'Project from API',
+                'source_language_code': 'en_US'
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 409)
