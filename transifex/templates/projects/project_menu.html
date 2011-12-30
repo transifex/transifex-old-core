@@ -22,14 +22,24 @@
 <script type="text/javascript">
 
 function toggle_access_control(){
-    var access_control = $("input[name='project_type']:checked").val();
-    if (access_control != 'outsourced'){
+    var project_type = $("input[name='project_type']:checked").val();
+    if (project_type != 'outsourced'){
         $("input[name='access_control']").attr('disabled', false);
         $("select[name='outsource']").attr('disabled', 'disabled');
     }else{
         $("input[name='access_control']").attr('disabled', 'disabled');
         $("select[name='outsource']").attr('disabled', false);
     }
+
+    // CLA related events
+    var access_control = $("input[name='access_control']:checked").val();
+    
+    if(access_control != 'limited_access' || project_type == 'outsourced') {
+        $("#cla_section").hide();
+    } else {
+        $("#cla_section").show();
+    }
+
 }
 
 $(document).ready(function(){
@@ -37,7 +47,7 @@ $(document).ready(function(){
     {# If project has a hub request open, do not execute form toggler #}
     {% if not project.hub_request %}
     
-        $("input[name='project_type']").change(function(){
+        $("form[name=hub] input[type=radio]").change(function(){
             toggle_access_control();
         });
 
@@ -54,6 +64,14 @@ $(document).ready(function(){
 
 
     {% endif %}
+    
+    if($("#id_cla_enable:checked").val() != null) {
+        $("#cla_textarea").show();
+    }
+
+    $("input[name='cla_enable']").change(function() {
+        $("#cla_textarea").toggle("fast");
+    });
 
     }
 );

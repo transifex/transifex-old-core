@@ -6,6 +6,7 @@
 {% load permissions %}
 {% load txpermissions %}
 {% load fieldsets %}
+{% load addons %}
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "Outsource and Access Control" %}{% endblock %}
 
@@ -35,6 +36,8 @@
     {% endif%}
 
     <h3/>{% trans "Outsource and Access Control Settings" %}</h3>
+   
+    {% hook "access_control_form_notices.html" %}    
 
     <form name="hub" action='' method='post' class="microform">{% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}"/> 
@@ -56,6 +59,8 @@
             {{ form.access_control }}
             {% if form.access_control.errors %}<p class="fielderrors">{% for error in form.access_control.errors %}{{ error }}{% endfor %}</p>{% endif %}
             <p class="helptext">{{ form.access_control.help_text|safe }}</p>
+
+            {% hook "access_control_additional.html" %}
 
         <p class="submit">
             <input type="submit" class="i16 submit buttonized" name="hub" value="{% trans "Save" %}" />

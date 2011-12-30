@@ -91,6 +91,7 @@
       <dt class="i16 user">{% trans "Become a translator:" %}</dt>
       <dd>
         <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
+            <p>{% hook "team_request_join_additional.html" %}</p>
             <input name="team_join" class="i16 team_join buttonized" type="submit" title="{% trans "Join this Team" %}"  value="{% trans "Join this Team" %}">
         </form>
       </dd>
