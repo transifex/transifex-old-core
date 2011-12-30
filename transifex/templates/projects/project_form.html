@@ -27,13 +27,8 @@
 {{ block.super }}
 <script type="text/javascript">
 $(document).ready(function(){
-		$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 		$('.tx-form .required, .tx-form .field-helptext').each(function(){
 			$(this).appendTo($(this).siblings('label'));
-		});
-		$('.tx-form #display-advform').click(function(){
-			$(this).toggleClass("active");
-			$(".tx-form #project-edit-advanced").slideToggle("fast",function(){$(".side-menu").css('height',$(".psettings-content").height());});
 		});
 });
 </script>

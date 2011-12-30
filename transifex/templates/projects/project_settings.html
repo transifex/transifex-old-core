@@ -22,11 +22,15 @@
 	</div>
 {% endblock %}
 
+{% block basejs %}
+{{ block.super }}
+<script type="text/javascript" src="{{ STATIC_URL }}js/project_settings.js"></script>
+{% endblock %}
+
 {% block extrajs %}
 {{ block.super }}
 <script type="text/javascript">
 	$(document).ready(function(){
-
 		$(".tx-form #id_project-maintainers_text").parents(".tx-form-field").addClass("txf-maintainers");
 	});
 </script>
