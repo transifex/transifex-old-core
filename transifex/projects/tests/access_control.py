@@ -142,22 +142,36 @@ class ProjectAccessControlTestCase(BaseTestCase):
         """Test edit of project access control"""
         url = reverse('project_access_control_edit', args=[self.project.slug,])
         resp = self.client['maintainer'].get(url)
-        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_1">', status_code=200)
+        self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
 
         #change access control to outsourced access
-        DATA = {'access_control':"outsourced_access", 'next': url, 'outsource': '22', 'submit_access_control':'Save Access Control Settings'}
+        DATA = {'project_type':'outsourced', 'access_control':"free_for_all", 'next': url, 'outsource': '22'}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_2">', status_code=200)
+        self.assertContains(resp, '<label for="id_project_type_2"><input checked="checked" type="radio"', status_code=200)
 
-        #change access control to free for all
-        DATA = {'access_control':"free_for_all", 'next': url, 'outsource': '', 'submit_access_control':'Save Access Control Settings'}
+        #change access control to typical and free for all
+        DATA = {'project_type':'typical', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_0">', status_code=200)
+        self.assertContains(resp, '<label for="id_project_type_0"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, '<label for="id_access_control_0"><input checked="checked" type="radio"', status_code=200)
 
-        #change access control to limited access
-        DATA = {'access_control':"limited_access", 'next': url, 'outsource': '', 'submit_access_control':'Save Access Control Settings'}
+        #change access control to typical with limited access
+        DATA = {'project_type':'typical', 'access_control':"limited_access", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<li class="selected"><span><label for="id_access_control_1">', status_code=200)
+        self.assertContains(resp, '<label for="id_project_type_0"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
+
+        #change access control as hub and free for all
+        DATA = {'project_type':'hub', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, '<label for="id_project_type_1"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, '<label for="id_access_control_0"><input checked="checked" type="radio"', status_code=200)
+
+        #change access control as hub with limited access
+        DATA = {'project_type':'hub', 'access_control':"limited_access", 'next': url, 'outsource': ''}
+        resp = self.client['maintainer'].post(url, DATA, follow=True)
+        self.assertContains(resp, '<label for="id_project_type_1"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
 
     def test_public_project_can_outsource_from_my_private_project(self):
         response = self.client['maintainer'].get(
