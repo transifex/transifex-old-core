@@ -189,10 +189,10 @@ class Resource(models.Model):
 
     def _set_method(self, m):
         self.i18n_type = m
-        # if m == 'POT':
-        #     self.i18n_type = 'PO'
-        # else:
-        #     self.i18n_type = m
+        if m == 'POT':
+            self.i18n_type = 'PO'
+        else:
+            self.i18n_type = m
 
     i18n_method = property(_get_method, _set_method)
 
@@ -298,6 +298,7 @@ class Resource(models.Model):
             id__in=RLStats.objects.by_resource(
                 self
             ).filter(translated__gt=0).order_by().values('language').query)
+
 
 class SourceEntityManager(models.Manager):
 

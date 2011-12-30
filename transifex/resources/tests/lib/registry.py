@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from mock import Mock
+from django.utils import unittest
+from django.conf import settings
+from transifex.resources.formats.registry import registry, _FormatsRegistry
+from transifex.resources.formats.pofile import POHandler, POTHandler
 from transifex.txcommon.tests.base import BaseTestCase
-from transifex.resources.formats.registry import _FormatsRegistry
+
 
 class TestRegistry(BaseTestCase):
 
@@ -44,3 +49,89 @@ class TestRegistry(BaseTestCase):
         self.assertEquals(mimetypes[0], 'text/x-po')
         self.assertEquals(mimetypes[1], 'application/x-gettext')
         self.assertEquals(mimetypes[2], 'application/x-po')
+
+
+class TestAppropriateHandler(unittest.TestCase):
+    """Test the process of finding the appropriate handler in
+    various situations.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.appropriate_handler = registry.appropriate_handler
+
+    def test_normal_types(self):
+        for method in settings.I18N_METHODS:
+            if method not in ('PO', 'POT', ):
+                resource = Mock()
+                resource.__dict__['i18n_type'] = method
+                handler = self.appropriate_handler(resource, None)
+                self.assertIsInstance(
+                    handler, type(registry.handler_for(method))
+                )
+
+    def test_get(self):
+        resource = Mock()
+        resource.__dict__['i18n_type'] = 'PO'
+        resource.source_language = 'en'
+
+        handler = self.appropriate_handler(resource, None)
+        self.assertIsInstance(handler, POTHandler)
+        handler = self.appropriate_handler(resource, 'en')
+        self.assertIsInstance(handler, POHandler)
+        handler = self.appropriate_handler(resource, 'el')
+        self.assertIsInstance(handler, POHandler)
+
+    def test_save(self):
+        resource = Mock()
+        resource.__dict__['i18n_type'] = 'PO'
+        resource.source_language = 'en'
+
+        filename = 'f.po'
+        handler = self.appropriate_handler(resource, None, filename=filename)
+        self.assertIsInstance(handler, POHandler)
+        handler = self.appropriate_handler(resource, 'en', filename=filename)
+        self.assertIsInstance(handler, POHandler)
+        handler = self.appropriate_handler(resource, 'el', filename=filename)
+        self.assertIsInstance(handler, POHandler)
+        filename = 'f.pot'
+        handler = self.appropriate_handler(resource, None, filename=filename)
+        self.assertIsInstance(handler, POTHandler)
+        handler = self.appropriate_handler(resource, 'en', filename=filename)
+        self.assertIsInstance(handler, POTHandler)
+        handler = self.appropriate_handler(resource, 'el', filename=filename)
+        self.assertIsInstance(handler, POTHandler)
+
+
+class TestFileExtensions(unittest.TestCase):
+    """Test the file extensions used."""
+
+    def setUp(self):
+        self.resource = Mock()
+        self.resource.source_language = 'en'
+
+    def test_extensions(self):
+        for method in registry.available_methods:
+            if method == 'POT':
+                continue
+            self.resource.i18n_method = method
+            correct_extensions = registry.extensions_for(method)
+            for lang in ('en', 'el'):
+                extension_returned = registry.file_extension_for(
+                    self.resource, lang
+                )
+                self.assertIn(extension_returned, correct_extensions)
+
+    def test_po_extensions(self):
+        """Test PO/POT extensions.
+
+        If langauge is None: extension == 'pot'.
+        """
+        self.resource.i18n_method = 'PO'
+        for lang in ('en', 'el', None):
+            extension = registry.file_extension_for(self.resource, lang)
+            if lang is None:
+                self.assertEqual(extension, registry.extensions_for('POT')[0])
+            else:
+                self.assertEqual(extension, registry.extensions_for('PO')[0])
+

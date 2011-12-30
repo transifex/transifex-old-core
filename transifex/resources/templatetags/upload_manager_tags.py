@@ -11,7 +11,8 @@ from transifex.resources.forms import CreateResourceForm, \
         ResourceTranslationForm, UpdateTranslationForm
 from transifex.resources.models import Resource
 from transifex.resources.backends import ResourceBackend, FormatsBackend, \
-        ResourceBackendError, FormatsBackendError, content_from_uploaded_file
+        ResourceBackendError, FormatsBackendError, content_from_uploaded_file, \
+        filename_of_uploaded_file
 
 register = template.Library()
 
@@ -45,11 +46,13 @@ def upload_create_resource_form(request, project, prefix='create_form'):
                 slug = "%s_%s" % (slug, identifier)
             method = cr_form.cleaned_data['i18n_method']
             content = content_from_uploaded_file(request.FILES)
+            filename = filename_of_uploaded_file(request.FILES)
             rb = ResourceBackend()
             try:
                 rb.create(
                     project, slug, name, method, project.source_language,
-                    content, user=request.user
+                    content, user=request.user,
+                    extra_data={'filename': filename}
                 )
             except ResourceBackendError, e:
                 transaction.rollback()

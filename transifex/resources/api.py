@@ -29,10 +29,9 @@ from transifex.projects.signals import post_submit_translation, post_resource_sa
 from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, \
         Translation as TranslationModel, RLStats
-from transifex.resources.views import _compile_translation_template, \
-        get_file_extension
-from transifex.resources.backends import ResourceBackend, \
-        ResourceBackendError, content_from_uploaded_file
+from transifex.resources.backends import ResourceBackend, FormatsBackend, \
+        ResourceBackendError, content_from_uploaded_file, \
+        filename_of_uploaded_file
 from transifex.resources.formats.registry import registry
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
@@ -499,7 +498,8 @@ class FileHandler(BaseHandler):
             return BAD_REQUEST("%s" % e )
 
         try:
-            template = _compile_translation_template(resource, language)
+            fb = FormatsBackend(resource, language)
+            template = fb.compile_translation(pseudo_type)
         except Exception, e:
             logger.error(unicode(e), exc_info=True)
             return BAD_REQUEST("Error compiling the translation file: %s" %e )
@@ -846,7 +846,10 @@ class FileTranslation(Translation):
             'attachment; filename*="UTF-8\'\'%s_%s%s"' % (
                 urllib.quote(translation.resource.name.encode('UTF-8')),
                 translation.language.code,
-                get_file_extension(translation.resource, translation.language))
+                registry.file_extension_for(
+                    translation.resource, translation.language
+                )
+            )
         )
         return response
 
@@ -861,13 +864,11 @@ class FileTranslation(Translation):
             BadRequestError: There was a problem with the request.
         """
         try:
-            template = _compile_translation_template(
-                self.resource, self.language, pseudo_type
-            )
+            fb = FormatsBackend(self.resource, self.language)
+            return fb.compile_translation(pseudo_type)
         except Exception, e:
             logger.error(unicode(e), exc_info=True)
             raise BadRequestError("Error compiling the translation file: %s" %e )
-        return template
 
     def create(self):
         """
@@ -897,7 +898,7 @@ class FileTranslation(Translation):
                 file_.write(chunk)
             file_.close()
 
-            parser = registry.handler_for_resource(
+            parser = registry.appropriate_handler(
                 self.resource,
                 language=self.language,
                 filename=name
@@ -946,9 +947,8 @@ class StringTranslation(Translation):
             BadRequestError: There was a problem with the request.
         """
         try:
-            template = _compile_translation_template(
-                self.resource, self.language, pseudo_type
-            )
+            fb = FormatsBackend(self.resource, self.language)
+            template = fb.compile_translation(pseudo_type)
         except Exception, e:
             logger.error(unicode(e), exc_info=True)
             raise BadRequestError(
@@ -975,7 +975,7 @@ class StringTranslation(Translation):
         """
         if 'content' not in self.data:
             raise NoContentError("No content found.")
-        parser = registry.handler_for_resource(
+        parser = registry.appropriate_handler(
             self.resource, language=self.language
         )
         if parser is None:

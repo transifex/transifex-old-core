@@ -13,6 +13,7 @@ from transifex.txcommon.log import logger
 from transifex.resources.models import Resource
 from transifex.resources.formats import FormatError
 from transifex.resources.formats.registry import registry
+from transifex.resources.formats.utils.decorators import need_language
 
 
 class BackendError(Exception):
@@ -91,7 +92,9 @@ class ResourceBackend(object):
                 "The content type of the request is not valid."
             ))
         try:
-            return fb.import_source(content, method)
+            return fb.import_source(
+                content, filename=extra_data.get('filename')
+            )
         except FormatsBackendError, e:
             raise ResourceBackendError(unicode(e))
         except Exception, e:
@@ -104,7 +107,7 @@ class ResourceBackend(object):
 class FormatsBackend(object):
     """Backend for formats operations."""
 
-    def __init__(self, resource, language, user):
+    def __init__(self, resource, language, user=None):
         """Initializer.
 
         Args:
@@ -115,26 +118,31 @@ class FormatsBackend(object):
         self.language = language
         self.user = user
 
-    def import_source(self, content, method, filename=None):
+    def import_source(self, content, filename=None):
         """Parse some content which is of a particular i18n type and save
         it to the database.
 
         Args:
             content: The content to parse.
-            method: The i18n type of the content.
+            filename: The filename of the uploaded content (if any).
         Returns:
             A two-element tuple (pair). The first element is the number of
             strings added and the second one is the number of those updated.
         """
+        if self.language is None:
+            msg = _("No language specified, when importing source file.")
+            logger.error(msg)
+            raise FormatsBackendError(msg)
         handler = self._get_handler(
             self.resource, self.language, filename=filename
         )
         if handler is None:
-            msg = _("Invalid i18n method used: %s") % method
-            logger.warning(msg)
+            msg = _("Invalid i18n method used: %s")
+            logger.error(msg % self.resource.i18n_method)
             raise FormatsBackendError(msg)
         return self._import_content(handler, content, True)
 
+    @need_language
     def import_translation(self, content):
         """Parse a translation file for a resource.
 
@@ -146,14 +154,14 @@ class FormatsBackend(object):
         """
         handler = self._get_handler(self.resource, self.language)
         if handler is None:
-            msg = _("Invalid i18n method used: %s") % method
-            logger.warning(msg)
+            msg = _("Invalid i18n method used: %s")
+            logger.error(msg % self.resource.i18n_method)
             raise FormatsBackendError(msg)
         return self._import_content(handler, content, False)
 
     def _get_handler(self, resource, language, filename=None):
         """Get the appropriate hanlder for the resource."""
-        return registry.handler_for_resource(
+        return registry.appropriate_handler(
             resource, language, filename=filename
         )
 
@@ -176,6 +184,23 @@ class FormatsBackend(object):
         except FormatError, e:
             raise FormatsBackendError(unicode(e))
 
+    def compile_translation(self, pseudo_type=None):
+        """Compile the translation for a resource in a specified language.
+
+        There is some extra care for PO/POT resources. If there is no
+        language specified, return a POT file, otherwise a PO.
+
+        """
+        handler = registry.appropriate_handler(
+            resource=self.resource, language=self.language
+        )
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        if pseudo_type:
+            handler.bind_pseudo_type(pseudo_type)
+        handler.compile()
+        return handler.compiled_template or ''
+
 
 def content_from_uploaded_file(files, encoding='UTF-8'):
     """Get the content of an uploaded file.
@@ -193,3 +218,10 @@ def content_from_uploaded_file(files, encoding='UTF-8'):
         return ''
     return files[0].read()
 
+
+def filename_of_uploaded_file(files):
+    """Get the filename of he uploaded file."""
+    files = files.values()
+    if not files:
+        return None
+    return files[0].name

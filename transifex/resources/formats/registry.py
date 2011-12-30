@@ -160,27 +160,65 @@ class _FormatsRegistry(object):
             return None
         return self.handlers[m]()
 
-    def handler_for_resource(self, resource, language=None, filename=None):
-        """Return a handler for a resource.
+    def appropriate_handler(self, resource, language, **kwargs):
+        """Return the appropriate handler based on the arguments.
+
+        The arguments may be the filename of the resource or whether
+        a pot file has been requested.
 
         Args:
-            resource: A resource.
-            language: A language.
-            filename: The filename of the content.
+            resource: The resource the handler is for.
+            language: The language the handler is asked for.
         Returns:
-            A particular handler for the method or None, in case the method
-            has not been registered.
+            A subclass of formats.core.Handler or None.
         """
-        m = resource.i18n_type
-        slang = resource.source_language
-        suffix_is_pot = filename is not None and filename.endswith('pot')
-        suffix_is_po = filename is not None and filename.endswith('po')
-        if m == 'POT' and suffix_is_po:
-            m = 'PO'
-        elif m == 'POT' and language is not None and language != slang:
-            m = 'PO'
-        elif m == 'PO' and suffix_is_pot:
-            m = 'POT'
-        return self.handler_for(m)
+        method = resource.i18n_type
+        handler = registry.handler_for
+
+        # Only PO/POT files need special treatment
+        if method != 'PO':
+            return handler(method)
+
+        # Override the behavior manually
+        wants_pot = kwargs.get('wants_pot')
+        if wants_pot:
+            return handler('POT')
+
+        # Check file extension
+        filename = kwargs.get('filename')
+        if filename is not None:
+            if filename.endswith('po'):
+                return handler('PO')
+            else:
+                return handler('POT')
+
+        # Return POT, when no language has been asked
+        if language is None:
+            return handler('POT')
+        return handler('PO')
+
+        # # Always return PO for non-source language files
+        # slang = resource.source_language
+        # if language != slang:
+        #     return handler('PO')
+
+        # Should never be here
+        return None
+
+    def file_extension_for(self, resource, language):
+        """Return the filename extension that should be used
+        for the specific resource-language pair.
+        """
+        resource_method = resource.i18n_method
+        try:
+            if resource_method != 'PO':
+                return self.extensions_for(resource_method)[0]
+            if language is None:
+                return self.extensions_for('POT')[0]
+            return self.extensions_for(resource_method)[0]
+        except IndexError, e:
+            msg = "No extensions for resource %s: %s"
+            logger.error(msg % (resource, e), exc_info=True)
+            raise
 
 registry = _FormatsRegistry()

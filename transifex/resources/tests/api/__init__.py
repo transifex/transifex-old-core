@@ -8,6 +8,7 @@ from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import Users, TransactionNoticeTypes
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.api import ResourceHandler
+from transifex.resources.formats.registry import registry
 from transifex.resources.tests.api.base import APIBaseTests
 from transifex.projects.models import Project
 from transifex.languages.models import Language
@@ -954,4 +955,4 @@ class TestFormatsAPI(APIBaseTests):
         )
         self.assertEqual(res.status_code, 200)
         json = simplejson.loads(res.content)
-        self.assertEqual(settings.I18N_METHODS, json)
+        self.assertEqual(registry.available_methods, json)

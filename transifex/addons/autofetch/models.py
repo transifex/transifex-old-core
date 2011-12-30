@@ -68,7 +68,7 @@ class URLInfo(models.Model):
                 msg = "No i18n method defined for resource %s"
                 logger.error(msg % self.resource)
                 return
-            parser = registry.handler_for_resource(
+            parser = registry.appropriate_handler(
                 self.resource, language=self.resource.source_language,
                 filename=filename
             )

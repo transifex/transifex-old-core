@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.utils.hashcompat import md5_constructor
 from django.utils.http import urlquote
 
+
 def invalidate_template_cache(fragment_name, *variables):
     """
     This function invalidates a template cache named `fragment_name` and with

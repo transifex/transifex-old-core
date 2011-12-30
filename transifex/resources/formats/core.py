@@ -21,6 +21,7 @@ from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation, SourceEntityCollection, TranslationCollection
 
+
 # Temporary
 from transifex.txcommon import notifications as txnotification
 # Addons
@@ -863,5 +864,3 @@ class ResourceItems(object):
 
     def __iter__(self):
         return iter(self._items)
-
-

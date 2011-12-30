@@ -217,7 +217,7 @@ def save_source_file(resource, user, content, method, filename=None):
     Called by the "edit resource" action.
     """
     fb = FormatsBackend(resource, resource.source_language, user)
-    return fb.import_source(content, method, filename)
+    return fb.import_source(content, filename)
 
 
 # Restrict access only for private projects
@@ -462,33 +462,6 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
             context_instance=RequestContext(request))
 
 
-def _compile_translation_template(resource=None, language=None, pseudo_type=None):
-    """Given a resource and a language we create the translation file."""
-    if resource.i18n_method == 'PO' and language is None:
-        i18n_type = 'POT'
-    else:
-        i18n_type = resource.i18n_method
-
-    if resource.i18n_method == 'POT' and language is not None:
-        i18n_type = 'PO'
-
-    handler = registry.handler_for(i18n_type)
-    handler.bind_resource(resource)
-    handler.set_language(language)
-    if pseudo_type:
-        handler.bind_pseudo_type(pseudo_type)
-    handler.compile()
-    return handler.compiled_template
-
-def get_file_extension(resource, language):
-    i18n_method = settings.I18N_METHODS[resource.i18n_method]
-    if resource.i18n_method == 'POT' and \
-            resource.source_language != language:
-        return '.po'
-    else:
-        return i18n_method['file-extensions'].split(', ')[0]
-
-
 # Restrict access only for private projects
 # DONT allow anonymous access
 @login_required
@@ -506,7 +479,8 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
     language = get_object_or_404(Language, code=lang_code)
 
     try:
-        template = _compile_translation_template(resource, language)
+        fb = FormatsBackend(resource, language)
+        template = fb.compile_translation()
     except Exception, e:
         messages.error(request,
                        _("Error compiling translation file."))
@@ -522,7 +496,8 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         'proj': smart_unicode(resource.project.slug),
         'res': smart_unicode(resource.slug),
         'lang': language.code,
-        'type': get_file_extension(resource, language)}
+        'type': registry.file_extension_for(resource, language)
+    }
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 
@@ -540,7 +515,8 @@ def get_pot_file(request, project_slug, resource_slug):
         Resource, project__slug=project_slug, slug=resource_slug
     )
     try:
-        template = _compile_translation_template(resource, None)
+        fb = FormatsBackend(resource, None)
+        template = fb.compile_translation()
     except Exception, e:
         messages.error(request, _("Error compiling the pot file."))
         logger.error(
@@ -558,7 +534,6 @@ def get_pot_file(request, project_slug, resource_slug):
     }
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
-
 
 
 # Restrict access only to : (The checks are done in the view's body)
