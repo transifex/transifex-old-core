@@ -32,7 +32,6 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/json2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip-1.0.0-rc2.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tipsy.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/ajaxupload.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/sprintf.js"></script>
@@ -138,6 +137,7 @@
       <div id="content_header_sec">
         {% block content_header_sec %}{% endblock %}
       </div>
+      <div id="header_menu" class="grid_16 clearfix">{% block header_menu%}{% endblock %} </div>
     {% endblock %}
     </div>
     <div id="body" class="wrapper">
