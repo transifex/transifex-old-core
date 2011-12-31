@@ -55,10 +55,14 @@ $(document).ready(function(){
   <h5 class="i16 orange-arrow">{% trans "You can also login using:" %}</h5>
   <ul>
 	  {% url socialauth_begin 'twitter' as social_twitter_url %}
-		{% if social_twitter_url %}		
-		  <li><a id="twitter-login" href="{{ social_twitter_url }}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Twitter' %}">Twitter</a></li>
-		  <li><a id="google-login" href="{% url socialauth_begin 'google-oauth2' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Google' %}">Google</a></li>
-		  <li><a id="facebook-login" href="{% url socialauth_begin 'facebook' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Facebook' %}">Facebook</a></li>
+		{% if social_twitter_url %}	
+
+		  <li><a id="twitter-login" href="{{ social_twitter_url }}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Twitter' %}"></a></li>
+		  <li><a id="linkedin-login" href="{% url socialauth_begin 'linkedin' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Linkedin' %}"></a></li>
+		  <li><a id="google-login" href="{% url socialauth_begin 'google-oauth2' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Google' %}"></a></li>
+		  <li><a id="facebook-login" href="{% url socialauth_begin 'facebook' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Facebook' %}"></a></li>		
+			
+
 		{% endif %}
 	</ul>
 		  <h5 style="margin-top:17px;" class="i16 orange-arrow">{% trans "Not yet a member?" %}&nbsp;<a href="{% url userena_signup %}"><strong>{% trans "Register now!" %}</strong></a></h5>

@@ -68,15 +68,16 @@ label .required{margin:0 2px;width:9px;height: 9px;font-weight: normal;color: #b
 .checkbox label{font-weight: normal;}
 .checkbox{margin-bottom: 30px;}
 .forgot-pass{font-weight: normal;font-size: 0.846em;margin-left: 5px;}
-.social-login{width: 150px;height:22px;display: block;background-image: url('../images/social-login.png');background-repeat: no-repeat;}
-#twitter-login.social-login:hover{background-position: 0px -22px;}
-#google-login.social-login:hover{background-position: -150px -22px;}
-#facebook-login.social-login:hover{background-position: -300px -22px;}
-#google-login.social-login{background-position: -150px 0px;}
-#facebook-login.social-login{background-position: -300px 0px;}
+.social-login{width: 150px;height:24px;display: block;background-image: url('../images/social-login.png');background-repeat: no-repeat;opacity: 0.6;}
+.social-login:hover{opacity: 1;}
+#google-login.social-login{background-position: -450px 0px;}
+#twitter-login.social-login{background-position: -300px 0px;}
+#linkedin-login.social-login{background-position: -150px 0px;}
 #login-utility-list ul{margin: 0;}
-#login-utility-list ul li{margin: 1px 27px;}
+#login-utility-list ul li{margin: 1px 27px;padding-right: 20px;}
+#login-utility-list ul li:hover{background: url(../images/icons/right-arrow.png) 150px center no-repeat;}
 #login-utility-list ul li:first-child{margin-top: 4px;}
+
 
 #login-form.profile-form label:first-child{margin-top: 0;}
 .profile-form label{display: block;margin-top: 15px;}
@@ -193,7 +194,6 @@ div#content_footer_sec {
 div#content_header_prim, div#content_header_sec { margin-bottom: 0.5em; }
 div#content_footer_prim, div#content_footer_sec { margin-top: 0.5em; }
 div#content_header_prim, div#content_footer_prim { margin-left: 1em; }
-div#content_header_sec, div#content_footer_sec { margin-right: 1em; }
 div#content_header_center, div#content_footer_center { text-align: center; }
 
 div#body_sec { margin-top: 0.5em; margin-right: -1.8em; }
