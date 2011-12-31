@@ -8,16 +8,22 @@
 <div class="generic_form" id="login_index login-block">
 <fieldset>
   <legend>{% trans "Sign in" %}</legend>
-  <p class="login-tagline i16 user">{% trans "Sign in to add or modify projects, work on translations, and other stuff." %}</p>
   {% if form_message %}
     <p class="message i16 bell">{{ form_message }}</p>
   {% endif %}
   <table>
     <tbody>
-      {% form_as_table_rows form %}
+{% for field in form %}
+          
+		<div>
+      {{ field.label_tag }}
+      {{ field }}
+      {{ field.errors }}
+     </div>   
+        {% endfor %}
     </tbody>
   </table>
-  <div class="submit-row"><input type="submit" class="i16 key buttonized" name="blogin" value="{% trans "Sign in" %}"></div>
+  <div class="submit-row"><input type="submit" class="i16 tick buttonized" name="blogin" value="{% trans "Sign in" %}"></div>
 </fieldset>
 </div>
 </form>
