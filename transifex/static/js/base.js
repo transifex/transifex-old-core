@@ -1,4 +1,27 @@
+(function( $ ){
+  $.fn.dualtxf = function( options ) {  
 
+    var settings = {
+      'fieldsLeft'         : 'none',
+      'fieldsRight'        : 'none'
+    };
+
+    if ( options ) { 
+        $.extend( settings, options );
+    }
+    
+    this.each(function(){
+    	$(this).children("fieldset").prepend("<div class='first-tdfc grid_5 alpha'></div><div class='second-tdfc grid_5'></div>"); 
+
+			for (num=0; num < settings.fieldsLeft.length;num++)
+			$("#"+settings.fieldsLeft[num]).appendTo("#"+this.id+" .first-tdfc");
+
+			for (num=0; num < settings.fieldsRight.length;num++)
+			$("#"+settings.fieldsRight[num]).appendTo("#"+this.id+" .second-tdfc");	
+    	
+    });
+  };
+})( jQuery );
 // General Tooltip function
 function tooltip(targetnode, message){
 
