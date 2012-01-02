@@ -46,8 +46,7 @@ div#header div#header_secnav {
 div#header div#header_trinav {
   float: right;
   clear: right;
-  margin-top: 10px;
-  font-size: 85%;
+  margin-top: 12px;
   color: #666;
   margin-right: 10px;
 }
@@ -414,6 +413,10 @@ body.projects.project_detail .components p.more {
 
 
 /* Search */
+
+#header_trinav .searchform_plain input{float:left;margin-left: 5px;}
+#header_trinav .searchform_plain input[type=submit]{background:transparent url(../images/search-button.png) 0 0 no-repeat;height:26px;width:26px;display:block;float:left;padding:0;margin-top: 3px;}
+
 div.searchform {
   margin-bottom: 0.5em;
 }
@@ -528,7 +531,7 @@ ul li, ol li {
   margin-bottom: 0.5em;
 }
 ul.actionlist {font-size: 0.9em;}
-ul.simple { list-style: none; padding-left: 20px; }
+ul.simple { list-style: none; padding-left: 10px; }
 ul.simple.bigthings { font-weight: bold; }
 ul.simple.bigthings .description { font-weight: normal; color: #666; }
 ul.simple.links { padding-left: 0px; }
@@ -555,6 +558,14 @@ img.repotype { vertical-align: middle; margin-left: 10px; }
   padding-top: 10px;
   margin: 2px;
   line-height: 1.5em;
+}
+
+#languages_list ul li {
+	display: block;
+	width: 270px;
+	margin: 0;
+	margin-right: 18px;
+	float: left;
 }
 
 .message_info, .message_success, .message_warning, .message_error, .message_validation {
@@ -1490,6 +1501,7 @@ background-image: linear-gradient(top, #F2F6F7 0%, #e6ebed 100%);}
     color: #ccc;
     outline: none; /* prevent dotted border in Firefox */
 }
+.tabs a:hover{color:#3D658D;}
 .tabs>.selected, .tabs li:hover {background: #fff;color:#525252;}
 .tabs>.selected>a {margin-bottom: -4px;border-bottom: 4px solid #fff; color:#3D658D;}
 .tab-wrapper {position: relative;height: 31px;z-index: 1;}
