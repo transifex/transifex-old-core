@@ -209,7 +209,7 @@ def team_delete(request, project_slug, language_code):
         context = {'team': _team}
 
         #Delete rlstats for this team in outsourced projects
-        for p in project.project_set.all():
+        for p in project.outsourcing.all():
             RLStats.objects.select_related('resource').by_project_and_language(
                     p, _team.language).filter(translated=0).delete()
 
