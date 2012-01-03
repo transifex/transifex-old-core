@@ -149,7 +149,7 @@ class Projects(Users):
     Use this as a mixin in tests.
     """
 
-    fixtures = ["sample_data", ]
+    fixtures = ["sample_users", "sample_languages", "sample_data", ]
 
     def setUp(self):
         super(Projects, self).setUp()
