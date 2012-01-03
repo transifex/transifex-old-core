@@ -56,10 +56,6 @@ urlpatterns = patterns('',
 # Project
 urlpatterns += patterns('',
     url(
-        regex = '^myprojects/$',
-        view = myprojects,
-        name = 'myprojects'),
-    url(
         regex = '^add/$',
         view = project_create,
         name = 'project_create'),
@@ -122,28 +118,6 @@ urlpatterns += patterns('',
 
 
 urlpatterns += patterns('django.views.generic',
-    url(
-        regex = '^$',
-        view = 'list_detail.object_list',
-        kwargs = public_project_list,
-        name = 'project_list'),
-    url(
-        '^recent/$', 'list_detail.object_list',
-        kwargs = {
-            'queryset': Project.public.recent(),
-            'template_object_name': 'project',
-            'extra_context' : {'type_of_qset' : 'projects.recent',},
-        },
-        name = 'project_list_recent'),
-    url (
-        regex = '^open_translations/$',
-        view = 'list_detail.object_list',
-        kwargs = {
-            'queryset': Project.public.open_translations(),
-            'template_object_name': 'project',
-            'extra_context' : {'type_of_qset' : 'projects.open_translations',},
-        },
-        name = 'project_list_open_translations'),
     url(
         r'^tag/(?P<tag>[^/]+)/$',
         tagged_object_list,
