@@ -14,7 +14,6 @@ import re
 
 from notification.feeds import NoticeUserFeed
 
-current_site = Site.objects.get_current()
 
 class TxNoticeUserFeed(NoticeUserFeed, FeedClass):
     pass
