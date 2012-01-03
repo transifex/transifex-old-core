@@ -64,6 +64,13 @@
         });
         {% endif %}
 
+        $(".stat_row").click(function() {
+          var lang_code = $(this).data('language');
+          var actions_url_tmpl = '{% url resource_actions resource.project.slug resource.slug 1111111111 %}';
+          var actions_url = actions_url_tmpl.replace('1111111111', lang_code)
+          $.facebox({ ajax: actions_url })
+        });
+
     });
 </script>
 {% endblock %}
@@ -216,7 +223,7 @@
         </thead>
       <tbody>
     {% endifequal %}
-    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+    <tr class="stat_row" data-language="{{ stat.language.code }}" title="{% trans 'click for translation' %}">
         {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
         <td>
           <span class="linkstyle">{{ stat.language.name }}</span>
@@ -251,13 +258,6 @@
         {% endwith %}
         </td>
     </tr>
-    <script type="text/javascript">
-      jQuery(document).ready(function($){
-        $("#stat_row_{{forloop.counter}}").click(function(){
-        	jQuery.facebox({ ajax: '{% url resource_actions resource.project.slug resource.slug stat.language.code %}' })
-        });
-			})
-    </script>
     {% if forloop.counter == 1 and forloop.last %}
         </thead>
       <tbody>
