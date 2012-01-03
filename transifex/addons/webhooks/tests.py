@@ -5,7 +5,9 @@ Tests for the webhook addon.
 """
 
 from __future__ import with_statement
+from mock import patch
 from django.core.exceptions import ValidationError
+from transifex.txcommon.log import logger
 from transifex.txcommon.tests.base import BaseTestCase
 from webhooks.models import WebHook
 from webhooks.handlers import visit_url, add_web_hook_field, save_web_hook
@@ -27,7 +29,9 @@ class TestWebHooks(BaseTestCase):
         stats = RLStats.objects.get(
             resource=self.resource, language=self.language_en
         )
-        self.assertFalse(visit_url(sender=stats))
+        with patch.object(logger, 'error') as log_mock:
+            visit_url(sender=stats)
+            self.assertFalse(log_mock.called)
 
     def test_wrong_url(self):
         """Test that an error occurs, if you try to create a web hook
@@ -45,7 +49,9 @@ class TestWebHooks(BaseTestCase):
         web_hook = WebHook.objects.create(
             project=self.resource.project, url='https://127.0.0.1'
         )
-        self.assertFalse(visit_url(stats, post_function=_mock_error_request))
+        with patch.object(logger, 'error') as log_mock:
+            visit_url(stats, post_function=_mock_error_request)
+            self.assertTrue(log_mock.called)
 
     def test_successful_response(self):
         stats = RLStats.objects.get(
@@ -54,7 +60,9 @@ class TestWebHooks(BaseTestCase):
         web_hook = WebHook.objects.create(
             project=self.resource.project, url='https://127.0.0.1'
         )
-        self.assertTrue(visit_url(stats, post_function=_mock_successful_request))
+        with patch.object(logger, 'error') as log_mock:
+            visit_url(stats, post_function=_mock_successful_request)
+            self.assertFalse(log_mock.called)
 
 
 class TestWebHookHandlers(BaseTestCase):

@@ -44,7 +44,7 @@ def visit_url(sender, **kwargs):
         hooks = WebHook.objects.filter(project=project)
     except WebHook.DoesNotExist:
         logger.debug("Project %s has no web hooks" % project.slug)
-        return False
+        return
 
     event_info = {
         'project': project.slug,
@@ -66,6 +66,7 @@ def visit_url(sender, **kwargs):
             msg = "Error visiting webhook %s: HTTP code is %s" % (
               hook, res.status_code)
             logger.error(msg)
+
 
 def add_web_hook_field(sender, **kwargs):
     """Add the field for a web hook to the project edit form."""
