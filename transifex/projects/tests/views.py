@@ -15,7 +15,7 @@ class ProjectViewsTests(base.BaseTestCase, base.NoticeTypes):
         """Test that a private project is visible to its maintainer."""
         resp = self.client['maintainer'].get(self.url_acc, {})
         self.assertContains(resp, "Test Project", status_code=200)
-        self.assertContains(resp, "Test Private Project", status_code=200)
+        self.assertNotContains(resp, "Test Private Project", status_code=200)
 
 
     def test_project_outsource_bad(self):
