@@ -41,9 +41,11 @@ def fulltext_fuzzy_match_filter(string):
     from haystack.query import SQ
     # TODO: Searching in this way might be slow. We should investigate 
     # alternatives for it.
-    return reduce(operator.__or__, 
-        [SQ(text='"%s~"' % w) for w in string.split()])
-
+    if string:
+        return reduce(operator.__or__, 
+            [SQ(text='"%s~"' % w) for w in string.split()])
+    else:
+        return SQ(text='""')
 
 def prepare_solr_query_string(value):
     """
