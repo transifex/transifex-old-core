@@ -46,9 +46,12 @@
   	<div class="separate-buttons"><a class="i16 add nude-button" href="{% url project_create %}" title="{% trans 'Add New Project' %}">{% trans "Create new project" %}</a></div>
 		{% endif %}
  
+        {% url myprojects as myprojects_url %}
+        {% if myprojects_url %}
         <p>
-            <a href="{% url myprojects %}" title="{% trans "My projects" %}">{% trans "My projects" %}</a>
+            <a href="{{ myprojects_url }}" title="{% trans "My projects" %}">{% trans "My projects" %}</a>
         </p>
+        {% endif %}
 	</div>
 		{% endif %}		
 		
