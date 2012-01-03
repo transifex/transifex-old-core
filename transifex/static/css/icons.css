@@ -2,45 +2,26 @@
   Icons
 */
 
-
 /* Generic */
 
 .i16,
 .i24,
-.i48 {
-  background-repeat: no-repeat;
-  background-position: 0 50%;
-}
+.i48 {background-repeat: no-repeat;background-position: 0px center;}
+.i16 {padding-left: 24px;background-image: url('../images/icons/no-icon.png');}
 
-.i16 {
-  padding-left: 24px;
-  line-height: 16px;
-  background-image: url('../images/icons/no-icon.png');
-}
+.i16.buttonized{background-position: 5px center;}
 
-input.i16 {
-  background-position: 5px 50%;
-}
+input.i16{border:none;}
+.buttonized:hover input.i16{color:#3d658d;}
+.i16, .microform input[type="submit"] {padding-left: 23px;}
+span.i16{display: inline-block;height: 16px;}
+.submit {}
 
-.i16.buttonized,
-.microform input[type="submit"] {
-  background-position: 5px 50%;
-  padding-left: 27px;
-}
-
-.i16.buttonized:hover{
-	background-color: #fff;
-}
-
-.microform input[type="image"] {
-  background-position: 0 0;
-  margin: 0 0 0 5px;
-  padding: 0;
-  width: 0;
-  vertical-align: middle;
-  height: 16px;
-}
-
+/*Specific styling for particular icons*/
+.i16.imessage_success{background-image:url('../images/icons/tick.png');}
+.i16.imessage_info{background-image:url('../images/icons/binfo.png');}
+.i16.imessage_warning{background-image:url('../images/icons/warning.png');}
+.i16.imessage_error{background-image:url('../images/icons/exclamation.png');}
 /* Various icons */
 .i16.action { background-image: url('../images/icons/action.png'); }
 .i16.actionlog { background-image: url('../images/icons/time.png'); }

@@ -851,12 +851,13 @@ span.note {
 }
 
 
-/* Buttonized */
-.nude-button{padding-left: 22px !important;color:#3d658d;line-height:1;height:16px;}
+/* Button styling
+  -------------------------------------------------------------------------------------------------*/
+
+.nude-button{font-size: 1em;padding-left: 22px !important;color:#3d658d;line-height:1.077em;height:16px;}
 .nude-button:hover{text-decoration: underline;}
 a.nude-button:hover{color:#3d658d;}
 input.nude-button{background-color: transparent;border: none;}
-
 
 .buttonized,
 .buttonized:hover,
@@ -864,66 +865,66 @@ input.nude-button{background-color: transparent;border: none;}
 .buttonized_simple:hover,
 .buttonized_disabled,
 .buttonized_disabled:hover,
-.microform input[type="submit"] {
-  cursor: pointer;
+.microform input[type="submit"] {cursor: pointer;}
+
+.microform input[type="image"] {
+  background-position: 0 0;
+  margin: 0 0 0 5px;
+  padding: 0;
+  width: 0;
+  vertical-align: middle;
+  height: 16px;
 }
 
 .buttonized,
 .buttonized_disabled,
 .microform input[type="submit"],
-.microform input[type="file"] {
-  font-size: 0.85em;
+.microform input[type="file"] {font-size: 13px;/*13px*/}
+
+.buttonized,buttonized_disabled,input.buttonized, input.buttonized.i16/*Style for submitt buttons .. */
+{
+	font-weight: 600;
+  border:1px solid #d5d5d5;
+	text-shadow:#fff 1px 1px 0px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	padding: 6px 10px;
+	font-size: 13px;
+	font-family: 'Droid Sans';
+	max-width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
-.buttonized,
-.microform input[type="submit"] {
-  border: 1px solid #ccc !important;
-  background-color: #f5f5f5;
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  color: #333;
-}
-
-.buttonized_disabled {
-  border: 1px solid #ccc !important;
-  background-color: #f5f5f5;
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  color: #AAAAAA;
-}
-
-.buttonized,
-.buttonized_disabled {
-  padding: 5px 8px;
-  box-shadow:1px 1px 2px #ddd;
-  -moz-box-shadow:1px 1px 2px #ddd;
-  -webkit-box-shadow:1px 1px 2px #ddd; 
-}
-
-.microform input[type="submit"].buttonized {
-padding: 7px 8px 7px 23px;
-
-}
-
-.buttonized.active { background-color: #ddd; }
-
-a.buttonized  {
-  border-bottom: none;
-}
-
-a.buttonized:hover {
-  border-bottom: none;
-  cursor: pointer;
-}
+i16.buttonized,i16.buttonized_disabled,input.buttonized.i16{padding: 6px 10px 6px 27px;}
+.buttonized_disabled {background-color: #f5f5f5;}
+.microform input[type="submit"] {padding: 0.2em 0.6em;}
+.microform input[type="submit"].buttonized {padding: 5px 8px 5px 27px;/*same as buttonized*/}
+.buttonized, .list-buttonized{background-color: #eee;}
+a.buttonized,input.buttonized,span.buttonized{color:#666;}
 
 .buttonized:hover,
+input.buttonized:hover,
+input.buttonized:focus,
 .buttonized_disabled:hover {
-  background-color: #fafafa;
-  border: 1px solid #ccc;
-  box-shadow:1px 1px 2px #bbb;
-  -moz-box-shadow:1px 1px 2px #bbb;
-  -webkit-box-shadow:1px 1px 2px #bbb;
+  cursor: pointer;
+  text-shadow:none;
+  border:1px solid #bbb;
+  -webkit-box-shadow: rgba(0,0,0,0.25) 0 0 3px; box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+  color: #444;
 }
+
+.list-buttonized{border:1px solid #e5e5e5;padding: 3px 8px 3px 8px;font-size: 12px;text-shadow:#fff 1px 1px 0px;-moz-border-radius: 2px;-webkit-border-radius: 2px;	border-radius: 2px;}
+
+.watchbutton{height:26px;width: 26px;display: block;margin:0.8em 1em 0 1em;}
+.watchbutton{display: inline-block;margin: 0;margin-right: 0.5em;width: 31px;margin-bottom: 1px;}
+.watch_add{background:transparent url('../images/watchbutton.png') 0px 0px no-repeat;}
+.watch_remove{background:transparent url('../images/watchbutton.png') -31px 0px no-repeat;}
+.watch_add:hover{background-position-x: -31px;opacity: 0.85;cursor: pointer;}
+.watch_remove:hover{background-position-x: 0px; opacity: 0.85;cursor: pointer;} 
+.cpanel-entry .watchbutton{height:16px;width: 16px;margin: 0px;display: block;}
+
 
 /* Used for delete buttons etc. */
 .buttonized_warning{

@@ -89,7 +89,7 @@
                   {% url logout as signout_url %}
               {% endif %}
               <form action="{{ signout_url }}?next={{request.path}}" method="POST" class="microform">{% csrf_token %}
-                <input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonize" value="{% trans "Sign out" %}" />
+                <input type="submit" title="{% trans "Sign out from the website" %}" class="i16 logout buttonized" value="{% trans "Sign out" %}" style="padding: 3px 8px 3px 27px;font-size: 0.923em;font-weight:normal;"/>
               </form>
           {% else %}
               {% url userena_signin as signin_url %}
