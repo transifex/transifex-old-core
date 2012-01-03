@@ -226,9 +226,11 @@ def team_delete(request, project_slug, language_code):
         return HttpResponseRedirect(reverse("team_list",
                                      args=(project_slug,)))
     else:
-        return render_to_response("teams/team_confirm_delete.html",
-                                  {"team": team,},
-                                  context_instance=RequestContext(request))
+        return render_to_response(
+            "teams/team_confirm_delete.html",
+            {"team": team, "project": team.project},
+            context_instance=RequestContext(request)
+        )
 
 
 @access_off(team_off)
