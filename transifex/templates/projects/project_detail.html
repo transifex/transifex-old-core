@@ -111,6 +111,7 @@
 	
 	<div class="separate-header clearfix">
   	<h3  class="sh-label notopmargin">{% trans 'History' %}</h3>
+	<a class="simlink rss_feed" href="{% url timeline_feed project.slug %}" title="{% trans 'Timeline feed for this project' %}"><img border="0" src="{{ STATIC_URL }}images/icons/feed.png" align="right" /></a>
 	</div>
 	
 	{% get_log 10 as action_log for_object project %}

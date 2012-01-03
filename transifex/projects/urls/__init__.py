@@ -3,7 +3,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from tagging.views import tagged_object_list
 
-from transifex.projects.feeds import LatestProjects, ProjectFeed
+from transifex.projects.feeds import LatestProjects, ProjectFeed, ProjectTimelineFeed
 from transifex.projects.models import Project
 from transifex.projects.views import *
 from transifex.projects.views.project import *
@@ -27,6 +27,7 @@ public_project_list = {
 feeds = {
     'latest': LatestProjects,
     'project': ProjectFeed,
+    'timeline': ProjectTimelineFeed,
 }
 
 # Used only in urls already under projects/, such as this one and
@@ -50,6 +51,12 @@ urlpatterns = patterns('',
         name = 'project_feed',
         kwargs = {'feed_dict': feeds,
                   'slug': 'project'}),
+    url(
+	regex = '^p/(?P<param>[-\w]+)/feed/$',
+	view = 'projects.views.timeline_feed',
+	name = 'timeline_feed',
+	kwargs = {'feed_dict':feeds,
+		  'slug': 'timeline'}),
 )
 
 
