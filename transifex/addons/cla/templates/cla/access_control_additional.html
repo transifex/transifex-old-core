@@ -18,7 +18,7 @@
     {% if project.cla %}
     {% url cla_project_sign project.slug as cla_sign %}
 
-    <p class="wspacing">{% blocktrans %}<strong>Warning</strong>: Modifying or deleting the CLA will clear the signee list and will require you to inform translators to manually <a href="{{ cla_sign }}">sign the new CLA</a>.{% endblocktrans %}
+    <p class="infomsg">{% blocktrans %}<strong>Warning</strong>: Modifying or deleting the CLA will clear the signee list and will require you to inform translators to manually <a href="{{ cla_sign }}">sign the new CLA</a>.{% endblocktrans %}
     </p>
 
 <p>

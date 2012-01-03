@@ -12,13 +12,26 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Outsource and Access Control" %}{% endblock %}
 
+{% block extrajs %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#id_project_type_2,#id_project_type_1,#id_project_type_0").change(function(){
+				if($('#id_project_type_2').attr('checked'))
+				$("#selectoutsource").show();
+				else
+				$("#selectoutsource").hide();				
+			});
+	});
+</script>
+{% endblock %}
+
 {% block project_settings_content %}
 
-<div id="project-form-container" class="obj_bigdetails ui-tabs-panel">
+<div id="project-form-container" class="obj_bigdetails">
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-<div class="project_create generic_form">
+<div class="tx-form">
 
 {% if is_maintainer %}
 
@@ -35,7 +48,6 @@
         </div>   
     {% endif%}
 
-    <h3/>{% trans "Outsource and Access Control Settings" %}</h3>
    
     {% hook "access_control_form_notices.html" %}    
 
@@ -45,22 +57,32 @@
             <ul class="fielderrors">{{ form.non_field_errors }}</ul>
         {% endif %}
         <div class="tx-form-field">
-            {{ form.project_type.label }}: {% if form.project_type.field.required %}<span class="required">*</span>{% endif %}
+            <h3>{{ form.project_type.label }}: {% if form.project_type.field.required %}<span class="required">*</span>{% endif %}</h3>
             {{ form.project_type }}
             {% if form.project_type.errors %}<p class="fielderrors">{% for error in form.project_type.errors %}{{ error }}{% endfor %}</p>{% endif %}
             <p class="helptext">{{ form.project_type.help_text|safe }}</p>
+				</div>
 
+        <div id="selectoutsource" class="tx-form-field no-display">
             {{ form.outsource.label }}: {% if form.outsource.field.required %}<span class="required">*</span>{% endif %}
             {{ form.outsource }}
             {% if form.outsource.errors %}<p class="fielderrors">{% for error in form.outsource.errors %}{{ error }}{% endfor %}</p>{% endif %}
             <p class="helptext">{{ form.outsource.help_text|safe }}</p>
-
-            {{ form.access_control.label }}: {% if form.access_control.field.required %}<span class="required">*</span>{% endif %}
+				</div>
+				
+        <div class="tx-form-field">
+            <h3>{{ form.access_control.label }}: {% if form.access_control.field.required %}<span class="required">*</span>{% endif %}</h3>
             {{ form.access_control }}
             {% if form.access_control.errors %}<p class="fielderrors">{% for error in form.access_control.errors %}{{ error }}{% endfor %}</p>{% endif %}
             <p class="helptext">{{ form.access_control.help_text|safe }}</p>
-
+				</div>
             {% hook "access_control_additional.html" %}
+
+{% if not project.anyone_submit and not project.outsource %}
+   <div>
+        <a class="i16 edit" href="{% url project_add_permission project.slug %}">{% trans "Give project writer rights" %}</a>
+   </div>
+{% endif %}
 
         <p class="submit">
             <input type="submit" class="i16 submit buttonized" name="hub" value="{% trans "Save" %}" />
@@ -84,11 +106,6 @@
 
 {% endif %}
 
-{% if not project.anyone_submit and not project.outsource %}
-   <div class="editlinks">
-        <a class="i16 user" href="{% url project_add_permission project.slug %}">{% trans "Go to the project writers page." %}</a>
-   </div>
-{% endif %}
 
 </div>
 </div>
