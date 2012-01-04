@@ -8,6 +8,7 @@
 
 
 {% block content_main %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 <div id="resources" class="resources">
 	
 	<div class="separate-header clearfix">

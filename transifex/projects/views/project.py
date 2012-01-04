@@ -295,11 +295,6 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
-    statslist = RLStats.objects.select_related(
-        'resource', 'resource__project', 'resource__category',
-        'last_committer', 'resource__priority'
-    ).by_project_aggregated(project)
-
     return list_detail.object_detail(
         request,
         queryset = Project.objects.for_user(request.user),
@@ -309,7 +304,6 @@ def project_detail(request, project_slug):
           'project_overview': True,
           'user_teams': user_teams,
           'languages': Language.objects.all(),
-          'statslist': statslist,
         })
 
 
@@ -317,8 +311,16 @@ def project_detail(request, project_slug):
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def project_resources(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
-    return render_to_response('resources/resource_list.html', {
+
+    statslist = RLStats.objects.select_related(
+        'resource', 'resource__project', 'resource__category',
+        'last_committer', 'resource__priority'
+    ).by_project_aggregated(project)
+
+    return render_to_response('projects/project_resources.html', {
+        'project_resources': True,
         'project': project,
+        'statslist': statslist,
     }, context_instance=RequestContext(request))
 
 
