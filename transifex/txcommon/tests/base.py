@@ -11,7 +11,6 @@ from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from transifex.txcommon.notifications import NOTICE_TYPES
 
-
 # Load models
 Language = get_model('languages', 'Language')
 AuPermission = get_model('authority', 'Permission')
@@ -54,7 +53,19 @@ def deactivate_csrf_middleware():
     settings.MIDDLEWARE_CLASSES = list_middle_c
 
 
-class Users(object):
+class TestCaseMixin(object):
+    
+    @staticmethod
+    def response_in_browser(resp, halt=True):
+        """
+        Useful for debugging it shows the content of a http response in the
+        browser when called.
+        """
+        from transifex.txcommon.tests.utils import response_in_browser
+        return response_in_browser(resp, halt=True)
+
+
+class Users((TestCaseMixin)):
     """A class to create users in setUp().
 
     Use this as a mixin.
@@ -86,7 +97,7 @@ class Users(object):
         super(Users, self).setUp()
 
 
-class NoticeTypes(object):
+class NoticeTypes(TestCaseMixin):
     """A class to create default notice types.
 
     Use this as a mixin in tests.
@@ -99,7 +110,7 @@ class NoticeTypes(object):
         super(NoticeTypes, cls).setUpClass()
 
 
-class TransactionNoticeTypes(object):
+class TransactionNoticeTypes(TestCaseMixin):
     """A class to create default notice types.
 
     Use this as a mixin in tests.
@@ -111,7 +122,7 @@ class TransactionNoticeTypes(object):
         super(TransactionNoticeTypes, self).setUp()
 
 
-class Languages(object):
+class Languages(TestCaseMixin):
     """A class to create default languages.
 
     Use this as a mixin in tests.
@@ -128,7 +139,7 @@ class Languages(object):
         super(Languages, cls).setUpClass()
 
 
-class TransactionLanguages(object):
+class TransactionLanguages(TestCaseMixin):
     """A class to create default languages.
 
     Use this as a mixin in transaction-based tests.
