@@ -65,7 +65,7 @@ class TestCaseMixin(object):
         return response_in_browser(resp, halt=True)
 
 
-class Users((TestCaseMixin)):
+class Users(TestCaseMixin):
     """A class to create users in setUp().
 
     Use this as a mixin.
