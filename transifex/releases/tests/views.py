@@ -58,7 +58,8 @@ class ReleasesViewsTests(base.BaseTestCase):
 
         resp = self.client['maintainer'].post(self.urls['release_create'],
             {'slug': 'nice-release', 'name': 'Nice Release',
-            'project': self.project.id, 'resources': '|2|',
+            'project': self.project.id, 
+            'resources': '|%s|' % self.resource_private.id,
             'description': '', 'release_date': '', 'resources_text': '',
             'stringfreeze_date': '', 'homepage': '', 'long_description': '',
              'develfreeze_date': '', }, follow=True)
@@ -119,7 +120,8 @@ class ReleasesViewsTests(base.BaseTestCase):
         )
         r = self.client['registered'].post(self.urls['release_create'],
             {'slug': 'nice-release', 'name': 'Nice Release',
-            'project': self.project.id, 'resources': '|2|',
+            'project': self.project.id, 
+            'resources': '|%s|' % self.resource_private.id,
             'description': '', 'release_date': '', 'resources_text': '',
             'stringfreeze_date': '', 'homepage': '', 'long_description': '',
              'develfreeze_date': '', }, follow=True)
