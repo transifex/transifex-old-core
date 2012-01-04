@@ -96,14 +96,9 @@ class ReleasesViewsTests(base.BaseTestCase):
 
     def test_release_delete(self):
         """Test deleting a release"""
-        resp = self.client['maintainer'].post(self.urls['release_create'],
-            {'slug': 'nice-release', 'name': 'Nice Release',
-            'project': self.project.id, 'resources': '|2|',
-            'description': '', 'release_date': '', 'resources_text': '',
-            'stringfreeze_date': '', 'homepage': '', 'long_description': '',
-             'develfreeze_date': '', }, follow=True)
-        self.assertEqual(resp.status_code, 200)
-        release = Release.objects.get(slug='nice-release', project=self.project)
+        release = Release.objects.create(slug='nice-release', name='Nice', 
+            project=self.project)
+        release.resources.add(self.resource)        
         url = reverse('release_delete', args=[self.project.slug, release.slug])
         resp = self.client['maintainer'].post(url, {}, follow=True)
         self.assertContains(resp, "was deleted.", status_code=200)
