@@ -91,19 +91,7 @@
 
 {% include "projects/project_hub_join_requests.html" %}
 
-{% if project.resources.count or not project.releases.count %}
-
-  {% include "projects/resource_list.html" %}
-  {% hook "project.html" overview_top %}
-  {% include "projects/release_list.html" %}
-
-{% else %}
-
-  {% include "projects/release_list.html" %}
-  {% include "projects/resource_list.html" %}
-  {% hook "project.html" overview_top %}
-
-{% endif %}
+{% hook "project.html" overview_top %}
 
 </div>
 

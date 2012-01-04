@@ -312,6 +312,16 @@ def project_detail(request, project_slug):
           'statslist': statslist,
         })
 
+
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
+def project_resources(request, project_slug):
+    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
+    return render_to_response('resources/resource_list.html', {
+        'project': project,
+    }, context_instance=RequestContext(request))
+
+
 @login_required
 def myprojects(request):
     user = request.user
