@@ -47,9 +47,9 @@ class ReleaseForm(forms.ModelForm):
     def clean_resources(self):
         resources_list = self.cleaned_data['resources']
         for resource in resources_list:
-            if type(resource) == int:
+            if not isinstance(resource, Resource):
                 try:
-                    resource = Resource.objects.select_related().get(pk=resource)
+                    resource = Resource.objects.select_related().get(pk=int(resource))
                 except Resource.DoesNotExist, e:
                     raise ValidationError(_("Invalid resource used."))
             if resource.project.private:
