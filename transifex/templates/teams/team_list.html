@@ -1,4 +1,3 @@
-{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load txcommontags %}
 {% load permissions %}
@@ -6,21 +5,6 @@
 {% load statistics_resources %}
 {% load addons %}
 
-{% block extra_head %}
-{{ block.super }}
-<script type="text/javascript">
-  $(function(){
-    $("form.submit_form").hide();
-    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-   })
-</script>
-{% endblock %}
-
-{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Translation Teams" %}{% endblock %}
-
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Teams" %}{% endblock %}
-
-{% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 <div class="obj_bigdetails">
@@ -111,5 +95,5 @@
 
 
 </div>
-{% endblock %}
+
 

@@ -16,6 +16,15 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
+{% block extra_head %}
+{{ block.super }}
+<script type="text/javascript">
+  $(function(){
+    $("form.submit_form").hide();
+    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+   })
+</script>
+{% endblock %}
 
 {% block content_main %}
 
@@ -91,19 +100,8 @@
 
 {% include "projects/project_hub_join_requests.html" %}
 
-{% if project.resources.count or not project.releases.count %}
-
-  {% include "projects/resource_list.html" %}
-  {% hook "project.html" overview_top %}
-  {% include "projects/release_list.html" %}
-
-{% else %}
-
-  {% include "projects/release_list.html" %}
-  {% include "projects/resource_list.html" %}
-  {% hook "project.html" overview_top %}
-
-{% endif %}
+{% include "teams/team_list.html" %}
+{% hook "project.html" overview_top %}
 
 </div>
 
