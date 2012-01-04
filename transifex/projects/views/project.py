@@ -290,21 +290,17 @@ def project_detail(request, project_slug):
 
     if not request.user.is_anonymous():
         user_teams = Team.objects.filter(project=project).filter(
-             Q(coordinators=request.user)|
-             Q(members=request.user)).distinct(),
+             Q(coordinators=request.user)|Q(members=request.user)
+        ).distinct()
     else:
         user_teams = []
 
-    return list_detail.object_detail(
-        request,
-        queryset = Project.objects.for_user(request.user),
-        object_id=project.id,
-        template_object_name = 'project',
-        extra_context= {
-          'project_overview': True,
-          'user_teams': user_teams,
-          'languages': Language.objects.all(),
-        })
+    return render_to_response('projects/project_detail.html', {
+        'project_overview': True,
+        'project': project,
+        'user_teams': user_teams,
+        'languages': Language.objects.all(),
+    }, context_instance=RequestContext(request))
 
 
 @one_perm_required_or_403(pr_project_private_perm,
