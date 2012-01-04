@@ -117,10 +117,14 @@ urlpatterns += patterns('',
     url(regex = PROJECT_URL_PARTIAL+r'access/rq/(?P<permission_pk>\d+)/approve/$',
         view = project_approve_permission_request,
         name = "project_approve_permission_request"),
-    url(
-        regex = PROJECT_URL_PARTIAL+r'$',
+
+    url(regex = PROJECT_URL_PARTIAL+r'$',
         view = project_detail,
         name = 'project_detail'),
+
+    url(regex = PROJECT_URL_PARTIAL+r'resources/$',
+        view = project_resources,
+        name = 'project_resources'),
 )
 
 
