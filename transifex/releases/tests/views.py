@@ -53,6 +53,8 @@ class ReleasesViewsTests(base.BaseTestCase):
         User with access to a private resource should be able to add it to a
         release.
         """
+        self.project.is_hub = True
+        self.project.save()
 
         resp = self.client['maintainer'].post(self.urls['release_create'],
             {'slug': 'nice-release', 'name': 'Nice Release',
@@ -109,6 +111,8 @@ class ReleasesViewsTests(base.BaseTestCase):
         Public project release with a private resource I don't have access to.
         Use the registered user as the giunea pig.
         """
+        self.project.is_hub = True
+        self.project.save()
         self.project.maintainers.add(self.user['registered'])
         self.assertFalse(
             self.user['registered'] in self.project_private.maintainers.all()
