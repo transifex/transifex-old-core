@@ -499,7 +499,7 @@ class FileHandler(BaseHandler):
 
         try:
             fb = FormatsBackend(resource, language)
-            template = fb.compile_translation(pseudo_type)
+            template = fb.compile_translation(None)
         except Exception, e:
             logger.error(unicode(e), exc_info=True)
             return BAD_REQUEST("Error compiling the translation file: %s" %e )
