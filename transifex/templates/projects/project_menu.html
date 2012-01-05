@@ -110,19 +110,21 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block header_menu %}
-     <div class="tab-wrapper grid_16">
-        <ul  class="tabs clearfix">     
-            <li class="first {% if project_overview %}selected{% endif %} alpha"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
-            <li class="{% if project_team_page %}selected{% endif %}"><a href="{% url team_list project.slug %}">{% trans "Teams" %}</a></li>
-            {% hook "project.html" menu %}
-            
-            {% if perms.projects.change_project or is_maintainer %}
-            {% url project_edit project_slug=project.slug as url_project_edit%}
-            <li class="last {% ifequal request.path url_project_edit %}selected{% endifequal %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
-            {% endif %}
-            
-          </ul>
+	{% if project %}
+     	<div class="tab-wrapper grid_16">
+        	<ul  class="tabs clearfix">     
+        	    <li class="first {% if project_overview %}selected{% endif %} alpha"><a href="{% url project_detail project.slug %}">{% trans "Project Overview" %}</a></li>
+        	    <li class="{% if project_team_page %}selected{% endif %}"><a href="{% url team_list project.slug %}">{% trans "Teams" %}</a></li>
+        	    {% hook "project.html" menu %}
+        	    
+        	    {% if perms.projects.change_project or is_maintainer %}
+        	    {% url project_edit project_slug=project.slug as url_project_edit%}
+        	    <li class="last {% ifequal request.path url_project_edit %}selected{% endifequal %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
+        	    {% endif %}
+        	    
+        	  </ul>
         </div>            
+	{% endif %}
 {% endblock %}
 
 

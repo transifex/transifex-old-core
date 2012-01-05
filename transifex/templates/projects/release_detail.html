@@ -87,7 +87,7 @@
   	{% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
   	{% if perms.projects.add_release or is_maintainer %}
 	    {% if release.slug != alldata_slug %}
-	  		<div class="separate-buttons"><a class="i16 nude-button edit" title="{% trans 'Edit release detaila' %}" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release" %}</a></div>
+	  		<div class="separate-buttons"><a class="i16 nude-button edit" title="{% trans 'Edit release detail' %}" href="{% url release_edit project_slug=release.project.slug release_slug=release.slug %}">{% trans "Edit release" %}</a></div>
 	    {% endif %}
   	{% endif %}
 	</div>
