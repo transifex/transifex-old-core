@@ -802,7 +802,15 @@ class RLStatsQuerySet(models.query.QuerySet):
         return _aggregate_rlstats(self.by_release(release).order_by('language__code'),
             'language', total)
 
-    def by_project_aggregated(self, project):
+    def by_project_language_aggregated(self, project):
+        """Aggregate stats for a ``project`` and group them by language."""
+
+        total = Resource.objects.filter(project=project).aggregate(
+            total=Sum('total_entities'))['total']
+
+        return _aggregate_rlstats(self.by_project(project), 'language', total)
+
+    def by_project_aggregated(self, project, group_by=None):
         """
         Aggregate stats for a ``project``.
 

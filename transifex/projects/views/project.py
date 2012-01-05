@@ -295,11 +295,17 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
+    language_stats = RLStats.objects.select_related(
+        'resource', 'resource__project', 'resource__category',
+        'last_committer', 'resource__priority'
+    ).by_project_language_aggregated(project)
+
     return render_to_response('projects/project_detail.html', {
         'project_overview': True,
         'project': project,
         'user_teams': user_teams,
         'languages': Language.objects.all(),
+        'language_stats': language_stats,
     }, context_instance=RequestContext(request))
 
 
