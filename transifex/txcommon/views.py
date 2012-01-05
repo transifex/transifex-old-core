@@ -29,8 +29,8 @@ from transifex.projects.models import Project
 from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
-from transifex.txcommon.haystack_utils import prepare_solr_query_string, \
-    fulltext_fuzzy_match_filter
+from transifex.txcommon.haystack_utils import (prepare_solr_query_string,
+    fulltext_fuzzy_match_filter, fulltext_project_search_filter)
 from transifex.txcommon.feeds import TxNoticeUserFeed
 
 from notification.decorators import basic_auth_required, simple_basic_auth_callback
@@ -60,7 +60,7 @@ def search(request):
         results = index_query.auto_query(query_string)
     else:
         try:
-            qfilter = fulltext_fuzzy_match_filter(query_string)
+            qfilter = fulltext_project_search_filter(query_string)
             results = index_query.filter(qfilter)
             spelling_suggestion = results.spelling_suggestion(query_string)
         except TypeError:

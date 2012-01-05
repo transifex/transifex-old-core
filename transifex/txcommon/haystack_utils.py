@@ -22,6 +22,32 @@ def check_haystack_error(func):
                 raise HaystackError('Error contacting SOLR backend.')
     return wrapper
 
+def fulltext_project_search_filter(string):
+    """
+    Take a string and return a filter to be used on the SearchQuerySet.
+
+    It splits string/phrases into words and search them individually with
+    the operator OR using different boost values for 3 fields: 'name', 
+    'description' and 'text'. The 'text' field uses fuzzy match.
+
+    The parameter `string` must be passed through the function
+    prepare_solr_query_string() before, to ensure the string don't break the
+    query.
+
+    >>> value = "Test <br/> %s"
+    >>> fulltext_project_search_filter(prepare_solr_query_string(value))
+    <SQ: OR (name__exact=Test^1.2 OR description__exact=Test^1.1 OR text__exact=Test~)>
+    """
+    from haystack.query import SQ
+    if string:
+        filters = []
+        for w in string.split():
+            filters.append(SQ(name='%s^1.2' % w))
+            filters.append(SQ(description='%s^1.1' % w))
+            filters.append(SQ(text='%s~' % w))
+        return reduce(operator.__or__, filters)
+    else:
+        return SQ(text='')
 
 def fulltext_fuzzy_match_filter(string):
     """
