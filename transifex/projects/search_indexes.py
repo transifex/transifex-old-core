@@ -11,7 +11,8 @@ class ProjectIndex(RealTimeSearchIndex):
     
     slug = CharField(model_attr='slug', null=False)
     name = CharField(model_attr='name', null=False, boost=1.125)
-    description = CharField(model_attr='description', null=True) 
+    description = CharField(model_attr='description', null=True)
+    tags = MultiValueField()
 
     # django-haystack-1.2 needs it along with the custom prepare method
     suggestions = CharField()
@@ -19,6 +20,7 @@ class ProjectIndex(RealTimeSearchIndex):
     def prepare(self, obj):
         prepared_data = super(ProjectIndex, self).prepare(obj)
         prepared_data['suggestions'] = prepared_data['text']
+        prepared_data['tags'] = [tag.name for tag in obj.tagsobj]
         return prepared_data
 
     def index_queryset(self):
