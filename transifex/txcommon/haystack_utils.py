@@ -42,6 +42,7 @@ def fulltext_project_search_filter(string):
     if string:
         filters = []
         for w in string.split():
+            filters.append(SQ(slug='%s^1.2' % w))
             filters.append(SQ(name='%s^1.2' % w))
             filters.append(SQ(description='%s^1.1' % w))
             filters.append(SQ(text='%s~' % w))
