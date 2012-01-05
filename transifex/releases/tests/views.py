@@ -4,6 +4,7 @@ from django.db.models import get_model
 from django.core.urlresolvers import reverse
 from transifex.txcommon.tests import base
 
+Project = get_model('projects', 'Project')
 Resource = get_model('resources', 'Resource')
 Release = get_model('releases', 'Release')
 
@@ -46,6 +47,39 @@ class ReleasesViewsTests(base.BaseTestCase):
         url = reverse('release_language_detail', args=[self.project.slug, self.release.slug, self.language_ar.code])
         resp = self.client['anonymous'].get(url)
         self.assertContains(resp,'50%', status_code=200)
+
+    def test_release_create_good_and_bad_resources(self):
+        """
+        Test whether resources added to a release are valid or not depending
+        on the project, if it's a hub or not.
+        """
+        # Create a regular project with a resource
+        self.project3 = Project.objects.create(slug='project3',
+            source_language=self.language_en, owner = self.user['maintainer'])
+        self.project3.maintainers.add(self.user['maintainer'])
+        self.resource3 = Resource.objects.create(slug="resource3",
+            name="Resource3", project=self.project3, i18n_type='PO')
+
+        # Regular projects can't add resources from other projects
+        resp = self.client['maintainer'].post(self.urls['release_create'],
+            {'slug': 'nice-release', 'name': 'Nice Release',
+                'project': self.project.id, 'resources': [self.resource3.id]
+            }, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, "projects/release_form.html")
+        self.assertContains(resp, "Select a valid choice. %s is not one of "
+            "the available choices" % self.resource3.id)
+
+        # Once a project becomes a hub it can add resources from any project
+        self.project.is_hub = True
+        self.project.save()
+        resp = self.client['maintainer'].post(self.urls['release_create'],
+            {'slug': 'nice-release', 'name': 'Nice Release',
+            'project': self.project.id, 
+            'resources': '|%s|' % self.resource3.id}, follow=True)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTemplateUsed(resp, "projects/release_detail.html")
+        self.assertContains(resp, self.resource3.name)
 
     def test_release_create_good_private_resources(self):
         """Test Release creation with private resources.
@@ -95,7 +129,6 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
         self.assertNotContains(resp, "private resources")
         self.assertNotContains(resp, "Portuguese (Brazilian)")
-
 
     def test_release_delete(self):
         """Test deleting a release"""
