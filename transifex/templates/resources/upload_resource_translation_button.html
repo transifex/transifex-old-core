@@ -65,8 +65,8 @@ jQuery(document).ready(function($){
         },
         onComplete : function(file, response) {
             if(typeof(response['status']) !== 'undefined' && response['status'] != 200) {
-                if (typeof(response['message']) !== 'undefined')
-                    alert(response['message']);
+                if (typeof(response['msg']) !== 'undefined')
+                    alert(response['msg']);
             }
             $("div#notification-container").fadeOut("fast");
             this.enable();
