@@ -262,7 +262,7 @@ class ProjectHandler(BaseHandler):
         try:
             self._check_fields(data.iterkeys())
         except AttributeError, e:
-            return BAD_REQUEST("Field '%s' is not available." % e.message)
+            return BAD_REQUEST("Field '%s' is not available." % e)
 
         outsource = data.pop('outsource', {})
         maintainers = data.pop('maintainers', {})
