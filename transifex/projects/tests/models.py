@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 from django.db import IntegrityError
-from transifex.txcommon.tests.base import BaseTestCase
+from django.test import TestCase
+from transifex.txcommon.tests.base import Languages, Projects
 from transifex.languages.models import Language
 from transifex.resources.models import Translation
 from transifex.projects.models import Project
 from transifex.resources.models import Resource
 
 
-class ModelTests(BaseTestCase):
-
-    def setUp(self):
-        super(ModelTests, self).setUp()
-
-    def tearDown(self):
-        super(ModelTests, self).tearDown()
+class ModelTests(Languages, Projects, TestCase):
 
     def test_project_slug_integrity(self):
         """ Check duplication of project slug."""
@@ -43,3 +38,5 @@ class ModelTests(BaseTestCase):
             slug='rslug', project=p, source_language=self.language_ar
         )
         self.assertEqual(r.source_language, p.source_language)
+
+
