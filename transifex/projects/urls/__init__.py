@@ -159,6 +159,10 @@ urlpatterns += patterns('',
         view = team_detail,
         name = 'team_detail',),
     url(
+        regex = TEAM_URL+r'members/$',
+        view = team_members,
+        name = 'team_members',),
+    url(
         regex = TEAM_URL+r'delete/$',
         view = team_delete,
         name = 'team_delete',),

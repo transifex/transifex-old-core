@@ -185,6 +185,38 @@ def team_detail(request, project_slug, language_code):
         "statslist": statslist,
     }, context_instance=RequestContext(request))
 
+@access_off(team_off)
+@one_perm_required_or_403(pr_project_private_perm,
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
+def team_members(request, project_slug, language_code):
+
+    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
+    language = get_object_or_404(Language.objects.select_related(), code=language_code)
+    team = get_object_or_404(Team.objects.select_related(), project__pk=project.pk,
+        language__pk=language.pk)
+
+    team_access_requests = TeamAccessRequest.objects.filter(team__pk=team.pk)
+
+    if request.user.is_authenticated():
+        user_access_request = request.user.teamaccessrequest_set.filter(
+            team__pk=team.pk)
+    else:
+        user_access_request = None
+
+    team_members = team.members.all()
+    team_reviewers = team.reviewers.all()
+    team_all = team_members | team_reviewers
+
+    return render_to_response("teams/team_members.html", {
+        "project": project,
+        "team": team,
+        "team_members": team_members,
+        "team_reviewers": team_reviewers,
+        "team_all": team_all,
+        "team_access_requests": team_access_requests,
+        "user_access_request": user_access_request,
+        "project_team_members": True,
+    }, context_instance=RequestContext(request))
 
 pr_team_delete=(("granular", "project_perm.maintain"),
                 ("general",  "teams.delete_team"),)

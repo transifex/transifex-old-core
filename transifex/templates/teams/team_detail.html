@@ -222,35 +222,6 @@
   {% include "projects/release_list.html" %}
 {% endif %}
 
-{% with team_all as members %}
-{% if members %}
-<div class="list" style="clear:both">
-
-  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
-  	<h3  class="sh-label">{% trans "Team Members" %}</h3>
-	</div>
-
-<ul>
-{% for m in members|dictsort:"username" %}
-    <li>
-        <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
-        <a href="{% url profile_public m.username %}">
-            {{ m }}
-        </a>
-        {% if m in team_reviewers %}
-          <sup>Reviewer</sup>
-        {% endif %}
-        {% ifequal request.user.pk m.pk %}
-        <form class="microform" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
-            <input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/>
-        </form>
-        {% endifequal %}
-    </li>
-{% endfor %}
-</ul>
-</div>
-{% endif %}
-{% endwith %}
 </div>
 
 {% hook "team_detail.html" extra_content %}
