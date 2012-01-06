@@ -269,7 +269,7 @@ class ProjectHandler(BaseHandler):
 
     def _update(self, request, project_slug, data):
         try:
-            self._check_fields(data.iterkeys())
+            self._check_fields(data.iterkeys(), extra_exclude=['slug'])
         except AttributeError, e:
             return BAD_REQUEST("Field '%s' is not available." % e)
 
@@ -335,6 +335,8 @@ class ProjectHandler(BaseHandler):
             return BAD_REQUEST("Project not found")
         try:
             for key,value in data.items():
+                if key == 'slug':
+                    continue
                 setattr(p, key,value)
                 # Outsourcing
             if outsource:

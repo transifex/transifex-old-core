@@ -449,6 +449,21 @@ class TestProjectAPI(BaseTestCase):
             res, "source language is not allowed", status_code=400
         )
 
+    def test_update_slug(self):
+        """Test that updating the slug through the API is not allowed."""
+        self._set_permissions()
+        url = reverse(
+            'apiv2_project', kwargs={'project_slug': self.project.slug}
+        )
+        res = self.client['registered'].put(
+            url,
+            data=simplejson.dumps({'slug': 'blah'}),
+            content_type='application/json'
+        )
+        self.assertContains(
+            res, "'slug' is not available", status_code=400
+        )
+
     def test_delete(self):
         res = self.client['anonymous'].delete(self.url_project)
         self.assertEquals(res.status_code, 401)
@@ -484,6 +499,16 @@ class TestProjectAPI(BaseTestCase):
             content_type='application/json'
         )
         self.assertContains(res, "'slug' is required", status_code=400)
+
+    def _set_permissions(self, username='registered', perms=['change_project']):
+        """Set the permissions for the user ``username`` to
+        update a project.
+        """
+        user = User.objects.get(username=username)
+        for perm in perms:
+            user.user_permissions.add(
+                Permission.objects.get(codename=perm)
+            )
 
 
 class TestTransactionProjectAPI(Users, TransactionLanguages,
