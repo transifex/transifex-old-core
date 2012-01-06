@@ -54,7 +54,7 @@ def deactivate_csrf_middleware():
 
 
 class TestCaseMixin(object):
-    
+
     @staticmethod
     def response_in_browser(resp, halt=True):
         """
@@ -395,5 +395,5 @@ class BaseTestCaseTests(BaseTestCase):
         for role in USER_ROLES:
             # All users should be able to see the homepage
             resp = self.client[role].get('/')
-            self.assertEquals(resp.status_code, 200)
+            self.assertEquals(resp.status_code, 302)
 
