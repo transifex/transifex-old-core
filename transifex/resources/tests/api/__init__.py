@@ -249,6 +249,7 @@ class TestResourceAPI(APIBaseTests):
                     'slug': 'new_pr', 'name': 'Project from API',
                     'source_language_code': 'el',
                     'maintainers': 'registered',
+                    'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -327,6 +328,7 @@ class TestTransactionResourceCreate(Users, TransactionNoticeTypes,
                     'slug': 'new_pr', 'name': 'Project from API',
                     'source_language_code': 'el',
                     'maintainers': 'registered',
+                    'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -352,6 +354,7 @@ class TestTransactionResourceCreate(Users, TransactionNoticeTypes,
                     'slug': 'new_pr', 'name': 'Project from API',
                     'source_language_code': 'el',
                     'maintainers': 'registered',
+                    'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -821,6 +824,7 @@ class TestTranslationAPI(APIBaseTests):
                     'slug': 'new_pr', 'name': 'Project from API',
                     'source_language_code': 'el',
                     'maintainers': 'registered',
+                    'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -938,6 +942,7 @@ class TestStatsAPI(APIBaseTests):
                     'slug': self.project_slug, 'name': 'Project from API',
                     'source_language_code': 'el',
                     'maintainers': 'registered',
+                    'description': 'desc',
             }),
             content_type='application/json'
         )
