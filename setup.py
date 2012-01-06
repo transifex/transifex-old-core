@@ -64,7 +64,7 @@ setup(
         "django-userena",
         "userprofile", # Needed by txcommon.models.Profile migration
         "httplib2",
-        "polib >= 0.5.4",
+        "polib == 0.6.3",
         "Pygments >= 0.9",
         "PIL >= 1.1.7",
         "contact_form >= 0.3", # hg 97559a887345 or newer
@@ -72,7 +72,7 @@ setup(
         "django-authority",
         "django-social-auth",
         "django-filter >= 0.1",
-        "django-notification >= 0.1.2",
+        "django-notification == 0.1.5",
         "django-pagination >= 1.0.5",
         "django-piston",
         "django-sorting >= 0.1",
