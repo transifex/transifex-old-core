@@ -428,7 +428,20 @@ class TestProjectAPI(BaseTestCase):
         )
         self.assertContains(res, "User", status_code=400)
 
-        # update source language for project with no resources
+    def test_update_source_language(self):
+        """Test source language updating.
+
+        It is allowed, only if the project has no resources.
+        """
+        self._set_permissions()
+        res = self.client['maintainer'].post(
+            self.url_projects, simplejson.dumps({
+                'slug': 'foo', 'name': 'Foo Project',
+                'source_language_code': 'en', 'description': 'desc',
+            }),
+            content_type='application/json'
+        )
+        self.assertEquals(res.status_code, 201)
         res = self.client['registered'].put(
             self.url_project,
             data=simplejson.dumps({'source_language_code': 'en'}),
@@ -469,10 +482,7 @@ class TestProjectAPI(BaseTestCase):
         self.assertEquals(res.status_code, 401)
         res = self.client['registered'].delete(self.url_projects)
         self.assertEquals(res.status_code, 403)
-        user = User.objects.get(username='registered')
-        user.user_permissions.add(
-            Permission.objects.get(codename="delete_project")
-        )
+        self._set_permissions(perms=['delete_project'])
         res = self.client['registered'].delete(self.url_projects)
         self.assertEquals(res.status_code, 400)
         self.assertContains(res, "Project slug not specified", status_code=400)
