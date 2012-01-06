@@ -62,8 +62,9 @@ def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     except CommandError, e:
         logger.warning("pofile: The 'msgfmt -c' check failed.")
         raise PoParseError, ugettext("Your file failed a correctness check "
-            "(msgfmt -c). Please run this command on "
-            "your system to see the errors.")
+            "(msgfmt -c). It returned the following error:\n\n%s\n\n"
+            "Please run this command on "
+            "your system to see the errors for yourself." % e.stderr.lstrip('<stdin>:'))
 
 
 class GettextHandler(Handler):
