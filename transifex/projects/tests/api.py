@@ -296,6 +296,7 @@ class TestProjectAPI(BaseTestCase):
                 'slug': 'api_project',
                 'name': 'Project from API',
                 'source_language_code': 'en',
+                'description': 'desc',
                 'outsource': 'not_exists',
             }),
             content_type='application/json'
@@ -305,6 +306,7 @@ class TestProjectAPI(BaseTestCase):
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
                 'source_language_code': 'en', 'maintainers': 'not_exists',
+                'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -325,7 +327,8 @@ class TestProjectAPI(BaseTestCase):
                 'slug': 'api_project_maintainers',
                 'name': 'Project from API',
                 'source_language_code': 'en',
-                'maintainers': 'registered'
+                'maintainers': 'registered',
+                'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -334,7 +337,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
-                'source_language_code': 'en_US'
+                'source_language_code': 'en_US', 'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -352,7 +355,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project_2', 'name': 'Project from API - second',
-                'source_language_code': 'en_US'
+                'source_language_code': 'en_US', 'desctiption': 'desc',
             }),
             content_type='application/json'
         )
@@ -375,7 +378,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['maintainer'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'foo', 'name': 'Foo Project',
-                'source_language_code': 'en',
+                'source_language_code': 'en', 'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -491,7 +494,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'foo', 'name': 'Foo Project',
-                'source_language_code': 'en'
+                'source_language_code': 'en', 'description': 'desc',
             }),
             content_type='application/json'
         )
@@ -504,7 +507,7 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'ab+cd': 'api_project', 'name': 'Project from API',
-                'source_language_code': 'en_US'
+                'source_language_code': 'en_US', 'description': 'desc',
             }),
             content_type='application/json'
         )
