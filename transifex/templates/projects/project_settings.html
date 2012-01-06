@@ -39,7 +39,7 @@
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-<div class="grid_4 alpha side-menu left-side" style="height:100%;">
+<div class="grid_4 alpha side-menu left-side" style="height:100%;margin-top:50px;">
 	{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
 	<ul style="height:100%;">
 		{% url project_edit project.slug as url_project_edit %}
