@@ -19,6 +19,7 @@ long_description = long_description.decode('utf-8')
 
 package_data = {
     '': ['LICENCE', 'README'],
+    'transifex': ['transifex/static/*.*']
 }
 
 def buildlanguages():
@@ -89,10 +90,6 @@ setup(
         "redis",
         "hiredis",
     ],
-    data_files=[
-        ('templates', glob.glob('transifex/templates/*.html')),
-    ],
-
     zip_safe=False,
     packages=find_packages(),
     include_package_data=True,
