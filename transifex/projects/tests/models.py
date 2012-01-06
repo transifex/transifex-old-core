@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import IntegrityError
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 from transifex.txcommon.tests.base import Languages, Projects
 from transifex.languages.models import Language
 from transifex.resources.models import Translation
@@ -39,4 +40,17 @@ class ModelTests(Languages, Projects, TestCase):
         )
         self.assertEqual(r.source_language, p.source_language)
 
-
+    def test_slug_validation(self):
+        """Test that validation for slugs works."""
+        slug = 'abc'
+        p = Project(
+            slug=slug, name='a', source_language=self.language_en,
+            description='d'
+        )
+        p.clean_fields()
+        slug = 'abc+'
+        p = Project(
+            slug=slug, name='a', source_language=self.language_en,
+            description='d'
+        )
+        self.assertRaises(ValidationError, p.clean_fields)

@@ -12,6 +12,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_slug
 from django.db import models, IntegrityError
 from django.db.models import Sum
 from django.db.models import permalink, get_model, Q
@@ -131,7 +132,7 @@ class Project(models.Model):
                     'Moreover, private projects are limited according to billing'
                     'plans for the user account.'))
     slug = models.SlugField(_('Slug'), max_length=30, unique=True,
-        validators=[validate_slug_not_in_blacklisted],
+        validators=[validate_slug_not_in_blacklisted, validate_slug, ],
         help_text=_('A short label to be used in the URL, containing only '
                     'letters, numbers, underscores or hyphens.'))
     name = models.CharField(_('Name'), max_length=50,
@@ -293,7 +294,7 @@ class HubRequest(models.Model):
         blank=False, null=False, related_name="hub_requests",
         help_text=_("The project hub to outsource teams from."))
 
-    project = models.ForeignKey(Project, verbose_name=_('Project'), 
+    project = models.ForeignKey(Project, verbose_name=_('Project'),
         unique=True, blank=False, null=False, related_name="hub_requesting",
         help_text=_("The project that wants to outsource teams from "
             "another project."))
