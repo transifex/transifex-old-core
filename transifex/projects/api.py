@@ -365,13 +365,20 @@ class ProjectHandler(BaseHandler):
             return rc.INTERNAL_ERROR
         return rc.DELETED
 
-    def _check_fields(self, fields):
+    def _check_fields(self, fields, extra_exclude=[]):
         """
         Check if supplied fields are allowed to be given in a
         POST or PUT request.
+
+        Args:
+            fields: An iterable of fields to check.
+            extra_exclude: A list of fields that should not be used.
+        Raises:
+            AttributeError, in case a field is not in the allowed fields
+                or is in the ``extra_exclude`` list.
         """
         for field in fields:
-            if field not in self.allowed_fields:
+            if field not in self.allowed_fields or field in extra_exclude:
                 raise AttributeError(field)
 
 
