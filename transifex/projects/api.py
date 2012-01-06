@@ -186,6 +186,10 @@ class ProjectHandler(BaseHandler):
         except Exception:
             return BAD_REQUEST("Invalid arguments given.")
         try:
+            p.full_clean()
+        except ValidationError, e:
+            return BAD_REQUEST("%s" % e)
+        try:
             p.save()
         except IntegrityError:
             return rc.DUPLICATE_ENTRY
@@ -252,6 +256,11 @@ class ProjectHandler(BaseHandler):
                         pass
             else:
                 p.maintainers.add(p.owner)
+
+            try:
+                p.full_clean()
+            except ValidationError, e:
+                return BAD_REQUEST("%s" % e)
             p.save()
 
             return rc.CREATED

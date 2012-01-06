@@ -474,6 +474,17 @@ class TestProjectAPI(BaseTestCase):
         res = self.client['registered'].delete(self.url_project)
         self.assertEquals(res.status_code, 204)
 
+    def test_project_validation(self):
+        """Test that a project created through the API gets validated."""
+        res = self.client['registered'].post(
+            self.url_projects, simplejson.dumps({
+                'ab+cd': 'api_project', 'name': 'Project from API',
+                'source_language_code': 'en_US'
+            }),
+            content_type='application/json'
+        )
+        self.assertContains(res, "'slug' is required", status_code=400)
+
 
 class TestTransactionProjectAPI(Users, TransactionLanguages,
                                 TransactionTestCase):
