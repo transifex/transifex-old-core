@@ -4,10 +4,11 @@ from django.core.urlresolvers import reverse
 from django.utils import unittest
 from django.conf import settings
 from django.utils import simplejson
-from django.test import TransactionTestCase
+from django.test import TestCase, TransactionTestCase
 from django.contrib.auth.models import User, Permission
-from transifex.txcommon.tests.base import BaseTestCase, Users, Languages, \
-        NoticeTypes, Projects, TransactionNoticeTypes, TransactionLanguages
+from transifex.txcommon.tests.base import Users, Languages, \
+        NoticeTypes, Projects, Resources, TransactionNoticeTypes, \
+        TransactionLanguages
 from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import RLStats, Resource
 from transifex.projects.models import Project
@@ -181,7 +182,7 @@ class TestTransactionProjectResourceAPI(TransactionNoticeTypes,
         self.assertEqual(Resource.objects.filter(slug=rslug).count(), 0)
 
 
-class TestProjectAPI(BaseTestCase):
+class TestProjectAPI(Languages, Resources, TestCase):
 
     def setUp(self):
         super(TestProjectAPI, self).setUp()
@@ -535,15 +536,15 @@ class TestTransactionProjectAPI(Users, TransactionLanguages,
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
-                'source_language_code': 'en_US'
+                'source_language_code': 'en_US', 'description': 'desc',
             }),
             content_type='application/json'
         )
         res = self.client['registered'].post(
             self.url_projects, simplejson.dumps({
                 'slug': 'api_project', 'name': 'Project from API',
-                'source_language_code': 'en_US'
+                'source_language_code': 'en_US', 'description': 'desc',
             }),
             content_type='application/json'
         )
-        self.assertEquals(res.status_code, 409)
+        self.assertContains(res, "already exists", status_code=400)
