@@ -12,7 +12,9 @@
 
 {% block content_title %}
   <h2 class="pagetitle">
-    {% if not query %}{% trans "Search projects" %}{% else %}{% trans "Search results" %}{% endif %}
+  {% with results|length as result_count %}
+    {% if not query %}{% trans "Search projects" %}{% else %}{% trans "Search results " %}({{ result_count }}){% endif %}
+	{% endwith %}
   </h2>
 {% endblock %}
 
@@ -28,8 +30,6 @@
     {% endif %}
 
     {% if results %}
-      <h3 class="pagetitle">
-        {% with results|length as result_count %}{% blocktrans %}Search Results ({{ result_count }}){% endblocktrans %}</h3>{% endwith %}
       {% autopaginate results 10 %}
       <div class="project_list">
       {% for sr in results %}
