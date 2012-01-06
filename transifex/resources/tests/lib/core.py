@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from mock import patch, Mock
+from django.test import TestCase
 from django.test import TransactionTestCase
 from django.conf import settings
 from transifex.txcommon.tests.base import Users, Languages
@@ -7,6 +9,8 @@ from transifex.projects.models import Project
 from transifex.resources.models import Resource, SourceEntity
 from transifex.languages.models import Language
 from transifex.resources.formats.joomla import JoomlaINIHandler
+from transifex.resources.formats.core import Handler
+from transifex.resources.formats.compilation import Purpose
 
 
 class TestCoreFunctions(Users, Languages, TransactionTestCase):
@@ -38,3 +42,21 @@ class TestCoreFunctions(Users, Languages, TransactionTestCase):
         self.assertEquals(SourceEntity.objects.filter(resource=r).count(), 2)
         settings.MAX_STRING_ITERATIONS = old_max_iters
 
+
+class TestPurpose(TestCase):
+    """Test the purpose variable used in compilation."""
+
+    @patch.object(Handler, '_compile_viewing')
+    @patch.object(Handler, '_compile_translating')
+    @patch.object(Handler, '_content_from_template')
+    def test_purpose(self, tempalte_mock, tmock, vmock):
+        """Test that the correct function is called for compilation."""
+        h = Handler()
+        h.resource = Mock()
+        h.compile(purpose=Purpose.VIEWING)
+        self.assertTrue(vmock.called)
+        self.assertFalse(tmock.called)
+        vmock.reset_mock()
+        h.compile(purpose=Purpose.TRANSLATING)
+        self.assertFalse(vmock.called)
+        self.assertTrue(tmock.called)

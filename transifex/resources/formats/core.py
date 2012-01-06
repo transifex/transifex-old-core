@@ -15,6 +15,7 @@ from suggestions.formats import ContentSuggestionFormat
 from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats import FormatError
+from transifex.resources.formats.compilation import Purpose
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
@@ -195,6 +196,18 @@ class Handler(object):
             raise
         finally:
             f.close()
+
+    def _content_from_template(self, resource):
+        """Return the content of the template for the specified resource.
+
+        Args:
+            resource: The resource the template of which we want.
+        Returns:
+            The template as a unicode string.
+        """
+        return Template.objects.get(
+            resource=resource
+        ).content.decode(self.default_encoding)
 
     def set_language(self, language):
         """Set the language for the handler."""
@@ -386,7 +399,7 @@ class Handler(object):
         pass
 
     @need_resource
-    def compile(self, language=None):
+    def compile(self, language=None, purpose=Purpose.TRANSLATING):
         """
         Compile the template using the database strings. The result is the
         content of the translation file.
@@ -404,18 +417,35 @@ class Handler(object):
         if language is None:
             language = self.language
         self._pre_compile(language)
-        content = Template.objects.get(
-            resource=self.resource
-        ).content.decode(self.default_encoding)
+        content = self._content_from_template(self.resource)
         content = self._examine_content(content)
         try:
-            self.compiled_template = self._compile(
+            func_name = '_'.join(['_compile', purpose])
+            self.compiled_template = getattr(self, func_name)(
                 content, language
             ).encode(self.format_encoding)
         except Exception, e:
             logger.error("Error compiling file: %s" % e, exc_info=True)
             raise
         self._post_compile(language)
+
+    def _compile_viewing(self, content, language):
+        """Compile some content for viewing.
+
+        This method should compile a version that is available to be
+        distributed along with the project. Some formats might need to
+        override this.
+        """
+        return self._compile(content, language)
+
+    def _compile_translating(self, content, language):
+        """Compile some content for translating it.
+
+        This method should compile a version of the translation
+        that is suitable to be used by translators for off-line
+        translation. This is the default behavior.
+        """
+        return self._compile(content, language)
 
     def _compile(self, content, language):
         """Internal compile function.
