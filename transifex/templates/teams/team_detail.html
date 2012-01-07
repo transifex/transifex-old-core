@@ -1,4 +1,4 @@
-{% extends "projects/project_menu.html" %}
+{% extends "teams/team_menu.html" %}
 {% load i18n %}
 {% load cache %}
 {% load pagination_tags %}
@@ -46,8 +46,8 @@
 
 
 {% block project_header %}
-{{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
-<h2 class="pagetitle">
+{{block.super}}<h2 class="pagetitle with_description">/</h2>
+<h2 class="pagetitle with_description">
 {% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
 {% endblock%}
 
@@ -57,11 +57,22 @@
 
 <div class="obj_bigdetails">
 
-{% if perms.projects.change_team or is_coordinator %}
-<p class="clearfix">
-    <a class="i16 nude-button edit right" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit team" %}</a>
-</p>
-{% endif %}
+ 	<div class="separate-header notopmargin clearfix">
+  	<h3  class="sh-label">{% trans "Details" %}</h3>
+  	{% if perms.projects.change_team or is_coordinator %}
+  	<div class="separate-buttons"><a class="i16 edit nude-button" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit team" %}</a></div>
+		{% endif %}
+		
+		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
+	  <div class="separate-buttons">
+	    <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
+	        <p>{% hook "team_request_join_additional.html" %}</p>
+	        <p><input name="team_join" class="i16 team_join nude-button" type="submit" title="{% trans "Join this Team" %}" value="{% trans "Join this Team" %}" style="margin:0;padding:0;"></p>
+	    </form>
+	  </div>
+		{% endif %}
+	</div>
+
 
  <div class="team_detail">
   <dl class="definition clearfix">

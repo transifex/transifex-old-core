@@ -1,0 +1,62 @@
+{% extends "projects/base.html" %}
+{% load i18n %}
+{% load addons %}
+{% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
+
+{% block basecss %}
+{{ block.super }}
+  <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/jquery.autocomplete.css" />
+  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.autocomplete.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/file_submit.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+  {% if project %}
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
+  {% endif %}
+{% endblock %}
+
+{% block content_title %}
+{% with project.description as short_desc %}
+<div class="lastchild-emf">
+{% block project_header %}
+<h2 class="pagetitle{% if short_desc %} with_description{% endif %}"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
+{% endblock %}
+</div>
+
+{% block current_description %}
+{% if short_desc %}
+<div class="description">
+	<p>{{ project.description }}</p>
+</div>
+{% endif %}
+{% endblock %}
+{% endwith %}
+{% endblock %}
+
+{% block content_header_sec %}
+	{% if project.private %}
+	<span id="private_project_banner" class="ui-corner-all" style="padding-top:38px;display:inline-block;float:right;background:url({{ STATIC_URL }}images/icons/private-project.png)center top no-repeat;">
+	<p style="font-size:13px;font-weight:normal;color:#888;">{% trans "Private"%}</p>
+	</span>
+	{% endif %}
+{% endblock %}
+
+{% block header_menu %}
+     	<div class="tab-wrapper grid_16">
+        	<ul  class="tabs clearfix">     
+        	    <li class="first {% if project_team_page %}selected{% endif %} alpha"><a href="{% url team_list project.slug %}">{% trans "Team Overview" %}</a></li>
+        	    <li class=""><a href="">{% trans "Members" %}</a></li>
+        	  </ul>
+        </div>   
+{% endblock %}
+
+
+
+
+{% block content_main %}{% endblock %}
+{% block content_footer %}{% endblock %}

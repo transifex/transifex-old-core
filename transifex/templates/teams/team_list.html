@@ -33,7 +33,7 @@
     <li class="i16 team_request clearfix">
         <div class="tt-details">
   	      <h5 style="float:left;">{{ teamrequest.language.name }}</h5>
-	        <span class="details">- Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
+	        <span class="details">&nbsp;-&nbsp;Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
 				</div>	
         {% if is_maintainer %}
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
@@ -84,7 +84,7 @@
     <a class="team-row" href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
     	<li class="i16 team clearfix"> 
         	<div class="tt-details">
-	        	<h5>{{ team.language.name }}</h5>
+	        	<h5 class="linkstyle">{{ team.language.name }}</h5>
         	</div>
     	</li>
     </a>
