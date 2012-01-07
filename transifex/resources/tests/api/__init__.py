@@ -158,6 +158,21 @@ class TestResourceAPI(APIBaseTests):
         )
         self.assertContains(res, "Field 'i18n_type'", status_code=400)
 
+        f = open(self.po_file)
+        res = self.client['registered'].post(
+            self.url_create_resource,
+            data={
+                    'name': "resource1",
+                    'name': "resource2",
+                    'slug': 'r.2+',
+                    'i18n_type': 'PO',
+                    'attachment': f,
+            },
+        )
+        f.close()
+        self.assertContains(res, "Invalid arguments given", status_code=400)
+
+
     def test_post_files(self):
         self._create_project()
         # send files

@@ -63,6 +63,7 @@ class ResourceBackend(object):
                 project=project, source_language=source_language,
                 slug=slug, name=name
             )
+            r.full_clean()
             r.i18n_method = method
             for key in ifilter(lambda k: k != "content", extra_data.iterkeys()):
                 setattr(r, key, extra_data[key])

@@ -5,6 +5,7 @@ import urllib
 from itertools import ifilter
 from django.db import transaction, IntegrityError, DatabaseError
 from django.conf import settings
+from django.forms import ValidationError
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
@@ -277,11 +278,14 @@ class ResourceHandler(BaseHandler):
             r, created = Resource.objects.get_or_create(
                 project=project, **data
             )
+            r.full_clean()
 
             if created:
                 post_resource_save.send(sender=None, instance=r,
                         created=created, user=request.user)
 
+        except ValidationError, e:
+            return BAD_REQUEST("Invalid arguments given: %s" % unicode(e))
         except:
             return BAD_REQUEST("The json you provided is misformatted.")
         return rc.CREATED
@@ -309,7 +313,8 @@ class ResourceHandler(BaseHandler):
             for key, value in data.iteritems():
                 setattr(resource, key, value)
             # if i18n_type is not None:
-            #     resource.i18n_method = i18n_type
+            #     resource.i18n_method = i18n_typ
+            resource.full_clean()
             resource.save()
         except:
             return rc.BAD_REQUEST
