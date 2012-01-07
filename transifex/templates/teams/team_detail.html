@@ -149,7 +149,7 @@
 
 <div class="list" style="clear:both">
 
-  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  <div class="separate-header clearfix">
   	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources{% endblocktrans %}</h3>
 	</div>
 	
@@ -229,15 +229,14 @@
  {% endif %}
 </div>
 
-{% if project.resources.count or not project.releases.count %}
-  {% include "projects/release_list.html" %}
-{% endif %}
 
 </div>
 
 {% hook "team_detail.html" extra_content %}
 
-<h3>{% trans 'History' %}</h3>
+<div class="separate-header clearfix">
+	<h3  class="sh-label">{% trans "History" %}</h3>
+</div>
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object team %}
 {% if not action_log %}
