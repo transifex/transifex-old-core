@@ -9,6 +9,7 @@ from itertools import groupby
 from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
+from django.core.validators import validate_slug
 from django.db import models, transaction
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext_lazy as _
@@ -122,6 +123,7 @@ class Resource(models.Model):
 
     # Short identifier to be used in the API URLs
     slug = models.SlugField(_('Slug'), max_length=50, db_index=False,
+        validators=[validate_slug,],
         help_text=_("A short label to be used in the URL, containing only "
                     "letters, numbers, underscores and hyphens."))
     name = models.CharField(_('Name'), max_length=255, null=False, blank=False,

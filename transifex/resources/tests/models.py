@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import IntegrityError
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.test import TestCase
 from django.utils.hashcompat import md5_constructor
@@ -174,6 +175,16 @@ class ResourcesModelTests(BaseTestCase):
         self.resource.update_wordcount()
         self.assertEquals(self.resource.wordcount,
                           self.translation_en.wordcount)
+
+    def test_slug_validation(self):
+        """Test that validation for slug works"""
+        slug = "foo"
+        r = Resource(slug=slug, name='r', project=self.project,
+                source_language=self.language_en, i18n_type='PHP_DEFINE',)
+        r.clean_fields()
+        r.slug = "a.b.c+"
+        self.assertRaises(ValidationError, r.clean_fields)
+
 
 
 class RLStatsModelTests(BaseTestCase):

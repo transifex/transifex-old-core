@@ -7,3 +7,4 @@ from lib import *
 from views import *
 from templates import *
 from backends import *
+from models import *
