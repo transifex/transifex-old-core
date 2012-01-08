@@ -49,8 +49,8 @@
 {% block header_menu %}
      	<div class="tab-wrapper grid_16">
         	<ul  class="tabs clearfix">     
-        	    <li class="first {% if project_team_page %}selected{% endif %} alpha"><a href="{% url team_list project.slug %}">{% trans "Team Overview" %}</a></li>
-        	    <li class=""><a href="">{% trans "Members" %}</a></li>
+        	    <li class="first {% if project_team_page %}selected{% endif %} alpha"><a href="{% url team_detail project.slug team.language.code %}">{% trans "Team Overview" %}</a></li>
+        	    <li class="{% if project_team_members %}selected{% endif %} alpha"><a href="{% url team_members project.slug team.language.code %}">{% trans "Members" %}</a></li>
         	  </ul>
         </div>   
 {% endblock %}
