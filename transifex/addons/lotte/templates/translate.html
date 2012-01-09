@@ -82,12 +82,13 @@
     var target_lang = '{{ target_language.code }}';
     var saveError_response = false;
     var spellcheck_langs = [{% for item in spellcheck_supported_langs %}"{{ item }}"{% if not forloop.last %}, {% endif %}{% endfor %}];
-    if (spellcheck_langs.indexOf("{{target_language.code}}") >= 0) {
+    if ($.inArray("{{target_language.code}}", spellcheck_langs) >= 0) {
     	var spellcheck_url = '{% url spellcheckurl project.slug resource.slug target_language.code %}';
     	var enable_spellcheck = true;
     }
-    else
+    else {
     	var enable_spellcheck = false;
+    }
     // Used to manage extra tabs
     var toolbars = [];
     toolbars[0] = ['lotte', lotte_tabs]
@@ -463,9 +464,9 @@
             var req;
 
             if ($(this).attr('checked')) {
-                req = {true: [sid]};
+                req = {'true': [sid]};
             } else {
-                req = {false: [sid]};
+                req = {'false': [sid]};
             };
 
             $.ajax({
