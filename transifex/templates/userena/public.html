@@ -99,7 +99,7 @@
         {% if projects %}
         <div class="list">
         <h4>
-        {% blocktrans count projects|length as counter %}Maintainer of the following project{% plural %}Member of the following projects{% endblocktrans %}
+        {% blocktrans count projects|length as counter %}Maintainer of the following project{% plural %}Maintainer of the following projects{% endblocktrans %}
         </h4>
         <ul>
         {% for project in projects|dictsort:"project.name" %}
