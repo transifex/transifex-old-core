@@ -341,7 +341,7 @@ class SourceEntity(models.Model):
         help_text=_("The occurrences of the source string in the project code."))
     flags = models.TextField(_('Flags'), max_length=100,
         blank=True, editable=False,
-        help_text=_("The flags which mark the source string. For example, if"
+        help_text=_("The flags which mark the source string. For example, if "
                     "there is a python formatted string this is marked as "
                     "\"#, python-format\" in gettext."))
     developer_comment = models.TextField(_('Comments'), max_length=1000,

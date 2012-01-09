@@ -129,7 +129,7 @@ class Project(models.Model):
 
     private = models.BooleanField(default=False, verbose_name=_('Private'),
         help_text=_('A private project is visible only by you and your team.'
-                    'Moreover, private projects are limited according to billing'
+                    'Moreover, private projects are limited according to billing '
                     'plans for the user account.'))
     slug = models.SlugField(_('Slug'), max_length=30, unique=True,
         validators=[validate_slug_not_in_blacklisted, validate_slug, ],

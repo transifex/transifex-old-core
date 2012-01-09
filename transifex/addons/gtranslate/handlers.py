@@ -40,7 +40,7 @@ def add_auto_translate_field(sender, **kwargs):
         label=_("Auto Translate Service"), initial=choice,
         help_text=_(
             "Select the type of service you want to use for the "
-            "auto-transalte service. Leave it blank, if you do not "
+            "auto-translate service. Leave it blank, if you do not "
             "want to have the feature enabled. You will have to insert "
             "your API key for the service, too."
         )
