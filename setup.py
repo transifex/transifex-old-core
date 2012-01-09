@@ -91,6 +91,8 @@ setup(
         "hiredis",
         "requests",
         "django-picklefield",
+        "celery",
+        "django-celery",
     ],
     zip_safe=False,
     packages=find_packages(),
