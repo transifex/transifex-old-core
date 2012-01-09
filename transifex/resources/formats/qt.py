@@ -431,5 +431,5 @@ class LinguistHandler(Handler):
             "'(?=(?:(?!>).)*<\/source>)",
             r"&apos;", template_text
         )
-        return esc_template_text.encode(self.default_encoding)
+        return esc_template_text
 
