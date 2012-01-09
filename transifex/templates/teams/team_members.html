@@ -1,0 +1,172 @@
+{% extends "teams/team_menu.html" %}
+{% load i18n %}
+{% load cache %}
+{% load pagination_tags %}
+{% load txcommontags %}
+{% load permissions %}
+{% load txpermissions %}
+{% load addons %}
+{% load statistics_resources %}
+
+{% block extra_head %}
+<script type="text/javascript">
+  $(function(){
+    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+    $(".tablesorter_resource").tablesorter({
+        widgets: ['zebra'],
+        headers: {
+            1: { sorter: 'percent' },
+            2: { sorter: 'number' },
+            3: { sorter: 'number' }
+        },
+        textExtraction: function(node) {  
+            switch (node.cellIndex){
+                // Stats column
+                case 1:
+                    return $(".stats_string_resource", node).text();
+                // Last update column
+                case 2:
+                    return $("span", node).attr('unixdate');
+                // Priority column
+                case 3:
+                    return $(".priority_sort", node).text()
+                default: return node.innerHTML;
+            }
+        } 
+    });
+   })
+</script>
+{% endblock %}
+
+{% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
+
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo;
+<a href="{% url team_list team.project.slug %}">{% trans "Teams" %}</a> &raquo; {{ team.language.name }}
+{% endblock %}
+
+
+{% block project_header %}
+{{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
+<h2 class="pagetitle">
+{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
+{% endblock%}
+
+{% block content_main %}
+{% get_permission "project_perm.submit_translations" for request.user and team as "can_submit_translations" %}
+{% get_permission "project_perm.coordinate_team" for request.user and project,team.language as "is_coordinator" %}
+
+<div class="obj_bigdetails">
+
+ <div class="team_detail">
+  <dl class="definition clearfix">
+    {% if team.mainlist %}
+      <dt class="i16 email">{% trans "Mainlist:" %}</dt>
+      <dd>{{ team.mainlist|mungify:team.mainlist }} </a></dd>
+    {% endif %}
+
+    {% with team.coordinators.all as coordinators %}
+    {% if coordinators %}
+      <dt class="i16 coordinators">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</dt>
+      <dd>
+        {% for c in coordinators|slice:"0:6" %}
+          <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
+          {% if c.first_name and c.last_name %}
+            {{ c.first_name }} {{ c.last_name }}
+            (<a href="{% url profile_public c.username %}">{{ c.username }}</a>)
+          {% else %}
+            <a href="{% url profile_public c.username %}">{{ c.username }}</a>
+          {% endif %}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      </dd>
+    {% endif %}
+    {% endwith %}
+
+    {% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
+      <dt class="i16 user">{% trans "Become a translator:" %}</dt>
+      <dd>
+        <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
+            <p>{% hook "team_request_join_additional.html" %}</p>
+            <input name="team_join" class="i16 team_join buttonized" type="submit" title="{% trans "Join this Team" %}"  value="{% trans "Join this Team" %}">
+        </form>
+      </dd>
+   {% endif %}
+
+  </dl>
+</div>
+
+{% if team_access_requests %}
+<div class="list ">
+
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label">{% trans "People waiting for team membership approving:" %}</h3>
+	</div>
+	
+<ul>
+{% for access_request in team_access_requests|dictsort:"user.username" %}
+    <li>
+        <img class="border" width="16" height="16" src="{{ access_request.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
+        <a href="{% url profile_public access_request.user.username %}">
+            {{ access_request.user }}
+        </a>
+        {% if is_coordinator %}
+        <form class="microform" method="post" action="{% url team_join_approve access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
+            <input name="team_join_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
+        </form>
+
+        <form class="microform" method="post" action="{% url team_join_deny access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
+            <input name="team_join_deny" class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
+        </form>
+        {% endif %}
+
+        {% ifequal request.user.pk access_request.user.pk %}
+        <form class="microform" method="post" action="{% url team_join_withdraw access_request.team.project.slug access_request.team.language.code %}">{% csrf_token %}
+            <input name="team_join_withdraw" class="i16 delete buttonized" type="submit" value="{% trans "Withdraw" %}"/>
+        </form>
+        {% endifequal %}
+    </li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+
+{% with team_all as members %}
+{% if members %}
+<div class="list" style="clear:both">
+
+  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  	<h3  class="sh-label">{% trans "Team Members" %}</h3>
+	</div>
+
+<ul>
+{% for m in members|dictsort:"username" %}
+    <li>
+        <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
+        <a href="{% url profile_public m.username %}">
+            {{ m }}
+        </a>
+        {% if m in team_reviewers %}
+          <sup>Reviewer</sup>
+        {% endif %}
+        {% ifequal request.user.pk m.pk %}
+        <form class="microform" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
+            <input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/>
+        </form>
+        {% endifequal %}
+    </li>
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+{% endwith %}
+</div>
+
+
+{% endblock %}
+
+
+{% block content_footer %}
+  <div id="content_footer_center">
+
+  </div>
+{% endblock %}
