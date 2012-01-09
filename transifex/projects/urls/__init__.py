@@ -139,5 +139,5 @@ urlpatterns += patterns('django.views.generic',
 urlpatterns += patterns('',
     url('', include('resources.urls')),
     url(PROJECT_URL_PARTIAL, include('teams.urls')),
-    url('', include('releases.urls')),
+    url(PROJECT_URL_PARTIAL, include('releases.urls')),
 )
