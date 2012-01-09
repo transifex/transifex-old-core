@@ -1024,7 +1024,7 @@ def spellcheck(request, project_slug, lang_code, resource_slug=None):
             word_with_ws = string_[o:o+l]
             word = word_with_ws.strip()
             if len(word) < len(word_with_ws):
-                start, end = re.search(word, word_with_ws).span()
+                start, end = re.search(re.escape(word), word_with_ws).span()
                 l = end - start + 1
                 o = o + start
             d.append([(o, l), word, suggestions])
