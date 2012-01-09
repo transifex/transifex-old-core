@@ -4,6 +4,7 @@
 {% load txpermissions %}
 {% load statistics_resources %}
 {% load addons %}
+{% load team_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
@@ -86,6 +87,7 @@
         	<div class="tt-details">
 	        	<h5 class="linkstyle">{{ team.language.name }}</h5>
         	</div>
+          {% get_team_progress team %}
     	</li>
     </a>
 {% endfor %}
