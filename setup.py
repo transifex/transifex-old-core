@@ -93,6 +93,7 @@ setup(
         "django-picklefield",
         "celery",
         "django-celery",
+        "django-kombu",
     ],
     zip_safe=False,
     packages=find_packages(),
