@@ -9,7 +9,6 @@ from transifex.projects.views import *
 from transifex.projects.views.project import *
 from transifex.projects.views.hub import *
 from transifex.projects.views.permission import *
-from transifex.projects.views.team import *
 from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.urls import PROJECTS_URL
 
@@ -137,72 +136,8 @@ urlpatterns += patterns('django.views.generic',
         name='project_tag_list'),
 )
 
-# Teams
-
-TEAM_URL = PROJECT_URL_PARTIAL + r'team/(?P<language_code>[\-_@\w\.]+)/'
-
-urlpatterns += patterns('',
-    url(
-        regex = PROJECT_URL_PARTIAL+r'teams/add/$',
-        view = team_create,
-        name = 'team_create',),
-    url(
-        regex = TEAM_URL+r'edit/$',
-        view = team_update,
-        name = 'team_update',),
-    url(
-        regex = PROJECT_URL_PARTIAL+r'teams/$',
-        view = team_list,
-        name = 'team_list',),
-    url(
-        regex = TEAM_URL+r'$',
-        view = team_detail,
-        name = 'team_detail',),
-    url(
-        regex = TEAM_URL+r'members/$',
-        view = team_members,
-        name = 'team_members',),
-    url(
-        regex = TEAM_URL+r'delete/$',
-        view = team_delete,
-        name = 'team_delete',),
-    url(
-        regex = TEAM_URL+r'request/$',
-        view = team_join_request,
-        name = 'team_join_request',),
-    url(
-        regex = TEAM_URL+r'approve/(?P<username>[\.\w-]+)/$',
-        view = team_join_approve,
-        name = 'team_join_approve',),
-    url(
-        regex = TEAM_URL+r'deny/(?P<username>[\.\w-]+)/$',
-        view = team_join_deny,
-        name = 'team_join_deny',),
-    url(
-        regex = TEAM_URL+r'withdraw/$',
-        view = team_join_withdraw,
-        name = 'team_join_withdraw',),
-    url(
-        regex = TEAM_URL+r'leave/$',
-        view = team_leave,
-        name = 'team_leave',),
-    url(
-        regex = PROJECT_URL_PARTIAL+r'teams/request/$',
-        view = team_request,
-        name = 'team_request',),
-    url(
-        regex = TEAM_URL+r'approve/$',
-        view = team_request_approve,
-        name = 'team_request_approve',),
-    url(
-        regex = TEAM_URL+r'deny/$',
-        view = team_request_deny,
-        name = 'team_request_deny',),
-)
-
-
-# Resources
 urlpatterns += patterns('',
     url('', include('resources.urls')),
+    url(PROJECT_URL_PARTIAL, include('teams.urls')),
     url('', include('releases.urls')),
 )
