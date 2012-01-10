@@ -246,8 +246,7 @@ class TestPoFile(FormatsBaseTestCase):
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-        handler.compile()
-        exported_file = polib.pofile(handler.compiled_template)
+        exported_file = polib.pofile(handler.compile())
         for entry in exported_file:
             se = SourceEntity.objects.get(
                string = entry.msgid,
@@ -311,8 +310,7 @@ class TestPoFileHeaders(FormatsBaseTestCase):
         self.assertFalse(self.team.mainlist)
         handler = self._load_pot()
         handler.set_language(self.language)
-        handler.compile()
-        pofile = handler.compiled_template
+        pofile = handler.compile()
         self.assertTrue("Portuguese (Brazilian)" in pofile)
         self.assertTrue(self.urls['team'] in pofile)
 
@@ -322,8 +320,7 @@ class TestPoFileHeaders(FormatsBaseTestCase):
         self.team.save()
         handler = self._load_pot()
         handler.set_language(self.language)
-        handler.compile()
-        pofile = handler.compiled_template
+        pofile = handler.compile()
         self.assertTrue("Portuguese (Brazilian)" in pofile)
         self.assertFalse(self.urls['team'] in pofile)
         self.assertTrue(self.team.mainlist in pofile)
@@ -364,8 +361,7 @@ class TestPoFileCopyright(FormatsBaseTestCase):
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-        handler.compile()
-        self.assertTrue("AB" in handler.compiled_template)
+        self.assertIn("AB", handler.compile())
 
     def test_headers_on_pot(self):
         handler = POHandler(os.path.join(
@@ -375,8 +371,7 @@ class TestPoFileCopyright(FormatsBaseTestCase):
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-        handler.compile()
-        self.assertFalse("FIRST AUTHOR" in handler.compiled_template)
+        self.assertNotIn("FIRST AUTHOR", handler.compile())
         handler = POTHandler(os.path.join(
                 os.path.dirname(__file__), 'tests.pot')
         )
@@ -384,8 +379,7 @@ class TestPoFileCopyright(FormatsBaseTestCase):
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-        handler.compile()
-        self.assertTrue("FIRST AUTHOR" in handler.compiled_template)
+        self.assertIn("FIRST AUTHOR", handler.compile())
 
     def test_order(self):
         handler = POHandler(os.path.join(
@@ -404,8 +398,8 @@ class TestPoFileCopyright(FormatsBaseTestCase):
         cr = Copyright.objects.assign(
             language=self.language_en, resource=self.resource,
             owner='BA', year='2015')
-        handler.compile()
-        lines_iterator = handler.compiled_template.split("\n")
+        compiled_template = handler.compile()
+        lines_iterator = compiled_template.split("\n")
         for n, line in enumerate(lines_iterator):
             if line == "# Translators:":
                 break

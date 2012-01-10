@@ -41,9 +41,10 @@ class PropertiesHandler(Handler):
         string with backslashes in the store method.
         So let us do the same.
         """
-        return (s.replace(':', '\:')
-                .replace('=', '\=')
-                .replace('\\', '\\\\')
+        return (
+            s.replace(':', '\:')
+            .replace('=', '\=')
+            .replace('\\', '\\\\')
         )
 
     def _is_escaped(self, line, index):

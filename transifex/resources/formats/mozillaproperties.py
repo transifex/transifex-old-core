@@ -16,11 +16,14 @@ from transifex.resources.formats.resource_collections import StringSet, \
 from transifex.resources.formats.properties import PropertiesHandler, \
         PropertiesParseError, PropertiesCompileError
 
+
 class MozillaPropertiesParseError(PropertiesParseError):
     pass
 
+
 class MozillaPropertiesCompileError(PropertiesCompileError):
     pass
+
 
 class MozillaPropertiesHandler(PropertiesHandler):
     name = "Mozilla *.PROPERTIES file handler"
@@ -44,10 +47,3 @@ class MozillaPropertiesHandler(PropertiesHandler):
     def _unescape(self, value):
         """Reverse the escape of special characters."""
         return value.replace('\\\\', '\\')
-
-    def _replace_translation(self, original, replacement, text):
-        return text.replace(
-            original, self._pseudo_decorate(self._escape(replacement))
-        )
-
-

@@ -15,6 +15,7 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import ParseError, CompileError, \
         Handler, STRICT
+from transifex.resources.formats.compilation import Compiler
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from suggestions.models import Suggestion
@@ -36,6 +37,30 @@ class LinguistCompileError(CompileError):
     pass
 
 
+def _context_of_message(message):
+    """Get the context value of a message node."""
+    context_node = message.parentNode
+    context_name_element = _getElementByTagName(context_node, "name")
+    if context_name_element.firstChild:
+        if context_name_element.firstChild.nodeValue:
+            context_name = escape_context(
+                [context_name_element.firstChild.nodeValue])
+        else:
+            context_name = []
+    else:
+        context_name = []
+    try:
+        c_node = _getElementByTagName(message, "comment")
+        comment_text = _getText(c_node.childNodes)
+        if comment_text:
+            comment = escape_context([comment_text])
+        else:
+            comment = []
+    except LinguistParseError, e:
+        comment = []
+    return (context_name + comment) or "None"
+
+
 def _getElementByTagName(element, tagName, noneAllowed = False):
     elements = element.getElementsByTagName(tagName)
     if not noneAllowed and not elements:
@@ -43,6 +68,7 @@ def _getElementByTagName(element, tagName, noneAllowed = False):
     if len(elements) > 1:
         raise LinguistParseError(_("Multiple '%s' elements found!" % tagName))
     return elements[0]
+
 
 def _get_attribute(element, key, die = False):
     if element.attributes.has_key(key):
@@ -52,6 +78,7 @@ def _get_attribute(element, key, die = False):
             "for element '%s'" % (key, element.tagName))
     else:
         return None
+
 
 def _getText(nodelist):
     rc = []
@@ -63,26 +90,15 @@ def _getText(nodelist):
     return ''.join(rc)
 
 
-class LinguistHandler(Handler):
-    name = "Qt4 TS parser"
-    format = "Qt4 Translation XML files (*.ts)"
-    method_name = 'QT'
+class QtCompiler(Compiler):
+    """Compiler for Qt resources."""
 
-    HandlerParseError = LinguistParseError
-    HandlerCompileError = LinguistCompileError
-
-    def _escape(self, s):
-        return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
-
-    def _post_compile(self, *args, **kwargs):
-        """
-        """
-        if hasattr(kwargs,'language'):
-            language = kwargs['language']
-        else:
-            language = self.language
-
-        doc = xml.dom.minidom.parseString(self.compiled_template)
+    def _post_compile(self):
+        """Add plurals."""
+        language = self.language
+        doc = xml.dom.minidom.parseString(
+            self.compiled_template.encode('utf-8')
+        )
         root = doc.documentElement
         root.attributes["language"] = language.code
 
@@ -105,7 +121,7 @@ class LinguistHandler(Handler):
                     resource=self.resource,
                     language=language,
                     source_entity__string=sourceString,
-                    source_entity__context=self._context_of_message(message)
+                    source_entity__context=_context_of_message(message)
                 ).order_by('rule')
 
                 plural_keys = {}
@@ -120,9 +136,7 @@ class LinguistHandler(Handler):
                 for key in plural_keys.iterkeys():
                     e = doc.createElement("numerusform")
                     e.appendChild(
-                        doc.createTextNode(
-                            self._pseudo_decorate(plural_keys[key])
-                        )
+                        doc.createTextNode(self._tdecorator(plural_keys[key]))
                     )
                     translation.appendChild(e)
                     if not plural_keys[key]:
@@ -138,28 +152,18 @@ class LinguistHandler(Handler):
             r"&apos;", esc_template_text)
         self.compiled_template = esc_template_text
 
-    def _context_of_message(self, message):
-        """Get the context value of a message node."""
-        context_node = message.parentNode
-        context_name_element = _getElementByTagName(context_node, "name")
-        if context_name_element.firstChild:
-            if context_name_element.firstChild.nodeValue:
-                context_name = escape_context(
-                    [context_name_element.firstChild.nodeValue])
-            else:
-                context_name = []
-        else:
-            context_name = []
-        try:
-            c_node = _getElementByTagName(message, "comment")
-            comment_text = _getText(c_node.childNodes)
-            if comment_text:
-                comment = escape_context([comment_text])
-            else:
-                comment = []
-        except LinguistParseError, e:
-            comment = []
-        return (context_name + comment) or "None"
+
+class LinguistHandler(Handler):
+    name = "Qt4 TS parser"
+    format = "Qt4 Translation XML files (*.ts)"
+    method_name = 'QT'
+
+    HandlerParseError = LinguistParseError
+    HandlerCompileError = LinguistCompileError
+    CompilerClass = QtCompiler
+
+    def _escape(self, s):
+        return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
 
     def _parse(self, is_source, lang_rules):
         """
@@ -432,4 +436,3 @@ class LinguistHandler(Handler):
             r"&apos;", template_text
         )
         return esc_template_text
-

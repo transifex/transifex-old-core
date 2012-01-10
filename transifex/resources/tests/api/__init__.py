@@ -399,7 +399,7 @@ class TestTransactionResourceCreate(Users, TransactionNoticeTypes,
             }),
             content_type='application/json'
         )
-        self.assertContains(res, "same slug exists", status_code=400)
+        self.assertContains(res, "already exists", status_code=400)
         res = self.client['registered'].post(
             self.url_create_resource,
             data=simplejson.dumps({

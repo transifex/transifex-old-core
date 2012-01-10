@@ -3,6 +3,4 @@
 Transifex formats package.
 """
 
-class FormatError(Exception):
-    """Base class for all formats related errors."""
-    pass
+from transifex.resources.formats.exceptions import FormatError

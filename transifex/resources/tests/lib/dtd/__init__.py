@@ -114,13 +114,13 @@ class TestDTDHandler(BaseTestCase):
                 source_entity__resource=r, language=l).count(), 3
             )
 
-        handler.compile()
+        compiled_template = handler.compile()
         # comments should be in place
-        self.assertTrue("I am ready for you" in
-            handler.compiled_template.decode("utf-8"))
+        self.assertIn("I am ready for you", compiled_template.decode('UTF-8'))
 
         # template should be in UTF-8, and single quotes should be doubled
-        self.assertTrue(u'<!ENTITY robots.errorTitleText "Привіт людинам!">' in
-            handler.compiled_template.decode("utf-8"))
-
+        self.assertIn(
+            u'<!ENTITY robots.errorTitleText "Привіт людинам!">',
+            compiled_template.decode('UTF-8')
+        )
         r.delete()

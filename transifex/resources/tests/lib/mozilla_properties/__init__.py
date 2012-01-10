@@ -143,13 +143,11 @@ class TestMozillaProperties(BaseTestCase):
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
         old_template = handler.compiled_template
-        handler.compile()
-        self.assertNotEqual(old_template, handler.compiled_template)
+        self.assertNotEqual(old_template, handler.compile())
 
         handler.set_language(Language.objects.get(code='hi_IN'))
         old_template = handler.compiled_template
-        handler.compile()
-        self.assertNotEqual(old_template, handler.compiled_template)
+        self.assertNotEqual(old_template, handler.compile())
 
         #Cleanup
         self.resource.delete()

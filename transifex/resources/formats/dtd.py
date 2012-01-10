@@ -76,8 +76,6 @@ class DTDHandler(Handler):
             fh.close()
         return text
 
-
-
     def _parse(self, is_source, lang_rules):
         resource = self.resource
 

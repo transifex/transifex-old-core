@@ -37,10 +37,6 @@ class AppleStringsHandler(Handler):
     HandlerParseError = StringsParseError
     HandlerCompileError = StringsCompileError
 
-    def _post_compile(self, *args, **kwargs):
-        self.compiled_template = self.compiled_template.decode(
-                self.format_encoding).encode(self.format_encoding)
-
     def _escape(self, s):
         return s.replace('"', '\\"')
 
@@ -143,4 +139,3 @@ class AppleStringsHandler(Handler):
             if end == 0:
                 break
         return buf
-

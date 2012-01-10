@@ -20,7 +20,10 @@ from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
 from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
-from transifex.resources.formats.core import Handler, CompileError, ParseError
+from transifex.resources.formats.core import Handler
+from transifex.resources.formats.exceptions import CompileError, ParseError
+from transifex.resources.formats.compilation import Compiler, \
+        EmptyDecoratorBuilder, EmptyTranslationsBuilder
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 
@@ -78,7 +81,7 @@ class GettextHandler(Handler):
     copyright_line = re.compile('^# (.*?), ((\d{4}(, ?)?)+)\.?$')
 
     HandlerParseError = PoParseError
-    handlerCompileError = PoCompileError
+    HandlerCompileError = PoCompileError
 
     def _check_content(self, content):
         try:
@@ -144,6 +147,12 @@ class GettextHandler(Handler):
                 stripped_content += line + "\n"
         return stripped_content
 
+    def _get_compiler(self):
+        """Construct the compiler to use."""
+        return self.CompilerClass(
+            resource=self.resource, format_encoding=self.format_encoding
+        )
+
     def _escape(self, s):
         """
         Escape special chars and return the given string *st*.
@@ -159,94 +168,10 @@ class GettextHandler(Handler):
                 .replace('\r', r'\\r')\
                 .replace('\"', r'\\"')
 
-    def _post_compile(self, *args, **kwargs):
-        """
-        Here we update the PO file headers and the plurals
-        """
-        language = kwargs.get('language', self.language)
-        template = self.compiled_template
-        po = polib.pofile(template.decode(self.format_encoding))
-        po = self._update_headers(po=po, language=language)
-        po = self._update_plurals(po=po, language=language)
-        # Instead of saving raw text, we save the polib Handler
-        self.compiled_template = self.get_po_contents(po)
-        return po
-
-    def _update_headers(self, po, language):
-        """
-        Update the headers of a compiled po file.
-        """
-        po.metadata['Project-Id-Version'] = self.resource.project.name
-        po.metadata['Content-Type'] = u"text/plain; charset=%s" % self.format_encoding
-        # The above doesn't change the charset of the actual object, so we
-        # need to do it for the pofile object as well.
-        po.encoding = self.format_encoding
-
-        po.metadata['PO-Revision-Date'] = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
-        po.metadata['Plural-Forms'] = "nplurals=%s; plural=%s" % (language.nplurals, language.pluralequation)
-        # The following is in the specification but isn't being used by po
-        # files. What should we do?
-        po.metadata['Language'] = language.code
-
-        if self.resource.project.bug_tracker:
-            po.metadata['Report-Msgid-Bugs-To'] = self.resource.project.bug_tracker
-
-        if 'fuzzy' in po.metadata_is_fuzzy:
-            po.metadata_is_fuzzy.remove('fuzzy')
-
-        try:
-            team = Team.objects.get(
-                language=language, project = self.resource.project.outsource or self.resource.project
-            )
-        except Team.DoesNotExist:
-            pass
-        else:
-            team_contact = "<%s>" % team.mainlist if team.mainlist else \
-                "(http://%s%s)" % (Site.objects.get_current().domain,
-                                   team.get_absolute_url())
-
-            po.metadata['Language-Team'] = "%s %s" % (language.name, team_contact)
-
-        stat = RLStats.objects.by_resource(self.resource).by_language(language)
-        if stat and stat[0].last_committer:
-            u = stat[0].last_committer
-            po.metadata['Last-Translator'] = "%s <%s>" % (u.get_full_name() or u.username , u.email)
-            po.metadata['PO-Revision-Date'] = stat[0].last_update.strftime("%Y-%m-%d %H:%M+0000")
-        return po
-
-    def _get_plurals(self, language):
-        """Get all plural forms for the source strings."""
-        translations = Translation.objects.filter(
-            source_entity__resource = self.resource,
-            language=language,
-        ).order_by('source_entity__id', 'rule').\
-        values_list('source_entity__string', 'string')
-        plurals = defaultdict(list)
-        for se, t in translations:
-            plurals[se].append(t)
-        return plurals
-
-    def _update_plurals(self, po, language):
-        """Update the plurals in the po file."""
-        plurals = self._get_plurals(language)
-        for entry in po:
-            if entry.msgid_plural:
-                plural_keys = {}
-                # last rule excluding other(5)
-                lang_rules = language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
-                for p, n in enumerate(lang_rules):
-                    plural_keys[p] = ""
-                for n, p in enumerate(plurals[entry.msgid]):
-                    plural_keys[n] =  self._pseudo_decorate(p)
-                entry.msgstr_plural = plural_keys
-        return po
-
     def _post_save2db(self, *args, **kwargs):
         """Emit a signal for others to catch."""
         kwargs.update({'copyrights': self.copyrights})
         super(GettextHandler, self)._post_save2db(*args, **kwargs)
-
 
     def _parse(self, is_source, lang_rules):
         """
@@ -398,16 +323,112 @@ class GettextHandler(Handler):
         )
 
 
-class POHandler(GettextHandler):
-    """Actual PO file implementation."""
+class GettextCompiler(Compiler):
+    """Base compiler for gettext files."""
 
-    @property
-    def is_pot(self):
-        return False
+    def _get_plurals(self):
+        """Get all plural forms for the source strings."""
+        translations = Translation.objects.filter(
+            source_entity__resource = self.resource,
+            language=self.language,
+        ).order_by('source_entity__id', 'rule').\
+        values_list('source_entity__string', 'string')
+        plurals = defaultdict(list)
+        for se, t in translations:
+            plurals[se].append(t)
+        return plurals
 
-    def _post_compile(self, language):
+    def _post_compile(self):
+        """Update the PO file headers and the plurals."""
+        template = self.compiled_template
+        po = polib.pofile(template)
+        po = self._update_headers(po=po)
+        po = self._update_plurals(po=po)
+        # Instead of saving raw text, we save the polib Handler
+        self.compiled_template = unicode(po)
+
+    def _update_headers(self, po):
+        """Update the headers of a compiled po file."""
+        po.metadata['Project-Id-Version'] = self.resource.project.name
+        content_type = u"text/plain; charset=%s" % self.format_encoding
+        po.metadata['Content-Type'] = content_type
+        # The above doesn't change the charset of the actual object, so we
+        # need to do it for the pofile object as well.
+        po.encoding = self.format_encoding
+        revision_date = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
+        po.metadata['PO-Revision-Date'] = revision_date
+        plurals = "nplurals=%s; plural=%s" % (
+            self.language.nplurals, self.language.pluralequation
+        )
+        po.metadata['Plural-Forms'] = plurals
+        # The following is in the specification but isn't being used by po
+        # files. What should we do?
+        po.metadata['Language'] = self.language.code
+
+        bug_tracker = self.resource.project.bug_tracker
+        if bug_tracker:
+            po.metadata['Report-Msgid-Bugs-To'] = bug_tracker
+
+        if 'fuzzy' in po.metadata_is_fuzzy:
+            po.metadata_is_fuzzy.remove('fuzzy')
+
+        try:
+            team = Team.objects.get(
+                language=self.language,
+                project=self.resource.project.outsource or self.resource.project
+            )
+        except Team.DoesNotExist:
+            pass
+        else:
+            if team.mainlist:
+                team_contact = "<%s>" % team.mainlist
+            else:
+                team_contact = "(http://%s%s)" % (
+                    Site.objects.get_current().domain,
+                    team.get_absolute_url()
+                )
+            po.metadata['Language-Team'] = "%s %s" % (
+                self.language.name, team_contact
+            )
+
+        stat = RLStats.objects.by_resource(
+            self.resource
+        ).by_language(self.language)
+        if stat and stat[0].last_committer:
+            u = stat[0].last_committer
+            last_translator = "%s <%s>" % (
+                u.get_full_name() or u.username , u.email
+            )
+            po.metadata['Last-Translator'] = last_translator
+            translation_revision_date = stat[0].last_update.strftime(
+                "%Y-%m-%d %H:%M+0000"
+            )
+            po.metadata['PO-Revision-Date'] = translation_revision_date
+        return po
+
+    def _update_plurals(self, po):
+        """Update the plurals in the po file."""
+        plurals = self._get_plurals()
+        for entry in po:
+            if entry.msgid_plural:
+                plural_keys = {}
+                # last rule excluding other(5)
+                lang_rules = self.language.get_pluralrules_numbers()
+                # Initialize all plural rules up to the last
+                for p, n in enumerate(lang_rules):
+                    plural_keys[p] = ""
+                for n, p in enumerate(plurals[entry.msgid]):
+                    plural_keys[n] =  self._tdecorator(p)
+                entry.msgstr_plural = plural_keys
+        return po
+
+
+class PoCompiler(GettextCompiler):
+    """Compiler for PO files."""
+
+    def _post_compile(self):
         # Add copyright headers if any
-        po = super(POHandler, self)._post_compile(language)
+        super(PoCompiler, self)._post_compile()
         from transifex.addons.copyright.models import Copyright
         c = Copyright.objects.filter(
             resource=self.resource, language=self.language
@@ -422,13 +443,22 @@ class POHandler(GettextHandler):
                 copyrights_inserted = True
                 content_with_copyright += "# Translators:\n"
                 for entry in c:
-                    content_with_copyright += '# ' + entry.owner.encode('UTF-8') + \
-                            ', ' + entry.years_text.encode('UTF-8') + ".\n"
+                    content_with_copyright += '# ' + entry.owner + \
+                            ', ' + entry.years_text + ".\n"
                 content_with_copyright += line + "\n"
             else:
                 content_with_copyright += line + "\n"
         self.compiled_template = content_with_copyright
-        return po
+
+
+class POHandler(GettextHandler):
+    """Actual PO file implementation."""
+
+    CompilerClass = PoCompiler
+
+    @property
+    def is_pot(self):
+        return False
 
     def _parse_copyrights(self, content):
         """Read the copyrights (if any) from a po file."""
@@ -441,27 +471,24 @@ class POHandler(GettextHandler):
                 self.copyrights.append(c)
 
 
-class POTHandler(GettextHandler):
-    """Separate class for POT files, which allows extra overrides."""
+class PotCompiler(Compiler):
+    """Compiler for POT files."""
 
-    name = "GNU Gettext *.POT handler"
-    method_name = 'POT'
-    format = "GNU Gettext Catalog (*.po, *.pot)"
+    def __init__(self, *args, **kwargs):
+        """Always use the empty applier for POT files."""
+        super(PotCompiler, self).__init__(*args, **kwargs)
+        self._tset = EmptyDecoratorBuilder()
+        self._tdecorator = EmptyTranslationsBuilder()
 
-    @property
-    def is_pot(self):
-        return True
+    def _set_tdecorator(self, a):
+        """Don't allow to change the translations decorator."""
 
-    def _apply_translation(self, source_hash, trans, content):
-        return self._replace_translation("%s_tr" % source_hash, "", content)
+    def _set_tset(self, t):
+        """Don't allow to change the translations set builder."""
 
     def _get_plurals(self, language):
         # Override to avoid a db query
         return defaultdict(str)
-
-    def _get_translation(self, string, language, rule):
-        # Override to avoid a db query.
-        return ""
 
     def _update_headers(self, po, language):
         project_name = self.resource.project.name.encode(self.format_encoding)
@@ -475,6 +502,24 @@ class POTHandler(GettextHandler):
             bug_tracker = self.resource.project.bug_tracker.encode(self.format_encoding)
             po.metadata['Report-Msgid-Bugs-To'] = bug_tracker
         return po
+
+
+class POTHandler(GettextHandler):
+    """Separate class for POT files, which allows extra overrides."""
+
+    name = "GNU Gettext *.POT handler"
+    method_name = 'POT'
+    format = "GNU Gettext Catalog (*.po, *.pot)"
+
+    CompilerClass = PotCompiler
+
+    @property
+    def is_pot(self):
+        return True
+
+    def _get_translation(self, string, language, rule):
+        # Override to avoid a db query.
+        return ""
 
     def set_language(self, language):
         """Accept a language set to None.

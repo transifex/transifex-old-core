@@ -9,6 +9,7 @@ from transifex.resources.formats.strings import AppleStringsHandler, \
 
 from transifex.addons.suggestions.models import Suggestion
 
+
 class TestAppleStrings(BaseTestCase):
     """Suite of tests for the strings file lib."""
 

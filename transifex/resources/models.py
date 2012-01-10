@@ -670,6 +670,7 @@ class Translation(models.Model):
         Do some exra processing before the actual save to db.
         """
         # encoding happens to support unicode characters
+        self.resource = self.source_entity.resource
         self.string_hash = md5(self.string.encode('utf-8')).hexdigest()
         self._update_wordcount()
         super(Translation, self).save(*args, **kwargs)

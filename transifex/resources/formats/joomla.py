@@ -11,6 +11,7 @@ from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
+from transifex.resources.formats.compilation import Compiler
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 
@@ -21,6 +22,21 @@ class JoomlaParseError(ParseError):
 
 class JoomlaCompileError(CompileError):
     pass
+
+
+class JoomlaCompiler(Compiler):
+    """Compiler for Joomla .ini files."""
+
+    def _examine_content(self, content):
+        """Determine the version of the file."""
+        self.jformat = JoomlaIniVersion.create(content)
+        return content
+
+    def _replace_translation(self, original, replacement, text):
+        """Modify the translation depending on the version of the file."""
+        return super(JoomlaCompiler, self)._replace_translation(
+            original, self.jformat.get_compilation(replacement), text
+    )
 
 
 class JoomlaINIHandler(Handler):
@@ -38,20 +54,13 @@ class JoomlaINIHandler(Handler):
 
     HandlerParseError = JoomlaParseError
     HandlerCompileError = JoomlaCompileError
+    CompilerClass = JoomlaCompiler
 
     def _escape(self, s):
         return  s.replace('\\', '\\\\').replace('\n', r'\\n').replace('\r', r'\\r')
 
     def _unescape(self, s):
         return s.replace('\\n', '\n').replace('\\r', '\r')
-
-    def _examine_content(self, content):
-        self.jformat = JoomlaIniVersion.create(content)
-        return content
-
-    def _replace_translation(self, original, replacement, text):
-        return re.sub(re.escape(original),
-            self._pseudo_decorate(self._escape(self.jformat.get_compilation(replacement))), text)
 
     def _parse(self, is_source, lang_rules):
         """

@@ -6,6 +6,7 @@ from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.xliff import XliffHandler
 
+
 class TestXliffParser(BaseTestCase):
     """Suite of tests for XLIFF file lib."""
 
@@ -157,24 +158,20 @@ class TestXliffParser(BaseTestCase):
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
         old_template = handler.compiled_template
-        handler.compile()
-        self.assertNotEqual(old_template, handler.compiled_template)
+        self.assertNotEqual(old_template, handler.compile())
 
         handler.set_language(self.language_ar)
         old_template = handler.compiled_template
-        handler.compile()
-        self.assertNotEqual(old_template, handler.compiled_template)
+        self.assertNotEqual(old_template, handler.compile())
 
         handler.bind_resource(self.resource_new)
         handler.set_language(self.resource_new.source_language)
         old_template = handler.compiled_template
-        handler.compile()
-        self.assertNotEqual(old_template, handler.compiled_template)
+        self.assertNotEqual(old_template, handler.compile())
 
         handler.set_language(self.language_ar)
         old_template = handler.compiled_template
-        handler.compile()
-        self.assertNotEqual(old_template, handler.compiled_template)
+        self.assertNotEqual(old_template, handler.compile())
 
         #Cleanup
         self.resource.delete()

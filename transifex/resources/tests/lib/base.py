@@ -18,10 +18,10 @@ class FormatsBaseTestCase(base.BaseTestCase):
             source = s.source_entity
             source = "%(hash)s_tr" % {'hash':md5_constructor(
                     ':'.join([source, ""]).encode('utf-8')).hexdigest()}
-            template = handler._replace_translation(
-                "%s" % source.encode('utf-8'),
-                trans and trans.encode('utf-8') or "",
-                template
+            compiler = handler.CompilerClass(handler.resource)
+            compiler._examine_content(template)
+            template = compiler._replace_translation(
+                "%s" % source, trans and trans or "", template
             )
         with open(actual_file, 'r') as f:
             actual_content = f.read()

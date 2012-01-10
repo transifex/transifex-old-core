@@ -14,8 +14,11 @@ from suggestions.models import Suggestion
 from suggestions.formats import ContentSuggestionFormat
 from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
-from transifex.resources.formats import FormatError
-from transifex.resources.formats.compilation import Purpose
+from transifex.resources.formats.exceptions import FormatError, ParseError, \
+        CompileError
+from transifex.resources.formats.compilation import Compiler, \
+        NormalDecoratorBuilder, PseudoDecoratorBuilder, \
+        AllTranslationsBuilder, SourceTranslationsBuilder
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
@@ -73,14 +76,10 @@ class CustomSerializer(json.JSONEncoder):
             }
 
 
-class ParseError(FormatError):
-    """Base class for parsing errors."""
-    pass
+class Purpose(object):
+    """Class to suggest, what a translation is downloaded for."""
 
-
-class CompileError(FormatError):
-    """Base class for all compiling errors."""
-    pass
+    VIEWING, TRANSLATING = ('viewing', 'translating', )
 
 
 class Handler(object):
@@ -95,6 +94,7 @@ class Handler(object):
     HandlerCompileError = CompileError
 
     SuggestionFormat = ContentSuggestionFormat
+    CompilerClass = Compiler
 
     linesep = '\n'
 
@@ -254,15 +254,6 @@ class Handler(object):
             logger.error(msg)
             raise FormatsError(msg)
 
-
-    def bind_pseudo_type(self, pseudo_type):
-        if isinstance(pseudo_type, PseudoTypeMixin):
-            self.pseudo_type = pseudo_type
-        else:
-            raise Exception(_("pseudo_type needs to be based on type %s" %
-                PseudoTypeMixin.__class__))
-
-
     def _find_linesep(self, s):
         """Find the line separator used in the file."""
         if "\r\n" in s:         # windows line ending
@@ -282,62 +273,6 @@ class Handler(object):
     #  Core functions  #
     ####################
 
-    def _pseudo_decorate(self, string):
-        """
-        Modify the string accordingly to a ``pseudo_type`` set to the handler.
-        This is used to export Pseudo Localized files.
-        """
-        if hasattr(self,'pseudo_type') and self.pseudo_type:
-            nonunicode = False
-            if isinstance(string, str):
-                string = string.decode(self.default_encoding)
-                nonunicode = True
-
-            string = self.pseudo_type.compile(string)
-
-            if nonunicode:
-                string = string.encode(self.default_encoding)
-        return string
-
-    ####################
-    # Compile functions
-    ####################
-
-    def _replace_translation(self, original, replacement, text):
-        """
-        Do a search and replace inside `text` and replaces all
-        occurrences of `original` with `replacement`.
-        """
-        return re.sub(re.escape(original),
-            self._pseudo_decorate(self._escape(replacement)), text)
-
-    def _get_source_strings(self, resource):
-        """Return the source strings of the resource."""
-        return SourceEntity.objects.filter(resource=resource).values_list(
-            'id', 'string_hash'
-        )
-
-    def _get_translation_strings(self, source_entities, language):
-        """Get the translation strings that match the specified source_entities.
-
-        The returned translations are for the specified langauge and rule = 5.
-
-        Args:
-            source_entities: A list of source entity ids.
-            language: The language which the translation is for.
-        Returns:
-            A dictionary with the translated strings. The keys are the id of
-            the source entity this translation corresponds to and values are
-            the translated strings.
-        """
-        res = {}
-        translations = Translation.objects.filter(
-            source_entity__in=source_entities, language=language, rule=5
-        ).values_list('source_entity_id', 'string') .iterator()
-        for t in translations:
-            res[t[0]] = t[1]
-        return res
-
     def _get_translation(self, string, language, rule):
         try:
             return Translation.objects.get(
@@ -346,13 +281,6 @@ class Handler(object):
             )
         except Translation.DoesNotExist, e:
             return None
-
-    def _pre_compile(self, *args, **kwargs):
-        """
-        This is called before doing any actual work. Override in inherited
-        classes to alter behaviour.
-        """
-        pass
 
     def _escape(self, s):
         """
@@ -368,106 +296,83 @@ class Handler(object):
         """Adds to instance a new suggestion string."""
         self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
 
-    def _apply_translation(self, source_hash, trans, content):
-        """Apply a translation to text.
-
-        Usually, we do a search for the hash code of source and replace
-        with trans.
+    def _get_translation_decorator(self, pseudo_type):
+        """Choose the applier to use.
 
         Args:
-            source_hash: The hash string of the source entity.
-            trans: The translation string.
-            content: The text for the search-&-replace.
-
+            pseudo_type: The pseudo type chosen.
         Returns:
-            The content after the translation has been applied.
+            An instance of the applier.
         """
-        return self._replace_translation("%s_tr" % source_hash, trans, content)
+        if pseudo_type is None:
+            return NormalDecoratorBuilder(escape_func=self._escape)
+        else:
+            return PseudoDecoratorBuilder(
+                escape_func=self._escape,
+                pseudo_func=pseudo_type.compile
+            )
 
-    def _examine_content(self, content):
-        """
-        Offer a chance to peek into the template before any string is
-        compiled.
-        """
-        return content
+    def _get_compiler(self):
+        """Construct the compiler to use."""
+        return self.CompilerClass(resource=self.resource)
 
-    def _post_compile(self, *args, **kwargs):
+    def _get_translation_setter(self, language, purpose):
+        """Get the translations builder.
+
+        Args:
+            language: The language for the translations.
+            purpose: The purpose for the compilation.
+        Returns:
+            An instance of the apporpriate translations builder.
         """
-        This is called in the end of the compile method. Override if you need
-        the behaviour changed.
+        if purpose == Purpose.TRANSLATING:
+            return AllTranslationsBuilder(self.resource, language)
+        else:
+            # TODO
+            return SourceTranslationsBuilder(self.resource, language)
+
+    def _compiler(self, language, pseudo_type, purpose):
+        """Factory to construct the compiler to use.
+
+        Args:
+            language: The language to use.
+            pseudo_type: The pseudo_type to use.
+            purpose: The purpose of the compilation.
+        Returns:
+            The suitable compiler class.
         """
-        pass
+        tdec = self._get_translation_decorator(pseudo_type)
+        tset = self._get_translation_setter(language, purpose)
+        compiler = self._get_compiler()
+        compiler.translation_decorator = tdec
+        compiler.translation_set = tset
+        return compiler
 
     @need_resource
-    def compile(self, language=None, purpose=Purpose.TRANSLATING):
-        """
-        Compile the template using the database strings. The result is the
-        content of the translation file.
+    def compile(self, language=None, pseudo=None, purpose=Purpose.TRANSLATING):
+        """Compile the translation for the specified language.
 
-        There are three hooks a subclass can call:
-          _pre_compile: This is called first, before anything takes place.
-          _examine_content: This is called, to have a look at the content/make
-              any adjustments before it is used.
-          _post_compile: Called at the end of the process.
+        The actual output of the compilation depends on the arguments.
 
         Args:
-          language: The language of the file
+            language: The language of the translation.
+            pseudo: The pseudo type to use (if any).
+            purpose: The purpose of the translation.
+        Returns:
+            The compiled template in the correct encoding.
         """
-
         if language is None:
             language = self.language
-        self._pre_compile(language)
         content = self._content_from_template(self.resource)
-        content = self._examine_content(content)
+        compiler = self._compiler(language, pseudo, purpose)
         try:
-            func_name = '_'.join(['_compile', purpose])
-            self.compiled_template = getattr(self, func_name)(
+            return compiler.compile(
                 content, language
             ).encode(self.format_encoding)
         except Exception, e:
             logger.error("Error compiling file: %s" % e, exc_info=True)
-            raise
-        self._post_compile(language)
+            raise #self.HandlerCompileError(unicode(e))
 
-    def _compile_viewing(self, content, language):
-        """Compile some content for viewing.
-
-        This method should compile a version that is available to be
-        distributed along with the project. Some formats might need to
-        override this.
-        """
-        return self._compile(content, language)
-
-    def _compile_translating(self, content, language):
-        """Compile some content for translating it.
-
-        This method should compile a version of the translation
-        that is suitable to be used by translators for off-line
-        translation. This is the default behavior.
-        """
-        return self._compile(content, language)
-
-    def _compile(self, content, language):
-        """Internal compile function.
-
-        Subclasses must override this method, if they need to change
-        the compile behavior.
-
-        Args:
-            content: The content (template) of the resource.
-            language: The language for the translation.
-
-        Returns:
-            The compiled template.
-        """
-        stringset = self._get_source_strings(self.resource)
-        translations = self._get_translation_strings(
-            (s[0] for s in stringset), language
-        )
-        for string in stringset:
-            trans = translations.get(string[0], u"")
-            content = self._apply_translation(string[1], trans, content)
-        return content
 
     #######################
     #  save methods
@@ -869,6 +774,7 @@ class Handler(object):
             raise
         if is_source:
             self.template = self._generate_template(obj)
+
 
 class ResourceItems(object):
     """base class for collections for resource items (source entities,

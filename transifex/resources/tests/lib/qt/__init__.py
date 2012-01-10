@@ -5,7 +5,7 @@ from xml.etree.ElementTree import parse
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.qt import LinguistHandler, \
-        _getElementByTagName, _getText
+        _getElementByTagName, _getText, _context_of_message
 from transifex.addons.suggestions.models import Suggestion
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 
@@ -217,10 +217,10 @@ class TestQtFile(FormatsBaseTestCase):
         self.assertEqual(source.string, unescaped_string)
         self.assertEqual(translation.string, unescaped_string)
 
-        handler.compile()
+        compiled_template = handler.compile()
 
-        self.assertTrue(escaped_string in handler.compiled_template)
-        self.assertFalse(unescaped_string in handler.compiled_template)
+        self.assertIn(escaped_string, compiled_template)
+        self.assertNotIn(unescaped_string, compiled_template)
 
     def test_unfinished_entries(self):
         """Test that unfinished entries are not added in the database"""
@@ -334,8 +334,8 @@ class TestQtFile(FormatsBaseTestCase):
         handler.set_language(lang)
         handler.parse_file()
         handler.save2db()
-        handler.compile()
-        self.assertEqual(handler.compiled_template.count('unfinished'), 2)
+        compiled_template = handler.compile()
+        self.assertEqual(compiled_template.count('unfinished'), 2)
 
 
     def test_entries_with_comment_tag(self):
@@ -382,13 +382,13 @@ class TestQtFile(FormatsBaseTestCase):
         handler.set_language(self.language)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
-        handler.compile()
-        doc = xml.dom.minidom.parseString(handler.compiled_template)
+        compiled_template = handler.compile()
+        doc = xml.dom.minidom.parseString(compiled_template)
         root = doc.documentElement
         for message in doc.getElementsByTagName("message"):
             source = _getElementByTagName(message, "source")
             sourceString = _getText(source.childNodes)
-            generated_context = handler._context_of_message(message)
+            generated_context = _context_of_message(message)
             # this shouldn't raise any exceptions
             se = SourceEntity.objects.get(
                 resource=self.resource, string=sourceString,

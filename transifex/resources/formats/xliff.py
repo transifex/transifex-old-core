@@ -16,6 +16,7 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import Handler, ParseError, CompileError, \
         STRICT
+from transifex.resources.formats.compilation import Compiler
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from transifex.resources.formats.utils.decorators import *
@@ -28,20 +29,17 @@ SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
+
 class XliffParseError(ParseError):
     pass
+
 
 class XliffCompileError(CompileError):
     pass
 
-class XliffHandler(Handler):
-    name = "XLIFF *.XLF file handler"
-    format = "XLIFF files (*.xlf)"
-    method_name = 'XLIFF'
-    format_encoding = 'UTF-8'
 
-    HandlerParseError = XliffParseError
-    HandlerCompileError = XliffCompileError
+class XliffCompiler(Compiler):
+    """Compiler for xliff files."""
 
     def _examine_content(self, content):
         """Modify template content to handle plural data in target language"""
@@ -50,7 +48,9 @@ class XliffHandler(Handler):
         doc = xml.dom.minidom.parseString(content)
         root = doc.documentElement
         rules = self.language.get_pluralrules_numbers()
-        plurals = SourceEntity.objects.filter(resource = self.resource, pluralized=True)
+        plurals = SourceEntity.objects.filter(
+            resource=self.resource, pluralized=True
+        )
         if self.language != self.resource.source_language and plurals:
             for entity in plurals:
                 match = False
@@ -86,25 +86,8 @@ class XliffHandler(Handler):
         content = doc.toxml()
         return content
 
-    def _get_translation_strings(self, source_entities, language):
-        """Modified to include a new field for translation rule"""
-        res = {}
-        translations = Translation.objects.filter(
-            source_entity__in=source_entities, language=language
-        ).values_list('source_entity_id', 'string', 'rule') .iterator()
-        for t in translations:
-            if res.has_key(t[0]):
-                if type(res[t[0]]) == type([]):
-                    res[t[0]].append(t[1:])
-                else:
-                    res[t[0]] = [res[t[0]]]
-                    res[t[0]].append(t[1:])
-            else:
-                res[t[0]] = t[1:]
-        return res
-
-    def _post_compile(self, *args, **kwargs):
-        doc = xml.dom.minidom.parseString(self.compiled_template)
+    def _post_compile(self):
+        doc = xml.dom.minidom.parseString(self.compiled_template.encode('UTF-8'))
         root = doc.documentElement
         for node in root.getElementsByTagName("target"):
             value = ""
@@ -116,12 +99,9 @@ class XliffHandler(Handler):
                 parent.removeChild(node)
         self.compiled_template = doc.toxml()
 
-    def _compile(self, content, language):
+    def _compile(self, content):
         stringset = self._get_source_strings(self.resource)
-        translations = self._get_translation_strings(
-            (s[0] for s in stringset), language
-        )
-
+        translations = self._tset(s[0] for s in stringset)
         for string in stringset:
             trans = translations.get(string[0], u"")
             if SourceEntity.objects.get(id__exact=string[0]).pluralized:
@@ -147,8 +127,34 @@ class XliffHandler(Handler):
                     trans or "",
                     content
                 )
+        self.compiled_template = content
 
-        return content
+
+class XliffHandler(Handler):
+    name = "XLIFF *.XLF file handler"
+    format = "XLIFF files (*.xlf)"
+    method_name = 'XLIFF'
+    format_encoding = 'UTF-8'
+
+    HandlerParseError = XliffParseError
+    HandlerCompileError = XliffCompileError
+
+    def _get_translation_strings(self, source_entities, language):
+        """Modified to include a new field for translation rule"""
+        res = {}
+        translations = Translation.objects.filter(
+            source_entity__in=source_entities, language=language
+        ).values_list('source_entity_id', 'string', 'rule') .iterator()
+        for t in translations:
+            if res.has_key(t[0]):
+                if type(res[t[0]]) == type([]):
+                    res[t[0]].append(t[1:])
+                else:
+                    res[t[0]] = [res[t[0]]]
+                    res[t[0]].append(t[1:])
+            else:
+                res[t[0]] = t[1:]
+        return res
 
     def _getText(self, nodelist):
         rc = []

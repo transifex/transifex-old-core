@@ -11,9 +11,9 @@ from django.utils.translation import ugettext as _
 from django.db import IntegrityError, DatabaseError
 from transifex.txcommon.log import logger
 from transifex.resources.models import Resource
-from transifex.resources.formats import FormatError
+from transifex.resources.formats.exceptions import FormatError
 from transifex.resources.formats.registry import registry
-from transifex.resources.formats.compilation import Purpose
+from transifex.resources.formats.core import Purpose
 from transifex.resources.formats.utils.decorators import need_language
 
 
@@ -73,14 +73,12 @@ class ResourceBackend(object):
                     slug, project.slug, e
                 ), exc_info=True
             )
-            raise ResourceBackendError(_("Invalid arguments given."))
+            raise ResourceBackendError("Invalid arguments given: %s" % e)
         try:
             r.save()
         except IntegrityError, e:
             logger.warning("Error creating resource %s: %s" % (r, e))
-            raise ResourceBackendError(_(
-                "A resource with the same slug exists in this project."
-            ))
+            raise ResourceBackendError("Error saving resource: %s" % e)
         except DatabaseError, e:
             msg = _("Error creating resource: %s")
             logger.warning(msg % e)
@@ -208,10 +206,8 @@ class FormatsBackend(object):
         )
         handler.bind_resource(self.resource)
         handler.set_language(self.language)
-        if pseudo_type:
-            handler.bind_pseudo_type(pseudo_type)
-        handler.compile(purpose=purpose)
-        return handler.compiled_template or ''
+        content = handler.compile(pseudo=pseudo_type, purpose=purpose)
+        return content if isinstance(content, basestring) else ''
 
 
 def content_from_uploaded_file(files, encoding='UTF-8'):

@@ -52,8 +52,8 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.bind_resource(r)
         self.parser.parse_file(is_source=True)
         self.parser.save2db(is_source=True)
-        self.parser.compile()
-        self.assertTrue(r'\n' in self.parser.compiled_template)
+        compiled_template = self.parser.compile()
+        self.assertIn(r'\n', compiled_template)
 
     def test_key_translation(self):
         content = ';test\nKEY_OFFLINE="OFFLINE"'

@@ -13,6 +13,7 @@ from transifex.resources.models import Translation, Template
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
+from transifex.resources.formats.compilation import Compiler
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 
@@ -23,6 +24,43 @@ class DesktopParseError(ParseError):
 
 class DesktopCompileError(CompileError):
     pass
+
+
+class DesktopBaseCompiler(Compiler):
+    """Base compiler for .desktop files."""
+
+    def _apply_translation(self, source, trans, content):
+        return ''.join([
+                content, source, '[', self.language.code, ']=',
+                self._tdecorator(trans), '\n',
+        ])
+
+
+class DesktopSourceCompiler(DesktopBaseCompiler):
+    """Compiler for source .desktop files.
+
+    Show all translations.
+    """
+
+    def _compile(self, content):
+        """Compile all translations."""
+        all_languages = set(self.resource.available_languages_without_teams)
+        source_language = set([self.resource.source_language, ])
+        translated_to = all_languages - source_language
+        content = ''
+        for language in translated_to:
+            content = ''.join(
+                content,
+                super(DesktopSourceCompiler, self)._compile(content)
+            )
+        self.compiled_template = content
+
+
+class DesktopTranslationCompiler(DesktopBaseCompiler):
+    """Compiler for translation .desktop files.
+
+    Show a single language, the one of the translation.
+    """
 
 
 class DesktopHandler(Handler):
@@ -44,30 +82,6 @@ class DesktopHandler(Handler):
     # http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
     localized_keys = ['Name', 'GenericName', 'Comment', 'Icon', ]
 
-    def _apply_translation(self, source, trans, content):
-        return ''.join([
-                content, string.string.encode(self.default_encoding),
-                '[', language.code, ']=',
-                trans.string.encode(self.default_encoding), '\n',
-            ])
-
-    def _compile_translation(self, content, language, *args, **kwargs):
-        """Compile a translation file."""
-        return super(Desktophandler, self)._compile(content, language)
-
-    def _compile_source(self, content, *args, **kwargs):
-        """Compile a source file.
-
-        Add all translations to the file.
-        """
-        all_languages = set(self.resource.available_languages_without_teams)
-        source_language = set([self.resource.source_language, ])
-        translated_to = all_languages - source_language
-        content = ''
-        for language in translated_to:
-            content = self._compile_translation(content, language)
-        return content
-
     def _is_comment_line(self, line):
         """Return True, if the line is a comment."""
         return line[0] in self.comment_chars
@@ -79,6 +93,13 @@ class DesktopHandler(Handler):
     def _is_group_header_line(self, line):
         """Return True, if this is a group header."""
         return line[0] == '[' and line[-1] == ']'
+
+    def _get_compiler(self):
+        """Choose between source and single translation compilers."""
+        if self.language == self.resource.source_language:
+            return DesktopSourceCompiler(self.resource)
+        else:
+            return DesktopTranslationCompiler(self.resource)
 
     def _get_elements(self, line):
         """Get the key and the value of a line."""
@@ -173,9 +194,3 @@ class DesktopHandler(Handler):
                 self._add_translation_string(key, translation, context=context)
 
         return template
-
-    def _compile(self, content, language):
-        if language == self.resource.source_language:
-            return self._compile_source(content, language)
-        else:
-            return self._compile_translation(content, language)

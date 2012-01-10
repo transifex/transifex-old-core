@@ -6,7 +6,7 @@ from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.javaproperties import  JavaPropertiesHandler, \
-        JavaParseError
+        JavaParseError, convert_to_ascii, convert_to_unicode
 
 from transifex.addons.suggestions.models import Suggestion
 
@@ -142,6 +142,6 @@ class TestJavaProperties(BaseTestCase):
         """
         parser = JavaPropertiesHandler()
         for a in u'ΑΒΓΔΕΖΗΘ':
-            s = parser.convert_to_ascii(a)
-            c = parser.convert_to_unicode(s)
+            s = convert_to_ascii(a)
+            c = convert_to_unicode(s)
             self.assertEquals(a, c)

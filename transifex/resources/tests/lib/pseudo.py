@@ -23,7 +23,6 @@ FORMATS = {
             'MIXED': [u'"[Ŀǿƈȧŧīǿƞş ',],
             'EXTEND': [u'"Ŀǿƈȧŧīǿƞş ',]
             }
-
         },
     'QT':{
         'file': os.path.join(settings.TX_ROOT,
@@ -108,12 +107,10 @@ class PseudoTestCase(base.BaseTestCase):
                 pseudo_class = import_to_python(
                     settings.PSEUDO_TYPE_CLASSES[pseudo_type])
 
-                # Create a PseudoType instance and set it into the handler
-                handler.bind_pseudo_type(pseudo_class(self.resource.i18n_type))
-
                 # Compile file and check encoding
-                handler.compile()
-                file_content = handler.compiled_template
+                file_content = handler.compile(
+                    pseudo=pseudo_class(self.resource.i18n_type)
+                )
                 if not isinstance(file_content, unicode):
                     try:
                         file_content = file_content.decode('utf-8')
