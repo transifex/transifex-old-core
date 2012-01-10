@@ -1,4 +1,4 @@
-{% extends "teams/team_menu.html" %}
+{% extends parent_template %}
 {% load i18n %}
 {% load pagination_tags %}
 {% load txcommontags %}
@@ -34,7 +34,12 @@ $(document).ready(function(){
 <div class="obj_bigdetails">
 
 <div class="separate">
+  {% if team_create %}
+  <h3>{% trans "Create Team" %}</h3>
+  {% else %}
   <h3>{% trans "Edit Team" %}</h3>
+  {% endif %}
+
   {% if perms.projects.add_team or is_coordinator %}
   <form id="add_update_team" method="post" enctype="multipart/form-data" action="" class="microform submit_form">{% csrf_token %}
       <div class="notice">

@@ -44,7 +44,7 @@ def team_off(request, project, *args, **kwargs):
     }, context_instance=RequestContext(request))
 
 
-def _team_create_update(request, project_slug, language_code=None):
+def _team_create_update(request, project_slug, language_code=None, extra_context=None):
     """
     Handler for creating and updating a team of a project.
 
@@ -105,14 +105,19 @@ def _team_create_update(request, project_slug, language_code=None):
             return HttpResponseRedirect(reverse("team_detail",
                                         args=[project.slug, team.language.code]))
     else:
-        form=TeamSimpleForm(project, language_code, instance=team)
+        form = TeamSimpleForm(project, language_code, instance=team)
 
-    return render_to_response("teams/team_form.html",
-                              {"project": project,
-                               "team": team,
-                               "project_team_form": form,
-                               "project_team_page": True},
-                                context_instance=RequestContext(request))
+    context = {
+        "project": project,
+        "team": team,
+        "project_team_form": form,
+    }
+
+    if extra_context:
+        context.update(extra_context)
+
+    return render_to_response("teams/team_form.html", context,
+        context_instance=RequestContext(request))
 
 
 pr_team_add=(("granular", "project_perm.maintain"),)
@@ -121,7 +126,12 @@ pr_team_add=(("granular", "project_perm.maintain"),)
 @one_perm_required_or_403(pr_team_add,
     (Project, "slug__exact", "project_slug"))
 def team_create(request, project_slug):
-    return _team_create_update(request, project_slug)
+    extra_context = {
+        'parent_template': 'projects/base.html',
+        'team_create': True
+    }
+    return _team_create_update(request, project_slug,
+        extra_context=extra_context)
 
 
 pr_team_update=(("granular", "project_perm.coordinate_team"),)
@@ -131,7 +141,12 @@ pr_team_update=(("granular", "project_perm.coordinate_team"),)
     (Project, 'slug__exact', 'project_slug'),
     (Language, "code__exact", "language_code"))
 def team_update(request, project_slug, language_code):
-        return _team_create_update(request, project_slug, language_code)
+    extra_context = {
+        'parent_template': 'teams/team_menu.html',
+        'team_update': True
+    }
+    return _team_create_update(request, project_slug, language_code,
+        extra_context=extra_context)
 
 
 @access_off(team_off)
