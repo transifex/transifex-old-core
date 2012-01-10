@@ -104,23 +104,25 @@
 <ul>
 {% for access_request in team_access_requests|dictsort:"user.username" %}
     <li>
+    	<div class="tt-details">
         <img class="border" width="16" height="16" src="{{ access_request.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
         <a href="{% url profile_public access_request.user.username %}">
             {{ access_request.user }}
         </a>
+      </div>
         {% if is_coordinator %}
         <form class="microform" method="post" action="{% url team_join_approve access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
-            <input name="team_join_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
+            <input name="team_join_approve" class="i16 submit buttonized blist" type="submit" value="{% trans "Approve" %}"/>
         </form>
 
         <form class="microform" method="post" action="{% url team_join_deny access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
-            <input name="team_join_deny" class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
+            <input name="team_join_deny" class="i16 delete buttonized blist" type="submit" value="{% trans "Deny" %}"/>
         </form>
         {% endif %}
 
         {% ifequal request.user.pk access_request.user.pk %}
         <form class="microform" method="post" action="{% url team_join_withdraw access_request.team.project.slug access_request.team.language.code %}">{% csrf_token %}
-            <input name="team_join_withdraw" class="i16 delete buttonized" type="submit" value="{% trans "Withdraw" %}"/>
+            <input name="team_join_withdraw" class="i16 delete buttonized blist" type="submit" value="{% trans "Withdraw" %}"/>
         </form>
         {% endifequal %}
     </li>
@@ -134,13 +136,14 @@
 {% if members %}
 <div class="list" style="clear:both">
 
-  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  <div class="separate-header clearfix">
   	<h3  class="sh-label">{% trans "Team Members" %}</h3>
 	</div>
 
 <ul>
 {% for m in members|dictsort:"username" %}
     <li>
+    	<div class="tt-details">
         <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
         <a href="{% url profile_public m.username %}">
             {{ m }}
@@ -148,9 +151,10 @@
         {% if m in team_reviewers %}
           <sup>Reviewer</sup>
         {% endif %}
+      </div>
         {% ifequal request.user.pk m.pk %}
         <form class="microform" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
-            <input name="team_leave" class="i16 user_delete" type="submit" value="{% trans "Leave" %}"/>
+            <input name="team_leave" class="i16 buttonized blist user_delete" type="submit" value="{% trans "Leave" %}"/>
         </form>
         {% endifequal %}
     </li>

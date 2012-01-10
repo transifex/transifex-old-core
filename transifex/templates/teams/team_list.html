@@ -87,7 +87,12 @@
         	<div class="tt-details">
 	        	<h5 class="linkstyle">{{ team.language.name }}</h5>
         	</div>
-          {% get_team_progress team %}
+        	
+        	<div class="tt-stats">
+        	{% with 180 as width%}
+          	{% get_team_progress team width %}
+          {% endwith %}
+        	</div>
     	</li>
     </a>
 {% endfor %}
