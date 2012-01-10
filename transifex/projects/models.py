@@ -23,6 +23,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from authority.models import Permission
 from notification.models import ObservedItem
+from userena.models import upload_to_mugshot
+from easy_thumbnails.fields import ThumbnailerImageField
 
 from transifex.actionlog.models import LogEntry
 from transifex.txcommon.db.models import ChainerManager
@@ -31,6 +33,12 @@ from transifex.projects.signals import project_created, project_deleted
 from transifex.languages.models import Language
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"])
+
+# Settings for the Project.logo field, based on the userena settings mugshot 
+# settings
+MUGSHOT_SETTINGS = {'size': (settings.USERENA_MUGSHOT_SIZE,
+                             settings.USERENA_MUGSHOT_SIZE),
+                    'crop': settings.USERENA_MUGSHOT_CROP_TYPE}
 
 class DefaultProjectQuerySet(models.query.QuerySet):
     """
@@ -164,6 +172,10 @@ class Project(models.Model):
 
     tags = TagAutocompleteField(verbose_name=_('Tags'), blank=True, null=True)
 
+    logo = ThumbnailerImageField(_('Logo'), blank=True, null=True,
+        upload_to=upload_to_mugshot, resize_source=MUGSHOT_SETTINGS,
+        help_text=_('A logo image displayed for the project.'))
+
     # Relations
     maintainers = models.ManyToManyField(User, verbose_name=_('Maintainers'),
         related_name='projects_maintaining', blank=False, null=True)
@@ -275,6 +287,24 @@ class Project(models.Model):
             rlstats__resource__in=self.resources.all()
         ).exclude(code=self.source_language.code).order_by(
             '-rlstats__translated').distinct()
+
+    def get_logo_url(self):
+        """
+        Returns the image containing the mugshot for the user.
+
+        The mugshot can be a uploaded image or a Gravatar.
+
+        :return:
+            ``None`` when no default image is supplied by ``PROJECT_LOGO_DEFAULT``.
+        """
+        # First check for a uploaded logo image and if any return that.
+        if self.logo:
+            return self.logo.url
+        # Check for a default image.
+        elif getattr(settings, 'PROJECT_LOGO_DEFAULT', None):
+            return os.path.join(settings.STATIC_URL, settings.PROJECT_LOGO_DEFAULT)
+        else: 
+            return None
 
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')

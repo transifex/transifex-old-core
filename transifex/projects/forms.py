@@ -33,7 +33,7 @@ class ProjectForm(forms.ModelForm):
         fields = (
             'name', 'slug', 'description', 'trans_instructions', 'tags',
             'long_description', 'maintainers', 'private', 'homepage', 'feed',
-            'bug_tracker', 'source_language',
+            'bug_tracker', 'source_language', 'logo',
         )
 
     def __init__(self, *args, **kwargs):

@@ -68,7 +68,7 @@ $(document).ready(function(){
 
 
 <div class="tx-form dual">
-	  <form action='' method='post'>{% csrf_token %}
+	  <form action='' enctype="multipart/form-data" method='post'>{% csrf_token %}
 
       {{ project_form.non_field_errors }}
 
@@ -88,7 +88,7 @@ $(document).ready(function(){
 				<span id="display-advform">{% trans "View advanced fields" %}</span>
 			</div>
       <fieldset id="project-edit-advanced" style="display:none;">
-        {% get_fieldset homepage,trans_instructions,feed,bug_tracker,long_description,webhook,auto_translate_select_service,auto_translate_api_key as advanced_fields from project_form %}
+        {% get_fieldset homepage,trans_instructions,feed,bug_tracker,long_description,webhook,auto_translate_select_service,auto_translate_api_key,logo as advanced_fields from project_form %}
         {% for field in advanced_fields %}
           <div class="tx-form-field">
             {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
