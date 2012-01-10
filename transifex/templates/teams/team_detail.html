@@ -88,11 +88,8 @@
         {% for c in coordinators|slice:"0:6" %}
           <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
           {% if c.first_name and c.last_name %}
-            {{ c.first_name }} {{ c.last_name }}
-            (<a href="{% url profile_public c.username %}">{{ c.username }}</a>)
-          {% else %}
-            <a href="{% url profile_public c.username %}">{{ c.username }}</a>
-          {% endif %}{% if not forloop.last %},{% endif %}
+          	<a href="{% url profile_public c.username %}">{{c.username}}</a>
+          {% endif %}
         {% endfor %}
       </dd>
     {% endif %}
@@ -110,41 +107,6 @@
 
   </dl>
 </div>
-
-{% if team_access_requests %}
-<div class="list ">
-
-  <div class="separate-header clearfix">
-  	<h3  class="sh-label">{% trans "People waiting for team membership approving:" %}</h3>
-	</div>
-	
-<ul>
-{% for access_request in team_access_requests|dictsort:"user.username" %}
-    <li>
-        <img class="border" width="16" height="16" src="{{ access_request.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
-        <a href="{% url profile_public access_request.user.username %}">
-            {{ access_request.user }}
-        </a>
-        {% if is_coordinator %}
-        <form class="microform" method="post" action="{% url team_join_approve access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
-            <input name="team_join_approve" class="i16 submit buttonized" type="submit" value="{% trans "Approve" %}"/>
-        </form>
-
-        <form class="microform" method="post" action="{% url team_join_deny access_request.team.project.slug access_request.team.language.code access_request.user.username %}">{% csrf_token %}
-            <input name="team_join_deny" class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
-        </form>
-        {% endif %}
-
-        {% ifequal request.user.pk access_request.user.pk %}
-        <form class="microform" method="post" action="{% url team_join_withdraw access_request.team.project.slug access_request.team.language.code %}">{% csrf_token %}
-            <input name="team_join_withdraw" class="i16 delete buttonized" type="submit" value="{% trans "Withdraw" %}"/>
-        </form>
-        {% endifequal %}
-    </li>
-{% endfor %}
-</ul>
-</div>
-{% endif %}
 
 
 <div class="list" style="clear:both">

@@ -57,41 +57,30 @@
 
 <div class="obj_bigdetails">
 
- <div class="team_detail">
-  <dl class="definition clearfix">
-    {% if team.mainlist %}
-      <dt class="i16 email">{% trans "Mainlist:" %}</dt>
-      <dd>{{ team.mainlist|mungify:team.mainlist }} </a></dd>
-    {% endif %}
 
+
+
+
+ <div class="list">
     {% with team.coordinators.all as coordinators %}
     {% if coordinators %}
-      <dt class="i16 coordinators">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</dt>
-      <dd>
-        {% for c in coordinators|slice:"0:6" %}
+    
+    <div class="separate-header notopmargin clearfix">
+  		<h3  class="sh-label">{% trans "Coordinators" %}</h3>
+		</div>
+    
+    <ul>
+      {% for c in coordinators|slice:"0:6" %}
+      <li>
+      	<div class="tt-details">
           <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
-          {% if c.first_name and c.last_name %}
-            {{ c.first_name }} {{ c.last_name }}
-            (<a href="{% url profile_public c.username %}">{{ c.username }}</a>)
-          {% else %}
             <a href="{% url profile_public c.username %}">{{ c.username }}</a>
-          {% endif %}{% if not forloop.last %},{% endif %}
-        {% endfor %}
-      </dd>
+				</div>
+      </li>
+      {% endfor %}
+    </ul>
     {% endif %}
     {% endwith %}
-
-    {% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
-      <dt class="i16 user">{% trans "Become a translator:" %}</dt>
-      <dd>
-        <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
-            <p>{% hook "team_request_join_additional.html" %}</p>
-            <input name="team_join" class="i16 team_join buttonized" type="submit" title="{% trans "Join this Team" %}"  value="{% trans "Join this Team" %}">
-        </form>
-      </dd>
-   {% endif %}
-
-  </dl>
 </div>
 
 {% if team_access_requests %}
