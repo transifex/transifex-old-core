@@ -54,7 +54,7 @@ urlpatterns = patterns('',
         view = team_request,
         name = 'team_request',),
     url(
-        regex = r'approve/$',
+        regex = TEAM_PARTIAL_URL + r'approve/$',
         view = team_request_approve,
         name = 'team_request_approve',),
     url(
