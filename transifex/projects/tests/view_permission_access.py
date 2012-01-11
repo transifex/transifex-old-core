@@ -11,8 +11,8 @@ See txcommon.tests.utils.check_page_status for more info.
 
 #Project URLs
 URL_ROLES = SortedDict({
-    'GET:/projects/':{
-        'anonymous':(200, {}, 'Project list'),
+    'GET:/connect/projects/':{
+        'anonymous':(200, {}, 'Project activity'),
         'registered':(200,),
         'maintainer':(200,),
         'writer':(200,),
