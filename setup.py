@@ -94,6 +94,7 @@ setup(
         "celery",
         "django-celery",
         "django-kombu",
+        "chardet",
     ],
     zip_safe=False,
     packages=find_packages(),
