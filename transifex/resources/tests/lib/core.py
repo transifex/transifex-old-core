@@ -9,7 +9,7 @@ from transifex.projects.models import Project
 from transifex.resources.models import Resource, SourceEntity
 from transifex.languages.models import Language
 from transifex.resources.formats.joomla import JoomlaINIHandler
-from transifex.resources.formats.core import Handler, Purpose
+from transifex.resources.formats.core import Handler, Mode
 
 
 class TestCoreFunctions(Users, Languages, TransactionTestCase):
@@ -42,21 +42,21 @@ class TestCoreFunctions(Users, Languages, TransactionTestCase):
         settings.MAX_STRING_ITERATIONS = old_max_iters
 
 
-class TsetPurpose(TestCase):
-    """Test the purpose variable used in compilation."""
+class TsetMode(TestCase):
+    """Test the mode variable used in compilation."""
 
     @unittest.skip('Do it later')
     @patch.object(Handler, '_compile_viewing')
     @patch.object(Handler, '_compile_translating')
     @patch.object(Handler, '_content_from_template')
-    def test_purpose(self, tempalte_mock, tmock, vmock):
+    def test_mode(self, tempalte_mock, tmock, vmock):
         """Test that the correct function is called for compilation."""
         h = Handler()
         h.resource = Mock()
-        h.compile(purpose=Purpose.VIEWING)
+        h.compile(mode=Mode.VIEWING)
         self.assertTrue(vmock.called)
         self.assertFalse(tmock.called)
         vmock.reset_mock()
-        h.compile(purpose=Purpose.TRANSLATING)
+        h.compile(mode=Mode.TRANSLATING)
         self.assertFalse(vmock.called)
         self.assertTrue(tmock.called)

@@ -77,7 +77,7 @@ class CustomSerializer(json.JSONEncoder):
             }
 
 
-class Purpose(object):
+class Mode(object):
     """Class to suggest, what a translation is downloaded for."""
 
     VIEWING, TRANSLATING, REVIEWED = ('viewing', 'translating', 'reviewed')
@@ -337,7 +337,7 @@ class Handler(object):
         """
         return self.CompilerClass(resource=self.resource)
 
-    def _get_translation_setter(self, language, purpose):
+    def _get_translation_setter(self, language, mode):
         """Get the translations builder.
 
         This is used to fetch the set of translations to be used in
@@ -349,37 +349,37 @@ class Handler(object):
 
         Args:
             language: The language for the translations.
-            purpose: The purpose for the compilation.
+            mode: The mode for the compilation.
         Returns:
             An instance of the apporpriate translations builder.
         """
-        if purpose == Purpose.TRANSLATING:
+        if mode == Mode.TRANSLATING:
             return AllTranslationsBuilder(self.resource, language)
-        elif purpose == Purpose.REVIEWED:
+        elif mode == Mode.REVIEWED:
             return ReviewedTranslationsBuilder(self.resource, language)
         else:
             # TODO
             return SourceTranslationsBuilder(self.resource, language)
 
-    def _compiler(self, language, pseudo_type, purpose):
+    def _compiler(self, language, pseudo_type, mode):
         """Factory to construct the compiler to use.
 
         Args:
             language: The language to use.
             pseudo_type: The pseudo_type to use.
-            purpose: The purpose of the compilation.
+            mode: The mode of the compilation.
         Returns:
             The suitable compiler class.
         """
         tdec = self._get_translation_decorator(pseudo_type)
-        tset = self._get_translation_setter(language, purpose)
+        tset = self._get_translation_setter(language, mode)
         compiler = self._get_compiler()
         compiler.translation_decorator = tdec
         compiler.translation_set = tset
         return compiler
 
     @need_resource
-    def compile(self, language=None, pseudo=None, purpose=Purpose.TRANSLATING):
+    def compile(self, language=None, pseudo=None, mode=Mode.TRANSLATING):
         """Compile the translation for the specified language.
 
         The actual output of the compilation depends on the arguments.
@@ -387,14 +387,14 @@ class Handler(object):
         Args:
             language: The language of the translation.
             pseudo: The pseudo type to use (if any).
-            purpose: The purpose of the translation.
+            mode: The mode of the translation.
         Returns:
             The compiled template in the correct encoding.
         """
         if language is None:
             language = self.language
         content = self._content_from_template(self.resource)
-        compiler = self._compiler(language, pseudo, purpose)
+        compiler = self._compiler(language, pseudo, mode)
         try:
             return compiler.compile(
                 content, language

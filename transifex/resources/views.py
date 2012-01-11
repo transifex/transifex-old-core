@@ -499,9 +499,9 @@ def get_translation_file(request, project_slug, resource_slug, lang_code,
         'type': registry.file_extension_for(resource, language)
     }
     
-    # Prefix filename with purpose, case it exists
-    if kwargs.has_key('purpose'): 
-        _filename = "%s_" % kwargs.get('purpose') + _filename
+    # Prefix filename with mode, case it exists
+    if kwargs.has_key('mode'): 
+        _filename = "%s_" % kwargs.get('mode') + _filename
     
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response

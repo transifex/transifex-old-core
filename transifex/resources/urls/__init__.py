@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from transifex.projects.urls import PROJECTS_URL, PROJECT_URL, PROJECT_URL_PARTIAL
-from transifex.resources.formats.core import Purpose
+from transifex.resources.formats.core import Mode
 from transifex.resources.views import *
 
 # General URLs:
@@ -41,5 +41,5 @@ urlpatterns += patterns('',
         get_translation_file, name='download_translation'),
     url(RESOURCE_LANG_URL_PARTIAL+'download/reviewed/$',
         get_translation_file, name='download_reviewed_translation',
-            kwargs={'purpose':Purpose.REVIEWED}),
+            kwargs={'mode':Mode.REVIEWED}),
 )

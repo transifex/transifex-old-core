@@ -13,7 +13,7 @@ from transifex.txcommon.log import logger
 from transifex.resources.models import Resource
 from transifex.resources.formats.exceptions import FormatError
 from transifex.resources.formats.registry import registry
-from transifex.resources.formats.core import Purpose
+from transifex.resources.formats.core import Mode
 from transifex.resources.formats.utils.decorators import need_language
 
 
@@ -184,20 +184,20 @@ class FormatsBackend(object):
         except FormatError, e:
             raise FormatsBackendError(unicode(e))
 
-    def compile_translation(self, pseudo_type=None, purpose=Purpose.TRANSLATING):
+    def compile_translation(self, pseudo_type=None, mode=Mode.TRANSLATING):
         """Compile the translation for a resource in a specified language.
 
         There is some extra care for PO/POT resources. If there is no
         language specified, return a POT file, otherwise a PO.
 
-        The argument ``purpose`` allows for different handling of a
+        The argument ``mode`` allows for different handling of a
         translation, depending on whether it is for *viewing* or *translating
         it. This is necessary for formats that do not fallback to the source
         language in case of empty translations.
 
         Args:
             pseudo_type: The pseudo_type (if any).
-            purpose: The purpose for compiling this translation.
+            mode: The mode for compiling this translation.
         Returns:
             The compiled template.
         """
@@ -206,7 +206,7 @@ class FormatsBackend(object):
         )
         handler.bind_resource(self.resource)
         handler.set_language(self.language)
-        content = handler.compile(pseudo=pseudo_type, purpose=purpose)
+        content = handler.compile(pseudo=pseudo_type, mode=mode)
         return content if isinstance(content, basestring) else ''
 
 
