@@ -42,7 +42,7 @@ class TestCoreFunctions(Users, Languages, TransactionTestCase):
         settings.MAX_STRING_ITERATIONS = old_max_iters
 
 
-class TsetMode(TestCase):
+class TestMode(TestCase):
     """Test the mode variable used in compilation."""
 
     @unittest.skip('Do it later')
@@ -58,5 +58,9 @@ class TsetMode(TestCase):
         self.assertFalse(tmock.called)
         vmock.reset_mock()
         h.compile(mode=Mode.TRANSLATING)
+        self.assertFalse(vmock.called)
+        self.assertTrue(tmock.called)
+        vmock.reset_mock()
+        h.compile(mode=Mode.REVIEWED)
         self.assertFalse(vmock.called)
         self.assertTrue(tmock.called)
