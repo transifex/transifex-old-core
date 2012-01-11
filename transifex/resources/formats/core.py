@@ -297,7 +297,10 @@ class Handler(object):
         self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
 
     def _get_translation_decorator(self, pseudo_type):
-        """Choose the applier to use.
+        """Choose the decorator to use.
+
+        Override in subclasses, if you need to use a custom one for a
+        specific format.
 
         Args:
             pseudo_type: The pseudo type chosen.
@@ -313,11 +316,26 @@ class Handler(object):
             )
 
     def _get_compiler(self):
-        """Construct the compiler to use."""
+        """Construct the compiler to use.
+
+        We use by default `cls.CompilerClass``. If a format does not have
+        any special needs, we only need to set the ``CompilerClass``
+        variable to the appropriate compiler subclass.
+
+        Otherwise, a subclass should override this, so that it can
+        choose the appropriate compiler.
+        """
         return self.CompilerClass(resource=self.resource)
 
     def _get_translation_setter(self, language, purpose):
         """Get the translations builder.
+
+        This is used to fetch the set of translations to be used in
+        the compilation process. The default one is to fetch all
+        translations.
+
+        Subclasses should override this, if they need to use a different
+        TransaltionsBuilder subclass.
 
         Args:
             language: The language for the translations.
@@ -371,7 +389,7 @@ class Handler(object):
             ).encode(self.format_encoding)
         except Exception, e:
             logger.error("Error compiling file: %s" % e, exc_info=True)
-            raise #self.HandlerCompileError(unicode(e))
+            raise self.HandlerCompileError(unicode(e))
 
 
     #######################
