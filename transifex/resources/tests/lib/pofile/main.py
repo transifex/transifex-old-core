@@ -78,6 +78,16 @@ class TestPoFile(FormatsBaseTestCase):
         # '{0 results}' entity - pt_BR has nplurals=2
         self.assertEqual(nplurals, 2)
 
+    def test_po_parser_pt_BR_with_warning_messages(self):
+        """
+        Tests if nplural warning is raised for 'pt_BR' PO file loaded as an
+        'ar' language.
+        """
+        handler = POHandler('%s/pt_BR.po' % os.path.split(__file__)[0])
+        handler.set_language(self.language_ar)
+        handler.parse_file()
+        self.assertTrue('nplural' in handler.warning_messages.keys())
+
     def test_po_parser_ar(self):
         """Tests for ar PO file."""
         handler = POHandler('%s/ar.po' %
