@@ -125,7 +125,7 @@ class StorageHandler(BaseHandler):
                     files.append({'uuid':sf.uuid, 'id':str(sf.id),
                         'name':sf.name})
                 except UnicodeDecodeError, e:
-                    message = _(
+                    message = (
                         "The encoding of the uploaded file is not UTF-8. "
                         "Currently, transifex supports only UTF-8"
                         "encoded files. Please, visit"
@@ -134,7 +134,7 @@ class StorageHandler(BaseHandler):
                     )
                 except Exception, e:
                     if isinstance(e, UnicodeDecodeError):
-                        message = _(
+                        message = (
                             "The encoding of the uploaded file is not UTF-8. "
                             "Currently, transifex supports only UTF-8"
                             "encoded files. Please, visit"
@@ -146,7 +146,7 @@ class StorageHandler(BaseHandler):
                         # localized string.
                         message = "%s" % e
                     else:
-                        message = _("A strange error happened.")
+                        message = "Error: %s" % e
                         logger.error("Unhandled exception raised: %s" % e)
 
                     # The object is not saved yet, but it removes file from
