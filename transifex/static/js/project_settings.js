@@ -25,8 +25,8 @@ $(document).ready(function (){
     "fieldsLeft": [
         "project-homepage",
  				"project-feed",
- 				"project-long_description"
- 				"logo",
+ 				"project-long_description",
+ 				"logo"
     ],
     "fieldsRight": [
         "project-trans_instructions",
