@@ -7,6 +7,7 @@ from django.utils import simplejson as json
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
+from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext as _
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
@@ -40,7 +41,6 @@ STRICT flag is used to switch between two parsing modes:
     we will pass
 """
 STRICT=False
-
 
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
@@ -97,7 +97,7 @@ class Handler(object):
     CompilerClass = Compiler
 
     linesep = '\n'
-
+       
     @classmethod
     def accepts(cls, i18n_type):
         """Accept only files that have the correct type specified."""
@@ -124,6 +124,15 @@ class Handler(object):
             self.language = resource.source_language
         if language:
             self.language = language
+
+        # Hold warning messages from the parser in a sorted dict way to avoid 
+        # duplicated messages and keep them in the order they were added.
+        self.warning_messages = SortedDict()
+
+    def _set_warning_message(self, key, message):
+        """Set a warning message to the parser if it doesn't exist already."""
+        if key not in self.warning_messages.keys():
+            self.warning_messages[key] = message
 
     def _check_content(self, content):
         """

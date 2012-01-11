@@ -9,7 +9,7 @@ import polib
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext, ugettext as _
 
 from django.contrib.sites.models import Site
 
@@ -35,12 +35,10 @@ class PoParseError(ParseError):
 class PoCompileError(CompileError):
     pass
 
-
 Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
-
 
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """Run a `msgfmt -c` on the file contents.
@@ -232,16 +230,16 @@ class GettextHandler(Handler):
                     messages = []
                     if nplural:
                         if len(nplural) != nplural_file:
-                            msg = (
-                                "Passed plural rules has nplurals=%s, but '%s'"
-                                " file has nplurals=%s. String '%s' skipped."
-                            )
-                            logger.warning(
-                                msg % (
-                                    nplural, self.filename, nplural_file,
-                                    entry.msgid
-                                )
-                            )
+                            logger.warning("Passed plural rules has nplurals=%s"
+                                ", but '%s' file has nplurals=%s. String '%s'"
+                                "skipped." % (len(nplural), self.filename, 
+                                nplural_file, entry.msgid))
+                            self._set_warning_message('nplural',
+                                _("Pluralized entries of the file were skipped "
+                                "because the nplural of the upload file "
+                                "differs from the nplural (%s) for the given "
+                                "language available in the system." % 
+                                len(nplural)))
                             same_nplural = False
                     else:
                         same_nplural = False
