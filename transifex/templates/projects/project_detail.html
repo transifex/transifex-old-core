@@ -115,7 +115,7 @@
 		<div class="separate-buttons"><a class="i16 feed nude-button" href="{% url timeline_feed project.slug %}" title="{% trans 'Timeline feed for this project' %}">{% trans "Subscribe to feed" %}</a></div>
 	</div>
 	
-	{% get_log 10 as action_log for_object project %}
+	{% get_log 5 as action_log for_object project %}
 	{% if not action_log %}
 	
 	<p class="i16 infomsg">{% trans 'No history recorded yet.' %}</p>
