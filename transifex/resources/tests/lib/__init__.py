@@ -14,3 +14,4 @@ from validators import *
 from info import *
 from registry import *
 from collections import *
+from compilation import *
