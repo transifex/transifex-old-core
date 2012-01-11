@@ -36,7 +36,11 @@ def get_team_progress(team, width=100):
         untranslated += s.untranslated
         total += s.total
 
-    translated_perc = translated * 100 / total
+    try:
+        translated_perc = translated * 100 / total
+    except ZeroDivisionError:
+        translated_perc = 100
+
     untranslated_perc = 100 - translated_perc
 
     return {
