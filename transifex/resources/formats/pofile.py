@@ -9,7 +9,7 @@ import polib
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
-from django.utils.translation import ugettext, ugettext as _
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from django.contrib.sites.models import Site
 
@@ -235,8 +235,8 @@ class GettextHandler(Handler):
                                 "skipped." % (len(nplural), self.filename, 
                                 nplural_file, entry.msgid))
                             self._set_warning_message('nplural',
-                                _("Pluralized entries of the file were skipped "
-                                "because the nplural of the upload file "
+                                ugettext("Pluralized entries of the file were "
+                                "skipped because the nplural of the upload file "
                                 "differs from the nplural (%s) for the given "
                                 "language available in the system." % 
                                 len(nplural)))
