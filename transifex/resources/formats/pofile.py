@@ -232,10 +232,16 @@ class GettextHandler(Handler):
                     messages = []
                     if nplural:
                         if len(nplural) != nplural_file:
-                            logger.error("Passed plural rules has nplurals=%s"
-                                ", but '%s' file has nplurals=%s. String '%s'"
-                                "skipped." % (nplural, self.filename, nplural_file,
-                                entry.msgid))
+                            msg = (
+                                "Passed plural rules has nplurals=%s, but '%s'"
+                                " file has nplurals=%s. String '%s' skipped."
+                            )
+                            logger.warning(
+                                msg % (
+                                    nplural, self.filename, nplural_file,
+                                    entry.msgid
+                                )
+                            )
                             same_nplural = False
                     else:
                         same_nplural = False
