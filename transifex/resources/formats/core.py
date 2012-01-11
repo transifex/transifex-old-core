@@ -19,7 +19,8 @@ from transifex.resources.formats.exceptions import FormatError, ParseError, \
         CompileError
 from transifex.resources.formats.compilation import Compiler, \
         NormalDecoratorBuilder, PseudoDecoratorBuilder, \
-        AllTranslationsBuilder, SourceTranslationsBuilder
+        AllTranslationsBuilder, SourceTranslationsBuilder, \
+        ReviewedTranslationsBuilder
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
@@ -79,7 +80,7 @@ class CustomSerializer(json.JSONEncoder):
 class Purpose(object):
     """Class to suggest, what a translation is downloaded for."""
 
-    VIEWING, TRANSLATING = ('viewing', 'translating', )
+    VIEWING, TRANSLATING, REVIEWED = ('viewing', 'translating', 'reviewed')
 
 
 class Handler(object):
@@ -354,6 +355,8 @@ class Handler(object):
         """
         if purpose == Purpose.TRANSLATING:
             return AllTranslationsBuilder(self.resource, language)
+        elif purpose == Purpose.REVIEWED:
+            return ReviewedTranslationsBuilder(self.resource, language)
         else:
             # TODO
             return SourceTranslationsBuilder(self.resource, language)

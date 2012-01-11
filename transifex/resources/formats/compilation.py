@@ -249,8 +249,10 @@ class ReviewedTranslationsBuilder(TranslationsBuilder):
         """Get the translation strings that match the specified source_entities
         and have been reviewed.
         """
-        raise NotImplementedError
-
+        translations = Translation.objects.filter(reviewed=True,
+            source_entity__in=source_entities, language=self.language, rule=5
+            ).values_list('source_entity_id', 'string').iterator()
+        return dict(translations)
 
 class SourceTranslationsBuilder(TranslationsBuilder):
     """Builder to use source strings in case of missing strings."""

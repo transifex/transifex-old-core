@@ -467,12 +467,12 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 @login_required
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'))
-def get_translation_file(request, project_slug, resource_slug, lang_code):
+def get_translation_file(request, project_slug, resource_slug, lang_code, 
+    **kwargs):
     """
     View to export all translations of a resource for the requested language
     and give the translation file back to the user.
     """
-
     resource = get_object_or_404(Resource, project__slug = project_slug,
         slug = resource_slug)
 
@@ -480,7 +480,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
 
     try:
         fb = FormatsBackend(resource, language)
-        template = fb.compile_translation()
+        template = fb.compile_translation(**kwargs)
     except Exception, e:
         messages.error(request,
                        _("Error compiling translation file."))
@@ -498,6 +498,11 @@ def get_translation_file(request, project_slug, resource_slug, lang_code):
         'lang': language.code,
         'type': registry.file_extension_for(resource, language)
     }
+    
+    # Prefix filename with purpose, case it exists
+    if kwargs.has_key('purpose'): 
+        _filename = "%s_" % kwargs.get('purpose') + _filename
+    
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 
