@@ -1,8 +1,8 @@
 {% load i18n %}
-{% block menu %}
+{% block sep_but %}
 {% if project.private %}
 {% else %}
-	 <li class="{% if project_widgets %}selected{% endif %}"><a href="{% url project_widgets project.slug %}">{% trans "Widgets" %}</a></li>
+<a class="i16 nude-button stats" href="{% url project_widgets project.slug %}">{% trans "Widgets" %}</a>
 {% endif %}
 {% endblock %}
 
