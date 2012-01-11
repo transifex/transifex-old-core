@@ -227,7 +227,7 @@ class AllTranslationsBuilder(TranslationsBuilder):
             source_entity__in=source_entities, language=self.language, rule=5
         ).values_list(
             'source_entity_id', 'string'
-        ) .iterator()
+        ).iterator()
         return dict(translations)
 
 
