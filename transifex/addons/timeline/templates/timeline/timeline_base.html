@@ -7,31 +7,39 @@
 {% with actionlog.count as actionlog_total %}
 {% autopaginate actionlog 30 %}
 
-<div class="generic_form">
-    <form action="" method="get">
-      <table class="definition">
-        {% form_as_table_rows f.form %}
-      <tr>
-        <td></td>
-        <td><input type="submit" class="i16 action buttonized" id="timeline-submit" value="{% trans "Go" %}"/></td></tr>
-      </table>
+<div class="tx-form">
+
+		<form action="" method="POST">{% csrf_token %}            
+      <fieldset>
+				{% for field in f.form %}
+				<div class="tx-form-field clearfix" style="min-height:20px;">
+				{{ field.errors }}
+				{{ field.label_tag }}
+				{{ field }}
+				</div>
+				{% endfor %}
+      </fieldset>  
+			<input type="submit" class="i16 action buttonized" id="timeline-submit" style="margin-top:10px;" value="{% trans "Filter" %}"/></td></tr>
     </form>
+
+
+
 </div>
 
 {% if not actionlog %}
 <p>{% trans 'None available' %}</p>
 {% else %}
 
-<h3>
-{% blocktrans count actionlog_total as counter %}The query returned {{ counter }} result{% plural %}The query returned {{ counter }} results{% endblocktrans %}
-</h3>
+<h5 style="margin-top:2em;">
+{% blocktrans count actionlog_total as counter %}The query returned {{ counter }} result{% plural %}The query returned {{ counter }} results:{% endblocktrans %}
+</h5>
 
   <div class="pagination">{% paginate %}</div>
 
   <table class="tablesorter compact withair timeline" width="100%">
    <thead>
     <tr>
-      <th><span>{% anchor action_type # %}</span></th>
+      <th><span>{% anchor action_type " " %}</span></th>
       <th><span>{% anchor user User %}</span></th>
       <th><span>{% anchor action_time "Time" %}</span></th>
       <th><span>{% trans "Description" %}</span></th>
