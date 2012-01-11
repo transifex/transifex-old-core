@@ -110,22 +110,21 @@ $(document).ready(function(){
 {% endblock %}
 
 {% block header_menu %}
+    {% if project %}
      <div class="tab-wrapper grid_16">
         <ul  class="tabs clearfix">     
             <li class="{% if project_overview %}selected{% endif %} alpha"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
             <li class="{% if project_resources %}selected{% endif %} alpha"><a href="{% url project_resources project.slug %}">{% trans "Resources" %} ({{ project.resources.count }})</a></li>
             {% hook "project.html" menu %}
-            
+
             {% if perms.projects.change_project or is_maintainer %}
-            {% url project_edit project_slug=project.slug as url_project_edit%}
-            <li class="{% ifequal request.path url_project_edit %}selected{% endifequal %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
+            {% url project_edit project_slug=project.slug as url_project_edit%}{% url project_delete project_slug=project.slug as url_project_delete %}{% url project_access_control_edit project_slug=project.slug as url_project_access_control_edit %}{% url project_timeline project_slug=project.slug as url_project_timeline %}
+            <li class="last {% if request.path == url_project_edit or request.path == url_project_delete or request.path == url_project_access_control_edit or request.path == url_project_timeline%}selected{% endif %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
             {% endif %}
-            
           </ul>
         </div>            
+    {% endif %}
 {% endblock %}
-
-
 
 
 {% block content_main %}{% endblock %}
