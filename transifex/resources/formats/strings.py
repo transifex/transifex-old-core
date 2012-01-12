@@ -13,7 +13,6 @@ from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 
-
 class StringsParseError(ParseError):
     pass
 
@@ -76,6 +75,9 @@ class AppleStringsHandler(Handler):
         finally:
             f.close()
 
+    def _replace_translation(self, original, replacement, text):
+        return text.replace(original, self._pseudo_decorate(self._escape(replacement)), 1)
+
     def _parse(self, is_source, lang_rules):
         """Parse an apple .strings file and create a stringset with
         all entries in the file.
@@ -87,17 +89,20 @@ class AppleStringsHandler(Handler):
         resource = self.resource
         context = ""
         f = self.content
-        p = re.compile(r'(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)', re.U)
+        #regex for finding all comments in a file
+        cp = r'(?:/\*(?P<comment>(?:[^*]|(?:\*+[^*/]))*\**)\*/)'
+        p = re.compile(r'(?:%s[ \t]*[\n]|[\r\n]|[\r]){0,1}(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)'%cp, re.U)
         c = re.compile(r'\s*/\*(.|\s)*?\*/\s*', re.U)
         ws = re.compile(r'\s+', re.U)
         buf = u""
         end=0
         start = 0
         for i in p.finditer(f):
-            start = i.start()
+            start = i.start('line')
             end_ = i.end()
             line = i.group('line')
             key = i.group('key')
+            comment = i.group('comment') or ''
             if not key:
                 key = i.group('property')
             value = i.group('value')
@@ -127,7 +132,7 @@ class AppleStringsHandler(Handler):
                 continue
             self.stringset.strings.append(GenericTranslation(key,
                 self._unescape(value), rule=5, context=context,
-                pluralized=False, fuzzy=False,
+                pluralized=False, fuzzy=False, comment=comment,
                 obsolete=False))
         while len(f[end:]):
             m = c.match(f, end) or ws.match(f, end)
