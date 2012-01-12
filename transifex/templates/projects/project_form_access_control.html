@@ -26,6 +26,15 @@
 </script>
 {% endblock %}
 
+{% block extracss %}
+<style>
+.tx-form-field ul li label{margin:0.5em 0;}	
+#id_cla_license_text{width:650px;}
+.tx-form-field h5 {margin:1em 0;}
+.tx-form .tx-form-field {margin:2em 0;}
+</style>
+{% endblock %}
+
 {% block project_settings_content %}
 
 <div id="project-form-container" class="obj_bigdetails">
@@ -51,14 +60,14 @@
 
    
     {% hook "access_control_form_notices.html" %}    
-
-    <form name="hub" action='' method='post' class="microform">{% csrf_token %}
+<h3>{% trans "Set Access Control Settings" %}</h3>
+    <form name="hub" action='' method='post'>{% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}"/> 
         {% if form.non_field_errors %}
             <ul class="fielderrors">{{ form.non_field_errors }}</ul>
         {% endif %}
         <div class="tx-form-field">
-            <h3>{{ form.project_type.label }}: {% if form.project_type.field.required %}<span class="required">*</span>{% endif %}</h3>
+            <h5>{{ form.project_type.label }}: {% if form.project_type.field.required %}<span class="required">*</span>{% endif %}</h5>
             {{ form.project_type }}
             {% if form.project_type.errors %}<p class="fielderrors">{% for error in form.project_type.errors %}{{ error }}{% endfor %}</p>{% endif %}
             <p class="helptext">{{ form.project_type.help_text|safe }}</p>
@@ -72,7 +81,7 @@
 				</div>
 				
         <div class="tx-form-field">
-            <h3>{{ form.access_control.label }}: {% if form.access_control.field.required %}<span class="required">*</span>{% endif %}</h3>
+            <h5>{{ form.access_control.label }}: {% if form.access_control.field.required %}<span class="required">*</span>{% endif %}</h5>
             {{ form.access_control }}
             {% if form.access_control.errors %}<p class="fielderrors">{% for error in form.access_control.errors %}{{ error }}{% endfor %}</p>{% endif %}
             <p class="helptext">{{ form.access_control.help_text|safe }}</p>
@@ -80,8 +89,8 @@
             {% hook "access_control_additional.html" %}
 
 {% if not project.anyone_submit and not project.outsource %}
-   <div>
-        <a class="i16 edit" href="{% url project_add_permission project.slug %}">{% trans "Give project writer rights" %}</a>
+   <div class="access-control-extra">
+        <a class="i16 granted" href="{% url project_add_permission project.slug %}">{% trans "Give project writer rights" %}</a>
    </div>
 {% endif %}
 
