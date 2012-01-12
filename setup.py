@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, re
 import glob
 from codecs import BOM
 
@@ -21,6 +21,35 @@ package_data = {
     '': ['LICENCE', 'README'],
     'transifex': ['transifex/static/*.*']
 }
+
+def get_requirements(filename):
+    """
+    Read requirements and dependency links from a file passed by parameter 
+    and return them as two lists in a tuple.
+    """
+    def add_dependency_link(line):
+        link = re.sub(r'\s*-[ef]\s+', '', line)
+        filename = os.path.basename(link.split('://')[1])
+        url = link.split(filename)[0]
+        if url not in dependency_links:
+            dependency_links.append(url)
+
+    requirements = []
+    dependency_links = []
+    for line in open(filename, 'r').read().split('\n'):
+        if re.match(r'(\s*#)|(\s*$)', line):
+            continue
+        if re.match(r'\s*-e\s+', line):
+            # TODO support version numbers
+            requirements.append(re.sub(r'\s*-e\s+.*#egg=(.*)$', r'\1', line))
+            add_dependency_link(line)
+        elif re.match(r'\s*-f\s+', line):
+            add_dependency_link(line)
+        else:
+            requirements.append(line)
+    return requirements, dependency_links
+
+requirements, dependency_links = get_requirements('requirements.txt')
 
 def buildlanguages():
     import django.core.management.commands.compilemessages as c
@@ -47,55 +76,8 @@ setup(
     author_email="transifex-devel@googlegroups.com",
     url="http://transifex.org/",
     license="GPLv2",
-    dependency_links = [
-        "http://dist.repoze.org/",
-        "http://www.aeracode.org/releases/south/",
-        "http://transifex.org/files/deps/",
-        "http://pypi.python.org/simple",
-    ],
-    setup_requires = [
-        "Django >= 1.3.1",
-        "Pygments >= 0.9",
-        "Sphinx >= 0.4.2",
-    ],
-    install_requires = [
-        "Django == 1.3.1",
-        "markdown",
-        "django-userena",
-        "userprofile", # Needed by txcommon.models.Profile migration
-        "httplib2",
-        "polib == 0.6.3",
-        "Pygments >= 0.9",
-        "PIL >= 1.1.7",
-        "contact_form >= 0.3", # hg 97559a887345 or newer
-        "django-addons >= 0.6.6",
-        "django-authority",
-        "django-social-auth",
-        "django-filter >= 0.1",
-        "django-notification == 0.1.5",
-        "django-pagination >= 1.0.5",
-        "django-piston",
-        "django-sorting >= 0.1",
-        "django-tagging >= 0.3",
-        "django-haystack >= 1.2",
-        "South >= 0.7.2",
-        "django-ajax-selects == 1.1.4",
-        "django-threadedcomments >= 0.9",
-        "django-staticfiles < 0.4",
-        "pygooglechart",
-        "python-magic",
-        "pysolr",
-        "django-tagging-autocomplete >= 0.3.1",
-        "django_compressor",
-        "redis >= 2.4.10",
-        "hiredis",
-        "requests",
-        "django-picklefield",
-        "celery",
-        "django-celery",
-        "django-kombu",
-        "chardet",
-    ],
+    install_requires=requirements,
+    dependency_links=dependency_links,    
     zip_safe=False,
     packages=find_packages(),
     include_package_data=True,

@@ -1,4 +1,3 @@
-
 # Templates
 recursive-include transifex/templates *.html *.txt *.tmpl
 recursive-include transifex/*/templates *.html *.txt *.tmpl
@@ -25,10 +24,7 @@ recursive-include transifex/locale *.po
 
 # Docs
 include LICENSE README
-recursive-include docs *.txt README
-graft docs/html
 
 # Other
-include bootstrap.py buildout.cfg
 recursive-include build-tools *
-
+include requirements.txt
