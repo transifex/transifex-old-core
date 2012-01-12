@@ -18,7 +18,7 @@ def check_haystack_error(func):
                 func(*args, **kwargs)
             except Exception, e:
                 logger.error('Error contacting SOLR backend: %s' % 
-                    getattr(e, 'reason', str(e)))
+                    getattr(e, 'reason', e), exc_info=True)
                 raise HaystackError('Error contacting SOLR backend.')
     return wrapper
 
