@@ -37,10 +37,10 @@ class AppleStringsHandler(Handler):
     HandlerCompileError = StringsCompileError
 
     def _escape(self, s):
-        return s.replace('"', '\\"')
+        return s.replace('"', '\\"').replace('\n', r'\n').replace('\r', r'\r')
 
     def _unescape(self, s):
-        return s.replace('\\"', '"')
+        return s.replace('\\"', '"').replace(r'\n', '\n').replace(r'\r', '\r')
 
     def _get_content(self, filename=None, content=None):
         """Try decoding a file with UTF-8, too."""
