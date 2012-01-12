@@ -3,7 +3,6 @@
 Register the available formats and their capabilities.
 """
 
-import magic
 from django.conf import settings
 from transifex.txcommon import import_to_python
 from transifex.txcommon.log import logger
@@ -80,7 +79,7 @@ class _FormatsRegistry(object):
         """
         Return an appropriate Handler class for given file.
 
-        The handler is selected based on libmagic and the file extension
+        The handler is selected based on the file extension
         or the mime type.
 
         Args:
@@ -92,26 +91,8 @@ class _FormatsRegistry(object):
         """
         i18n_type = None
         if filename is not None:
-            try:
-                m = magic.Magic(mime=True)
-                # guess mimetype and remove charset
-                mime_type = m.from_file(filename)
-            except AttributeError, e:
-                m = magic.open(magic.MAGIC_NONE)
-                m.load()
-                mime_type = m.file(filename)
-                m.close()
-            except IOError, e:
-                # file does not exist in the storage
-                mime_type = None
-            except Exception, e:
-                logger.error("Uncaught exception: %s" % e.message, exc_info=True)
-                # We don't have the actual file. Depend on the filename only
-                mime_type = None
-
             for method, info in self.methods.items():
-                if filter(filename.endswith, info['file-extensions'].split(', ')) or\
-                  mime_type in info['mimetype'].split(', '):
+                if filter(filename.endswith, info['file-extensions'].split(', ')):
                     i18n_type = method
                     break
         elif mimetype is not None:

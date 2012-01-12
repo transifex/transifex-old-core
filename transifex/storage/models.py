@@ -12,7 +12,6 @@ from transifex.languages.models import Language
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.log import logger
 
-import magic
 
 class StorageFile(models.Model):
     """
@@ -87,32 +86,18 @@ class StorageFile(models.Model):
         return registry.handler_for(i18n_type)
 
     def update_props(self):
+        """Try to parse the file and fill in information fields
+        in current model.
         """
-        Try to parse the file and fill in information fields in current model
-        """
-        # this try to guess the API of the magic module, between
-        # the one from file and the other one from python-magic
-        try:
-                m = magic.Magic(mime=True)
-                # guess mimetype and remove charset
-                self.mime_type = m.from_file(self.get_storage_path())
-        except AttributeError:
-                m = magic.open(magic.MAGIC_NONE)
-                m.load()
-                self.mime_type = m.file(self.get_storage_path())
-                m.close()
-        except Exception, e:
-            pass
-
-        self.save()
-
+        from transifex.resources.formats.registry import registry
         try:
             parser = self.find_parser()
         except IndexError, e:
             raise FileCheckError("Invalid format")
-
         if not parser:
             return
+        self.mime_type = registry.mimetypes_for(parser.method_name)[0]
+        self.save()
 
         parser.bind_file(filename=self.get_storage_path())
         parser.set_language(self.language)
