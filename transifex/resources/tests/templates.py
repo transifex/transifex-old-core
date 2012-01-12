@@ -11,20 +11,17 @@ class ResourcesTemplateTests(BaseTestCase):
 
     def test_create_resource_template_tag(self):
         """Ensure that button and the form is appeared correctly."""
-        resp = self.client['maintainer'].get(self.urls['project'])
-        self.assertTemplateUsed(resp,
-                                'projects/resource_list.html')
-        self.assertContains(resp,
-                            "Create Resource")
+        resp = self.client['maintainer'].get(self.urls['project_resources'])
+        self.assertTemplateUsed(resp, 'projects/project_resources.html')
+        self.assertContains(resp, "Create Resource")
         for user in ['anonymous', 'registered','team_member']:
             resp = self.client[user].get(self.urls['project'])
-            self.assertNotContains(resp,
-                                   "Create Resource")
+            self.assertNotContains(resp, "Create Resource")
 
     def test_priority_table_snippet(self):
         """ Check that priority td is presented correctly."""
-        resp = self.client['maintainer'].get(self.urls['project'])
-        self.assertTemplateUsed(resp, 'projects/resource_list.html')
+        resp = self.client['maintainer'].get(self.urls['project_resources'])
+        self.assertTemplateUsed(resp, 'projects/project_resources.html')
         self.assertContains(resp,
                             'id="priority_%s"' %
                             (self.resource.slug ,),
@@ -63,8 +60,8 @@ class ResourcesTemplateTests(BaseTestCase):
 
     def test_javascript_snippet_cycle_priority(self):
         """Test if we include the ajax triggering js for priority changes."""
-        resp = self.client['maintainer'].get(self.urls['project'])
-        self.assertTemplateUsed(resp, 'projects/resource_list.html')
+        resp = self.client['maintainer'].get(self.urls['project_resources'])
+        self.assertTemplateUsed(resp, 'projects/project_resources.html')
         self.assertContains(resp,
                             'var resource_priority_cycle_url = \'%s\';'%
                             (reverse('cycle_resource_priority',
@@ -74,7 +71,7 @@ class ResourcesTemplateTests(BaseTestCase):
                             'title="Click the flags to modify the importance of a resource."')
         # All the other user classes should not see these snippets
         for user in ['anonymous', 'registered','team_member']:
-            resp = self.client[user].get(self.urls['project'])
+            resp = self.client[user].get(self.urls['project_resources'])
             self.assertNotContains(resp,
                                 'var resource_priority_cycle_url = \'%s\';'%
                                 (reverse('cycle_resource_priority',
