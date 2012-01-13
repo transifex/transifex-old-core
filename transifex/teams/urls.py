@@ -14,10 +14,6 @@ urlpatterns = patterns('',
         view = team_update,
         name = 'team_update',),
     url(
-        regex = r'teams/$',
-        view = team_list,
-        name = 'team_list',),
-    url(
         regex = TEAM_PARTIAL_URL + r'$',
         view = team_detail,
         name = 'team_detail',),

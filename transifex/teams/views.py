@@ -152,20 +152,6 @@ def team_update(request, project_slug, language_code):
 @access_off(team_off)
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
-def team_list(request, project_slug):
-
-    project = get_object_or_404(Project, slug=project_slug)
-    team_request_form = TeamRequestSimpleForm(project)
-
-    return render_to_response("teams/team_list.html",
-                              {"project": project,
-                              "team_request_form": team_request_form,
-                               "project_team_page": True, },
-                               context_instance=RequestContext(request))
-
-@access_off(team_off)
-@one_perm_required_or_403(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def team_detail(request, project_slug, language_code):
 
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
@@ -270,7 +256,7 @@ def team_delete(request, project_slug, language_code):
             # Send notification for maintainers
             notification.send(project.maintainers.all(), nt, context)
 
-        return HttpResponseRedirect(reverse("team_list",
+        return HttpResponseRedirect(reverse("project_detail",
                                      args=(project_slug,)))
     else:
         return render_to_response(
@@ -548,7 +534,7 @@ def team_request(request, project_slug):
         if not language_pk:
             messages.error(request, _(
                 "Please select a language before submitting the form."))
-            return HttpResponseRedirect(reverse("team_list",
+            return HttpResponseRedirect(reverse("project_detail",
                                         args=[project_slug,]))
 
 
@@ -658,7 +644,7 @@ def team_request_approve(request, project_slug, language_code):
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_list",
+    return HttpResponseRedirect(reverse("project_detail",
                                         args=[project_slug,]))
 
 
@@ -703,6 +689,6 @@ def team_request_deny(request, project_slug, language_code):
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
-    return HttpResponseRedirect(reverse("team_list",
+    return HttpResponseRedirect(reverse("project_detail",
                                         args=[project_slug,]))
 
