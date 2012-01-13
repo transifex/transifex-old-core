@@ -9,6 +9,17 @@ import functools
 from redis import StrictRedis, ConnectionError
 from transifex.txcommon.log import logger
 
+def redis_exception_handler(func):
+    """Decorator to handle redis backend exceptions."""
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except ConnectionError, e:
+            logger.critical("Cannot connect to redis: %s" % e, exc_info=True)
+        except Exception, e:
+            logger.error("Error from redis: %s" % e, exc_info=True)
+    return wrapper
+
 
 class TxRedis(object):
     """Wrapper class around redis for Transifex."""
