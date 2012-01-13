@@ -611,7 +611,7 @@ def team_request(request, project_slug):
                         "request."
                     ))
 
-    return HttpResponseRedirect(reverse("team_list", args=[project_slug,]))
+    return HttpResponseRedirect(reverse("project_detail", args=[project_slug,]))
 
 
 pr_team_request_approve=(("granular", "project_perm.maintain"),)

@@ -13,100 +13,87 @@
 <div class="project_create">
 
   <div class="separate-header clearfix">
-  	<h3  class="sh-label notopmargin">{% trans "Languages" %}</h3>
-  	{% if perms.projects.change_team or is_maintainer %}
-			<div class="separate-buttons">
-		    <a class="i16 nude-button add" href="{% url team_create project.slug %}">{% trans "Create a new team" %}</a>
-			</div>
-		{% endif %}
+  	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
+		<div class="separate-buttons">
+		  {% if request.user.is_authenticated and not is_maintainer %}
+      <a class="i16 requested" id="request-team-button" href="javascript:;">Request a new team</span>
+      {% endif %}
+      {% if perms.projects.change_team or is_maintainer %}
+		  <a class="i16 nude-button add" href="{% url team_create project.slug %}">{% trans "Create a new team" %}</a>
+      {% endif %}
+		</div>
 	</div> 
 
-{% with project.team_set.all|dictsort:"language.name" as teams %}
+  {% if team_request_form %}
+  {% if request.user.is_authenticated and not is_maintainer %}
+  <form id="request-team-form" method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission microform submit_form">{% csrf_token %}
+    <fieldset style="margin-top: 1em;">
+      <legend>Request a new translation team</legend>
+      <table>
+        <tbody>{% form_as_table_rows team_request_form %}</tbody>
+      </table>
 
-{% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
-{% if teamrequests %}
-<div class="list">
-<div class="table-separator-row">
-	<p>{% trans "Requests for new teams:" %}</p>
-</div>
-<ul class="nomargin">
-{% for teamrequest in teamrequests %}
-    <li class="i16 team_request clearfix">
+      {% hook "team_request_join_additional.html" %}
+
+      <p class="submit">
+        <input name="team_request" class="i16 submit buttonized" type="submit" value="{% trans "Request team" %}"/>
+      </p>
+    </fieldset>
+  </form>
+  {% endif %}
+  {% endif %}
+
+  {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
+  {% if teamrequests %}
+  <div class="list">
+    <div class="table-separator-row"><p>{% trans "Requests for new teams:" %}</p></div>
+    <ul class="nomargin">
+    {% for teamrequest in teamrequests %}
+      <li class="i16 team_request clearfix">
         <div class="tt-details">
-  	      <h5 style="float:left;">{{ teamrequest.language.name }}</h5>
-	        <span class="details">&nbsp;-&nbsp;Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
-				</div>	
+          <h5 style="float:left;">{{ teamrequest.language.name }}</h5>
+          <span class="details">&nbsp;-&nbsp;Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
+      	</div>
         {% if is_maintainer %}
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_deny" class="i16 delete blist buttonized" type="submit" value="{% trans "Deny" %}"/>
+          <input name="team_request_deny" class="i16 delete blist buttonized" type="submit" value="{% trans "Deny" %}"/>
         </form>
         <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
-            <input name="team_request_approve" class="i16 submit blist buttonized" type="submit" value="{% trans "Approve" %}"/>
+          <input name="team_request_approve" class="i16 submit blist buttonized" type="submit" value="{% trans "Approve" %}"/>
         </form>
         {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endwith %}
 
-    </li>
-{% endfor %}
-</ul>
-</div>
-{% endif %}
-{% endwith %}
-
-
-{% if team_request_form %}
-{% if request.user.is_authenticated and not is_maintainer %}
-<span class="i16 add submit_button buttonized" title="{% trans "Request a new translation team for this project" %}">{% trans "Request a new team" %}</span>
-<form method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission microform submit_form">{% csrf_token %}
-  <fieldset style="margin-top: 1em;">
-   <legend>Request a new translation team</legend>
-    <table>
-        <tbody>
-        {% form_as_table_rows team_request_form %}
-        </tbody>
-    </table>
-    
-    {% hook "team_request_join_additional.html" %}
-    
-    <p class="submit">
-        <input name="team_request" class="i16 submit buttonized" type="submit" value="{% trans "Request team" %}"/>
-    </p>
-   </fieldset>
-</form>
-{% endif %}
-{% endif %}
-
-{% if teams %}
-<div class="list">
-<div class="table-separator-row">
-	<p>{% trans "Available teams:" %}</p>
-</div>
-<ul class="nomargin">
-{% for team in teams %}
-    <a class="team-row" href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
-    	<li class="i16 team clearfix"> 
-        	<div class="tt-details">
-	        	<h5 class="linkstyle">{{ team.language.name }}</h5>
-        	</div>
-        	
-        	<div class="tt-stats">
-        	{% with 180 as width%}
-          	{% get_team_progress team width %}
-          {% endwith %}
-        	</div>
-    	</li>
-    </a>
-{% endfor %}
-</ul>
-</div>
-{% else %}
-<p>{% trans "No translation team has been created yet. Why don't you start one?" %}</p>
-{% endif %}
-
-
-{% endwith %}
-</div>
-
+  {% with project.team_set.all|dictsort:"language.name" as teams %}
+  {% if teams %}
+  <div class="list">
+    <div class="table-separator-row"><p>{% trans "Available teams:" %}</p></div>
+    <ul class="nomargin">
+    {% for team in teams %}
+      <a class="team-row" href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
+        <li class="i16 team clearfix">
+          <div class="tt-details">
+            <h5 class="linkstyle">{{ team.language.name }}</h5>
+          </div>
+          <div class="tt-stats">
+            {% with 180 as width%}
+              {% get_team_progress team width %}
+            {% endwith %}
+          </div>
+        </li>
+      </a>
+    {% endfor %}
+    </ul>
+  </div>
+  {% else %}
+  <p>{% trans "No translation team has been created yet. Why don't you start one?" %}</p>
+  {% endif %}
+  {% endwith %}
 
 </div>
-
-
+</div>

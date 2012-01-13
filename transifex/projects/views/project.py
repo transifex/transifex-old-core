@@ -27,6 +27,7 @@ from transifex.languages.models import Language
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.resources.models import RLStats
 from transifex.resources.utils import invalidate_template_cache
+from transifex.teams.forms import TeamRequestSimpleForm
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -287,6 +288,7 @@ def project_delete(request, project_slug):
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def project_detail(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
+    team_request_form = TeamRequestSimpleForm(project)
 
     if not request.user.is_anonymous():
         user_teams = Team.objects.filter(project=project).filter(
@@ -306,6 +308,7 @@ def project_detail(request, project_slug):
         'user_teams': user_teams,
         'languages': Language.objects.all(),
         'language_stats': language_stats,
+        'team_request_form': team_request_form,
     }, context_instance=RequestContext(request))
 
 
