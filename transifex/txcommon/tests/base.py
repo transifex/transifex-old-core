@@ -8,6 +8,7 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User, Group, Permission as DjPermission
 from django.contrib.contenttypes.models import ContentType
+from django.utils import unittest
 from django_addons.autodiscover import autodiscover_notifications
 from transifex.txcommon.notifications import NOTICE_TYPES
 
@@ -391,10 +392,11 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
 class BaseTestCaseTests(BaseTestCase):
     """Test the base test case itself."""
 
+    @unittest.skipIf(settings.TX_ROOT != settings.PROJECT_PATH, 'Unsupported redirect')
     def test_basetest_users(self):
         """Test that basic users can function normally."""
         for role in USER_ROLES:
             # All users should be able to see the homepage
             resp = self.client[role].get('/')
-            self.assertEquals(resp.status_code, 302)
+            self.assertEquals(resp.status_code, 200)
 

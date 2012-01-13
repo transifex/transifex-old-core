@@ -74,11 +74,6 @@ class TestmakerLoggedIn(TestmakerBase):
         self.assertEqual(r.status_code, 200)
 
     # Teams
-    def test_projectspexampleteams_128281369378(self):
-        r = self.c.get('/projects/p/project1/teams/', {})
-        self.assertEqual(r.status_code, 200)
-        self.assertTrue("Afrikaans (af)" in unicode(r.context["team_request_form"]))
-
     def test_projectspexampleteamsadd_128281371426(self):
         r = self.c.get('/projects/p/project1/teams/add/', {})
         self.assertEqual(r.status_code, 403)
