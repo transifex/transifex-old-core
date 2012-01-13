@@ -119,10 +119,8 @@ class PropertiesHandler(Handler):
                 nextline = self._prepare_line(lines.next())
                 # This line will become part of the value
                 line = line[:-1] + self._prepare_line(nextline)
-            key, value = self._split(line)
 
-            self._visit_value(value)
-
+            key, value = self._key_value_from_line(line)
             if is_source:
                 if not value:
                     template += line + self.linesep
@@ -162,3 +160,9 @@ class PropertiesHandler(Handler):
                 key, self._unescape(value), context=context
             )
         return template
+
+    def _key_value_from_line(self, line):
+        """Get the key and the value from a line of the file."""
+        key, value = self._split(line)
+        return (key, self._visit_value(value), )
+

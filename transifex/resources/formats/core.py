@@ -98,7 +98,7 @@ class Handler(object):
     CompilerClass = Compiler
 
     linesep = '\n'
-       
+
     @classmethod
     def accepts(cls, i18n_type):
         """Accept only files that have the correct type specified."""
@@ -126,7 +126,7 @@ class Handler(object):
         if language:
             self.language = language
 
-        # Hold warning messages from the parser in a sorted dict way to avoid 
+        # Hold warning messages from the parser in a sorted dict way to avoid
         # duplicated messages and keep them in the order they were added.
         self.warning_messages = SortedDict()
 
