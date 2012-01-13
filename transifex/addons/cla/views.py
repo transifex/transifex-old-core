@@ -84,7 +84,7 @@ def users(request, project_slug):
         "user_list.html",
         {'project': project, 
          'cla': cla,
-         'signed_user_list': cla.users.all(),
-         'unsigned_user_list': unsigned_user_list},
+         'signed_user_list': cla.users.all().order_by('username'),
+         'unsigned_user_list': unsigned_user_list.order_by('username')},
         context_instance= RequestContext(request)
     )
