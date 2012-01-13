@@ -43,11 +43,21 @@ class AppleStringsHandler(Handler):
         return s.replace('\\"', '"').replace(r'\n', '\n').replace(r'\r', '\r')
 
     def _get_content(self, filename=None, content=None):
-        """Try decoding a file with UTF-8, too."""
-        try:
-            return super(AppleStringsHandler, self)._get_content(filename, content)
-        except UnicodeError, e:
-            return self._get_content_from_file(filename, self.default_encoding)
+        if content is not None:
+            if chardet.detect(content)['encoding'].startswith(self.format_encoding):
+                encoding = self.format_encoding
+            else:
+                encoding = 'UTF-8'
+            if isinstance(content, str):
+                try:
+                    return content.decode(encoding)
+                except UnicodeDecodeError, e:
+                    raise FormatError(unicode(e))
+            else:
+                return content
+        if filename is None:
+            return None
+        return self._get_content_from_file(filename, self.format_encoding)
 
     def _get_content_from_file(self, filename, encoding):
         f = open(filename, 'r')
