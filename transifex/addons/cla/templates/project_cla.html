@@ -9,6 +9,15 @@
 
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "CLA" %}{% endblock %}
 
+{% block extrajs %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("a#cla_facebox").facebox();
+        });
+    </script>
+{% endblock %}
+
 {% block content_main %}
 
 <div class="obj_bigdetails ui-tabs-panel">
