@@ -93,7 +93,7 @@ class UserExperienceTest(CLAMixin):
 
     def test_team_request_reject_if_not_cla(self):
         response = self.client['registered'].get(
-            reverse('team_list', args=[self.project.slug])
+            reverse('project_detail', args=[self.project.slug])
         )
         self.assertContains(response, "Request a new translation team")
         response = self.client['registered'].post(
@@ -105,7 +105,7 @@ class UserExperienceTest(CLAMixin):
 
     def test_team_request_accept_if_cla(self):
         response = self.client['registered'].get(
-            reverse('team_list', args=[self.project.slug]),
+            reverse('project_detail', args=[self.project.slug]),
         )
         self.assertContains(response, "Request a new translation team")
         response = self.client['registered'].post(
@@ -117,7 +117,7 @@ class UserExperienceTest(CLAMixin):
 
     def test_cla_checkbox_shown_in_team_request(self):
         response = self.client['registered'].get(
-            reverse('team_list', args=[self.project.slug]),
+            reverse('project_detail', args=[self.project.slug]),
         )
         self.assertContains(response, "I have read and agree with this project", count=1)
 
@@ -163,7 +163,7 @@ class UserExperienceTest(CLAMixin):
 
     def test_cla_checkbox_shown_in_join(self):
         response = self.client['team_coordinator'].get(
-            reverse("team_list", args=[self.project.slug])
+            reverse("project_detail", args=[self.project.slug])
         )
         response = self.client['team_coordinator'].post(
             reverse('team_request', args=[self.project.slug]),
