@@ -78,12 +78,19 @@ class TestWatches(BaseTestCase):
             else:
                 self.assertEqual(resp.status_code, 302)
 
-        resp = self.client['maintainer'].post(self.urls['release_create'],
-            {'slug': 'nice-release', 'name': 'Nice Release',
-            'project': self.project.id, 'resources': '|2|',
-            'description': '', 'release_date': '', 'resources_text': '',
-            'stringfreeze_date': '', 'homepage': '', 'long_description': '',
-             'develfreeze_date': '', }, follow=True)
+        resp = self.client['maintainer'].post(self.urls['release_create'], {
+            'slug': 'nice-release',
+            'name': 'Nice Release',
+            'project': self.project.id,
+            'resources': self.project.resources.all()[0].id,
+            'description': '',
+            'release_date': '',
+            'resources_text': '',
+            'stringfreeze_date': '',
+            'homepage': '',
+            'long_description': '',
+            'develfreeze_date': '',
+        }, follow=True)
 
         self.assertEqual(resp.status_code, 200)
         self.assertTemplateUsed(resp, "projects/release_detail.html")
