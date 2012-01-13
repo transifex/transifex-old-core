@@ -11,14 +11,6 @@ See txcommon.tests.utils.check_page_status for more info.
 
 #Project URLs
 URL_ROLES = SortedDict({
-    'GET:/connect/projects/':{
-        'anonymous':(200, {}, 'Project activity'),
-        'registered':(200,),
-        'maintainer':(200,),
-        'writer':(200,),
-        'team_coordinator':(200,),
-        'team_member':(200,),
-        },
     'GET:/projects/add/':{
         'anonymous':(302,),
         'registered':(200,),
@@ -199,14 +191,6 @@ URL_ROLES.update({
 
 # Team URLs
 URL_ROLES.update({
-    'GET:/projects/p/project1/teams/':{
-        'anonymous':(200,),
-        'registered':(200,),
-        'maintainer':(200,),
-        'writer':(200,),
-        'team_coordinator':(200,),
-        'team_member':(200,),
-        },
     'GET:/projects/p/project1/teams/add/':{
         'anonymous':(302,),
         'registered':(403,),
@@ -216,6 +200,14 @@ URL_ROLES.update({
         'team_member':(403,),
         },
     'GET:/projects/p/project1/team/pt_BR/':{
+        'anonymous':(200,),
+        'registered':(200,),
+        'maintainer':(200,),
+        'writer':(200,),
+        'team_coordinator':(200,),
+        'team_member':(200,),
+        },
+    'GET:/projects/p/project1/team/pt_BR/members/':{
         'anonymous':(200,),
         'registered':(200,),
         'maintainer':(200,),

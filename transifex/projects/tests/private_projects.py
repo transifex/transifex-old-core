@@ -197,9 +197,8 @@ class PrivateProjectTest(BaseTestCase):
         URLs = {
             'anonymous' : {
                 403 : [
-                    '/projects/p/%s/teams/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/' % (self.project_private.slug,
-                         self.language.code)
+                    '/projects/p/%s/team/%s/' % (self.project_private.slug, self.language.code),
+                    '/projects/p/%s/team/%s/members/' % (self.project_private.slug, self.language.code)
                 ],
                 302 : [
                     '/projects/p/%s/teams/add/' % self.project_private.slug,
@@ -221,8 +220,8 @@ class PrivateProjectTest(BaseTestCase):
             },
             'registered' : {
                 403 : [
-                    '/projects/p/%s/teams/' % self.project_private.slug, # FIXME: returns 200
                     '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code),
                     '/projects/p/%s/teams/add/' % self.project_private.slug,
                     '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
                     '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
@@ -240,11 +239,11 @@ class PrivateProjectTest(BaseTestCase):
             },
             'maintainer' : {
                 200 : [
-                    '/projects/p/%s/teams/' % self.project_private.slug, #200
-                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code), #200
-                    '/projects/p/%s/teams/add/' % self.project_private.slug, #200
-                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code), #200
-                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code) #200
+                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/teams/add/' % self.project_private.slug,
+                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code)
                 ],
                 302 : [
                     '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
@@ -288,8 +287,8 @@ class PrivateProjectTest(BaseTestCase):
             #},
             'team_coordinator' : {
                 200 : [
-                    '/projects/p/%s/teams/' % self.project_private.slug,
                     '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code),
                     '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code)
                 ],
                 302 : [
@@ -314,8 +313,8 @@ class PrivateProjectTest(BaseTestCase):
             },
             'team_member' : {
                 200 : [
-                     '/projects/p/%s/teams/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code)
                 ],
                 302 : [
                     '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
