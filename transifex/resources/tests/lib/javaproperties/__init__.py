@@ -149,7 +149,7 @@ class TestJavaProperties(BaseTestCase):
     def test_unicode_conversion(self):
         """Test that the unicode codepoints are converted to unicode strings."""
         parser = JavaPropertiesHandler()
-        line = ru'key = \u03b1'
+        line = r'key = \u03b1'
         key, value = parser._key_value_from_line(line)
         self.assertEquals(value, u'α')
 
