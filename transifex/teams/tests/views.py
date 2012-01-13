@@ -13,7 +13,7 @@ class TestTeams(base.BaseTestCase):
         super(TestTeams, self).setUp()
 
     def test_team_list(self):
-        url = reverse('team_list', args=[self.project.slug])
+        url = reverse('project_detail', args=[self.project.slug])
         resp = self.client['registered'].get(url)
         self.assertContains(resp, '(pt_BR)', status_code=200)
 
