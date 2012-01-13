@@ -3,8 +3,8 @@
 	<h4>{% blocktrans with project.name as project_name %}{{ project_name }} CLA{% endblocktrans %}</h4>
 	<div id='cla_signed'>
 	
+	<h3>{% trans "Users that have signed the CLA:" %}</h3>
 	{% if signed_user_list %}
-	    <h3>{% trans "Users that have signed the CLA:" %}</h3>
 	    <hr />
 	    <ul>
 	    {% for user in signed_user_list %}
@@ -21,10 +21,9 @@
 	
 	</div>
 	
-	{% if unsigned_user_list %}
 	<div id='cla_unsigned'>
-	
 	<h3>{% trans "Users that have NOT signed the current CLA:" %}</h3>
+	{% if unsigned_user_list %}
 	<hr />
 	<ul>
 	{% for user in unsigned_user_list %}
@@ -35,6 +34,8 @@
 	    </li>
 	{% endfor %}
 	</ul>
-	</div>
+        {% else %}
+          {% trans "No users without signing the CLA." %}
 	{% endif %}
+	</div>
 </div>
