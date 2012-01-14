@@ -50,6 +50,7 @@ function auto_translate_supported(source, target, callback) {
     $.getJSON(supportedlangs_url, {'target': target}, function(response) {
         if (!response.error) {
             if (autotranslate_type == "GT"){
+              source = _canonical_lang_code(source)
               $.each(response.data.languages, function(k, v) {
                   if (source == v.language) {
                       callback();
