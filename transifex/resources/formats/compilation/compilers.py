@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
-Compilation related objects.
+Compiler classes.
+
+Classes that handle compiling a template.
 """
 
 import re
-from transifex.txcommon.log import logger
-from transifex.resources.models import SourceEntity, Translation
+from transifex.resources.models import SourceEntity
 from transifex.resources.formats.exceptions import UninitializedCompilerError
 
 
@@ -142,124 +143,3 @@ class Compiler(object):
         return re.sub(re.escape(original), replacement, text)
 
 
-class DecoratorBuilder(object):
-    """Builder for decorating the translation."""
-
-    def __init__(self, *args, **kwargs):
-        """Set the escape function to use."""
-        self._escape = kwargs.get('escape_func', self._default_escape)
-
-    def __call__(self, translation):
-        """Decorate a translation.
-        Args:
-            translation: The translation string.
-        Returns:
-            The decorated translation.
-        """
-        raise NotImplementedError
-
-    def _default_escape(self, s):
-        """Default escape function."""
-        return s
-
-
-class NormalDecoratorBuilder(DecoratorBuilder):
-    """Just escape the translation."""
-
-    def __call__(self, translation):
-        """Escape the string first."""
-        return self._escape(translation)
-
-
-class PseudoDecoratorBuilder(DecoratorBuilder):
-    """Pseudo-ize the translation."""
-
-    def __init__(self, pseudo_func, *args, **kwargs):
-        """Set the pseudo function to use."""
-        self._pseudo_decorate = pseudo_func
-        super(PseudoDecoratorBuilder, self).__init__(args, kwargs)
-
-    def __call__(self, translation):
-        """Use the pseudo function."""
-        return self._pseudo_decorate(self._escape(translation))
-
-
-class EmptyDecoratorBuilder(DecoratorBuilder):
-    """Use an empty translation."""
-
-    def __call__(self, translation):
-        """Return an empty string."""
-        return ""
-
-
-class TranslationsBuilder(object):
-    """Builder to fetch the set of translations to use."""
-
-    def __init__(self, resource, language):
-        """Set the resource and language for the translation."""
-        self.resource = resource
-        self.language = language
-
-    def __call__(self, source_entities):
-        """Get the translation strings that match the specified source_entities.
-
-        The returned translations are for the specified langauge and rule = 5.
-
-        Args:
-            source_entities: A list of source entity ids.
-        Returns:
-            A dictionary with the translated strings. The keys are the id of
-            the source entity this translation corresponds to and values are
-            the translated strings.
-        """
-        raise NotImplementedError
-
-
-class AllTranslationsBuilder(TranslationsBuilder):
-    """Builder to fetch all translations."""
-
-    def __call__(self, source_entities):
-        """Get the translation strings that match the specified
-        source_entities.
-        """
-        res = {}
-        translations = Translation.objects.filter(
-            source_entity__in=source_entities, language=self.language, rule=5
-        ).values_list(
-            'source_entity_id', 'string'
-        ).iterator()
-        return dict(translations)
-
-
-class EmptyTranslationsBuilder(TranslationsBuilder):
-    """Builder to fetch no translations."""
-
-    def __init__(self, *args, **kwargs):
-        super(EmptyTranslationsBuilder, self).__init__(None, None)
-
-    def __call__(self, source_entities):
-        """Return an empty dictionary."""
-        return {}
-
-
-class ReviewedTranslationsBuilder(TranslationsBuilder):
-    """Builder to fetch only reviewed strings."""
-
-    def __call__(self, source_entities):
-        """Get the translation strings that match the specified source_entities
-        and have been reviewed.
-        """
-        translations = Translation.objects.filter(reviewed=True,
-            source_entity__in=source_entities, language=self.language, rule=5
-            ).values_list('source_entity_id', 'string').iterator()
-        return dict(translations)
-
-class SourceTranslationsBuilder(TranslationsBuilder):
-    """Builder to use source strings in case of missing strings."""
-
-    def __call__(self, source_entities):
-        """Get the translation strings that match the specified
-        source entities. Use the source strings for the missing
-        ones.
-        """
-        raise NotImplementedError
