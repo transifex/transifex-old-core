@@ -13,7 +13,7 @@ def redis_exception_handler(func):
     """Decorator to handle redis backend exceptions."""
     def wrapper(*args, **kwargs):
         try:
-            func(*args, **kwargs)
+            return func(*args, **kwargs)
         except ConnectionError, e:
             logger.critical("Cannot connect to redis: %s" % e, exc_info=True)
         except Exception, e:
