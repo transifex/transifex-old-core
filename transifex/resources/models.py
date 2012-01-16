@@ -130,7 +130,7 @@ class Resource(models.Model):
         help_text=_("A descriptive name unique inside the project."))
 
     # i18n related fields
-    i18n_type = models.CharField(_('I18n type'), max_length=20, editable=False,
+    i18n_type = models.CharField(_('I18n type'), max_length=20, #editable=False,
         choices=((k,settings.I18N_METHODS[k]['description']) for k,v in settings.I18N_METHODS.items()),
         help_text=_("The type of i18n method used in this resource (%s)") %
                     ', '.join(settings.TRANS_CHOICES.keys()))
