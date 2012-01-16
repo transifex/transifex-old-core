@@ -3,8 +3,8 @@ from django.contrib import admin
 from transifex.resources.models import *
 
 class ResourceAdmin(admin.ModelAdmin):
-    search_fields = ['slug', 'name', 'project__name', 'source_language__name', 'i18n_type']
-    list_display = ['name', 'project', 'source_language', 'i18n_type']
+    search_fields = ['slug', 'name', 'project__name', 'source_language__name']
+    list_display = ['name', 'project', 'source_language']
 
 class SourceEntityAdmin(admin.ModelAdmin):
     search_fields = ['string', 'string_hash', 'context', 'occurrences']
