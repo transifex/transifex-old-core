@@ -178,7 +178,7 @@
   </dl>
 </div>
 
-{% get_permission "project_perm.submit_translations" for request.user and resource.project as "can_submit_translation" %}
+{% get_permission "project_perm.submit_translations" for request.user and resource.project,1 as "can_submit_translation" %}
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="separate-header  clearfix">
 	<h3  class="sh-label">{% blocktrans with resource.available_languages|length as num_of_langs %}Available languages ({{ num_of_langs }}){% endblocktrans %}</h3>
