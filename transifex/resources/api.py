@@ -306,7 +306,7 @@ class ResourceHandler(BaseHandler):
         i18n_type = data.pop('i18n_type', None)
 
         try:
-            resource = Resource.objects.get(slug=resource_slug)
+            resource = Resource.objects.get(project=p, slug=resource_slug)
         except Resource.DoesNotExist:
             return BAD_REQUEST("Resource %s does not exist" % resource_slug)
         try:
