@@ -321,7 +321,7 @@ class TestPoFileHeaders(FormatsBaseTestCase):
         handler = self._load_pot()
         handler.set_language(self.language)
         pofile = handler.compile()
-        self.assertTrue("Portuguese (Brazilian)" in pofile)
+        self.assertTrue("Portuguese (Brazil)" in pofile)
         self.assertTrue(self.urls['team'] in pofile)
 
     def test_poheader_team_email(self):
@@ -331,7 +331,7 @@ class TestPoFileHeaders(FormatsBaseTestCase):
         handler = self._load_pot()
         handler.set_language(self.language)
         pofile = handler.compile()
-        self.assertTrue("Portuguese (Brazilian)" in pofile)
+        self.assertTrue("Portuguese (Brazil)" in pofile)
         self.assertFalse(self.urls['team'] in pofile)
         self.assertTrue(self.team.mainlist in pofile)
 
