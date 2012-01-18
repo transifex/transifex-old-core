@@ -20,7 +20,7 @@ class TestTeams(base.BaseTestCase):
     def test_team_details(self):
         url = reverse('team_detail', args=[self.project.slug, self.language.code])
         resp = self.client['registered'].get(url)
-        self.assertContains(resp, '(Brazilian)', status_code=200)
+        self.assertContains(resp, '(Brazil)', status_code=200)
 
     def test_create_team(self):
         """Test a successful team creation."""
