@@ -407,9 +407,9 @@ def _get_stringset(post_data, resources, language, review=False, *args, **kwargs
                     source_entity__id=s.source_entity.id,
                     language__code=language.code, rule=5
                 )
-                review_snippet = '<span><input class="review-check" id="review_source_' + str(s.source_entity.id) + '" type="checkbox" name="review" ' + ('checked="checked"' if translation.reviewed else '') + ' value="Review"/></span>',
+                review_snippet = '<span><input class="review-check" title="' + _("Reviewed string") + '" id="review_source_' + str(s.source_entity.id) + '" type="checkbox" name="review" ' + ('checked="checked"' if translation.reviewed else '') + ' value="Review"/></span>',
             except Translation.DoesNotExist:
-                review_snippet = '<span><input class="review-check" id="review_source_' + str(s.source_entity.id) + '" type="checkbox" name="review" disabled="disabled" value="Review"/></span>',
+                review_snippet = '<span><input class="review-check" title="' + _("Reviewed string") + '" id="review_source_' + str(s.source_entity.id) + '" type="checkbox" name="review" disabled="disabled" value="Review"/></span>',
 
             response_dict['aaData'][counter].append(review_snippet)
 
