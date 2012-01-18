@@ -23,6 +23,7 @@ from transifex.resources.formats.compilation import Compiler, \
         ReviewedTranslationsBuilder
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
+from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation, SourceEntityCollection, TranslationCollection
@@ -125,6 +126,8 @@ class Handler(object):
             self.language = resource.source_language
         if language:
             self.language = language
+
+        self.key_dict = {}
 
         # Hold warning messages from the parser in a sorted dict way to avoid
         # duplicated messages and keep them in the order they were added.
@@ -298,8 +301,35 @@ class Handler(object):
         """
         return s
 
+    def _update_key_dict(self, *args, **kwargs):
+        try:
+            source_entity = args[0]
+            translation = args[1]
+            context = kwargs['context']
+            hash_tr = hash_tag(source_entity, context)
+            rule = kwargs.get('rule', 5)
+            key = (hash_tr, context)
+            if key in self.key_dict and self.key_dict[key].get(rule, None):
+                tmp = self.key_dict[key][rule]
+                g = GenericTranslation(source_entity, tmp[0],
+                        **tmp[1])
+                self.stringset.strings.remove(g)
+                self.key_dict[key][rule] = [translation, kwargs]
+            else:
+                if key in self.key_dict:
+                    self.key_dict[key][rule] = [translation, kwargs]
+                else:
+                    self.key_dict[key] = {
+                                rule: [translation, kwargs]
+                            }
+        except Exception, e:
+            logger.warning("Error during parsing: %s" % unicode(e),
+                    exc_info=True)
+
+
     def _add_translation_string(self, *args, **kwargs):
         """Adds to instance a new translation string."""
+        self._update_key_dict(*args, **kwargs)
         self.stringset.strings.append(GenericTranslation(*args, **kwargs))
 
     def _add_suggestion_string(self, *args, **kwargs):
