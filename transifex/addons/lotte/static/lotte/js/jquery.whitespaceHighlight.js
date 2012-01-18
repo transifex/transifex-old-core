@@ -81,9 +81,10 @@
                 $(".whitespace.space", obj).replaceWith(' ');
                 // Empty it, as we have included the original new line after span!!!
                 $(".whitespace.newline", obj).replaceWith('');
+                // Reset tab space
+                $(".whitespace.other[title='Tab']", obj).replaceWith('\t');
 
                 // TODO: Reset all the other whitespace chars!!!
-
                 return obj.html();
         }
     };
