@@ -33,7 +33,7 @@
     {% if social_auth.associated %}
         {% for account in social_auth.associated %}
             {% if account.provider == 'google-oauth2' %}
-                <li class="google associated">
+                <li class="Google associated">
         		    <a href="{% url socialauth_disconnect_individual account.provider account.id %}">
                 	    <div class="pla-network">Google</div>
                 	    <div class="pla-state">{% trans "Associated" %}</div>
