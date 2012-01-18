@@ -768,10 +768,12 @@
 
         // Enable tooltips with tipsy
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+
         $(".lotte-header-link").each(function(){
-        	$(this).appendTo("#stringset_table_wrapper .top").show();
-        	});
-				$("a.shortcuts.fancy").facebox({});
+            $(this).appendTo("#stringset_table_wrapper .top").show();
+        });
+        
+        $("a.shortcuts.fancy").facebox({});
     });
 
 </script>
@@ -794,7 +796,7 @@
 {% block body_class %}project_list{% endblock %}
 
 {% block content_header_sec %}
-  <div class="lotte-header-link"><a href="#shortcutsdiv" class="i16 nude-button shortcuts fancy" title="Lorem ipsum dolor sit ame">{% trans "Shortcuts" %}</a></div>
+  <div class="lotte-header-link"><a href="#shortcutsdiv" class="i16 nude-button shortcuts fancy tipsy_enable" title="Lotte keyboard shortcuts">{% trans "Shortcuts" %}</a></div>
 
   {% hook "lotte_header_link.html" %}
     
