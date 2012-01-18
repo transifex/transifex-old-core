@@ -125,20 +125,6 @@ def on_resource_delete(sender, instance, user, **kwargs):
         txnotification.send_observation_notices_for(instance.project,
                 signal=nt, extra_context=context)
 
-def on_translation_presave(sender, instance, **kwargs):
-    """
-    If the new translation is different from the previous one,
-    the reviewed flag should be unset.
-    """
-    if instance:
-        try:
-            old_instance = Translation.objects.get(pk=instance.id)
-            if instance.string != old_instance.string:
-                instance.reviewed = False
-        except Translation.DoesNotExist, e:
-            pass
-
 # Resource signal handlers for logging
 post_resource_save.connect(on_resource_save)
 post_resource_delete.connect(on_resource_delete)
-pre_save.connect(on_translation_presave, sender=Translation)

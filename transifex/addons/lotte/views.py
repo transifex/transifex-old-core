@@ -823,6 +823,9 @@ def _save_translation(source_string, translations, target_language, user):
     source_language = resource.source_language
     warnings = []
 
+    check = ProjectPermission(user)
+    review_perm = check.proofread(resource.project, target_language)
+
     for rule, target_string in translations.items():
         rule = target_language.get_rule_num_from_name(rule)
         if rule != 5:
@@ -856,6 +859,12 @@ def _save_translation(source_string, translations, target_language, user):
                 source_entity=source_string.source_entity,
                 language=target_language, rule=rule
             )
+
+            if translation_string.reviewed:
+                if not review_perm:
+                    raise LotteBadRequestError(
+                        _('You are not allowed to edit a reviewed string.')
+                    )
 
             # FIXME: Maybe we don't want to permit anyone to delete!!!
             # If an empty string has been issued then we delete the translation.
