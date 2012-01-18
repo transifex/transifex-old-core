@@ -38,6 +38,49 @@ class JoomlaCompiler(Compiler):
             original, self.jformat.get_compilation(replacement), text
     )
 
+def update_key_dict(obj, key_dict, key, value, rule=5, context="", comment=""):
+    """
+        obj: Handler object
+        key_dict: key_dict from _parse() method of handler
+        key: source/key
+        value: translation/value
+        rule: plural rule
+        context: context for key
+        comment: comment for key
+    """
+
+    try:
+        value = obj._unescape(value)
+        if key in key_dict and key_dict[key].get(rule, None):
+            g = GenericTranslation(key, obj._unescape(
+                    key_dict[key][rule]['translation']),
+                    context=key_dict[key][rule]['context'],
+                    comment=key_dict[key][rule]['comment']
+                )
+            obj.stringset.strings.remove(g)
+            key_dict[key][rule] = {'translation': obj._unescape(value),
+                                   'context': context,
+                                   'comment': comment
+                                  }
+        else:
+            if key in key_dict:
+                key_dict[key][rule] = {
+                                        'translation': value,
+                                        'context': context,
+                                        'comment': comment
+                                      }
+            else:
+                key_dict[key] = {
+                            rule: {
+                                    'translation': value,
+                                    'context': context,
+                                    'comment': comment
+                                  }
+                            }
+    except Exception, e:
+        logger.warning("Error during parsing: %s" % unicode(e))
+    return key_dict
+
 
 class JoomlaINIHandler(Handler):
     """
@@ -70,6 +113,7 @@ class JoomlaINIHandler(Handler):
         self.jformat = JoomlaIniVersion.create(self.content)
         self._find_linesep(content)
         comment = ""
+        key_dict = {}
 
         buf = ''
         for line in self._iter_by_line(content):
@@ -111,6 +155,8 @@ class JoomlaINIHandler(Handler):
                 #ignore keys with no translation
                 context=""
                 continue
+            key_dict = update_key_dict(self, key_dict, source,
+                    escaped_trans, comment=comment)
             self._add_translation_string(source, self._unescape(escaped_trans),
                     context=context, comment=comment)
             comment = ""
