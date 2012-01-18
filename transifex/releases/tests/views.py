@@ -105,21 +105,21 @@ class ReleasesViewsTests(base.BaseTestCase):
             args=[self.project.slug, 'nice-release']))
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
         self.assertContains(resp, "1 private resources you have access to.")
-        self.assertContains(resp, "Portuguese (Brazilian)")
+        self.assertContains(resp, "Portuguese (Brazil)")
 
         # Priv proj member can see the private resource.
         resp = self.client['team_member'].get(reverse('release_detail',
             args=[self.project.slug, 'nice-release']))
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
         self.assertContains(resp, "1 private resources you have access to.")
-        self.assertContains(resp, "Portuguese (Brazilian)")
+        self.assertContains(resp, "Portuguese (Brazil)")
 
         # Priv proj non-member cannot see the private resource.
         resp = self.client['registered'].get(reverse('release_detail',
             args=[self.project.slug, 'nice-release']))
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
         self.assertNotContains(resp, "private resources")
-        self.assertNotContains(resp, "Portuguese (Brazilian)")
+        self.assertNotContains(resp, "Portuguese (Brazil)")
 
         # ...even if he is a member of the public project teams.
         resp = self.client['registered'].get(reverse('release_detail',
@@ -128,7 +128,7 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertTrue(self.user['registered'] in self.team.members.all())
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
         self.assertNotContains(resp, "private resources")
-        self.assertNotContains(resp, "Portuguese (Brazilian)")
+        self.assertNotContains(resp, "Portuguese (Brazil)")
 
     def test_release_delete(self):
         """Test deleting a release"""

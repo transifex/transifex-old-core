@@ -10,9 +10,9 @@ from transifex.projects.models import Project
 from transifex.txcommon.tests.base import BaseTestCase
 
 
-JSON_RESPONSE = "google.visualization.Query.setResponse({'version':'0.6', 'reqId':'0', 'status':'OK', 'table': {cols:[{id:'lang',label:'Language',type:'string'},{id:'trans',label:'Translated',type:'number'}],rows:[{c:[{v:'Arabic'},{v:50}]},{c:[{v:'English (United States)'},{v:50}]},{c:[{v:'Portuguese (Brazilian)'},{v:0}]}]}});"
+JSON_RESPONSE = "google.visualization.Query.setResponse({'version':'0.6', 'reqId':'0', 'status':'OK', 'table': {cols:[{id:'lang',label:'Language',type:'string'},{id:'trans',label:'Translated',type:'number'}],rows:[{c:[{v:'Arabic'},{v:50}]},{c:[{v:'English (United States)'},{v:50}]},{c:[{v:'Portuguese (Brazil)'},{v:0}]}]}});"
 
-REDIRECT_URL = 'http://chart.apis.google.com/chart?cht=bhs&chs=350x53&chd=s:ffA&chco=78dc7d,dae1ee,efefef&chxt=y,r&chxl=0:%7cPortuguese%20%28Brazilian%29%7cEnglish%20%28United%20States%29%7cArabic%7c1:%7c0%25%7c50%25%7c50%25&chbh=9'
+REDIRECT_URL = 'http://chart.apis.google.com/chart?cht=bhs&chs=350x53&chd=s:ffA&chco=78dc7d,dae1ee,efefef&chxt=y,r&chxl=0:%7cPortuguese%20%28Brazil%29%7cEnglish%20%28United%20States%29%7cArabic%7c1:%7c0%25%7c50%25%7c50%25&chbh=9'
 
 class TestCharts(BaseTestCase):
 
