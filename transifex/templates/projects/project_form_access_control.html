@@ -14,16 +14,67 @@
 
 {% block extrajs %}
 {{ block.super }}
+
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("#id_project_type_2,#id_project_type_1,#id_project_type_0").change(function(){
-				if($('#id_project_type_2').attr('checked'))
-				$("#selectoutsource").show();
-				else
-				$("#selectoutsource").hide();				
-			});
-	});
+
+    function toggle_access_control(){
+        var project_type = $("input[name='project_type']:checked").val();
+        if (project_type != 'outsourced'){
+            $("input[name='access_control']").attr('disabled', false);
+            $("select[name='outsource']").attr('disabled', 'disabled');
+            $("#selectoutsource").hide();
+        }else{
+            $("input[name='access_control']").attr('disabled', 'disabled');
+            $("select[name='outsource']").attr('disabled', false);
+            $("#selectoutsource").show();
+        }
+
+        // CLA related events
+        var access_control = $("input[name='access_control']:checked").val();
+        
+        if(access_control != 'limited_access' || project_type == 'outsourced') {
+            $("#cla_section").hide();
+        } else {
+            $("#cla_section").show();
+        }
+
+    }
+
+    $(document).ready(function(){
+
+        {# If project has a hub request open, do not execute form toggler #}
+        {% if not project.hub_request %}
+        
+            $("form[name=hub] input[type=radio]").change(function(){
+                toggle_access_control();
+            });
+
+            toggle_access_control();
+
+        {% else %}
+
+            $("form[name=hub]").submit(function(){
+                // On submit disable its submit button
+                $("input[type=submit]", this).attr('disabled', 'disabled');
+            });
+            $("form[name=hub] input[type=submit]").attr('disabled', 'disabled');
+            $("form[name=hub] input[type=submit]").addClass('tick_disabled');
+
+
+        {% endif %}
+        
+        if($("#id_cla_enable:checked").val() != null) {
+            $("#cla_textarea").show();
+        }
+
+        $("input[name='cla_enable']").change(function() {
+            $("#cla_textarea").toggle("fast");
+        });
+
+        }
+    );
 </script>
+
 {% endblock %}
 
 {% block extracss %}
