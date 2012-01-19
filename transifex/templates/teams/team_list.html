@@ -16,7 +16,7 @@
   	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
 		<div class="separate-buttons">
 		  {% if request.user.is_authenticated and not is_maintainer %}
-      <a class="i16 requested" id="request-team-button" href="javascript:;">Request a new team</span>
+      <a class="i16 team_request" id="request-team-button" href="javascript:;">Request a new team</a>
       {% endif %}
       {% if perms.projects.change_team or is_maintainer %}
 		  <a class="i16 nude-button add" href="{% url team_create project.slug %}">{% trans "Create a new team" %}</a>
@@ -26,9 +26,8 @@
 
   {% if team_request_form %}
   {% if request.user.is_authenticated and not is_maintainer %}
-  <form id="request-team-form" method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission microform submit_form">{% csrf_token %}
-    <fieldset style="margin-top: 1em;">
-      <legend>Request a new translation team</legend>
+  <form id="request-team-form" method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission submit_form tx-form">{% csrf_token %}
+   
       <table>
         <tbody>{% form_as_table_rows team_request_form %}</tbody>
       </table>
@@ -38,15 +37,15 @@
       <p class="submit">
         <input name="team_request" class="i16 submit buttonized" type="submit" value="{% trans "Request team" %}"/>
       </p>
-    </fieldset>
+   
   </form>
   {% endif %}
   {% endif %}
 
   {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
-  {% if teamrequests %}
+  {% if teamrequests and request.user.is_authenticated %}
   <div class="list">
-    <div class="table-separator-row"><p>{% trans "Requests for new teams:" %}</p></div>
+    <div class="table-separator-row clearfix"><p>{% trans "Requests for new teams:" %}</p></div>
     <ul class="nomargin">
     {% for teamrequest in teamrequests %}
       <li class="i16 team_request clearfix">
@@ -72,7 +71,7 @@
   {% with project.team_set.all|dictsort:"language.name" as teams %}
   {% if teams %}
   <div class="list">
-    <div class="table-separator-row"><p>{% trans "Available teams:" %}</p></div>
+    <div class="table-separator-row clearfix"><p>{% trans "Available teams:" %}</p></div>
     <ul class="nomargin">
     {% for team in teams %}
       <a class="team-row" href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
