@@ -178,10 +178,12 @@ class AllReleaseTests(base.BaseTestCase):
         self.project.resources.all().delete()
         self.assertEquals(self.project.releases.filter(slug='all-resources').count(), 0)
 
-    def _create_new_resource(self):
+    def _create_new_resource(self, project=None):
+        if not project:
+            project = self.project
         self.res2 = Resource.objects.create(
             slug="resource2", name="Resource2",
-            project=self.project, source_language=self.language_en,
+            project=project, source_language=self.language_en,
             i18n_type='PO')
 
     def test_first_resource(self):
@@ -216,6 +218,20 @@ class AllReleaseTests(base.BaseTestCase):
         resp = self.client['maintainer'].post('/projects/p/project1/add-release/', {'slug': 'foobar', 'project': '1', 'name': 'test', })
         self.assertNotContains(resp, "value is reserved")
 
+    def test_project_hub(self):
+        """
+        Test whether resources from projects outsourcing theirs access are 
+        also added in the outsourced all-resources release.
+        """
+        self._project = Project.objects.create(slug="hub", is_hub=True,
+            source_language=self.language_en)
+        self._create_new_resource(self._project)
+        self.project.outsource = self._project
+        self.project.save()
+        self._create_new_resource()
+        rel_resources = self._project.releases.get(slug='all-resources').resources.all()
+        self.assertTrue(self.res2 in rel_resources)
+        self.assertTrue(rel_resources.count() == 3)
 
 
 class ReleaseFormDateFieldsTests(base.BaseTestCase):
