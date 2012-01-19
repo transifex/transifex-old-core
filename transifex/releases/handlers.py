@@ -17,16 +17,25 @@ Release = get_model('releases', 'Release')
 
 
 def update_all_release(project):
-    if project.resources.count():
-        rel, rel_created = project.releases.get_or_create(
-            slug=RELEASE_ALL_DATA['slug'],
-            defaults={'name': RELEASE_ALL_DATA['name'],
-                      'description': RELEASE_ALL_DATA['description'],})
-        rel.resources = project.resources.all()
-        return rel
-    else:
-        return None
+    """
+    Update all-resources release for the given project and also for the 
+    related project hub in case the project is outsourcing its access.
+    """
+    projects = [project,]    
+    if project.outsource:
+        projects.append(project.outsource)
+  
+    for p in projects:
+        resources = p.resources.all()
+        if p.is_hub:
+            resources |= Resource.objects.filter(project__outsource=p)
 
+        if resources.count():
+            rel, rel_created = p.releases.get_or_create(
+                slug=RELEASE_ALL_DATA['slug'],
+                defaults={'name': RELEASE_ALL_DATA['name'],
+                        'description': RELEASE_ALL_DATA['description'],})
+            rel.resources = resources
 
 def release_all_push(sender, instance, **kwargs):
     """
