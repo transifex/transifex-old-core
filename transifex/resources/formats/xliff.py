@@ -211,7 +211,8 @@ class XliffHandler(Handler):
     def parse_tag_group(self, group_node, is_source=False, context=None):
         if not context:
             context = []
-        if group_node.attributes['restype'].value == "x-gettext-plurals":
+        if group_node.attributes.get('restype', None) and \
+                group_node.attributes['restype'].value == "x-gettext-plurals":
             pluralized = True
             nplural_file = 0
             nplural = self.language.get_pluralrules_numbers()
