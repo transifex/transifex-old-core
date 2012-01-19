@@ -137,9 +137,27 @@ def user_nudge(request, username):
 def profile_public(request, username, template_name='userena/public.html'):
     """User public profile page."""
     user = get_object_or_404(User, username=username)
-    return render_to_response(template_name,
-                  {'profile': user.get_profile()},
-                  context_instance=RequestContext(request))
+    teams_coordinating = user.team_coordinators.public()
+    projects_maintaining = Project.objects.maintained_by(user).public()
+
+    entries = []
+    for project in projects_maintaining:
+        entries.append({
+            'action': 'maintaining',
+            'project': project
+        })
+
+    for team in teams_coordinating:
+        entries.append({
+            'action': 'coordinating',
+            'project': team.project,
+            'team': team
+        })
+
+    return render_to_response(template_name, {
+        'profile': user.get_profile(),
+        'entries': entries,
+    }, context_instance=RequestContext(request))
 
 
 @login_required
