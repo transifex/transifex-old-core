@@ -5,6 +5,7 @@ A series of classes that hold collections of the resources' app objects.
 
 from django.utils import simplejson as json
 from transifex.resources.models import SourceEntity, Translation
+from transifex.resources.formats.utils.hash_tag import hash_tag
 
 
 class StringSet(object):
@@ -14,6 +15,41 @@ class StringSet(object):
     def __init__(self):
         self.strings = []
         self.target_language = None
+        self.key_dict = {}
+
+    def _update_key_dict(self, *args, **kwargs):
+        try:
+            source_entity = args[0]
+            translation = args[1]
+            context = kwargs['context']
+            hash_tr = hash_tag(source_entity, context)
+            rule = kwargs.get('rule', 5)
+            key = (hash_tr, context)
+            if key in self.key_dict and self.key_dict[key].get(rule, None):
+                tmp = self.key_dict[key][rule]
+                g = GenericTranslation(source_entity, tmp[0],
+                        **tmp[1])
+                self.strings.remove(g)
+                self.key_dict[key][rule] = [translation, kwargs]
+            else:
+                if key in self.key_dict:
+                    self.key_dict[key][rule] = [translation, kwargs]
+                else:
+                    self.key_dict[key] = {
+                                rule: [translation, kwargs]
+                            }
+        except Exception, e:
+            logger.warning("Error during parsing: %s" % unicode(e),
+                    exc_info=True)
+
+    def add(self, *args, **kwargs):
+        """
+        Append a GenericTranslation object to self.strings array so that
+        so that (source_entity, context, rule) is unique among all such
+        objects in self.strings
+        """
+        self._update_key_dict(*args, **kwargs)
+        self.strings.append(GenericTranslation(*args, **kwargs))
 
     def strings_grouped_by_context(self):
         d = {}
