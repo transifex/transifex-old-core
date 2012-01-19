@@ -351,3 +351,8 @@ class XliffHandler(Handler):
         content =  self._getText(context_node.childNodes)
         context_type = context_node.attributes['context-type'].value
         return "%s: %s" % (context_type, content.replace("\n", " "))
+
+    def _escape(self, s):
+        return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
+
+
