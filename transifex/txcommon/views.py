@@ -141,17 +141,19 @@ def profile_public(request, username, template_name='userena/public.html'):
     projects_maintaining = Project.objects.maintained_by(user).public()
 
     entries = []
-    for project in projects_maintaining:
+    for n, project in enumerate(projects_maintaining):
         entries.append({
             'action': 'maintaining',
-            'project': project
+            'project': project,
+            'index': n
         })
 
-    for team in teams_coordinating:
+    for n, team in enumerate(teams_coordinating):
         entries.append({
             'action': 'coordinating',
             'project': team.project,
-            'team': team
+            'team': team,
+            'index': n
         })
 
     return render_to_response(template_name, {
