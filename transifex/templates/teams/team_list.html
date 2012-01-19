@@ -4,7 +4,7 @@
 {% load txpermissions %}
 {% load statistics_resources %}
 {% load addons %}
-{% load team_tags %}
+{% load project_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
@@ -81,7 +81,7 @@
           </div>
           <div class="tt-stats">
             {% with 180 as width%}
-              {% get_team_progress team width %}
+              {% progress_for_project team.project team.language width %}
             {% endwith %}
           </div>
         </li>
