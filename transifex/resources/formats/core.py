@@ -11,6 +11,7 @@ from django.utils.datastructures import SortedDict
 from django.utils.translation import ugettext as _
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
+from transifex.projects.permissions.project import ProjectPermission
 from suggestions.models import Suggestion
 from suggestions.formats import ContentSuggestionFormat
 from transifex.actionlog.models import action_logging
@@ -667,7 +668,28 @@ class Handler(object):
                     continue
                 if (se, j) in translations:
                     tr = translations.get((se, j))
-                    if overwrite_translations and tr.string != j.translation:
+
+                    # We also check if the user submitting the translation
+                    # has reviewing privileges. Regular users shouldn't be
+                    # able to modify a reviewed string.
+
+                    # FIXME: This check shouldn't be needed but save2db is
+                    # called with user=None all over the place, so do this
+                    # for now to avoid breaking everything.
+                    if user:
+                        check = ProjectPermission(user)
+                        review_perm = check.proofread(self.resource.project,
+                            self.language)
+                        if overwrite_translations and tr.string != j.translation:
+                            if tr.reviewed:
+                                if not review_perm:
+                                    continue
+                            tr.string = j.translation
+                            tr.user = user
+                            tr.save()
+                            strings_updated += 1
+                    else:
+                        if overwrite_translations and tr.string != j.translation:
                             tr.string = j.translation
                             tr.user = user
                             tr.save()
