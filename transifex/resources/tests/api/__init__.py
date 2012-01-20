@@ -6,7 +6,8 @@ from django.test import TransactionTestCase
 from django.conf import settings
 from django.utils import unittest
 from django.contrib.auth.models import User, Permission
-from transifex.txcommon.tests.base import Users, TransactionNoticeTypes
+from transifex.txcommon.tests.base import Users, TransactionNoticeTypes,\
+                            TransactionUsers
 from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.api import ResourceHandler
@@ -293,7 +294,7 @@ class TestResourceAPI(APIBaseTests):
         'postgresql_psycopg2'), log_skip_transaction_test(
             "Skipping transaction test because database backend"
             " is not postgres."))
-class TestTransactionResourceCreate(Users, TransactionNoticeTypes,
+class TestTransactionResourceCreate(TransactionUsers, TransactionNoticeTypes,
                                     TransactionTestCase):
 
     def setUp(self):

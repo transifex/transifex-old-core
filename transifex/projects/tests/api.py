@@ -8,7 +8,7 @@ from django.test import TestCase, TransactionTestCase
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import Users, Languages, \
         NoticeTypes, Projects, Resources, TransactionNoticeTypes, \
-        TransactionLanguages
+        TransactionLanguages, TransactionProjects, TransactionUsers
 from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import RLStats, Resource
 from transifex.projects.models import Project
@@ -112,7 +112,8 @@ class ProjectResourceAPITests(BaseStorageTests):
             " is not postgres."))
 class TestTransactionProjectResourceAPI(TransactionNoticeTypes,
                                         TransactionLanguages,
-                                        Projects, TransactionTestCase):
+                                        TransactionProjects,
+                                        TransactionTestCase):
 
     def setUp(self):
         # Have to run now, because the TransactionTestCase resets
@@ -525,7 +526,7 @@ class TestProjectAPI(Languages, Resources, TestCase):
             )
 
 
-class TestTransactionProjectAPI(Users, TransactionLanguages,
+class TestTransactionProjectAPI(TransactionUsers, TransactionLanguages,
                                 TransactionTestCase):
 
     def setUp(self):
