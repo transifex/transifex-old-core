@@ -134,6 +134,7 @@ def slugify(value):
     It is similar to built-in :filter:`slugify` but it also handles special characters in variety of languages
     so that they are not simply removed but properly transliterated/downcoded.
     """
+    value = value.decode('utf-8')
     try:
         value = unicodedata.normalize('NFC', value)
         value = downcode(value)
