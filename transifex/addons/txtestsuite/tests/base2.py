@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+from copy import copy
 from django.core import management
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -118,24 +119,24 @@ class Users(TestCaseMixin):
                 codename='add_project', name='Can add project',
                 content_type=ContentType.objects.get_for_model(Project))[0])
 
-        cls.user = {}
-        cls.client = {}
+        cls._user = {}
+        cls._client = {}
 
         # Create users, respective clients and login users
         for nick in USER_ROLES:
-            cls.client[nick] = Client()
+            cls._client[nick] = Client()
             if nick != 'anonymous':
                 # Create respective users
                 if User.objects.filter(username=nick):
-                    cls.user[nick] = User.objects.get(username=nick)
+                    cls._user[nick] = User.objects.get(username=nick)
                 else:
-                    cls.user[nick] = User.objects.create_user(
+                    cls._user[nick] = User.objects.create_user(
                         nick, '%s@localhost' % nick, PASSWORD)
-                cls.user[nick].groups.add(registered)
+                cls._user[nick].groups.add(registered)
                 # Login non-anonymous personas
-                cls.client[nick].login(username=nick, password=PASSWORD)
-                #cls.assertTrue(cls.user[nick].is_authenticated())
-        cls.client_dict = cls.client
+                cls._client[nick].login(username=nick, password=PASSWORD)
+                #cls._assertTrue(cls._user[nick].is_authenticated())
+        cls._client_dict = cls._client
         super(Users, cls).setUpClass()
 
 class TransactionNoticeTypes(TestCaseMixin):
@@ -172,9 +173,9 @@ class Languages(TestCaseMixin):
     def setUpClass(cls):
         from django.core import management
         management.call_command('txlanguages', verbosity=0)
-        cls.language = Language.objects.get(code='pt_BR')
-        cls.language_en = Language.objects.get(code='en_US')
-        cls.language_ar = Language.objects.get(code='ar')
+        cls._language = Language.objects.get(code='pt_BR')
+        cls._language_en = Language.objects.get(code='en_US')
+        cls._language_ar = Language.objects.get(code='ar')
         #self.language_hi_IN = Language.objects.get(code='hi_IN')
         super(Languages, cls).setUpClass()
 
@@ -225,15 +226,15 @@ class Projects(Users):
     @classmethod
     def setUpClass(cls):
         super(Projects, cls).setUpClass()
-        cls.project = Project.objects.get(slug='project1')
-        cls.project.maintainers.add(cls.user['maintainer'])
-        cls.project.owner = cls.user['maintainer']
-        cls.project.save()
+        cls._project = Project.objects.get(slug='project1')
+        cls._project.maintainers.add(cls._user['maintainer'])
+        cls._project.owner = cls._user['maintainer']
+        cls._project.save()
 
-        cls.project_private = Project.objects.get(slug='project2')
-        cls.project_private.maintainers.add(cls.user['maintainer'])
-        cls.project_private.owner = cls.user['maintainer']
-        cls.project_private.save()
+        cls._project_private = Project.objects.get(slug='project2')
+        cls._project_private.maintainers.add(cls._user['maintainer'])
+        cls._project_private.owner = cls._user['maintainer']
+        cls._project_private.save()
 
 class TransactionResources(TransactionProjects):
     """A class to create sample resources.
@@ -265,12 +266,12 @@ class Resources(Projects):
     def setUpClass(cls):
         # Create a resource
         super(Resources, cls).setUpClass()
-        cls.resource = Resource.objects.get_or_create(
-            slug="resource1", name="Resource1", project=cls.project,
+        cls._resource = Resource.objects.get_or_create(
+            slug="resource1", name="Resource1", project=cls._project,
             i18n_type='PO'
         )[0]
-        cls.resource_private = Resource.objects.get_or_create(
-            slug="resource1", name="Resource1", project=cls.project_private,
+        cls._resource_private = Resource.objects.get_or_create(
+            slug="resource1", name="Resource1", project=cls._project_private,
             i18n_type='PO'
         )[0]
 
@@ -314,22 +315,22 @@ class SourceEntities(Resources):
     @classmethod
     def setUpClass(cls):
         super(SourceEntities, cls).setUpClass()
-        cls.source_entity = SourceEntity.objects.get_or_create(
+        cls._source_entity = SourceEntity.objects.get_or_create(
             string='String1', context='Context1', occurrences='Occurrences1',
-            resource=cls.resource
+            resource=cls._resource
         )[0]
-        cls.source_entity_private = SourceEntity.objects.get_or_create(
+        cls._source_entity_private = SourceEntity.objects.get_or_create(
             string='String1', context='Context1', occurrences='Occurrences1',
-            resource=cls.resource_private
+            resource=cls._resource_private
         )[0]
-        cls.source_entity_plural = SourceEntity.objects.get_or_create(
+        cls._source_entity_plural = SourceEntity.objects.get_or_create(
             string='pluralized_String1', context='Context1',
-            occurrences='Occurrences1_plural', resource= cls.resource,
+            occurrences='Occurrences1_plural', resource= cls._resource,
             pluralized=True
         )[0]
-        cls.source_entity_plural_private = SourceEntity.objects.get_or_create(
+        cls._source_entity_plural_private = SourceEntity.objects.get_or_create(
             string='pluralized_String1', context='Context1',
-            occurrences='Occurrences1_plural', resource= cls.resource_private,
+            occurrences='Occurrences1_plural', resource= cls._resource_private,
             pluralized=True
         )[0]
 
@@ -371,21 +372,21 @@ class Translations(SourceEntities):
     def setUpClass(cls):
         # Create one translation
         super(Translations, cls).setUpClass()
-        cls.translation_en = cls.source_entity.translations.get_or_create(
+        cls._translation_en = cls._source_entity.translations.get_or_create(
             string='Buy me some BEER :)',
             rule=5,
-            source_entity=cls.source_entity,
-            language=cls.language_en,
-            user=cls.user['registered'],
-            resource=cls.resource
+            source_entity=cls._source_entity,
+            language=cls._language_en,
+            user=cls._user['registered'],
+            resource=cls._resource
         )[0]
-        cls.translation_ar = cls.source_entity.translations.get_or_create(
+        cls._translation_ar = cls._source_entity.translations.get_or_create(
             string=u'This is supposed to be arabic text! αβγ',
             rule=5,
-            source_entity=cls.source_entity,
-            language=cls.language_ar,
-            user=cls.user['registered'],
-            resource=cls.resource
+            source_entity=cls._source_entity,
+            language=cls._language_ar,
+            user=cls._user['registered'],
+            resource=cls._resource
         )[0]
 
 
@@ -435,47 +436,47 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
         super(BaseTestCase, cls).setUpClass()
 
         # Add django-authority permission for writer
-        cls.permission = AuPermission.objects.create(
+        cls._permission = AuPermission.objects.create(
             codename='project_perm.submit_translations',
-            approved=True, user=cls.user['writer'],
-            content_object=cls.project, creator=cls.user['maintainer'])
+            approved=True, user=cls._user['writer'],
+            content_object=cls._project, creator=cls._user['maintainer'])
 
         # Create teams
-        cls.team = Team.objects.get_or_create(language=cls.language,
-            project=cls.project, creator=cls.user['maintainer'])[0]
-        cls.team_private = Team.objects.get_or_create(language=cls.language,
-            project=cls.project_private, creator=cls.user['maintainer'])[0]
-        cls.team.coordinators.add(cls.user['team_coordinator'])
-        cls.team.members.add(cls.user['team_member'])
-        cls.team_private.coordinators.add(cls.user['team_coordinator'])
-        cls.team_private.members.add(cls.user['team_member'])
+        cls._team = Team.objects.get_or_create(language=cls._language,
+            project=cls._project, creator=cls._user['maintainer'])[0]
+        cls._team_private = Team.objects.get_or_create(language=cls._language,
+            project=cls._project_private, creator=cls._user['maintainer'])[0]
+        cls._team.coordinators.add(cls._user['team_coordinator'])
+        cls._team.members.add(cls._user['team_member'])
+        cls._team_private.coordinators.add(cls._user['team_coordinator'])
+        cls._team_private.members.add(cls._user['team_member'])
 
         # Create a release
-        cls.release = Release.objects.get_or_create(slug="releaseslug1",
-            name="Release1", project=cls.project)[0]
-        cls.release.resources.add(cls.resource)
-        cls.release_private = Release.objects.get_or_create(slug="releaseslug2",
-            name="Release2", project=cls.project_private)[0]
-        cls.release_private.resources.add(cls.resource_private)
+        cls._release = Release.objects.get_or_create(slug="releaseslug1",
+            name="Release1", project=cls._project)[0]
+        cls._release.resources.add(cls._resource)
+        cls._release_private = Release.objects.get_or_create(slug="releaseslug2",
+            name="Release2", project=cls._project_private)[0]
+        cls._release_private.resources.add(cls._resource_private)
 
 
         # Create common URLs
         # Easier to call common URLs in your view/template unit tests.
-        cls.urls = {
-            'project': reverse('project_detail', args=[cls.project.slug]),
-            'project_edit': reverse('project_edit', args=[cls.project.slug]),
-            'resource': reverse('resource_detail', args=[cls.resource.project.slug, cls.resource.slug]),
-            'resource_actions': reverse('resource_actions', args=[cls.resource.project.slug, cls.resource.slug, cls.language.code]),
-            'resource_edit': reverse('resource_edit', args=[cls.resource.project.slug, cls.resource.slug]),
-            'translate': reverse('translate_resource', args=[cls.resource.project.slug, cls.resource.slug, cls.language.code]),
-            'release': reverse('release_detail', args=[cls.release.project.slug, cls.release.slug]),
-            'release_create': reverse('release_create', args=[cls.project.slug]),
-            'team': reverse('team_detail', args=[cls.resource.project.slug,
-                                                 cls.language.code]),
+        cls._urls = {
+            'project': reverse('project_detail', args=[cls._project.slug]),
+            'project_edit': reverse('project_edit', args=[cls._project.slug]),
+            'resource': reverse('resource_detail', args=[cls._resource.project.slug, cls._resource.slug]),
+            'resource_actions': reverse('resource_actions', args=[cls._resource.project.slug, cls._resource.slug, cls._language.code]),
+            'resource_edit': reverse('resource_edit', args=[cls._resource.project.slug, cls._resource.slug]),
+            'translate': reverse('translate_resource', args=[cls._resource.project.slug, cls._resource.slug, cls._language.code]),
+            'release': reverse('release_detail', args=[cls._release.project.slug, cls._release.slug]),
+            'release_create': reverse('release_create', args=[cls._project.slug]),
+            'team': reverse('team_detail', args=[cls._resource.project.slug,
+                                                 cls._language.code]),
 
-            'project_private': reverse('project_detail', args=[cls.project_private.slug]),
-            'resource_private': reverse('resource_detail', args=[cls.resource_private.project.slug, cls.resource_private.slug]),
-            'translate_private': reverse('translate_resource', args=[cls.resource_private.project.slug, cls.resource_private.slug, cls.language.code]),
+            'project_private': reverse('project_detail', args=[cls._project_private.slug]),
+            'resource_private': reverse('resource_detail', args=[cls._resource_private.project.slug, cls._resource_private.slug]),
+            'translate_private': reverse('translate_resource', args=[cls._resource_private.project.slug, cls._resource_private.slug, cls._language.code]),
         }
 
 
@@ -522,7 +523,27 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
 
     def setUp(self):
         super(BaseTestCase, self).setUp()
-        self.client = self.client_dict
+        self.client = copy(self._client_dict)
+        self.user = copy(self._user)
+        self.language = copy(self._language)
+        self.language_en = copy(self._language_en)
+        self.language_ar = copy(self._language_ar)
+        self.project = copy(self._project)
+        self.project_private = copy(self._project_private)
+        self.resource = copy(self._resource)
+        self.resource_private = copy(self._resource_private)
+        self.source_entity = copy(self._source_entity)
+        self.source_entity_private = copy(self._source_entity_private)
+        self.source_entity_plural = copy(self._source_entity_plural)
+        self.source_entity_plural_private = copy(self._source_entity_plural_private)
+        self.translation_en = copy(self._translation_en)
+        self.translation_ar = copy(self._translation_ar)
+        self.permission = copy(self._permission)
+        self.team = copy(self._team)
+        self.team_private = copy(self._team_private)
+        self.release = copy(self._release)
+        self.release_private = copy(self._release_private)
+        self.urls = copy(self._urls)
 
 
     def tearDown(self):
