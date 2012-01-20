@@ -58,6 +58,39 @@ def deactivate_csrf_middleware():
         pass
     settings.MIDDLEWARE_CLASSES = list_middle_c
 
+class TransactionUsers(TestCaseMixin):
+    """A class to create users in setUp().
+
+    Use this as a mixin.
+    """
+
+    fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
+
+    def setUp(self):
+        registered = Group.objects.get(name="registered")
+        registered.permissions.add(
+            DjPermission.objects.get_or_create(
+                codename='add_project', name='Can add project',
+                content_type=ContentType.objects.get_for_model(Project))[0])
+
+        self.user = {}
+        self.client = {}
+
+        # Create users, respective clients and login users
+        for nick in USER_ROLES:
+            self.client[nick] = Client()
+            if nick != 'anonymous':
+                # Create respective users
+                if User.objects.filter(username=nick):
+                    self.user[nick] = User.objects.get(username=nick)
+                else:
+                    self.user[nick] = User.objects.create_user(
+                        nick, '%s@localhost' % nick, PASSWORD)
+                self.user[nick].groups.add(registered)
+                # Login non-anonymous personas
+                self.client[nick].login(username=nick, password=PASSWORD)
+                self.assertTrue(self.user[nick].is_authenticated())
+        super(TransactionUsers, self).setUp()
 
 class Users(TestCaseMixin):
     """A class to create users in setUp().
@@ -93,6 +126,17 @@ class Users(TestCaseMixin):
         cls.client_dict = cls.client
         super(Users, cls).setUpClass()
 
+class TransactionNoticeTypes(TestCaseMixin):
+    """A class to create default notice types.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        from django.core import management
+        management.call_command('txcreatenoticetypes', verbosity=0)
+        super(TransactionNoticeTypes, self).setUp()
+
 
 class NoticeTypes(TestCaseMixin):
     """A class to create default notice types.
@@ -105,20 +149,6 @@ class NoticeTypes(TestCaseMixin):
         from django.core import management
         management.call_command('txcreatenoticetypes', verbosity=0)
         super(NoticeTypes, cls).setUpClass()
-
-
-class TransactionNoticeTypes(TestCaseMixin):
-    """A class to create default notice types.
-
-    Use this as a mixin in tests.
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        from django.core import management
-        management.call_command('txcreatenoticetypes', verbosity=0)
-        super(TransactionNoticeTypes, cls).setUpClass()
-
 
 class Languages(TestCaseMixin):
     """A class to create default languages.
@@ -143,14 +173,34 @@ class TransactionLanguages(TestCaseMixin):
     Use this as a mixin in transaction-based tests.
     """
 
-    @classmethod
-    def setUpClass(cls):
+    def setUp(self):
         from django.core import management
         management.call_command('txlanguages', verbosity=0)
-        cls.language = Language.objects.get(code='pt_BR')
-        cls.language_en = Language.objects.get(code='en_US')
-        cls.language_ar = Language.objects.get(code='ar')
-        super(TransactionLanguages, cls).setUpClass()
+        self.language = Language.objects.get(code='pt_BR')
+        self.language_en = Language.objects.get(code='en_US')
+        self.language_ar = Language.objects.get(code='ar')
+        super(TransactionLanguages, self).setUp()
+
+class TransactionProjects(TransactionUsers):
+    """A class to create sample projects.
+
+    Use this as a mixin in tests.
+    """
+
+    fixtures = ["sample_users", "sample_languages", "sample_data", ]
+
+    def setUp(self):
+        super(TransactionProjects, self).setUp()
+        self.project = Project.objects.get(slug='project1')
+        self.project.maintainers.add(self.user['maintainer'])
+        self.project.owner = self.user['maintainer']
+        self.project.save()
+
+        self.project_private = Project.objects.get(slug='project2')
+        self.project_private.maintainers.add(self.user['maintainer'])
+        self.project_private.owner = self.user['maintainer']
+        self.project_private.save()
+
 
 
 class Projects(Users):
@@ -173,6 +223,25 @@ class Projects(Users):
         cls.project_private.owner = cls.user['maintainer']
         cls.project_private.save()
 
+class TransactionResources(TransactionProjects):
+    """A class to create sample resources.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        # Create a resource
+        super(TransactionResources, self).setUp()
+        self.resource = Resource.objects.create(
+            slug="resource1", name="Resource1", project=self.project,
+            i18n_type='PO'
+        )
+        self.resource_private = Resource.objects.create(
+            slug="resource1", name="Resource1", project=self.project_private,
+            i18n_type='PO'
+        )
+
+
 
 class Resources(Projects):
     """A class to create sample resources.
@@ -192,6 +261,36 @@ class Resources(Projects):
             slug="resource1", name="Resource1", project=cls.project_private,
             i18n_type='PO'
         )[0]
+
+
+class TransactionSourceEntities(TransactionResources):
+    """A class to create some sample source entities.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        super(TransactionSourceEntities, self).setUp()
+        self.source_entity = SourceEntity.objects.create(
+            string='String1', context='Context1', occurrences='Occurrences1',
+            resource=self.resource
+        )
+        self.source_entity_private = SourceEntity.objects.create(
+            string='String1', context='Context1', occurrences='Occurrences1',
+            resource=self.resource_private
+        )
+        self.source_entity_plural = SourceEntity.objects.create(
+            string='pluralized_String1', context='Context1',
+            occurrences='Occurrences1_plural', resource= self.resource,
+            pluralized=True
+        )
+        self.source_entity_plural_private = SourceEntity.objects.create(
+            string='pluralized_String1', context='Context1',
+            occurrences='Occurrences1_plural', resource= self.resource_private,
+            pluralized=True
+        )
+
+
 
 
 class SourceEntities(Resources):
@@ -222,6 +321,33 @@ class SourceEntities(Resources):
             pluralized=True
         )[0]
 
+class TransactionTranslations(TransactionSourceEntities):
+    """A class to create some sample translations.
+
+    Use this as a mixin in tests.
+    """
+
+    def setUp(self):
+        # Create one translation
+        super(TransactionTranslations, self).setUp()
+        self.translation_en = self.source_entity.translations.create(
+            string='Buy me some BEER :)',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_en,
+            user=self.user['registered'],
+            resource=self.resource
+        )
+        self.translation_ar = self.source_entity.translations.create(
+            string=u'This is supposed to be arabic text! αβγ',
+            rule=5,
+            source_entity=self.source_entity,
+            language=self.language_ar,
+            user=self.user['registered'],
+            resource=self.resource
+        )
+
+
 
 class Translations(SourceEntities):
     """A class to create some sample translations.
@@ -251,7 +377,8 @@ class Translations(SourceEntities):
         )[0]
 
 
-class SampleData(Languages, Translations, NoticeTypes):
+class SampleData(TransactionLanguages, TransactionTranslations,
+        TransactionNoticeTypes):
     """A class that has all sample data defined."""
 
 
