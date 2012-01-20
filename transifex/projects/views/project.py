@@ -25,6 +25,7 @@ from transifex.projects import signals
 
 from transifex.languages.models import Language
 from transifex.projects.permissions.project import ProjectPermission
+from transifex.releases.handlers import update_all_release
 from transifex.resources.models import RLStats
 from transifex.resources.utils import invalidate_template_cache
 from transifex.teams.forms import TeamRequestSimpleForm
@@ -195,6 +196,9 @@ def project_access_control_edit(request, project_slug):
             handle_stats_on_access_control_edit(project)
 
             if outsourced and not project.outsource:
+                # Drop resources from all-resources release of the hub project
+                update_all_release(outsourced)
+                
                 # Logging action
                 nt = 'project_hub_left'
                 context = {'project': project, 'project_hub': outsourced}
