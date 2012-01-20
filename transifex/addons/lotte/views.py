@@ -210,7 +210,8 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
             nt = 'project_resource_translated'
             context = {'project': project,
                        'resource': resource,
-                       'language': language}
+                       'language': language,
+                       'sender': request.user}
             object_list = [project, resource, language]
             action_logging(request.user, object_list, nt, context=context)
     else:

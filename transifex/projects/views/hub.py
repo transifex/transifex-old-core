@@ -63,7 +63,8 @@ def project_hub_join_approve(request, project_slug, outsourced_project_slug):
 
             # ActionLog & Notification
             nt = 'project_hub_join_approved'
-            context = {'hub_request': hub_request}
+            context = {'hub_request': hub_request,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [outsourced_project, 
@@ -105,7 +106,8 @@ def project_hub_join_deny(request, project_slug, outsourced_project_slug):
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_hub_join_denied'
-            context = {'hub_request': hub_request}
+            context = {'hub_request': hub_request,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [outsourced_project, 
@@ -143,7 +145,8 @@ def project_hub_join_withdraw(request, project_slug):
             # TODO: Use signals
             nt = 'project_hub_join_withdrawn'
             context = {'hub_request': _hub_request,
-                       'performer': request.user,}
+                       'performer': request.user,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [_hub_request.project, 
@@ -185,7 +188,8 @@ def project_hub_projects_toggler(request, project_slug):
 
         ## ActionLog & Notification
         #nt = 'project_hub_added'
-        #context = {'team': team}
+        #context = {'team': team,
+                   #'sender': request.user}
 
         ## Logging action
         #action_logging(request.user, [project, team], nt, context=context)

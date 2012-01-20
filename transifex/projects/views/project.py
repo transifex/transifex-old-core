@@ -78,7 +78,8 @@ def _project_create_update(request, project_slug=None,
                         instance=project, form=project_form)
 
             # ActionLog & Notification
-            context = {'project': project}
+            context = {'project': project,
+                       'sender': request.user}
             if not project_id:
                 nt = 'project_added'
                 action_logging(request.user, [project], nt, context=context)
@@ -158,7 +159,8 @@ def project_access_control_edit(request, project_slug):
                     # ActionLog & Notification
                     # TODO: Use signals
                     nt = 'project_hub_join_requested'
-                    context = {'hub_request': hub_request}
+                    context = {'hub_request': hub_request,
+                               'sender': request.user}
 
                     # Logging action
                     action_logging(request.user, [project, project_hub], nt, context=context)
@@ -201,7 +203,8 @@ def project_access_control_edit(request, project_slug):
                 
                 # Logging action
                 nt = 'project_hub_left'
-                context = {'project': project, 'project_hub': outsourced}
+                context = {'project': project, 'project_hub': outsourced,
+                           'sender': request.user}
                 action_logging(request.user, [project, outsourced], nt, context=context)
 
             return HttpResponseRedirect(request.POST['next'])
@@ -257,7 +260,8 @@ def _delete_project(request, project):
 
     # ActionLog & Notification
     nt = 'project_deleted'
-    context = {'project': project_}
+    context = {'project': project_,
+               'sender': request.user}
     action_logging(request.user, [project_], nt, context=context)
     if settings.ENABLE_NOTICES:
         txnotification.send_observation_notices_for(project_,

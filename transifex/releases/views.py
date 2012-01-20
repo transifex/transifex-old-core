@@ -153,7 +153,8 @@ def release_delete(request, project_slug, release_slug):
 
         # ActionLog & Notification
         nt = 'project_release_deleted'
-        context = {'release': release_}
+        context = {'release': release_,
+                   'sender': request.user}
         action_logging(request.user, [release_.project], nt, context=context)
         if settings.ENABLE_NOTICES:
             txnotification.send_observation_notices_for(release_.project,

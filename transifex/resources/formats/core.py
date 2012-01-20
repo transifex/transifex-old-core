@@ -435,7 +435,8 @@ class Handler(object):
         context = {
             'project': self.resource.project,
             'resource': self.resource,
-            'language': self.language
+            'language': self.language,
+            'sender': user
         }
         object_list = [self.resource.project, self.resource, self.language]
 

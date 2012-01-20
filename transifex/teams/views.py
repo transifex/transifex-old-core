@@ -85,7 +85,8 @@ def _team_create_update(request, project_slug, language_code=None, extra_context
             else:
                 nt = 'project_team_changed'
 
-            context = {'team': team}
+            context = {'team': team,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
@@ -239,7 +240,8 @@ def team_delete(request, project_slug, language_code):
         # ActionLog & Notification
         # TODO: Use signals
         nt = 'project_team_deleted'
-        context = {'team': _team}
+        context = {'team': _team,
+                   'sender': request.user}
 
         #Delete rlstats for this team in outsourced projects
         for p in project.outsourcing.all():
@@ -296,7 +298,8 @@ def team_join_request(request, project_slug, language_code):
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_join_requested'
-            context = {'access_request': access_request}
+            context = {'access_request': access_request,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
@@ -360,7 +363,8 @@ def team_join_approve(request, project_slug, language_code, username):
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_join_approved'
-            context = {'access_request': access_request}
+            context = {'access_request': access_request,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
@@ -409,7 +413,8 @@ def team_join_deny(request, project_slug, language_code, username):
             # TODO: Use signals
             nt = 'project_team_join_denied'
             context = {'access_request': access_request,
-                       'performer': request.user,}
+                       'performer': request.user,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
@@ -453,7 +458,8 @@ def team_join_withdraw(request, project_slug, language_code):
             # TODO: Use signals
             nt = 'project_team_join_withdrawn'
             context = {'access_request': access_request,
-                       'performer': request.user,}
+                       'performer': request.user,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
@@ -496,7 +502,8 @@ def team_leave(request, project_slug, language_code):
                 # TODO: Use signals
                 nt = 'project_team_left'
                 context = {'team': team,
-                        'performer': request.user,}
+                           'performer': request.user,
+                           'sender': request.user}
 
                 # Logging action
                 action_logging(request.user, [project, team], nt, context=context)
@@ -575,7 +582,8 @@ def team_request(request, project_slug):
                     # ActionLog & Notification
                     # TODO: Use signals
                     nt = 'project_team_requested'
-                    context = {'team_request': team_request}
+                    context = {'team_request': team_request,
+                               'sender': request.user}
 
                     # Logging action
                     action_logging(request.user, [project], nt, context=context)
@@ -627,7 +635,8 @@ def team_request_approve(request, project_slug, language_code):
             # ActionLog & Notification
             # TODO: Use signals
             nt = 'project_team_added'
-            context = {'team': team}
+            context = {'team': team,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
@@ -672,7 +681,8 @@ def team_request_deny(request, project_slug, language_code):
             # TODO: Use signals
             nt = 'project_team_request_denied'
             context = {'team_request': team_request,
-                       'performer': request.user}
+                       'performer': request.user,
+                       'sender': request.user}
 
             # Logging action
             action_logging(request.user, [project], nt, context=context)

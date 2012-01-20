@@ -99,7 +99,8 @@ def on_resource_save(sender, instance, created, user, **kwargs):
     saved instance. Used for logging the create/update of a resource.
     """
     # ActionLog
-    context = {'resource': instance}
+    context = {'resource': instance,
+               'sender': user}
     object_list = [instance.project, instance]
     if created:
         nt = 'project_resource_added'
@@ -108,14 +109,15 @@ def on_resource_save(sender, instance, created, user, **kwargs):
         nt = 'project_resource_changed'
         action_logging(user, object_list, nt, context=context)
 
-def on_resource_delete(sender, instance, user,**kwargs):
+def on_resource_delete(sender, instance, user, **kwargs):
     """
     Called on resource post delete to file an action log for this action.
     Passes a user object along with the deleted instance for use in the logging
     mechanism.
     """
     # ActionLog
-    context = {'resource': instance}
+    context = {'resource': instance,
+               'sender': user}
     object_list = [instance.project, instance]
     nt = 'project_resource_deleted'
     action_logging(user, object_list, nt, context=context)
