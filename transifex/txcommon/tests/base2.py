@@ -14,7 +14,6 @@ from django.contrib.auth.models import User, Group, Permission as DjPermission
 from django.contrib.contenttypes.models import ContentType
 from django_addons.autodiscover import autodiscover_notifications
 from transifex.txcommon.notifications import NOTICE_TYPES
-from transifex.txcommon.tests.base import TestCaseMixin
 
 
 # Load models
@@ -57,6 +56,19 @@ def deactivate_csrf_middleware():
     except ValueError:
         pass
     settings.MIDDLEWARE_CLASSES = list_middle_c
+
+
+class TestCaseMixin(object):
+
+    @staticmethod
+    def response_in_browser(resp, halt=True):
+        """
+        Useful for debugging it shows the content of a http response in the
+        browser when called.
+        """
+        from transifex.txcommon.tests.utils import response_in_browser
+        return response_in_browser(resp, halt=True)
+
 
 class TransactionUsers(TestCaseMixin):
     """A class to create users in setUp().
