@@ -81,11 +81,11 @@ class Users(TestCaseMixin):
             cls.client[nick] = Client()
             if nick != 'anonymous':
                 # Create respective users
-                try:
+                if User.objects.filter(username=nick):
+                    cls.user[nick] = User.objects.get(username=nick)
+                else:
                     cls.user[nick] = User.objects.create_user(
                         nick, '%s@localhost' % nick, PASSWORD)
-                except IntegrityError, e:
-                    cls.user[nick] = User.objects.get(username=nick)
                 cls.user[nick].groups.add(registered)
                 # Login non-anonymous personas
                 cls.client[nick].login(username=nick, password=PASSWORD)
@@ -345,12 +345,14 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
 
     def _pre_setup(self):
         if not connections_support_transactions():
+            fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
             if getattr(self, 'multi_db', False):
                 databases = connections
             else:
                 databases = [DEFAULT_DB_ALIAS]
             for db in databases:
                 call_command('flush', verbosity=0, interactive=False, database=db)
+                call_command('loaddata', *fixtures, **{'verbosity': 0, 'database': db})
 
         else:
             if getattr(self, 'multi_db', False):
@@ -376,8 +378,8 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
             for db in databases:
                 transaction.rollback(using=db)
                 transaction.leave_transaction_management(using=db)
-            for connection in connections.all():
-                connection.close()
+        for connection in connections.all():
+            connection.close()
 
     def setUp(self):
         super(BaseTestCase, self).setUp()
