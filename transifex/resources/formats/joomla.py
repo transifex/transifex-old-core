@@ -91,7 +91,7 @@ class JoomlaINIHandler(Handler):
 
             escaped_trans = self.jformat.get_translation(trans)
             if isinstance(self.jformat, JoomlaIniNew):
-                trans = trans[1:-1]
+                trans = trans.strip()[1:-1]
             context = ""        # We use empty context
 
             if is_source:
@@ -163,7 +163,7 @@ class JoomlaIniNew(JoomlaIniVersion):
 
     def get_translation(self, value):
         # Get rid of double-quote at the start and end of value
-        return self._unescape(value[1:-1])
+        return self._unescape(value.strip()[1:-1])
 
     def get_compilation(self, value):
         return self._escape(value)
