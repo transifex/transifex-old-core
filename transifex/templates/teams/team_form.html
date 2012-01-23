@@ -20,11 +20,31 @@ $(document).ready(function(){
 </script>
 {% endblock %}
 
+{% block content_title %}
+{% with project.description as short_desc %}
+<div class="lastchild-emf">
 {% block project_header %}
-{{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
+<h2 class="pagetitle{% if short_desc %} with_description{% endif %}"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
+<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
 <h2 class="pagetitle with_description">
+{% if team_create %}
+{% blocktrans %}Create Team{% endblocktrans %}</h2>
+{% else %}
 {% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
+{% endif %}
 {% endblock%}
+</div>
+
+{% block current_description %}
+{% if short_desc %}
+<div class="description">
+	<p>{{ project.description }}</p>
+</div>
+{% endif %}
+{% endblock %}
+{% endwith %}
+{% endblock %}
+
 
 {% block content_main %}
 {% with team.language as language %}
@@ -34,9 +54,7 @@ $(document).ready(function(){
 <div class="obj_bigdetails">
 
 <div class="separate">
-  {% if team_create %}
-  <h3>{% trans "Create Team" %}</h3>
-  {% else %}
+  {% if not team_create %}
   <h3>{% trans "Edit Team" %}</h3>
   {% endif %}
 
