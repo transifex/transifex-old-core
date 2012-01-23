@@ -4,6 +4,7 @@ from django.utils import unittest
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.resources.models import Resource, Translation, SourceEntity
 from transifex.resources.formats.compilation import *
+from .mode import *
 
 
 class TestTranslationsBuilders(BaseTestCase):

@@ -78,12 +78,6 @@ class CustomSerializer(json.JSONEncoder):
             }
 
 
-class Mode(object):
-    """Class to suggest, what a translation is downloaded for."""
-
-    VIEWING, TRANSLATING, REVIEWED = ('viewing', 'translating', 'reviewed')
-
-
 class Handler(object):
     """
     Base class for writing file handlers for all the I18N types.
