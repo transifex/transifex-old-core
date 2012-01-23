@@ -7,10 +7,18 @@
 {% load upload_manager_tags %}
 
 
+
+{% block project_header %}
+<h2 class="pagetitle with_description">{% blocktrans %}Resources of {{project}}{% endblocktrans %}</h2>
+{% endblock %}
+{% block current_description %}
+<p class="description">{% blocktrans %}Detailed list of the project's resources{% endblocktrans %}</p>
+{% endblock %}
+
+
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 <div id="resources" class="resources">
-	
 	<div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% blocktrans %}Project Resources{% endblocktrans %}</h3>
   	{% if perms.projects.pr_resource_add_change or is_maintainer %}
@@ -120,7 +128,7 @@
 
   {% for stat in statslist %}
   {% if forloop.first %}
-  <table class="stat_table_font stats_table tablesorter_resource_list" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
+  <table class="stat_table_font stats-table tablesorter_resource_list">
   <thead>
    <tr>
     <th id="category_header"><span>{% trans "Resource name" %}</span></th>
@@ -138,7 +146,7 @@
           <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}&nbsp;&raquo;</a>
         </td>
         <td class="category_td_class">{{ stat.object.category }}</td>
-        <td class="last_updated">
+        <td class="tablelastupd">
           {% with stat.last_committer as last_committer %}
             <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
           {% endwith %}
