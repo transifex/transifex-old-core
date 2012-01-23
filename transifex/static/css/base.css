@@ -282,3 +282,232 @@ font-size: 0.923em;
 .watch_add:hover{background-position-x: -31px;opacity: 0.85;cursor: pointer;}
 .watch_remove:hover{background-position-x: 0px; opacity: 0.85;cursor: pointer;} 
 .cpanel-entry .watchbutton{height:16px;width: 16px;margin: 0px;display: block;}
+
+
+/* Menus
+  -------------------------------------------------------------------------------------------------*/
+
+/*Side menu*/
+.side-menu {font-size: 1.077em;border-right: 5px solid #EBEFF1;width:213px !important;margin-top: 10px;}
+.side-menu a{color: #444;}
+.side-menu li.head	{padding:0.7em 0 0.6em 5px;font-weight: bold;color:#999;border-right: 5px solid #EBEFF1;}
+.side-menu li.head:hover{background-color: transparent;}
+.side-menu li a {padding:0.7em 0 0.6em 5px;display: block;border-right: 5px solid #EBEFF1;}
+.side-menu li.inner-item a{padding:0.5em 0 0.5em 15px;}
+.side-menu li.active a{ background-color:#EBEFF1 ; text-shadow:#fff 1px 1px 0px;border-right: 5px solid #3d658d;}
+.side-menu li a:hover{background-color:#EBEFF1;border-right: 5px solid #c5d5e6; }
+.side-menu li.active a:hover{border-right: 5px solid #3d658d;}
+.side-menu ul{padding:0px 0px 15px 20px;margin:0;margin-right: -5px;}
+.side-menu.left-side ul{padding-left: 0;}
+.side-menu li.tail {}
+
+
+/* Actions Popup
+  -------------------------------------------------------------------------------------------------*/
+div.actions_popup,div.facebox-content {min-width:680px;margin:0;padding:12px 18px 6px 18px;text-align:left !important;}
+div.actions_popup h4{margin-top: 2px; font-weight: bold;}
+div.actions_popup legend {color:#666666;}
+div.actions_popup .first_level {clear:both;width:100%;border-top:1px solid #e1e1e1;padding: 1.5em 0 1em 0;}
+div.actions_popup .details_font {color:#666666;font-size:0.923em;}
+div.actions_popup .footer_action {vertical-align:top;margin-top:2.5em;text-align:center;font-size:12px;}
+div.actions_popup div.more_actions {vertical-align:top;}
+div.actions_popup div.more_actions ul {width:300px;list-style:none;margin-top: 0;}
+div.actions_popup div.more_actions ul.right {float:right;}
+div.actions_popup div.more_actions li.top {margin-top:0;}
+div.actions_popup div.last_update {vertical-align:top;}
+div.actions_popup div.last_update ul {list-style:none;color:#777}
+div.actions_popup div.last_update li.top {margin-top:0;}
+div.actions_popup li {margin-top: 0.5em;margin-bottom: 0.5em;}
+div.actions_popup li a {text-decoration: none;}
+div.actions_popup li a.disabled {color:#AAAAAA;}
+div.actions_popup div.stats_details_string {background: transparent url('../images/icons/orange-arrow.png') 0 5px no-repeat;text-align:left;padding:0.5em;padding-left:0;padding-left: 16px;font-weight: bold;border-bottom: 1px solid #EEE;width: 570px;}
+div.actions_popup div.stats_wrapper {padding:1.5em 1em 1.5em 0.5em;width:450px;text-align:center;}
+div.actions_popup span.translate_button_wrapper {padding:2em 4em 1em 0em;float:right;text-align:center;}
+div.actions_popup span.favourite_wrapper {float:right;}
+div.actions_popup div.title_wrapper {text-align:left;}
+div.actions_popup div.title_wrapper div.details_font{text-align:left;  padding:0.5em;}
+div.actions_popup #action-tmbreakdown{background: transparent url('../images/icons/orange-arrow.png') 0 0px no-repeat;font-size: 0.923em;text-align: left;padding-left: 16px;width:570px;margin-top: 0.5em;display: block;line-height: 20px;}
+.language_chooser select{width:150px;}
+div.error_notes {display:none;font-size:80%;color:#C53333;text-align: right;}
+
+/* 	Messages
+	--------------------------------------------------------------------------*/
+
+.error,
+.notice,
+.info,
+.success    { font-family: sans-serif;
+			  font-size: 0.923em; /* 14px */
+			  text-align: center;
+			  padding: 0.875em 1em;
+			  margin: 1em 0;
+			  border: 1px solid #ddd; }
+
+.error      { background-color: #f7d8d4; color: #d73d29; border-color: #d73d29; }
+.notice     { background-color: #f6f3c1; color: #bf9103; border-color: #d4aa02; }
+.info       { background-color: #d5e5f3; color: #395476; border-color: #395476; }
+.success    { background-color: #DFF2BF; color: #4F8A10; border-color: #4F8A10; }
+
+.error a    { color: #993d42; }
+.notice a   { color: #72692e; }
+.info a     { color: #2e4d73; }
+.success a  { color: #57742e; }
+
+
+.messages {text-align: center;}
+.messages p{display: inline;}
+.message_info, .message_success, .message_warning, .message_error, .message_validation {
+  border-width: 0px;
+  border-style: solid;
+  background-color: #ffffe0;
+  margin: 0px;
+  font-size: 0.9em;
+  border-bottom-width: 1px;
+  padding: 0.7em 0em;
+}
+.message_info {color: #395476;background-color: #d5e5f3;}
+.message_success {color: #4F8A10;background-color: #DFF2BF;}
+.message_warning {color: #d4aa02;background-color: #f6f3c1;}
+.message_error {color: #d73d29;background-color: #f7d8d4;}
+
+.message, .message_info, .message_warning, .message_error, .message_success {}
+.message b, .message_info b, .message_warning b, .message_error b, .message_success b {font-weight: bold;}
+.messages .message, .messages message_info, .messages .message_warning, .messages .message_error, .messages .message_success {width: 100%;margin: 0 auto;display: block;}
+
+.message.i16, .message_info.i16, .message_warning.i16, .message_error.i16, .message_success.i16 {background-position: 10px 50%;padding-left: 33px;}
+
+
+
+
+/*Forms ---------------------------------------------------------------------------------------*/
+
+
+form, input, textarea, select { font-size: 1em; }
+
+fieldset    { margin:0; padding:0; border: none; }
+legend      { font-weight: bold; font-size: 1.125em; /* 18px */ padding: 0 0.2em; }
+label[for]  { font-weight: bold; margin-right: 0.2em; }
+
+input[type="email"], input[type="password"], input[type="text"], input[type="url"]{background-color: #fbfbfb;outline: none;padding:7px;}
+input[type="email"]:hover, input[type="password"]:hover, input[type="text"]:hover, input[type="url"]:hover {border-color: #999;}
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, input[type="url"]:focus {border-color: #3d658d;}
+
+
+input, textarea, select { font-family: sans-serif; margin: 0.3em 0; }
+input, textarea { 
+    padding: 3px;
+    border: 1px solid #bfbfbf;
+    outline: none;
+}
+
+input:focus, textarea:focus { border: 1px solid #818181; }
+
+/*Overriden form elements-----------------------------------------------------*/
+.tx-form select{margin: 10px 0;cursor: pointer;}
+.tx-form .chzn-container{width:250px !important;margin: 0.3em 0;}
+.tx-form .chzn-drop{width:248px !important;}
+.tx-form .chzn-search input{width:213px !important;}
+.tx-form select:hover{cursor:pointer;}
+.txf-helptext{width:20px;height:20px;display: block;background-color: #f7f7f7;text-align: center;border: 1px solid #ccc;padding-top:1px;line-height: 19px;font-weight: bold;	-moz-border-radius: 10px;-webkit-border-radius: 10px;border-radius: 3px;opacity: 0.6;float: left;margin: 7px 0px 7px 20px;}
+.txf-helptext:hover{opacity: 1;cursor: default;}
+/*	--------------------------------------------------------------------------*/
+
+
+/* 	Serif classes
+	--------------------------------------------------------------------------*/
+
+
+
+q, blockquote 	{ font-style: italic; }
+q 				{ quotes: "\201C" "\201D" "\2018" "\2019"; }
+q:lang(el) 		{ quotes: "\00AB" "\00BB" "\0027" "\0027"; }
+blockquote 		{ font-family: 'Droid Serif',Georgia, Times, serif; margin: 1em 3em; }
+.seriftext,.description,.quotes,.timestamp,.tweet_time,.long_description	{ font-family: 'Droid Serif',Georgia, Times, serif;}
+
+/* 	Preformatted
+	--------------------------------------------------------------------------*/
+
+pre 						{ white-space: pre; }
+pre, code, tt, kbd, samp 	{ font-family: Monaco, Consolas, monospace; }
+p								{margin: 0.2em 0 0.3em;}
+
+/* 	Miscellaneous
+	--------------------------------------------------------------------------*/
+
+p.wspacing      { margin-top: 0.5em; margin-bottom: 0.5em; }
+strong 			{ font-weight: bold; }
+em 				{ font-style: italic; }
+dfn 			{ font-style: italic; font-weight: bold; }
+abbr, acronym 	{ border-bottom: 1px dotted #999; cursor: help; }
+
+sup, sub 		{ font-size: 0.78em; line-height: 0; }
+sup 			{ vertical-align: super; }
+sub 			{ vertical-align: sub; }
+
+address 		{ font-style: italic; }
+
+ins 			{  }
+del 			{  }
+
+hr 				{ background: #ddd; color: #ddd;
+				  clear: both; float: none;
+				  width: 100%; height: 0.1em;
+				  margin: 1em 0; border: none; }
+
+/* 	Lists
+	--------------------------------------------------------------------------*/
+
+ul, ol, dl 	 {  }
+li ul, li ol {  }
+
+ul, ol 	{ list-style-position: outside; }
+ol 		{ list-style-type: decimal; }
+
+dl 		{  }
+dt 		{ font-weight: bold; }
+dd 		{ margin-right: 0;}
+
+ul, ol, dl dd	{ margin-left: 1em; }  /* List indent */
+ul            {list-style-type: none;}
+ul.nomargin 	{margin: 0;padding: 0;}
+li ul, li ol 	{ margin: 0 0 0 0.5em; } /* Sub-list indent */
+
+
+/* 	Tables
+	--------------------------------------------------------------------------*/
+
+table       {  }
+
+th, td,
+caption 	{ padding: 4px 10px 4px 5px; }
+
+th          { font-weight: bold; }
+tfoot 		{ font-style: italic; }
+tfoot td 	{ border-top: 1px solid #ddd; }
+caption     { font-style: italic; font-size: 0.923em; }
+
+/*tr.even td 	{ background: #e5ecf9; } Alternate row background colour */
+
+
+/* 	Utilities
+	--------------------------------------------------------------------------*/
+
+.smaller 	{ font-size: 0.75em; }
+.small 		{ font-size: 0.875em; }
+.big 		{ font-size: 1.125em; }
+.bigger 	{ font-size: 1.3125em; }
+.large		{ font-size: 1.5em; line-height: 1.167; }
+.caption	{ font-size: 0.75em; line-height: 1.333; font-style: italic; }
+
+.highlight  { background: #ff0; }
+/* BUGBUG: Check what are consequences of this.
+           This is required for timeline to get rid of green background */
+/* .added 		{ background: #060; color: #fff; } */
+.removed 	{ background: #900; color: #fff; }
+
+.left  		{ float: left; margin: 0.5em; margin-left: 0; margin-top:0; }
+.right 		{ float: right; margin: 0.5em; margin-right: 0;margin-top:0; }
+.first 		{ margin-left: 0; }
+.last 		{ margin-right: 0 !important; }
+.top 		{ margin-top: 0; }
+.bottom 	{ margin-bottom: 0; }

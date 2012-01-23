@@ -124,9 +124,17 @@
   </div>
 
   <div id="content" class="clearfix">
+		{% block messages %}
+	    {% if messages %}
+	        <div class="messages">
+	        {% for message in messages %}
+	            <span class="message{% if message.tags %}_{{ message.tags }}{% endif %}">{{ message }}</span>
+	        {% endfor %}
+	        </div>
+	    {% endif %}
+	  {% endblock %}
     <div id="content_header">
     {% block content_header %}
-      
       {% comment %}
       <div id="breadcrumbs">
         {% block breadcrumb %}{% homelink %}{% endblock %}
@@ -145,15 +153,7 @@
       {% block content %}
         <div id="body_sec">{% block content_sec %}{% endblock %}</div>
         <div id="body_main" class=" grid_16 clearfix">
-          {% block messages %}
-            {% if messages %}
-                <div class="messages">
-                {% for message in messages %}
-                    <span class="message{% if message.tags %}_{{ message.tags }}{% endif %}">{{ message }}</span>
-                {% endfor %}
-                </div>
-            {% endif %}
-          {% endblock %}
+          
         {% block content_main %}{% endblock %}
         </div>
       {% endblock %}
