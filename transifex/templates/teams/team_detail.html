@@ -46,9 +46,9 @@
 
 
 {% block project_header %}
-{{block.super}}<h2 class="pagetitle with_description">/</h2>
+{{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
 <h2 class="pagetitle with_description">
-{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
+{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Language - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
 {% endblock%}
 
 {% block content_main %}
@@ -60,14 +60,14 @@
  	<div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% trans "Details" %}</h3>
   	{% if perms.projects.change_team or is_coordinator %}
-  	<div class="separate-buttons"><a class="i16 edit nude-button" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit team" %}</a></div>
+  	<div class="separate-buttons"><a class="i16 edit nude-button" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit language translation" %}</a></div>
 		{% endif %}
 		
 		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
 	  <div class="separate-buttons">
 	    <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
 	        <p>{% hook "team_request_join_additional.html" %}</p>
-	        <p><input name="team_join" class="i16 team_join nude-button" type="submit" title="{% trans "Join this Team" %}" value="{% trans "Join this Team" %}" style="margin:0;padding:0;"></p>
+	        <p><input name="team_join" class="i16 team_join nude-button" type="submit" title="{% trans 'Join language translation' %}" value="{% trans 'Join language translation' %}" style="margin:0;padding:0;"></p>
 	    </form>
 	  </div>
 		{% endif %}
@@ -95,16 +95,6 @@
     {% endif %}
     {% endwith %}
 
-    {% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
-      <dt class="i16 user">{% trans "Become a translator:" %}</dt>
-      <dd>
-        <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
-            <p>{% hook "team_request_join_additional.html" %}</p>
-            <input name="team_join" class="i16 team_join buttonized" type="submit" title="{% trans "Join this Team" %}"  value="{% trans "Join this Team" %}">
-        </form>
-      </dd>
-   {% endif %}
-
   </dl>
 </div>
 
@@ -112,12 +102,12 @@
 <div class="list" style="clear:both">
 
   <div class="separate-header clearfix">
-  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Team Translating Resources{% endblocktrans %}</h3>
+  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Team Translating Resource{% plural %}Language Resources{% endblocktrans %}</h3>
 	</div>
 	
  {% if statslist %}
 
-  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
+  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%;margin-left:auto;margin-right:auto;">
   <thead>
   <tr>
     <th><span>{% trans "Resource" %}</span></th>
@@ -155,9 +145,6 @@
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|date:"M d, h:ia" }}
-              {% if last_committer %}
-              by {{ last_committer }}
-              {% endif %}
           {% else %}
               {% trans "no activity yet" %}
           {% endif %}
@@ -203,9 +190,10 @@
 {% else %}
 <ul class="actionlist simple">
 {% for entry in action_log %}
-    <li class="i16 actionlog">
-    {{ entry.message|safe }} by {{ entry.user }} {{ entry.action_time|timesince }} ago.
-    </li>
+	<li class="i16 {{entry.action_type}}">
+	    <p>{{ entry.message|safe }}</p> 
+	    <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
+	</li>
 {% endfor %}
 </ul>
 {% endif %}
