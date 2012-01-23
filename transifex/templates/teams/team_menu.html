@@ -5,16 +5,7 @@
 {% load permissions %}
 {% load txpermissions %}
 
-{% block basecss %}
-{{ block.super }}
-  <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/jquery.autocomplete.css" />
-  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
-{% endblock %}
-
 {% block extrajs %}
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.autocomplete.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/file_submit.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
   {% if project %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
   {% endif %}
