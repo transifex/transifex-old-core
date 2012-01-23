@@ -104,9 +104,9 @@ class GettextHandler(Handler):
                 logger.warning(
                     "pofile: Required metadata '%s' not found." % metadata
                 )
-                raise PoParseError(_(
+                raise PoParseError(
                     "Uploaded file header doesn't have '%s' metadata!" % metadata
-                ))
+                )
 
         # Save to avoid parsing it again
         self._po = po
@@ -216,9 +216,10 @@ class GettextHandler(Handler):
                 if is_source:
                     nplural_file = len(entry.msgstr_plural.keys())
                     if nplural_file != 2:
-                        raise PoParseError(_("Your source file is not a POT file and"
+                        raise PoParseError("Your source file is not a POT file and"
                             " the translation file you're using has more"
-                            " than two plurals which is not supported."))
+                            " than two plurals which is not supported."
+                        )
                     # English plural rules
                     messages = [(1, entry.msgstr_plural['0'] or entry.msgid),
                                 (5, entry.msgstr_plural['1'] or entry.msgid_plural)]
@@ -232,13 +233,13 @@ class GettextHandler(Handler):
                         if len(nplural) != nplural_file:
                             logger.warning("Passed plural rules has nplurals=%s"
                                 ", but '%s' file has nplurals=%s. String '%s'"
-                                "skipped." % (len(nplural), self.filename, 
+                                "skipped." % (len(nplural), self.filename,
                                 nplural_file, entry.msgid))
                             self._set_warning_message('nplural',
                                 ugettext("Pluralized entries of the file were "
                                 "skipped because the nplural of the upload file "
                                 "differs from the nplural (%s) for the given "
-                                "language available in the system." % 
+                                "language available in the system." %
                                 len(nplural)))
                             same_nplural = False
                     else:
