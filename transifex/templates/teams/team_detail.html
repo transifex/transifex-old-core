@@ -12,6 +12,7 @@
 <script type="text/javascript">
   $(function(){
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+    $("#join-facebox-trigger").facebox();
     $(".tablesorter_resource").tablesorter({
         widgets: ['zebra'],
         headers: {
@@ -59,18 +60,30 @@
 
  	<div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% trans "Details" %}</h3>
+  	<div class="separate-buttons">
   	{% if perms.projects.change_team or is_coordinator %}
-  	<div class="separate-buttons"><a class="i16 edit nude-button" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit language translation" %}</a></div>
+  		<a class="i16 edit nude-button" href="{% url team_update team.project.slug team.language.code %}">{% trans "Edit language translation" %}</a>
 		{% endif %}
 		
-		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
-	  <div class="separate-buttons">
+		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
+			<a id="join-facebox-trigger" class="i16 team_join nude-button" href="#facebox-joinmember">{% trans 'Join language translation' %}</a>	
+		{% endif %}
+	  </div>
+	  
+	  <div class="no-display">
+		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
+		<div id="facebox-joinmember"  class="facebox-content">
+		<div class="facebox-content">
 	    <form method="post" action="{% url team_join_request team.project.slug team.language.code %}" class="microform">{% csrf_token %}
 	        <p>{% hook "team_request_join_additional.html" %}</p>
-	        <p><input name="team_join" class="i16 team_join nude-button" type="submit" title="{% trans 'Join language translation' %}" value="{% trans 'Join language translation' %}" style="margin:0;padding:0;"></p>
+	        <p><input name="team_join" class="i16 tick buttonized" type="submit" title="{% trans 'Join language translation' %}" value="{% trans 'Join language translation' %}"></p>
 	    </form>
+		</div>
 	  </div>
 		{% endif %}
+	  
+	  </div>
+
 	</div>
 
 
@@ -188,7 +201,7 @@
 {% if not action_log %}
 <p>{% trans 'None available' %}</p>
 {% else %}
-<ul class="actionlist simple">
+<ul class="actionlist nomargin">
 {% for entry in action_log %}
 	<li class="i16 {{entry.action_type}}">
 	    <p>{{ entry.message|safe }}</p> 
