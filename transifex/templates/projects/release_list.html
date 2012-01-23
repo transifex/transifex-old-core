@@ -23,7 +23,7 @@
 
   
   <div class="release_list">
-    <ul class="simple bigthings">
+    <ul class="nomargin">
     {% for release in releases %}
       <li><p class="i16 release"><a href="{{ release.get_absolute_url }}">{{ release.name }}</a>
       {% if release.description %}<span class="description">– {{ release.description }}</span>{% endif %}</p></li>

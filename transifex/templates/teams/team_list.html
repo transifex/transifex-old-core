@@ -44,11 +44,11 @@
 
   {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
   {% if teamrequests and request.user.is_authenticated %}
-  <div class="list">
+  <div class="datalist">
     <div class="i16 language-add table-separator-row clearfix"><p>{% trans "Requests for new:" %}</p></div>
     <ul class="nomargin">
     {% for teamrequest in teamrequests %}
-      <li class="clearfix">
+      <li class="clearfix team-row">
         <div class="tt-details">
           <h5 style="float:left;">{{ teamrequest.language.name }}</h5>
           <span class="details">&nbsp;-&nbsp;Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
@@ -70,12 +70,12 @@
 
   {% with project.team_set.all|dictsort:"language.name" as teams %}
   {% if teams %}
-  <div class="list" style="margin-top:1em;">
+  <div class="datalist" style="margin-top:1em;">
     <div class="i16 language table-separator-row clearfix"><p>{% trans "Already available:" %}</p></div>
     <ul class="nomargin">
     {% for team in teams %}
-      <a class="team-row" href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
-        <li class="clearfix">
+      <a href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
+        <li class="clearfix team-row">
           <div class="tt-details">
             <h5 class="linkstyle">{{ team.language.name }}</h5>
           </div>
