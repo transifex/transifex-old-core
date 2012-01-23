@@ -219,7 +219,7 @@
 {% endif %}
 
 
-<table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:99%;margin-left:auto;margin-right:auto;">
+<table class="stat_table_font stats-table highlighted tablesorter_resource">
   <thead>
   <tr>
     <th><span>{% trans "Language" %}</span></th>
@@ -286,7 +286,7 @@
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object resource %}
 {% if not action_log %}
-<p>{% trans 'No actions recorded yet :)' %}</p>
+<p class="i16 infomsg">{% trans 'No actions recorded yet :)' %}</p>
 {% else %}
 <ul class="actionlist simple">
 {% for entry in action_log %}
