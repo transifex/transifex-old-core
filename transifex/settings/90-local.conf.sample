@@ -17,6 +17,9 @@ REQUIRE_EMAIL_CONFIRMATION = True
 NOTIFICATION_QUEUE_ALL = False
 INTERNAL_IPS = ('127.0.0.1',)
 SCRATCH_DIR = os.path.join(PROJECT_PATH, 'scratchdir')
+# Also override all other settings which are affected by SCRATCH_DIR:
+MSGMERGE_DIR = os.path.join(SCRATCH_DIR, 'msgmerge_files')
+STORAGE_DIR = os.path.join(SCRATCH_DIR, 'storage_files')
 
 # Email sending
 EMAIL_HOST = 'localhost'
