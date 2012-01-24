@@ -13,7 +13,7 @@ from transifex.txcommon.log import logger
 from transifex.resources.models import Resource
 from transifex.resources.formats.exceptions import FormatError
 from transifex.resources.formats.registry import registry
-from transifex.resources.formats.compilation import mode
+from transifex.resources.formats.compilation import Mode
 from transifex.resources.formats.utils.decorators import need_language
 
 
@@ -184,7 +184,7 @@ class FormatsBackend(object):
         except FormatError, e:
             raise FormatsBackendError(unicode(e))
 
-    def compile_translation(self, pseudo_type=None, mode=mode.DEFAULT):
+    def compile_translation(self, pseudo_type=None, mode=None):
         """Compile the translation for a resource in a specified language.
 
         There is some extra care for PO/POT resources. If there is no

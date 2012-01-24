@@ -37,6 +37,9 @@ class _Mode(object):
         return u'<Mode %s>' % self._value
 
 
-DEFAULT = _Mode(value=0)
-TRANSLATE = _Mode(value=1)
-REVIEWED = _Mode(value=2)
+class Mode(object):
+    """Act as a namespace for the pre-defined modes."""
+
+    DEFAULT = _Mode(value=0)
+    TRANSLATED = _Mode(value=1)
+    REVIEWED = _Mode(value=2)

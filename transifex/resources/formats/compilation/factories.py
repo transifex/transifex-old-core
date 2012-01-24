@@ -9,7 +9,7 @@ from transifex.resources.formats.compilation.decorators import \
 from transifex.resources.formats.compilation.builders import \
         AllTranslationsBuilder, EmptyTranslationsBuilder, \
         ReviewedTranslationsBuilder, SourceTranslationsBuilder
-from .mode import TRANSLATE, REVIEWED
+from .mode import Mode
 
 
 class CompilerFactory(object):
@@ -99,7 +99,7 @@ class SimpleCompilerFactory(CompilerFactory):
 
         We either use all translations or only reviewed ones.
         """
-        if REVIEWED in mode:
+        if Mode.REVIEWED in mode:
             return ReviewedTranslationsBuilder(self.resource, language)
         else:
             return AllTranslationsBuilder(self.resource, language)
@@ -119,9 +119,9 @@ class FillEmptyCompilerFactory(CompilerFactory):
 
         We either use all translations or only reviewed ones.
         """
-        if REVIEWED in mode:
+        if Mode.REVIEWED in mode:
             return ReviewedTranslationsBuilder(self.resource, language)
-        elif TRANSLATE in mode:
+        elif Mode.TRANSLATED in mode:
             return AllTranslationsBuilder(self.resource, language)
         else:
             return SourceTranslationsBuilder(self.resource, language)
