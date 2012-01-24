@@ -4,11 +4,12 @@
 Factories for compilers.
 """
 
-from transifex.resources.formats.compilation.decorators import \
-        NormalDecoratorBuilder, PseudoDecoratorBuilder, EmptyDecoratorBuilder
-from transifex.resources.formats.compilation.builders import \
-        AllTranslationsBuilder, EmptyTranslationsBuilder, \
-        ReviewedTranslationsBuilder, SourceTranslationsBuilder
+from __future__ import absolute_import
+from .decorators import NormalDecoratorBuilder, PseudoDecoratorBuilder, \
+        EmptyDecoratorBuilder
+from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \
+        ReviewedTranslationsBuilder, SourceTranslationsBuilder, \
+        ReviewedSourceTranslationsBuilder
 from .mode import Mode
 
 
@@ -115,11 +116,10 @@ class FillEmptyCompilerFactory(CompilerFactory):
     """
 
     def _get_translation_setter(self, language, mode):
-        """Get the translations builder.
-
-        We either use all translations or only reviewed ones.
-        """
-        if Mode.REVIEWED in mode:
+        """Get the translations builder."""
+        if Mode.REVIEWED in mode and mode.TRANSLATE in mode:
+            return ReviewedSourceTranslationsBuilder(self.resource, language)
+        elif Mode.REVIEWED in mode:
             return ReviewedTranslationsBuilder(self.resource, language)
         elif Mode.TRANSLATED in mode:
             return AllTranslationsBuilder(self.resource, language)
