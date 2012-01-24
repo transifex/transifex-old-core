@@ -95,7 +95,7 @@ class UserExperienceTest(CLAMixin):
         response = self.client['registered'].get(
             reverse('project_detail', args=[self.project.slug])
         )
-        self.assertContains(response, "Request a new translation team")
+        self.assertContains(response, "Request language")
         response = self.client['registered'].post(
             reverse('team_request', args=[self.project.slug]),
             {'language': 28}, # 28 is the language code for french
@@ -107,7 +107,7 @@ class UserExperienceTest(CLAMixin):
         response = self.client['registered'].get(
             reverse('project_detail', args=[self.project.slug]),
         )
-        self.assertContains(response, "Request a new translation team")
+        self.assertContains(response, "Request language")
         response = self.client['registered'].post(
             reverse('team_request', args=[self.project.slug]),
             {'cla_sign': True, 'language': 28},
@@ -133,7 +133,7 @@ class UserExperienceTest(CLAMixin):
         response = self.client['registered'].get(
             reverse('team_detail', args=[self.project.slug, 'fr'])
         )
-        self.assertContains(response, 'Join this Team')
+        self.assertContains(response, 'Join language translation')
         response = self.client['registered'].post(
             reverse('team_join_request', args=[self.project.slug, 'fr']),
             {'team_join': "Join this Team"},
@@ -153,7 +153,7 @@ class UserExperienceTest(CLAMixin):
         response = self.client['registered'].get(
             reverse('team_detail', args=[self.project.slug, 'fr']),
         )
-        self.assertContains(response, 'Join this Team')
+        self.assertContains(response, 'Join language translation')
         response = self.client['registered'].post(
             reverse('team_join_request', args=[self.project.slug, 'fr']),
             {'cla_sign': True, 'team_join': "Join this Team"},
