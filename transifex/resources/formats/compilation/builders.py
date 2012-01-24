@@ -7,6 +7,7 @@ These builders are responsible to fetch all translations to be
 used, when compiling a template.
 """
 
+import itertools
 from transifex.resources.models import SourceEntity, Translation
 
 
@@ -30,6 +31,7 @@ class TranslationsBuilder(object):
             the source entity this translation corresponds to and values are
             the translated strings.
         """
+        # TODO Should return plurals
         raise NotImplementedError
 
 
@@ -40,7 +42,6 @@ class AllTranslationsBuilder(TranslationsBuilder):
         """Get the translation strings that match the specified
         source_entities.
         """
-        res = {}
         translations = Translation.objects.filter(
             source_entity__in=source_entities, language=self.language, rule=5
         ).values_list(
@@ -72,6 +73,7 @@ class ReviewedTranslationsBuilder(TranslationsBuilder):
             ).values_list('source_entity_id', 'string').iterator()
         return dict(translations)
 
+
 class SourceTranslationsBuilder(TranslationsBuilder):
     """Builder to use source strings in case of missing strings."""
 
@@ -80,4 +82,18 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         source entities. Use the source strings for the missing
         ones.
         """
-        raise NotImplementedError
+        # TODO Make caller use set
+        source_entities = set(source_entities)
+        translations = Translation.objects.filter(
+            source_entity__in=source_entities, language=self.language, rule=5
+        ).values_list(
+            'source_entity_id', 'string'
+        )
+        missing_ids = source_entities - set([sid for sid, s in translations])
+        source_strings = Translation.objects.filter(
+            source_entity__in=missing_ids,
+            language=self.resource.source_language, rule=5
+        ).values_list(
+            'source_entity_id', 'string'
+        )
+        return dict(itertools.chain(translations, source_strings))
