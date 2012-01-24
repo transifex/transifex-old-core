@@ -103,3 +103,25 @@ class SimpleCompilerFactory(CompilerFactory):
             return ReviewedTranslationsBuilder(self.resource, language)
         else:
             return AllTranslationsBuilder(self.resource, language)
+
+
+class FillEmptyCompilerFactory(CompilerFactory):
+    """Fill empty translations with source strings, if asked.
+
+    The features this compiler offers are:
+    - If the user does not want to translate the file, he will receive a
+      full translation, filled with source strings, where needed.
+    - Supports reviewed translations only.
+    """
+
+    def _get_translation_setter(self, language, mode):
+        """Get the translations builder.
+
+        We either use all translations or only reviewed ones.
+        """
+        if REVIEWED in mode:
+            return ReviewedTranslationsBuilder(self.resource, language)
+        elif TRANSLATE in mode:
+            return AllTranslationsBuilder(self.resource, language)
+        else:
+            return SourceTranslationsBuilder(self.resource, language)
