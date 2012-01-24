@@ -4,35 +4,9 @@ from django.utils import unittest
 from transifex.txcommon.tests.base import BaseTestCase
 from transifex.resources.models import Resource, Translation, SourceEntity
 from transifex.resources.formats.compilation import *
+from __future__ import absolute_import
+from .builders import *
 from .mode import *
-
-
-class TestTranslationsBuilders(BaseTestCase):
-    """Test the various translation builders."""
-
-    def test_all_builder(self):
-        """Test that the AllTransaltionsBuilder correctly returns
-        all translations.
-        """
-        builder = AllTranslationsBuilder(self.resource, self.language_en)
-        translations = builder([self.source_entity.id])
-        self.assertEquals(len(translations), 1)
-        self.translation_en.delete()
-        translations = builder([self.source_entity.id])
-        self.assertEquals(translations, {})
-
-    def test_empty_builder(self):
-        """Test that the EmptyTranslationsBuilder always returns an empty
-        dictionary.
-        """
-        builder = EmptyTranslationsBuilder(self.resource, self.language_en)
-        translations = builder([self.source_entity.id])
-        self.assertEquals(translations, {})
-        self.translation_en.delete()
-        translations = builder([self.source_entity.id])
-        self.assertEquals(translations, {})
-
-
 class TestDecoratorBuilders(unittest.TestCase):
     """Test the decorator builders."""
 
