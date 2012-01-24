@@ -3,6 +3,7 @@
 """
 GNU Gettext .PO/.POT file handler/compiler
 """
+from __future__ import absolute_import
 import os, re, time
 from collections import defaultdict
 import polib
@@ -22,7 +23,7 @@ from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.core import Handler
 from transifex.resources.formats.exceptions import CompileError, ParseError
-from transifex.resources.formats.compilation import Compiler, \
+from .compilation import SimpleCompilerFactory, Compiler, \
         EmptyDecoratorBuilder, EmptyTranslationsBuilder
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
@@ -68,7 +69,7 @@ def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
             "your system to see the errors for yourself." % e.stderr.lstrip('<stdin>:'))
 
 
-class GettextHandler(Handler):
+class GettextHandler(SimpleCompilerFactory, Handler):
     """
     Translate Toolkit is using Gettext C library to parse/create PO files in Python
     TODO: Switch to Gettext C library

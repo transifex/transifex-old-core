@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-""" Wikitext format handler """
+"""
+Wikitext format handler.
+"""
+
+from __future__ import absolute_import
 import os, re
 from itertools import groupby
 from transifex.txcommon.log import logger
@@ -9,6 +13,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
+from .compilation import SimpleCompilerFactory
 
 
 class WikiParseError(ParseError):
@@ -19,7 +24,7 @@ class WikiCompileError(CompileError):
     pass
 
 
-class WikiHandler(Handler):
+class WikiHandler(SimpleCompilerFactory, Handler):
     """Class for mediawiki markup."""
 
     name = "Wiki handler"

@@ -3,6 +3,7 @@
 """
 Generic properties format super class.
 """
+from __future__ import absolute_import
 import os, re
 from django.utils.hashcompat import md5_constructor
 
@@ -13,6 +14,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
+from .compilation import FillEmptyCompilerFactory
 
 
 class PropertiesParseError(ParseError):
@@ -23,7 +25,7 @@ class PropertiesCompileError(CompileError):
     pass
 
 
-class PropertiesHandler(Handler):
+class PropertiesHandler(FillEmptyCompilerFactory, Handler):
     """
     Handler for PROPERTIES translation files.
     """

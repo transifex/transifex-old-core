@@ -16,7 +16,7 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import Handler, ParseError, CompileError, \
         STRICT
-from transifex.resources.formats.compilation import Compiler
+from .compilation import Compiler, SimpleCompilerFactory
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from transifex.resources.formats.utils.decorators import *
@@ -130,7 +130,7 @@ class XliffCompiler(Compiler):
         self.compiled_template = content
 
 
-class XliffHandler(Handler):
+class XliffHandler(SimpleCompilerFactory, Handler):
     name = "XLIFF *.XLF file handler"
     format = "XLIFF files (*.xlf)"
     method_name = 'XLIFF'

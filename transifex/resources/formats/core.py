@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
 import codecs, copy, os, re
 import gc
 from django.utils import simplejson as json
@@ -18,10 +19,9 @@ from transifex.actionlog.models import action_logging
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats.exceptions import FormatError, ParseError, \
         CompileError
-from transifex.resources.formats.compilation import Compiler, \
-        NormalDecoratorBuilder, PseudoDecoratorBuilder, \
-        AllTranslationsBuilder, SourceTranslationsBuilder, \
-        ReviewedTranslationsBuilder, SimpleCompilerFactory, mode
+from .compilation import Compiler, NormalDecoratorBuilder, \
+        PseudoDecoratorBuilder, AllTranslationsBuilder, \
+        SourceTranslationsBuilder, ReviewedTranslationsBuilder, mode
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
@@ -78,7 +78,7 @@ class CustomSerializer(json.JSONEncoder):
             }
 
 
-class Handler(SimpleCompilerFactory):
+class Handler(object):
     """Base class for writing file handlers for all the I18N types."""
     default_encoding = "UTF-8"
     method_name = None

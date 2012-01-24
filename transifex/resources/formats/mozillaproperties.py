@@ -3,9 +3,10 @@
 """
 Mozilla properties file handler/compiler
 """
+
+from __future__ import absolute_import
 import os, re
 from django.utils.hashcompat import md5_constructor
-
 from transifex.txcommon.log import logger
 from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *

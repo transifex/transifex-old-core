@@ -3,8 +3,9 @@
 """
 Apple strings file handler/compiler
 """
-import codecs, os, re, chardet
 
+from __future__ import absolute_import
+import codecs, os, re, chardet
 from transifex.txcommon.log import logger
 from transifex.resources.models import SourceEntity, Template
 from transifex.resources.formats.utils.decorators import *
@@ -12,6 +13,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
+from .compilation import SimpleCompilerFactory
 
 class StringsParseError(ParseError):
     pass
@@ -21,7 +23,7 @@ class StringsCompileError(ParseError):
     pass
 
 
-class AppleStringsHandler(Handler):
+class AppleStringsHandler(SimpleCompilerFactory, Handler):
     """
     Handler for Apple STRINGS translation files.
 

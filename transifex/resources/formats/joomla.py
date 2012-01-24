@@ -3,15 +3,16 @@
 """
 Joomla INI file handler/compiler
 """
+
+from __future__ import absolute_import
 import os, re
 import codecs
-
 from transifex.txcommon.log import logger
 from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
-from transifex.resources.formats.compilation import Compiler
+from .compilation import Compiler, SimpleCompilerFactory
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 
@@ -38,7 +39,7 @@ class JoomlaCompiler(Compiler):
             original, self.jformat.get_compilation(replacement), text
     )
 
-class JoomlaINIHandler(Handler):
+class JoomlaINIHandler(SimpleCompilerFactory, Handler):
     """
     Handler for Joomla's INI translation files.
 

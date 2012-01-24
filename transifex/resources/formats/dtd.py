@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """ DTD file handler/compiler """
-import os, re
 
+from __future__ import absolute_import
+import os, re
 from transifex.txcommon.log import logger
 from transifex.resources.formats import FormatError
 from transifex.resources.formats.utils.decorators import *
@@ -9,6 +10,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
+from .compilation import SimpleCompilerFactory
 
 
 class DTDParseError(ParseError):
@@ -19,7 +21,7 @@ class DTDCompileError(CompileError):
     pass
 
 
-class DTDHandler(Handler):
+class DTDHandler(SimpleCompilerFactory, Handler):
     """ Handler for DTD translation files. """
     default_encoding = 'UTF-8'
     format_encoding = 'UTF-8'

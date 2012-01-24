@@ -3,6 +3,7 @@
 """
 Qt4 TS file parser for Python
 """
+from __future__ import absolute_import
 import re
 import time
 import xml.dom.minidom
@@ -15,7 +16,7 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import ParseError, CompileError, \
         Handler, STRICT
-from transifex.resources.formats.compilation import Compiler
+from .compilation import Compiler, SimpleCompilerFactory
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from suggestions.models import Suggestion
@@ -153,7 +154,7 @@ class QtCompiler(Compiler):
         self.compiled_template = esc_template_text
 
 
-class LinguistHandler(Handler):
+class LinguistHandler(SimpleCompilerFactory, Handler):
     name = "Qt4 TS parser"
     format = "Qt4 Translation XML files (*.ts)"
     method_name = 'QT'

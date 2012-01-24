@@ -3,6 +3,7 @@
 Handler for .desktop files.
 """
 
+from __future__ import absolute_import
 import re
 import codecs
 from django.utils.translation import ugettext as _
@@ -13,7 +14,7 @@ from transifex.resources.models import Translation, Template
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
-from transifex.resources.formats.compilation import Compiler
+from .compilation import Compiler, SimpleCompilerFactory
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 
@@ -63,7 +64,7 @@ class DesktopTranslationCompiler(DesktopBaseCompiler):
     """
 
 
-class DesktopHandler(Handler):
+class DesktopHandler(SimpleCompilerFactory, Handler):
     """Class for .desktop files.
 
     See http://standards.freedesktop.org/desktop-entry-spec/latest/.
