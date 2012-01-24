@@ -63,7 +63,15 @@ class CompilerFactory(object):
 
 
 class SimpleCompilerFactory(CompilerFactory):
-    """Use translation string set as is."""
+    """Use translation string set as is.
+
+    The features this compiler offers are the default ones:
+    - Uses only the translation strings, whenever a translation is
+      asked.
+    - Supports fetching only reviewed strings.
+
+    This compiler should be used by formats such as PO.
+    """
 
     def construct_compiler(self, language, pseudo_type, mode):
         """Construct a compiler that uses only the translations for the
