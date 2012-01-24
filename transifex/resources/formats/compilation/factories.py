@@ -125,3 +125,19 @@ class FillEmptyCompilerFactory(CompilerFactory):
             return AllTranslationsBuilder(self.resource, language)
         else:
             return SourceTranslationsBuilder(self.resource, language)
+
+
+class AlwaysFillEmptyCompilerFactory(CompilerFactory):
+    """Always fill empty translations with source strings.
+
+    The features this compiler offers are:
+    - Source strings are always used for empty translations.
+    - Supports reviewed translations only.
+    """
+
+    def _get_translation_setter(self, language, mode):
+        """Get the translations builder."""
+        if Mode.REVIEWED in mode:
+            return ReviewedSourceTranslationsBuilder(self.resource, language)
+        else:
+            return SourceTranslationsBuilder(self.resource, language)
