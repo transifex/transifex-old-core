@@ -13,7 +13,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
-from .compilation import SimpleCompilerFactory
+from .compilation import FillEmptyCompilerFactory
 
 
 class WikiParseError(ParseError):
@@ -24,7 +24,7 @@ class WikiCompileError(CompileError):
     pass
 
 
-class WikiHandler(SimpleCompilerFactory, Handler):
+class WikiHandler(FillEmptyCompilerFactory, Handler):
     """Class for mediawiki markup."""
 
     name = "Wiki handler"
