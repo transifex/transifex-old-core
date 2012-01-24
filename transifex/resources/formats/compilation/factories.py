@@ -28,7 +28,12 @@ class CompilerFactory(object):
         Returns:
             A suitable compiler.
         """
-        raise NotImplementedError
+        tdec = self._get_translation_decorator(pseudo_type)
+        tset = self._get_translation_setter(language, mode)
+        compiler = self._get_compiler()
+        compiler.translation_decorator = tdec
+        compiler.translation_set = tset
+        return compiler
 
     def _get_compiler(self):
         """Construct the compiler to use.
@@ -61,6 +66,22 @@ class CompilerFactory(object):
                 pseudo_func=pseudo_type.compile
             )
 
+    def _get_translation_setter(self, language, mode):
+        """Get the translations builder.
+
+        This is used to fetch the set of translations to be used in
+        the compilation process.
+
+        Subclasses should override this.
+
+        Args:
+            language: The language for the translations.
+            mode: The mode for the compilation.
+        Returns:
+            An instance of the apporpriate translations builder.
+        """
+        raise NotImplementedError
+
 
 class SimpleCompilerFactory(CompilerFactory):
     """Use translation string set as is.
@@ -73,33 +94,10 @@ class SimpleCompilerFactory(CompilerFactory):
     This compiler should be used by formats such as PO.
     """
 
-    def construct_compiler(self, language, pseudo_type, mode):
-        """Construct a compiler that uses only the translations for the
-        stringset.
-        """
-        tdec = self._get_translation_decorator(pseudo_type)
-        tset = self._get_translation_setter(language, mode)
-        compiler = self._get_compiler()
-        compiler.translation_decorator = tdec
-        compiler.translation_set = tset
-        return compiler
-
-
     def _get_translation_setter(self, language, mode):
         """Get the translations builder.
 
-        This is used to fetch the set of translations to be used in
-        the compilation process. The default one is to fetch all
-        translations.
-
-        Subclasses should override this, if they need to use a different
-        TransaltionsBuilder subclass.
-
-        Args:
-            language: The language for the translations.
-            mode: The mode for the compilation.
-        Returns:
-            An instance of the apporpriate translations builder.
+        We either use all translations or only reviewed ones.
         """
         if REVIEWED in mode:
             return ReviewedTranslationsBuilder(self.resource, language)
