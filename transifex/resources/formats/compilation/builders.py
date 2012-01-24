@@ -97,3 +97,31 @@ class SourceTranslationsBuilder(TranslationsBuilder):
             'source_entity_id', 'string'
         )
         return dict(itertools.chain(translations, source_strings))
+
+
+class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
+    """Builder to fetch only reviewed translations and fill the others
+    with the source strings.
+    """
+
+    def __call__(self, source_entities):
+        """Get the translation strings that match the specified
+        source entities. Use the source strings for the missing
+        ones.
+        """
+        # TODO Make caller use set
+        source_entities = set(source_entities)
+        translations = Translation.objects.filter(
+            reviewed=True, source_entity__in=source_entities,
+            language=self.language, rule=5
+        ).values_list(
+            'source_entity_id', 'string'
+        )
+        missing_ids = source_entities - set([sid for sid, s in translations])
+        source_strings = Translation.objects.filter(
+            source_entity__in=missing_ids,
+            language=self.resource.source_language, rule=5
+        ).values_list(
+            'source_entity_id', 'string'
+        )
+        return dict(itertools.chain(translations, source_strings))
