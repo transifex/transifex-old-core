@@ -21,7 +21,7 @@ from transifex.resources.formats.exceptions import FormatError, ParseError, \
 from transifex.resources.formats.compilation import Compiler, \
         NormalDecoratorBuilder, PseudoDecoratorBuilder, \
         AllTranslationsBuilder, SourceTranslationsBuilder, \
-        ReviewedTranslationsBuilder
+        ReviewedTranslationsBuilder, SimpleCompilerFactory
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
@@ -78,10 +78,8 @@ class CustomSerializer(json.JSONEncoder):
             }
 
 
-class Handler(object):
-    """
-    Base class for writing file handlers for all the I18N types.
-    """
+class Handler(SimpleCompilerFactory):
+    """Base class for writing file handlers for all the I18N types."""
     default_encoding = "UTF-8"
     method_name = None
     format_encoding = "UTF-8"
@@ -303,78 +301,6 @@ class Handler(object):
         """Adds to instance a new suggestion string."""
         self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
 
-    def _get_translation_decorator(self, pseudo_type):
-        """Choose the decorator to use.
-
-        Override in subclasses, if you need to use a custom one for a
-        specific format.
-
-        Args:
-            pseudo_type: The pseudo type chosen.
-        Returns:
-            An instance of the applier.
-        """
-        if pseudo_type is None:
-            return NormalDecoratorBuilder(escape_func=self._escape)
-        else:
-            return PseudoDecoratorBuilder(
-                escape_func=self._escape,
-                pseudo_func=pseudo_type.compile
-            )
-
-    def _get_compiler(self):
-        """Construct the compiler to use.
-
-        We use by default `cls.CompilerClass``. If a format does not have
-        any special needs, we only need to set the ``CompilerClass``
-        variable to the appropriate compiler subclass.
-
-        Otherwise, a subclass should override this, so that it can
-        choose the appropriate compiler.
-        """
-        return self.CompilerClass(resource=self.resource)
-
-    def _get_translation_setter(self, language, mode):
-        """Get the translations builder.
-
-        This is used to fetch the set of translations to be used in
-        the compilation process. The default one is to fetch all
-        translations.
-
-        Subclasses should override this, if they need to use a different
-        TransaltionsBuilder subclass.
-
-        Args:
-            language: The language for the translations.
-            mode: The mode for the compilation.
-        Returns:
-            An instance of the apporpriate translations builder.
-        """
-        if mode == Mode.TRANSLATING:
-            return AllTranslationsBuilder(self.resource, language)
-        elif mode == Mode.REVIEWED:
-            return ReviewedTranslationsBuilder(self.resource, language)
-        else:
-            # TODO
-            return SourceTranslationsBuilder(self.resource, language)
-
-    def _compiler(self, language, pseudo_type, mode):
-        """Factory to construct the compiler to use.
-
-        Args:
-            language: The language to use.
-            pseudo_type: The pseudo_type to use.
-            mode: The mode of the compilation.
-        Returns:
-            The suitable compiler class.
-        """
-        tdec = self._get_translation_decorator(pseudo_type)
-        tset = self._get_translation_setter(language, mode)
-        compiler = self._get_compiler()
-        compiler.translation_decorator = tdec
-        compiler.translation_set = tset
-        return compiler
-
     @need_resource
     def compile(self, language=None, pseudo=None, mode=Mode.TRANSLATING):
         """Compile the translation for the specified language.
@@ -391,7 +317,7 @@ class Handler(object):
         if language is None:
             language = self.language
         content = self._content_from_template(self.resource)
-        compiler = self._compiler(language, pseudo, mode)
+        compiler = self.construct_compiler(language, pseudo, mode)
         try:
             return compiler.compile(
                 content, language
