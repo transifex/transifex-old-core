@@ -32,7 +32,7 @@ class TestTeams(base.BaseTestCase):
                 'coordinators': '|%s|' % User.objects.all()[0].id,
                 'members': '|',}
         resp = self.client['maintainer'].post(url, data=DATA, follow=True)
-        self.assertContains(resp, 'Translation Teams - Arabic', status_code=200)
+        self.assertContains(resp, 'Language - Arabic', status_code=200)
         self.assertNotContains(resp, 'Enter a valid value')
 
     def team_details_release(self):
