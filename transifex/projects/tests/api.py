@@ -8,7 +8,8 @@ from django.test import TestCase, TransactionTestCase
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import Users, Languages, \
         NoticeTypes, Projects, Resources, TransactionNoticeTypes, \
-        TransactionLanguages, TransactionProjects, TransactionUsers
+        TransactionLanguages, TransactionProjects, TransactionUsers,\
+        BaseTestCase
 from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import RLStats, Resource
 from transifex.projects.models import Project
@@ -183,7 +184,7 @@ class TestTransactionProjectResourceAPI(TransactionNoticeTypes,
         self.assertEqual(Resource.objects.filter(slug=rslug).count(), 0)
 
 
-class TestProjectAPI(Languages, Resources, TestCase):
+class TestProjectAPI(BaseTestCase):
 
     def setUp(self):
         super(TestProjectAPI, self).setUp()

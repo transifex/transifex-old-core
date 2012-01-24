@@ -65,6 +65,32 @@ class TestCaseMixin(object):
         from transifex.txcommon.tests.utils import response_in_browser
         return response_in_browser(resp, halt=True)
 
+def create_users_and_clients(USER_ROLES):
+    registered = Group.objects.get(name="registered")
+    registered.permissions.add(
+        DjPermission.objects.get_or_create(
+            codename='add_project', name='Can add project',
+            content_type=ContentType.objects.get_for_model(Project))[0])
+
+    user = {}
+    client = {}
+
+    # Create users, respective clients and login users
+    for nick in USER_ROLES:
+        client[nick] = Client()
+        if nick != 'anonymous':
+            # Create respective users
+            if User.objects.filter(username=nick):
+                user[nick] = User.objects.get(username=nick)
+            else:
+                user[nick] = User.objects.create_user(
+                    nick, '%s@localhost' % nick, PASSWORD)
+            user[nick].groups.add(registered)
+            # Login non-anonymous personas
+            client[nick].login(username=nick, password=PASSWORD)
+
+    return user, client
+
 
 class Users(TestCaseMixin):
     """A class to create users in setUp().
@@ -75,25 +101,9 @@ class Users(TestCaseMixin):
     fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
 
     def setUp(self):
-        registered = Group.objects.get(name="registered")
-        registered.permissions.add(
-            DjPermission.objects.get_or_create(
-                codename='add_project', name='Can add project',
-                content_type=ContentType.objects.get_for_model(Project))[0])
-
-        self.user = {}
-        self.client = {}
-
-        # Create users, respective clients and login users
+        self.user, self.client = create_users_and_clients(USER_ROLES)
         for nick in USER_ROLES:
-            self.client[nick] = Client()
             if nick != 'anonymous':
-                # Create respective users
-                self.user[nick] = User.objects.create_user(
-                    nick, '%s@localhost' % nick, PASSWORD)
-                self.user[nick].groups.add(registered)
-                # Login non-anonymous personas
-                self.client[nick].login(username=nick, password=PASSWORD)
                 self.assertTrue(self.user[nick].is_authenticated())
         super(Users, self).setUp()
 

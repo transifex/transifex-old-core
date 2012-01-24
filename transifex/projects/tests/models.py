@@ -2,14 +2,14 @@
 from django.db import IntegrityError
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from transifex.txcommon.tests.base import Languages, Projects
+from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import Translation
 from transifex.projects.models import Project
 from transifex.resources.models import Resource
 
 
-class ModelTests(Languages, Projects, TestCase):
+class ModelTests(BaseTestCase):
 
     def test_project_slug_integrity(self):
         """ Check duplication of project slug."""

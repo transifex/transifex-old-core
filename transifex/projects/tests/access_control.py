@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from transifex.txcommon.tests.base import (Project, Language, Team, AuPermission,
-    BaseTestCase, USER_ROLES)
+    BaseTestCase, USER_ROLES, create_users_and_clients)
 from transifex.txcommon.tests.utils import (check_page_status,
     convert_url_roles, assert_status_code)
 
@@ -39,13 +39,14 @@ class ProjectAccessControlTestCase(BaseTestCase):
         'outsource_maintainer']
 
     def setUp(self):
-        USER_ROLES.remove('anonymous')
-
-        # Extending user roles
-        USER_ROLES.extend(self.EXTRA_USER_ROLES)
         super(ProjectAccessControlTestCase, self).setUp()
-        for u in self.EXTRA_USER_ROLES:
-            USER_ROLES.remove(u)
+        if 'anonymous' in USER_ROLES:
+            USER_ROLES.remove('anonymous')
+        # Extending users and clients
+        extra_users, extra_clients = create_users_and_clients(
+                self.EXTRA_USER_ROLES)
+        self.user.update(extra_users)
+        self.client.update(extra_clients)
 
         # Create an extra project to use it as the outsource
         self.project_outsource = Project.objects.get_or_create(
