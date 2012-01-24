@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.utils import unittest
-from transifex.resources.formats.compilation.mode import _Mode, VIEW, \
+from transifex.resources.formats.compilation.mode import _Mode, DEFAULT, \
         TRANSLATE, REVIEWED
 
 
@@ -20,18 +20,15 @@ class TestCompilationModes(unittest.TestCase):
         m1 = REVIEWED
         m2 = TRANSLATE
         m = m1 | m2
-        self.assertNotIn(VIEW, m)
         self.assertIn(TRANSLATE, m)
         self.assertIn(REVIEWED, m)
 
-        m1 = VIEW
+        m1 = DEFAULT
         m2 = REVIEWED
         m = m1 | m2
-        self.assertIn(VIEW, m)
         self.assertIn(REVIEWED, m)
         self.assertNotIn(TRANSLATE, m)
 
-        m = VIEW
-        self.assertIn(VIEW, m)
+        m = DEFAULT
         self.assertNotIn(TRANSLATE, m)
         self.assertNotIn(REVIEWED, m)

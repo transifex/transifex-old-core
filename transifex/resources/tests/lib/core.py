@@ -9,7 +9,8 @@ from transifex.projects.models import Project
 from transifex.resources.models import Resource, SourceEntity
 from transifex.languages.models import Language
 from transifex.resources.formats.joomla import JoomlaINIHandler
-from transifex.resources.formats.core import Handler, Mode
+from transifex.resources.formats.core import Handler
+from transifex.resources.formats.compilation import mode
 
 
 class TestCoreFunctions(Users, Languages, TransactionTestCase):
@@ -53,14 +54,14 @@ class TestMode(TestCase):
         """Test that the correct function is called for compilation."""
         h = Handler()
         h.resource = Mock()
-        h.compile(mode=Mode.VIEWING)
+        h.compile(mode=mode.DEFAULT)
         self.assertTrue(vmock.called)
         self.assertFalse(tmock.called)
         vmock.reset_mock()
-        h.compile(mode=Mode.TRANSLATING)
+        h.compile(mode=mode.TRANSLATE)
         self.assertFalse(vmock.called)
         self.assertTrue(tmock.called)
         vmock.reset_mock()
-        h.compile(mode=Mode.REVIEWED)
+        h.compile(mode=mode.REVIEWED)
         self.assertFalse(vmock.called)
         self.assertTrue(tmock.called)

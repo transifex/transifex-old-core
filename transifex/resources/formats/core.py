@@ -21,7 +21,7 @@ from transifex.resources.formats.exceptions import FormatError, ParseError, \
 from transifex.resources.formats.compilation import Compiler, \
         NormalDecoratorBuilder, PseudoDecoratorBuilder, \
         AllTranslationsBuilder, SourceTranslationsBuilder, \
-        ReviewedTranslationsBuilder, SimpleCompilerFactory
+        ReviewedTranslationsBuilder, SimpleCompilerFactory, mode
 from transifex.resources.formats.pseudo import PseudoTypeMixin
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
@@ -302,7 +302,7 @@ class Handler(SimpleCompilerFactory):
         self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
 
     @need_resource
-    def compile(self, language=None, pseudo=None, mode=Mode.TRANSLATING):
+    def compile(self, language=None, pseudo=None, mode=mode.DEFAULT):
         """Compile the translation for the specified language.
 
         The actual output of the compilation depends on the arguments.
