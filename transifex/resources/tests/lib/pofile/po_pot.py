@@ -17,8 +17,7 @@ from django.conf import settings
 from django.utils import simplejson
 from django.test import TestCase
 from django.test.client import Client, RequestFactory
-from transifex.txcommon.tests.base import Users, Languages, Projects, \
-        NoticeTypes, Resources
+from transifex.txcommon.tests.base import BaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.formats.registry import registry
 from transifex.resources.views import update_translation
@@ -29,7 +28,7 @@ from transifex.resources.api import Translation
 from transifex.resources.formats.pofile import POHandler, POTHandler
 
 
-class TestApiInvocations(Languages, Resources, TestCase):
+class TestApiInvocations(BaseTestCase):
     """Test PO/POT Handler invokations in the API.
 
     We need to test POST for resources and GET and PUT for translations and
@@ -135,7 +134,7 @@ class TestApiInvocations(Languages, Resources, TestCase):
                 self.assertIsInstance(used_handler, pot_class)
 
 
-class TestViewsInvocations(Languages, NoticeTypes, Resources, TestCase):
+class TestViewsInvocations(BaseTestCase):
     """Test PO/POT Handler invokations in the views.
 
     Test for both source content and translations, json and file

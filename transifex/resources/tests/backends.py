@@ -6,15 +6,15 @@ from mock import patch, Mock
 from django.conf import settings
 from django.test import TransactionTestCase
 from transifex.projects.models import Project
-from transifex.txcommon.tests.base import TransactionLanguages, Users, \
-        TransactionNoticeTypes
+from transifex.txcommon.tests.base import TransactionLanguages, \
+        TransactionUsers, TransactionNoticeTypes
 from transifex.languages.models import Language
 from transifex.resources.models import Resource, SourceEntity, Translation
 from transifex.resources.backends import *
 
 
-class TestBackend(Users, TransactionLanguages, TransactionNoticeTypes,
-                  TransactionTestCase):
+class TestBackend(TransactionUsers, TransactionLanguages,
+        TransactionNoticeTypes, TransactionTestCase):
 
     def setUp(self):
         super(TestBackend, self).setUp()

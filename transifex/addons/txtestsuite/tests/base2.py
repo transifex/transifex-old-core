@@ -463,6 +463,7 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
         cls._urls = {
             'project': reverse('project_detail', args=[cls._project.slug]),
             'project_edit': reverse('project_edit', args=[cls._project.slug]),
+            'project_resources': reverse('project_resources', args=[cls._project.slug]),
             'resource': reverse('resource_detail', args=[cls._resource.project.slug, cls._resource.slug]),
             'resource_actions': reverse('resource_actions', args=[cls._resource.project.slug, cls._resource.slug, cls._language.code]),
             'resource_edit': reverse('resource_edit', args=[cls._resource.project.slug, cls._resource.slug]),

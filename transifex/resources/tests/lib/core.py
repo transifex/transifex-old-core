@@ -4,7 +4,8 @@ from mock import patch, Mock
 from django.test import TestCase, TransactionTestCase
 from django.utils import unittest
 from django.conf import settings
-from transifex.txcommon.tests.base import Users, Languages
+from transifex.txcommon.tests.base import TransactionUsers,\
+        TransactionLanguages
 from transifex.projects.models import Project
 from transifex.resources.models import Resource, SourceEntity
 from transifex.languages.models import Language
@@ -13,7 +14,8 @@ from transifex.resources.formats.core import Handler
 from transifex.resources.formats.compilation import mode
 
 
-class TestCoreFunctions(Users, Languages, TransactionTestCase):
+class TestCoreFunctions(TransactionUsers, TransactionLanguages,
+        TransactionTestCase):
 
     def test_delete_old(self):
         """Test that old source entities get deleted, even when the iterations
