@@ -304,8 +304,6 @@ class TransactionSourceEntities(TransactionResources):
         )
 
 
-
-
 class SourceEntities(Resources):
     """A class to create some sample source entities.
 
@@ -334,6 +332,7 @@ class SourceEntities(Resources):
             pluralized=True
         )[0]
 
+
 class TransactionTranslations(TransactionSourceEntities):
     """A class to create some sample translations.
 
@@ -359,7 +358,6 @@ class TransactionTranslations(TransactionSourceEntities):
             user=self.user['registered'],
             resource=self.resource
         )
-
 
 
 class Translations(SourceEntities):
