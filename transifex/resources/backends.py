@@ -201,13 +201,8 @@ class FormatsBackend(object):
         Returns:
             The compiled template.
         """
-        try:
-            if mode is None:
-                mode = Mode.DEFAULT
-            else:
-                mode = getattr(Mode, mode.upper())
-        except AttributeError, e:
-            raise FormatsBackendError(unicode(e))
+        if mode is None:
+            mode = Mode.DEFAULT
         handler = registry.appropriate_handler(
             resource=self.resource, language=self.language
         )

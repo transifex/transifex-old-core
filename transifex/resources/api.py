@@ -33,6 +33,7 @@ from transifex.resources.models import Resource, SourceEntity, \
 from transifex.resources.backends import ResourceBackend, FormatsBackend, \
         ResourceBackendError, content_from_uploaded_file, \
         filename_of_uploaded_file
+from transifex.resources.formats import Mode
 from transifex.resources.formats.registry import registry
 from transifex.resources.formats.core import ParseError
 from transifex.resources.formats.pseudo import get_pseudo_class
@@ -611,6 +612,11 @@ class TranslationHandler(BaseHandler):
 
         # Get the mode the user requested, if any
         mode = request.GET.get('mode', None)
+        if mode is not None:
+            try:
+                mode = getattr(Mode, mode.upper())
+            except AttributeError, e:
+                return BAD_REQUEST(unicode(e))
 
         translation = Translation.get_object("get", request, r, language)
         try:
