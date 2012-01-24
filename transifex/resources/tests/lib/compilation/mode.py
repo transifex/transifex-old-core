@@ -19,15 +19,15 @@ class TestCompilationModes(unittest.TestCase):
         m1 = Mode.REVIEWED
         m2 = Mode.TRANSLATED
         m = m1 | m2
-        self.assertIn(TRANSLATE, m)
-        self.assertIn(REVIEWED, m)
+        self.assertIn(Mode.TRANSLATED, m)
+        self.assertIn(Mode.REVIEWED, m)
 
         m1 = Mode.DEFAULT
         m2 = Mode.REVIEWED
         m = m1 | m2
-        self.assertIn(REVIEWED, m)
-        self.assertNotIn(TRANSLATE, m)
+        self.assertIn(Mode.REVIEWED, m)
+        self.assertNotIn(Mode.TRANSLATED, m)
 
         m = Mode.DEFAULT
-        self.assertNotIn(TRANSLATE, m)
-        self.assertNotIn(REVIEWED, m)
+        self.assertNotIn(Mode.TRANSLATED, m)
+        self.assertNotIn(Mode.REVIEWED, m)
