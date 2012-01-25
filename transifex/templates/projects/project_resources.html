@@ -134,6 +134,7 @@
    <tr>
     <th id="category_header"><span>{% trans "Resource name" %}</span></th>
     <th class="ui-corner-topleft"><span>{% trans "Category" %}</span</th>
+		<th>{% trans "Size" %}</th>
     <th><span>{% trans "Last Updated" %}</span></th>
     <th class="ui-corner-topright"><span {% if is_maintainer %}class="res_tipsy_enable" title="{% trans "Click the flags to modify the importance of a resource." %}" {% else %} {% endif %}style="border:0">{% trans "Importance" %}</span></th>
    </tr>
@@ -144,9 +145,10 @@
 		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
         
         <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
-          <h5 class="linkstyle res_tipsy_enable" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}&nbsp;&raquo;</h5>
+          <h5 class="linkstyle" style="font-weight:bold">{{ stat.object.name }}&nbsp;&raquo;</h5>
         </td>
         <td class="category_td_class">{{ stat.object.category }}</td>
+        <td> {% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings <span style="color:#888;">({{ words }} words)</span>{% endblocktrans %}</td>
         <td class="tablelastupd">
           {% with stat.last_committer as last_committer %}
             <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
