@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 from cla.models import Cla, ClaSignature
 from transifex.projects.models import Project
+from transifex.resources.models import Language
 from transifex.txcommon.tests.base import BaseTestCase
 
 
@@ -57,6 +58,10 @@ class ModelApiTest(CLAMixin):
 
 
 class UserExperienceTest(CLAMixin):
+    @classmethod
+    def setUpClass(cls):
+        super(UserExperienceTest, cls).setUpClass()
+        cls.language_fr = Language.objects.get(code='fr')
 
     def setUp(self):
         super(UserExperienceTest, self).setUp()
@@ -98,7 +103,7 @@ class UserExperienceTest(CLAMixin):
         self.assertContains(response, "Request language")
         response = self.client['registered'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'language': 28}, # 28 is the language code for french
+            {'language': self.language_fr.pk},
             follow=True
         )
         self.assertContains(response, 'Contribution License Agreement', count=1)
@@ -110,7 +115,7 @@ class UserExperienceTest(CLAMixin):
         self.assertContains(response, "Request language")
         response = self.client['registered'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'cla_sign': True, 'language': 28},
+            {'cla_sign': True, 'language': self.language_fr.pk},
             follow=True
         )
         self.assertContains(response, 'French')
@@ -124,7 +129,7 @@ class UserExperienceTest(CLAMixin):
     def test_team_join_reject_if_not_cla(self):
         self.client['team_coordinator'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'cla_sign': True, 'language': 28}
+            {'cla_sign': True, 'language': self.language_fr.pk}
         )
         self.client['maintainer'].post(
             reverse('team_request_approve', args=[self.project.slug, 'fr']),
@@ -144,7 +149,7 @@ class UserExperienceTest(CLAMixin):
     def test_team_join_accept_if_cla(self):
         self.client['team_coordinator'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'cla_sign': True, 'language': 28}
+            {'cla_sign': True, 'language': self.language_fr.pk}
         )
         self.client['maintainer'].post(
             reverse('team_request_approve', args=[self.project.slug, 'fr']),
@@ -167,7 +172,7 @@ class UserExperienceTest(CLAMixin):
         )
         response = self.client['team_coordinator'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'cla_sign': True, 'language': 28},
+            {'cla_sign': True, 'language': self.language_fr.pk},
             follow=True
         )
         self.client['maintainer'].post(
@@ -186,7 +191,7 @@ class UserExperienceTest(CLAMixin):
     def test_show_signed_users(self):
         self.client['team_coordinator'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'cla_sign': True, 'language': 28}
+            {'cla_sign': True, 'language': self.language_fr.pk}
         )
         response = self.client['maintainer'].get(self.cla.get_users_url())
         self.assertContains(response, "team_coordinator")
@@ -194,7 +199,7 @@ class UserExperienceTest(CLAMixin):
     def test_dont_show_signed_users_if_not_project_maintainer(self):
         self.client['team_coordinator'].post(
             reverse('team_request', args=[self.project.slug]),
-            {'cla_sign': True, 'language': 28}
+            {'cla_sign': True, 'language': self.language_fr.pk}
         )
         response = self.client['team_coordinator'].get(self.cla.get_users_url())
         self.assertEqual(response.status_code, 403)
