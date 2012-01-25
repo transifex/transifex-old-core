@@ -56,7 +56,7 @@
      <div class="tab-wrapper grid_16">
         <ul  class="tabs clearfix">     
             <li class="{% if project_overview %}selected{% endif %} alpha"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
-            <li class="{% if project_resources %}selected{% endif %} alpha"><a href="{% url project_resources project.slug %}">{% trans "Resources" %} ({{ project.resources.count }})</a></li>
+            <li class="{% if project_resources %}selected{% endif %} alpha"><a href="{% url project_resources project.slug %}">{% trans "Resources" %} <span class="tab-stat">{{ project.resources.count }}</span></a></li>
             {% hook "project.html" menu %}
 
             {% if perms.projects.change_project or is_maintainer %}
