@@ -3,24 +3,30 @@
 {% load addons %}
 {% load permissions %}
 
-{% block content_title %}
-  <h2 class="pagetitle with_description">
+{% block project_header %}
   {% if not project %}
+  <h2 class="pagetitle with_description">
     {% trans "New project" %}
-  {% else %}
-    {% blocktrans with project.name as project_name %}Edit {{ project_name }}{% endblocktrans %}
-  {% endif %}
   </h2>
-   
-  <div class="description">
-		<p>{% if not project %}
-    	{% trans "Create a new project on Transifex" %}
-  		{% else %}
-    	{% trans "Edit your Project" %}
-  		{% endif %}
-    </p>
-	</div>
+  {% else %}
+  {{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
+  <h2 class="pagetitle with_description">
+    {% blocktrans with project.name as project_name %}Edit{% endblocktrans %}
+  </h2>
+  {% endif %}
 {% endblock %}
+
+{% block current_description %}
+<p class="description">
+  {% if not project %}
+    {% trans "Create a new project on Transifex" %}
+  {% else %}
+    {% trans "Edit your Project" %}
+  {% endif %}
+</p>
+{% endblock %}
+
+
 
 {% block basejs %}
 {{ block.super }}

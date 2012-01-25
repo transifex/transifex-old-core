@@ -45,7 +45,7 @@
   {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
   {% if teamrequests and request.user.is_authenticated %}
   <div class="datalist">
-    <div class="i16 language-add table-separator-row clearfix"><p>{% trans "Requests for new:" %}</p></div>
+    <div class="table-separator-row clearfix"><p>{% trans "Requests for new:" %}</p></div>
     <ul class="nomargin">
     {% for teamrequest in teamrequests %}
       <li class="clearfix team-row">
@@ -71,7 +71,7 @@
   {% with project.team_set.all|dictsort:"language.name" as teams %}
   {% if teams %}
   <div class="datalist" style="margin-top:1em;">
-    <div class="i16 language table-separator-row clearfix"><p>{% trans "Already available:" %}</p></div>
+    <div class="table-separator-row clearfix"><p>{% trans "Already available:" %}</p></div>
     <ul class="nomargin">
     {% for team in teams %}
       <a href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">

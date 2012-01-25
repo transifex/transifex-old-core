@@ -46,8 +46,7 @@
 
 {% block project_header %}
 {{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
-<h2 class="pagetitle with_description">
-{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Language - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
+<h2 class="pagetitle with_description">{% blocktrans %}Members{% endblocktrans %}</h2>
 {% endblock%}
 
 
