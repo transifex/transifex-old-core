@@ -338,10 +338,10 @@ class GettextCompiler(Compiler):
             source_entity__resource = self.resource,
             language=self.language,
         ).order_by('source_entity__id', 'rule').\
-        values_list('source_entity__string', 'string')
+        values_list('source_entity__string_hash', 'string')
         plurals = defaultdict(list)
-        for se, t in translations:
-            plurals[se].append(t)
+        for se_hash, t in translations:
+            plurals[se_hash].append(t)
         return plurals
 
     def _post_compile(self):
@@ -423,7 +423,9 @@ class GettextCompiler(Compiler):
                 # Initialize all plural rules up to the last
                 for p, n in enumerate(lang_rules):
                     plural_keys[p] = ""
-                for n, p in enumerate(plurals[entry.msgid]):
+                string_hash = hash_tag(entry.msgid, escape_context(
+                                entry.msgctxt) or '')
+                for n, p in enumerate(plurals[string_hash]):
                     plural_keys[n] =  self._tdecorator(p)
                 entry.msgstr_plural = plural_keys
         return po
