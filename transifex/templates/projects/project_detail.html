@@ -42,7 +42,7 @@
 	    {% url notification.views.notices as notices_url %}
 	    {% if notices_url %}
 	      <div class="separate-buttons">
-	      	<a class="nude-button">{% watch_toggle project %}</a>
+
 	      	{% hook "project.html" sep_but %}
 	      </div>
 	    {% endif %}
@@ -115,7 +115,18 @@
 	
 	<div class="separate-header clearfix">
   	<h3  class="sh-label notopmargin">{% trans 'History' %}</h3>
-		<div class="separate-buttons"><a class="i16 feed nude-button" href="{% url timeline_feed project.slug %}" title="{% trans 'Timeline feed for this project' %}">{% trans "Subscribe to feed" %}</a></div>
+		<div class="separate-buttons">
+		  <a class="i16 feed nude-button" href="{% url timeline_feed project.slug %}" title="{% trans 'Timeline feed for this project' %}">{% trans "Subscribe to feed" %}</a>
+		    	{% if request.user.is_authenticated %}
+	    {% url notification.views.notices as notices_url %}
+	    {% if notices_url %}
+	      
+	      	<a class="nude-button">{% watch_toggle project %}</a>
+	      
+	      
+	    {% endif %}
+		{% endif %}
+		</div>
 	</div>
 	
 	{% get_log 5 as action_log for_object project %}
