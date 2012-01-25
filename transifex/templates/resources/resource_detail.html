@@ -259,9 +259,6 @@
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|date:"M d, h:ia" }}
-              {% if last_committer %}
-              by {{ last_committer }}
-              {% endif %}
           {% else %}
               {% trans "no translations yet" %}
           {% endif %}

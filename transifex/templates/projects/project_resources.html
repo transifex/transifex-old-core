@@ -140,11 +140,11 @@
   </thead>
   <tbody>
   {% endif %}
-    <tr>
+    <tr onclick="javascript:window.location.href='{% url resource_detail project.slug stat.object.slug %}';">
 		{% cache 604800 project_resource_details project.slug stat.object.slug LANGUAGE_CODE %}
         
         <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
-          <a class="res_tipsy_enable" href="{% url resource_detail project.slug stat.object.slug %}" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}&nbsp;&raquo;</a>
+          <h5 class="linkstyle res_tipsy_enable" style="font-weight:bold" title="{% blocktrans with stat.object.total_entities as strings and stat.object.wordcount as words %}{{ strings }} strings, {{ words }} words{% endblocktrans %}">{{ stat.object.name }}&nbsp;&raquo;</h5>
         </td>
         <td class="category_td_class">{{ stat.object.category }}</td>
         <td class="tablelastupd">

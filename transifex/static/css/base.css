@@ -478,8 +478,8 @@ li ul, li ol 	{ margin: 0 0 0 0.5em; } /* Sub-list indent */
 /*DataList*/
 .datalist ul {list-style-image: none;list-style-position: outside;}
 .datalist ul li{padding: 0.5em 5px;height: 2em;border-bottom: 1px solid #e1e1e1;}
-.datalist ul>a{display: block;}
-.datalist ul>a:hover{background:#f7f9fa url(../images/icons/right-arrow.png) 99% center no-repeat;}
+.datalist ul li.linking:hover{cursor: pointer;background:#f7f9fa url(../images/icons/right-arrow.png) 99% center no-repeat;}
+.datalist ul li:hover .linkstyle{text-decoration: underline;}
 .datalist ul li.team-row{}
 .datalist ul li.i16{padding-left: 23px;}
 .datalist ul li .name{font-weight: bold;}
@@ -509,8 +509,9 @@ div.notice {
 
 .team-row input{margin:0;}
 .tt-stats{float: left;margin: 8px 10px 0px;}
-.tt-details{float:left;margin-top:7px;width:290px;}
-.tt-details h5{margin: 0;}
+.tt-details{float:left;margin-top:7px;width:320px;}
+.tt-details .ttd-extra{line-height: 1.1em; margin-left: 5px;color: #888;}
+.tt-details h5{margin: 0;float:left;font-weight: bold;}
 td img.bullet{position: relative;top:5px;}
 
 /*Actionlist*/
@@ -543,6 +544,7 @@ caption     { font-style: italic; font-size: 0.923em; }
 /*tr.even td 	{ background: #e5ecf9; } Alternate row background colour */
 
 .stats-table{clear:both;margin-top:0.5em;width:100%;}
+.stats-table tr{cursor: pointer;}
 table td.priority_level{width:30px;}
 table td.tablelastupd{width:140px;}
 

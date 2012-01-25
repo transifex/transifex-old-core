@@ -51,7 +51,7 @@
       <li class="clearfix team-row">
         <div class="tt-details">
           <h5 style="float:left;">{{ teamrequest.language.name }}</h5>
-          <span class="details">&nbsp;-&nbsp;Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a></span>
+          <span class="ttd-extra">(Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a>)</span>
       	</div>
         {% if is_maintainer %}
         <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
@@ -74,18 +74,16 @@
     <div class="table-separator-row clearfix"><p>{% trans "Already available:" %}</p></div>
     <ul class="nomargin">
     {% for team in teams %}
-      <a href="{% url team_detail team.project.slug team.language.code %}" class="clearfix">
-        <li class="clearfix team-row">
-          <div class="tt-details">
-            <h5 class="linkstyle">{{ team.language.name }}</h5>
-          </div>
-          <div class="tt-stats">
-            {% with 180 as width%}
-              {% progress_for_project team.project team.language width %}
-            {% endwith %}
-          </div>
-        </li>
-      </a>
+	    <li class="clearfix linking" onclick="javascript:window.location.href='{% url team_detail team.project.slug team.language.code %}';">
+	      <div class="tt-details">
+	        <h5 class="linkstyle">{{ team.language.name }}</h5><span class="ttd-extra">({{ team.members.all.count }}{% blocktrans %}  translators{% endblocktrans %})</span>
+	      </div>
+	      <div class="tt-stats">
+	        {% with 180 as width%}
+	          {% progress_for_project team.project team.language width %}
+	        {% endwith %}
+	      </div>
+	    </li>
     {% endfor %}
     </ul>
   </div>
