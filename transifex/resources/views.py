@@ -467,7 +467,7 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 @login_required
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'))
-def get_translation_file(request, project_slug, resource_slug, lang_code, 
+def get_translation_file(request, project_slug, resource_slug, lang_code,
     **kwargs):
     """
     View to export all translations of a resource for the requested language
@@ -498,11 +498,11 @@ def get_translation_file(request, project_slug, resource_slug, lang_code,
         'lang': language.code,
         'type': registry.file_extension_for(resource, language)
     }
-    
+
     # Prefix filename with mode, case it exists
-    if kwargs.has_key('mode'): 
+    if kwargs.has_key('mode'):
         _filename = "%s_" % kwargs.get('mode') + _filename
-    
+
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
 

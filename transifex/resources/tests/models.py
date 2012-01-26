@@ -41,11 +41,11 @@ class ResourcesModelTests(BaseTestCase):
 
     def test_create_resource(self):
         """Test Resource model creation."""
-        r = Resource.objects.create(name='Resource Model Test',
-                                slug='resource_model_test',
-                                i18n_type='PO',
-                                source_language=self.language_en,
-                                project=self.project)
+        r = Resource.objects.create(
+            name='Resource Model Test', slug='resource_model_test',
+            i18n_type='PO', source_language=self.language_en,
+            project=self.project
+        )
         self.assertTrue(r)
 
     def test_rlstats_creation(self):
@@ -76,11 +76,14 @@ class ResourcesModelTests(BaseTestCase):
 
     def test_create_translation_string(self):
         """Test TranslationString model creation."""
-        t = Translation.objects.create(string='Buy me some BEER :)',
-                                       rule=5,
-                                       source_entity=self.source_entity,
-                                       language=self.language,
-                                       user=self.user['registered'])
+        t = Translation.objects.create(
+            string='Buy me some BEER :)',
+            rule=5,
+            source_entity=self.source_entity,
+            resource=self.resource,
+            language=self.language,
+            user=self.user['registered']
+        )
         self.assertTrue(t)
         self.assertEqual(t.string_hash, md5(t.string.encode('utf-8')).hexdigest())
 
@@ -89,11 +92,14 @@ class ResourcesModelTests(BaseTestCase):
 
         WARNING! The 'u' character is important to be identified as unicode!
         """
-        t = Translation.objects.create(string=u'Αγόρασε μου μια μπύρα :)',
-                               rule=5,
-                               source_entity=self.source_entity,
-                               language=self.language,
-                               user=self.user['registered'])
+        t = Translation.objects.create(
+            string=u'Αγόρασε μου μια μπύρα :)',
+            rule=5,
+            source_entity=self.source_entity,
+            resource=self.resource,
+            language=self.language,
+            user=self.user['registered']
+        )
         self.assertTrue(t)
         self.assertEqual(t.string_hash, md5(t.string.encode('utf-8')).hexdigest())
 
@@ -101,16 +107,16 @@ class ResourcesModelTests(BaseTestCase):
         """Test that plural forms for translations are created correctly."""
         self.source_entity.pluralized = True
         self.source_entity.save()
-        t_one = Translation.objects.create(string=u'I want one beer :)',
-                                           rule=1,
-                                           source_entity=self.source_entity,
-                                           language=self.language,
-                                           user=self.user['registered'])
-        t_other = Translation.objects.create(string=u'I want ten beers :)',
-                                             rule=5,
-                                             source_entity=self.source_entity,
-                                             language=self.language,
-                                             user=self.user['registered'])
+        t_one = Translation.objects.create(
+            string=u'I want one beer :)', rule=1,
+            source_entity=self.source_entity, resource=self.resource,
+            language=self.language, user=self.user['registered']
+        )
+        t_other = Translation.objects.create(
+            string=u'I want ten beers :)', rule=5,
+            source_entity=self.source_entity, resource=self.resource,
+            language=self.language, user=self.user['registered']
+        )
         self.assertEqual(Translation.objects.filter(
             source_entity=self.source_entity, language=self.language).count(),
             len(self.language.get_pluralrules()))
@@ -120,11 +126,11 @@ class ResourcesModelTests(BaseTestCase):
 
         This depends to the corresponding DB engine.
         """
-        t = Translation.objects.create(string=SAMPLE_BIG_TEXT,
-                               rule=5,
-                               source_entity=self.source_entity,
-                               language=self.language,
-                               user=self.user['registered'])
+        t = Translation.objects.create(
+            string=SAMPLE_BIG_TEXT, rule=5,
+            source_entity=self.source_entity, resource=self.resource,
+            language=self.language, user=self.user['registered']
+        )
         self.assertTrue(t)
         self.assertEqual(t.string_hash,
                          md5(SAMPLE_BIG_TEXT.encode('utf-8')).hexdigest())
@@ -135,16 +141,16 @@ class ResourcesModelTests(BaseTestCase):
         Translation uniqueness is based on the combination of 'source_entity',
         'language' and 'rule' fields.
         """
-        t = Translation.objects.create(string="Hello",
-                                       rule=5,
-                                       source_entity=self.source_entity,
-                                       language=self.language,
-                                       user=self.user['registered'])
-        t_error = Translation(string="Hello2",
-                              rule=5,
-                              source_entity=self.source_entity,
-                              language=self.language,
-                              user=self.user['maintainer'])
+        t = Translation.objects.create(
+            string="Hello", rule=5,
+            source_entity=self.source_entity, resource=self.resource,
+            language=self.language, user=self.user['registered']
+        )
+        t_error = Translation(
+            string="Hello2", rule=5,
+            source_entity=self.source_entity, resource=self.resource,
+            language=self.language, user=self.user['maintainer']
+        )
         self.assertRaises(IntegrityError, t_error.save)
 
     def test_source_entity_integrity(self):
@@ -153,12 +159,12 @@ class ResourcesModelTests(BaseTestCase):
         SourceEntity uniqueness is based on the combination of 'string_hash',
          'context' and 'resource' fields.
         """
-        s = SourceEntity.objects.create(string=SAMPLE_STRING,
-                                        context="menu title",
-                                        resource=self.resource)
-        s_error = SourceEntity(string=SAMPLE_STRING,
-                               context="menu title",
-                               resource=self.resource)
+        s = SourceEntity.objects.create(
+            string=SAMPLE_STRING, context="menu title", resource=self.resource
+        )
+        s_error = SourceEntity(
+            string=SAMPLE_STRING, context="menu title", resource=self.resource
+        )
         self.assertRaises(IntegrityError, s_error.save)
 
 
