@@ -6,7 +6,6 @@ Compiler classes.
 Classes that handle compiling a template.
 """
 
-import re
 from transifex.resources.models import SourceEntity
 from transifex.resources.formats.exceptions import UninitializedCompilerError
 
