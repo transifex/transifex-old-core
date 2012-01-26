@@ -25,15 +25,17 @@ class TestTeams(base.BaseTestCase):
     def test_create_team(self):
         """Test a successful team creation."""
         url = reverse('team_create', args=[self.project.slug])
-        # Testmaker POST data:
-        # r = self.client.post('/projects/p/desktop-effects/teams/add/', {'language': '1', 'creator': '', 'mainlist': '', 'save_team': 'Save team', 'members_text': '', 'next': '', 'project': '20', 'coordinators': '|1|', 'coordinators_text': '', 'members': '|', 'csrfmiddlewaretoken': 'faac51cbc36b415e98599da53e798bd2', })
-        DATA = {'language': self.language_ar.id,
-                'project': self.project.id,
-                'coordinators': '|%s|' % User.objects.all()[0].id,
-                'members': '|',}
+        DATA = {
+            'language': self.language_ar.id,
+            'project': self.project.id,
+            'coordinators': '|%s|' % User.objects.all()[0].id,
+            'members': '|',
+        }
         resp = self.client['maintainer'].post(url, data=DATA, follow=True)
-        self.assertContains(resp, 'Language - Arabic', status_code=200)
-        self.assertNotContains(resp, 'Enter a valid value')
+        self.assertTemplateUsed(resp, 'teams/team_detail.html')
+        self.assertEqual(resp.context['team'].project.id, self.project.id)
+        self.assertEqual(resp.context['team'].language.id, self.language_ar.id)
+        self.assertIn(User.objects.all()[0], resp.context['team'].coordinators.all())
 
     def team_details_release(self):
         """Test releases appear correctly on team details page."""
