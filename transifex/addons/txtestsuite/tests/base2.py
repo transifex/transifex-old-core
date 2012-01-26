@@ -354,17 +354,17 @@ class TransactionTranslations(TransactionSourceEntities):
             string='Buy me some BEER :)',
             rule=5,
             source_entity=self.source_entity,
+            resource=self.resource,
             language=self.language_en,
             user=self.user['registered'],
-            resource=self.resource
         )
         self.translation_ar = self.source_entity.translations.create(
             string=u'This is supposed to be arabic text! αβγ',
             rule=5,
             source_entity=self.source_entity,
+            resource=self.resource,
             language=self.language_ar,
             user=self.user['registered'],
-            resource=self.resource
         )
 
 
@@ -569,6 +569,7 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
             string='Translation String 2',
             rule=5,
             source_entity=self.source_entity,
+            resource=self.resource,
             language=self.language_en,
             user=self.user['registered'])
         self.resource.update_total_entities()
