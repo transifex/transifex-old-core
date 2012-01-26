@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import logging
 from django.conf import settings
 from django.utils.hashcompat import md5_constructor
@@ -26,3 +27,13 @@ class FormatsBaseTestCase(base.BaseTestCase):
         with open(actual_file, 'r') as f:
             actual_content = f.read()
         self.assertEquals(template, actual_content)
+
+    def get_content_from_file(self, filename, encoding=False):
+        """Get content from a file as required by handler's
+        bind_content() method"""
+        f = open(filename, 'r')
+        content = f.read()
+        f.close()
+        if encoding:
+            content = content.decode(encoding)
+        return content
