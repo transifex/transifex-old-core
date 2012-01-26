@@ -38,7 +38,7 @@ class TranslationsBuilder(object):
 class AllTranslationsBuilder(TranslationsBuilder):
     """Builder to fetch all translations."""
 
-    def __call__(self, resource):
+    def __call__(self):
         """Get the translation strings that match the specified
         source_entities.
         """
@@ -64,7 +64,7 @@ class EmptyTranslationsBuilder(TranslationsBuilder):
 class ReviewedTranslationsBuilder(TranslationsBuilder):
     """Builder to fetch only reviewed strings."""
 
-    def __call__(self, resource):
+    def __call__(self):
         """Get the translation strings that match the specified source_entities
         and have been reviewed.
         """
@@ -77,7 +77,7 @@ class ReviewedTranslationsBuilder(TranslationsBuilder):
 class SourceTranslationsBuilder(TranslationsBuilder):
     """Builder to use source strings in case of missing strings."""
 
-    def __call__(self, resource):
+    def __call__(self):
         """Get the translation strings that match the specified
         source entities. Use the source strings for the missing
         ones.
@@ -88,7 +88,9 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         ).values_list(
             'source_entity_id', 'string'
         )
-        source_entities = SourceEntity.objects.filter(resource=self.resource).values_list('id', flat=True)
+        source_entities = SourceEntity.objects.filter(
+            resource=self.resource
+        ).values_list('id', flat=True)
         missing_ids = set(source_entities) - set([sid for sid, s in translations])
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
@@ -104,20 +106,20 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
     with the source strings.
     """
 
-    def __call__(self, resources):
+    def __call__(self):
         """Get the translation strings that match the specified
         source entities. Use the source strings for the missing
         ones.
         """
-        # TODO Make caller use set
-        source_entities = set(source_entities)
         translations = Translation.objects.filter(
             reviewed=True, resources=self.resource,
             language=self.language, rule=5
         ).values_list(
             'source_entity_id', 'string'
         )
-        source_entities = SourceEntity.objects.filter(resource=self.resource).values_list('id', flat=True)
+        source_entities = SourceEntity.objects.filter(
+            resource=self.resource
+        ).values_list('id', flat=True)
         missing_ids = set(source_entities) - set([sid for sid, s in translations])
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
