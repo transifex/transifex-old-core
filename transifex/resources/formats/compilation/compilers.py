@@ -137,9 +137,6 @@ class Compiler(object):
 
         Do a search and replace inside ``text`` and replaces all
         occurrences of ``original`` with ``replacement``.
-
-        TODO: use string.replace instead of re.sub.
         """
-        return re.sub(re.escape(original), replacement, text)
-
+        return text.replace(original, replacement)
 
