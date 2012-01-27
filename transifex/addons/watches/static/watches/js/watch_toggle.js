@@ -1,6 +1,6 @@
 watch_classes = Array('watch_add', 'watch_remove');
 
-function watch_handler(data, textStatus){
+function watch_handler(data, textStatus, onclcick_val){
     
     if (typeof(data) == 'object'){
         // JQuery >= 1.5
@@ -12,9 +12,9 @@ function watch_handler(data, textStatus){
     
     // TODO: It's a hack
     if(j.project)
-        obj = $('#watch-project');
+        obj = $('#watch-project[onclick="'+onclick_val+'"]');
     else
-        obj = $('#watch-resource-' + String(j.id));
+        obj = $('#watch-resource-' + String(j.id) + '[onclick="'+onclick_val+'"]');
 
     if (j.error){
         obj.attr('title', j.error);
@@ -42,6 +42,7 @@ function click_function(obj, url){
 }
 
 function watch_toggle(obj, url){
+    onclick_val = $(obj).attr('onclick');
     obj.onclick = null;
     o = $(obj);
     o.unbind('click');
@@ -51,5 +52,7 @@ function watch_toggle(obj, url){
         }
     }
     o.addClass('waiting'); /* will be removed in the callback */
-    $.post(url=url, callback=watch_handler, type='json');
+    $.post(url=url, callback=function(data, textStatus){
+      watch_handler(data, textStatus, onclick_val);
+    }, type='json');
 }
