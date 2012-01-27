@@ -37,7 +37,7 @@ from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.txcommon import notifications as txnotification
 
 from signals import lotte_init, lotte_done, lotte_save_translation
-from filters import get_search_filter_query, validate_date
+from filters import get_search_filter_query
 
 Suggestion = get_model('suggestions', 'Suggestion')
 
