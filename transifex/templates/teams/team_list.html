@@ -16,7 +16,7 @@
   	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
 		<div class="separate-buttons">
 		  {% if request.user.is_authenticated and not is_maintainer %}
-      <a class="i16 team_request" id="request-team-button" href="javascript:;">Request language</a>
+      <a class="i16 language-add" id="request-team-button" href="javascript:;">Request language</a>
       {% endif %}
       {% if perms.projects.change_team or is_maintainer %}
 		  <a class="i16 nude-button add" href="{% url team_create project.slug %}">{% trans "Create Language" %}</a>
@@ -49,7 +49,7 @@
     {% for teamrequest in teamrequests %}
       <li class="clearfix requested-row">
         <div class="tt-details">
-          <h5 style="float:left;">{{ teamrequest.language.name }}</h5>
+          <h5>{{ teamrequest.language.name }}</h5>
           <span class="ttd-extra">(Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a>)</span>
       	</div>
         {% if is_maintainer %}
