@@ -122,7 +122,7 @@ class Resource(models.Model):
     """
 
     # Short identifier to be used in the API URLs
-    slug = models.SlugField(_('Slug'), max_length=50, db_index=False,
+    slug = models.SlugField(_('Slug'), max_length=200, db_index=False,
         validators=[validate_slug,],
         help_text=_("A short label to be used in the URL, containing only "
                     "letters, numbers, underscores and hyphens."))
