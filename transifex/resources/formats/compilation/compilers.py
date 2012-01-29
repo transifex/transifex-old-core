@@ -104,7 +104,7 @@ class Compiler(object):
             content: The content (template) of the resource.
         """
         stringset = self._get_source_strings()
-        translations = self._tset(s[0] for s in stringset)
+        translations = self._tset()
         for string in stringset:
             trans = translations.get(string[0], u"")
             content = self._apply_translation(string[1], trans, content)
