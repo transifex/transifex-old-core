@@ -28,7 +28,6 @@
 {% endblock %}
 </div>
 
-
 {% block current_description %}
 {% if short_desc %}
 <div class="description">
@@ -37,38 +36,41 @@
 {% endif %}
 {% endblock %}
 
-
 {% endwith %}
-
 {% endblock %}
 
-
 {% block content_header_sec %}
+
+	{% if project.is_hub %}
+  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/hub-project.png)center top no-repeat;">
+	<p>{% trans "Hub"%}</p>
+	</span>
+	{% endif %}
+	
+	
 	{% if project.private %}
-	<span id="private_project_banner" class="ui-corner-all" style="padding-top:38px;display:inline-block;float:right;background:url({{ STATIC_URL }}images/icons/private-project.png)center top no-repeat;">
-	<p style="font-size:13px;font-weight:normal;color:#888;">{% trans "Private"%}</p>
+	<span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/private-project.png)center top no-repeat;">
+	<p>{% trans "Private"%}</p>
 	</span>
 	{% endif %}
 {% endblock %}
 
 {% block header_menu %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-    {% if project %}
-     <div class="tab-wrapper grid_16">
-        <ul  class="tabs clearfix">     
-            <li class="{% if project_overview %}selected{% endif %} alpha"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
-            <li class="{% if project_resources %}selected{% endif %} alpha"><a href="{% url project_resources project.slug %}">{% trans "Resources" %} <span class="tab-stat">{{ project.resources.count }}</span></a></li>
-            {% hook "project.html" menu %}
-
-            {% if perms.projects.change_project or is_maintainer %}
-            {% url project_edit project_slug=project.slug as url_project_edit%}{% url project_delete project_slug=project.slug as url_project_delete %}{% url project_access_control_edit project_slug=project.slug as url_project_access_control_edit %}{% url project_timeline project_slug=project.slug as url_project_timeline %}
-            <li class="{% if request.path == url_project_edit or request.path == url_project_delete or request.path == url_project_access_control_edit or request.path == url_project_timeline%}selected{% endif %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
-            {% endif %}
-          </ul>
-        </div>            
-    {% endif %}
+	{% if project %}
+	<div class="tab-wrapper grid_16">
+		<ul  class="tabs clearfix">     
+		  <li class="{% if project_overview %}selected{% endif %} alpha"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
+		  <li class="{% if project_resources %}selected{% endif %} alpha"><a href="{% url project_resources project.slug %}">{% trans "Resources" %} <span class="tab-stat">{{ project.resources.count }}</span></a></li>
+		  {% hook "project.html" menu %}
+		  {% if perms.projects.change_project or is_maintainer %}
+		  {% url project_edit project_slug=project.slug as url_project_edit%}{% url project_delete project_slug=project.slug as url_project_delete %}{% url project_access_control_edit project_slug=project.slug as url_project_access_control_edit %}{% url project_timeline project_slug=project.slug as url_project_timeline %}
+		  <li class="{% if request.path == url_project_edit or request.path == url_project_delete or request.path == url_project_access_control_edit or request.path == url_project_timeline%}selected{% endif %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
+		  {% endif %}
+		</ul>
+	</div>            
+	{% endif %}
 {% endblock %}
-
 
 {% block content_main %}{% endblock %}
 {% block content_footer %}{% endblock %}
