@@ -16,69 +16,70 @@
 {{ block.super }}
 
 <script type="text/javascript">
-
-    function toggle_access_control(){
-        var project_type = $("input[name='project_type']:checked").val();
-        if (project_type != 'outsourced'){
-            $("input[name='access_control']").attr('disabled', false);
-            $("select[name='outsource']").attr('disabled', 'disabled');
-            $("#selectoutsource").hide();
-        }else{
-            $("input[name='access_control']").attr('disabled', 'disabled');
-            $("select[name='outsource']").attr('disabled', false);
-            $("#selectoutsource").show();
-        }
-
-        // CLA related events
-        var access_control = $("input[name='access_control']:checked").val();
-        
-        if(access_control != 'limited_access' || project_type == 'outsourced') {
-            $("#cla_section").hide();
-        } else {
-            $("#cla_section").show();
-        }
-
-    }
-
-    $(document).ready(function(){
-
-        {# If project has a hub request open, do not execute form toggler #}
-        {% if not project.hub_request %}
-        
-            $("form[name=hub] input[type=radio]").change(function(){
-                toggle_access_control();
-            });
-
-            toggle_access_control();
-
-        {% else %}
-
-            $("form[name=hub]").submit(function(){
-                // On submit disable its submit button
-                $("input[type=submit]", this).attr('disabled', 'disabled');
-            });
-            $("form[name=hub] input[type=submit]").attr('disabled', 'disabled');
-            $("form[name=hub] input[type=submit]").addClass('tick_disabled');
-
-
-        {% endif %}
-        
-        if($("#id_cla_enable:checked").val() != null) {
-            $("#cla_textarea").show();
-        }
-
-        $("input[name='cla_enable']").change(function() {
-            $("#cla_textarea").toggle("fast");
-        });
-
-        }
-    );
+	function toggle_access_control(){
+	    var project_type = $("input[name='project_type']:checked").val();
+	    if (project_type != 'outsourced'){
+	        $("input[name='access_control']").attr('disabled', false);
+	        $("select[name='outsource']").attr('disabled', 'disabled');
+	        $("#selectoutsource").hide();
+	    }else{
+	        $("input[name='access_control']").attr('disabled', 'disabled');
+	        $("select[name='outsource']").attr('disabled', false);
+	        $("#selectoutsource").show();
+	    }
+	
+	    // CLA related events
+	    var access_control = $("input[name='access_control']:checked").val();
+	    
+	    if(access_control != 'limited_access' || project_type == 'outsourced') {
+	        $("#cla_section").hide();
+	    } else {
+	        $("#cla_section").show();
+	    }
+	
+	}
+	
+	$(document).ready(function(){
+	
+	    {# If project has a hub request open, do not execute form toggler #}
+	    {% if not project.hub_request %}
+	    
+	        $("form[name=hub] input[type=radio]").change(function(){
+	            toggle_access_control();
+	        });
+	
+	        toggle_access_control();
+	
+	    {% else %}
+	
+	        $("form[name=hub]").submit(function(){
+	            // On submit disable its submit button
+	            $("input[type=submit]", this).attr('disabled', 'disabled');
+	        });
+	        $("form[name=hub] input[type=submit]").attr('disabled', 'disabled');
+	        $("form[name=hub] input[type=submit]").addClass('tick_disabled');
+	
+	
+	    {% endif %}
+	    
+	    if($("#id_cla_enable:checked").val() != null) {
+	        $("#cla_textarea").show();
+	    }
+	
+	    $("input[name='cla_enable']").change(function() {
+	        $("#cla_textarea").toggle("fast");
+	    });
+	
+	    }
+	);
 </script>
 
 {% endblock %}
 
 {% block extracss %}
 <style>
+#cla_textarea label{float:left;}
+.tx-form-field ul{margin-left:0px;}
 .tx-form-field ul li label{margin:0.5em 0;}	
 #id_cla_license_text{width:650px;}
 .tx-form-field h5 {margin:1em 0;}
@@ -96,18 +97,18 @@
 
 {% if is_maintainer %}
 
-    {% if project.hub_request %}
-        <div class="notice clearfix">
-        <span>
-        {% blocktrans with project.hub_request.project_hub as project_name %}This project has an outsource request pending to the '{{ project_name }}' hub, thus it can not change its access control settings while the request is open.{% endblocktrans %}
-        </span>
-        
-        <form class="microform" method="post" action="{% url project_hub_join_withdraw project.slug %}">{% csrf_token %}
-            <input class="i16 delete buttonized" type="submit" style="float:right;"  value="{% trans "Withdraw" %}"/>
-        </form>
+	{% if project.hub_request %}
+    <div class="notice clearfix">
+	    <span>
+	    {% blocktrans with project.hub_request.project_hub as project_name %}This project has an outsource request pending to the '{{ project_name }}' hub, thus it can not change its access control settings while the request is open.{% endblocktrans %}
+	    </span>
+	    
+	    <form class="microform" method="post" action="{% url project_hub_join_withdraw project.slug %}">{% csrf_token %}
+	        <input class="i16 delete buttonized" type="submit" style="float:right;"  value="{% trans "Withdraw" %}"/>
+	    </form>
 
-        </div>   
-    {% endif%}
+    </div>   
+	{% endif%}
 
    
     {% hook "access_control_form_notices.html" %}    
@@ -150,20 +151,7 @@
         </p>
     </form>  
 
-    {% if project.is_hub %}
-    <div class="i16 project" style="margin-top:1em;" >
-        <span id="outsourcing_projects" class="linkstyle">
-        {% blocktrans count project.outsourcing.count as counter %} {{ counter }} project outsourcing access to it{% plural %}{{ counter }} projects outsourcing access to it{% endblocktrans %}
-        </span>
-    </div>
 
-    <script type="text/javascript">
-        $("#outsourcing_projects").click(function(){
-           jQuery.facebox({ ajax: '{% url project_hub_projects project.slug %}' });
-        });
-    </script>
-
-    {% endif %}
 
 {% endif %}
 

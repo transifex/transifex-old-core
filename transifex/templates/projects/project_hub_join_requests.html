@@ -2,21 +2,19 @@
 
 {% with project.hub_requests.all as hub_requests %}
 {% if hub_requests and is_maintainer %}
-<div class="list ">
-  <div class="separate-header clearfix">
-        <h3  class="sh-label">{% trans "Projects waiting for outsource and hub approving:" %}</h3>
-  </div>
-  <ul>
+<div class="datalist">
+ 
+  <ul class="nomargin">
     {% for hub_request in hub_requests %}
-    <li>
-        <a href="{% url project_detail hub_request.project.slug %}">
-            {{ hub_request.project }}
-        </a>
+    <li class="clearfix linking" onclick="javascript:window.location.href='{% url project_detail hub_request.project.slug %}';">
+    	<div class="tt-details">
+        <h5 class="linkstyle">{{ hub_request.project }}</h5>
+			</div>
         <form class="microform" method="post" action="{% url project_hub_join_deny hub_request.project_hub.slug hub_request.project.slug %}">{% csrf_token %}
-            <input class="i16 delete buttonized" type="submit" value="{% trans "Deny" %}"/>
+            <input class="i16 delete buttonized blist" type="submit" value="{% trans "Deny" %}"/>
         </form>
         <form class="microform" method="post" action="{% url project_hub_join_approve hub_request.project_hub.slug hub_request.project.slug %}">{% csrf_token %}
-            <input class="i16 tick buttonized" type="submit" style="float:right;"  value="{% trans "Approve" %}"/>
+            <input class="i16 tick buttonized blist" type="submit" style="float:right;"  value="{% trans "Approve" %}"/>
         </form>
 
     </li>

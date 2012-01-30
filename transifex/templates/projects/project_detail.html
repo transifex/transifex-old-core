@@ -103,7 +103,14 @@
 	
 </div>
 
-{% include "projects/project_hub_join_requests.html" %}
+{% with project.hub_requests.all as hub_requests %}
+{% if hub_requests and is_maintainer %}
+<p class="i16 infomsg">
+  {% trans "Projects have requested to outsource access" %} <a href="{% url project_hub_projects project.slug %}">View requests &raquo;</a>
+</p>
+{%endif%}
+{% endwith %}
+
 
 {% include "teams/team_list.html" %}
 
