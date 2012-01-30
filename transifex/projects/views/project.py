@@ -328,10 +328,6 @@ def project_detail(request, project_slug):
 def project_resources(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
 
-    # statslist = RLStats.objects.select_related(
-    #     'resource', 'resource__project', 'resource__category',
-    #     'last_committer', 'resource__priority'
-    # ).by_project_aggregated(project)
     statslist = Resource.objects.filter(
         project=project
     ).values(
@@ -342,10 +338,6 @@ def project_resources(request, project_slug):
     )
     for stat in statslist:
         stat['priority__display'] = level_display(stat['priority__level'])
-        stat['last_committer'] = RLStats.objects.filter(
-            resource__slug=stat['slug'], resource__project=project,
-            last_update=stat['last_update']
-        ).values_list('last_committer__username', flat=True)[0]
 
     return render_to_response('projects/project_resources.html', {
         'project_resources': True,
