@@ -11,7 +11,8 @@ $(document).ready(function (){
         "project-description",
  				"project-source_language",
  				"project-private",
- 				"project-fill_up_resources"
+ 				"project-fill_up_resources",
+ 				"project-logo"
     ],
     "fieldsRight": [
         "project-name",
@@ -25,8 +26,7 @@ $(document).ready(function (){
     "fieldsLeft": [
         "project-homepage",
  				"project-feed",
- 				"project-long_description",
- 				"logo"
+ 				"project-long_description"
     ],
     "fieldsRight": [
         "project-trans_instructions",
@@ -47,10 +47,14 @@ $(document).ready(function (){
       if (e.which == 13)
       return false;
   });
-
+  
 	$('.tx-form .required, .tx-form .field-helptext').each(function(){
 		$(this).appendTo($(this).siblings('label'));
 	});
+  $(".txf-checkbox").each(function(){
+    $(this).find("span.field-helptext").appendTo($(this));
+  });
+
 	/*Check if there are errors in the slidable form. If yes then slides down*/
 	$('.tx-form #display-advform').click(function(){
 		$(this).toggleClass("active");
