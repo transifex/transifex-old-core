@@ -61,13 +61,13 @@
 	<div class="tab-wrapper grid_16">
 		<ul  class="tabs clearfix">     
 		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
-  	  <li class="{% if hub_requests %}selected{% endif %}">
-  		  <a href="{% url project_hub_projects project.slug %}">
     		{% if project.is_hub and is_maintainer %}
+    	  <li class="{% if hub_projects_page %}selected{% endif %}">
+    		  <a href="{% url project_hub_projects project.slug %}">
         {% blocktrans count project.outsourcing.count as counter %} Hub project <span class="tab-stat">{{ counter }}</span> {% plural %}Hub projects <span class="tab-stat">{{ counter }}</span> {% endblocktrans %}
+          </a>
+        </li>
         {% endif %}
-        </a>
-      </li>
 		  <li class="{% if project_resources %}selected{% endif %}"><a href="{% url project_resources project.slug %}">{% trans "Resources" %} <span class="tab-stat">{{ project.resources.count }}</span></a></li>
 		  {% hook "project.html" menu %}
 		  {% if perms.projects.change_project or is_maintainer %}

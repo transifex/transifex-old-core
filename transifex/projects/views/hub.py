@@ -32,6 +32,7 @@ def project_hub_projects(request, project_slug):
 
     return render_to_response('projects/project_hub_projects.html', {
         'project': project,
+        'hub_projects_page': True,
     }, context_instance=RequestContext(request))
 
 
