@@ -222,7 +222,7 @@ class TestPoFile(FormatsBaseTestCase):
 
         # Make sure that we have all translations in the db
         self.assertEqual(Translation.objects.filter(source_entity__in=
-            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 4)
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 5)
 
         # import source with small modifications
         handler = POHandler('%s/suggestions/tests-diff.pot' %
@@ -234,11 +234,23 @@ class TestPoFile(FormatsBaseTestCase):
 
         # Make sure that all suggestions were added
         self.assertEqual(Suggestion.objects.filter(source_entity__in=
-            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 1)
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)
 
         # Make both strings are now untranslated
         self.assertEqual(Translation.objects.filter(source_entity__in=
-            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 2)
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 3)
+
+        # import pt_BR translation again
+        handler = POHandler('%s/suggestions/pt_BR.po' %
+            os.path.split(__file__)[0])
+        handler.bind_resource(self.resource)
+        handler.set_language(self.language)
+        handler.parse_file()
+        handler.save2db()
+
+        # Make sure that we have all translations in the db
+        self.assertEqual(Translation.objects.filter(source_entity__in=
+            SourceEntity.objects.filter(resource=self.resource).values('id')).count(), 3)
 
     def test_general_po(self):
         """
