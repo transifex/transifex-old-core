@@ -40,14 +40,16 @@
 {% endblock %}
 
 {% block content_header_sec %}
-
+	{% if project.outsource %}
+  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/outsource-project.png)center top no-repeat;">
+	<p>{% trans "Outsourcing"%}</p>
+	</span>
+	{% endif %}
 	{% if project.is_hub %}
   <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/hub-project.png)center top no-repeat;">
 	<p>{% trans "Hub"%}</p>
 	</span>
 	{% endif %}
-	
-	
 	{% if project.private %}
 	<span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/private-project.png)center top no-repeat;">
 	<p>{% trans "Private"%}</p>
