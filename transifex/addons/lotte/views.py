@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import re
+import re, httplib
 from polib import escape, unescape
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -32,21 +32,22 @@ from transifex.resources.formats.validators import create_error_validators, \
         create_warning_validators, ValidationError
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
-import httplib
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
 
+from signals import lotte_init, lotte_done, lotte_save_translation
+from filters import get_search_filter_query
+
+Suggestion = get_model('suggestions', 'Suggestion')
 
 class LotteBadRequestError(Exception):
     pass
 
 #Languages suported by google-spellcheck as mentioned at
 #http://www.google.com/support/toolbar/bin/answer.py?hl=en&answer=32703
-SPELLCHECK_SUPPORTED_LANGS = ['da', 'de', 'en', 'en_US', 'es', 'fi', 'fr', 'it', 'nl', 'pl', 'pt', 'pt_BR', 'ru', 'sv']
-Suggestion = get_model('suggestions', 'Suggestion')
-
-from signals import lotte_init, lotte_done, lotte_save_translation
+SPELLCHECK_SUPPORTED_LANGS = ['da', 'de', 'en', 'en_US', 'es', 'fi', 'fr',
+    'it', 'nl', 'pl', 'pt', 'pt_BR', 'ru', 'sv']
 
 # Restrict access only to : (The checks are done in the view's body)
 # 1)those belonging to the specific language team (coordinators or members)
@@ -334,14 +335,18 @@ def _get_stringset(post_data, resources, language, review=False, *args, **kwargs
             more_languages = post_data.get('more_languages').rstrip(',').split(',')
 
         # keyword filtering
-        sSearch = post_data.get('sSearch','')
-        if not sSearch == '':
+        search = post_data.get('sSearch', '')
+        if not search == '':
+            search, search_filter_query = get_search_filter_query(search)
             query = Q()
-            for term in sSearch.split(' '):
+            for term in search.split():
                 query &= Q(string__icontains=term)
-	    source_entities = translated_strings.filter(query).values('source_entity')
-	    query |= Q(source_entity__in=source_entities)
-            source_strings = source_strings.filter(query)
+            if query:
+                source_entities = translated_strings.filter(query).values('source_entity')
+                query |= Q(source_entity__in=source_entities)
+                source_strings = source_strings.filter(query)
+            if search_filter_query:
+                source_strings = source_strings.filter(search_filter_query)
 
         # sorting
         scols = post_data.get('iSortingCols', '0')

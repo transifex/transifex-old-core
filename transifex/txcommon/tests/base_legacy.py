@@ -367,6 +367,7 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
             string='Translation String 2',
             rule=5,
             source_entity=self.source_entity,
+            resource=self.resource,
             language=self.language_en,
             user=self.user['registered'])
         self.resource.update_total_entities()

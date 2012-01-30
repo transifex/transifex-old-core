@@ -41,6 +41,14 @@ class XliffCompileError(CompileError):
 class XliffCompiler(Compiler):
     """Compiler for xliff files."""
 
+    def getElementByTagName(self, element, tagName, noneAllowed = False):
+        elements = element.getElementsByTagName(tagName)
+        if not noneAllowed and not elements:
+            raise self.HandlerParseError(_("Element '%s' not found!" % tagName))
+        if len(elements) > 1:
+            raise self.HandlerParseError(_("Multiple '%s' elements found!" % tagName))
+        return elements[0]
+
     def _examine_content(self, content):
         """Modify template content to handle plural data in target language"""
         if isinstance(content, unicode):
@@ -100,7 +108,7 @@ class XliffCompiler(Compiler):
         self.compiled_template = doc.toxml()
 
     def _compile(self, content):
-        stringset = self._get_source_strings(self.resource)
+        stringset = self._get_source_strings()
         translations = self._tset(s[0] for s in stringset)
         for string in stringset:
             trans = translations.get(string[0], u"")
@@ -139,6 +147,8 @@ class XliffHandler(SimpleCompilerFactory, Handler):
     HandlerParseError = XliffParseError
     HandlerCompileError = XliffCompileError
 
+    CompilerClass = XliffCompiler
+
     def _get_translation_strings(self, source_entities, language):
         """Modified to include a new field for translation rule"""
         res = {}
@@ -164,14 +174,6 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             else:
                 rc.append(node.toxml())
         return ''.join(rc)
-
-    def getElementByTagName(self, element, tagName, noneAllowed = False):
-        elements = element.getElementsByTagName(tagName)
-        if not noneAllowed and not elements:
-            raise self.HandlerParseError(_("Element '%s' not found!" % tagName))
-        if len(elements) > 1:
-            raise self.HandlerParseError(_("Multiple '%s' elements found!" % tagName))
-        return elements[0]
 
     def _parse(self, is_source, lang_rules):
         """

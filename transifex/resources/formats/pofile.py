@@ -161,11 +161,11 @@ class GettextHandler(SimpleCompilerFactory, Handler):
         >>> escape('\\t and \\n and \\r and " and \\\\')
         '\\\\t and \\\\n and \\\\r and \\\\" and \\\\\\\\'
         """
-        return s.replace('\\', r'\\\\')\
-                .replace('\n', r'\\n')\
-                .replace('\t', r'\\t')\
-                .replace('\r', r'\\r')\
-                .replace('\"', r'\\"')
+        return s.replace('\\', '\\\\')\
+                .replace('\n', '\\n')\
+                .replace('\t', '\\t')\
+                .replace('\r', '\\r')\
+                .replace('\"', '\\"')
 
     def _post_save2db(self, *args, **kwargs):
         """Emit a signal for others to catch."""

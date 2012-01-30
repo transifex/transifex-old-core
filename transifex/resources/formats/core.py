@@ -4,7 +4,6 @@ from __future__ import absolute_import
 import codecs, copy, os, re
 import gc
 from django.utils import simplejson as json
-
 from django.conf import settings
 from django.db import transaction
 from django.db.models import get_model
@@ -474,6 +473,7 @@ class Handler(object):
         """
         qs = SourceEntity.objects.filter(resource=self.resource)
         original_sources = list(qs) # TODO Use set() instead? Hash by pk
+        updated_entities = set([])
         new_entities = []
         source_entities = self._init_source_entity_collection(original_sources)
         translations = self._init_translation_collection(source_entities.se_ids)
@@ -485,21 +485,18 @@ class Handler(object):
             for j in self.stringset.strings:
                 if j in source_entities:
                     se = source_entities.get(j)
+                    if se in new_entities:
+                        continue
                     # update source string attributes.
                     se.flags = j.flags or ""
                     se.pluralized = j.pluralized
                     se.developer_comment = j.comment or ""
                     se.occurrences = j.occurrences
-                    se.save()
-                    try:
-                        original_sources.remove(se)
-                    except ValueError:
-                        # When we have plurals, we can't delete the se
-                        # everytime, so we just pass
-                        pass
+                    # se.save()
+                    updated_entities.add(se)
                 else:
                     # Create the new SE
-                    se = SourceEntity.objects.create(
+                    se = SourceEntity(
                         string = j.source_entity,
                         context = self._context_value(j.context),
                         resource = self.resource, pluralized = j.pluralized,
@@ -513,37 +510,51 @@ class Handler(object):
                     new_entities.append(se)
                     source_entities.add(se)
 
+            SourceEntity.objects.bulk_insert(new_entities)
+            SourceEntity.objects.bulk_update(updated_entities)
+            qs = SourceEntity.objects.filter(resource=self.resource)
+            new_sources = list(qs) # TODO Use set() instead? Hash by pk
+            source_entities = self._init_source_entity_collection(new_sources)
+            new_translations = []
+            updated_translations = set([])
+            for j in self.stringset.strings:
+                se = source_entities.get(j)
                 if self._should_skip_translation(se, j):
                     continue
                 if (se, j) in translations:
                     tr = translations.get((se, j))
                     if overwrite_translations and tr.string != j.translation:
-                            tr.string = j.translation
-                            tr.user = user
-                            tr.save()
-                            strings_updated += 1
+                        tr.string = j.translation
+                        tr.user = user
+                        updated_translations.add(tr)
+                        strings_updated += 1
                 else:
-                    tr = Translation.objects.create(
+                    tr = Translation(
                         source_entity=se, language=self.language, rule=j.rule,
                         string=j.translation, user=user,
                         resource = self.resource
                     )
-                    translations.add(tr)
+                    new_translations.append(tr)
+                    # translations.add(tr)
                     if j.rule==5:
                         strings_added += 1
+            Translation.objects.bulk_insert(new_translations)
+            Translation.objects.bulk_update(updated_translations)
         except Exception, e:
-            logger.error(
-                "There was a problem while importing the entries into the "
-                "database. Entity: '%s'. Error: '%s'." % (
-                    j.source_entity, e
-                )
-            )
+            msg = "Error importing the entries into the database: %s"
+            logger.error(msg % e)
             raise
 
         sg_handler = self.SuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions.strings)
-        sg_handler.create_suggestions(original_sources, new_entities)
-        for se in original_sources:
+        new_entities = SourceEntity.objects.exclude(
+            pk__in=[s.pk for s in original_sources]
+        ).filter(
+            resource=self.resource
+        )
+        untouched_ses = set(original_sources) - updated_entities
+        sg_handler.create_suggestions(untouched_ses, new_entities)
+        for se in untouched_ses:
             se.delete()
         self._update_template(self.template)
 
@@ -573,6 +584,8 @@ class Handler(object):
         qs = SourceEntity.objects.filter(resource=self.resource).iterator()
         source_entities = self._init_source_entity_collection(qs)
         translations = self._init_translation_collection(source_entities.se_ids)
+        new_translations = []
+        updated_translations = set([])
 
         strings_added = 0
         strings_updated = 0
@@ -606,21 +619,24 @@ class Handler(object):
                                     continue
                             tr.string = j.translation
                             tr.user = user
-                            tr.save()
+                            updated_translations.add(tr)
                             strings_updated += 1
                     else:
                         if overwrite_translations and tr.string != j.translation:
                             tr.string = j.translation
                             tr.user = user
-                            tr.save()
+                            updated_translations.add(tr)
                             strings_updated += 1
                 else:
-                    tr = Translation.objects.create(
+                    tr = Translation(
                         source_entity=se, language=self.language, rule=j.rule,
                         string=j.translation, user=user, resource=self.resource
                     )
+                    new_translations.append(tr)
                     if j.rule==5:
                         strings_added += 1
+            Translation.objects.bulk_insert(new_translations)
+            Translation.objects.bulk_update(updated_translations)
         except Exception, e:
             logger.error(
                 "There was a problem while importing the entries into the "

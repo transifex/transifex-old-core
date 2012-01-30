@@ -30,7 +30,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".res_tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        $(".res_tipsy_enable").tipsy({html:true, gravity:'s', live:true});
         var tablesorter_resource = $(".tablesorter_resource_list");
         tablesorter_resource.tablesorter({
             widgets: ['zebra'],
@@ -107,7 +107,9 @@
         {% if is_maintainer %}
         var resource_priority_cycle_url = '{% url cycle_resource_priority project.slug "1111111111" %}';
         $("a.resource_priority_trigger").each(function(){
-          $(this).click(function(){
+          $(this).click(function(e){
+            event.stopPropagation();
+            $('.tipsy').remove();
             id_string = $(this).attr("id");
             var slug = id_string.substring(id_string.indexOf("_")+1);
             var pr_url = resource_priority_cycle_url.replace('1111111111', slug)

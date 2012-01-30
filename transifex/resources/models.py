@@ -10,14 +10,14 @@ from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.core.validators import validate_slug
-from django.db import models, transaction
+from django.db import models, connection
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext_lazy as _
 from django.utils.hashcompat import md5_constructor
 from django.utils import simplejson as json
 from django.contrib.auth.models import User, AnonymousUser
 from django.forms import ValidationError
-
+from djangobulk.bulk import insert_many, update_many
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.txcommon.db.models import CompressedTextField, \
@@ -122,7 +122,7 @@ class Resource(models.Model):
     """
 
     # Short identifier to be used in the API URLs
-    slug = models.SlugField(_('Slug'), max_length=50, db_index=False,
+    slug = models.SlugField(_('Slug'), max_length=200, db_index=False,
         validators=[validate_slug,],
         help_text=_("A short label to be used in the URL, containing only "
                     "letters, numbers, underscores and hyphens."))
@@ -313,6 +313,16 @@ class SourceEntityManager(models.Manager):
         return SourceEntity.objects.filter(
             resource__in=Resource.objects.for_user(user))
 
+    def bulk_insert(self, records):
+        """Bulk insert records to the database."""
+        # TODO Maybe use COPY instead?
+        insert_many(SourceEntity, records)
+
+    def bulk_update(self, records):
+        """Bulk update records to the database."""
+        update_many(SourceEntity, records)
+
+
 class SourceEntity(models.Model):
     """
     A representation of a source string which is translated in many languages.
@@ -379,20 +389,22 @@ class SourceEntity(models.Model):
         ordering = ['last_update',]
         get_latest_by = 'created'
 
-    def save(self, *args, **kwargs):
-        """
-        Do some exra processing before the actual save to db.
-        """
+    def presave(self):
+        """Perform any necessary actions before saving the object."""
         context = self.context_string
         # This is for sqlite support since None objects are treated as strings
         # containing 'None'
         if not context or context == 'None':
             context = ""
-
         # Calculate new hash
         self.string_hash = md5_constructor(':'.join([self.string,
             context]).encode('utf-8')).hexdigest()
 
+    def save(self, *args, **kwargs):
+        """
+        Do some exra processing before the actual save to db.
+        """
+        self.presave()
         super(SourceEntity, self).save(*args, **kwargs)
 
     @property
@@ -411,6 +423,7 @@ class SourceEntity(models.Model):
 
 
 class TranslationManager(models.Manager):
+
     def by_source_entity_and_language(self, string,
             source_code='en', target_code=None):
         """
@@ -594,6 +607,15 @@ class TranslationManager(models.Manager):
             language=source_language, rule=5,
         )
 
+    def bulk_insert(self, records):
+        """Bulk insert translations."""
+        # TODO Maybe use COPY instead?
+        insert_many(Translation, records)
+
+    def bulk_update(self, records):
+        """Bulk update records to the database."""
+        update_many(Translation, records)
+
 
 class Translation(models.Model):
     """
@@ -665,14 +687,16 @@ class Translation(models.Model):
         ordering  = ['last_update',]
         get_latest_by = 'last_update'
 
-    def save(self, *args, **kwargs):
-        """
-        Do some exra processing before the actual save to db.
-        """
+    def presave(self):
+        """Do any necessay work before saving the object."""
         # encoding happens to support unicode characters
-        self.resource = self.source_entity.resource
+        # self.resource = self.source_entity.resource
         self.string_hash = md5(self.string.encode('utf-8')).hexdigest()
         self._update_wordcount()
+
+    def save(self, *args, **kwargs):
+        """Do some exra processing before the actual save to db."""
+        self.presave()
         super(Translation, self).save(*args, **kwargs)
 
     def _update_wordcount(self):

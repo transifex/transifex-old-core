@@ -78,7 +78,7 @@ class SuggestionFormat(object):
                     "Source entity %s does not exist" % j.source_entity
                 )
                 continue
-            Suggestion.objects.create(
+            Suggestion.objects.get_or_create(
                 string = j.translation, source_entity = se,
                 language = self.language
             )

@@ -6,7 +6,6 @@ Compiler classes.
 Classes that handle compiling a template.
 """
 
-import re
 from transifex.resources.models import SourceEntity
 from transifex.resources.formats.exceptions import UninitializedCompilerError
 
@@ -105,7 +104,7 @@ class Compiler(object):
             content: The content (template) of the resource.
         """
         stringset = self._get_source_strings()
-        translations = self._tset(s[0] for s in stringset)
+        translations = self._tset()
         for string in stringset:
             trans = translations.get(string[0], u"")
             content = self._apply_translation(string[1], trans, content)
@@ -137,9 +136,6 @@ class Compiler(object):
 
         Do a search and replace inside ``text`` and replaces all
         occurrences of ``original`` with ``replacement``.
-
-        TODO: use string.replace instead of re.sub.
         """
-        return re.sub(re.escape(original), replacement, text)
-
+        return text.replace(original, replacement)
 
