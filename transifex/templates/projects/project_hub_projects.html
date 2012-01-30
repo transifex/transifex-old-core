@@ -15,19 +15,18 @@
 
 {% block content_main %}
   {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-  
 
-  
   {% with project.outsourcing.all as outsourcing_projects %}
   <div class="separate-header clearfix">
   	<h3  class="sh-label">{% blocktrans %}Hub Projects{% endblocktrans %}</h3>
 	</div>
   {% include "projects/project_hub_join_requests.html" %}
   {% if outsourcing_projects %}
+    <div class="datalist">
       <ul>
       {% for p in outsourcing_projects %}
           <li class="clearfix">
-          <span class="name notice"><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></span>
+          <span class="name"><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></span>
   
           <div style="float:right">
               {% hub_associate_project_toogler p %}
@@ -36,6 +35,7 @@
           </li>
       {% endfor %}
       </ul>
+    </div>
   {% else %}
       <span class="i16 infomsg">{% trans "No project is outsourcing access to this project hub." %}</span>
   {% endif %}
