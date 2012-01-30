@@ -84,7 +84,7 @@ class TestJavaProperties(BaseTestCase):
         self.assertEqual(entities, 25)
         self.assertEqual(translations, 25)
 
-    def test_properties_save2db(self, delete=True):
+    def _test_properties_save2db(self):
         """Test creating source strings from a PROPERTIES file works"""
         handler = JavaPropertiesHandler(
             os.path.join(os.path.dirname(__file__), 'complex.properties')
@@ -130,11 +130,32 @@ class TestJavaProperties(BaseTestCase):
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 23)
+        return handler
 
-        if delete:
-            r.delete()
-        else:
-            return r
+    def _test_properties_compile(self, handler):
+        source_compiled_file = os.path.join(os.path.dirname(__file__),
+                'complex_compiled.properties')
+        trans_compiled_file = os.path.join(os.path.dirname(__file__),
+                'complex_hi_IN-ascii_compiled.properties')
+        handler.set_language(self.resource.source_language)
+        compiled_template = handler.compile()
+        f = open(source_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
+        handler.set_language(Language.objects.get(code='hi_IN'))
+        compiled_template = handler.compile()
+        f = open(trans_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
+
+
+    def test_properties_save_and_compile(self):
+        handler = self._test_properties_save2db()
+        self._test_properties_compile(handler)
 
     def test_convert_unicode(self):
         """Test the conversion of a series of bytes that represent a unicode
@@ -150,6 +171,6 @@ class TestJavaProperties(BaseTestCase):
         """Test that the unicode codepoints are converted to unicode strings."""
         parser = JavaPropertiesHandler()
         line = r'key = \u03b1'
-        key, value = parser._key_value_from_line(line)
+        key, value, old_value = parser._key_value_from_line(line)
         self.assertEquals(value, u'α')
 

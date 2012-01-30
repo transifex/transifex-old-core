@@ -120,7 +120,7 @@ class PropertiesHandler(FillEmptyCompilerFactory, Handler):
                 # This line will become part of the value
                 line = line[:-1] + self._prepare_line(nextline)
 
-            key, value = self._key_value_from_line(line)
+            key, value, old_value = self._key_value_from_line(line)
             if is_source:
                 if not value:
                     template += line + self.linesep
@@ -129,7 +129,7 @@ class PropertiesHandler(FillEmptyCompilerFactory, Handler):
                 else:
                     key_len = len(key)
                     template += line[:key_len] + re.sub(
-                        re.escape(value),
+                        re.escape(old_value),
                         "%(hash)s_tr" % {'hash': hash_tag(key, context)},
                         line[key_len:]
                     ) + self.linesep
@@ -143,5 +143,5 @@ class PropertiesHandler(FillEmptyCompilerFactory, Handler):
     def _key_value_from_line(self, line):
         """Get the key and the value from a line of the file."""
         key, value = self._split(line)
-        return (key, self._visit_value(value), )
+        return (key, self._visit_value(value), value)
 
