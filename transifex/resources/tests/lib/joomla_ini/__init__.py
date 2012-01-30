@@ -93,4 +93,6 @@ class TestJoomlaIni(FormatsBaseTestCase):
         translation_string = self.parser.stringset.strings[0].translation
         self.assertEqual(translation_string, 'Translation\nwith new line \r\n')
 
-
+    def apply_translation(self, t, compiler):
+        t = super(TestJoomlaIni, self).get_translation(t, compiler)
+        return compiler.jformat.get_compilation(t)

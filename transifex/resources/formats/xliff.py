@@ -6,7 +6,9 @@ XLIFF file parser for Python
 see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.htm for documentation
 of XLIFF format
 """
-import re
+
+from __future__ import absolute_import
+import re, collections
 import xml.dom.minidom
 import xml.parsers.expat
 from xml.sax.saxutils import escape as xml_escape
@@ -14,13 +16,11 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
-from transifex.resources.formats.core import Handler, ParseError, CompileError, \
-        STRICT
+from .core import Handler, ParseError, CompileError
 from .compilation import Compiler, SimpleCompilerFactory
-from transifex.resources.formats.resource_collections import StringSet, \
-        GenericTranslation
-from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
+from .resource_collections import StringSet, GenericTranslation
+from .utils.decorators import *
+from .utils.hash_tag import hash_tag, escape_context, hash_regex
 
 # Resources models
 Resource = get_model('resources', 'Resource')
@@ -107,35 +107,92 @@ class XliffCompiler(Compiler):
                 parent.removeChild(node)
         self.compiled_template = doc.toxml()
 
-    def _compile(self, content):
-        stringset = self._get_source_strings()
-        translations = self._tset(s[0] for s in stringset)
-        for string in stringset:
-            trans = translations.get(string[0], u"")
-            if SourceEntity.objects.get(id__exact=string[0]).pluralized:
-                if type(trans) == type([]):
-                    plural_trans = trans
+    def _get_translation_strings(self, source_entities, language):
+        """Modified to include a new field for translation rule"""
+        res = {}
+        translations = Translation.objects.filter(
+            resource=self.resource, language=language
+        ).values_list('source_entity_id', 'string', 'rule') .iterator()
+        for t in translations:
+            if res.has_key(t[0]):
+                if type(res[t[0]]) == type([]):
+                    res[t[0]].append(t[1:])
                 else:
-                    plural_trans = []
-                    for i in self.language.get_pluralrules_numbers():
-                        plural_trans.append((u"", i))
-                for i in plural_trans:
-                    rule = str(i[1])
-                    trans = i[0]
-                    if SourceEntity.objects.get(id__exact=string[0]).pluralized:
-                        content = self._replace_translation(
-                            "%s_pl_%s"%(string[1].encode('utf-8'), rule),
-                            trans or "",
-                            content)
+                    res[t[0]] = [res[t[0]]]
+                    res[t[0]].append(t[1:])
             else:
-                if trans:
-                    trans = trans[0]
-                content = self._replace_translation(
-                    "%s_tr" % string[1].encode('utf-8'),
-                    trans or "",
-                    content
-                )
+                res[t[0]] = t[1:]
+        return res
+
+    def _plurals(self):
+        translations = Translation.objects.filter(
+            resource=self.resource, language=self.language,
+            source_entity__pluralized=True
+        ).values_list(
+            'source_entity_id', 'rule', 'string'
+        ).iterator()
+        res = collections.defaultdict(dict)
+        for t in translations:
+            res[t[0]][t[1]] = t[2]
+        return res
+
+    def _compile(self, content):
+        super(XliffCompiler, self)._compile(content)
+        stringset = self._get_source_strings()
+        existing_translations = self._plurals()
+        replace_translations = {}
+        for string in stringset:
+            trans = self._visit_translation(
+                existing_translations.get(string[0], u"")
+            )
+            if trans:
+                for rule in trans:
+                    key = string[1] + '_pl_' + str(rule)
+                    replace_translations[key] = self._tdecorator(trans[rule])
+            else:
+                for rule in self.language.get_pluralrules_numbers():
+                    key = string[1] + '_pl_' + str(rule)
+                    replace_translations[key] = self._tdecorator(u"")
+        content = self._apply_plurals(replace_translations, content)
         self.compiled_template = content
+
+    def _apply_plurals(self, translations, text):
+        regex = hash_regex(suffix='pl')
+        return regex.sub(
+            lambda m: translations.get(m.group(0), m.group(0)), text
+        )
+
+
+
+    # def _compile(self, content):
+    #     stringset = self._get_source_strings()
+    #     translations = self._tset()
+    #     for string in stringset:
+    #         trans = translations.get(string[0], u"")
+    #         if SourceEntity.objects.get(id__exact=string[0]).pluralized:
+    #             if type(trans) == type([]):
+    #                 plural_trans = trans
+    #             else:
+    #                 plural_trans = []
+    #                 for i in self.language.get_pluralrules_numbers():
+    #                     plural_trans.append((u"", i))
+    #             for i in plural_trans:
+    #                 rule = str(i[1])
+    #                 trans = i[0]
+    #                 if SourceEntity.objects.get(id__exact=string[0]).pluralized:
+    #                     content = self._replace_translation(
+    #                         "%s_pl_%s"%(string[1].encode('utf-8'), rule),
+    #                         trans or "",
+    #                         content)
+    #         else:
+    #             if trans:
+    #                 trans = trans[0]
+    #             content = self._replace_translation(
+    #                 "%s_tr" % string[1].encode('utf-8'),
+    #                 trans or "",
+    #                 content
+    #             )
+    #     self.compiled_template = content
 
 
 class XliffHandler(SimpleCompilerFactory, Handler):
@@ -148,23 +205,6 @@ class XliffHandler(SimpleCompilerFactory, Handler):
     HandlerCompileError = XliffCompileError
 
     CompilerClass = XliffCompiler
-
-    def _get_translation_strings(self, source_entities, language):
-        """Modified to include a new field for translation rule"""
-        res = {}
-        translations = Translation.objects.filter(
-            source_entity__in=source_entities, language=language
-        ).values_list('source_entity_id', 'string', 'rule') .iterator()
-        for t in translations:
-            if res.has_key(t[0]):
-                if type(res[t[0]]) == type([]):
-                    res[t[0]].append(t[1:])
-                else:
-                    res[t[0]] = [res[t[0]]]
-                    res[t[0]].append(t[1:])
-            else:
-                res[t[0]] = t[1:]
-        return res
 
     def _getText(self, nodelist):
         rc = []

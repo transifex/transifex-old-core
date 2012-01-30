@@ -42,6 +42,8 @@ class NormalDecoratorBuilder(DecoratorBuilder):
 
     def __call__(self, translation):
         """Escape the string first."""
+        if not translation:
+            return ''
         return self._escape(translation)
 
 
@@ -55,7 +57,7 @@ class PseudoDecoratorBuilder(DecoratorBuilder):
     def __init__(self, pseudo_func, *args, **kwargs):
         """Set the pseudo function to use."""
         self._pseudo_decorate = pseudo_func
-        super(PseudoDecoratorBuilder, self).__init__(args, kwargs)
+        super(PseudoDecoratorBuilder, self).__init__(*args, **kwargs)
 
     def __call__(self, translation):
         """Use the pseudo function."""

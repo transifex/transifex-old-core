@@ -6,8 +6,16 @@ Compiler classes.
 Classes that handle compiling a template.
 """
 
+from __future__ import absolute_import
+import re
 from transifex.resources.models import SourceEntity
-from transifex.resources.formats.exceptions import UninitializedCompilerError
+from ..exceptions import UninitializedCompilerError
+from ..utils.hash_tag import hash_regex
+
+
+class _Substituter(object):
+    """Functor to substitute hash matches with the actual translations."""
+
 
 
 class Compiler(object):
@@ -77,21 +85,18 @@ class Compiler(object):
         del self.language
         return self.compiled_template
 
-    def _apply_translation(self, source_hash, trans, content):
-        """Apply a translation to the content.
-
-        Usually, we do a search for the hash code of source and replace
-        with trans.
+    def _apply_translations(self, translations, text):
+        """Apply the translations to the text.
 
         Args:
-            source_hash: The hash string of the source entity.
-            trans: The translation string.
-            content: The text for the search-&-replace.
+            translations: A list of translations to use.
+            text: The text to apply the translations.
         Returns:
-            The content after the translation has been applied.
+            The text with the translations applied.
         """
-        return self._replace_translation(
-            "%s_tr" % source_hash, self._tdecorator(trans), content
+        regex = hash_regex()
+        return regex.sub(
+            lambda m: translations.get(m.group(0), m.group(0)), text
         )
 
     def _compile(self, content):
@@ -104,15 +109,20 @@ class Compiler(object):
             content: The content (template) of the resource.
         """
         stringset = self._get_source_strings()
+        existing_translations = self._tset()
+        replace_translations = {}
+        suffix = '_tr'
         translations = self._tset()
         for string in stringset:
-            trans = translations.get(string[0], u"")
-            content = self._apply_translation(string[1], trans, content)
+            trans = self._visit_translation(
+                self._tdecorator(existing_translations.get(string[0], u""))
+            )
+            replace_translations[string[1] + suffix] = trans
+        content = self._apply_translations(replace_translations, content)
         self.compiled_template = content
 
     def _examine_content(self, content):
-        """Peek into the template before any string is compiled.
-        """
+        """Peek into the template before any string is compiled."""
         return content
 
     def _get_source_strings(self):
@@ -123,6 +133,10 @@ class Compiler(object):
             'id', 'string_hash'
         )
 
+    def _visit_translation(self, s):
+        """Have a chance to handle translation strings."""
+        return s
+
     def _post_compile(self):
         """Do any work after the compilation process."""
         pass
@@ -130,12 +144,3 @@ class Compiler(object):
     def _pre_compile(self):
         """Do any work before compiling the translation."""
         pass
-
-    def _replace_translation(self, original, replacement, text):
-        """Put the translation to the text.
-
-        Do a search and replace inside ``text`` and replaces all
-        occurrences of ``original`` with ``replacement``.
-        """
-        return text.replace(original, replacement)
-

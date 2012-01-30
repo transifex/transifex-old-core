@@ -9,12 +9,11 @@ from django.utils.hashcompat import md5_constructor
 from transifex.txcommon.log import logger
 from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag
-from transifex.resources.formats.properties import PropertiesHandler, \
-        PropertiesParseError, PropertiesCompileError
+from .utils.hash_tag import hash_tag
+from .properties import PropertiesHandler, PropertiesParseError, \
+        PropertiesCompileError
 from .compilation import Compiler
-from transifex.resources.formats.resource_collections import StringSet, \
-        GenericTranslation
+from .resource_collections import StringSet, GenericTranslation
 
 
 class JavaParseError(PropertiesParseError):
@@ -71,20 +70,17 @@ def convert_to_ascii(c):
 
 
 class JavaCompiler(Compiler):
-    """Compiler for Java .properties files."""
+    """Compiler for java .properties files.
 
-    def _replace_translation(self, original, replacement, text):
-        """Convert unicode characters to sequence of bytes representing the
-        codepoints.
-        """
-        for char in replacement:
+    We need to convert translations to unicode sequences.
+    """
+
+    def _visit_translation(self, translation):
+        """Use unicode escape sequences to represent unicode characters."""
+        for char in translation:
             if ord(char) in range(127, 160) or ord(char) > 255:
-                replacement = replacement.replace(
-                    char, convert_to_ascii(char)
-                )
-        return super(JavaCompiler, self)._replace_translation(
-            original, replacement, text
-        )
+                translation = translation.replace(char, convert_to_ascii(char))
+        return translation
 
 
 class JavaPropertiesHandler(PropertiesHandler):

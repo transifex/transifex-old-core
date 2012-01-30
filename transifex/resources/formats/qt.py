@@ -103,6 +103,11 @@ class QtCompiler(Compiler):
         root = doc.documentElement
         root.attributes["language"] = language.code
 
+        # FIXME monkey-patching
+        # We need a way to call decorators *without* the escape function
+        #
+        self._tdecorator._escape = self._tdecorator._default_escape
+
         for message in doc.getElementsByTagName("message"):
             translation = _getElementByTagName(message, "translation")
             if message.attributes.has_key("numerus") and \

@@ -33,11 +33,10 @@ class JoomlaCompiler(Compiler):
         self.jformat = JoomlaIniVersion.create(content)
         return content
 
-    def _replace_translation(self, original, replacement, text):
+    def _visit_translation(self, s):
         """Modify the translation depending on the version of the file."""
-        return super(JoomlaCompiler, self)._replace_translation(
-            original, self.jformat.get_compilation(replacement), text
-    )
+        return self.jformat.get_compilation(s)
+
 
 class JoomlaINIHandler(SimpleCompilerFactory, Handler):
     """

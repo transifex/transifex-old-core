@@ -8,7 +8,12 @@ used, when compiling a template.
 """
 
 import itertools
+import collections
+from django.db.models import Count
 from transifex.resources.models import SourceEntity, Translation
+
+# TODO More efficient plural fetching (we need HAVING num_rules > 1)
+# TODO Or merge the queries
 
 
 class TranslationsBuilder(object):
@@ -19,19 +24,30 @@ class TranslationsBuilder(object):
         self.resource = resource
         self.language = language
 
-    def __call__(self, source_entities):
+    def __call__(self):
         """Get the translation strings that match the specified source_entities.
 
-        The returned translations are for the specified langauge and rule = 5.
+        The returned translations are for the specified language and rule = 5.
 
-        Args:
-            source_entities: A list of source entity ids.
         Returns:
             A dictionary with the translated strings. The keys are the id of
             the source entity this translation corresponds to and values are
             the translated strings.
         """
         # TODO Should return plurals
+        raise NotImplementedError
+
+    def plurals(self):
+        """Get the pluralized translation strings.
+
+        The returned translations are for the specified language.
+
+        Returns:
+            A dictionary with the translated strings. The keys are the id of
+            the source entity this translation is for and the values are
+            dictionaries themselves with keys being the rule number and
+            values the translations for the specific (source_entity, rule).
+        """
         raise NotImplementedError
 
 
@@ -56,7 +72,7 @@ class EmptyTranslationsBuilder(TranslationsBuilder):
     def __init__(self, *args, **kwargs):
         super(EmptyTranslationsBuilder, self).__init__(None, None)
 
-    def __call__(self, resource):
+    def __call__(self):
         """Return an empty dictionary."""
         return {}
 

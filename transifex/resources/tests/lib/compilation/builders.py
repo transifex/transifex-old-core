@@ -18,10 +18,10 @@ class TestTranslationsBuilders(BaseTestCase):
         all translations.
         """
         builder = AllTranslationsBuilder(self.resource, self.language_en)
-        translations = builder([self.source_entity.id])
+        translations = builder()
         self.assertEquals(len(translations), 1)
         self.translation_en.delete()
-        translations = builder([self.source_entity.id])
+        translations = builder()
         self.assertEquals(translations, {})
 
     def test_empty_builder(self):
@@ -29,10 +29,10 @@ class TestTranslationsBuilders(BaseTestCase):
         dictionary.
         """
         builder = EmptyTranslationsBuilder(self.resource, self.language_en)
-        translations = builder([self.source_entity.id])
+        translations = builder()
         self.assertEquals(translations, {})
         self.translation_en.delete()
-        translations = builder([self.source_entity.id])
+        translations = builder()
         self.assertEquals(translations, {})
 
     def test_source_builder(self):
@@ -40,8 +40,8 @@ class TestTranslationsBuilders(BaseTestCase):
         instead of empty translations.
         """
         builder = SourceTranslationsBuilder(self.resource, self.language_ar)
-        translations = builder([self.source_entity.id])
+        translations = builder()
         self.assertEquals(len(translations), 1)
         self.translation_ar.delete()
-        translations = builder([self.source_entity.id])
+        translations = builder()
         self.assertEquals(len(translations), 1)

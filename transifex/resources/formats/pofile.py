@@ -25,8 +25,8 @@ from transifex.resources.formats.core import Handler
 from transifex.resources.formats.exceptions import CompileError, ParseError
 from .compilation import SimpleCompilerFactory, Compiler, \
         EmptyDecoratorBuilder, EmptyTranslationsBuilder
-from transifex.resources.formats.resource_collections import StringSet, \
-        GenericTranslation
+from .resource_collections import StringSet, GenericTranslation
+from .utils.string_utils import split_by_newline
 
 
 class PoParseError(ParseError):
@@ -335,8 +335,7 @@ class GettextCompiler(Compiler):
     def _get_plurals(self):
         """Get all plural forms for the source strings."""
         translations = Translation.objects.filter(
-            source_entity__resource = self.resource,
-            language=self.language,
+            resource = self.resource, language=self.language,
         ).order_by('source_entity__id', 'rule').\
         values_list('source_entity__string_hash', 'string')
         plurals = defaultdict(list)
@@ -435,28 +434,35 @@ class PoCompiler(GettextCompiler):
     """Compiler for PO files."""
 
     def _post_compile(self):
-        # Add copyright headers if any
+        """Add copyright headers, if any.
+
+        We first try to find where to insert those. Then, we just concatenate
+        them with the rest of the text.
+        """
         super(PoCompiler, self)._post_compile()
         from transifex.addons.copyright.models import Copyright
         c = Copyright.objects.filter(
             resource=self.resource, language=self.language
         ).order_by('owner')
-        content_with_copyright = ""
         copyrights_inserted = False
-        for line in self.compiled_template.split('\n'):
+        lines = []
+        for index, line in split_by_newline(self.compiled_template):
             if line.startswith('#'):
                 if not line.startswith('# FIRST AUTHOR'):
-                    content_with_copyright += line + "\n"
+                    lines.append(line)
             elif not copyrights_inserted:
                 copyrights_inserted = True
-                content_with_copyright += "# Translators:\n"
+                lines.append("# Translators:")
                 for entry in c:
-                    content_with_copyright += '# ' + entry.owner + \
-                            ', ' + entry.years_text + ".\n"
-                content_with_copyright += line + "\n"
+                    lines.append(
+                        '# ' + entry.owner + ', ' + entry.years_text + "."
+                    )
+                lines.append(line)
             else:
-                content_with_copyright += line + "\n"
-        self.compiled_template = content_with_copyright
+                lines.append(line)
+                break
+        lines.append(self.compiled_template[index:])
+        self.compiled_template = '\n'.join(lines)
 
 
 class POHandler(GettextHandler):

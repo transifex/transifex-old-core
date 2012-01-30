@@ -87,9 +87,6 @@ class AppleStringsHandler(SimpleCompilerFactory, Handler):
         finally:
             f.close()
 
-    def _replace_translation(self, original, replacement, text):
-        return text.replace(original, self._pseudo_decorate(self._escape(replacement)), 1)
-
     def _parse(self, is_source, lang_rules):
         """Parse an apple .strings file and create a stringset with
         all entries in the file.
