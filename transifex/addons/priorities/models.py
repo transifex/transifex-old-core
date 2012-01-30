@@ -40,3 +40,10 @@ class ResourcePriority(models.Model):
         """Cycle through the states of the priority object."""
         self.level = str((int(self.level) + 1) % int(len(PRIORITY_LEVELS)))
         self.save()
+
+
+def level_display(level):
+    """Return the display name for the specified level."""
+    for lvl, name in PRIORITY_LEVELS:
+        if lvl == level:
+            return name

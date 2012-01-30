@@ -3,7 +3,7 @@ import copy
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.db.models import Q, get_model
+from django.db.models import Q, get_model, Sum, Max
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -26,7 +26,7 @@ from transifex.projects import signals
 from transifex.languages.models import Language
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.releases.handlers import update_all_release
-from transifex.resources.models import RLStats
+from transifex.resources.models import Resource, RLStats
 from transifex.resources.utils import invalidate_template_cache
 from transifex.teams.forms import TeamRequestSimpleForm
 
@@ -39,8 +39,11 @@ from transifex.txcommon.views import json_result, json_error
 # To calculate user_teams
 from transifex.teams.models import Team
 
+from priorities.models import level_display
+
 Lock = get_model('locks', 'Lock')
 TranslationWatch = get_model('watches', 'TranslationWatch')
+
 
 def _project_create_update(request, project_slug=None,
     template_name='projects/project_form.html'):
@@ -137,13 +140,13 @@ def project_access_control_edit(request, project_slug):
             project = form.save(commit=False)
             project_hub = project.outsource
             hub_request = None
-            
+
             if 'outsourced' != project_type:
                 project.outsource = None
             else:
                 check = ProjectPermission(request.user)
                 if not (check.maintain(project) and check.maintain(project_hub)):
-                    # If the user is not maintainer of both projects it does 
+                    # If the user is not maintainer of both projects it does
                     # not associate the outsource project directly.
                     # It does a request instead.
                     try:
@@ -153,7 +156,7 @@ def project_access_control_edit(request, project_slug):
                     hub_request.project_hub = project_hub
                     hub_request.user = request.user
                     hub_request.save()
-                    
+
                     messages.success(request,
                         _("Requested to join the '%s' project hub.") % project_hub)
                     # ActionLog & Notification
@@ -166,7 +169,7 @@ def project_access_control_edit(request, project_slug):
                     action_logging(request.user, [project, project_hub], nt, context=context)
 
                     if settings.ENABLE_NOTICES:
-                        # Send notification for project hub maintainers 
+                        # Send notification for project hub maintainers
                         notification.send(project_hub.maintainers.all(), nt, context)
 
                     return HttpResponseRedirect(request.POST['next'])
@@ -175,8 +178,8 @@ def project_access_control_edit(request, project_slug):
                 project.is_hub = True
             else:
                 project.is_hub = False
-            
-            if ('free_for_all' == access_control and 
+
+            if ('free_for_all' == access_control and
                 project_type != "outsourced"):
                 project.anyone_submit = True
             else:
@@ -200,7 +203,7 @@ def project_access_control_edit(request, project_slug):
             if outsourced and not project.outsource:
                 # Drop resources from all-resources release of the hub project
                 update_all_release(outsourced)
-                
+
                 # Logging action
                 nt = 'project_hub_left'
                 context = {'project': project, 'project_hub': outsourced,
@@ -325,10 +328,20 @@ def project_detail(request, project_slug):
 def project_resources(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
 
-    statslist = RLStats.objects.select_related(
-        'resource', 'resource__project', 'resource__category',
-        'last_committer', 'resource__priority'
-    ).by_project_aggregated(project)
+    # statslist = RLStats.objects.select_related(
+    #     'resource', 'resource__project', 'resource__category',
+    #     'last_committer', 'resource__priority'
+    # ).by_project_aggregated(project)
+    statslist = Resource.objects.filter(
+        project=project
+    ).values(
+        'slug', 'name', 'category', 'priority__level',
+        'total_entities', 'wordcount'
+    ).annotate(
+        last_update=Max('rlstats__last_update')
+    )
+    for stat in statslist:
+        stat['priority__display'] = level_display(stat['priority__level'])
 
     return render_to_response('projects/project_resources.html', {
         'project_resources': True,
