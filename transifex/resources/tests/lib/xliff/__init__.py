@@ -41,14 +41,19 @@ class TestXliffParser(BaseTestCase):
                 entities += 1
                 if s.translation.strip() != '':
                     translations += 1
-            self.assertEqual(entities, 7)
-            self.assertEqual(translations, 7)
+            if file == 'example.xlf':
+                self.assertEqual(entities, 10)
+                self.assertEqual(translations, 10)
+            else:
+                self.assertEqual(entities, 7)
+                self.assertEqual(translations, 7)
 
-    def test_xliff_save2db(self, delete=True):
+    def _test_xliff_save2db(self):
         """Test creating source strings from a XLIFF file"""
         source_file = 'example.xlf'
         trans_file = 'translation_ar.xlf'
-        handler = XliffHandler(os.path.join(os.path.dirname(__file__), source_file))
+        handler = XliffHandler(os.path.join(os.path.dirname(__file__),
+            source_file))
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
         handler.bind_resource(self.resource)
@@ -56,11 +61,12 @@ class TestXliffParser(BaseTestCase):
         r = self.resource
         l = r.source_language
         # Check that all entities with not null are created in the db
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 6)
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 9)
 
         # Check that all source translations are there
         self.assertEqual(
-            len(Translation.objects.filter(source_entity__resource=r, language=l)), 7
+            len(Translation.objects.filter(source_entity__resource=r,
+                language=l)), 10
         )
 
         # Import and save the finish translation
@@ -80,13 +86,14 @@ class TestXliffParser(BaseTestCase):
 
         handler.save2db()
         # Check if all Source strings are untouched
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 6)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 9)
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 7)
 
         #Save updated translation file
-        handler.bind_file(os.path.join(os.path.dirname(__file__), 'translation_ar_updated.xlf'))
+        handler.bind_file(os.path.join(os.path.dirname(__file__),
+            'translation_ar_updated.xlf'))
         handler.set_language(l)
         handler.parse_file()
 
@@ -101,10 +108,20 @@ class TestXliffParser(BaseTestCase):
 
         handler.save2db()
         # Check if all Source strings are untouched
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 6)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 9)
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 9)
+
+        # Reset to old data
+        for se in self.resource.source_entities.all():
+            se.translations.filter(language=self.language_ar).delete()
+
+        handler.bind_file(os.path.join(os.path.dirname(__file__),
+            'translation_ar.xlf'))
+        handler.parse_file()
+        handler.save2db()
+
 
         #Create another resource with files with no plural data
         r1 = self.resource_new
@@ -145,36 +162,31 @@ class TestXliffParser(BaseTestCase):
         #Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r1,
             language=l)), 5)
+        return handler
 
-        if delete:
-            r.delete()
-            r1.delete()
-
-    def test_xliff_compile(self):
+    def _test_xliff_compile(self, handler):
         """Test compiling translations for XLIFF files"""
-
-        self.test_xliff_save2db(delete=False)
-        handler = XliffHandler()
+        source_compiled_file = os.path.join(os.path.dirname(__file__),
+                'example_compiled.xlf')
+        trans_compiled_file = os.path.join(os.path.dirname(__file__),
+                'translation_ar_compiled.xlf')
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
-        old_template = handler.compiled_template
-        self.assertNotEqual(old_template, handler.compile())
-
+        compiled_template = handler.compile()
+        f = open(source_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
         handler.set_language(self.language_ar)
-        old_template = handler.compiled_template
-        self.assertNotEqual(old_template, handler.compile())
+        compiled_template = handler.compile()
+        f = open(trans_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
 
-        handler.bind_resource(self.resource_new)
-        handler.set_language(self.resource_new.source_language)
-        old_template = handler.compiled_template
-        self.assertNotEqual(old_template, handler.compile())
-
-        handler.set_language(self.language_ar)
-        old_template = handler.compiled_template
-        self.assertNotEqual(old_template, handler.compile())
-
-        #Cleanup
-        self.resource.delete()
-        self.resource_new.delete()
-
+    def test_xliff_save_and_compile(self):
+        handler = self._test_xliff_save2db()
+        self._test_xliff_compile(handler)
 

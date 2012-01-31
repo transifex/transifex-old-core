@@ -56,45 +56,47 @@ class XliffCompiler(Compiler):
         doc = xml.dom.minidom.parseString(content)
         root = doc.documentElement
         rules = self.language.get_pluralrules_numbers()
-        plurals = SourceEntity.objects.filter(
-            resource=self.resource, pluralized=True
-        )
-        if self.language != self.resource.source_language and plurals:
-            for entity in plurals:
-                match = False
-                for group_node in root.getElementsByTagName("group"):
-                    if group_node.attributes.has_key('restype') and \
-                            group_node.attributes.has_key('id') and \
-                            group_node.attributes['restype'].value == "x-gettext-plurals":
-                        trans_unit_nodes = group_node.getElementsByTagName("trans-unit")
-                        if self.getElementByTagName(trans_unit_nodes[0], "target") and \
-                                self.getElementByTagName(trans_unit_nodes[0], "target"
-                                        ).firstChild.data[:-5] == entity.string_hash:
-                            match = True
-                            break
-                if not match:
-                    continue
-                for count,rule in enumerate(rules):
-                    if rule == 0:
-                        clone = trans_unit_nodes[1].cloneNode(deep=True)
-                        target = self.getElementByTagName(clone, "target")
-                        target.firstChild.data = target.firstChild.data[:-1] + '0'
-                        clone.setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-                        indent_node = trans_unit_nodes[0].previousSibling.cloneNode(deep=True)
-                        group_node.insertBefore(indent_node, trans_unit_nodes[0].previousSibling)
-                        group_node.insertBefore(clone, trans_unit_nodes[0].previousSibling)
-                    if rule == 1:
-                        trans_unit_nodes[0].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-                    if rule in range(2, 5):
-                        clone = trans_unit_nodes[1].cloneNode(deep=True)
-                        target = self.getElementByTagName(clone, "target")
-                        target.firstChild.data = target.firstChild.data[:-1] + '%d'%rule
-                        clone.setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-                        indent_node = trans_unit_nodes[1].previousSibling.cloneNode(deep=True)
-                        group_node.insertBefore(indent_node, trans_unit_nodes[1].previousSibling)
-                        group_node.insertBefore(clone, trans_unit_nodes[1].previousSibling)
-                    if rule == 5:
-                        trans_unit_nodes[1].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
+        if self.language == self.resource.source_language:
+            return content
+        for group_node in root.getElementsByTagName("group"):
+            if group_node.attributes.has_key('restype') and \
+                    group_node.attributes.has_key('id') and \
+                    group_node.attributes['restype'].value == "x-gettext-plurals":
+                trans_unit_nodes = group_node.getElementsByTagName("trans-unit")
+            else:
+                continue
+            for count,rule in enumerate(rules):
+                if rule == 0:
+                    clone = trans_unit_nodes[1].cloneNode(deep=True)
+                    target = self.getElementByTagName(clone, "target")
+                    target.firstChild.data = target.firstChild.data[:-1] + '0'
+                    clone.setAttribute("id",
+                            group_node.attributes["id"].value+'[%d]'%count)
+                    indent_node = trans_unit_nodes[
+                            0].previousSibling.cloneNode(deep=True)
+                    group_node.insertBefore(
+                            indent_node, trans_unit_nodes[0].previousSibling)
+                    group_node.insertBefore(
+                            clone, trans_unit_nodes[0].previousSibling)
+                if rule == 1:
+                    trans_unit_nodes[0].setAttribute(
+                        "id", group_node.attributes["id"].value+'[%d]'%count)
+                if rule in range(2, 5):
+                    clone = trans_unit_nodes[1].cloneNode(deep=True)
+                    target = self.getElementByTagName(clone, "target")
+                    target.firstChild.data = target.firstChild.data[:-1] +\
+                            '%d'%rule
+                    clone.setAttribute("id", group_node.attributes["id"].value\
+                            +'[%d]'%count)
+                    indent_node = trans_unit_nodes[
+                            1].previousSibling.cloneNode(deep=True)
+                    group_node.insertBefore(
+                        indent_node, trans_unit_nodes[1].previousSibling)
+                    group_node.insertBefore(
+                            clone, trans_unit_nodes[1].previousSibling)
+                if rule == 5:
+                    trans_unit_nodes[1].setAttribute(
+                        "id", group_node.attributes["id"].value+'[%d]'%count)
         content = doc.toxml()
         return content
 
@@ -369,7 +371,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
                 return
             # TODO - do something with inline elements
         if pluralized:
-            self._add_translation_string(
+            self.stringset.add(
                     source, translation, context=context,
                     rule=rule, pluralized=True
              )
@@ -380,7 +382,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
                     obsolete=False))
              """
         else:
-            self._add_translation_string(
+            self.stringset.add(
                     source, translation, context=context
              )
             """
