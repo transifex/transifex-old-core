@@ -53,8 +53,18 @@
             }
         });
     });
-  }                 
+  }
+
+
+  $('.field-helptext').each(function(){
+    $(this).appendTo($(this).siblings('span'));
+  });
+
+
 </script>
+
+
+
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
@@ -121,25 +131,25 @@
   </div>
   <div class="first_level more_actions">
         <ul class="right">
-          <li class="top">
+          <li class="tx-form-field top">
             <span id="view_strings" class="i16 view_online">
             <a href="{% url view_strings resource.project.slug resource.slug target_language.code %}">{% trans "View strings online" %}</a>
             </span>
           </li>
 
-          <li>
+          <li class="tx-form-field">
           	{% watch_toggle resource target_language %}
           </li>
-          <li>
+          <li class="tx-form-field">
             <span class="i16 team"><a {% if team %} href="{% url team_detail project.slug target_language.code %}"{% else %}class="disabled" title="There is no project team for this language."{% endif %}>{% trans "Visit language team" %}</a></span>
           </li>
-          <li>
+          <li class="tx-form-field">
             {% if request.user.is_authenticated and resource.accept_translations %}
               {% if is_maintainer or user_teams %}
               <span class="i16 clone">
                 <a class="language_chooser_trigger" href="javascript:;" >{% trans "Clone to new language" %}</a>
               </span>
-              <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
+              <span class="field-helptext tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
               <div class="language_chooser" style="display:none;margin:5px;">
                 <select style="margin-left:24px">
                   <option value="" selected="selected">---------</option>
@@ -159,19 +169,19 @@
                 <span class="i16 clone">
                   <a class="language_chooser_trigger disabled">{% trans "Clone to new language" %}</a>
                 </span>
-                <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
+                <span class="field-helptext tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
               {% endif %}
 
             {% else %}
               <span class="i16 clone">
                 <a class="language_chooser_trigger disabled">{% trans "Clone to new language" %}</a>
               </span>
-              <span class="tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
+              <span class="field-helptext tipsy_enable" title="{% trans "Copy all the translations from this language to a new (chosen) language in the specific resource. This will copy the pluralized translations too, if and only if the two languages have exactly the same plural rules." %}" style="border:0">(?)</span>
             {% endif %}
           </li>
         </ul>
         <ul>
-          <li class="top">
+          <li class="tx-form-field top">
             <span class="i16 get_file">
             {% if request.user.is_authenticated %}
                 <a href="{% url download_translation resource.project.slug resource.slug target_language.code %}">{% trans "Download for viewing" %}</a>
@@ -179,9 +189,10 @@
                 <a class="disabled" title="{% trans "You must login to be able to download the translations." %}">{% trans "Download for viewing" %}</a>
             {% endif %}
             </span>
+            <span class="field-helptext tipsy_enable" title="{% trans "Add only translated strings into the file. Untranslated strings are NOT filed with source strings." %}" style="border:0">(?)</span>
           </li>
           {% ifequal resource.i18n_type "PO" %}
-          <li>
+          <li class="tx-form-field">
             <span id="download_pot" class="i16 get_file">
               {% if request.user.is_authenticated %}
               <a href="{% url transifex.resources.views.get_pot_file project_slug=project.slug resource_slug=resource.slug %}">
@@ -193,10 +204,11 @@
               </a>
               {% endif %}
             </span>
+            <span class="field-helptext tipsy_enable" title="{% trans "PO file template." %}" style="border:0">(?)</span>
           </li>
           {% endifequal %}
 
-          <li>
+          <li class="tx-form-field">
             <span class="i16 get_reviewed_file">
               {% if request.user.is_authenticated %}
               <a href="{% url download_reviewed_translation project.slug resource.slug target_language.code %}">
@@ -206,10 +218,11 @@
                 {% trans "Download only reviewed translations" %}
               </a>
             </span>
+            <span class="field-helptext tipsy_enable" title="{% trans "Add only reviewed translations into the file. Untranslated strings are not filed at all." %}" style="border:0">(?)</span>
           </li>
 
           {% if resource.source_language == target_language and request.user.is_authenticated %}
-          <li>
+          <li class="tx-form-field">
             <span class="i16 get_file ">
                 <a id="resource_pseudo_translation_actions" href="{% url apiv2_pseudo_content project.slug resource.slug %}?pseudo_type=MIXED&file=true" >{% trans "Get pseudo translations" %}</a>
             </span>
@@ -217,7 +230,7 @@
           {% endif %}
           
           {% ifnotequal resource.source_language target_language %}
-          <li>
+          <li class="tx-form-field">
             {% if request.user.is_authenticated %}
             <span id="download_for_translation" class="i16 lock">
               <a {% if lock %}{% ifnotequal request.user lock.owner %}class="disabled" title="{% trans "Resource cannot be locked" %}" {% else %}href="#"{% endifnotequal %}{% else %}{% if can_submit_translation and resource.accept_translations %}href="#"{% else %}class="disabled"{% endif %}{% endif %}>{% trans "Download for translation" %}</a>
@@ -227,7 +240,7 @@
               <a class="disabled" title="{% trans "You must login to use this action" %}">{% trans "Download for translation" %}</a>
             </span>
             {% endif %}
-            <span class="tipsy_enable" title="{% trans "Lock the file under your ownership and download it locally to edit it, in one action." %}" style="border:0">(?)</span>
+            <span class="field-helptext tipsy_enable" title="{% trans "Lock the file under your ownership and download it locally to edit it, in one action. Untranslated strings are filed by source strings." %}" style="border:0">(?)</span>
             <div class="error_notes"></div>
           </li>
           <li>
