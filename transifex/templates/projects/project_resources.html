@@ -145,7 +145,7 @@
           <h5 class="linkstyle" style="font-weight:bold">{{ stat.name }}&nbsp;&raquo;</h5>
         </td>
         <td class="category_td_class">{{ stat.category }}</td>
-        <td> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
+        <td class="res-size"> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
         <td class="tablelastupd">
           {% with stat.last_committer as last_committer %}
             <span class="i16 table-update res_tipsy_enable" title="{% trans 'Last update' %}">
