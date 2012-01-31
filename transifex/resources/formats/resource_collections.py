@@ -6,7 +6,29 @@ A series of classes that hold collections of the resources' app objects.
 from django.utils import simplejson as json
 from transifex.resources.models import SourceEntity, Translation
 from transifex.resources.formats.utils.hash_tag import hash_tag
+from transifex.txcommon.log import logger
 
+
+class KeyObj(object):
+    """
+    An object to store keys of key_dict used in _update_key_dict()
+    method of class StringSet. This is required because lists cannot
+    be used as dictionary keys. But context for a source string may
+    also be a list in some cases.
+    """
+    def __init__(self, hash_tr, context):
+        self.hash_tr = hash_tr
+        self.context = context
+
+    def __hash__(self):
+        return hash(hash_tag(self.hash_tr, self.context))
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__) and \
+            self.hash_tr == other.hash_tr and \
+            self.context == other.context:
+            return True
+        return False
 
 class StringSet(object):
     """
@@ -24,8 +46,9 @@ class StringSet(object):
             context = kwargs['context']
             hash_tr = hash_tag(source_entity, context)
             rule = kwargs.get('rule', 5)
-            key = (hash_tr, context)
-            if key in self.key_dict and self.key_dict[key].get(rule, None):
+            key = KeyObj(hash_tr, context)
+            if key in self.key_dict and self.key_dict[key].get(
+                    rule, None):
                 return False
             else:
                 if key in self.key_dict:
