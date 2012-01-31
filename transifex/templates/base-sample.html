@@ -45,6 +45,10 @@
 	<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.autocomplete.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/file_submit.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+  <script type="text/javascript">
+  $.facebox.settings.loadingImage = '{{ STATIC_URL }}images/loading.gif';
+  $.facebox.settings.closeImage = '{{ STATIC_URL }}images/closelabel.png';
+  </script>
   {% endcompress %}
   {% endblock %}
   {% hook "base.html" headjs %}
