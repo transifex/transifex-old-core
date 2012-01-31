@@ -34,23 +34,18 @@
         var tablesorter_resource = $(".tablesorter_resource_list");
         tablesorter_resource.tablesorter({
             widgets: ['zebra'],
+            sortList: [[0,0]], 
             textExtraction: { // Take value inside an object for the columns
-              0: function(node) {
+              0: function(node) {return $("a", node).text(); },
+              1: function(node) {
                   var category = $(node).html();
                   if(category == "None")
                     return "zzzzzzzzzzzz";
                   else
-                    return category;
-              },
-              1: function(node) {
-                  return $("a", node).text();
-              },
-              2: function(node) {
-                  return $(".origin_format", node).text();
-              },
-              3: function(node) {
-                  return parseInt($(".priority_sort", node).text());
-              }
+                    return category;},
+              2: function(node) {return $(node).find(".wordcount").text();},
+              3: function(node) {return $(".origin_format", node).text();},
+              4: function(node) {return parseInt($(".priority_sort", node).text());}
             }
         });
         var category_is_clicked = false; // holds whether the last click on a table header was on the 'category' header or not
@@ -134,11 +129,11 @@
   <table class="stat_table_font stats-table tablesorter_resource_list">
   <thead>
    <tr>
-    <th id="category_header"><span>{% trans "Resource name" %}</span></th>
-    <th class="ui-corner-topleft"><span>{% trans "Category" %}</span</th>
-		<th>{% trans "Size" %}</th>
-    <th><span>{% trans "Last Updated" %}</span></th>
-    <th class="ui-corner-topright"><span {% if is_maintainer %}class="res_tipsy_enable" title="{% trans "Click the flags to modify the importance of a resource." %}" {% else %} {% endif %}style="border:0">{% trans "Importance" %}</span></th>
+    <th class="onlyarrow"></th>
+    <th id="category_header" class="onlyarrow"></th>
+		<th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
    </tr>
   </thead>
   <tbody>
@@ -150,10 +145,10 @@
           <h5 class="linkstyle" style="font-weight:bold">{{ stat.name }}&nbsp;&raquo;</h5>
         </td>
         <td class="category_td_class">{{ stat.category }}</td>
-        <td> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}{{ strings }} strings <span style="color:#888;">({{ words }} words)</span>{% endblocktrans %}</td>
+        <td> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
         <td class="tablelastupd">
           {% with stat.last_committer as last_committer %}
-            <span class="res_tipsy_enable" style="border:0" title="{% if last_committer %}{% blocktrans %}Committed by {{ last_committer }}{% endblocktrans %}<br/>{% else %}{% blocktrans %}No committers yet{% endblocktrans %}{% endif %}">
+            <span class="i16 table-update res_tipsy_enable" title="{% trans 'Last update' %}">
           {% endwith %}
           {% with stat.last_update as last_update %}
             {% if last_update %}
@@ -166,20 +161,20 @@
           </span>
         </td>
 		{% endcache %}
-        <td class="priority_level" style="width:100px;text-align:center">
-            {% with stat.priority__level as priority_level %}
-            {% with stat.priority__display as display_level %}
-            {% if is_maintainer %}
-              <a id="priority_{{ stat.slug }}" class="resource_priority_trigger" style="cursor:pointer">
-                <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-                <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
-              </a>
-            {% else %}
-              <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-              <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
-            {% endif %}
-            {% endwith %}
-            {% endwith %}
+        <td class="priority_level" style="text-align:center">
+          {% with stat.priority__level as priority_level %}
+          {% with stat.priority__display as display_level %}
+          {% if is_maintainer %}
+          <a id="priority_{{ stat.slug }}" class="resource_priority_trigger" style="cursor:pointer">
+            <span class="priority_sort" style="display:none">{{ priority_level }}</span>
+            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
+          </a>
+          {% else %}
+          <span class="priority_sort" style="display:none">{{ priority_level }}</span>
+          <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
+          {% endif %}
+          {% endwith %}
+          {% endwith %}
         </td>
     </tr>
   {% if forloop.last %}
