@@ -19,11 +19,12 @@ class _Mode(object):
     """
 
     # use slots to save memory
-    __slots__ = ('_value', )
+    __slots__ = ('_value', 'label')
 
-    def __init__(self, value=0):
+    def __init__(self, value=0, label=None):
         """Set the initial mode of the object."""
         self._value = value
+        self.label = label
 
     def __or__(self, other):
         """Combine modes."""
@@ -35,11 +36,11 @@ class _Mode(object):
 
     def __unicode__(self):
         return u'<Mode %s>' % self._value
-
+    
 
 class Mode(object):
     """Act as a namespace for the pre-defined modes."""
 
-    DEFAULT = _Mode(value=0)
-    TRANSLATED = _Mode(value=1)
-    REVIEWED = _Mode(value=2)
+    DEFAULT = _Mode(0, 'for_use')
+    TRANSLATED = _Mode(1, 'for_translation')
+    REVIEWED = _Mode(2, 'for_use_reviewed')

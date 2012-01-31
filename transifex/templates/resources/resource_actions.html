@@ -30,7 +30,7 @@
   if(!$("#download_for_translation a").hasClass('disabled')){
     $("#download_for_translation").click(function(){
         $.ajax({
-            url : '{% url lock_and_download_translation resource.project.slug resource.slug stats.language.code %}',
+            url : '{% url lock_and_download_for_translation resource.project.slug resource.slug stats.language.code %}',
             contentType : 'application/json',
             type : 'POST',
             beforeSend: function(){
@@ -184,9 +184,9 @@
           <li class="tx-form-field top">
             <span class="i16 get_file">
             {% if request.user.is_authenticated %}
-                <a href="{% url download_translation resource.project.slug resource.slug target_language.code %}">{% trans "Download for viewing" %}</a>
+                <a href="{% url download_for_use resource.project.slug resource.slug target_language.code %}">{% trans "Download for use" %}</a>
             {% else %}
-                <a class="disabled" title="{% trans "You must login to be able to download the translations." %}">{% trans "Download for viewing" %}</a>
+                <a class="disabled" title="{% trans "You must login to be able to download the translations." %}">{% trans "Download for use" %}</a>
             {% endif %}
             </span>
             <span class="field-helptext tipsy_enable" title="{% trans "Add only translated strings into the file. Untranslated strings are NOT filed with source strings." %}" style="border:0">(?)</span>

@@ -501,7 +501,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code,
 
     # Prefix filename with mode, case it exists
     if kwargs.has_key('mode'):
-        _filename = "%s_" % kwargs.get('mode') + _filename
+        _filename = "%s_" % kwargs.get('mode').label + _filename
 
     response['Content-Disposition'] = ('attachment; filename=%s' % _filename)
     return response
@@ -583,7 +583,7 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
                 # Lock the resource now
                 Lock.objects.create_update(resource, language, request.user)
                 response['status'] = 'OK'
-                response['redirect'] = reverse('download_translation',
+                response['redirect'] = reverse('download_for_translation',
                     args=[resource.project.slug, resource.slug, lang_code])
             except:
                 response['status'] = "FAILED"
@@ -594,7 +594,7 @@ def lock_and_get_translation_file(request, project_slug, resource_slug, lang_cod
                     # File already locked by me, so extend the lock period.
                     Lock.objects.create_update(resource, language, request.user)
                     response['status'] = 'OK'
-                    response['redirect'] = reverse('download_translation',
+                    response['redirect'] = reverse('download_for_translation',
                         args=[resource.project.slug, resource.slug, lang_code])
                 except:
                     response['status'] = "FAILED"
