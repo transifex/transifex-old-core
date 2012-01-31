@@ -63,34 +63,38 @@ class XliffCompiler(Compiler):
             for entity in plurals:
                 match = False
                 for group_node in root.getElementsByTagName("group"):
-                    if group_node.attributes['restype'].value == "x-gettext-plurals":
+                    if group_node.attributes.has_key('restype') and \
+                            group_node.attributes.has_key('id') and \
+                            group_node.attributes['restype'].value == "x-gettext-plurals":
                         trans_unit_nodes = group_node.getElementsByTagName("trans-unit")
-                        if self.getElementByTagName(trans_unit_nodes[0], "source").firstChild.data == entity.string_hash:
+                        if self.getElementByTagName(trans_unit_nodes[0], "target") and \
+                                self.getElementByTagName(trans_unit_nodes[0], "target"
+                                        ).firstChild.data[:-5] == entity.string_hash:
                             match = True
                             break
                 if not match:
                     continue
-            for count,rule in enumerate(rules):
-                if rule == 0:
-                    clone = trans_unit_nodes[1].cloneNode(deep=True)
-                    target = self.getElementByTagName(clone, "target")
-                    target.firstChild.data = target.firstChild.data[:-1] + '0'
-                    clone.setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-                    indent_node = trans_unit_nodes[0].previousSibling.cloneNode(deep=True)
-                    group_node.insertBefore(indent_node, trans_unit_nodes[0].previousSibling)
-                    group_node.insertBefore(clone, trans_unit_nodes[0].previousSibling)
-                if rule == 1:
-                    trans_unit_nodes[0].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-                if rule in range(2, 5):
-                    clone = trans_unit_nodes[1].cloneNode(deep=True)
-                    target = self.getElementByTagName(clone, "target")
-                    target.firstChild.data = target.firstChild.data[:-1] + '%d'%rule
-                    clone.setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
-                    indent_node = trans_unit_nodes[1].previousSibling.cloneNode(deep=True)
-                    group_node.insertBefore(indent_node, trans_unit_nodes[1].previousSibling)
-                    group_node.insertBefore(clone, trans_unit_nodes[1].previousSibling)
-                if rule == 5:
-                    trans_unit_nodes[1].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
+                for count,rule in enumerate(rules):
+                    if rule == 0:
+                        clone = trans_unit_nodes[1].cloneNode(deep=True)
+                        target = self.getElementByTagName(clone, "target")
+                        target.firstChild.data = target.firstChild.data[:-1] + '0'
+                        clone.setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
+                        indent_node = trans_unit_nodes[0].previousSibling.cloneNode(deep=True)
+                        group_node.insertBefore(indent_node, trans_unit_nodes[0].previousSibling)
+                        group_node.insertBefore(clone, trans_unit_nodes[0].previousSibling)
+                    if rule == 1:
+                        trans_unit_nodes[0].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
+                    if rule in range(2, 5):
+                        clone = trans_unit_nodes[1].cloneNode(deep=True)
+                        target = self.getElementByTagName(clone, "target")
+                        target.firstChild.data = target.firstChild.data[:-1] + '%d'%rule
+                        clone.setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
+                        indent_node = trans_unit_nodes[1].previousSibling.cloneNode(deep=True)
+                        group_node.insertBefore(indent_node, trans_unit_nodes[1].previousSibling)
+                        group_node.insertBefore(clone, trans_unit_nodes[1].previousSibling)
+                    if rule == 5:
+                        trans_unit_nodes[1].setAttribute("id", group_node.attributes["id"].value+'[%d]'%count)
         content = doc.toxml()
         return content
 
@@ -138,6 +142,7 @@ class XliffCompiler(Compiler):
 
     def _compile(self, content):
         super(XliffCompiler, self)._compile(content)
+        content = self.compiled_template
         stringset = self._get_source_strings()
         existing_translations = self._plurals()
         replace_translations = {}
@@ -233,7 +238,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
                 if node.nodeType == node.ELEMENT_NODE and node.localName == "file":
                     self.parse_tag_file(node, is_source)
         except Exception, e:
-            XliffParseError(e.message)
+            raise self.HandlerParseError(e.message)
 
         return self.doc.toxml()
 
@@ -254,6 +259,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
         if not context:
             context = []
         if group_node.attributes.get('restype', None) and \
+                group_node.attributes.get('id', None) and \
                 group_node.attributes['restype'].value == "x-gettext-plurals":
             pluralized = True
             nplural_file = 0
@@ -300,8 +306,10 @@ class XliffHandler(SimpleCompilerFactory, Handler):
         # TODO prop-group, note, count-group
         # there is no way to handle bin-unit in transifex
 
-    def parse_tag_trans_unit(self, trans_unit_node, is_source=False, context=[], source_string = None, rule = None):
+    def parse_tag_trans_unit(self, trans_unit_node, is_source=False, context=[], source_string=None, rule=None):
         source = ""
+        if not rule and not trans_unit_node.attributes.get('id', None):
+            return
         source_node = trans_unit_node.getElementsByTagName("source")[0]
         if len(source_node.childNodes)>1:
             for i in source_node.childNodes:
