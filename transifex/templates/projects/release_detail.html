@@ -132,7 +132,7 @@
 
     {% with private_resources|length as resources_number %}
     {% if private_resources %}
-      <dt class="coordinators i16">{% trans "Private Resources:" %}</dt>
+      <dt class="resource i16">{% trans "Private Resources:" %}</dt>
       <dd>
         <span id="private-resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
         {% blocktrans %}This release has {{ resources_number }} private resources you have access to.{% endblocktrans %}
@@ -160,21 +160,19 @@
 <div id="projects" class="projects">
 
   <div class="separate-header clearfix">
-  	<h3  class="sh-label">{% trans "Translation Statistics" %}</h3>
+  	<h3  class="sh-label">{% trans "Release Languages" %}</h3>
 	</div>
 
 
 
 <div class="list clear">
 
-
-
-<table class="stat_table_font stats_table highlighted tablesorter_resource tablesorter_release_list" style="clear:both;margin-top:0.5em;width:100%">
+<table class="stat_table_font stats-table highlighted tablesorter_resource tablesorter_release_list" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span>{% trans "Language" %}</span></th>
-    <th class="completion_cell"><span>{% trans "Completion" %}</span></th>
-    <th><span>{% trans "Last Translation" %}</span></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
    </tr>
 {% for stat in statslist|sort_source_langs_first:source_languages %}
     {% if stat.first_translation %}
@@ -184,28 +182,23 @@
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td>
-
           <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a> <span class="locale">({{ stat.object.code }})</span>
           {% if stat.object in source_languages %}
              <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
           {% endif %}
-
           </td>
-        <td>
+        <td class="completion">
           {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
           {% endwith %}
         </td>
 
-        <td>
+        <td class="tablelastupd">
         {% with stat.last_update as last_update %}
-        <span style="border:0" unixdate="{{ last_update|date:'U' }}">
+        <span class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|date:"M d, h:ia" }}
-              {% if last_committer %}
-              by {{ last_committer }}
-              {% endif %}
           {% else %}
               {% trans "no translations yet" %}
           {% endif %}

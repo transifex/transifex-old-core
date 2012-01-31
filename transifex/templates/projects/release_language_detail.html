@@ -1,4 +1,4 @@
-{% extends "projects/project_detail_childs.html" %}
+{% extends "projects/project_menu.html" %}
 {% load i18n %}
 {% load statistics_resources %}
 
@@ -97,7 +97,21 @@
   <a class="i16 feed" href="{% url release_language_feed release.project.slug release.slug language.code %}" title="{% trans "Statistics feed for this language and release" %}">{% trans "Subscribe to feed" %}</a>
 {% endblock %}
 
-{% block content_title %}<h2 class="pagetitle">Release '{{ release.name }}':&nbsp;{{ language.name }}</h2>{% endblock %}
+{% block header_menu %}{% endblock %}
+{% block project_header %}
+{{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
+<h2 class="pagetitle with_description"><a href="{{ release.get_absolute_url }}">Release '{{ release.name }}'</a></h2>
+<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
+<h2 class="pagetitle with_description">{{ language.name }}</h2>
+{% endblock%}
+
+
+{% if release.description %}
+{% block current_description %}
+<p class="description belowheader">{{ release.description }}</p>
+{% endblock %}
+{% endif %}
+
 
 {% block content_main %}
 
@@ -111,11 +125,10 @@
   <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th id="category_header"><span>{% trans "Category" %}</span></th>
-    <th><span>{% trans "Resource" %}</span></th>
-    <th style="width:320px"><span>{% trans "Completion" %}</span></th>
-    <th><span>{% trans "Last Updated" %}</span></th>
-    <th><span>{% trans "Importance" %}</span></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
    </tr>
   </thead>
   <tbody>
@@ -134,14 +147,14 @@
           {% endif %}
         {% endif %}
       </td>
-      <td>
+      <td class="completion">
         {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
         {% endwith %}
       </td>
       <td>
         {% with stat.last_update as last_update %}
-        <span style="border:0" unixdate="{{ last_update|date:'U' }}">
+        <span class="tablelastupd" style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|timesince }}
@@ -182,14 +195,17 @@
   </table>
  {% endif %}
  {% if private_stats %}
- <h3>{% blocktrans count resources|length as counter %}Private Resource that you have access to under this Release{% plural %}Private resources that you have access to under this Release{% endblocktrans %}</h3>
-  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Private Resource that you have access to under this Release{% plural %}Private resources that you have access to under this Release{% endblocktrans %}</h3>
+	</div>
+ 
+  <table class="stats-table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
   <thead>
   <tr>
-    <th><span class="i16 comment">{% trans "Resource" %}</span></th>
-    <th style="width:320px"><span class="i16 stats">{% trans "Completion" %}</span></th>
-    <th><span class="i16 clock">{% trans "Last Updated" %}</span></th>
-    <th><span class="i16 ruby">{% trans "Importance" %}</span></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
+    <th class="onlyarrow"></th>
    </tr>
   </thead>
   <tbody>
@@ -207,20 +223,17 @@
           {% endif %}
         {% endif %}
         </td>
-        <td>
+        <td class="completion">
         {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
         {% endwith %}
         </td>
         <td>
         {% with stat.last_update as last_update %}
-        <span style="border:0" unixdate="{{ last_update|date:'U' }}">
+        <span class="tablelastupd" style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|timesince }}
-              {% if last_committer %}
-              by {{ last_committer }}
-              {% endif %}
           {% else %}
               {% trans "no activity yet" %}
           {% endif %}
@@ -228,7 +241,7 @@
         </span>
         {% endwith %}
         </td>
-        <td class="priority_level" style="width:100px;text-align:center">
+        <td class="priority_level" style="text-align:center">
         <span style="border:0">
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
