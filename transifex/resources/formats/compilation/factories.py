@@ -84,6 +84,13 @@ class CompilerFactory(object):
         raise NotImplementedError
 
 
+class EmptyCompilerFactory(CompilerFactory):
+    """Return an empty translation set."""
+
+    def _get_translation_setter(self, language, mode):
+        return EmptyTranslationsBuilder(self.resource, language)
+
+
 class SimpleCompilerFactory(CompilerFactory):
     """Use translation string set as is.
 

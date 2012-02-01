@@ -82,7 +82,7 @@ class EmptyTranslationsBuilder(TranslationsBuilder):
 
     def __call__(self):
         """Return an empty dictionary."""
-        return {}
+        return self._output('')
 
 
 class ReviewedTranslationsBuilder(TranslationsBuilder):

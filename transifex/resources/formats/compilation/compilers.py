@@ -78,10 +78,10 @@ class Compiler(object):
         if self._tset is None or self._tdecorator is None:
             msg = "One of the builders has not been set."
             raise UninitializedCompilerError(msg)
-        self._pre_compile()
+        self._pre_compile(template)
         content = self._examine_content(template)
         self._compile(content)
-        self._post_compile()
+        self._post_compile(content)
         del self.language
         return self.compiled_template
 
@@ -138,11 +138,11 @@ class Compiler(object):
         """Have a chance to handle translation strings."""
         return s
 
-    def _post_compile(self):
+    def _post_compile(self, content=None):
         """Do any work after the compilation process."""
         pass
 
-    def _pre_compile(self):
+    def _pre_compile(self, content=None):
         """Do any work before compiling the translation."""
         pass
 
@@ -197,7 +197,7 @@ class PluralCompiler(Compiler):
         content = self._apply_translations(replace_translations, content)
         self.compiled_template = content
 
-    def _pre_compile(self):
+    def _pre_compile(self, content=None):
         """Set the translations builder to pluralized mode."""
         self._tset.pluralized = True
 
