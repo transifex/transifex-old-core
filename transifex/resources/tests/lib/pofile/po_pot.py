@@ -154,14 +154,14 @@ class TestViewsInvocations(BaseTestCase):
     @patch.object(POTHandler, 'compile')
     def test_get(self, mock_pot, mock_po):
         po_source_url = reverse(
-            'download_translation', kwargs={
+            'download_for_translation', kwargs={
                 'project_slug': self.pslug,
                 'resource_slug': self.rslug,
                 'lang_code': 'en'
             }
         )
         po_translation_url = reverse(
-            'download_translation', kwargs={
+            'download_for_translation', kwargs={
                 'project_slug': self.pslug,
                 'resource_slug': self.rslug,
                 'lang_code': 'el'

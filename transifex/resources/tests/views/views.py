@@ -86,7 +86,7 @@ class CoreViewsTest(base.BaseTestCase):
     #    # We first need a test that creates a resource with a template.
     #    raise NotImplementedError
     #    resp = self.client['registered'].get(
-    #        reverse('download_translation',
+    #        reverse('download_for_translation',
     #        args=[self.project.slug, self.resource.slug, self.language.code]), follow=True)
     #    self.assertEqual(resp.status_code, 200)
     #    self.assertTrue('project1_resource1.po' in resp['Content-Disposition'])
@@ -238,7 +238,7 @@ class CoreViewsTest(base.BaseTestCase):
     def test_get_translation_file(self):
         """Test download of a translation file"""
         self.test_resource_edit()
-        url = reverse('download_translation', args=[self.project.slug, self.resource.slug, self.language.code])
+        url = reverse('download_for_translation', args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['maintainer'].post(url)
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('project1_resource1_pt_BR.po' in resp['Content-Disposition'])

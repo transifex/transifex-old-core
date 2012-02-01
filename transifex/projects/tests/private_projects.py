@@ -434,7 +434,7 @@ class PrivateProjectTest(BaseTestCase):
         """
 
         # Check who has access to download pofile for language with team
-        URL = reverse('download_translation', kwargs={'project_slug':self.project_private.slug,
+        URL = reverse('download_for_translation', kwargs={'project_slug':self.project_private.slug,
             'resource_slug':self.resource_private.slug,
             'lang_code': self.language.code })
 

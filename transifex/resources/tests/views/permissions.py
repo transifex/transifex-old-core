@@ -86,7 +86,7 @@ class PermissionsTest(BaseTestCase):
         self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['anonymous'].get(page_url)
         self.assertEqual(resp.status_code, 302)
@@ -167,7 +167,7 @@ class PermissionsTest(BaseTestCase):
         self.assertRedirects(resp, '/accounts/signin/?next=%s' % page_url)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project_private.slug, self.resource_private.slug,
                   self.language.code])
         resp = self.client['anonymous'].get(page_url)
@@ -248,7 +248,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 403)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['registered'].get(page_url)
         self.assertEqual(resp.status_code, 302)
@@ -326,7 +326,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 403)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project_private.slug, self.resource_private.slug,
                   self.language.code])
         resp = self.client['registered'].get(page_url)
@@ -426,7 +426,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['team_member'].get(page_url)
         self.assertEqual(resp.status_code, 302)
@@ -513,7 +513,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project_private.slug, self.resource_private.slug,
                   self.language.code])
         resp = self.client['team_member'].get(page_url)
@@ -589,7 +589,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['maintainer'].get(page_url)
         self.assertEqual(resp.status_code, 302)
@@ -668,7 +668,7 @@ class PermissionsTest(BaseTestCase):
         self.assertEqual(resp.status_code, 200)
 
         # Check download file perms
-        page_url = reverse('download_translation',
+        page_url = reverse('download_for_translation',
             args=[self.project_private.slug, self.resource_private.slug,
                   self.language.code])
         resp = self.client['maintainer'].get(page_url)
