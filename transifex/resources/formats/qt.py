@@ -4,7 +4,7 @@
 Qt4 TS file parser for Python
 """
 from __future__ import absolute_import
-import re
+import re, collections
 import time
 import xml.dom.minidom
 import xml.parsers.expat
@@ -21,7 +21,8 @@ from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from suggestions.models import Suggestion
 from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
+from transifex.resources.formats.utils.hash_tag import hash_tag,\
+        escape_context, hash_regex
 
 
 # Resources models
@@ -94,8 +95,48 @@ def _getText(nodelist):
 class QtCompiler(Compiler):
     """Compiler for Qt resources."""
 
-    def _post_compile(self):
-        """Add plurals."""
+    def _plurals(self):
+        translations = Translation.objects.filter(
+            resource=self.resource, language=self.language,
+            source_entity__pluralized=True
+        ).values_list(
+            'source_entity_id', 'rule', 'string'
+        ).iterator()
+        res = collections.defaultdict(dict)
+        for t in translations:
+            res[t[0]][t[1]] = t[2]
+        return res
+
+    def _apply_plurals(self, translations, text):
+        regex = hash_regex(suffix='pl')
+        return regex.sub(
+            lambda m: translations.get(m.group(0), m.group(0)), text
+        )
+
+    def _compile(self, content):
+        super(QtCompiler, self)._compile(content)
+        stringset = self._get_source_strings()
+        existing_translations = self._plurals()
+        replace_translations = {}
+        self._tdecorator._escape = self._tdecorator._default_escape
+        for string in stringset:
+            trans = self._visit_translation(
+                existing_translations.get(string[0], u"")
+            )
+            if trans:
+                for rule in trans:
+                    key = string[1] + '_pl_' + str(rule)
+                    replace_translations[key] = self._tdecorator(trans[rule])
+            else:
+                for rule in self.language.get_pluralrules_numbers():
+                    key = string[1] + '_pl_' + str(rule)
+                    replace_translations[key] = self._tdecorator(u"")
+        content = self._update_plural_hashes(replace_translations)
+        content = self._apply_plurals(replace_translations, content)
+        self.compiled_template = content
+
+    def _update_plural_hashes(self, plurals):
+        """Add plurals hashes"""
         language = self.language
         doc = xml.dom.minidom.parseString(
             self.compiled_template.encode('utf-8')
@@ -106,7 +147,6 @@ class QtCompiler(Compiler):
         # FIXME monkey-patching
         # We need a way to call decorators *without* the escape function
         #
-        self._tdecorator._escape = self._tdecorator._default_escape
 
         for message in doc.getElementsByTagName("message"):
             translation = _getElementByTagName(message, "translation")
@@ -123,37 +163,37 @@ class QtCompiler(Compiler):
                 else:
                     sourceString = _getText(source.childNodes)
 
-                plurals = Translation.objects.filter(
-                    resource=self.resource,
-                    language=language,
-                    source_entity__string=sourceString,
-                    source_entity__context=_context_of_message(message)
-                ).order_by('rule')
-
+                #update plural hashes for target language
                 plural_keys = {}
-                # last rule excluding other(5)
+                md5_pattern = r'[0-9a-f]{32}'
+                plural_pattern = r'(?P<md5>%s)_pl_\d' % md5_pattern
+                plural_regex = re.compile(plural_pattern, re.IGNORECASE)
                 lang_rules = language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
+                m = plural_regex.search(numerusforms[0].firstChild.data)
+                string_hash = m.group('md5')
+                # Initialize all plural rules up to the las
                 for p,n in enumerate(lang_rules):
-                    plural_keys[p] = ""
-                for p,n in enumerate(plurals):
-                    plural_keys[p] = n.string
+                    plural_keys[p] = "%s_pl_%d" % (string_hash, n)
+
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.iterkeys():
                     e = doc.createElement("numerusform")
                     e.appendChild(
-                        doc.createTextNode(self._tdecorator(plural_keys[key]))
+                        doc.createTextNode(plural_keys[key])
                     )
                     translation.appendChild(e)
-                    if not plural_keys[key]:
+                    if not plurals[plural_keys[key]]:
                         translation.attributes['type'] = 'unfinished'
             else:
                 if not translation.childNodes:
                     translation.attributes['type'] = 'unfinished'
 
         template_text = doc.toxml()
+        return template_text
+
+    def _post_compile(self):
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
-            r"&apos;", template_text)
+            r"&apos;", self.compiled_template)
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/translation>)",
             r"&apos;", esc_template_text)
         self.compiled_template = esc_template_text

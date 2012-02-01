@@ -94,7 +94,7 @@ class TestQtFile(FormatsBaseTestCase):
         # Asserting number of entities - Qt file has 43 entries.
         self.assertEqual(entities, 44)
 
-    def test_qt_save2db(self):
+    def _test_qt_save2db(self):
         """Test creating source strings from a Qt file works"""
         handler = LinguistHandler(
             os.path.join(os.path.split(__file__)[0], 'en.ts')
@@ -134,7 +134,48 @@ class TestQtFile(FormatsBaseTestCase):
             len(Translation.objects.filter(resource=r, language=l)), 44
         )
 
-        r.delete()
+        #Import and save Arabic translations
+        handler.bind_file('%s/ar.ts' % os.path.split(__file__)[0])
+        l = Language.objects.by_code_or_alias('ar')
+        handler.set_language(l)
+        handler.parse_file()
+
+        handler.save2db()
+
+        # Check if all Source strings are untouched
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 43)
+
+        # Check that all translations are there
+        self.assertEqual(
+            len(Translation.objects.filter(resource=r, language=l)), 10
+        )
+        return handler
+
+    def _test_qt_compile(self, handler):
+        """Test compiling translation files for Qt resources"""
+        source_compiled_file = os.path.join(os.path.dirname(__file__),
+                'en_compiled.ts')
+        trans_compiled_file = os.path.join(os.path.dirname(__file__),
+                'ar.ts')
+        handler.bind_resource(self.resource)
+        handler.set_language(self.resource.source_language)
+        compiled_template = handler.compile()
+        f = open(source_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template,
+                expected_compiled_template[:-1])
+        handler.set_language(self.language_ar)
+        compiled_template = handler.compile()
+        f = open(trans_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
+
+    def test_qt_save_and_compile(self):
+        handler = self._test_qt_save2db()
+        self._test_qt_compile(handler)
 
     def test_convert_to_suggestions(self):
         """Test convert to suggestions when importing new source files"""
