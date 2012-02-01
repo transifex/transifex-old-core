@@ -160,9 +160,11 @@ div.translated_comp {
   position: absolute;
   height:100%;
   left: 0%; 
-  background: #99cc66;
+  background: #80b66a;
   background-repeat: repeat-x;
-  border-right: 1px solid #65a519;
+    -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; 
 }
 
  
@@ -178,9 +180,7 @@ div.untranslated_comp {
   position: absolute;
   height:100%; 
   display: inline;
-  background: #efefef;
   background-repeat: repeat-x;
-  border-right: 1px solid #ddd;
 }
 
 span.stat_message{
@@ -222,8 +222,14 @@ div.graph_resource {
   height: 12px;
   margin: 0px;
   padding: 0px;
-  border-left: 1px solid #ddd;
   margin-right: 1px; /* Due to the right border of div.untranslated_comp */
+  background-color: #eee;
+  -moz-box-shadow:    inset 1px 1px 5px #ddd;
+  -webkit-box-shadow: inset 1px 1px 5px #ddd;
+  box-shadow:         inset 1px 1px 5px #ddd;
+   -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px; 
 }
 
 div.stats_string_resource{
@@ -242,8 +248,14 @@ div.graph_resource_actions {
   height: 26px;
   margin: 0px;
   padding: 0px;
-  border-left: 1px solid #ddd;
+  background-color: #eee;
   margin-right: 1px; /* Due to the right border of div.untranslated_comp */
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;  
+  -moz-box-shadow:    inset 1px 1px 5px #ccc;
+  -webkit-box-shadow: inset 1px 1px 5px #ccc;
+  box-shadow:         inset 1px 1px 5px #ccc;
 }
 
 div.stats_string_resource_actions{
