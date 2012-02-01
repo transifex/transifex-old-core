@@ -336,13 +336,10 @@ class GettextHandler(SimpleCompilerFactory, Handler):
 class GettextCompiler(PluralCompiler):
     """Base compiler for gettext files."""
 
-    def _post_compile(self):
-        """Update the PO file headers."""
-        template = self.compiled_template
-        po = polib.pofile(template)
-        po = self._update_headers(po=po)
-        # Instead of saving raw text, we save the polib Handler
-        self.compiled_template = unicode(po)
+    def _pre_compile(self, content):
+        super(GettextCompiler, self)._pre_compile(content)
+        self.po = polib.pofile(content)
+        self._update_headers(po=self.po)
 
     def _update_headers(self, po):
         """Update the headers of a compiled po file."""
@@ -405,8 +402,7 @@ class GettextCompiler(PluralCompiler):
 
     def _update_plural_hashes(self, translations, content):
         """Update plural hashes for the target language."""
-        po = polib.pofile(content)
-        for entry in po:
+        for entry in self.po:
             if entry.msgid_plural:
                 plural_keys = {}
                 # last rule excluding other(5)
@@ -418,7 +414,7 @@ class GettextCompiler(PluralCompiler):
                 for p, n in enumerate(lang_rules):
                     plural_keys[p] = "%s_pl_%d" %(string_hash, p)
                 entry.msgstr_plural = plural_keys
-        return unicode(po)
+        return unicode(self.po)
 
 
 class PoCompiler(GettextCompiler):
