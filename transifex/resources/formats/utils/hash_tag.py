@@ -45,9 +45,13 @@ class _HashRegex(object):
 
     md5_pattern = r'[0-9a-f]{32}'
     default_pattern = md5_pattern + '_tr'
-    plural_pattern = md5_pattern + '_pl_\d'
+    plural_pattern = md5_pattern + '_(tr|pl_\d)'
     default_regex = re.compile(default_pattern, re.IGNORECASE)
     plural_regex = re.compile(plural_pattern, re.IGNORECASE)
+
+    def __init__(self, plurals=False):
+        """Choose the default behavior: support plurals or not."""
+        self.regex = self.plural_regex if plurals else self.default_regex
 
     def __call__(self, suffix=None):
         """Allow to use object as function.
@@ -56,14 +60,13 @@ class _HashRegex(object):
         regular expression is compiled on demand.
 
         Args:
-            suffix: The suffix ot use.
+            suffix: The suffix to use.
         Returns:
             A compiled regular expression.
         """
         if suffix is None:
-            return self.default_regex
-        elif suffix == 'pl':
-            return self.plural_regex
+            return self.regex
         return re.compile(self.md5_pattern + suffix, re.IGNORECASE)
 
 hash_regex = _HashRegex()
+pluralized_hash_regex = _HashRegex(plurals=True)

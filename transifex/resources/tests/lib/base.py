@@ -22,6 +22,7 @@ class FormatsBaseTestCase(base.BaseTestCase):
         compiler = handler.CompilerClass(handler.resource)
         compiler._tdecorator = Decorator(escape_func=handler._escape)
         compiler._examine_content(handler.template)
+        compiler.language = handler.language
         sources = [
             (idx, "%s" % hash_tag(s.source_entity, ""))
             for idx, s in enumerate(handler.stringset.strings)

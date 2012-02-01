@@ -3,6 +3,7 @@
 """
 GNU Gettext .PO/.POT file handler/compiler
 """
+
 from __future__ import absolute_import
 import os, re, time
 from collections import defaultdict
@@ -24,10 +25,16 @@ from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.core import Handler
 from transifex.resources.formats.exceptions import CompileError, ParseError
-from .compilation import SimpleCompilerFactory, Compiler, \
+from .compilation import SimpleCompilerFactory, PluralCompiler, \
         EmptyDecoratorBuilder, EmptyTranslationsBuilder
 from .resource_collections import StringSet, GenericTranslation
 from .utils.string_utils import split_by_newline
+
+
+Resource = get_model('resources', 'Resource')
+Translation = get_model('resources', 'Translation')
+SourceEntity = get_model('resources', 'SourceEntity')
+Template = get_model('resources', 'Template')
 
 
 class PoParseError(ParseError):
@@ -37,10 +44,6 @@ class PoParseError(ParseError):
 class PoCompileError(CompileError):
     pass
 
-Resource = get_model('resources', 'Resource')
-Translation = get_model('resources', 'Translation')
-SourceEntity = get_model('resources', 'SourceEntity')
-Template = get_model('resources', 'Template')
 
 def msgfmt_check(po_contents, ispot=False, with_exceptions=True):
     """Run a `msgfmt -c` on the file contents.
@@ -330,79 +333,11 @@ class GettextHandler(SimpleCompilerFactory, Handler):
         )
 
 
-class GettextCompiler(Compiler):
+class GettextCompiler(PluralCompiler):
     """Base compiler for gettext files."""
 
-    #def _get_plurals(self):
-    #    """Get all plural forms for the source strings."""
-    #    translations = Translation.objects.filter(
-    #        resource = self.resource, language=self.language,
-    #    ).order_by('source_entity__id', 'rule').\
-    #    values_list('source_entity__string_hash', 'string')
-    #    plurals = defaultdict(list)
-    #    for se_hash, t in translations:
-    #        plurals[se_hash].append(t)
-    #    return plurals
-
-    def _plurals(self):
-        translations = Translation.objects.filter(
-            resource=self.resource, language=self.language,
-            source_entity__pluralized=True
-        ).values_list(
-            'source_entity_id', 'rule', 'string'
-        ).iterator()
-        res = defaultdict(dict)
-        for t in translations:
-            res[t[0]][t[1]] = t[2]
-        return res
-
-    def _apply_plurals(self, translations, text):
-        regex = hash_regex(suffix='pl')
-        return regex.sub(
-            lambda m: translations.get(m.group(0), m.group(0)), text
-        )
-
-    def _compile(self, content):
-        super(GettextCompiler, self)._compile(content)
-        content = unicode(self._update_plural_hashes(polib.pofile(
-            self.compiled_template)))
-        stringset = self._get_source_strings()
-        existing_translations = self._plurals()
-        replace_translations = {}
-        for string in stringset:
-            trans = self._visit_translation(
-                existing_translations.get(string[0], u"")
-            )
-            if trans:
-                for rule in trans:
-                    key = string[1] + '_pl_' + str(rule)
-                    replace_translations[key] = self._tdecorator(trans[rule])
-            else:
-                for rule in self.language.get_pluralrules_numbers():
-                    key = string[1] + '_pl_' + str(rule)
-                    replace_translations[key] = self._tdecorator(u"")
-        content = self._apply_plurals(replace_translations, content)
-        self.compiled_template = content
-
-    def _update_plural_hashes(self, po):
-        """
-        Update plural hashes for the target language
-        """
-        for entry in po:
-            if entry.msgid_plural:
-                plural_keys = {}
-                # last rule excluding other(5)
-                lang_rules = self.language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
-                string_hash = hash_tag(entry.msgid, escape_context(
-                                entry.msgctxt) or '')
-                for p, n in enumerate(lang_rules):
-                    plural_keys[p] = "%s_pl_%d" %(string_hash, n)
-                entry.msgstr_plural = plural_keys
-        return po
-
     def _post_compile(self):
-        """Update the PO file headers and the plurals."""
+        """Update the PO file headers."""
         template = self.compiled_template
         po = polib.pofile(template)
         po = self._update_headers(po=po)
@@ -468,23 +403,22 @@ class GettextCompiler(Compiler):
             po.metadata['PO-Revision-Date'] = translation_revision_date
         return po
 
-    #def _update_plurals(self, po):
-    #    """Update the plurals in the po file."""
-    #    plurals = self._get_plurals()
-    #    for entry in po:
-    #        if entry.msgid_plural:
-    #            plural_keys = {}
-    #            # last rule excluding other(5)
-    #            lang_rules = self.language.get_pluralrules_numbers()
-    #            # Initialize all plural rules up to the last
-    #            for p, n in enumerate(lang_rules):
-    #                plural_keys[p] = ""
-    #            string_hash = hash_tag(entry.msgid, escape_context(
-    #                            entry.msgctxt) or '')
-    #            for n, p in enumerate(plurals[string_hash]):
-    #                plural_keys[n] =  self._tdecorator(p)
-    #            entry.msgstr_plural = plural_keys
-    #    return po
+    def _update_plural_hashes(self, translations, content):
+        """Update plural hashes for the target language."""
+        po = polib.pofile(content)
+        for entry in po:
+            if entry.msgid_plural:
+                plural_keys = {}
+                # last rule excluding other(5)
+                lang_rules = self.language.get_pluralrules_numbers()
+                # Initialize all plural rules up to the last
+                string_hash = hash_tag(
+                    entry.msgid, escape_context(entry.msgctxt) or ''
+                )
+                for p, n in enumerate(lang_rules):
+                    plural_keys[p] = "%s_pl_%d" %(string_hash, p)
+                entry.msgstr_plural = plural_keys
+        return unicode(po)
 
 
 class PoCompiler(GettextCompiler):
@@ -542,7 +476,7 @@ class POHandler(GettextHandler):
                 self.copyrights.append(c)
 
 
-class PotCompiler(Compiler):
+class PotCompiler(GettextCompiler):
     """Compiler for POT files."""
 
     def __init__(self, *args, **kwargs):
@@ -557,11 +491,7 @@ class PotCompiler(Compiler):
     def _set_tset(self, t):
         """Don't allow to change the translations set builder."""
 
-    def _get_plurals(self, language):
-        # Override to avoid a db query
-        return defaultdict(str)
-
-    def _update_headers(self, po, language):
+    def _update_headers(self, po):
         project_name = self.resource.project.name.encode(self.format_encoding)
         content_type = "text/plain; charset=%s" % self.format_encoding
         po.metadata['Project-Id-Version'] = project_name
@@ -591,6 +521,10 @@ class POTHandler(GettextHandler):
     def _get_translation(self, string, language, rule):
         # Override to avoid a db query.
         return ""
+
+    def _update_plural_hashes(self, translations, content):
+        """no-op method."""
+        return content
 
     def set_language(self, language):
         """Accept a language set to None.

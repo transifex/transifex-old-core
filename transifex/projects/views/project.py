@@ -308,7 +308,9 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
-    language_stats = RLStats.objects.filter(resource__project=project).order_by().values(
+    language_stats = RLStats.objects.filter(
+        resource__project=project
+    ).order_by().values(
         'language__name', 'language__code'
     ).distinct()
 

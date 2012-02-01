@@ -16,7 +16,7 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.resources.formats.core import ParseError, CompileError, \
         Handler, STRICT
-from .compilation import Compiler, SimpleCompilerFactory
+from .compilation import PluralCompiler, SimpleCompilerFactory
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from suggestions.models import Suggestion
@@ -92,62 +92,19 @@ def _getText(nodelist):
     return ''.join(rc)
 
 
-class QtCompiler(Compiler):
+class QtCompiler(PluralCompiler):
     """Compiler for Qt resources."""
 
-    def _plurals(self):
-        translations = Translation.objects.filter(
-            resource=self.resource, language=self.language,
-            source_entity__pluralized=True
-        ).values_list(
-            'source_entity_id', 'rule', 'string'
-        ).iterator()
-        res = collections.defaultdict(dict)
-        for t in translations:
-            res[t[0]][t[1]] = t[2]
-        return res
-
-    def _apply_plurals(self, translations, text):
-        regex = hash_regex(suffix='pl')
-        return regex.sub(
-            lambda m: translations.get(m.group(0), m.group(0)), text
-        )
-
-    def _compile(self, content):
-        super(QtCompiler, self)._compile(content)
-        stringset = self._get_source_strings()
-        existing_translations = self._plurals()
-        replace_translations = {}
-        self._tdecorator._escape = self._tdecorator._default_escape
-        for string in stringset:
-            trans = self._visit_translation(
-                existing_translations.get(string[0], u"")
-            )
-            if trans:
-                for rule in trans:
-                    key = string[1] + '_pl_' + str(rule)
-                    replace_translations[key] = self._tdecorator(trans[rule])
-            else:
-                for rule in self.language.get_pluralrules_numbers():
-                    key = string[1] + '_pl_' + str(rule)
-                    replace_translations[key] = self._tdecorator(u"")
-        content = self._update_plural_hashes(replace_translations)
-        content = self._apply_plurals(replace_translations, content)
-        self.compiled_template = content
-
-    def _update_plural_hashes(self, plurals):
+    def _update_plural_hashes(self, translations, content):
         """Add plurals hashes"""
         language = self.language
-        doc = xml.dom.minidom.parseString(
-            self.compiled_template.encode('utf-8')
-        )
+        doc = xml.dom.minidom.parseString(content.encode('utf-8'))
         root = doc.documentElement
         root.attributes["language"] = language.code
 
-        # FIXME monkey-patching
-        # We need a way to call decorators *without* the escape function
-        #
-
+        md5_pattern = r'[0-9a-f]{32}'
+        plural_pattern = r'(?P<md5>%s)_pl_\d' % md5_pattern
+        plural_regex = re.compile(plural_pattern, re.IGNORECASE)
         for message in doc.getElementsByTagName("message"):
             translation = _getElementByTagName(message, "translation")
             if message.attributes.has_key("numerus") and \
@@ -165,15 +122,12 @@ class QtCompiler(Compiler):
 
                 #update plural hashes for target language
                 plural_keys = {}
-                md5_pattern = r'[0-9a-f]{32}'
-                plural_pattern = r'(?P<md5>%s)_pl_\d' % md5_pattern
-                plural_regex = re.compile(plural_pattern, re.IGNORECASE)
                 lang_rules = language.get_pluralrules_numbers()
                 m = plural_regex.search(numerusforms[0].firstChild.data)
                 string_hash = m.group('md5')
                 # Initialize all plural rules up to the las
                 for p,n in enumerate(lang_rules):
-                    plural_keys[p] = "%s_pl_%d" % (string_hash, n)
+                    plural_keys[p] = "%s_pl_%d" % (string_hash, p)
 
                 message.setAttribute('numerus', 'yes')
                 for key in plural_keys.iterkeys():
@@ -182,14 +136,17 @@ class QtCompiler(Compiler):
                         doc.createTextNode(plural_keys[key])
                     )
                     translation.appendChild(e)
-                    if not plurals[plural_keys[key]]:
+                    if not translations[plural_keys[key]]:
                         translation.attributes['type'] = 'unfinished'
             else:
                 if not translation.childNodes:
+                    # Translation elemnent should have only one tag, the text
                     translation.attributes['type'] = 'unfinished'
+                elif not translations[translation.childNodes[0].nodeValue]:
+                    translation.attributes['type'] = 'unfinished'
+                    translation.childNodes = []
 
-        template_text = doc.toxml()
-        return template_text
+        return doc.toxml()
 
     def _post_compile(self):
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",

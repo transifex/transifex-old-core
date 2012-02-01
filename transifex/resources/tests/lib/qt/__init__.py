@@ -163,15 +163,13 @@ class TestQtFile(FormatsBaseTestCase):
         f = open(source_compiled_file, 'r')
         expected_compiled_template = f.read()
         f.close()
-        self.assertEqual(compiled_template,
-                expected_compiled_template[:-1])
+        self.assertEqual(compiled_template, expected_compiled_template[:-1])
         handler.set_language(self.language_ar)
         compiled_template = handler.compile()
         f = open(trans_compiled_file, 'r')
         expected_compiled_template = f.read()
         f.close()
-        self.assertEqual(compiled_template,
-                expected_compiled_template)
+        self.assertEqual(compiled_template, expected_compiled_template)
 
     def test_qt_save_and_compile(self):
         handler = self._test_qt_save2db()

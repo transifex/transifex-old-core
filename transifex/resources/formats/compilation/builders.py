@@ -12,17 +12,19 @@ import collections
 from django.db.models import Count
 from transifex.resources.models import SourceEntity, Translation
 
-# TODO More efficient plural fetching (we need HAVING num_rules > 1)
-# TODO Or merge the queries
-
 
 class TranslationsBuilder(object):
     """Builder to fetch the set of translations to use."""
+
+    single_fields = ['source_entity_id', 'string']
+    plural_fields = ['source_entity_id', 'string', 'rule']
+
 
     def __init__(self, resource, language):
         """Set the resource and language for the translation."""
         self.resource = resource
         self.language = language
+        self.pluralized = False
 
     def __call__(self):
         """Get the translation strings that match the specified source_entities.
@@ -37,18 +39,26 @@ class TranslationsBuilder(object):
         # TODO Should return plurals
         raise NotImplementedError
 
-    def plurals(self):
-        """Get the pluralized translation strings.
+    def _single_output(self, iterable):
+        """Output of builder for non-pluralized formats."""
+        return dict(iterable)
 
-        The returned translations are for the specified language.
+    def _plurals_output(self, iterable):
+        """Output of builder for pluralized formats."""
+        res = collections.defaultdict(dict)
+        for t in iterable:
+            res[t[0]][t[2]] = t[1]
+        return res
 
-        Returns:
-            A dictionary with the translated strings. The keys are the id of
-            the source entity this translation is for and the values are
-            dictionaries themselves with keys being the rule number and
-            values the translations for the specific (source_entity, rule).
-        """
-        raise NotImplementedError
+    def _set_pluralized(self, p):
+        """Choose between pluralized and non-pluralized version."""
+        if p:
+            self._output = self._plurals_output
+            self._fields = self.plural_fields
+        else:
+            self._output = self._single_output
+            self._fields = self.single_fields
+    pluralized = property(fset=_set_pluralized)
 
 
 class AllTranslationsBuilder(TranslationsBuilder):
@@ -59,11 +69,9 @@ class AllTranslationsBuilder(TranslationsBuilder):
         source_entities.
         """
         translations = Translation.objects.filter(
-            resource=self.resource, language=self.language, rule=5
-        ).values_list(
-            'source_entity_id', 'string'
-        ).iterator()
-        return dict(translations)
+            resource=self.resource, language=self.language
+        ).values_list(*self._fields).iterator()
+        return self._output(translations)
 
 
 class EmptyTranslationsBuilder(TranslationsBuilder):
@@ -84,10 +92,10 @@ class ReviewedTranslationsBuilder(TranslationsBuilder):
         """Get the translation strings that match the specified source_entities
         and have been reviewed.
         """
-        translations = Translation.objects.filter(reviewed=True,
-            resource=self.resource, language=self.language, rule=5
-        ).values_list('source_entity_id', 'string').iterator()
-        return dict(translations)
+        translations = Translation.objects.filter(
+            reviewed=True, resource=self.resource, language=self.language
+        ).values_list(*self._fields).iterator()
+        return self._output(translation)
 
 
 class SourceTranslationsBuilder(TranslationsBuilder):
@@ -101,9 +109,7 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         # TODO Make caller use set
         translations = Translation.objects.filter(
             resource=self.resource, language=self.language, rule=5
-        ).values_list(
-            'source_entity_id', 'string'
-        )
+        ).values_list(*self._fields)
         source_entities = SourceEntity.objects.filter(
             resource=self.resource
         ).values_list('id', flat=True)
@@ -111,10 +117,8 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
             language=self.resource.source_language, rule=5
-        ).values_list(
-            'source_entity_id', 'string'
-        )
-        return dict(itertools.chain(translations, source_strings))
+        ).values_list(*self._fields)
+        return self._output(itertools.chain(translations, source_strings))
 
 
 class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
@@ -130,9 +134,7 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
         translations = Translation.objects.filter(
             reviewed=True, resources=self.resource,
             language=self.language, rule=5
-        ).values_list(
-            'source_entity_id', 'string'
-        )
+        ).values_list(*self._fields)
         source_entities = SourceEntity.objects.filter(
             resource=self.resource
         ).values_list('id', flat=True)
@@ -140,7 +142,5 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
             language=self.resource.source_language, rule=5
-        ).values_list(
-            'source_entity_id', 'string'
-        )
-        return dict(itertools.chain(translations, source_strings))
+        ).values_list(*self._fields)
+        self._output(itertools.chain(translations, source_strings))

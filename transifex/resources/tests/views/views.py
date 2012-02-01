@@ -252,8 +252,11 @@ class CoreViewsTest(base.BaseTestCase):
         self.assertEqual(resp.status_code, 200)
         json = simplejson.loads(resp.content)
         self.assertEqual(json['status'], 'OK')
-        self.assertEqual(json['redirect'], '/projects/p/%s/resource/%s/l/%s/download/'
-                         %(self.project.slug, self.resource.slug, self.language.code))
+        self.assertEqual(
+            json['redirect'],
+            '/projects/p/%s/resource/%s/l/%s/download/for_translation/'
+            %(self.project.slug, self.resource.slug, self.language.code)
+        )
 
     def test_different_resource_formats(self):
         """Test creation of resource with different source file formats"""

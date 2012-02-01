@@ -35,9 +35,9 @@ class StatusCodesTest(BaseTestCase):
                     (self.project.slug, self.resource.slug)),
                 ('/projects/p/%s/resource/%s/delete/$' %
                     (self.project.slug, self.resource.slug)),
-                ('/projects/p/%s/resource/%s/l/pt_BR/download/' %
+                ('/projects/p/%s/resource/%s/l/pt_BR/download/for_use/' %
                     (self.project.slug, self.resource.slug)),
-                ('/ajax/p/%s/resource/%s/l/pt_BR/lock_and_download/' %
+                ('/ajax/p/%s/resource/%s/l/pt_BR/download/lock/' %
                     (self.project.slug, self.resource.slug)),
                 ],
             403: [

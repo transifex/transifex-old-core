@@ -8,7 +8,7 @@ a translation file.
 """
 
 from __future__ import absolute_import
-from .compilers import Compiler
+from .compilers import Compiler, PluralCompiler
 from .decorators import NormalDecoratorBuilder, PseudoDecoratorBuilder, \
         EmptyDecoratorBuilder
 from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \

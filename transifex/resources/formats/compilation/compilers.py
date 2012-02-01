@@ -10,7 +10,7 @@ from __future__ import absolute_import
 import re
 from transifex.resources.models import SourceEntity
 from ..exceptions import UninitializedCompilerError
-from ..utils.hash_tag import hash_regex
+from ..utils.hash_tag import hash_regex, pluralized_hash_regex
 
 
 class _Substituter(object):
@@ -113,6 +113,7 @@ class Compiler(object):
         replace_translations = {}
         suffix = '_tr'
         translations = self._tset()
+        plural_forms = self.language.get_pluralrules_numbers()
         for string in stringset:
             trans = self._visit_translation(
                 self._tdecorator(existing_translations.get(string[0], u""))
@@ -130,7 +131,7 @@ class Compiler(object):
         return SourceEntity.objects.filter(
             resource=self.resource
         ).values_list(
-            'id', 'string_hash'
+            'id', 'string_hash', 'pluralized'
         )
 
     def _visit_translation(self, s):
@@ -144,3 +145,69 @@ class Compiler(object):
     def _pre_compile(self):
         """Do any work before compiling the translation."""
         pass
+
+
+class PluralCompiler(Compiler):
+    """Compiler that handles plurals, too."""
+
+    def _apply_translations(self, translations, text):
+        """Apply the translations to the text.
+
+        Args:
+            translations: A list of translations to use.
+            text: The text to apply the translations.
+        Returns:
+            The text with the translations applied.
+        """
+        regex = pluralized_hash_regex()
+        return regex.sub(
+            lambda m: translations.get(m.group(0), m.group(0)), text
+        )
+
+    def _compile(self, content):
+        """Internal compile function.
+
+        Subclasses must override this method, if they need to change
+        the compile behavior.
+
+        Args:
+            content: The content (template) of the resource.
+        """
+        stringset = self._get_source_strings()
+        existing_translations = self._tset()
+        replace_translations = {}
+        suffix = '_tr'
+        translations = self._tset()
+        plural_forms = self.language.get_pluralrules_numbers()
+        for string in stringset:
+            forms = existing_translations.get(string[0], {})
+            if string[2]:       # is plural
+                for index, form in enumerate(plural_forms):
+                    trans = self._visit_translation(
+                        self._tdecorator(forms.get(form, u""))
+                    )
+                    hash_key = string[1] + '_pl_' + str(index)
+                    replace_translations[hash_key] = trans
+            else:
+                trans = self._visit_translation(
+                    self._tdecorator(forms.get(5, u""))
+                )
+                replace_translations[string[1] + suffix] = trans
+        content = self._update_plural_hashes(replace_translations, content)
+        content = self._apply_translations(replace_translations, content)
+        self.compiled_template = content
+
+    def _pre_compile(self):
+        """Set the translations builder to pluralized mode."""
+        self._tset.pluralized = True
+
+    def _update_plural_hashes(self, translations, content):
+        """Create the necessary plural hashes to replace them later.
+
+        Args:
+            translations: A dictionary with the translations and the rules.
+            content: The content to use.
+        Returns:
+            The content with all necessary plural hashes.
+        """
+        raise NotImplementedError

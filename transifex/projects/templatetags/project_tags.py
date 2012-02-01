@@ -14,7 +14,23 @@ def progress_for_project(project, language_code=None, width=100):
         resource__project=project, language__code=language_code
     ).values('language__code').distinct().annotate(
         mytranslated=Sum('translated'), myuntranslated=Sum('untranslated')
-    ).get()
+    ).filter()
+
+    if not stats:
+        # Project has no resources
+        bar_data = [
+            ('trans', 0),
+            ('untrans', 100)
+        ]
+        return {
+            'untrans_percent': 100,
+            'trans_percent': 0,
+            'untrans': 0,
+            'trans': 0,
+            'pos': StatBarsPositions(bar_data, width),
+            'width': width
+        }
+    stats = stats[0]
 
     translated = stats['mytranslated']
     untranslated = stats['myuntranslated']
