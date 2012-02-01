@@ -5,8 +5,8 @@ GNU Gettext .PO/.POT file handler/compiler
 """
 
 from __future__ import absolute_import
-import os, re, time
-from collections import defaultdict
+import os, re
+import itertools
 import polib
 from django.conf import settings
 from django.db import transaction
@@ -402,18 +402,17 @@ class GettextCompiler(PluralCompiler):
 
     def _update_plural_hashes(self, translations, content):
         """Update plural hashes for the target language."""
-        for entry in self.po:
-            if entry.msgid_plural:
-                plural_keys = {}
-                # last rule excluding other(5)
-                lang_rules = self.language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
-                string_hash = hash_tag(
-                    entry.msgid, escape_context(entry.msgctxt) or ''
-                )
-                for p, n in enumerate(lang_rules):
-                    plural_keys[p] = "%s_pl_%d" %(string_hash, p)
-                entry.msgstr_plural = plural_keys
+        for entry in itertools.ifilter(lambda e: e.msgid_plural, self.po):
+            plural_keys = {}
+            # last rule excluding other(5)
+            lang_rules = self.language.get_pluralrules_numbers()
+            # Initialize all plural rules up to the last
+            string_hash = hash_tag(
+                entry.msgid, escape_context(entry.msgctxt) or ''
+            )
+            for p in range(len(lang_rules)):
+                plural_keys[p] = "%s_pl_%d" %(string_hash, p)
+            entry.msgstr_plural = plural_keys
         return unicode(self.po)
 
 
