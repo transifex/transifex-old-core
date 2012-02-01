@@ -1,24 +1,24 @@
 from django import template
+from django.db.models import Sum
+from transifex.languages.models import Language
 from transifex.resources.models import RLStats
 from transifex.txcommon.utils import StatBarsPositions
 
 register = template.Library()
 
 @register.inclusion_tag('resources/stats_bar_simple.html')
-def progress_for_project(project, language=None, width=100):
+def progress_for_project(project, language_code=None, width=100):
     """Render a progressbar for the specified project."""
 
-    if language:
-        stats = RLStats.objects.by_project_and_language(project, language)
-    else:
-        stats = RLStats.objects.by_project(project)
+    stats = RLStats.objects.filter(
+        resource__project=project, language__code=language_code
+    ).values('language__code').distinct().annotate(
+        mytranslated=Sum('translated'), myuntranslated=Sum('untranslated')
+    ).get()
 
-    translated = untranslated = total = 0
-
-    for s in stats:
-        translated += s.translated
-        untranslated += s.untranslated
-        total += s.total
+    translated = stats['mytranslated']
+    untranslated = stats['myuntranslated']
+    total = translated + untranslated
 
     try:
         translated_perc = translated * 100 / total

@@ -308,10 +308,9 @@ def project_detail(request, project_slug):
     else:
         user_teams = []
 
-    language_stats = RLStats.objects.select_related(
-        'resource', 'resource__project', 'resource__category',
-        'last_committer', 'resource__priority'
-    ).by_project_language_aggregated(project)
+    language_stats = RLStats.objects.filter(resource__project=project).order_by().values(
+        'language__name', 'language__code'
+    ).distinct()
 
     return render_to_response('projects/project_detail.html', {
         'project_overview': True,
