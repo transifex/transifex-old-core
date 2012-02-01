@@ -208,6 +208,7 @@
           </li>
           {% endifequal %}
 
+          {% ifnotequal resource.source_language target_language %}
           <li class="tx-form-field">
             <span class="i16 get_reviewed_file">
               {% if request.user.is_authenticated %}
@@ -220,16 +221,10 @@
             </span>
             <span class="field-helptext tipsy_enable" title="{% trans "Add only reviewed translations into the file. Untranslated strings are not filed at all." %}" style="border:0">(?)</span>
           </li>
+          {% endifnotequal %}         
 
-          {% if resource.source_language == target_language and request.user.is_authenticated %}
-          <li class="tx-form-field">
-            <span class="i16 get_file ">
-                <a id="resource_pseudo_translation_actions" href="{% url apiv2_pseudo_content project.slug resource.slug %}?pseudo_type=MIXED&file=true" >{% trans "Get pseudo translations" %}</a>
-            </span>
-          </li>
-          {% endif %}
-          
           {% ifnotequal resource.source_language target_language %}
+
           <li class="tx-form-field">
             {% if request.user.is_authenticated %}
             <span id="download_for_translation" class="i16 lock">
@@ -251,15 +246,22 @@
             {% endif %}
           </li>
           {% endifnotequal %}
-          
-            {% ifnotequal resource.source_language target_language %}
-  {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
-<li>
-    <a class="i16 delete buttonized_warning" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>
-  </li>
-  {% endif %}
-  {% endifnotequal %}
-          
+
+          {% if resource.source_language == target_language and request.user.is_authenticated %}
+          <li class="tx-form-field">
+            <span class="i16 get_file ">
+                <a id="resource_pseudo_translation_actions" href="{% url apiv2_pseudo_content project.slug resource.slug %}?pseudo_type=MIXED&file=true" >{% trans "Get pseudo translations" %}</a>
+            </span>
+          </li>
+          {% endif %}
+
+          {% ifnotequal resource.source_language target_language %}
+            {% if perms.projects.delete_resource or is_maintainer or request.user.is_superuser %}
+            <li>
+                <a class="i16 delete buttonized_warning" href="{% url resource_translations_delete project.slug resource.slug target_language.code %}">{% trans "Delete translations" %}</a>
+            </li>
+            {% endif %}
+          {% endifnotequal %}
         </ul>
   </div>
   <div class="first_level last_update">
