@@ -246,7 +246,7 @@ class CoreViewsTest(base.BaseTestCase):
     def test_lock_and_get_translation_file(self):
         """Test lock and get translation file"""
         self.test_resource_edit()
-        url = reverse('lock_and_download_translation',
+        url = reverse('lock_and_download_for_translation',
             args=[self.project.slug, self.resource.slug, self.language.code])
         resp = self.client['maintainer'].post(url)
         self.assertEqual(resp.status_code, 200)
