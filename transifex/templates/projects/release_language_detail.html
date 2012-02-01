@@ -289,7 +289,7 @@
 					if(!$("#download_for_translation a").hasClass('disabled')){
             $("#download_for_translation").click(function(){
                 $.ajax({
-                    url : '{% url lock_and_download_translation stat.resource.project.slug stat.resource.slug language.code %}',
+                    url : '{% url lock_and_download_for_translation stat.resource.project.slug stat.resource.slug language.code %}',
                     contentType : 'application/json',
                     type : 'POST',
                     beforeSend: function(){
