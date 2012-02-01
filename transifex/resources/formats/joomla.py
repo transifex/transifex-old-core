@@ -110,7 +110,7 @@ class JoomlaINIHandler(SimpleCompilerFactory, Handler):
                 #ignore keys with no translation
                 context=""
                 continue
-            self._add_translation_string(source, self._unescape(escaped_trans),
+            self.stringset.add(source, self._unescape(escaped_trans),
                     context=context, comment=comment)
             comment = ""
         return buf[:buf.rfind(self.linesep)]
