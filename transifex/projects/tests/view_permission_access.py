@@ -135,7 +135,23 @@ URL_ROLES.update({
         'team_coordinator':(200, {}, "#stringset_table"),
         'team_member':(200, {}, "#stringset_table"),
         },
-    'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/':{
+    'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/for_use/':{
+        'anonymous':(302,),
+        'registered':(302,),
+        'maintainer':(302,),
+        'writer':(302,),
+        'team_coordinator':(302,),
+        'team_member':(302,),
+        },
+    'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/for_translation/':{
+        'anonymous':(302,),
+        'registered':(302,),
+        'maintainer':(302,),
+        'writer':(302,),
+        'team_coordinator':(302,),
+        'team_member':(302,),
+        },
+    'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/reviewed/':{
         'anonymous':(302,),
         'registered':(302,),
         'maintainer':(302,),
