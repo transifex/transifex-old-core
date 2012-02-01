@@ -478,14 +478,16 @@ class PotCompiler(GettextCompiler):
     def __init__(self, *args, **kwargs):
         """Always use the empty applier for POT files."""
         super(PotCompiler, self).__init__(*args, **kwargs)
-        self._tset = EmptyDecoratorBuilder()
-        self._tdecorator = EmptyTranslationsBuilder()
+        self._tset = EmptyTranslationsBuilder()
+        self._tdecorator = EmptyDecoratorBuilder()
 
     def _set_tdecorator(self, a):
         """Don't allow to change the translations decorator."""
+    translation_decorator = property(fset=_set_tdecorator)
 
     def _set_tset(self, t):
         """Don't allow to change the translations set builder."""
+    translation_set = property(fset=_set_tset)
 
     def _update_headers(self, po):
         project_name = self.resource.project.name.encode(self.format_encoding)
