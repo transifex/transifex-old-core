@@ -144,7 +144,13 @@
         <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
           <h5 class="linkstyle" style="font-weight:bold">{{ stat.name }}&nbsp;&raquo;</h5>
         </td>
-        <td class="category_td_class">{{ stat.category }}</td>
+        <td class="category_td_class">
+            {% if stat.category %}
+                {{ stat.category }}
+            {% else %}
+                {% trans "Uncategorized" %}
+            {% endif %}
+        </td>
         <td class="res-size"> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
         <td class="tablelastupd">
           {% with stat.last_committer as last_committer %}

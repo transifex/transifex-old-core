@@ -134,7 +134,13 @@
   <tbody>
   {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-      <td class="category_td_class">{{ stat.resource.category }}</td>
+      <td class="category_td_class">
+          {% if stat.resource.category %}
+              {{ stat.resource.category }}
+          {% else %}
+              {% trans "Uncategorized" %}
+          {% endif %}
+      </td>
       <td>
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
