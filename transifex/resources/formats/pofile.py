@@ -18,7 +18,8 @@ from transifex.txcommon.commands import run_command, CommandError
 from transifex.txcommon.log import logger
 from transifex.teams.models import Team
 from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag, escape_context
+from transifex.resources.formats.utils.hash_tag import hash_tag,\
+        escape_context, hash_regex
 from transifex.resources.models import RLStats
 from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.core import Handler
@@ -332,23 +333,79 @@ class GettextHandler(SimpleCompilerFactory, Handler):
 class GettextCompiler(Compiler):
     """Base compiler for gettext files."""
 
-    def _get_plurals(self):
-        """Get all plural forms for the source strings."""
+    #def _get_plurals(self):
+    #    """Get all plural forms for the source strings."""
+    #    translations = Translation.objects.filter(
+    #        resource = self.resource, language=self.language,
+    #    ).order_by('source_entity__id', 'rule').\
+    #    values_list('source_entity__string_hash', 'string')
+    #    plurals = defaultdict(list)
+    #    for se_hash, t in translations:
+    #        plurals[se_hash].append(t)
+    #    return plurals
+
+    def _plurals(self):
         translations = Translation.objects.filter(
-            resource = self.resource, language=self.language,
-        ).order_by('source_entity__id', 'rule').\
-        values_list('source_entity__string_hash', 'string')
-        plurals = defaultdict(list)
-        for se_hash, t in translations:
-            plurals[se_hash].append(t)
-        return plurals
+            resource=self.resource, language=self.language,
+            source_entity__pluralized=True
+        ).values_list(
+            'source_entity_id', 'rule', 'string'
+        ).iterator()
+        res = defaultdict(dict)
+        for t in translations:
+            res[t[0]][t[1]] = t[2]
+        return res
+
+    def _apply_plurals(self, translations, text):
+        regex = hash_regex(suffix='pl')
+        return regex.sub(
+            lambda m: translations.get(m.group(0), m.group(0)), text
+        )
+
+    def _compile(self, content):
+        super(GettextCompiler, self)._compile(content)
+        content = unicode(self._update_plural_hashes(polib.pofile(
+            self.compiled_template)))
+        stringset = self._get_source_strings()
+        existing_translations = self._plurals()
+        replace_translations = {}
+        for string in stringset:
+            trans = self._visit_translation(
+                existing_translations.get(string[0], u"")
+            )
+            if trans:
+                for rule in trans:
+                    key = string[1] + '_pl_' + str(rule)
+                    replace_translations[key] = self._tdecorator(trans[rule])
+            else:
+                for rule in self.language.get_pluralrules_numbers():
+                    key = string[1] + '_pl_' + str(rule)
+                    replace_translations[key] = self._tdecorator(u"")
+        content = self._apply_plurals(replace_translations, content)
+        self.compiled_template = content
+
+    def _update_plural_hashes(self, po):
+        """
+        Update plural hashes for the target language
+        """
+        for entry in po:
+            if entry.msgid_plural:
+                plural_keys = {}
+                # last rule excluding other(5)
+                lang_rules = self.language.get_pluralrules_numbers()
+                # Initialize all plural rules up to the last
+                string_hash = hash_tag(entry.msgid, escape_context(
+                                entry.msgctxt) or '')
+                for p, n in enumerate(lang_rules):
+                    plural_keys[p] = "%s_pl_%d" %(string_hash, n)
+                entry.msgstr_plural = plural_keys
+        return po
 
     def _post_compile(self):
         """Update the PO file headers and the plurals."""
         template = self.compiled_template
         po = polib.pofile(template)
         po = self._update_headers(po=po)
-        po = self._update_plurals(po=po)
         # Instead of saving raw text, we save the polib Handler
         self.compiled_template = unicode(po)
 
@@ -411,23 +468,23 @@ class GettextCompiler(Compiler):
             po.metadata['PO-Revision-Date'] = translation_revision_date
         return po
 
-    def _update_plurals(self, po):
-        """Update the plurals in the po file."""
-        plurals = self._get_plurals()
-        for entry in po:
-            if entry.msgid_plural:
-                plural_keys = {}
-                # last rule excluding other(5)
-                lang_rules = self.language.get_pluralrules_numbers()
-                # Initialize all plural rules up to the last
-                for p, n in enumerate(lang_rules):
-                    plural_keys[p] = ""
-                string_hash = hash_tag(entry.msgid, escape_context(
-                                entry.msgctxt) or '')
-                for n, p in enumerate(plurals[string_hash]):
-                    plural_keys[n] =  self._tdecorator(p)
-                entry.msgstr_plural = plural_keys
-        return po
+    #def _update_plurals(self, po):
+    #    """Update the plurals in the po file."""
+    #    plurals = self._get_plurals()
+    #    for entry in po:
+    #        if entry.msgid_plural:
+    #            plural_keys = {}
+    #            # last rule excluding other(5)
+    #            lang_rules = self.language.get_pluralrules_numbers()
+    #            # Initialize all plural rules up to the last
+    #            for p, n in enumerate(lang_rules):
+    #                plural_keys[p] = ""
+    #            string_hash = hash_tag(entry.msgid, escape_context(
+    #                            entry.msgctxt) or '')
+    #            for n, p in enumerate(plurals[string_hash]):
+    #                plural_keys[n] =  self._tdecorator(p)
+    #            entry.msgstr_plural = plural_keys
+    #    return po
 
 
 class PoCompiler(GettextCompiler):

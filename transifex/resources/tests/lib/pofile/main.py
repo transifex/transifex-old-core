@@ -114,7 +114,7 @@ class TestPoFile(FormatsBaseTestCase):
         # '{0 results}' entity - ar has nplurals=6.
         self.assertEqual(nplurals, 6)
 
-    def test_po_save2db(self):
+    def _test_po_save2db(self):
         """Test creating source strings from a PO/POT file works"""
         handler = POHandler('%s/tests.pot' %
             os.path.split(__file__)[0])
@@ -146,8 +146,43 @@ class TestPoFile(FormatsBaseTestCase):
 
         self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 11)
+        return handler
 
-        r.delete()
+    def _test_po_compile(self, handler):
+        """Test compiling po translations"""
+        source_compiled_file = os.path.join(os.path.dirname(__file__),
+                'en_compiled.po')
+        trans_compiled_file = os.path.join(os.path.dirname(__file__),
+                'ar_compiled.po')
+        handler.bind_resource(self.resource)
+        handler.set_language(Language.objects.get(code='en_US'))
+        compiled_template = handler.compile()
+        f = open(source_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        po = polib.pofile(compiled_template)
+        epo = polib.pofile(expected_compiled_template)
+        po.metadata['PO-Revision-Date'] = epo.metadata['PO-Revision-Date']
+        po.metadata['Last-Translator'] = epo.metadata['Last-Translator']
+        compiled_template = str(po)
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
+        handler.set_language(self.language_ar)
+        compiled_template = handler.compile()
+        f = open(trans_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        po = polib.pofile(compiled_template)
+        epo = polib.pofile(expected_compiled_template)
+        po.metadata['PO-Revision-Date'] = epo.metadata['PO-Revision-Date']
+        po.metadata['Last-Translator'] = epo.metadata['Last-Translator']
+        compiled_template = str(po)
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
+
+    def test_po_save_and_compile(self):
+        handler = self._test_po_save2db()
+        self._test_po_compile(handler)
 
     def test_logical_ids(self):
         """Test po files with logical ids instead of normal strings"""
