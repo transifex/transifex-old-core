@@ -112,8 +112,6 @@ class Compiler(object):
         existing_translations = self._tset()
         replace_translations = {}
         suffix = '_tr'
-        translations = self._tset()
-        plural_forms = self.language.get_pluralrules_numbers()
         for string in stringset:
             trans = self._visit_translation(
                 self._tdecorator(existing_translations.get(string[0], u""))
@@ -177,7 +175,6 @@ class PluralCompiler(Compiler):
         existing_translations = self._tset()
         replace_translations = {}
         suffix = '_tr'
-        translations = self._tset()
         plural_forms = self.language.get_pluralrules_numbers()
         for string in stringset:
             forms = existing_translations.get(string[0], {})
