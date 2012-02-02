@@ -148,8 +148,8 @@ class QtCompiler(PluralCompiler):
 
         return doc.toxml()
 
-    def _post_compile(self, content=None):
-        super(QtCompiler, self)._post_compile(content)
+    def _post_compile(self):
+        super(QtCompiler, self)._post_compile(self.compiled_template)
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/source>)",
             r"&apos;", self.compiled_template)
         esc_template_text = re.sub("'(?=(?:(?!>).)*<\/translation>)",

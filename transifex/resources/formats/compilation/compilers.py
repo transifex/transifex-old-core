@@ -76,7 +76,7 @@ class Compiler(object):
         self._pre_compile(template)
         content = self._examine_content(template)
         self._compile(content)
-        self._post_compile(content)
+        self._post_compile()
         del self.language
         return self.compiled_template
 

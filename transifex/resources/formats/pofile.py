@@ -419,7 +419,7 @@ class GettextCompiler(PluralCompiler):
 class PoCompiler(GettextCompiler):
     """Compiler for PO files."""
 
-    def _post_compile(self, content):
+    def _post_compile(self):
         """Add copyright headers, if any.
 
         We first try to find where to insert those. Then, we just concatenate

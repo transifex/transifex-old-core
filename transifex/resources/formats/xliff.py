@@ -100,9 +100,11 @@ class XliffCompiler(PluralCompiler):
         content = doc.toxml()
         return content
 
-    def _post_compile(self, content=None):
-        super(XliffCompiler, self)._post_compile(content)
-        doc = xml.dom.minidom.parseString(self.compiled_template.encode('UTF-8'))
+    def _post_compile(self):
+        super(XliffCompiler, self)._post_compile()
+        doc = xml.dom.minidom.parseString(
+            self.compiled_template.encode('UTF-8')
+        )
         root = doc.documentElement
         for node in root.getElementsByTagName("target"):
             value = ""
