@@ -38,6 +38,16 @@ class TranslationsBuilder(object):
         # TODO Should return plurals
         raise NotImplementedError
 
+    def _get_source_strings(self, ids):
+        """Get a list of the source strings of the resource.
+
+        Args:
+            The ids to fetch source strings for.
+        """
+        return Translation.objects.filter(
+            source_entity__in=ids, language=self.resource.source_language
+        ).values_list(*self._fields)
+
     def _single_output(self, iterable):
         """Output of builder for non-pluralized formats."""
         return dict(iterable)
@@ -113,19 +123,11 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         ).values_list('id', flat=True))
         missing_ids = source_entities - set(map(lambda x: x[0], translations))
         if not missing_ids:
-            return self._output(translations)
-        source_strings = self._get_source_strings(missing_ids)
-        return self._output(itertools.chain(translations, source_strings))
-
-    def _get_source_strings(self, ids):
-        """Get a list of the source strings of the resource.
-
-        Args:
-            The ids to fetch source strings for.
-        """
-        return Translation.objects.filter(
-            source_entity__in=ids, language=self.resource.source_language
-        ).values_list(*self._fields)
+            iterable = translations
+        else:
+            source_strings = self._get_source_strings(missing_ids)
+            iterable = itertools.chain(translations, source_strings)
+        return self._output(iterable)
 
 
 class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
@@ -145,17 +147,16 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
                 resource=self.resource
         ).values_list('id', flat=True))
         missing_ids = source_entities - set(map(lambda x: x[0], translations))
-        source_strings = Translation.objects.filter(
-            source_entity__in=missing_ids,
-            language=self.resource.source_language
-        ).values_list(*self._fields)
-        self._output(itertools.chain(translations, source_strings))
+        if not missing_ids:
+            iterable = translations
+        else:
+            source_strings = self._get_source_strings(missing_ids)
+            iterable = itertools.chain(translations, source_strings)
+        return self._output(iterable)
 
 
-class MarkedSourceTranslationsBuilder(SourceTranslationsBuilder):
-    """Mark the source strings, so that the compiler knows
-    how to handle those.
-    """
+class _MarkSourceMixin(object):
+    """Mixin to provide a method to return source strings marked."""
 
     def _get_source_strings(self, ids):
         """Mark the source strings with a _txss before returning them."""
