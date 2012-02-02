@@ -168,3 +168,17 @@ class _MarkSourceMixin(object):
             res.append(list(s))
             res[-1][1] = s[1] + '_txss'
         return res
+
+
+class MarkedSourceTranslationsBuilder(_MarkSourceMixin,
+                                      SourceTranslationsBuilder):
+    """Mark the source strings, so that the compiler knows how to
+    handle those.
+    """
+
+class ReviewedMarkedSourceTranslationsBuilder(
+    _MarkSourceMixin, ReviewedSourceTranslationsBuilder
+):
+    """Mark the source strings, so that the compiler knows how to
+    handle those.
+    """
