@@ -9,7 +9,7 @@ from .decorators import NormalDecoratorBuilder, PseudoDecoratorBuilder, \
         EmptyDecoratorBuilder
 from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \
         ReviewedTranslationsBuilder, SourceTranslationsBuilder, \
-        ReviewedSourceTranslationsBuilder
+        ReviewedSourceTranslationsBuilder, MarkedSourceTranslationsBuilder
 from .mode import Mode
 
 
@@ -148,3 +148,10 @@ class AlwaysFillEmptyCompilerFactory(CompilerFactory):
             return ReviewedSourceTranslationsBuilder(self.resource, language)
         else:
             return SourceTranslationsBuilder(self.resource, language)
+
+
+class MarkedSourceCompilerFactory(CompilerFactory):
+    """Use source strings, but mark them."""
+
+    def _get_translation_setter(self, language, mode):
+        return MarkedSourceTranslationsBuilder(self.resource, language)

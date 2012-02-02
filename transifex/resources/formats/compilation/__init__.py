@@ -15,5 +15,6 @@ from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \
         ReviewedTranslationsBuilder, SourceTranslationsBuilder, \
         MarkedSourceTranslationsBuilder
 from .factories import SimpleCompilerFactory, FillEmptyCompilerFactory, \
-        AlwaysFillEmptyCompilerFactory, EmptyCompilerFactory
+        AlwaysFillEmptyCompilerFactory, EmptyCompilerFactory, \
+        MarkedSourceCompilerFactory
 from .mode import Mode
