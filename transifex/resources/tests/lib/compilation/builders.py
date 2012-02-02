@@ -119,6 +119,39 @@ class TestTranslationsBuilders(BaseTestCase):
         self.assertEquals(len(t), 1)
         self.assertIn(5, t)
 
+    def test_marked_source_strings_builder(self):
+        """Test that source strings are marked by the
+        MarkedSourceTranslationsBuilder.
+        """
+        builder = MarkedSourceTranslationsBuilder(
+            self.resource, self.language_ar
+        )
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        self.translation_ar.delete()
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        self._has_correct_normal_format(translations)
+        t_string = translations.values()[0]
+        self.assertTrue(t_string.endswith('txss'))
+
+    def test_marked_source_builder_pluralized(self):
+        """Test that the SourceTranslationsBuilder uses source strings
+        instead of empty translations in the pluralized case.
+        """
+        builder = MarkedSourceTranslationsBuilder(
+            self.resource, self.language_ar
+        )
+        builder.pluralized = True
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        self.translation_ar.delete()
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        self._has_correct_plural_format(translations)
+        t_string = translations.values()[0][5]
+        self.assertTrue(t_string.endswith('txss'))
+
     def _has_correct_normal_format(self, t):
         """Test t has the correct normal format."""
         self.assertIsInstance(t, dict)
