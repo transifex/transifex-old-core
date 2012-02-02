@@ -61,4 +61,5 @@ class:
 
 The default behavior is to do a search-and-replace on the template based
 on the set of translations that is returned by the
-``TranslationBuilder`` subclass.
+``TranslationBuilder`` subclass. Each translation string is first
+escaped with the ``_escape`` function each format defines.
