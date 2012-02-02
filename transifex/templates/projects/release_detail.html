@@ -82,7 +82,7 @@
   <div class="details">
 
 
-  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
+  <div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
   	{% get_permission "project_perm.maintain" for request.user and release.project as "is_maintainer" %}
   	{% if perms.projects.add_release or is_maintainer %}
