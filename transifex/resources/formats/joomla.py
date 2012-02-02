@@ -9,12 +9,11 @@ import os, re
 import codecs
 from transifex.txcommon.log import logger
 from transifex.resources.models import SourceEntity
-from transifex.resources.formats.utils.decorators import *
-from transifex.resources.formats.utils.hash_tag import hash_tag
-from transifex.resources.formats.core import Handler, ParseError, CompileError
-from .compilation import Compiler, SimpleCompilerFactory
-from transifex.resources.formats.resource_collections import StringSet, \
-        GenericTranslation
+from .core import Handler, ParseError, CompileError
+from .compilation import Compiler, MarkedSourceCompilerFactory
+from .resource_collections import StringSet, GenericTranslation
+from .utils.hash_tag import hash_tag
+from .utils.decorators import *
 
 
 class JoomlaParseError(ParseError):
@@ -33,12 +32,20 @@ class JoomlaCompiler(Compiler):
         self.jformat = JoomlaIniVersion.create(content)
         return content
 
+    def _post_compile(self):
+        """Comment out source strings."""
+        pattern = r'(?P<actual>.*)_txss"'
+        regex = re.compile(pattern)
+        self.compiled_template = regex.sub(
+            lambda m: '; '+ m.group('actual') + '"', self.compiled_template
+        )
+
     def _visit_translation(self, s):
         """Modify the translation depending on the version of the file."""
         return self.jformat.get_compilation(s)
 
 
-class JoomlaINIHandler(SimpleCompilerFactory, Handler):
+class JoomlaINIHandler(MarkedSourceCompilerFactory, Handler):
     """
     Handler for Joomla's INI translation files.
 
