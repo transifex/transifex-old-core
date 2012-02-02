@@ -94,7 +94,7 @@ class ReviewedTranslationsBuilder(TranslationsBuilder):
         translations = Translation.objects.filter(
             reviewed=True, resource=self.resource, language=self.language
         ).values_list(*self._fields).iterator()
-        return self._output(translation)
+        return self._output(translations)
 
 
 class SourceTranslationsBuilder(TranslationsBuilder):
@@ -111,7 +111,7 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         source_entities = set(SourceEntity.objects.filter(
                 resource=self.resource
         ).values_list('id', flat=True))
-        missing_ids = source_entities - set([sid for sid, s in translations])
+        missing_ids = source_entities - set(map(lambda x: x[0], translations))
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
             language=self.resource.source_language
@@ -135,7 +135,7 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
         source_entities = set(SourceEntity.objects.filter(
                 resource=self.resource
         ).values_list('id', flat=True))
-        missing_ids = source_entities - set([sid for sid, s in translations])
+        missing_ids = source_entities - set(map(lambda x: x[0], translations))
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
             language=self.resource.source_language
