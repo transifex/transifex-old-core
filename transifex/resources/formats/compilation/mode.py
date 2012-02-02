@@ -36,7 +36,7 @@ class _Mode(object):
 
     def __unicode__(self):
         return u'<Mode %s>' % self._value
-    
+
 
 class Mode(object):
     """Act as a namespace for the pre-defined modes."""

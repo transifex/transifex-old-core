@@ -17,7 +17,6 @@ class _Substituter(object):
     """Functor to substitute hash matches with the actual translations."""
 
 
-
 class Compiler(object):
     """Class to compile translation files.
 

@@ -19,7 +19,6 @@ class TranslationsBuilder(object):
     single_fields = ['source_entity_id', 'string']
     plural_fields = ['source_entity_id', 'string', 'rule']
 
-
     def __init__(self, resource, language):
         """Set the resource and language for the translation."""
         self.resource = resource
@@ -27,9 +26,9 @@ class TranslationsBuilder(object):
         self.pluralized = False
 
     def __call__(self):
-        """Get the translation strings that match the specified source_entities.
+        """Get the translation strings for the resource.
 
-        The returned translations are for the specified language and rule = 5.
+        The returned translations are for the specified language.
 
         Returns:
             A dictionary with the translated strings. The keys are the id of
@@ -106,17 +105,16 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         source entities. Use the source strings for the missing
         ones.
         """
-        # TODO Make caller use set
         translations = Translation.objects.filter(
-            resource=self.resource, language=self.language, rule=5
+            resource=self.resource, language=self.language
         ).values_list(*self._fields)
-        source_entities = SourceEntity.objects.filter(
-            resource=self.resource
-        ).values_list('id', flat=True)
-        missing_ids = set(source_entities) - set([sid for sid, s in translations])
+        source_entities = set(SourceEntity.objects.filter(
+                resource=self.resource
+        ).values_list('id', flat=True))
+        missing_ids = source_entities - set([sid for sid, s in translations])
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
-            language=self.resource.source_language, rule=5
+            language=self.resource.source_language
         ).values_list(*self._fields)
         return self._output(itertools.chain(translations, source_strings))
 
@@ -132,15 +130,14 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
         ones.
         """
         translations = Translation.objects.filter(
-            reviewed=True, resources=self.resource,
-            language=self.language, rule=5
+            reviewed=True, resources=self.resource, language=self.language
         ).values_list(*self._fields)
-        source_entities = SourceEntity.objects.filter(
-            resource=self.resource
-        ).values_list('id', flat=True)
-        missing_ids = set(source_entities) - set([sid for sid, s in translations])
+        source_entities = set(SourceEntity.objects.filter(
+                resource=self.resource
+        ).values_list('id', flat=True))
+        missing_ids = source_entities - set([sid for sid, s in translations])
         source_strings = Translation.objects.filter(
             source_entity__in=missing_ids,
-            language=self.resource.source_language, rule=5
+            language=self.resource.source_language
         ).values_list(*self._fields)
         self._output(itertools.chain(translations, source_strings))
