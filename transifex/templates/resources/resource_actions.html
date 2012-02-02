@@ -115,7 +115,7 @@
 
     <div class="stats_wrapper">
       {% with 390 as barwidth %}
-      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Remaining: " %}{{ stats.untranslated }}">
+      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }}<br/>{% trans "Remaining: " %}{{ stats.untranslated }}">
           <div class="stats_string_resource_actions">
               {{ stats.translated|percentage:stats.total }}
           </div>
