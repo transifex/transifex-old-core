@@ -160,9 +160,7 @@ class _MarkSourceMixin(object):
 
     def _get_source_strings(self, ids):
         """Mark the source strings with a _txss before returning them."""
-        strings = super(
-            MarkedSourceTranslationsBuilder, self
-        )._get_source_strings(ids)
+        strings = super(_MarkSourceMixin, self)._get_source_strings(ids)
         res = []
         for s in strings:
             res.append(list(s))
@@ -175,6 +173,7 @@ class MarkedSourceTranslationsBuilder(_MarkSourceMixin,
     """Mark the source strings, so that the compiler knows how to
     handle those.
     """
+
 
 class ReviewedMarkedSourceTranslationsBuilder(
     _MarkSourceMixin, ReviewedSourceTranslationsBuilder
