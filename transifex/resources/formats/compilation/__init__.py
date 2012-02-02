@@ -14,5 +14,5 @@ from .decorators import NormalDecoratorBuilder, PseudoDecoratorBuilder, \
 from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \
         ReviewedTranslationsBuilder, SourceTranslationsBuilder
 from .factories import SimpleCompilerFactory, FillEmptyCompilerFactory, \
-        AlwaysFillEmptyCompilerFactory
+        AlwaysFillEmptyCompilerFactory, EmptyCompilerFactory
 from .mode import Mode
