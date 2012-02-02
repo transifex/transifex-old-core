@@ -124,7 +124,7 @@ class FillEmptyCompilerFactory(CompilerFactory):
 
     def _get_translation_setter(self, language, mode):
         """Get the translations builder."""
-        if Mode.REVIEWED in mode and mode.TRANSLATE in mode:
+        if Mode.REVIEWED in mode and Mode.TRANSLATED in mode:
             return ReviewedSourceTranslationsBuilder(self.resource, language)
         elif Mode.REVIEWED in mode:
             return ReviewedTranslationsBuilder(self.resource, language)
