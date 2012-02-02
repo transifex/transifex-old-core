@@ -138,11 +138,11 @@
   </thead>
   <tbody>
   {% endif %}
-    <tr onclick="javascript:window.location.href='{% url resource_detail project.slug stat.slug %}';">
+    <tr>
 		{% cache 604800 project_resource_details project.slug stat.slug LANGUAGE_CODE %}
 
         <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
-          <h5 class="linkstyle" style="font-weight:bold">{{ stat.name }}&nbsp;&raquo;</h5>
+          <h5 style="font-weight:bold"><a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}&nbsp;&raquo;</a></h5>
         </td>
         <td class="category_td_class">
             {% if stat.category %}

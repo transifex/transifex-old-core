@@ -7,6 +7,25 @@
 {% load project_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".tablesorter_resource_list").tablesorter({
+      sortList: [[0,0]],
+      textExtraction: function(node) {
+        switch (node.cellIndex){
+            // Stats column
+            case 1:
+                return $(".stats_string_resource", node).text();
+            // Last update column
+            case 2:
+                return $("span", node).attr('unixdate');
+            default: return node.innerHTML;
+        }
+      }        
+    });
+  });
+</script>
+
 
 <div class="obj_bigdetails">
 
@@ -27,17 +46,16 @@
   {% if team_request_form %}
   {% if request.user.is_authenticated and not is_maintainer %}
   <form id="request-team-form" method="post" enctype="multipart/form-data" action="{% url team_request project.slug %}" class="add-permission submit_form tx-form">{% csrf_token %}
-   
-      <table>
-        <tbody>{% form_as_table_rows team_request_form %}</tbody>
-      </table>
-
-      {% hook "team_request_join_additional.html" %}
-
-      <p class="submit">
-        <input name="team_request" class="i16 submit buttonized" type="submit" value="{% trans "Request team" %}"/>
-      </p>
-   
+    <table>
+      <tbody>{% form_as_table_rows team_request_form %}</tbody>
+    </table>
+  
+    {% hook "team_request_join_additional.html" %}
+  
+    <p class="submit">
+      <input name="team_request" class="i16 submit buttonized" type="submit" value="{% trans "Request team" %}"/>
+    </p>
+  
   </form>
   {% endif %}
   {% endif %}
@@ -69,22 +87,35 @@
 
   {% with project.team_set.all|dictsort:"language.name" as teams %}
   {% if teams %}
-  <div class="datalist">
-    <ul class="nomargin">
+  <table class="stats-table tablesorter_resource_list">
+    <thead>
+     <tr>
+      <th class="onlyarrow"></th>
+      <th class="onlyarrow"></th>
+      <th class="onlyarrow"></th>
+     </tr>
+    </thead>
+  <tbody>
     {% for team in teams %}
-	    <li class="clearfix linking" onclick="javascript:window.location.href='{% url team_detail team.project.slug team.language.code %}';">
-	      <div class="tt-details">
-	        <h5 class="linkstyle">{{ team.language.name }}</h5><span class="ttd-extra">({{ team.members.all.count }}{% blocktrans %}  translators{% endblocktrans %})</span>
-	      </div>
-	      <div class="tt-stats">
+	    <tr>
+        <td>
+	        <h5><a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a></h5>
+        </td>
+	      <td class="completion">
 	        {% with 180 as width%}
 	          {% progress_for_project team.project team.language.code width %}
 	        {% endwith %}
+	      </td>
+	      <td class="membercount">
+	       <a href="{% url team_members project.slug team.language.code %}">
+         {{team.members.all.count}} translators <span style="color:#758CA3;">({{ team.members.all.count|add:team.reviewers.all.count|add:team.coordinators.all.count }}{% blocktrans %} members in total{% endblocktrans %})</span>
+         </a>
 	      </div>
-	    </li>
+	      </td>
+	    </tr>
     {% endfor %}
-    </ul>
-  </div>
+  </tbody>
+  </table>
   {% else %}
   <p class="i16 infomsg">{% trans "No translation team has been created yet. Why don't you start one?" %}</p>
   {% endif %}
