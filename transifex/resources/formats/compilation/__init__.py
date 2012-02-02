@@ -12,7 +12,8 @@ from .compilers import Compiler, PluralCompiler
 from .decorators import NormalDecoratorBuilder, PseudoDecoratorBuilder, \
         EmptyDecoratorBuilder
 from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \
-        ReviewedTranslationsBuilder, SourceTranslationsBuilder
+        ReviewedTranslationsBuilder, SourceTranslationsBuilder, \
+        MarkedSourceTranslationsBuilder
 from .factories import SimpleCompilerFactory, FillEmptyCompilerFactory, \
         AlwaysFillEmptyCompilerFactory, EmptyCompilerFactory
 from .mode import Mode
