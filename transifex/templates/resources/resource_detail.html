@@ -204,7 +204,7 @@
   </thead>
   <tbody>
   {% for stat in statslist %}
-  <tr class="stat_row" data-language="{{ stat.language.code }}" title="{% trans 'click for translation' %}">
+  <tr class="stat_row" data-language="{{ stat.language.code }}">
       {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
       <td class="tableobject">
         <span class="linkstyle">{{ stat.language.name }}</span>

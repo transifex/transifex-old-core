@@ -106,7 +106,7 @@
   <tbody>
   {% for stat in statslist %}
 
-  <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+  <tr id="stat_row_{{forloop.counter}}">
   {% cache 604800 team_details team.id stat.resource.id LANGUAGE_CODE %}
         <td class="tableobject">
         <span class="linkstyle">{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</span>

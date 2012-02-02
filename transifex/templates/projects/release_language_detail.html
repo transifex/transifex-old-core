@@ -130,7 +130,7 @@
   </thead>
   <tbody>
   {% for stat in stats %}
-    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+    <tr id="stat_row_{{forloop.counter}}">
       <td class="tableobject">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
@@ -213,7 +213,7 @@
   </thead>
   <tbody>
   {% for stat in private_stats %}
-    <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+    <tr id="stat_row_{{forloop.counter}}">
         <td class="tableobject">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
