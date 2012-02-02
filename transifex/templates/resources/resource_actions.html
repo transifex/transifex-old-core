@@ -115,7 +115,7 @@
 
     <div class="stats_wrapper">
       {% with 390 as barwidth %}
-      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Untranslated: " %}{{ stats.untranslated }}">
+      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }},{% trans "Remaining: " %}{{ stats.untranslated }}">
           <div class="stats_string_resource_actions">
               {{ stats.translated|percentage:stats.total }}
           </div>
@@ -186,7 +186,7 @@
                 <a class="disabled" title="{% trans "You must login to be able to download the translations." %}">{% trans "Download for use" %}</a>
             {% endif %}
             </span>
-            <span class="tipsy_enable" title="{% trans "Add only translated strings into the file. Untranslated strings are NOT filed with source strings." %}" style="border:0">?</span>
+            <span class="tipsy_enable" title="{% trans "Add only translated strings into the file. Untranslated strings are NOT filled with source strings." %}" style="border:0">?</span>
           </li>
           {% ifequal resource.i18n_type "PO" %}
           <li>
@@ -216,7 +216,7 @@
                 {% trans "Download only reviewed translations" %}
               </a>
             </span>
-            <span class="tipsy_enable" title="{% trans "Add only reviewed translations into the file. Untranslated strings are not filed at all." %}" style="border:0">?</span>
+            <span class="tipsy_enable" title="{% trans "Add only reviewed translations into the file. Untranslated strings are not filled at all." %}" style="border:0">?</span>
           </li>
           {% endifnotequal %}         
 
@@ -232,7 +232,7 @@
               <a class="disabled" title="{% trans "You must login to use this action" %}">{% trans "Download for translation" %}</a>
             </span>
             {% endif %}
-            <span class="tipsy_enable" title="{% trans "Lock the file under your ownership and download it locally to edit it, in one action. Untranslated strings are filed by source strings." %}" style="border:0">?</span>
+            <span class="tipsy_enable" title="{% trans "Lock the file under your ownership and download it locally to edit it, in one action. Untranslated strings are filled by source strings." %}" style="border:0">?</span>
             <div class="error_notes"></div>
           </li>
           <li>
