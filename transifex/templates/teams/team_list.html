@@ -9,7 +9,7 @@
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 <script type="text/javascript">
   $(document).ready(function(){
-    $(".tablesorter_resource_list").tablesorter({
+    $(".tablesorter").tablesorter({
       sortList: [[0,0]],
       textExtraction: function(node) {
         switch (node.cellIndex){
@@ -87,21 +87,21 @@
 
   {% with project.team_set.all|dictsort:"language.name" as teams %}
   {% if teams %}
-  <table class="stats-table tablesorter_resource_list">
+  <table class="stats-table tablesorter teamlist">
     <thead>
      <tr>
-      <th class="onlyarrow"></th>
-      <th class="onlyarrow"></th>
-      <th class="onlyarrow"></th>
+      <th class="onlyarrow tableobject"></th>
+      <th class="onlyarrow tablecompletion"></th>
+      <th class="onlyarrow membercount"></th>
      </tr>
     </thead>
   <tbody>
     {% for team in teams %}
 	    <tr>
-        <td>
-	        <h5><a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a></h5>
+        <td class="tableobject">
+	        <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>
         </td>
-	      <td class="completion">
+	      <td class="tablecompletion">
 	        {% with 180 as width%}
 	          {% progress_for_project team.project team.language.code width %}
 	        {% endwith %}

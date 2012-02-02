@@ -13,7 +13,7 @@
   $(function(){
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
     $("#join-facebox-trigger").facebox();
-    $(".tablesorter_resource").tablesorter({
+    $(".tablesorter").tablesorter({
         sortList: [[1,0]], 
         headers: {
             1: { sorter: 'percent' },
@@ -116,21 +116,21 @@
 	
  {% if statslist %}
 
-  <table class="stat_table_font stats-table highlighted tablesorter_resource">
+  <table class="stats-table tablesorter langdetail">
   <thead>
-  <tr>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-   </tr>
+    <tr>
+      <th class="onlyarrow tableobject"></th>
+      <th class="onlyarrow tablecompletion"></th>
+      <th class="onlyarrow tablelastupd"></th>
+      <th class="onlyarrow priority_level"></th>
+    </tr>
   </thead>
   <tbody>
   {% for stat in statslist %}
 
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
   {% cache 604800 team_details team.id stat.resource.id LANGUAGE_CODE %}
-        <td>
+        <td class="tableobject">
         <span class="linkstyle">{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
@@ -142,7 +142,7 @@
           {% endif %}
         {% endif %}
         </td>
-        <td class="completion">
+        <td class="tablecompletion">
         {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
         {% endwith %}

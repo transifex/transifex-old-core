@@ -19,7 +19,7 @@
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
         // Stats table sorter
-        $(".tablesorter_release_list").tablesorter({
+        $(".tablesorter").tablesorter({
             sortList: [[1,1]],
             widgets: ['zebra'],
             headers: {
@@ -167,27 +167,27 @@
 
 <div class="list clear">
 
-<table class="stat_table_font stats-table highlighted tablesorter_resource tablesorter_release_list" style="clear:both;margin-top:0.5em;width:100%">
+<table class="stats-table tablesorter reldetail" >
   <thead>
   <tr>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
+    <th class="onlyarrow tableobject"></th>
+    <th class="onlyarrow tablecompletion"></th>
+    <th class="onlyarrow tablelastupd"></th>
    </tr>
-{% for stat in statslist|sort_source_langs_first:source_languages %}
-    {% if stat.first_translation %}
-        </thead>
-        <tbody>
+  {% for stat in statslist|sort_source_langs_first:source_languages %}
+  {% if stat.first_translation %}
+  </thead>
+  <tbody>
     {% endif %}
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
-        <td>
+        <td class="tableobject">
           <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a> <span class="locale">({{ stat.object.code }})</span>
           {% if stat.object in source_languages %}
              <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
           {% endif %}
           </td>
-        <td class="completion">
+        <td class="tablecompletion">
           {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
           {% endwith %}

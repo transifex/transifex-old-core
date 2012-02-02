@@ -31,7 +31,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $(".res_tipsy_enable").tipsy({html:true, gravity:'s', live:true});
-        var tablesorter_resource = $(".tablesorter_resource_list");
+        var tablesorter_resource = $(".tablesorter");
         tablesorter_resource.tablesorter({
             widgets: ['zebra'],
             sortList: [[0,0]], 
@@ -126,14 +126,14 @@
 
   {% for stat in statslist %}
   {% if forloop.first %}
-  <table class="stat_table_font stats-table tablesorter_resource_list">
+  <table class="stats-table tablesorter resources">
   <thead>
-   <tr>
-    <th class="onlyarrow"></th>
-    <th id="category_header" class="onlyarrow"></th>
-		<th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
+   <tr >
+    <th class="onlyarrow tableobject"></th>
+    <th id="category_header" class="onlyarrow category_td_class"></th>
+		<th class="onlyarrow res-size"></th>
+    <th class="onlyarrow tablelastupd"></th>
+    <th class="onlyarrow priority_level"></th>
    </tr>
   </thead>
   <tbody>
@@ -141,8 +141,8 @@
     <tr>
 		{% cache 604800 project_resource_details project.slug stat.slug LANGUAGE_CODE %}
 
-        <td><!--icon padding 27px+20px list padding...so that aligns with the rest-->
-          <h5 style="font-weight:bold"><a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}&nbsp;&raquo;</a></h5>
+        <td class="tableobject">
+          <a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}&nbsp;&raquo;</a>
         </td>
         <td class="category_td_class">
             {% if stat.category %}

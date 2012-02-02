@@ -17,7 +17,7 @@
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
         // Stats table sorter
-        var tablesorter_resource = $(".tablesorter_resource");
+        var tablesorter_resource = $(".tablesorter");
         tablesorter_resource.tablesorter({
             sortList: [[2,1],[1,0]],
             widgets: ['zebra'],
@@ -122,26 +122,20 @@
   	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
 	</div>
 
-  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <table class="stats_table tablesorter rltemplate">
   <thead>
   <tr>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
+    <th class="onlyarrow tableobject"></th>
+    <th class="onlyarrow category_td_class"></th>
+    <th class="onlyarrow tablecompletion"></th>
+    <th class="onlyarrow tablelastupd"></th>
+    <th class="onlyarrow priority_level"></th>
    </tr>
   </thead>
   <tbody>
   {% for stat in stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-      <td class="category_td_class">
-          {% if stat.resource.category %}
-              {{ stat.resource.category }}
-          {% else %}
-              {% trans "Uncategorized" %}
-          {% endif %}
-      </td>
-      <td>
+      <td class="tableobject">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
@@ -153,7 +147,14 @@
           {% endif %}
         {% endif %}
       </td>
-      <td class="completion">
+      <td class="category_td_class">
+      {% if stat.resource.category %}
+        {{ stat.resource.category }}
+      {% else %}
+        {% trans "Uncategorized" %}
+      {% endif %}
+      </td>
+      <td class="tablecompletion">
         {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
         {% endwith %}
@@ -205,19 +206,19 @@
   	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Private Resource that you have access to under this Release{% plural %}Private resources that you have access to under this Release{% endblocktrans %}</h3>
 	</div>
  
-  <table class="stats-table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <table class="stats-table tablesorter rltemplate">
   <thead>
   <tr>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
-    <th class="onlyarrow"></th>
+    <th class="onlyarrow tableobject"></th>
+    <th class="onlyarrow tablecompletion"></th>
+    <th class="onlyarrow tablelastupd"></th>
+    <th class="onlyarrow priority_level"></th>
    </tr>
   </thead>
   <tbody>
   {% for stat in private_stats %}
     <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-        <td>
+        <td class="tableobject">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
@@ -229,14 +230,14 @@
           {% endif %}
         {% endif %}
         </td>
-        <td class="completion">
+        <td class="tablecompletion">
         {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
         {% endwith %}
         </td>
-        <td>
+        <td class="tablelastupd">
         {% with stat.last_update as last_update %}
-        <span class="tablelastupd" style="border:0" unixdate="{{ last_update|date:'U' }}">
+        <span class="i16 table-update" style="border:0" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|timesince }}
