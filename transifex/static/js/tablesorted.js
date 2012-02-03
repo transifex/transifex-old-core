@@ -99,15 +99,15 @@ $(document).ready(function(){
 
 
 
-    // ordering for Web editing form table
-    $("#trans_web_edit").tablesorter({
-        widgets: ['zebra'],
-        headers: {
-            2: { sorter: false },
-            4: { sorter: false },
-            5: { sorter: false },
-            6: { sorter: false },
-        },
-    });
+  // ordering for Web editing form table
+  $("#trans_web_edit").tablesorter({
+      widgets: ['zebra'],
+      headers: {
+          2: { sorter: false },
+          4: { sorter: false },
+          5: { sorter: false },
+          6: { sorter: false },
+      },
+  });
 
 });
