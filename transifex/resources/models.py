@@ -102,6 +102,18 @@ class ResourceQuerySet(models.query.QuerySet):
             # RLStats.objects.private(User.objects.get(username="margie")).count()
             project__in=Project.objects.for_user(user))
 
+
+    def by_project(self, project, include_outsourcing=True):
+        """
+        Filter resources by a project and by default also include resources
+        of outsourced projects.
+        """
+        query = Q(project=project)
+        if include_outsourcing and project.is_hub:
+            query |= Q(project__outsource=project)
+        return self.filter(query)
+        
+
 category_pat = re.compile(r'^[\w\d_-]+$')
 def validate_category(value):
     if not category_pat.search(value):
@@ -811,8 +823,8 @@ class RLStatsQuerySet(models.query.QuerySet):
         Return a queryset matching RLStats associated with the given
         ``project`` and ``language``.
         """
-        return self.by_language(language).by_resources(
-            project.resources.values('pk').query)
+        resources = Resource.objects.by_project(project)
+        return self.by_language(language).by_resources(resources)
 
     def by_release_aggregated(self, release):
         """
@@ -832,10 +844,7 @@ class RLStatsQuerySet(models.query.QuerySet):
     def by_project_language_aggregated(self, project):
         """Aggregate stats for a ``project`` and group them by language."""
         
-        query = Q(project=project)
-        if project.is_hub:
-            query |= Q(project__outsource=project)
-        total = Resource.objects.filter(query).aggregate(
+        total = Resource.objects.by_project(project).aggregate(
             total=Sum('total_entities'))['total']
         return _aggregate_rlstats(self.by_project(project).order_by('language__code'),
             'language', total)
@@ -846,10 +855,7 @@ class RLStatsQuerySet(models.query.QuerySet):
 
         RLStats from a project are grouped by resources.
         """
-        query = Q(project=project)
-        if project.is_hub:
-            query |= Q(project__outsource=project)
-        total = Resource.objects.filter(query).aggregate(
+        total = Resource.objects.by_project(project).aggregate(
             total=Sum('total_entities'))['total']
 
         # In order to do grouping by resource we first need to order by
