@@ -168,6 +168,23 @@
   {% endif %}
 </div>
 
+ {% if empty_rlstats %}
+  <br />
+   {% blocktrans with language.name as language_name %}The following resources don't have any translations in {{ language_name }} and also don't have a team associated with this language:{% endblocktrans %}</span>
+  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <tbody>
+  {% for resource in empty_rlstats %} 
+    <tr title="{% trans 'click for resource details' %}">
+        <td style="padding-left:1em;">
+          <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a></span>
+        </td>
+        </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+ {% endif %}
+
+
 </div>
 
 {% if team %}
