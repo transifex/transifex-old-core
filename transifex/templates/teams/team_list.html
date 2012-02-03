@@ -5,8 +5,29 @@
 {% load statistics_resources %}
 {% load addons %}
 {% load project_tags %}
+{% load team_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".tablesorter").tablesorter({
+      sortList: [[0,0]],
+      textExtraction: function(node) {
+        switch (node.cellIndex){
+            // Stats column
+            case 1:
+                return $(".stats_string_resource", node).text();
+            // Last update column
+            case 2:
+                return $("span", node).attr('unixdate');
+            default: return node.innerHTML;
+        }
+      }        
+    });
+  });
+</script>
+
+
 <div class="obj_bigdetails">
 
 <div class="project_create">
@@ -65,8 +86,7 @@
   {% endif %}
   {% endwith %}
 
-  {% with project.team_set.all|dictsort:"language.name" as teams %}
-  {% if teams %}
+  {% if language_stats %}
   <table class="stats-table tablesorter teamlist">
     <thead>
      <tr>
@@ -75,22 +95,31 @@
       <th class="onlyarrow membercount"></th>
      </tr>
     </thead>
-  <tbody>
-    {% for team in teams %}
+    <tbody>
+    {% for stat in language_stats %}
 	    <tr>
         <td class="tableobject">
-	        <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>
+	        <a href="{% url team_detail project.slug stat.language__code %}">{{ stat.language__name }}</a>
         </td>
 	      <td class="tablecompletion">
-	        {% with 180 as width%}
-	          {% progress_for_project team.project team.language.code width %}
+	        {% with 180 as width %}
+	          {% progress_for_project project stat.language__code width %}
 	        {% endwith %}
 	      </td>
 	      <td class="membercount">
-	       <a href="{% url team_members project.slug team.language.code %}">
-         {{team.members.all.count}} translators <span style="color:#758CA3;">({{ team.members.all.count|add:team.reviewers.all.count|add:team.coordinators.all.count }}{% blocktrans %} members in total{% endblocktrans %})</span>
-         </a>
-	      </div>
+	        {% if stat.language__code == project.source_language.code %}
+	          {% trans "source language "%}
+	        {% else %}
+            {% if stat.language__code|language_has_team:project %}
+	          <a href="{% url team_members project.slug stat.language__code %}">
+            {% with stat.language__code as lang_code %}  
+              {% with teams|getitem:lang_code as counts %}
+               {{ counts.0 }} translators <span style="color:#758CA3;">({{ counts.1 }} {% blocktrans %}members in total{% endblocktrans %})</span>
+              {% endwith %}
+            {% endwith %}
+            </a>
+            {% endif %}
+          {% endif %}
 	      </td>
 	    </tr>
     {% endfor %}
@@ -99,7 +128,6 @@
   {% else %}
   <p class="i16 infomsg">{% trans "No translation team has been created yet. Why don't you start one?" %}</p>
   {% endif %}
-  {% endwith %}
 
 </div>
 </div>

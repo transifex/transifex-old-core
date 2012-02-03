@@ -227,6 +227,10 @@ def in_list(value, arg):
     return value in arg
 
 @register.filter
+def getitem(d, key):
+  return d.get(key, '')
+
+@register.filter
 def get_next(request):
     """Return the next path from the request."""
     try:

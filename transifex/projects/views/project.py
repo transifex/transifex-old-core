@@ -3,7 +3,7 @@ import copy
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.db.models import Q, get_model, Sum, Max
+from django.db.models import Q, get_model, Sum, Max, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -301,23 +301,32 @@ def project_detail(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
     team_request_form = TeamRequestSimpleForm(project)
 
-    if not request.user.is_anonymous():
-        user_teams = Team.objects.filter(project=project).filter(
-             Q(coordinators=request.user)|Q(members=request.user)
-        ).distinct()
-    else:
-        user_teams = []
-
     language_stats = RLStats.objects.filter(
         resource__project=project
     ).order_by().values(
         'language__name', 'language__code'
     ).distinct()
 
+    teams = project.team_set.annotate(
+        member_count=Count('members'),
+        reviewer_count=Count('reviewers'),
+        coordinator_count=Count('coordinators')
+    ).values(
+        'language__code', 'member_count',
+        'reviewer_count', 'coordinator_count'
+    )
+
+    team_dict = {}
+    for t in teams:
+        lang_code = t['language__code']
+        members = t['member_count']
+        total = members + t['coordinator_count'] + t['reviewer_count']
+        team_dict[lang_code] = (members, total)
+
     return render_to_response('projects/project_detail.html', {
         'project_overview': True,
         'project': project,
-        'user_teams': user_teams,
+        'teams': team_dict,
         'languages': Language.objects.all(),
         'language_stats': language_stats,
         'team_request_form': team_request_form,

@@ -142,7 +142,9 @@ pr_team_update=(("granular", "project_perm.coordinate_team"),)
     (Project, 'slug__exact', 'project_slug'),
     (Language, "code__exact", "language_code"))
 def team_update(request, project_slug, language_code):
+    language = Language.objects.by_code_or_alias_or_404(language_code)
     extra_context = {
+        'language': language,
         'parent_template': 'teams/team_menu.html',
         'team_update': True
     }
@@ -154,15 +156,12 @@ def team_update(request, project_slug, language_code):
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def team_detail(request, project_slug, language_code):
-
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
     language = get_object_or_404(Language.objects.select_related(), code=language_code)
-    team = get_object_or_404(Team.objects.select_related(), project__pk=project.pk,
-        language__pk=language.pk)
 
-    team_access_requests = TeamAccessRequest.objects.filter(team__pk=team.pk)
+    team = Team.objects.get_or_none(project, language.code)
 
-    if request.user.is_authenticated():
+    if team and request.user.is_authenticated():
         user_access_request = request.user.teamaccessrequest_set.filter(
             team__pk=team.pk)
     else:
@@ -171,17 +170,10 @@ def team_detail(request, project_slug, language_code):
     statslist = RLStats.objects.select_related('resource',
         'resource__priority').by_project_and_language(project, language)
 
-    team_members = team.members.all()
-    team_reviewers = team.reviewers.all()
-    team_all = team_members | team_reviewers
-
     return render_to_response("teams/team_detail.html", {
         "project": project,
+        "language": language,
         "team": team,
-        "team_members": team_members,
-        "team_reviewers": team_reviewers,
-        "team_all": team_all,
-        "team_access_requests": team_access_requests,
         "user_access_request": user_access_request,
         "project_team_page": True,
         "statslist": statslist,
@@ -194,27 +186,24 @@ def team_members(request, project_slug, language_code):
 
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
     language = get_object_or_404(Language.objects.select_related(), code=language_code)
-    team = get_object_or_404(Team.objects.select_related(), project__pk=project.pk,
-        language__pk=language.pk)
 
-    team_access_requests = TeamAccessRequest.objects.filter(team__pk=team.pk)
+    team = Team.objects.get_or_none(project, language.code)
 
-    if request.user.is_authenticated():
+    if team:
+        team_access_requests = TeamAccessRequest.objects.filter(team__pk=team.pk)
+    else:
+        team_access_requests = None
+
+    if team and request.user.is_authenticated():
         user_access_request = request.user.teamaccessrequest_set.filter(
             team__pk=team.pk)
     else:
         user_access_request = None
 
-    team_members = team.members.all()
-    team_reviewers = team.reviewers.all()
-    team_all = team_members | team_reviewers
-
     return render_to_response("teams/team_members.html", {
         "project": project,
+        "language": language,
         "team": team,
-        "team_members": team_members,
-        "team_reviewers": team_reviewers,
-        "team_all": team_all,
         "team_access_requests": team_access_requests,
         "user_access_request": user_access_request,
         "project_team_members": True,

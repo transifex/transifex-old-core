@@ -2,11 +2,11 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from transifex.teams.views import *
 
-TEAM_PARTIAL_URL =  r'team/(?P<language_code>[\-_@\w\.]+)/'
+TEAM_PARTIAL_URL =  r'language/(?P<language_code>[\-_@\w\.]+)/'
 
 urlpatterns = patterns('',
     url(
-        regex = r'teams/add/$',
+        regex = r'languages/add/$',
         view = team_create,
         name = 'team_create',),
     url(
@@ -46,7 +46,7 @@ urlpatterns = patterns('',
         view = team_leave,
         name = 'team_leave',),
     url(
-        regex = r'teams/request/$',
+        regex = r'languages/request/$',
         view = team_request,
         name = 'team_request',),
     url(
