@@ -766,7 +766,10 @@ class RLStatsQuerySet(models.query.QuerySet):
         Return a queryset matching all RLStats associated with a given
         ``project``.
         """
-        return self.filter(resource__project=project).distinct()
+        queryset = self.filter(resource__project=project)
+        if project.is_hub:
+            queryset |= Q(resource__project__outsource=project)
+        return queryset.distinct()
 
     def by_resource(self, resource):
         """
