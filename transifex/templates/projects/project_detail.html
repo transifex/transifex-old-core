@@ -54,24 +54,24 @@
   <dl class="definition clearfix">
     {% if project.homepage %}
       <dt class="homepage i16">{% trans "Homepage:" %}</dt>
-      <dd><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></dd>
+      <dd class="fadecontent"><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></dd>
 
     {% endif %}
     {% if project.bug_tracker %}
       <dt class="bug i16">{% trans "Bug tracker:" %}</dt>
-      <dd class="hideover"><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></dd>
+      <dd class="hideover fadecontent"><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></dd>
     {% endif %}
     {% if project.tags %}
       	<dt class="i16 tag">{% trans "Tags:" %}</dt>
-      	<dd class="compact hideover">
+      	<dd class="compact fadecontent hideover">
         {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
 	      </dd>
     {% endif %}
 
     {% with project.trans_instructions as instructions_url %}
     {% if instructions_url %}
-      <dt class="help i16">{% trans "Documentation:" %}</dt>
-      <dd><a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank">{% trans "Translation help pages" %}</a></dd>
+      <dt class="file i16">{% trans "Documentation:" %}</dt>
+      <dd class="fadecontent"><a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank">{% trans "Translation help pages" %}</a></dd>
     {% endif %}
     {% endwith %}
 
