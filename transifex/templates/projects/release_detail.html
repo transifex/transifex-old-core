@@ -11,33 +11,12 @@
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_feed release.project.slug release.slug %}" />
-  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
-  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
   <script type="text/javascript">
     $(function(){
         // Enable tooltip
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
         // Stats table sorter
-        $(".tablesorter").tablesorter({
-            sortList: [[1,1]],
-            widgets: ['zebra'],
-            headers: {
-                1: { sorter: 'percent' },
-                2: { sorter: 'number' }
-            },
-            textExtraction: function(node) {
-                switch (node.cellIndex){
-                    // Stats column
-                    case 1:
-                        return $(".stats_string_resource", node).text();
-                    // Last update column
-                    case 2:
-                        return $("span", node).attr('unixdate');
-                    default: return node.innerHTML;
-                }
-            }
-        });
 
         // Toggle to resources list
         $("#resource-list-toggler").click(function () {

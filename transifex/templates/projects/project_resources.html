@@ -30,93 +30,93 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".res_tipsy_enable").tipsy({html:true, gravity:'s', live:true});
-        var tablesorter_resource = $(".tablesorter");
-        tablesorter_resource.tablesorter({
-            widgets: ['zebra'],
-            sortList: [[0,0]], 
-            textExtraction: { // Take value inside an object for the columns
-              0: function(node) {return $("a", node).text(); },
-              1: function(node) {
-                  var category = $(node).html();
-                  if(category == "None")
-                    return "zzzzzzzzzzzz";
-                  else
-                    return category;},
-              2: function(node) {return $(node).find(".wordcount").text();},
-              3: function(node) {return $(".origin_format", node).text();},
-              4: function(node) {return parseInt($(".priority_sort", node).text());}
-            }
-        });
-        var category_is_clicked = false; // holds whether the last click on a table header was on the 'category' header or not
-        var tablesorter_resource_header = $('th', tablesorter_resource); // selects all headers of the table
-        tablesorter_resource_header.click(function() {
-            // set 'category_is_clicked' depending on what was clicked
-            if($(this).attr('id') == 'category_header') {
-                category_is_clicked = true;
-            } else {
-                category_is_clicked = false;
-            }
-        });
-        tablesorter_resource.bind("sortEnd", function(event) {
-            // this is called after the sorting is done
-            if(category_is_clicked) {
-                // if 'category' was clicked
-                var odd = false; // holds whether the current line is to be "painted" as odd or event
-                var last_category = "";
-                $('tr', $(this)).each(function(index, element) {
-                    // iterate over all table lines
-                    var current_category = $('.category_td_class', $(element)).html(); // get new category name
-                    if(current_category != last_category) { // if it is a different category than the last one
-                        last_category = current_category;
-                        odd = ! odd; // toggle the odd value
-                    }
-                    var jq_element = $(element);
-                    jq_element.removeClass(); // remove all classes from the current line
-                    // and add the correct class in order to "paint" appropriately
-                    if(odd) {
-                        jq_element.addClass('odd');
-                    } else {
-                        jq_element.addClass('even');
-                    }
-                });
-            }
-        })
-        {% if request.user.is_authenticated %}
-        $("#new_translation1").click( function (){
-            $("#new_translation_box1").toggle();
-        });
-        $("#start_new_translation").click( function() {
-            var target_lang_code = $(this).prev().val();
-            if ( target_lang_code != "" ) {
-                //request_url = window.location + target_lang_code;
-                //This is _UGLY_. We need to find a way to do reverse url
-                //lookups from JS code. #FIXME
-                request_url ='/resources/project/{{project.slug}}/'+ target_lang_code;
-                window.location = request_url;
-            } else {
-                alert("Please select a target language first and then click Go.");
-            }
-        });
-        {% endif %}
-        {% if is_maintainer %}
-        var resource_priority_cycle_url = '{% url cycle_resource_priority project.slug "1111111111" %}';
-        $("a.resource_priority_trigger").each(function(){
-          $(this).click(function(e){
-            event.stopPropagation();
-            $('.tipsy').remove();
-            id_string = $(this).attr("id");
-            var slug = id_string.substring(id_string.indexOf("_")+1);
-            var pr_url = resource_priority_cycle_url.replace('1111111111', slug)
-            $(this).load(pr_url, function(response, status, xhr) {
-                if (status == "error") {
-                    var msg = "Sorry but there was an error: ";
-                    alert(msg + xhr.status + " " + xhr.statusText);
-                }
-            });
+      $(".res_tipsy_enable").tipsy({html:true, gravity:'s', live:true});
+      var tablesorter_resource = $(".tablesorter");
+      tablesorter_resource.tablesorter({
+        widgets: ['zebra'],
+        sortList: [[0,0]], 
+        textExtraction: { // Take value inside an object for the columns
+          0: function(node) {return $("a", node).text(); },
+          1: function(node) {
+              var category = $(node).html();
+              if(category == "None")
+                return "zzzzzzzzzzzz";
+              else
+                return category;},
+          2: function(node) {return $(node).find(".wordcount").text();},
+          3: function(node) {return $(".origin_format", node).text();},
+          4: function(node) {return parseInt($(".priority_sort", node).text());}
+        }
+      });
+      var category_is_clicked = false; // holds whether the last click on a table header was on the 'category' header or not
+      var tablesorter_resource_header = $('th', tablesorter_resource); // selects all headers of the table
+      tablesorter_resource_header.click(function() {
+      // set 'category_is_clicked' depending on what was clicked
+      if($(this).attr('id') == 'category_header') {
+          category_is_clicked = true;
+      } else {
+          category_is_clicked = false;
+      }
+      });
+      tablesorter_resource.bind("sortEnd", function(event) {
+          // this is called after the sorting is done
+          if(category_is_clicked) {
+              // if 'category' was clicked
+              var odd = false; // holds whether the current line is to be "painted" as odd or event
+              var last_category = "";
+              $('tr', $(this)).each(function(index, element) {
+                  // iterate over all table lines
+                  var current_category = $('.category_td_class', $(element)).html(); // get new category name
+                  if(current_category != last_category) { // if it is a different category than the last one
+                      last_category = current_category;
+                      odd = ! odd; // toggle the odd value
+                  }
+                  var jq_element = $(element);
+                  jq_element.removeClass(); // remove all classes from the current line
+                  // and add the correct class in order to "paint" appropriately
+                  if(odd) {
+                      jq_element.addClass('odd');
+                  } else {
+                      jq_element.addClass('even');
+                  }
+              });
+          }
+      })
+      {% if request.user.is_authenticated %}
+      $("#new_translation1").click( function (){
+          $("#new_translation_box1").toggle();
+      });
+      $("#start_new_translation").click( function() {
+          var target_lang_code = $(this).prev().val();
+          if ( target_lang_code != "" ) {
+              //request_url = window.location + target_lang_code;
+              //This is _UGLY_. We need to find a way to do reverse url
+              //lookups from JS code. #FIXME
+              request_url ='/resources/project/{{project.slug}}/'+ target_lang_code;
+              window.location = request_url;
+          } else {
+              alert("Please select a target language first and then click Go.");
+          }
+      });
+      {% endif %}
+      {% if is_maintainer %}
+      var resource_priority_cycle_url = '{% url cycle_resource_priority project.slug "1111111111" %}';
+      $("a.resource_priority_trigger").each(function(){
+        $(this).click(function(e){
+          event.stopPropagation();
+          $('.tipsy').remove();
+          id_string = $(this).attr("id");
+          var slug = id_string.substring(id_string.indexOf("_")+1);
+          var pr_url = resource_priority_cycle_url.replace('1111111111', slug)
+          $(this).load(pr_url, function(response, status, xhr) {
+              if (status == "error") {
+                  var msg = "Sorry but there was an error: ";
+                  alert(msg + xhr.status + " " + xhr.statusText);
+              }
           });
         });
-        {% endif %}
+      });
+      {% endif %}
     });
 </script>
 
@@ -140,48 +140,47 @@
   {% endif %}
     <tr>
 		{% cache 604800 project_resource_details project.slug stat.slug LANGUAGE_CODE %}
-
-        <td class="tableobject">
-          <a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}&nbsp;&raquo;</a>
-        </td>
-        <td class="category_td_class">
-            {% if stat.category %}
-                {{ stat.category }}
-            {% else %}
-                {% trans "Uncategorized" %}
-            {% endif %}
-        </td>
-        <td class="res-size"> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
-        <td class="tablelastupd">
-          {% with stat.last_committer as last_committer %}
-            <span class="i16 table-update res_tipsy_enable" title="{% trans 'Last update' %}">
-          {% endwith %}
-          {% with stat.last_update as last_update %}
-            {% if last_update %}
-                <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
-                {{ last_update|date:"M d, h:ia" }}
-            {% else %}
-                {% trans "no translations yet" %}
-            {% endif %}
-          {% endwith %}
-          </span>
-        </td>
-		{% endcache %}
-        <td class="priority_level" style="text-align:center">
-          {% with stat.priority__level as priority_level %}
-          {% with stat.priority__display as display_level %}
-          {% if is_maintainer %}
-          <a id="priority_{{ stat.slug }}" class="resource_priority_trigger" style="cursor:pointer">
-            <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
-          </a>
+      <td class="tableobject">
+        <a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}&nbsp;&raquo;</a>
+      </td>
+      <td class="category_td_class">
+        {% if stat.category %}
+          {{ stat.category }}
+        {% else %}
+          {% trans "Uncategorized" %}
+        {% endif %}
+      </td>
+      <td class="res-size"> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
+      <td class="tablelastupd">
+        {% with stat.last_committer as last_committer %}
+          <span class="i16 table-update res_tipsy_enable" title="{% trans 'Last update' %}">
+        {% endwith %}
+        {% with stat.last_update as last_update %}
+          {% if last_update %}
+            <span class="origin_format" style="display:none">{{ last_update|date:"M d,Y h:i A" }}</span>
+            {{ last_update|date:"M d, h:ia" }}
           {% else %}
+            {% trans "no translations yet" %}
+          {% endif %}
+        {% endwith %}
+        </span>
+      </td>
+  {% endcache %}
+      <td class="priority_level" style="text-align:center">
+        {% with stat.priority__level as priority_level %}
+        {% with stat.priority__display as display_level %}
+        {% if is_maintainer %}
+        <a id="priority_{{ stat.slug }}" class="resource_priority_trigger" style="cursor:pointer">
           <span class="priority_sort" style="display:none">{{ priority_level }}</span>
           <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
-          {% endif %}
-          {% endwith %}
-          {% endwith %}
-        </td>
+        </a>
+        {% else %}
+        <span class="priority_sort" style="display:none">{{ priority_level }}</span>
+        <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
+        {% endif %}
+        {% endwith %}
+        {% endwith %}
+      </td>
     </tr>
   {% if forloop.last %}
   </tbody>
@@ -190,6 +189,5 @@
   {% empty %}
     <p class="i16 infomsg">{% trans "No resources are registered for this project yet." %}</p>
   {% endfor %}
-
 </div>
 {% endblock %}

@@ -9,10 +9,7 @@
 
 {% block extra_head %}
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
-<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/ui.tabs.outside.css" />
-<link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
 <link media="screen" href="{{ STATIC_URL }}css/chosen.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
@@ -33,25 +30,6 @@
             }
         });
         {% endif %}
-
-        $(".tablesorter").tablesorter({
-            sortList: [[0,0]],
-            headers: {
-                1: { sorter: 'percent' },
-                2: { sorter: 'number' }
-            },
-            textExtraction: function(node) {
-                switch (node.cellIndex){
-                    // Stats column
-                    case 1:
-                        return $(".stats_string_resource", node).text();
-                    // Last update column
-                    case 2:
-                        return $("span", node).attr('unixdate');
-                    default: return node.innerHTML;
-                }
-            }
-        });
 
         {% if is_maintainer %}
         var resource_priority_cycle_url = '{% url cycle_resource_priority resource.project.slug resource.slug %}';
@@ -223,11 +201,9 @@
     <th class="onlyarrow tablecompletion"></th>
     <th class="onlyarrow tablelastupd"></th>
    </tr>
-{% for stat in statslist %}
-  {% ifequal forloop.counter 2 %}
   </thead>
   <tbody>
-  {% endifequal %}
+  {% for stat in statslist %}
   <tr class="stat_row" data-language="{{ stat.language.code }}" title="{% trans 'click for translation' %}">
       {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
       <td class="tableobject">
@@ -260,10 +236,6 @@
       {% endwith %}
       </td>
   </tr>
-  {% if forloop.counter == 1 and forloop.last %}
-      </thead>
-    <tbody>
-  {% endif %}
 {% endfor %}
   </tbody>
 </table>

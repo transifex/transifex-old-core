@@ -7,26 +7,6 @@
 {% load project_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-<script type="text/javascript">
-  $(document).ready(function(){
-    $(".tablesorter").tablesorter({
-      sortList: [[0,0]],
-      textExtraction: function(node) {
-        switch (node.cellIndex){
-            // Stats column
-            case 1:
-                return $(".stats_string_resource", node).text();
-            // Last update column
-            case 2:
-                return $("span", node).attr('unixdate');
-            default: return node.innerHTML;
-        }
-      }        
-    });
-  });
-</script>
-
-
 <div class="obj_bigdetails">
 
 <div class="project_create">

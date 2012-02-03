@@ -4,10 +4,6 @@
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_language_feed release.project.slug release.slug language.code %}" />
-  <script type="text/javascript" src="{{ STATIC_URL }}js/watch_toggle.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
-  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
-
   <script type="text/javascript" src="{{ STATIC_URL }}js/houdini.js"></script>
   <link media="screen" href="{{ STATIC_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
 

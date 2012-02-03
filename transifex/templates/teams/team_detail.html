@@ -13,28 +13,6 @@
   $(function(){
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
     $("#join-facebox-trigger").facebox();
-    $(".tablesorter").tablesorter({
-        sortList: [[1,0]], 
-        headers: {
-            1: { sorter: 'percent' },
-            2: { sorter: 'number' },
-            3: { sorter: 'number' }
-        },
-        textExtraction: function(node) {  
-            switch (node.cellIndex){
-                // Stats column
-                case 1:
-                    return $(".stats_string_resource", node).text();
-                // Last update column
-                case 2:
-                    return $("span", node).attr('unixdate');
-                // Priority column
-                case 3:
-                    return $(".priority_sort", node).text()
-                default: return node.innerHTML;
-            }
-        } 
-    });
    })
 </script>
 {% endblock %}
