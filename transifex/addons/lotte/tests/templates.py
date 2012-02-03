@@ -61,7 +61,7 @@ class LotteTemplateTests(BaseTestCase):
         self.assertTemplateUsed(resp, 'translate.html')
 
         self.assertContains(resp, 'Translated', status_code=200)
-        self.assertContains(resp, 'Untranslated')
+        self.assertContains(resp, 'Remaining')
         self.assertContains(resp, 'Modified')
         self.assertContains(resp, 'Total')
         self.assertContains(resp, ('<input id="translated" class="filters" '
