@@ -301,11 +301,11 @@ def project_detail(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
     team_request_form = TeamRequestSimpleForm(project)
 
-    language_stats = RLStats.objects.filter(
-        resource__project=project
-    ).order_by().values(
-        'language__name', 'language__code'
-    ).distinct()
+    source_languages = Language.objects.filter(Q(id=project.source_language.id) | 
+        Q(id=project.outsourcing.all().values('source_language').distinct())).distinct()
+   
+    language_stats = RLStats.objects.select_related('language').for_user(
+        request.user).by_project_language_aggregated(project)
 
     teams = project.team_set.annotate(
         member_count=Count('members'),
@@ -329,6 +329,7 @@ def project_detail(request, project_slug):
         'teams': team_dict,
         'languages': Language.objects.all(),
         'language_stats': language_stats,
+        'source_languages': source_languages,
         'team_request_form': team_request_form,
     }, context_instance=RequestContext(request))
 
