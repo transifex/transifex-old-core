@@ -6,6 +6,7 @@
 {% load addons %}
 {% load project_tags %}
 {% load team_tags %}
+{% load resources_common_tags %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 <script type="text/javascript">
@@ -94,25 +95,27 @@
       <th class="onlyarrow tablecompletion"></th>
       <th class="onlyarrow membercount"></th>
      </tr>
-    </thead>
-    <tbody>
-    {% for stat in language_stats %}
-	    <tr>
+    {% for stat in language_stats|sort_source_langs_first:source_languages %}
+    {% if stat.first_translation %}
+      </thead>
+      <tbody>
+    {% endif %}
+	<tr>
         <td class="tableobject">
-	        <a href="{% url team_detail project.slug stat.language__code %}">{{ stat.language__name }}</a>
+	        <a href="{% url team_detail project.slug stat.object.code %}">{{ stat.object.name }}</a>
         </td>
 	      <td class="tablecompletion">
-	        {% with 180 as width %}
-	          {% progress_for_project project stat.language__code width %}
-	        {% endwith %}
+                {% with 180 as barwidth %}
+                    {% stats_bar_simple stat barwidth %}
+                {% endwith %}
 	      </td>
 	      <td class="membercount">
-	        {% if stat.language__code == project.source_language.code %}
+	        {% if stat.object in source_languages %}
 	          {% trans "source language "%}
 	        {% else %}
-            {% if stat.language__code|language_has_team:project %}
-	          <a href="{% url team_members project.slug stat.language__code %}">
-            {% with stat.language__code as lang_code %}  
+            {% if stat.object.code|language_has_team:project %}
+	          <a href="{% url team_members project.slug stat.object.code %}">
+            {% with stat.object.code as lang_code %}  
               {% with teams|getitem:lang_code as counts %}
                {{ counts.0 }} translators <span style="color:#758CA3;">({{ counts.1 }} {% blocktrans %}members in total{% endblocktrans %})</span>
               {% endwith %}
