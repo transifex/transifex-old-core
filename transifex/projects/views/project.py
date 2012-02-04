@@ -172,7 +172,7 @@ def project_access_control_edit(request, project_slug):
                         # Send notification for project hub maintainers
                         notification.send(project_hub.maintainers.all(), nt, context)
 
-                    return HttpResponseRedirect(request.POST['next'])
+                    return HttpResponseRedirect(reverse('project_detail',args=[project.slug]),)
 
             if 'hub' == project_type:
                 project.is_hub = True
@@ -210,7 +210,7 @@ def project_access_control_edit(request, project_slug):
                            'sender': request.user}
                 action_logging(request.user, [project, outsourced], nt, context=context)
 
-            return HttpResponseRedirect(request.POST['next'])
+            return HttpResponseRedirect(reverse('project_detail',args=[project.slug]),)
 
     else:
         form = ProjectAccessControlForm(instance=project, user=request.user)
