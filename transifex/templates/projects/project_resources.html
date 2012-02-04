@@ -1,5 +1,6 @@
 {% extends "projects/project_menu.html" %}
 {% load i18n %}
+{% load humanize %}
 {% load cache %}
 {% load txcommontags %}
 {% load permissions %}
@@ -150,7 +151,7 @@
           {% trans "Uncategorized" %}
         {% endif %}
       </td>
-      <td class="res-size"> {% blocktrans with stat.total_entities as strings and stat.wordcount as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
+      <td class="res-size"> {% blocktrans with stat.total_entities|intcomma as strings and stat.wordcount|intcomma as words %}<span class="wordcount">{{ words }}</span> words <span style="color:#888;">({{ strings }} strings)</span>{% endblocktrans %}</td>
       <td class="tablelastupd">
         {% with stat.last_committer as last_committer %}
           <span class="i16 table-update res_tipsy_enable" title="{% trans 'Last update' %}">
