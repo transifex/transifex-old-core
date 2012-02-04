@@ -7,7 +7,7 @@
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Add Team" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Create team" %}{% endblock %}
 
 {% block extra_head %}
 <link media="screen" href="{{ STATIC_URL }}css/chosen.css" type="text/css" rel="stylesheet" />
@@ -28,9 +28,9 @@ $(document).ready(function(){
 <h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
 <h2 class="pagetitle with_description">
 {% if team_create %}
-{% blocktrans %}Create Team{% endblocktrans %}</h2>
+{% blocktrans %}Create team{% endblocktrans %}</h2>
 {% else %}
-{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation Teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
+{% blocktrans with team.language.name as language_name and team.language.code as language_code %}Translation teams - {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
 {% endif %}
 {% endblock%}
 </div>
@@ -56,7 +56,7 @@ $(document).ready(function(){
 <div>
   {% if not team_create %}
   <div class="separate-header notopmargin clearfix" style="margin-top:0;">
-    <h3  class="sh-label">{% trans "Edit Language" %}</h3>
+    <h3  class="sh-label">{% trans "Edit language" %}</h3>
   </div>
   {% endif %}
   
@@ -82,7 +82,7 @@ $(document).ready(function(){
   {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
   {% if perms.teams.delete_team or is_maintainer %}
   <div class="separate-header clearfix">
-    <h3  class="sh-label">{% trans "Delete Language" %}</h3>
+    <h3  class="sh-label">{% trans "Delete language" %}</h3>
   </div>
     
   <p style="margin-bottom:1em;">{% trans "Do you wish to delete the team? Translations will not be lost" %}</p>

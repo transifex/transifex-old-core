@@ -5,14 +5,14 @@
 {% load permissions %}
 {% load txpermissions %}
 
-{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Access Control" %}{% endblock %}
+{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Access control" %}{% endblock %}
 
 {% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
 
 {% block content_main %}
 
 <div class="obj_bigdetails ui-tabs-panel">
-<h3 class="pagetitle_wdesc">{% trans "Access Control" %}</h3>
+<h3 class="pagetitle_wdesc">{% trans "Access control" %}</h3>
 
 {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translations" %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}

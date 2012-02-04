@@ -58,7 +58,7 @@ $(document).ready(function() {
 <div class="lotte_details_wrapper clearfix">
 {% if translation %}
 <ul class="simple contexts details_right">
-    <li title="Last Translation"><label>{% trans "Last Translation:" %}</label> 
+    <li title="Last translation"><label>{% trans "Last translation:" %}</label> 
       {% if translation.last_update %}<span>{{ translation.last_update|timesince }}</span>{% endif %}
       {% if translation.user %}
         <span>

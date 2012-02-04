@@ -9,8 +9,8 @@
     <form method="POST" action="">{% csrf_token %}
         <ul>
             {{ form.as_ul }}
-            <li><input type="submit" value="Submit Comment" /></li>
-            <li><input type="submit" value="Preview Updated Comment" name="preview" /></li>
+            <li><input type="submit" value="Submit comment" /></li>
+            <li><input type="submit" value="Preview updated comment" name="preview" /></li>
         </ul>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>

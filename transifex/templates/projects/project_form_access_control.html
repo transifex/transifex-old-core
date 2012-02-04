@@ -8,9 +8,9 @@
 {% load fieldsets %}
 {% load addons %}
 
-{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Outsource and Access Control" %}{% endblock %}
+{% block title %}{{ block.super }} | {{ project.name }} | {% trans "Outsource and Access control" %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Outsource and Access Control" %}{% endblock %}
+{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Outsource and Access control" %}{% endblock %}
 
 {% block extrajs %}
 {{ block.super }}
@@ -112,7 +112,7 @@
 
    
     {% hook "access_control_form_notices.html" %}    
-<h3>{% trans "Set Access Control Settings" %}</h3>
+<h3>{% trans "Access control settings" %}</h3>
     <form name="hub" action='' method='post'>{% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}"/> 
         {% if form.non_field_errors %}

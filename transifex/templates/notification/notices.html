@@ -8,7 +8,7 @@
 {% block content_title %}<h2 class="pagetitle">{% trans "Notifications" %}</h2>{% endblock %}
 
 {% block extra_head %}
-    <link rel="alternate" type="application/atom+xml" title="Notices Feed" href="{% url notification_feed_for_user %}" />
+    <link rel="alternate" type="application/atom+xml" title="Notices feed" href="{% url notification_feed_for_user %}" />
     <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
     <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
     <script type="text/javascript">
@@ -29,7 +29,7 @@
 
     {% autopaginate notices %}
 
-    <h2>{% trans "Received Notifications" %}</h2>
+    <h2>{% trans "Received notifications" %}</h2>
 
     <div class="notification">
     <div class="separate">

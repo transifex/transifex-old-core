@@ -117,7 +117,7 @@
                 <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>  -
                 <a href="{% url project_detail team.project.slug %}">{{ team.project.name }}</a>
                 <form style="float:right;diplay:inline" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
-                    <input name="team_leave" class="leave_team" type="submit" value="{% trans 'Leave' %}" title="Leave Team"/>
+                    <input name="team_leave" class="leave_team" type="submit" value="{% trans 'Leave' %}" title="Leave team"/>
                 </form>
                 </li>
             {% endfor %}

@@ -86,8 +86,8 @@
  {% comment %}
   <!--{% if resource.project.private %}
   <span id="private_project_banner" class="ui-corner-all">
-    {% trans "Private Project"%}
-    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private Project">
+    {% trans "Private project"%}
+    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private project">
   </span>
   {% endif %}-->
  {% endcomment %}
@@ -105,7 +105,7 @@
 
   <dl class="definition clearfix">
 
-      <dt class="i16 stringnum">{% trans "Total Strings:" %}</dt>
+      <dt class="i16 stringnum">{% trans "Total strings:" %}</dt>
       <dd>
         {{ resource.total_entities|intcomma }}
         <span class="words big_number">({{ resource.wordcount|intcomma }} {% trans "words" %})</span>
@@ -123,7 +123,7 @@
     {% if resource.priority %}
     {% with resource.priority.level as priority_level %}
     {% with resource.priority.display_level as display_level %}
-      <dt class="i16 ruby">{% trans "Priority Level:" %}</dt>
+      <dt class="i16 ruby">{% trans "Priority level:" %}</dt>
       <dd>
         {% if is_maintainer %}
             <a class="resource_priority_trigger" style="cursor:pointer">
@@ -175,7 +175,7 @@
     The change should respect the below permissions!!!
 
     <select name="translation_languages" class="language">
-        <option value="">{% trans "Select Language" %}</option>
+        <option value="">{% trans "Select language" %}</option>
         {% if is_maintainer or request.user.is_superuser %}
           {% for language in languages %}
               <option value="{{ language.code }}">{{ language.name }}</option>

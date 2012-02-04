@@ -187,7 +187,7 @@ $(document).ready(function(){
   <span class='suggestions_help' class="i16 help" title="Click to learn how to use suggestions">&nbsp;</span>
   <div class="user_suggestions">
   {% if suggestions %}
-    <div class="title_line"><span class="title">{% trans "User Suggestions" %}</span></div>
+    <div class="title_line"><span class="title">{% trans "User suggestions" %}</span></div>
       {% for suggestion in suggestions %}
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
@@ -223,7 +223,7 @@ $(document).ready(function(){
   <div class="clear">&nbsp;</div>
   {% endif %}
 
-    <div class="title_line"><span class="title">{% trans "New Suggestion" %}</span></div>
+    <div class="title_line"><span class="title">{% trans "New suggestion" %}</span></div>
     <div class="suggestion_create">
       <div class="suggestion_user">
           <img class="border top" alt="{{ request.user }}" width="32" height="32" src="{{ request.user.profile.get_mugshot_url }}" />

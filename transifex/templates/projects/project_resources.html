@@ -22,9 +22,9 @@
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 <div id="resources" class="resources">
 	<div class="separate-header notopmargin clearfix">
-  	<h3  class="sh-label">{% blocktrans %}Project Resources{% endblocktrans %}</h3>
+  	<h3  class="sh-label">{% blocktrans %}Project resources{% endblocktrans %}</h3>
   	{% if perms.projects.pr_resource_add_change or is_maintainer %}
-  	<div class="separate-buttons"><span id="create_new_resource" title="{% trans 'Add new resource' %}" class="i16 nude-button add houdini_toggler linkstyle">{% trans "Add New Resource" %}</span></div>
+  	<div class="separate-buttons"><span id="create_new_resource" title="{% trans 'Add new resource' %}" class="i16 nude-button add houdini_toggler linkstyle">{% trans "Add new resource" %}</span></div>
 		{% endif %}
 	</div>
 

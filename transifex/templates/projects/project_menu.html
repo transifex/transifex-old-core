@@ -42,7 +42,7 @@
 {% block content_header_sec %}
 	{% if project.anyone_submit %}
   <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/ffa-project.png)center top no-repeat;">
-	<p>{% trans "Free 4 All"%}</p>
+	<p>{% trans "Free for all"%}</p>
 	</span>
 	{% endif %}
 	{% if project.outsource %}
@@ -67,7 +67,7 @@
 	{% if project %}
 	<div class="tab-wrapper grid_16">
 		<ul  class="tabs clearfix">     
-		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project Overview" %}</a></li>
+		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project overview" %}</a></li>
     		{% if project.is_hub and is_maintainer %}
     	  <li class="{% if hub_projects_page %}selected{% endif %}">
     		  <a href="{% url project_hub_projects project.slug %}">

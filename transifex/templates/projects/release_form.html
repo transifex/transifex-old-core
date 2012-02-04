@@ -25,7 +25,7 @@
     <h2 class="pagetitle">{% trans "Add a release" %}</h2>
   {% else %}
     <h2 class="pagetitle">
-      {% blocktrans with release.name as release_name and release.get_absolute_url as release_url %}Editing Release '<a href="{{ release_url }}">{{ release_name }}</a>'{% endblocktrans %}
+      {% blocktrans with release.name as release_name and release.get_absolute_url as release_url %}Editing release '<a href="{{ release_url }}">{{ release_name }}</a>'{% endblocktrans %}
     </h2>
   {% endif %}
 {% endblock %}

@@ -87,7 +87,7 @@ $(document).ready(
 <div id="project-tabs">
 <ul>
     <li><a id="tab-link-1" href="{% if project_permission %}{% url project_edit project_slug=project.slug %}{% endif %}#tab-1"><span>{% trans "Details" %}</span></a></li>
-    <li><a id="tab-link-2" href="{% if project_permission %}{% else %}{% if project %}{% txadd_url_for_obj project %}{% endif %}{% endif %}#tab-2"><span>{% trans "Access Control" %}</span></a></li>
+    <li><a id="tab-link-2" href="{% if project_permission %}{% else %}{% if project %}{% txadd_url_for_obj project %}{% endif %}{% endif %}#tab-2"><span>{% trans "Access control" %}</span></a></li>
 </ul>
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}

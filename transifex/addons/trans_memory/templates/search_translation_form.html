@@ -24,7 +24,7 @@
     </select>
     <br />
     <select name="target_lang" class="query withbgimage" placeholder="Choose language" >
-        <option value="">Any Language</option>
+        <option value="">Any language</option>
         {% for language in languages %}
           {% ifequal language.code target_language_code %}
             <option value="{{ language.code }}" selected="selected">{{ language.name }}</option>
