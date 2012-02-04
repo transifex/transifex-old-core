@@ -163,7 +163,7 @@
         <td class="tableobject">
           <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a> <span class="locale">({{ stat.object.code }})</span>
           {% if stat.object in source_languages %}
-             <span style="padding-left:1em"><em>{% trans "source language" %}</em></span>
+             <span style="padding-left:1em; color: #999;"><strong>{% trans "Source language" %}</strong></span>
           {% endif %}
           </td>
         <td class="tablecompletion">

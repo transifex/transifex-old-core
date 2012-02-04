@@ -210,7 +210,7 @@
         <span class="linkstyle">{{ stat.language.name }}</span>
         <span class="locale">({{ stat.language.code }})</span>
         {% ifequal resource.source_language stat.language %}
-           <span style="padding-left:1em"><em>{% trans "(source language)" %}</em></span>
+           <span style="padding-left:1em; color: #999;"><strong>{% trans "(source language)" %}</strong></span>
         {% endifequal %}
         {% if stat.lock.valid %}
           <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
