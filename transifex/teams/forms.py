@@ -64,7 +64,7 @@ class TeamSimpleForm(forms.ModelForm):
             self.fields["language"].empty_label = None
         else:
             # Create list of languages to be disabled excluding the current
-            # language_code and also the languega of teams already created.
+            # language_code and also the language of teams already created.
             self.disabled_langs = Team.objects.filter(project=project).exclude(
                 language__code=language_code).values_list('language__pk', flat=True)
 
@@ -121,7 +121,7 @@ class TeamRequestSimpleForm(forms.ModelForm):
         self.fields['user'].widget = forms.HiddenInput()
 
         # Create list of languages to be disabled excluding the current
-        # language_code and also the languega of teams already created.
+        # language_code and also the language of teams already created.
         self.disabled_langs = Team.objects.filter(project=project).exclude(
             language__code=language_code).values_list('language__pk', flat=True)
 
