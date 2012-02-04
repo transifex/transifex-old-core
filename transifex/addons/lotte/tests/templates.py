@@ -75,7 +75,7 @@ class LotteTemplateTests(BaseTestCase):
         resp = self.client['team_member'].get(self.translate_view_url)
         self.assertTemplateUsed(resp, 'translate.html')
 
-        self.assertContains(resp, 'General Settings', status_code=200)
+        self.assertContains(resp, 'General settings', status_code=200)
         self.assertContains(resp, 'Verbose editing')
         self.assertContains(resp, 'Auto save')
 

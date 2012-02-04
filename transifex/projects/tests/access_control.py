@@ -13,7 +13,7 @@ URL_ROLES = {
         'POST:/projects/p/project1/access/rq/1/delete/',
         'POST:/projects/p/project1/access/rq/1/approve/',
     ],
-    '(200, {}, "This project is not using Translation Teams")':[
+    '(200, {}, "This project does not maintain its own teams")':[
         'GET:/projects/p/project1/teams/add/',
         'GET:/projects/p/project1/team/pt_BR/',
         'GET:/projects/p/project1/team/pt_BR/members/',
