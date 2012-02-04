@@ -45,22 +45,24 @@
 {% block content_main %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-<div class="grid_4 alpha side-menu left-side" style="height:100%;margin-top:50px;">
-	{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
-	<ul style="height:100%;">
-		{% url project_edit project.slug as url_project_edit %}
-		<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_project_edit }}">{% trans "Edit project" %}</a></li>
-		{% url project_delete project.slug as url_project_delete %}
-		<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'delete' %}active{% endif %}"><a href="{{ url_project_delete }}">{% trans "Delete project" %}</a></li>
+{% if project %}
+	<div class="grid_4 alpha side-menu left-side" style="height:100%;margin-top:50px;">
+		{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
+		<ul style="height:100%;">
+			{% url project_edit project.slug as url_project_edit %}
+			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_project_edit }}">{% trans "Edit project" %}</a></li>
+			{% url project_delete project.slug as url_project_delete %}
+			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'delete' %}active{% endif %}"><a href="{{ url_project_delete }}">{% trans "Delete project" %}</a></li>
 
-    {% if is_maintainer %}
-		{% url project_access_control_edit project.slug as url_project_access_control_edit %}
-		<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Outsource and Access control" %}</a></li>
-    {% endif %}
+		{% if is_maintainer %}
+			{% url project_access_control_edit project.slug as url_project_access_control_edit %}
+			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Outsource and Access control" %}</a></li>
+		{% endif %}
 
-		{% hook "project.html" settings_menu %}
-	</ul>
-</div>
+			{% hook "project.html" settings_menu %}
+		</ul>
+	</div>
+{% endif %}
 
 
 
