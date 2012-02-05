@@ -125,12 +125,11 @@ def invalidate_cache(sender, instance, created=True, **kwargs):
             instance.rlstats.resource.project.slug,
             instance.rlstats.resource.slug)
 
-        team = Team.objects.get_or_none(instance.rlstats.resource.project,
-            instance.rlstats.language.code)
-        if team:
-            invalidate_template_cache('team_details', team.id,
-                instance.rlstats.resource.id)
-
+        invalidate_template_cache("team_details",
+            instance.rlstats.resource.project.slug,
+            instance.rlstats.language.code,
+            instance.rlstats.resource.id
+        )
 
 def connect():
     pre_submit_translation.connect(pre_handler, sender=Resource)

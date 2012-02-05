@@ -77,11 +77,8 @@ def invalidate_object_templates(resource, language, **kwargs):
 
     # Number of source strings in resource
     for lang in langs:
-        team = Team.objects.get_or_none(resource.project, lang.code)
-        if team:
-            # Template lvl cache for team details
-            invalidate_template_cache("team_details",
-                team.id, resource.id)
+        invalidate_template_cache("team_details",
+            resource.project.slug, lang.code, resource.id)
 
         for rel in resource.project.releases.all():
             # Template lvl cache for release details
