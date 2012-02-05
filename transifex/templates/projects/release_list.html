@@ -10,7 +10,7 @@
   
   {% if not releases_heading %}
   <div class="separate-header clearfix">
-  	<h3  class="sh-label notopmargin">{% trans "Project releases" %}{% render_metacount releases _("releases") %}</h3>
+  	<h3  class="sh-label notopmargin">{% trans "Project releases" %}</h3>
   	{% if perms.projects.pr_release_add_change or is_maintainer %}
   	<div class="separate-buttons"><a class="i16 add nude-button" href="{{ release_create }}" title="{% trans 'Add' %}">{% trans "Add new release "%}</a></div>
   	{% endif %}  
@@ -38,7 +38,7 @@
     <div id="releases" class="releases">
     {% if not releases_heading %}
       <div class="separate-header clearfix">
-  			<h3  class="sh-label">{% trans "Project releases" %}{% render_metacount releases _("releases") %}</h3>
+  			<h3  class="sh-label">{% trans "Project releases" %}</h3>
 			</div>
     {% else %}
       <div class="separate-header clearfix">
