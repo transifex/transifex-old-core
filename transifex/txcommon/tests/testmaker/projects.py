@@ -75,11 +75,11 @@ class TestmakerLoggedIn(TestmakerBase):
 
     # Teams
     def test_projectspexampleteamsadd_128281371426(self):
-        r = self.c.get('/projects/p/project1/teams/add/', {})
+        r = self.c.get('/projects/p/project1/languages/add/', {})
         self.assertEqual(r.status_code, 403)
 
     def test_projectspexampleteamsadd_128281371653(self):
-        r = self.c.post('/projects/p/project1/teams/add/', {'language': '', 'creator': '', 'mainlist': '', 'save_team': 'Save team', 'members_text': '', 'next': '', 'project': '1', 'coordinators': '|', 'coordinators_text': '', 'members': '|', }, follow=True)
+        r = self.c.post('/projects/p/project1/languages/add/', {'language': '', 'creator': '', 'mainlist': '', 'save_team': 'Save team', 'members_text': '', 'next': '', 'project': '1', 'coordinators': '|', 'coordinators_text': '', 'members': '|', }, follow=True)
         self.assertEqual(r.status_code, 403)
 
     def test_ajaxajax_lookupusers_128281371984(self):
@@ -87,15 +87,15 @@ class TestmakerLoggedIn(TestmakerBase):
         self.assertContains(r, 'editor', status_code=200)
 
     def test_projectspexampleteamsadd_128281372177(self):
-        r = self.c.post('/projects/p/project1/teams/add/', {'language': '1', 'creator': '1', 'mainlist': '', 'save_team': 'Save team', 'members_text': '', 'next': '', 'project': '1', 'coordinators': '|1|', 'coordinators_text': '', 'members': '|', }, follow=True)
+        r = self.c.post('/projects/p/project1/languages/add/', {'language': '1', 'creator': '1', 'mainlist': '', 'save_team': 'Save team', 'members_text': '', 'next': '', 'project': '1', 'coordinators': '|1|', 'coordinators_text': '', 'members': '|', }, follow=True)
         self.assertEqual(r.status_code, 403)
-        r = self.c.get('/projects/p/project1/team/af/delete/', {})
+        r = self.c.get('/projects/p/project1/language/af/delete/', {})
         self.assertEqual(r.status_code, 403)
 
     def test_projectspexampleteamafdelete_128282090157(self):
-        r = self.c.post('/projects/p/project1/team/af/delete/', {'team_delete': "Yes, I'm sure!", })
-        r = self.c.get('/projects/p/project1/team/af/', {})
-        self.assertEqual(r.status_code, 404)
+        r = self.c.post('/projects/p/project1/language/af/delete/', {'team_delete': "Yes, I'm sure!", })
+        r = self.c.get('/projects/p/project1/language/af/', {})
+        self.assertEqual(r.status_code, 200)
 
     # Edit project
     def test_projectspexampleedit_128281375582(self):
