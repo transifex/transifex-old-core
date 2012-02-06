@@ -50,7 +50,9 @@ $(document).ready(function(){
 
 {% block content_main %}
 {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translations" %}
+{% if language %}
 {% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
+{% endif %}
 
 <div>
   {% if not team_create %}
