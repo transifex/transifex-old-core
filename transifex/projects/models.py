@@ -310,6 +310,18 @@ class Project(models.Model):
         else: 
             return None
 
+    def get_action_logs(self):
+        """
+        Return actionlog entries for the given project plus the actionlogs of
+        the hub projects, in case it's a hub.
+        """
+        ids = [self.id]
+        if self.is_hub:
+            ids += self.outsourcing.all().values_list('id', flat=True)
+        return LogEntry.objects.filter(
+            content_type=ContentType.objects.get_for_model(Project),
+            object_id__in=ids)
+
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
 except tagging.AlreadyRegistered, e:

@@ -138,7 +138,7 @@
 		</div>
 	</div>
 	
-	{% get_log 5 as action_log for_object project %}
+	{% with project.get_action_logs|slice:":5" as action_log %}
 	{% if not action_log %}
 	
 	<p class="i16 infomsg">{% trans 'No history recorded yet.' %}</p>
@@ -156,6 +156,7 @@
 	{% hook "project.html" overview %}
 	
 	{% endif %}
+	{% endwith %}
 </div>
 
 {% endblock %}
