@@ -115,33 +115,7 @@
 {% url project_detail project.outsource.slug as url_hub_project %}
 <p class="i16 infomsg" style="margin-top:4em;">{% blocktrans with project.outsource.name as hub_project %}This project does not maintain its own languages but has chosen to re-use the language translations of project <a href="{{ url_hub_project }}">{{hub_project}}</a>{% endblocktrans %}</p>
 {% else %}
-  {% if project.anyone_submit %}
-    <div class="separate-header clearfix">
-    	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
-  		<div class="separate-buttons">
-  		</div>
-  	</div>
-    {% if language_stats %}
-    <div class="datalist">
-      <ul class="nomargin">
-      {% for stat in language_stats %}
-  	    <li class="clearfix">
-  	      <div class="tt-details">
-  	        <h5 class="linkstyle">{{ stat.language__name }}</h5>
-  	      </div>
-  	      <div class="tt-stats">
-  	        {% progress_for_project project stat.language__code 180 %}
-  	      </div>
-  	    </li>
-      {% endfor %}
-      </ul>
-    </div>
-    {% else %}
-    <p class="i16 infomsg">{% trans "No translations has been recorded yet. Why don't you start one?" %}</p>
-    {% endif %}
-  {% else %}
-    {% include "teams/team_list.html" %}
-  {% endif %}
+  {% include "teams/team_list.html" %}
 {% endif %}
 
 {% include "projects/release_list.html" %}
