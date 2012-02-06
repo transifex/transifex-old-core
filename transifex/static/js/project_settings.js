@@ -62,10 +62,7 @@ $(document).ready(function (){
 	});
 	
 
-  var $source_language_select = $("select#id_project-source_language");
-  $source_language_select.addClass("chzn-select");
-  $('span#selectproject-source_language').remove();
-  $source_language_select.chosen();
+  $("select#id_project-source_language").chosen();
 });
 
 

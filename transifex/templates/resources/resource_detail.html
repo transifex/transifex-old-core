@@ -9,7 +9,6 @@
 
 {% block extra_head %}
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
-<link media="screen" href="{{ STATIC_URL }}css/chosen.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript">
     $(document).ready(function(){
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});

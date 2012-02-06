@@ -10,7 +10,6 @@
 {% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "Create team" %}{% endblock %}
 
 {% block extra_head %}
-<link media="screen" href="{{ STATIC_URL }}css/chosen.css" type="text/css" rel="stylesheet" />
 <script type="text/javascript">
 $(document).ready(function(){
     var $language_select = $("select#id_language");
