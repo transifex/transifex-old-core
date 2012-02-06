@@ -382,7 +382,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
         }
         if (to_update.length == 0) {
             if (typeof callback === 'undefined')
-                alert("No strings to push");
+                alert("Alrighty, all strings have been saved already");
         } else {
 
             $("div#notification-container div").html("Saving...");
