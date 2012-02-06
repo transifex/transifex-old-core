@@ -28,11 +28,7 @@
 
  	<div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% trans "Details" %}</h3>
-  	<div class="separate-buttons">
-  	{% if perms.projects.change_team or is_coordinator %}
-  		<a class="i16 edit nude-button" href="{% url team_update project.slug language.code %}">{% trans "Edit language" %}</a>
-		{% endif %}
-		
+  	<div class="separate-buttons">		
 		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
 			<a id="join-facebox-trigger" class="i16 team_join nude-button" href="#facebox-joinmember">{% trans 'Join language translation' %}</a>	
 		{% endif %}

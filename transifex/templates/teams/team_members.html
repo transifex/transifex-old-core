@@ -8,36 +8,6 @@
 {% load addons %}
 {% load statistics_resources %}
 
-{% block extra_head %}
-<script type="text/javascript">
-  $(function(){
-    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-    $(".tablesorter_resource").tablesorter({
-        widgets: ['zebra'],
-        headers: {
-            1: { sorter: 'percent' },
-            2: { sorter: 'number' },
-            3: { sorter: 'number' }
-        },
-        textExtraction: function(node) {  
-            switch (node.cellIndex){
-                // Stats column
-                case 1:
-                    return $(".stats_string_resource", node).text();
-                // Last update column
-                case 2:
-                    return $("span", node).attr('unixdate');
-                // Priority column
-                case 3:
-                    return $(".priority_sort", node).text()
-                default: return node.innerHTML;
-            }
-        } 
-    });
-   })
-</script>
-{% endblock %}
-
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
 {% block project_header %}
@@ -50,6 +20,12 @@
 {% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 
 <div class="obj_bigdetails">
+
+{% if perms.projects.change_team or is_coordinator %}
+<div class="clearfix">
+  <a class="i16 settings nude-button right" href="{% url team_update project.slug language.code %}">{% trans "Manage Members" %}</a>
+</div>
+{% endif %}
 
 <div class="datalist clearfix">
 	{% with team.coordinators.all as coordinators %}
@@ -116,13 +92,14 @@
 {% endif %}
 
 {% with team.members.all as members %}
-{% if members %}
+
 <div class="datalist">
 
   <div class="separate-header clearfix">
-  	<h3  class="sh-label">{% trans "Team members" %}</h3>
+  	<h3  class="sh-label">{% trans "Translators" %}</h3>
 	</div>
 
+  {% if members %}
   <ul>
   {% for m in members|dictsort:"username" %}
     <li>
@@ -143,9 +120,52 @@
     </li>
   {% endfor %}
   </ul>
+  {% else %}
+  {% url connect_people as url_connect %}  
+  <p class="i16 infomsg">{% blocktrans %} Translators can help you speed up the localization process. <a href="{{url_connect }}" title="Explore our community" >Connect with them&raquo;</a> {% endblocktrans %}</p>
+  {% endif %}
+  
 </div>
-{% endif %}
+
 {% endwith %}
+
+{% with team.reviewers.all as reviewers %}
+
+<div class="datalist">
+
+  <div class="separate-header clearfix">
+  	<h3  class="sh-label">{% trans "Reviewers" %}</h3>
+	</div>
+
+  {% if reviewers %}
+  <ul>
+  {% for m in members|dictsort:"username" %}
+    <li>
+      <div class="tt-details">
+        <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
+    		{% if m.first_name or m.last_name %}
+    			<span class="fullname">({{ m.first_name }} {{ m.last_name }})</span>
+    		{% endif %}
+        <a href="{% url profile_public m.username %}">{{ m }}</a>
+      </div>
+
+      {% ifequal request.user.pk m.pk %}
+      <form class="microform" method="post" action="{% url team_leave project.slug language.code %}">{% csrf_token %}
+          <input name="team_leave" class="i16 buttonized blist user_delete" type="submit" value="{% trans "Leave" %}"/>
+      </form>
+      {% endifequal %}
+
+    </li>
+  {% endfor %}
+  </ul>
+  {% else %}
+  <p class="i16 infomsg">{% trans "Reviewers reasure the quality of your translations. How about adding some?" %}</p>
+  {% endif %}
+  
+</div>
+
+{% endwith %}
+
 
 </div>
 {% endblock %}
