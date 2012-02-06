@@ -73,9 +73,7 @@
       <dd>
         {% for c in coordinators|slice:"0:6" %}
           <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
-          {% if c.first_name and c.last_name %}
-          	<a href="{% url profile_public c.username %}">{{c.username}}</a>
-          {% endif %}
+          <a href="{% url profile_public c.username %}">{{ c.username }}</a>
         {% endfor %}
       </dd>
     {% endif %}
