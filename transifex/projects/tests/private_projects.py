@@ -197,143 +197,143 @@ class PrivateProjectTest(BaseTestCase):
         URLs = {
             'anonymous' : {
                 403 : [
-                    '/projects/p/%s/team/%s/' % (self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/members/' % (self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/' % (self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/members/' % (self.project_private.slug, self.language.code)
                 ],
                 302 : [
-                    '/projects/p/%s/teams/add/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/edit/' % (self.project_private.slug,
+                    '/projects/p/%s/languages/add/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/edit/' % (self.project_private.slug,
                         self.language.code),
-                    '/projects/p/%s/team/%s/delete/' % (self.project_private.slug,
+                    '/projects/p/%s/language/%s/delete/' % (self.project_private.slug,
                          self.language.code),
-                    '/projects/p/%s/team/%s/request/' % (self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/request/' % (self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/request/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/approve/' % (self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/request/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/approve/' % (self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code),
                 ]
             },
             'registered' : {
                 403 : [
-                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/add/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/members/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/add/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/edit/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/delete/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/request/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/request/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/request/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/approve/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code)
                 ]
             },
             'maintainer' : {
                 200 : [
-                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/add/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/members/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/add/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/edit/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/delete/' %(self.project_private.slug, self.language.code)
                 ],
                 302 : [
-                    '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/request/' % self.project_private.slug
+                    '/projects/p/%s/language/%s/request/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/request/' % self.project_private.slug
                 ],
                 404 : [
-                    '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/approve/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code)
                 ],
             },
             #'writer' : {
             #    200 : [
-            #        '/projects/p/%s/teams/',
-            #        '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code)
+            #        '/projects/p/%s/languages/',
+            #        '/projects/p/%s/language/%s/' %(self.project_private.slug, self.language.code)
             #    ],
             #    302 : [
-            #        '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
-            #        '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-            #        '/projects/p/%s/teams/request/'
+            #        '/projects/p/%s/language/%s/request/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/languages/request/'
             #    ],
             #    404 : [
-            #        '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code)
+            #        '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code)
             #    ],
             #    403 : [
-            #        '/projects/p/%s/teams/add/',
-            #        '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
-            #        '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
-            #        '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+            #        '/projects/p/%s/languages/add/',
+            #        '/projects/p/%s/language/%s/edit/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/language/%s/delete/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
             #            self.user['team_member'].username),
-            #        '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+            #        '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
             #            self.user['team_member'].username),
-            #        '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
-            #        '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
+            #        '/projects/p/%s/language/%s/approve/' %(self.project_private.slug, self.language.code),
+            #        '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code)
             #    ]
             #},
             'team_coordinator' : {
                 200 : [
-                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/members/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/edit/' %(self.project_private.slug, self.language.code)
                 ],
                 302 : [
-                    '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/request/' % self.project_private.slug
+                    '/projects/p/%s/language/%s/request/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/request/' % self.project_private.slug
                 ],
                 404 : [
-                    '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username)
                 ],
                 403 : [
-                    '/projects/p/%s/teams/add/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/add/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/delete/' %(self.project_private.slug, self.language.code),
                     # TODO: Add a second team to check if coordinator has access too.
-                    '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/approve/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code)
                 ]
             },
             'team_member' : {
                 200 : [
-                    '/projects/p/%s/team/%s/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/members/' %(self.project_private.slug, self.language.code)
+                    '/projects/p/%s/language/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/members/' %(self.project_private.slug, self.language.code)
                 ],
                 302 : [
-                    '/projects/p/%s/team/%s/request/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/leave/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/teams/request/' % self.project_private.slug
+                    '/projects/p/%s/language/%s/request/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/request/' % self.project_private.slug
                 ],
                 404 : [
-                    '/projects/p/%s/team/%s/withdraw/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code),
                 ],
                 403 : [
-                    '/projects/p/%s/teams/add/' % self.project_private.slug,
-                    '/projects/p/%s/team/%s/edit/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/delete/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/add/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/edit/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/delete/' %(self.project_private.slug, self.language.code),
                     # TODO: Add a second team to check if coordinator has access too.
-                    '/projects/p/%s/team/%s/approve/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/deny/' %(self.project_private.slug, self.language.code),
-                    '/projects/p/%s/team/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/approve/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username),
-                    '/projects/p/%s/team/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+                    '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username)
                 ]
             }

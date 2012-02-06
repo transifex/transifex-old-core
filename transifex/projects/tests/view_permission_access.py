@@ -207,7 +207,7 @@ URL_ROLES.update({
 
 # Team URLs
 URL_ROLES.update({
-    'GET:/projects/p/project1/teams/add/':{
+    'GET:/projects/p/project1/languages/add/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(200,),
@@ -215,7 +215,7 @@ URL_ROLES.update({
         'team_coordinator':(403,),
         'team_member':(403,),
         },
-    'GET:/projects/p/project1/team/pt_BR/':{
+    'GET:/projects/p/project1/language/pt_BR/':{
         'anonymous':(200,),
         'registered':(200,),
         'maintainer':(200,),
@@ -223,7 +223,7 @@ URL_ROLES.update({
         'team_coordinator':(200,),
         'team_member':(200,),
         },
-    'GET:/projects/p/project1/team/pt_BR/members/':{
+    'GET:/projects/p/project1/language/pt_BR/members/':{
         'anonymous':(200,),
         'registered':(200,),
         'maintainer':(200,),
@@ -231,7 +231,7 @@ URL_ROLES.update({
         'team_coordinator':(200,),
         'team_member':(200,),
         },
-    'GET:/projects/p/project1/team/pt_BR/edit/':{
+    'GET:/projects/p/project1/language/pt_BR/edit/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(200,),
@@ -239,7 +239,7 @@ URL_ROLES.update({
         'team_coordinator':(200,),
         'team_member':(403,),
         },
-    'GET:/projects/p/project1/team/pt_BR/delete/':{
+    'GET:/projects/p/project1/language/pt_BR/delete/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(200,),
@@ -247,7 +247,7 @@ URL_ROLES.update({
         'team_coordinator':(403,),
         'team_member':(403,),
         },
-    'POST:/projects/p/project1/team/pt_BR/request/':{
+    'POST:/projects/p/project1/language/pt_BR/request/':{
         'anonymous':(302,),
         'registered':(302,),
         'maintainer':(302,),
@@ -255,7 +255,7 @@ URL_ROLES.update({
         'team_coordinator':(302,),
         'team_member':(302,),
         },
-    'POST:/projects/p/project1/team/pt_BR/approve/diegobz/':{
+    'POST:/projects/p/project1/language/pt_BR/approve/diegobz/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(404,),
@@ -263,7 +263,7 @@ URL_ROLES.update({
         'team_coordinator':(404,),
         'team_member':(403,),
         },
-    'POST:/projects/p/project1/team/pt_BR/deny/diegobz/':{
+    'POST:/projects/p/project1/language/pt_BR/deny/diegobz/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(404,),
@@ -271,7 +271,7 @@ URL_ROLES.update({
         'team_coordinator':(404,),
         'team_member':(403,),
         },
-    'POST:/projects/p/project1/team/pt_BR/withdraw/':{
+    'POST:/projects/p/project1/language/pt_BR/withdraw/':{
         'anonymous':(302,),
         'registered':(404,),
         'maintainer':(404,),
@@ -279,7 +279,7 @@ URL_ROLES.update({
         'team_coordinator':(404,),
         'team_member':(404,),
         },
-    'POST:/projects/p/project1/team/pt_BR/leave/':{
+    'POST:/projects/p/project1/language/pt_BR/leave/':{
         'anonymous':(302,),
         'registered':(302,),
         'maintainer':(302,),
@@ -287,7 +287,7 @@ URL_ROLES.update({
         'team_coordinator':(302,),
         'team_member':(302,),
         },
-    'POST:/projects/p/project1/teams/request/':{
+    'POST:/projects/p/project1/languages/request/':{
         'anonymous':(302,),
         'registered':(302,),
         'maintainer':(302,),
@@ -295,7 +295,7 @@ URL_ROLES.update({
         'team_coordinator':(302,),
         'team_member':(302,),
         },
-    'POST:/projects/p/project1/team/el/approve/':{
+    'POST:/projects/p/project1/language/el/approve/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(404,),
@@ -303,7 +303,7 @@ URL_ROLES.update({
         'team_coordinator':(403,),
         'team_member':(403,),
         },
-    'POST:/projects/p/project1/team/el/deny/':{
+    'POST:/projects/p/project1/language/el/deny/':{
         'anonymous':(302,),
         'registered':(403,),
         'maintainer':(404,),
