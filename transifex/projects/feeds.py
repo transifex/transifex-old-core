@@ -48,27 +48,27 @@ class ProjectFeed(Feed):
 class ProjectTimelineFeed(Feed):  
 
     def get_object(self, bits):
-	# In case of "/rss/name/foo/bar/baz", or other such clutter
-	# check that the bits parameter has only one member.
-	if len(bits) != 1:
-	    raise ObjectDoesNotExist
-	return Project.objects.get(slug__exact=bits[0])
-	
+        # In case of "/rss/name/foo/bar/baz", or other such clutter
+        # check that the bits parameter has only one member.
+        if len(bits) != 1:
+            raise ObjectDoesNotExist
+        return Project.objects.get(slug__exact=bits[0])
+        
     def title(self, obj):
-	return _("%(site_name)s: Timeline for %(project)s") % {
-	    'site_name':current_site.name,
-	    'project':obj.name }
-	    
+        return _("%(site_name)s: Timeline for %(project)s") % {
+            'site_name':current_site.name,
+            'project':obj.name }
+            
     def description(self, obj):
-	return _("History of the project %s.") % obj.name
-	
+        return _("History of the project %s.") % obj.name
+        
     def link(self, obj):
-	if not obj:
-	    raise FeedDoesNotExist
-	return  obj.get_absolute_url()
+        if not obj:
+            raise FeedDoesNotExist
+        return  obj.get_absolute_url()
 
     def items(self, obj):
-	return LogEntry.objects.by_object(obj)[:10]
+        return obj.get_action_logs()[:10]
 
     def item_link(self, obj):
-	return obj.object.get_absolute_url()
+        return obj.object.get_absolute_url()
