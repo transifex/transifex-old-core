@@ -39,7 +39,7 @@ def team_off(request, project, *args, **kwargs):
     Usage: '@access_off(team_off)' in front on any team view.
     """
     return render_to_response('teams/team_off.html', {
-        'project_team_page': True,
+        'project_overview': True,
         'project': project,
     }, context_instance=RequestContext(request))
 
