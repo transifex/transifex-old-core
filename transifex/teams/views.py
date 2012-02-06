@@ -152,7 +152,6 @@ def team_update(request, project_slug, language_code):
         extra_context=extra_context)
 
 
-@access_off(team_off)
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def team_detail(request, project_slug, language_code):
