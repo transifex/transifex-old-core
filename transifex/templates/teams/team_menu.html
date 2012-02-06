@@ -45,7 +45,9 @@
      	<div class="tab-wrapper grid_16">
         	<ul  class="tabs clearfix">     
         	    <li class="{% if project_team_page %}selected{% endif %} alpha"><a href="{% url team_detail project.slug language.code %}">{% trans "Overview" %}</a></li>
+        	    {% if not project.anyone_submit %}
         	    <li class="{% if project_team_members %}selected{% endif %} alpha"><a href="{% url team_members project.slug language.code %}">{% trans "Members" %}</a></li>
+        	    {% endif %}
               {% hook "team.html" menu %}
         	  </ul>
         </div>   
