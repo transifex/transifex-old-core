@@ -76,7 +76,7 @@
      <tr>
       <th class="onlyarrow tableobject"></th>
       <th class="onlyarrow tablecompletion"></th>
-      <th class="onlyarrow membercount"></th>
+      <th class="onlyarrow tablelastupd"></th>
      </tr>
     {% for stat in language_stats|sort_source_langs_first:source_languages %}
     {% if stat.first_translation %}
@@ -86,26 +86,25 @@
 	<tr>
     <td class="tableobject">
       <a href="{% url team_detail project.slug stat.object.code %}">{{ stat.object.name }}</a>
+      {% if stat.object in source_languages %}
+        {% trans "source language "%}
+      {% else %}
+        {% if stat.object.code|language_has_team:project %}
+        {% with stat.object.code as lang_code %}  
+          {% with teams|getitem:lang_code as counts %}
+           <span style="color:#999;">({{ counts.1 }} {% blocktrans %}members in total{% endblocktrans %})</span>
+          {% endwith %}
+        {% endwith %}
+        {% endif %}
+      {% endif %}
     </td>
     <td class="tablecompletion">
       {% with 180 as barwidth %}
           {% stats_bar_simple stat barwidth %}
       {% endwith %}
     </td>
-    <td class="membercount">
-      {% if stat.object in source_languages %}
-        {% trans "source language "%}
-      {% else %}
-        {% if stat.object.code|language_has_team:project %}
-        <a href="{% url team_members project.slug stat.object.code %}">
-        {% with stat.object.code as lang_code %}  
-          {% with teams|getitem:lang_code as counts %}
-           {{ counts.0 }} translators <span style="color:#758CA3;">({{ counts.1 }} {% blocktrans %}members in total{% endblocktrans %})</span>
-          {% endwith %}
-        {% endwith %}
-        </a>
-        {% endif %}
-      {% endif %}
+    <td class="tablelastupd">
+      <span  class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ last_update|date:'U' }}">{{ stat.last_update|date:"M d, h:ia" }}</span>
     </td>
   </tr>
   {% endfor %}
