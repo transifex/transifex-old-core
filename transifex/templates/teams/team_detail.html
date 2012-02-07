@@ -19,6 +19,10 @@
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
 
+{% if project.anyone_submit %}
+{% block header_menu %}
+{% endblock %}
+{% endif %}
 
 {% block content_main %}
 {% get_permission "project_perm.submit_translations" for request.user and team as "can_submit_translations" %}
@@ -26,8 +30,12 @@
 
 <div class="obj_bigdetails">
 
- 	<div class="separate-header notopmargin clearfix">
-  	<h3  class="sh-label">{% trans "Details" %}</h3>
+{% if not project.anyone_submit %}
+ 	<div class=" notopmargin clearfix">
+  	<h4  class="sh-label">{% trans "Progress:" %}</h4>
+  	               {% with 180 as barwidth %}
+                    {% stats_bar_simple stat barwidth %}
+                {% endwith %}
   	<div class="separate-buttons">		
 		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
 			<a id="join-facebox-trigger" class="i16 team_join nude-button" href="#facebox-joinmember">{% trans 'Join language translation' %}</a>	
@@ -80,7 +88,7 @@
     {% endwith %}
   </dl>
 </div>
-
+{% endif %}
 
 <div class="list" style="clear:both">
 
