@@ -4,6 +4,7 @@ Register the available formats and their capabilities.
 """
 
 from django.conf import settings
+from django.utils.safestring import SafeString
 from transifex.txcommon import import_to_python
 from transifex.txcommon.log import logger
 
@@ -59,7 +60,7 @@ class _FormatsRegistry(object):
         method they correspond to.
         """
         return [
-            (m, '%s (%s)' % (v['description'], v['file-extensions']))
+            (m, SafeString('%s (%s)' % (v['description'], v['file-extensions'])))
             for m, v in self.methods.items()
             if m != 'POT'
         ]
