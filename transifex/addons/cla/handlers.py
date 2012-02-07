@@ -28,11 +28,12 @@ def handle_cla_create(sender, **kwargs):
     if license_text:
         try:
             cla = Cla.objects.get(project=project)
-            cla.license_text = license_text
-            cla.save()
-            messages.success(request, _(
-                "You have updated this project's CLA."
-            ))
+            if license_text != cla.license_text:
+                cla.license_text = license_text
+                cla.save()
+                messages.success(request, _(
+                    "You have updated this project's CLA."
+                ))
         except Cla.DoesNotExist, e:
             Cla(project=project, license_text=license_text).save()
             messages.success(request, _(
