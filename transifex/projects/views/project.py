@@ -302,7 +302,7 @@ def project_detail(request, project_slug):
     team_request_form = TeamRequestSimpleForm(project)
 
     source_languages = Language.objects.filter(Q(id=project.source_language.id) | 
-        Q(id=project.outsourcing.all().values('source_language').distinct())).distinct()
+        Q(id__in=project.outsourcing.all().values('source_language').distinct())).distinct()
    
     language_stats = RLStats.objects.select_related('language').for_user(
         request.user).by_project_language_aggregated(project)
