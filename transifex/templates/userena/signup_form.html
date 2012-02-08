@@ -38,8 +38,8 @@
         });
         $("#recaptcha_container").appendTo();
 
-        $("fieldset").prepend('<div class="separate-header clearfix" style="width:556px;"><div class="sh-label">{% trans "Credentials"%}</div></div>');        
-        $("#id_billing_name").parents(".tx-form-field").prev().append('<div class="separate-header clearfix" style="width:556px;"><div class="sh-label">{% trans "Billing information"%}</div></div>'); 
+        var separateElement = $("#id_billing_name").parents(".tx-form-field").prev(); 
+        $('<div class="separate-header clearfix" style="width:556px;float:left;"><div class="sh-label">{% trans "Billing information"%}</div></div>').insertAfter(separateElement); 
     });
 </script>
 {% endblock %}
@@ -50,10 +50,7 @@
 {% endblock %}
 
 {% block content_main %}
-
-<div id="billing-separator" class="nodisplay" style="border-bottom:1px solid red;">
-{% trans "Billing information" %}
-</div>
+<div class="separate-header clearfix" style="width:556px;"><div class="sh-label">{% trans "Credentials"%}</div></div>
 
 <form id="signup-form" class="tx-form dual" action="" method="post" style="width:700px;">
   {% csrf_token %}
