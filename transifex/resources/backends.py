@@ -83,7 +83,6 @@ class ResourceBackend(object):
             msg = _("Error creating resource: %s")
             logger.warning(msg % e)
             raise ResourceBackendError(msg % e)
-        raise ResourceBackendError("blah")
         # save source entities
         try:
             fb = FormatsBackend(r, source_language, user)
