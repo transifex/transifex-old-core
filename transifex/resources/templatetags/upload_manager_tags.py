@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import with_statement
 from django import template
 from django.db import transaction
 from django.core.urlresolvers import reverse
@@ -17,7 +18,6 @@ from transifex.resources.backends import ResourceBackend, FormatsBackend, \
 register = template.Library()
 
 
-@transaction.commit_manually
 @register.inclusion_tag("resources/upload_create_resource_form.html")
 def upload_create_resource_form(request, project, prefix='create_form'):
     """Form for creating a new resource."""
@@ -49,17 +49,16 @@ def upload_create_resource_form(request, project, prefix='create_form'):
             filename = filename_of_uploaded_file(request.FILES)
             rb = ResourceBackend()
             try:
-                rb.create(
-                    project, slug, name, method, project.source_language,
-                    content, user=request.user,
-                    extra_data={'filename': filename}
-                )
+                with transaction.commit_on_success():
+                    rb.create(
+                        project, slug, name, method, project.source_language,
+                        content, user=request.user,
+                        extra_data={'filename': filename}
+                    )
             except ResourceBackendError, e:
-                transaction.rollback()
                 cr_form._errors['source_file'] = ErrorList([e.message, ])
                 display_form=True
             else:
-                transaction.commit()
                 display_form = False
                 resource = Resource.objects.get(slug=slug, project=project)
         else:
