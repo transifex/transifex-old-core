@@ -152,6 +152,54 @@ class TestTranslationsBuilders(BaseTestCase):
         t_string = translations.values()[0][5]
         self.assertTrue(t_string.endswith('txss'))
 
+    def test_reviewed_marked_builder(self):
+        """Test the ReviewedMarkedTranslationsBuilder builder returns only
+        reviewed strings.
+        """
+        builder = ReviewedMarkedSourceTranslationsBuilder(
+            self.resource, self.language_ar
+        )
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        t_string = translations.values()[0]
+        self.assertTrue(t_string.endswith('txss'))
+        self.translation_ar.reviewed = True
+        self.translation_ar.save()
+        translations = builder()
+        self._has_correct_normal_format(translations)
+        self.assertEquals(len(translations), 1)
+        self.assertEquals(
+            translations.keys()[0], self.translation_ar.source_entity_id
+        )
+        t_string = translations.values()[0]
+        self.assertFalse(t_string.endswith('txss'))
+
+    def test_reviewed_marked_builder_pluralized(self):
+        """Test the ReviewedTranslationsBuilder builder, when pluralized."""
+        builder = ReviewedMarkedSourceTranslationsBuilder(
+            self.resource, self.language_ar
+        )
+        builder.pluralized = True
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        t_string = translations.values()[0][5]
+        self.assertTrue(t_string.endswith('txss'))
+        self.translation_ar.reviewed = True
+        self.translation_ar.save()
+        translations = builder()
+        self.assertEquals(len(translations), 1)
+        self.assertEquals(
+            translations.keys()[0], self.translation_ar.source_entity_id
+        )
+        self.assertEquals(len(translations.values()), 1)
+        self._has_correct_plural_format(translations)
+        t = translations.values()[0]
+        self.assertIsInstance(t, dict)
+        self.assertEquals(len(t), 1)
+        self.assertIn(5, t)
+        t_string = translations.values()[0][5]
+        self.assertFalse(t_string.endswith('txss'))
+
     def _has_correct_normal_format(self, t):
         """Test t has the correct normal format."""
         self.assertIsInstance(t, dict)
