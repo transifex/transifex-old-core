@@ -3,6 +3,7 @@
 
 from __future__ import absolute_import
 import os, re
+from xml.sax.saxutils import escape as xml_escape, unescape as xml_unescape
 from transifex.txcommon.log import logger
 from transifex.resources.formats import FormatError
 from transifex.resources.formats.utils.decorators import *
@@ -39,20 +40,21 @@ class DTDHandler(SimpleCompilerFactory, Handler):
         single quotes are omitted,
         because double quotes around the value are forced in template
         """
-        return (s.replace('&', '&amp;')
-                 .replace('<', '&lt;')
-                 .replace('>', '&gt;')
-                 .replace('"', '&quot;')
-                 )
+        return xml_escape(s, {
+            '"': '&quot;',
+            '%': '&#37;'
+        })
 
     def _unescape(self, s):
         """ Unescape entities for easy editing """
-        return (s.replace('&amp;', '&')
-                 .replace('&lt;', '<')
-                 .replace('&gt;', '>')
-                 .replace('&quot;', '"')
-                 .replace('&#39;',"'")
-                 )
+        return xml_unescape(s, {
+            '&quot;': '"',
+            '&#39;': "'",
+            '&#37;': '%',
+            '&#039;': "'",
+            '&#037;': '%',
+            '&apos;': "'",
+        })
 
     def _get_content_from_file(self, filename, encoding):
         fh = open(filename, "r")

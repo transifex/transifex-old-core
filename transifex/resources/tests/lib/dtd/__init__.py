@@ -23,7 +23,7 @@ class TestDTDHandler(BaseTestCase):
         )
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
-        self.assertEqual(len(handler.stringset.strings), 3)
+        self.assertEqual(len(handler.stringset.strings), 4)
         content = [
             (u' Nonsense line from the movie "The Day The Earth Stood Still". ',
                 u"robots.pagetitle",
@@ -36,7 +36,7 @@ class TestDTDHandler(BaseTestCase):
                 u"robots.errorShortDescText",
                 u"We have come to visit you in peace & with goodwill!"),
             ]
-        self.assertEqual(len(handler.stringset.strings), 3)
+        self.assertEqual(len(handler.stringset.strings), 4)
         for i in range(0, 3):
             s = handler.stringset.strings[i]
             self.assertEqual(s.comment, content[i][0])
@@ -106,7 +106,7 @@ class TestDTDHandler(BaseTestCase):
         handler.save2db()
 
         # check number of source entities imported
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 3)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 4)
 
         # Check that all source translations are there
         self.assertEqual(
@@ -123,4 +123,12 @@ class TestDTDHandler(BaseTestCase):
             u'<!ENTITY robots.errorTitleText "Привіт людинам!">',
             compiled_template.decode('UTF-8')
         )
+        handler.set_language(self.resource.source_language)
+        compiled_template = handler.compile()
+        source_compiled_file = os.path.join(os.path.dirname(__file__),
+                'aboutRobots_compiled.dtd')
+        f = open(source_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        self.assertEqual(compiled_template, expected_compiled_template)
         r.delete()
