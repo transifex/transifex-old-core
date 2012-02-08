@@ -768,6 +768,7 @@
 
         // Enable tooltips with tipsy
         $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+        $('#review-all').tipsy({'gravity':'s'});
 
         $(".lotte-header-link").each(function(){
             $(this).appendTo("#stringset_table_wrapper .top").show();
@@ -900,7 +901,7 @@
         <th>&nbsp;</th>
         {% if is_reviewer %}
         <th>
-          <input id="review-all" type="checkbox" name="review-all"/>
+          <input title="{% trans "Mark all strings as reviewed." %}" id="review-all" type="checkbox" name="review-all"/>
         </th>
         {% endif %}
         </tr>
