@@ -12,9 +12,10 @@ def progress_for_project(project, language_code=None, width=100):
 
     stats = RLStats.objects.filter(
         resource__project=project, language__code=language_code
-    ).values('language__code').distinct().annotate(
-        mytranslated=Sum('translated'), myuntranslated=Sum('untranslated')
-    ).filter()
+    ).values('language__code').annotate(
+        trans=Sum('translated'),
+        untrans=Sum('untranslated')
+    ).order_by()
 
     if not stats:
         # Project has no resources
@@ -30,10 +31,10 @@ def progress_for_project(project, language_code=None, width=100):
             'pos': StatBarsPositions(bar_data, width),
             'width': width
         }
-    stats = stats[0]
 
-    translated = stats['mytranslated']
-    untranslated = stats['myuntranslated']
+    stats = stats[0]
+    translated = stats['trans']
+    untranslated = stats['untrans']
     total = translated + untranslated
 
     try:
