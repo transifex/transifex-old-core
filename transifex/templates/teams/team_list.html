@@ -89,13 +89,6 @@
       {% if stat.object in source_languages %}
         {% trans "source language "%}
       {% else %}
-        {% if stat.object.code|language_has_team:project %}
-        {% with stat.object.code as lang_code %}  
-          {% with teams|getitem:lang_code as counts %}
-           <span style="color:#999;">({{ counts.1 }} {% blocktrans %}members in total{% endblocktrans %})</span>
-          {% endwith %}
-        {% endwith %}
-        {% endif %}
       {% endif %}
     </td>
     <td class="tablecompletion">
