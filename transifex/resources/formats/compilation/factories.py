@@ -9,7 +9,8 @@ from .decorators import NormalDecoratorBuilder, PseudoDecoratorBuilder, \
         EmptyDecoratorBuilder
 from .builders import AllTranslationsBuilder, EmptyTranslationsBuilder, \
         ReviewedTranslationsBuilder, SourceTranslationsBuilder, \
-        ReviewedSourceTranslationsBuilder, MarkedSourceTranslationsBuilder
+        ReviewedSourceTranslationsBuilder, MarkedSourceTranslationsBuilder, \
+        ReviewedMarkedSourceTranslationsBuilder
 from .mode import Mode
 
 
@@ -154,4 +155,9 @@ class MarkedSourceCompilerFactory(CompilerFactory):
     """Use source strings, but mark them."""
 
     def _get_translation_setter(self, language, mode):
-        return MarkedSourceTranslationsBuilder(self.resource, language)
+        if Mode.REVIEWED in mode:
+            return ReviewedMarkedSourceTranslationsBuilder(
+                self.resource, language
+            )
+        else:
+            return MarkedSourceTranslationsBuilder(self.resource, language)
