@@ -141,7 +141,7 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
         ones.
         """
         translations = Translation.objects.filter(
-            reviewed=True, resources=self.resource, language=self.language
+            reviewed=True, resource=self.resource, language=self.language
         ).values_list(*self._fields)
         source_entities = set(SourceEntity.objects.filter(
                 resource=self.resource
