@@ -30,6 +30,8 @@ class CreateUserFromSocial(object):
         user = UserenaSignup.objects.create_user(
             username, email, password=None, active=True, send_email=False
         )
+        # Activate user automatically
+        user = UserenaSignup.objects.activate_user(user, user.userena_signup.activation_key)
         return {'user': user, 'is_new': True}
 
 
