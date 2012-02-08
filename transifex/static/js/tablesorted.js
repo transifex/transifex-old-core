@@ -31,7 +31,7 @@ $(document).ready(function(){
   });
   
   $(".tablesorter.resdetail").tablesorter({
-    sortList: [[1,0]], 
+    sortList: [[1,1]],
     headers: {
       1: { sorter: 'percent' },
       2: { sorter: 'number' },
