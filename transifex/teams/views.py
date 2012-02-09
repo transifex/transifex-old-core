@@ -166,11 +166,12 @@ def team_detail(request, project_slug, language_code):
     else:
         user_access_request = None
 
-    statslist = RLStats.objects.select_related('resource',
-        'resource__priority').by_project_and_language(project, language)
+    statslist = RLStats.objects.select_related('resource', 'resource__project',
+        'lock', 'last_committer', 'resource__priority'
+        ).by_project_and_language(project, language)
 
-    empty_rlstats = Resource.objects.by_project(project).exclude(
-        id__in=statslist.values('resource'))
+    empty_rlstats = Resource.objects.select_related('project'
+        ).by_project(project).exclude(id__in=statslist.values('resource'))
 
     return render_to_response("teams/team_detail.html", {
         "project": project,
