@@ -763,7 +763,7 @@ class Handler(object):
             msg = "Error when parsing file for resource %s: %s"
             logger.error(msg % (self.resource, e), exc_info=True)
             raise
-        if not self.stringset.strings:
+        if self.resource and not self.stringset.strings:
             msg = _("We're not able to extract any string from the file "
                     "uploaded for language %(language)s in resource "
                     "%(resource)s." % {'language': self.language, 
