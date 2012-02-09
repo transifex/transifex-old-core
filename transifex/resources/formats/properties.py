@@ -14,7 +14,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
-from .compilation import FillEmptyCompilerFactory
+from .compilation import Compiler, MarkedSourceCompilerFactory
 
 
 class PropertiesParseError(ParseError):
@@ -25,7 +25,19 @@ class PropertiesCompileError(CompileError):
     pass
 
 
-class PropertiesHandler(FillEmptyCompilerFactory, Handler):
+class PropertiesCompiler(Compiler):
+    """Compiler for .properties formats."""
+
+    def _post_compile(self):
+        """Comment out source strings."""
+        pattern = r'(?P<actual>.*)_txss'
+        regex = re.compile(pattern)
+        self.compiled_template = regex.sub(
+            lambda m: '# '+ m.group('actual'), self.compiled_template
+        )
+
+
+class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
     """
     Handler for PROPERTIES translation files.
     """

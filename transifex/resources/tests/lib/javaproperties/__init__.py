@@ -128,29 +128,30 @@ class TestJavaProperties(BaseTestCase):
         # Check if all Source strings are untouched
         self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 25)
         # Check that all translations are there
-        self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
-            language=l)), 23)
+        self.assertEqual(
+            len(Translation.objects.filter(resource=r, language=l)), 23
+        )
         return handler
 
     def _test_properties_compile(self, handler):
-        source_compiled_file = os.path.join(os.path.dirname(__file__),
-                'complex_compiled.properties')
-        trans_compiled_file = os.path.join(os.path.dirname(__file__),
-                'complex_hi_IN-ascii_compiled.properties')
+        source_compiled_file = os.path.join(
+            os.path.dirname(__file__), 'complex_compiled.properties'
+        )
+        trans_compiled_file = os.path.join(
+            os.path.dirname(__file__), 'complex_hi_IN-ascii_compiled.properties'
+        )
         handler.set_language(self.resource.source_language)
         compiled_template = handler.compile()
         f = open(source_compiled_file, 'r')
         expected_compiled_template = f.read()
         f.close()
-        self.assertEqual(compiled_template,
-                expected_compiled_template)
+        self.assertEqual(compiled_template, expected_compiled_template)
         handler.set_language(Language.objects.get(code='hi_IN'))
         compiled_template = handler.compile()
         f = open(trans_compiled_file, 'r')
         expected_compiled_template = f.read()
         f.close()
-        self.assertEqual(compiled_template,
-                expected_compiled_template)
+        self.assertEqual(compiled_template, expected_compiled_template)
 
 
     def test_properties_save_and_compile(self):

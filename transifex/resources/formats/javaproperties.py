@@ -10,9 +10,8 @@ from transifex.txcommon.log import logger
 from transifex.resources.models import SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from .utils.hash_tag import hash_tag
-from .properties import PropertiesHandler, PropertiesParseError, \
-        PropertiesCompileError
-from .compilation import Compiler
+from .properties import PropertiesCompiler, PropertiesHandler, \
+        PropertiesParseError, PropertiesCompileError
 from .resource_collections import StringSet, GenericTranslation
 
 
@@ -69,7 +68,7 @@ def convert_to_ascii(c):
     return ''.join(['\\u', s])
 
 
-class JavaCompiler(Compiler):
+class JavaCompiler(PropertiesCompiler):
     """Compiler for java .properties files.
 
     We need to convert translations to unicode sequences.
