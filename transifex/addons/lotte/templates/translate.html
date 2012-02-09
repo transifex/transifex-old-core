@@ -59,8 +59,10 @@
     /* vars for string calcs */
     var translated;
     var untranslated;
-    var translated_strings = {{ translated_strings }}
-    var untranslated_strings = {{ untranslated_strings }}
+    var reviewed;
+    var translated_strings = {{ translated_strings }};
+    var untranslated_strings = {{ untranslated_strings }};
+    var reviewed_strings = {{ reviewed_strings }};
     var total_strings = translated_strings + untranslated_strings;
     /* obj for holding default values of edited text areas. works like a hastable/dict */
     var current_defaults = {};
@@ -378,15 +380,18 @@
                         // Modified strings should be saved or dropped on page change.
                         translated = stringset.translated; // - stringset.translated_modified;
                         untranslated = stringset.untranslated; // - stringset.untranslated_modified;
+                        reviewed = stringset.reviewed;
                     } else {
                         translated = translated_strings;
                         untranslated = untranslated_strings;
+                        reviewed = reviewed_strings;
                     }
 
                     // Create StringSet instance
                     stringset = new StringSet(parsed_data, push_url, '{{resource.source_language}}', '{{target_language.code}}');
                     stringset.translated = translated;
                     stringset.untranslated = untranslated;
+                    stringset.reviewed = reviewed;
 
                     // Draw the table
                     fnCallback(parsed_data);
@@ -461,18 +466,28 @@
 
         $('.review-check').live('change', function(){
             var sid = $(this).attr('id').split('_')[2];
-            var req;
+            var req, up;
 
             if ($(this).attr('checked')) {
                 req = {'true': [sid]};
+                up = true;
             } else {
                 req = {'false': [sid]};
+                up = false;
             };
 
             $.ajax({
                 type: 'POST',
                 url: proofread_url,
                 data: JSON.stringify(req),
+                success: function() {
+                  if (up) {
+                    stringset.reviewed += 1;
+                  } else {
+                    stringset.reviewed -= 1;
+                  }
+                  stringset.updateStats();
+                }
             });
         });
 
@@ -865,7 +880,7 @@
 
   <tr>
     <th class="untranslated">{% trans "Remaining" %}</th>
-    <td id="total_untranslated">{{ untranslated_strings|intcomma }} </td>
+    <td id="total_untranslated">{{ untranslated_strings|intcomma }}</td>
     <td id="total_untranslated_perc">?</td>
     <td>
       <input id="untranslated" class="filters" type="checkbox" checked="checked" name="only_untranslated"/>
@@ -874,8 +889,8 @@
 
   <tr>
     <th class="fuzzy">{% trans "Reviewed" %}</th>
-    <td id="total_reviewed">0</td>
-    <td id="total_reviewed_perc">0.00%</td>
+    <td id="total_reviewed">{{ reviewed_strings|intcomma }}</td>
+    <td id="total_reviewed_perc">?</td>
     <td>
       <input id="reviewed" class="filters" type="checkbox" name="only_reviewed"/>
     </td>

@@ -118,10 +118,17 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         resource__in = resources).count()
 
     translated_strings = Translation.objects.filter(
-        resource__in = resources,
-        language = target_language,
+        resource__in=resources,
+        language=target_language,
         source_entity__pluralized=False,
-        rule = 5).count()
+        rule=5).count()
+
+    reviewed_strings = Translation.objects.filter(
+        resource__in=resources,
+        language=target_language,
+        source_entity__pluralized=False,
+        rule=5,
+        reviewed=True).count()
 
     # Include counting of pluralized entities
     for pluralized_entity in SourceEntity.objects.filter(resource__in = resources,
@@ -156,21 +163,21 @@ def translate(request, project_slug, lang_code, resource_slug=None,
     except GtModel.DoesNotExist:
         auto_translate = None
 
-    return render_to_response("translate.html",
-        { 'project' : project,
-          'resource' : translation_resource,
-          'target_language' : target_language,
-          'translated_strings': translated_strings,
-          'untranslated_strings': total_strings - translated_strings,
-          'contributors': contributors,
-          'resources': resources,
-          'resource_slug': resource_slug,
-          'languages': Language.objects.all(),
-          'auto_translate': auto_translate,
-          'spellcheck_supported_langs' : SPELLCHECK_SUPPORTED_LANGS,
-          'team_language': team_language
-        },
-        context_instance = RequestContext(request))
+    return render_to_response("translate.html", {
+        'project': project,
+        'resource': translation_resource,
+        'target_language': target_language,
+        'translated_strings': translated_strings,
+        'reviewed_strings': reviewed_strings,
+        'untranslated_strings': total_strings - translated_strings,
+        'contributors': contributors,
+        'resources': resources,
+        'resource_slug': resource_slug,
+        'languages': Language.objects.all(),
+        'auto_translate': auto_translate,
+        'spellcheck_supported_langs': SPELLCHECK_SUPPORTED_LANGS,
+        'team_language': team_language
+    }, context_instance = RequestContext(request))
 
 @login_required
 def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):

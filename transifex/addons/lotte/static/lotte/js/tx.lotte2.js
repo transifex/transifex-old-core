@@ -706,6 +706,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 
             translated = this.translated - this.translated_modified;
             untranslated = this.untranslated - this.untranslated_modified;
+            reviewed = this.reviewed;
 
             if (this.bound_stats) {
                 total = translated + untranslated + this.modified;
@@ -716,6 +717,8 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                 $('#total_fuzzy_perc', this.bound_stats).html(sprintf("%.02f%%", this.modified*100.0/total));
                 $('#total_untranslated', this.bound_stats).html(untranslated);
                 $('#total_untranslated_perc', this.bound_stats).html(sprintf("%.02f%%", untranslated*100.0/total));
+                $('#total_reviewed', this.bound_stats).html(reviewed);
+                $('#total_reviewed_perc', this.bound_stats).html(sprintf("%.02f%%", reviewed*100.0/total));
             }
         }
     }
