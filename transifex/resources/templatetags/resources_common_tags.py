@@ -13,9 +13,10 @@ def sort_source_langs_first(rlstats, source_languages):
     Take a RLStats aggregated queryset and move the entries related to the
     source_languages to the top of the list.
     """
+    codes = source_languages.values_list('code', flat=True)
     rlstats_source_list, rlstats_list = [], []
     for r in rlstats:
-        if r.object in source_languages:
+        if r.object.code in codes:
             rlstats_source_list.append(r)
         else:
             rlstats_list.append(r)
