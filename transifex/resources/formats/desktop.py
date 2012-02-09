@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from collections import defaultdict
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
-from transifex.resources.models import Translation, Template
+from transifex.resources.models import Translation, Template, SourceEntity
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
@@ -30,9 +30,30 @@ class DesktopCompileError(CompileError):
 class DesktopBaseCompiler(Compiler):
     """Base compiler for .desktop files."""
 
-    def _apply_translation(self, source, trans, content):
+    def _get_source_strings(self):
+        return SourceEntity.objects.filter(resource=self.resource).values_list(
+            'id', 'string_hash', 'string'
+        )
+
+    def _compile_content(self, content, language):
+        stringset = self._get_source_strings()
+        self._tset.language = language
+        translations = self._tset()
+        for string in stringset:
+            trans = translations.get(string[0], u"")
+            if trans:
+                content = self._apply_translation(string[2], trans, content, language)
+        return content
+
+    def _apply_translation(self, source, trans, content, language):
+        if isinstance(content, str):
+            content = content.decode(self.default_encoding)
+        if isinstance(source, str):
+            source = source.decode(self.default_encoding)
+        if isinstance(trans, str):
+            trans = trans.decode(self.default_encoding)
         return ''.join([
-                content, source, '[', self.language.code, ']=',
+                content, source, '[', language.code, ']=',
                 self._tdecorator(trans), '\n',
         ])
 
@@ -48,12 +69,8 @@ class DesktopSourceCompiler(DesktopBaseCompiler):
         all_languages = set(self.resource.available_languages_without_teams)
         source_language = set([self.resource.source_language, ])
         translated_to = all_languages - source_language
-        content = ''
         for language in translated_to:
-            content = ''.join(
-                content,
-                super(DesktopSourceCompiler, self)._compile(content)
-            )
+            content = self._compile_content(content, language)
         self.compiled_template = content
 
 
@@ -62,6 +79,8 @@ class DesktopTranslationCompiler(DesktopBaseCompiler):
 
     Show a single language, the one of the translation.
     """
+    def _compile(self, content):
+        self.compiled_template = self._compile_content(content, self.language)
 
 
 class DesktopHandler(SimpleCompilerFactory, Handler):
