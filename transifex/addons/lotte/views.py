@@ -464,7 +464,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
         source_entity_ids = request_data['true']
         translations = Translation.objects.filter(
             source_entity__id__in=source_entity_ids,
-            language__code=lang_code, rule=5
+            language__code=lang_code,
         )
         translations.update(reviewed=True)
 
@@ -472,7 +472,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
         source_entity_ids = request_data['false']
         translations = Translation.objects.filter(
             source_entity__id__in=source_entity_ids,
-            language__code=lang_code, rule=5
+            language__code=lang_code,
         )
         translations.update(reviewed=False)
 
