@@ -89,6 +89,15 @@
       {% if stat.object in source_languages %}
         {% trans "source language "%}
       {% else %}
+        {% if stat.object.code|language_has_team:project %}
+          {% with stat.object.code as lang_code %}
+            {% with teams|getitem:lang_code as request_count %}
+              {% if request_count %}
+              <span style="color:#999;">({{ request_count }} join requests)</span>
+              {% endif %}
+            {% endwith %}
+          {% endwith %}
+        {% endif %}
       {% endif %}
     </td>
     <td class="tablecompletion">

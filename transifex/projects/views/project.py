@@ -308,20 +308,16 @@ def project_detail(request, project_slug):
         request.user).by_project_language_aggregated(project)
 
     teams = project.team_set.annotate(
-        member_count=Count('members'),
-        reviewer_count=Count('reviewers'),
-        coordinator_count=Count('coordinators')
+        request_count=Count('join_requests')
     ).values(
-        'language__code', 'member_count',
-        'reviewer_count', 'coordinator_count'
+        'language__code', 'request_count'
     )
 
     team_dict = {}
     for t in teams:
         lang_code = t['language__code']
-        members = t['member_count']
-        total = members + t['coordinator_count'] + t['reviewer_count']
-        team_dict[lang_code] = (members, total)
+        request_count = t['request_count']
+        team_dict[lang_code] = request_count
 
     return render_to_response('projects/project_detail.html', {
         'project_overview': True,

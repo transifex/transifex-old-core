@@ -157,7 +157,7 @@ class TeamAccessRequestManager(models.Manager):
 
 class TeamAccessRequest(models.Model):
     team = models.ForeignKey(Team, verbose_name=_('Team'),
-        blank=False, null=False)
+        blank=False, null=False, related_name='join_requests')
     user = models.ForeignKey(User, verbose_name=_('User'),
         blank=False, null=False)
 
