@@ -13,7 +13,59 @@ URL_ROLES = {
         'POST:/projects/p/project1/access/rq/1/delete/',
         'POST:/projects/p/project1/access/rq/1/approve/',
     ],
-    '(200, {}, "This project does not maintain its own teams")':[
+    '(200, {}, "This project does not maintain its own translation teams")':[
+        'GET:/projects/p/project1/languages/add/',
+        'GET:/projects/p/project1/language/pt_BR/',
+        'GET:/projects/p/project1/language/pt_BR/members/',
+        'GET:/projects/p/project1/language/pt_BR/edit/',
+        'GET:/projects/p/project1/language/pt_BR/delete/',
+        'POST:/projects/p/project1/language/pt_BR/request/',
+        'POST:/projects/p/project1/language/pt_BR/approve/diegobz/',
+        'POST:/projects/p/project1/language/pt_BR/deny/diegobz/',
+        'POST:/projects/p/project1/language/pt_BR/withdraw/',
+        'POST:/projects/p/project1/language/pt_BR/leave/',
+        'POST:/projects/p/project1/languages/request/',
+        'POST:/projects/p/project1/language/el/approve/',
+        'POST:/projects/p/project1/language/el/deny/',
+    ],
+}
+
+URL_ROLES_FREE = {
+    '(301, )':[
+        'GET:/projects/p/project1/access/pm/add',
+    ],
+    '(403, )':[
+        'POST:/projects/p/project1/access/pm/1/delete/',
+        'POST:/projects/p/project1/access/rq/1/delete/',
+        'POST:/projects/p/project1/access/rq/1/approve/',
+    ],
+    '(200, {}, "Free for all")':[
+        'GET:/projects/p/project1/languages/add/',
+        'GET:/projects/p/project1/language/pt_BR/',
+        'GET:/projects/p/project1/language/pt_BR/members/',
+        'GET:/projects/p/project1/language/pt_BR/edit/',
+        'GET:/projects/p/project1/language/pt_BR/delete/',
+        'POST:/projects/p/project1/language/pt_BR/request/',
+        'POST:/projects/p/project1/language/pt_BR/approve/diegobz/',
+        'POST:/projects/p/project1/language/pt_BR/deny/diegobz/',
+        'POST:/projects/p/project1/language/pt_BR/withdraw/',
+        'POST:/projects/p/project1/language/pt_BR/leave/',
+        'POST:/projects/p/project1/languages/request/',
+        'POST:/projects/p/project1/language/el/approve/',
+        'POST:/projects/p/project1/language/el/deny/',
+    ],
+}
+
+URL_ROLES_OUTSOURCE = {
+    '(301, )':[
+        'GET:/projects/p/project1/access/pm/add',
+    ],
+    '(403, )':[
+        'POST:/projects/p/project1/access/pm/1/delete/',
+        'POST:/projects/p/project1/access/rq/1/delete/',
+        'POST:/projects/p/project1/access/rq/1/approve/',
+    ],
+    '(200, {}, "Outsourcing")':[
         'GET:/projects/p/project1/languages/add/',
         'GET:/projects/p/project1/language/pt_BR/',
         'GET:/projects/p/project1/language/pt_BR/members/',
@@ -83,7 +135,7 @@ class ProjectAccessControlTestCase(BaseTestCase):
         self.project.save()
 
         for user_role in USER_ROLES:
-            check_page_status(self, user_role, convert_url_roles(URL_ROLES))
+            check_page_status(self, user_role, convert_url_roles(URL_ROLES_FREE))
 
         # Check if a simple registered user can open up Lotte
         expected_code = 200
@@ -101,7 +153,7 @@ class ProjectAccessControlTestCase(BaseTestCase):
         self.project.save()
 
         for user_role in USER_ROLES:
-            check_page_status(self, user_role, convert_url_roles(URL_ROLES))
+            check_page_status(self, user_role, convert_url_roles(URL_ROLES_OUTSOURCE))
 
         # Check if a writer and a team member of the outsource project can
         # open up Lotte
@@ -158,14 +210,12 @@ class ProjectAccessControlTestCase(BaseTestCase):
         #change access control to typical and free for all
         DATA = {'project_type':'typical', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<label for="id_project_type_0"><input checked="checked" type="radio"', status_code=200)
-        self.assertContains(resp, '<label for="id_access_control_0"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, 'Free for all', status_code=200)
 
         #change access control to typical with limited access
         DATA = {'project_type':'typical', 'access_control':"limited_access", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<label for="id_project_type_0"><input checked="checked" type="radio"', status_code=200)
-        self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
+        self.assertNotContains(resp, 'Free for all', status_code=200)
 
         #change access control to typical with not access_control field filled
         DATA = {'project_type':'typical', 'next': url, 'outsource': ''}
@@ -175,14 +225,14 @@ class ProjectAccessControlTestCase(BaseTestCase):
         #change access control as hub and free for all
         DATA = {'project_type':'hub', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<label for="id_project_type_1"><input checked="checked" type="radio"', status_code=200)
-        self.assertContains(resp, '<label for="id_access_control_0"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, 'Free for all')
+        self.assertContains(resp, 'Hub')
 
         #change access control as hub with limited access
         DATA = {'project_type':'hub', 'access_control':"limited_access", 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<label for="id_project_type_1"><input checked="checked" type="radio"', status_code=200)
-        self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
+        self.assertNotContains(resp, 'Free for all')
+        self.assertContains(resp, 'Hub')
 
         #change access control as hub with not access_control field filled
         DATA = {'project_type':'hub', 'next': url, 'outsource': ''}
@@ -190,10 +240,9 @@ class ProjectAccessControlTestCase(BaseTestCase):
         self.assertContains(resp, 'This field is required', status_code=200)
 
     def test_public_project_can_outsource_from_my_private_project(self):
-        
-        url = reverse('project_access_control_edit',
+        url = reverse('project_detail',
             kwargs={'project_slug': self.project.slug})
-        
+
         self.project_private.is_hub = True
         self.project_private.save()
 
@@ -202,5 +251,6 @@ class ProjectAccessControlTestCase(BaseTestCase):
             'outsource': self.project_private.id,
             'next': url}
             )
-        
-        self.assertRedirects(response, url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'projects/project_detail.html')
