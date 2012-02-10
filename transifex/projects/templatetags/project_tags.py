@@ -10,8 +10,8 @@ register = template.Library()
 def progress_for_project(project, language_code=None, width=100):
     """Render a progressbar for the specified project."""
 
-    stats = RLStats.objects.filter(
-        resource__project=project, language__code=language_code
+    stats = RLStats.objects.by_project(project).filter(
+        language__code=language_code
     ).values('language__code').annotate(
         trans=Sum('translated'),
         untrans=Sum('untranslated')
