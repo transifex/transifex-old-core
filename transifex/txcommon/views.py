@@ -66,7 +66,7 @@ def search(request):
         except TypeError:
             results = []
 
-    logger.debug("Searched for %s. Found %s results." % (query_string, len(results)))
+    logger.debug("Searched for %s. Found %s results." % (query_string, results.count()))
     return render_to_response("search.html",
         {'query': query_string,
          'terms': search_terms,
