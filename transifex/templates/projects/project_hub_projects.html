@@ -23,10 +23,10 @@
   {% include "projects/project_hub_join_requests.html" %}
   {% if outsourcing_projects %}
     <div class="datalist">
-      <ul>
+      <ul class="nomargin">
       {% for p in outsourcing_projects %}
           <li class="clearfix">
-          <span class="name"><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></span>
+          <span class="tt-details"><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></span>
   
           <div style="float:right">
               {% hub_associate_project_toogler p %}
