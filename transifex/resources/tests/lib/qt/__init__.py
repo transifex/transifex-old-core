@@ -149,6 +149,14 @@ class TestQtFile(FormatsBaseTestCase):
         self.assertEqual(
             len(Translation.objects.filter(resource=r, language=l)), 10
         )
+
+        self._mark_translation_as_reviewed(self.resource,
+                [
+                    '%n FILES PROCESSED.',
+                    'PROCESSING...'
+                ],
+                self.language_ar, 7)
+
         return handler
 
     def _test_qt_compile(self, handler):
@@ -157,6 +165,8 @@ class TestQtFile(FormatsBaseTestCase):
                 'en_compiled.ts')
         trans_compiled_file = os.path.join(os.path.dirname(__file__),
                 'ar.ts')
+        trans_compiled_file_reviewed = os.path.join(os.path.dirname(__file__),
+                'ar_compiled_for_review.ts')
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
         compiled_template = handler.compile()
@@ -170,6 +180,10 @@ class TestQtFile(FormatsBaseTestCase):
         expected_compiled_template = f.read()
         f.close()
         self.assertEqual(compiled_template, expected_compiled_template)
+        self._check_compilation(handler, self.resource,
+                self.language_ar, trans_compiled_file_reviewed,
+                'REVIEWED'
+        )
 
     def test_qt_save_and_compile(self):
         handler = self._test_qt_save2db()
