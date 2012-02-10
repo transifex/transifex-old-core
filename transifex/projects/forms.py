@@ -123,31 +123,24 @@ class ProjectAccessControlForm(forms.ModelForm):
         {'typical': {
             'label': _('Typical project'),
             'help_text': _(
-                "Allow any logged-in user to submit files to my project. "
-                "<a href=\"http://www.youtube.com/watch?v=-b7qaSxuZUg\" "
-                "target=\"_blank\">Imagine</a> all the people, sharing all the "
-                "world. Recommended for quick translations, and when a "
-                "pre-commit review process is in place, e.g. when "
-                "contributions are submitted by email or to a separate branch.")
+                "This is the default option for most projects where"
+                "they work as a single project among the system.")
             }
         },
         {'hub': {
             'label': _('Project hub'),
             'help_text': _(
-                "Give access to specific people. Translations teams will have "
-                "access to their language's files only, and global writers "
-                "will have access to all translation files. Recommended for "
-                "most projects."),
+                "Such projects function as \"parents\" for other \"children\" projects."
+                " Ideal in scenarios like Linux distributions that are composed of "
+                "many sub-projects."),
             }
         },
         {'outsourced': {
             'label': _('Outsourced project'),
             'help_text': _(
-                "Re-use another project's teams and writers by delegating "
-                "access control to that project. If a person can contribute to "
-                "that project, it can contribute to this one as well. "
-                "Recommended for non-upstream projects such as distribution "
-                "packages and desktop environment modules."),
+                "Become a \"child\" of a hub project. If a person can contribute to "
+                "the hub project, it can contribute to this one as well. "
+                "Recommended for non-upstream projects"),
             }
         },
     ]
@@ -157,11 +150,10 @@ class ProjectAccessControlForm(forms.ModelForm):
             'label': _('Free for all'),
             'help_text': _(
                 "Allow any logged-in user to submit files to my project. "
-                "<a href=\"http://www.youtube.com/watch?v=-b7qaSxuZUg\" "
+                "<a href=\"http://www.youtube.com/watch?v=DCX3ZNDZAwY\" "
                 "target=\"_blank\">Imagine</a> all the people, sharing all the "
                 "world. Recommended for quick translations, and when a "
-                "pre-commit review process is in place, e.g. when "
-                "contributions are submitted by email or to a separate branch.")
+                "pre-commit review process is in place.")
             }
         },
         {'limited_access': {
@@ -201,16 +193,16 @@ class ProjectAccessControlForm(forms.ModelForm):
 
     
     project_type = forms.ChoiceField(choices=types, required=True,
-        widget=forms.RadioSelect, #help_text=types_help2,
-        #widget=forms.RadioSelect(renderer=RadioFieldRenderer,
-        #    attrs={'help_text': types_help})
+        #widget=forms.RadioSelect, #help_text=types_help2,
+        widget=forms.RadioSelect(renderer=RadioFieldRenderer,
+        attrs={'help_text': types_help})
         )
 
     access_control = forms.ChoiceField(choices=access_control_types,
         required=True, 
-        widget=forms.RadioSelect, #help_text=access_control_help2,
-        #widget=forms.RadioSelect(renderer=RadioFieldRenderer,
-        #    attrs={'help_text': access_control_help})
+        #widget=forms.RadioSelect, #help_text=access_control_help2,
+        widget=forms.RadioSelect(renderer=RadioFieldRenderer,
+        attrs={'help_text': access_control_help})
         )
 
     class Meta:
