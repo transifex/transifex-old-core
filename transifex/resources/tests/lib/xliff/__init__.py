@@ -1,13 +1,13 @@
 import os
 import re
 import unittest
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.tests.lib.base import FormatsBaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.xliff import XliffHandler
 
 
-class TestXliffParser(BaseTestCase):
+class TestXliffParser(FormatsBaseTestCase):
     """Suite of tests for XLIFF file lib."""
 
     def setUp(self):
@@ -162,6 +162,15 @@ class TestXliffParser(BaseTestCase):
         #Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r1,
             language=l)), 5)
+
+        self._mark_translation_as_reviewed(self.resource,
+                [
+                    'You have deleted <ph ctype="x-c-param" id="1">'\
+                            '%d</ph> file',
+                ],
+                self.language_ar, 6
+        )
+
         return handler
 
     def _test_xliff_compile(self, handler):
@@ -170,6 +179,8 @@ class TestXliffParser(BaseTestCase):
                 'example_compiled.xlf')
         trans_compiled_file = os.path.join(os.path.dirname(__file__),
                 'translation_ar_compiled.xlf')
+        trans_compiled_file_reviewed = os.path.join(os.path.dirname(__file__),
+                'translation_ar_compiled_for_review.xlf')
         handler.bind_resource(self.resource)
         handler.set_language(self.resource.source_language)
         compiled_template = handler.compile()
@@ -185,6 +196,10 @@ class TestXliffParser(BaseTestCase):
         f.close()
         self.assertEqual(compiled_template,
                 expected_compiled_template)
+        self._check_compilation(handler, self.resource,
+                self.language_ar, trans_compiled_file_reviewed,
+                'REVIEWED'
+        )
 
     def test_xliff_save_and_compile(self):
         handler = self._test_xliff_save2db()

@@ -132,6 +132,14 @@ class FormatsBaseTestCase(base.BaseTestCase):
         compiled_file: path to a compiled file
         mode: Compilation Mode instance
         """
+        if isinstance(mode, str):
+            if mode == 'REVIEWED':
+                mode = Mode.REVIEWED
+            elif mode == 'TRANSLATED':
+                mode = Mode.TRANSLATED
+            else:
+                mode = Mode.DEFAULT
+
         handler.bind_resource(resource)
         handler.set_language(language)
         compiled_template = handler.compile(mode=mode)
