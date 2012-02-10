@@ -4,7 +4,9 @@ import os
 from transifex.languages.models import Language
 from transifex.resources.models import Resource
 from transifex.resources.formats.joomla import JoomlaINIHandler
+from transifex.resources.formats.compilation import Mode
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
+from transifex.resources.models import Translation
 
 class TestJoomlaIni(FormatsBaseTestCase):
     """Tests for Joomla init files."""
@@ -12,8 +14,12 @@ class TestJoomlaIni(FormatsBaseTestCase):
     def setUp(self):
         super(TestJoomlaIni, self).setUp()
         self.file = os.path.join(os.path.dirname(__file__), 'example1.6.ini')
+        self.trans_file = os.path.join(os.path.dirname(__file__),
+                'example_ar_1.6.ini')
         self.parser = JoomlaINIHandler(self.file)
         self.parser.set_language(Language.objects.by_code_or_alias("en_US"))
+        self.resource.i18n_type = 'INI'
+        self.resource.save()
 
     def test_accept(self):
         self.assertTrue(self.parser.accepts('INI'))
@@ -96,3 +102,45 @@ class TestJoomlaIni(FormatsBaseTestCase):
     def apply_translation(self, t, compiler):
         t = super(TestJoomlaIni, self).get_translation(t, compiler)
         return compiler.jformat.get_compilation(t)
+
+    def _test_save2db(self):
+        """Test saving Joomla INI files"""
+        handler = self._save_source(JoomlaINIHandler(), self.resource,
+                self.file, 3, 3)
+        handler = self._save_translation(handler, self.resource,
+                self.language_ar, self.trans_file, 2)
+
+        self._mark_translation_as_reviewed(self.resource, ['KEY1'],
+                self.language_ar, 1)
+
+        return handler
+
+    def _test_compile(self, handler):
+        source_compiled_file = os.path.join(
+            os.path.dirname(__file__), 'example1.6.ini'
+        )
+        trans_compiled_file_for_use = os.path.join(
+            os.path.dirname(__file__), 'example1.6_ar_compiled_for_use.ini'
+        )
+        trans_compiled_file_for_review = os.path.join(
+            os.path.dirname(__file__), 'example1.6_ar_compiled_for_review.ini'
+        )
+        trans_compiled_file_for_translation = os.path.join(
+            os.path.dirname(__file__), 'example1.6_ar_compiled_for_translation.ini'
+        )
+        self._check_compilation(handler, self.resource,
+                self.resource.source_language, source_compiled_file
+        )
+        self._check_compilation(handler, self.resource, self.language_ar,
+                trans_compiled_file_for_use
+        )
+        self._check_compilation(handler, self.resource, self.language_ar,
+                trans_compiled_file_for_review, Mode.REVIEWED
+        )
+        self._check_compilation(handler, self.resource, self.language_ar,
+                trans_compiled_file_for_translation, Mode.TRANSLATED
+        )
+
+    def test_save_and_compile(self):
+        handler = self._test_save2db()
+        self._test_compile(handler)
