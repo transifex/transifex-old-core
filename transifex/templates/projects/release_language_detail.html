@@ -126,7 +126,7 @@
   	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
 	</div>
 
-  <table class="stats_table tablesorter rltemplate">
+  <table class="stats-table tablesorter rltemplate1">
   <thead>
   <tr>
     <th class="onlyarrow tableobject"></th>
@@ -144,10 +144,8 @@
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% else %}
-          {% if stat.resource.accept_translations %}
-            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_green.png" title="{% trans "Accepting translations" %}"/>
-          {% else %}
-            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans "Not accepting translations at the moment" %}"/>
+          {% if not stat.resource.accept_translations %}
+          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans 'Not accepting translations at the moment' %}"/>
           {% endif %}
         {% endif %}
       </td>
@@ -163,9 +161,9 @@
             {% stats_bar_simple stat barwidth %}
         {% endwith %}
       </td>
-      <td>
+      <td class="tablelastupd">
         {% with stat.last_update as last_update %}
-        <span class="tablelastupd" style="border:0" unixdate="{{ last_update|date:'U' }}">
+        <span unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|timesince }}
@@ -179,7 +177,7 @@
         </span>
         {% endwith %}
       </td>
-      <td class="priority_level" style="width:100px;text-align:center">
+      <td class="priority_level">
         <span style="border:0">
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
@@ -216,10 +214,8 @@
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% else %}
-          {% if stat.resource.accept_translations %}
-            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_green.png" title="{% trans "Accepting translations" %}"/>
-          {% else %}
-            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans "Not accepting translations at the moment" %}"/>
+          {% if not stat.resource.accept_translations %}
+          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_delete.png" title="{% trans 'Not accepting translations at the moment' %}"/>
           {% endif %}
         {% endif %}
         </td>
@@ -230,7 +226,7 @@
         </td>
         <td class="tablelastupd">
         {% with stat.last_update as last_update %}
-        <span class="i16 table-update" style="border:0" unixdate="{{ last_update|date:'U' }}">
+        <span class="i16 table-update" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|timesince }}
@@ -242,7 +238,7 @@
         {% endwith %}
         </td>
         <td class="priority_level" style="text-align:center">
-        <span style="border:0">
+        <span>
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
@@ -261,7 +257,7 @@
  {% if empty_rlstats or empty_private_rlstats %}
   <br />
    The following resources don't have any translations in {{ language.name }} and also don't have a team associated with this language:</span>
-  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
+  <table class="stats-table tablesorter rltemplate" style="clear:both;margin-top:0.5em;width:100%">
   <tbody>
   {% for resource in empty_rlstats %} 
     <tr title="{% trans 'click for resource details' %}">
