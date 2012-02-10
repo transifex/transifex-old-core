@@ -2,15 +2,16 @@
 
 import os, chardet
 import unittest
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.tests.lib.base import FormatsBaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
+from transifex.resources.formats.compilation import Mode
 from transifex.resources.formats.javaproperties import  JavaPropertiesHandler, \
         JavaParseError, convert_to_ascii, convert_to_unicode
 
 from transifex.addons.suggestions.models import Suggestion
 
-class TestJavaProperties(BaseTestCase):
+class TestJavaProperties(FormatsBaseTestCase):
     """Suite of tests for the propertiesfile lib."""
 
     def setUp(self):
@@ -131,28 +132,38 @@ class TestJavaProperties(BaseTestCase):
         self.assertEqual(
             len(Translation.objects.filter(resource=r, language=l)), 23
         )
+        self._mark_translation_as_reviewed(self.resource,
+                ['Key00', 'Key02'], l, 2)
         return handler
 
     def _test_properties_compile(self, handler):
         source_compiled_file = os.path.join(
             os.path.dirname(__file__), 'complex_compiled.properties'
         )
-        trans_compiled_file = os.path.join(
+        trans_compiled_file_for_use = os.path.join(
             os.path.dirname(__file__), 'complex_hi_IN-ascii_compiled.properties'
         )
-        handler.set_language(self.resource.source_language)
-        compiled_template = handler.compile()
-        f = open(source_compiled_file, 'r')
-        expected_compiled_template = f.read()
-        f.close()
-        self.assertEqual(compiled_template, expected_compiled_template)
-        handler.set_language(Language.objects.get(code='hi_IN'))
-        compiled_template = handler.compile()
-        f = open(trans_compiled_file, 'r')
-        expected_compiled_template = f.read()
-        f.close()
-        self.assertEqual(compiled_template, expected_compiled_template)
-
+        trans_compiled_file_for_review = os.path.join(
+            os.path.dirname(__file__),
+            'complex_hi_IN-ascii_compiled_for_review.properties'
+        )
+        trans_compiled_file_for_translation = os.path.join(
+            os.path.dirname(__file__),
+            'complex_hi_IN-ascii_compiled_for_translation.properties'
+        )
+        self._check_compilation(handler, self.resource,
+                self.resource.source_language, source_compiled_file
+        )
+        l = Language.objects.get(code='hi_IN')
+        self._check_compilation(handler, self.resource, l,
+                trans_compiled_file_for_use
+        )
+        self._check_compilation(handler, self.resource, l,
+                trans_compiled_file_for_review, Mode.REVIEWED
+        )
+        self._check_compilation(handler, self.resource, l,
+                trans_compiled_file_for_translation, Mode.TRANSLATED
+        )
 
     def test_properties_save_and_compile(self):
         handler = self._test_properties_save2db()
