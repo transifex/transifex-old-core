@@ -19,6 +19,8 @@ $(document).ready(function(){
     sortList: [[0,0]],
     textExtraction: function(node) {
       switch (node.cellIndex){
+          case 0:
+              return $("a:first", node).text();
           // Stats column
           case 1:
               return $(".stats_string_resource", node).text();
