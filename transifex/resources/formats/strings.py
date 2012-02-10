@@ -13,7 +13,12 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
-from .compilation import SimpleCompilerFactory
+from .compilation.compilers import Compiler
+from .compilation.factories import CompilerFactory
+from .compilation.mode import Mode
+from .compilation.builders import MarkedSourceTranslationsBuilder,\
+        AllTranslationsBuilder, ReviewedTranslationsBuilder
+
 
 class StringsParseError(ParseError):
     pass
@@ -23,7 +28,30 @@ class StringsCompileError(ParseError):
     pass
 
 
-class AppleStringsHandler(SimpleCompilerFactory, Handler):
+class AppleMarkedSourceCompilerFactory(CompilerFactory):
+    """Use source strings, but mark them."""
+
+    def _get_translation_setter(self, language, mode):
+        if Mode.TRANSLATED in mode:
+            return MarkedSourceTranslationsBuilder(self.resource, language)
+        elif Mode.REVIEWED in mode:
+            return ReviewedTranslationsBuilder(self.resource, language)
+        else:
+            return AllTranslationsBuilder(self.resource, language)
+
+
+class AppleStringsCompiler(Compiler):
+    def _post_compile(self):
+        line = r'(?P<prefix>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|'\
+               r'(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.'\
+               r'[^"\\]*)*))_txss(?P<suffix>"\s*;)'
+        regex = re.compile(line, re.U)
+        self.compiled_template = regex.sub(
+            lambda m: '/* ' + m.group('prefix') + m.group('suffix') + ' */',
+            self.compiled_template
+        )
+
+class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
     """
     Handler for Apple STRINGS translation files.
 
@@ -37,6 +65,8 @@ class AppleStringsHandler(SimpleCompilerFactory, Handler):
 
     HandlerParseError = StringsParseError
     HandlerCompileError = StringsCompileError
+
+    CompilerClass = AppleStringsCompiler
 
     def _escape(self, s):
         return s.replace('"', '\\"').replace('\n', r'\n').replace('\r', r'\r')

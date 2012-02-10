@@ -1,16 +1,17 @@
 import os
 import re
 import unittest
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.tests.lib.base import FormatsBaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
+from transifex.resources.formats.compilation import Mode
 from transifex.resources.formats.strings import AppleStringsHandler, \
         StringsParseError
 
 from transifex.addons.suggestions.models import Suggestion
 
 
-class TestAppleStrings(BaseTestCase):
+class TestAppleStrings(FormatsBaseTestCase):
     """Suite of tests for the strings file lib."""
 
     def setUp(self):
@@ -20,7 +21,9 @@ class TestAppleStrings(BaseTestCase):
 
     def test_regex(self):
         """Test regex used in the parser"""
-        p = re.compile(r'(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)', re.U)
+        p = re.compile(r'(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|'\
+                r'(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]'\
+                r'*)*)"\s*;)', re.U)
         c = re.compile(r'\s*/\*(.|\s)*?\*/\s*', re.U)
         ws = re.compile(r'\s+', re.U)
 
@@ -85,53 +88,53 @@ class TestAppleStrings(BaseTestCase):
             else:
                 self.assertRaises(StringsParseError, handler.parse_file, is_source=True)
 
-    def test_strings_save2db(self):
-        """Test creating source strings from a STRINGS file works"""
-        source_file = 'test_utf_16.strings'
-        trans_file = 'test_translation.strings'
-        handler = AppleStringsHandler()
-        handler.bind_file(os.path.join(os.path.dirname(__file__), source_file))
+    def _test_save2db(self):
+        """Test saving Apple Strings files"""
+        source_file = os.path.join(
+                os.path.dirname(__file__), 'test_utf_16.strings'
+        )
+        trans_file = os.path.join(
+                os.path.dirname(__file__), 'test_translation.strings'
+        )
+        handler = self._save_source(AppleStringsHandler(), self.resource,
+                source_file, 4, 4)
+        handler = self._save_translation(handler, self.resource,
+                self.language_ar, trans_file, 2)
 
-        handler.set_language(self.resource.source_language)
-        handler.parse_file(is_source=True)
+        self._mark_translation_as_reviewed(self.resource, ['key2'],
+                self.language_ar, 1)
 
-        r = self.resource
-        l = r.source_language
+        return handler
 
-        handler.bind_resource(r)
-
-        handler.save2db(is_source=True)
-
-        # Check that all 4 entities are created in the db
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 4)
-
-        # Check that all source translations are there
-        self.assertEqual(
-            len(Translation.objects.filter(source_entity__resource=r, language=l)), 4
+    def _test_compile(self, handler):
+        source_compiled_file = os.path.join(
+            os.path.dirname(__file__), 'test_utf_16_compiled.strings'
+        )
+        trans_compiled_file_for_use = os.path.join(
+            os.path.dirname(__file__),
+            'test_translation_compiled_for_use.strings'
+        )
+        trans_compiled_file_for_review = os.path.join(
+            os.path.dirname(__file__),
+            'test_translation_compiled_for_review.strings'
+        )
+        trans_compiled_file_for_translation = os.path.join(
+            os.path.dirname(__file__),
+            'test_translation_compiled_for_translation.strings'
+        )
+        self._check_compilation(handler, self.resource,
+                self.resource.source_language, source_compiled_file
+        )
+        self._check_compilation(handler, self.resource, self.language_ar,
+                trans_compiled_file_for_use
+        )
+        self._check_compilation(handler, self.resource, self.language_ar,
+                trans_compiled_file_for_review, Mode.REVIEWED
+        )
+        self._check_compilation(handler, self.resource, self.language_ar,
+                trans_compiled_file_for_translation, Mode.TRANSLATED
         )
 
-        # Import and save the finish translation
-        handler.bind_file(os.path.join(os.path.dirname(__file__), trans_file))
-        l = self.language_ar
-        handler.set_language(l)
-        handler.parse_file()
-
-        entities = 0
-        translations = 0
-        for s in handler.stringset.strings:
-            entities += 1
-            if s.translation.strip() != '':
-                translations += 1
-
-        self.assertEqual(entities, 2)
-        self.assertEqual(translations, 2)
-
-        handler.save2db()
-        # Check if all Source strings are untouched
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 4)
-        # Check that all translations are there
-        self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
-            language=l)), 2)
-
-        r.delete()
-
+    def test_save_and_compile(self):
+        handler = self._test_save2db()
+        self._test_compile(handler)
