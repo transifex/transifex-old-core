@@ -210,7 +210,7 @@
   </thead>
   <tbody>
   {% for stat in private_stats %}
-    <tr id="stat_row_{{forloop.counter}}">
+    <tr class="stat-row" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
         <td class="tableobject">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
@@ -252,17 +252,6 @@
         </span>
         </td>
     </tr>
-    
-    <script type="text/javascript">
-      jQuery(document).ready(function($){
-      	
-        $("#stat_row_{{forloop.counter}}").click(function(){
-        	jQuery.facebox({ ajax: '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}' })
-        });
-
-			})
-    </script>
-    
   {% endfor %}
   </tbody>
   </table>
