@@ -308,11 +308,11 @@ def project_detail(request, project_slug):
     # really an issue? Will a private project outsource stuff to an open project?
     language_stats = RLStats.objects.by_project_language_aggregated_raw(project)
 
-    teams = project.team_set.annotate(
-        request_count=Count('join_requests')
-    ).values(
-        'language__code', 'request_count'
-    )
+    teams = project.team_set.annotate(request_count=Count('join_requests')
+        ).values('language__code', 'request_count')
+
+    available_teams_codes = project.available_teams.values_list('language__code',
+        flat=True)
 
     team_dict = {}
     for t in teams:
@@ -328,6 +328,7 @@ def project_detail(request, project_slug):
         'language_stats': language_stats,
         'source_languages': source_languages,
         'team_request_form': team_request_form,
+        'available_teams_codes': available_teams_codes
     }, context_instance=RequestContext(request))
 
 
