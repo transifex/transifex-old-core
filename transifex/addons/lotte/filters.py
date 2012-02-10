@@ -4,11 +4,11 @@ from django.db.models import Q
 
 # Filters allowed in Lotte search box
 SEARCH_FILTERS = {
-    'from': {
+    'after': {
         'validator': lambda date: validate_date(date),
         'query': lambda date: Q(last_update__gte=date)
         },
-    'to': {
+    'before': {
         'validator': lambda date: validate_date(date),
         'query': lambda date: Q(last_update__lte=date)
         },
