@@ -1,7 +1,7 @@
 from django import template
 from django.db.models import Sum
 from transifex.languages.models import Language
-from transifex.resources.models import RLStats
+from transifex.resources.models import RLStats, Resource
 from transifex.txcommon.utils import StatBarsPositions
 
 register = template.Library()
@@ -16,6 +16,10 @@ def progress_for_project(project, language_code=None, width=100):
         trans=Sum('translated'),
         untrans=Sum('untranslated')
     ).order_by()
+
+    total = Resource.objects.by_project(project).aggregate(
+        total_entities=Sum('total_entities')
+    )['total_entities']
 
     if not stats:
         # Project has no resources
@@ -35,7 +39,6 @@ def progress_for_project(project, language_code=None, width=100):
     stats = stats[0]
     translated = stats['trans']
     untranslated = stats['untrans']
-    total = translated + untranslated
 
     try:
         translated_perc = translated * 100 / total
