@@ -76,6 +76,7 @@
       <th class="onlyarrow tablecompletion"></th>
       <th class="onlyarrow tablelastupd"></th>
      </tr>
+    {% with source_languages|laguage_codes_list as source_language_codes %}
     {% for stat in language_stats|sort_source_langs_first:source_languages %}
     {% if stat.first_translation %}
       </thead>
@@ -84,7 +85,7 @@
 	<tr>
     <td class="tableobject">
       <a href="{% url team_detail project.slug stat.object.code %}">{{ stat.object.name }}</a>
-      {% if stat.object in source_languages %}
+      {% if stat.object.code in source_language_codes  %}
         {% trans "source language "%}
       {% else %}
         {% if stat.object.code in available_teams_codes %}
@@ -108,6 +109,7 @@
     </td>
   </tr>
   {% endfor %}
+  {% endwith %}
   </tbody>
   </table>
   {% else %}

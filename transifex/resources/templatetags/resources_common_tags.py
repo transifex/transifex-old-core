@@ -13,7 +13,7 @@ def sort_source_langs_first(rlstats, source_languages):
     Take a RLStats aggregated queryset and move the entries related to the
     source_languages to the top of the list.
     """
-    codes = source_languages.values_list('code', flat=True)
+    codes = laguage_codes_list(source_languages)
     rlstats_source_list, rlstats_list = [], []
     for r in rlstats:
         if r.object.code in codes:
@@ -27,3 +27,9 @@ def sort_source_langs_first(rlstats, source_languages):
         rlstats_list = [stat] + rlstats_list[1:]
 
     return rlstats_source_list + rlstats_list
+    
+
+@register.filter
+def laguage_codes_list(languages):
+    """Get a Language queryset and return a list of language codes."""
+    return set(languages.values_list('code', flat=True))
