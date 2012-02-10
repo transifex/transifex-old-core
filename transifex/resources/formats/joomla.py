@@ -34,10 +34,15 @@ class JoomlaCompiler(Compiler):
 
     def _post_compile(self):
         """Comment out source strings."""
-        pattern = r'(?P<actual>.*)_txss"'
+        pattern = r'(?P<actual>.*)_txss'
+        suffix = ""
+        if isinstance(self.jformat, JoomlaIniNew):
+            pattern += r'"'
+            suffix = '"'
         regex = re.compile(pattern)
         self.compiled_template = regex.sub(
-            lambda m: '; '+ m.group('actual') + '"', self.compiled_template
+            lambda m: '%s '% self.jformat.comment_char +\
+                    m.group('actual') + suffix, self.compiled_template
         )
 
     def _visit_translation(self, s):
@@ -146,6 +151,7 @@ class JoomlaIniVersion(object):
 
 class JoomlaIniOld(JoomlaIniVersion):
     """Format for Joomla 1.5."""
+    comment_char = '#'
 
     def _escape(self, value):
         return value.replace('"', "&quot;")
@@ -162,6 +168,8 @@ class JoomlaIniOld(JoomlaIniVersion):
 
 class JoomlaIniNew(JoomlaIniVersion):
     """Format for Joomla 1.6."""
+    comment_char = ';'
+
     def _escape(self, value):
         return value.replace('"', '"_QQ_"')
 
