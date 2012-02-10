@@ -314,6 +314,9 @@ def project_detail(request, project_slug):
     available_teams_codes = project.available_teams.values_list('language__code',
         flat=True)
 
+    team_requests = project.teamrequest_set.select_related('language', 
+        'project', 'user').all().order_by('language__name')
+
     team_dict = {}
     for t in teams:
         lang_code = t['language__code']
@@ -328,7 +331,8 @@ def project_detail(request, project_slug):
         'language_stats': language_stats,
         'source_languages': source_languages,
         'team_request_form': team_request_form,
-        'available_teams_codes': available_teams_codes
+        'available_teams_codes': available_teams_codes,
+        'team_requests': team_requests
     }, context_instance=RequestContext(request))
 
 

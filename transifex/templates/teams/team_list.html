@@ -45,21 +45,20 @@
   {% endif %}
   {% endif %}
 
-  {% with project.teamrequest_set.all|dictsort:"language.name" as teamrequests %}
-  {% if teamrequests and request.user.is_authenticated %}
+  {% if team_requests and request.user.is_authenticated %}
   <div class="datalist">
     <ul class="nomargin">
-    {% for teamrequest in teamrequests %}
+    {% for team_request in team_requests %}
       <li class="clearfix requested-row">
         <div class="tt-details">
-          <h5>{{ teamrequest.language.name }}</h5>
-          <span class="ttd-extra">(Requester: <a href="{% url profile_public teamrequest.user.username %}">{{ teamrequest.user.username }}</a>)</span>
+          <h5>{{ team_request.language.name }}</h5>
+          <span class="ttd-extra">(Requester: <a href="{% url profile_public team_request.user.username %}">{{ team_request.user.username }}</a>)</span>
       	</div>
         {% if is_maintainer %}
-        <form class="microform" method="post" action="{% url team_request_deny teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
+        <form class="microform" method="post" action="{% url team_request_deny team_request.project.slug team_request.language.code %}">{% csrf_token %}
           <input name="team_request_deny" class="i16 delete blist buttonized" type="submit" value="{% trans "Deny" %}"/>
         </form>
-        <form class="microform" method="post" action="{% url team_request_approve teamrequest.project.slug teamrequest.language.code %}">{% csrf_token %}
+        <form class="microform" method="post" action="{% url team_request_approve team_request.project.slug team_request.language.code %}">{% csrf_token %}
           <input name="team_request_approve" class="i16 submit blist buttonized" type="submit" value="{% trans "Approve" %}"/>
         </form>
         {% endif %}
@@ -68,7 +67,6 @@
     </ul>
   </div>
   {% endif %}
-  {% endwith %}
 
   {% if language_stats %}
   <table class="stats-table tablesorter teamlist">
