@@ -2,14 +2,14 @@
 
 import os, chardet
 import unittest
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.resources.tests.lib.base import FormatsBaseTestCase
 from transifex.languages.models import Language
 from transifex.resources.models import *
 from transifex.resources.formats.mozillaproperties import  MozillaPropertiesHandler
 
 from transifex.addons.suggestions.models import Suggestion
 
-class TestMozillaProperties(BaseTestCase):
+class TestMozillaProperties(FormatsBaseTestCase):
     """Suite of tests for the propertiesfile lib."""
 
     def setUp(self):
@@ -83,7 +83,7 @@ class TestMozillaProperties(BaseTestCase):
         self.assertEqual(entities, 25)
         self.assertEqual(translations, 25)
 
-    def test_properties_save2db(self, delete=True):
+    def _test_properties_save2db(self):
         """Test creating source strings from a PROPERTIES file works"""
         handler = MozillaPropertiesHandler(
             os.path.join(os.path.dirname(__file__), 'complex.properties')
@@ -129,27 +129,44 @@ class TestMozillaProperties(BaseTestCase):
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 23)
+        self._mark_translation_as_reviewed(self.resource,
+                ['Key00', 'Key02'], l, 2)
 
-        if delete:
-            r.delete()
-        else:
-            return r
+        return handler
 
-    def test_properties_compile(self):
+    def _test_properties_compile(self, handler):
         """Test compiling translations for PROPERTIES files"""
+        source_compiled_file = os.path.join(
+            os.path.dirname(__file__), 'complex_compiled.properties'
+        )
+        trans_compiled_file_for_use = os.path.join(
+            os.path.dirname(__file__), 'complex_hi_IN_compiled_for_use.properties'
+        )
+        trans_compiled_file_for_review = os.path.join(
+            os.path.dirname(__file__),
+            'complex_hi_IN_compiled_for_review.properties'
+        )
+        trans_compiled_file_for_translation = os.path.join(
+            os.path.dirname(__file__),
+            'complex_hi_IN_compiled_for_translation.properties'
+        )
+        self._check_compilation(handler, self.resource,
+                self.resource.source_language, source_compiled_file
+        )
+        l = Language.objects.get(code='hi_IN')
+        self._check_compilation(handler, self.resource, l,
+                trans_compiled_file_for_use
+        )
+        self._check_compilation(handler, self.resource, l,
+                trans_compiled_file_for_review, 'REVIEWED'
+        )
+        self._check_compilation(handler, self.resource, l,
+                trans_compiled_file_for_translation, 'TRANSLATED'
+        )
 
-        self.test_properties_save2db(delete=False)
-        handler = MozillaPropertiesHandler()
-        handler.bind_resource(self.resource)
-        handler.set_language(self.resource.source_language)
-        old_template = handler.compiled_template
-        self.assertNotEqual(old_template, handler.compile())
+    def test_properties_save_and_compile(self):
+        handler = self._test_properties_save2db()
+        self._test_properties_compile(handler)
 
-        handler.set_language(Language.objects.get(code='hi_IN'))
-        old_template = handler.compiled_template
-        self.assertNotEqual(old_template, handler.compile())
-
-        #Cleanup
-        self.resource.delete()
 
 

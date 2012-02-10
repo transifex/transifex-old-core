@@ -15,7 +15,7 @@ from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from transifex.resources.formats.properties import PropertiesHandler, \
-        PropertiesParseError, PropertiesCompileError
+        PropertiesParseError, PropertiesCompileError, PropertiesCompiler
 
 
 class MozillaPropertiesParseError(PropertiesParseError):
@@ -34,6 +34,7 @@ class MozillaPropertiesHandler(PropertiesHandler):
 
     HandlerParseError = MozillaPropertiesParseError
     HandlerCompileError = MozillaPropertiesCompileError
+    CompilerClass = PropertiesCompiler
 
     def _escape(self, s):
         """
