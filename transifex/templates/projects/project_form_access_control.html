@@ -97,22 +97,22 @@
 
 {% if is_maintainer %}
 
-	{% if project.hub_request %}
-    <div class="notice clearfix">
-	    <span>
-	    {% blocktrans with project.hub_request.project_hub as project_name %}This project has an outsource request pending to the '{{ project_name }}' hub, thus it can not change its access control settings while the request is open.{% endblocktrans %}
-	    </span>
-	    
-	    <form class="microform" method="post" action="{% url project_hub_join_withdraw project.slug %}">{% csrf_token %}
-	        <input class="i16 delete buttonized" type="submit" style="float:right;"  value="{% trans "Withdraw" %}"/>
-	    </form>
-
-    </div>   
-	{% endif%}
-
-   
-    {% hook "access_control_form_notices.html" %}    
 <h3>{% trans "Access control settings" %}</h3>
+
+  	{% if project.hub_request %}
+      <div class="importantmsg clearfix" style="margin:0px;">
+  	    <p class="i16 infomsg">
+  	    {% blocktrans with project.hub_request.project_hub as project_name %}This project has an outsource request pending to the '{{ project_name }}' hub, thus it can not change its access control settings while the request is open.{% endblocktrans %}
+  	    </p>
+  	    
+  	    <form class="microform" method="post" action="{% url project_hub_join_withdraw project.slug %}">{% csrf_token %}
+  	        <input class="i16 disassociate buttonized" type="submit" style="float:right;margin-top:5px;"  value="{% trans "Withdraw" %}"/>
+  	    </form>
+  
+      </div>   
+  	{% endif%}
+
+    {% hook "access_control_form_notices.html" %} 
     <form name="hub" action='' method='post'>{% csrf_token %}
         <input type="hidden" name="next" value="{{ request.path }}"/> 
         {% if form.non_field_errors %}
