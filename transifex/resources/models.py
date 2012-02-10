@@ -11,7 +11,7 @@ from django.conf import settings
 from django.core.cache import cache
 from django.core.validators import validate_slug
 from django.db import models, connection
-from django.db.models import Q, Sum
+from django.db.models import Q, Sum, Max
 from django.utils.translation import ugettext_lazy as _
 from django.utils.hashcompat import md5_constructor
 from django.utils import simplejson as json
@@ -846,23 +846,8 @@ class RLStatsQuerySet(models.query.QuerySet):
 
     def by_project_language_aggregated(self, project):
         """Aggregate stats for a ``project`` and group them by language."""
-        
-        total = Resource.objects.by_project(project).aggregate(
-            total=Sum('total_entities'))['total']
-        return _aggregate_rlstats(self.by_project(project).order_by('language__code'),
-            'language', total)
 
-    def by_project_language_aggregated_raw(self, project):
-        """
-        Aggregate stats for a ``project`` and group them by language using
-        a raw SQL query.
-        
-        It doesn't handle private projects that might be outsourcing access 
-        to an open project. In this case the stats of the private project are 
-        also returned in the aggregated objects.
-        """
-        
-        def fetchall_as_aggregated_rlstats(cursor):
+        def as_aggregated_rlstats(cursor):
             """
             Yield each row from a cursor as a AggregatedRLStats object.
             """
@@ -872,55 +857,23 @@ class RLStatsQuerySet(models.query.QuerySet):
             # Create a kwargs var to be passed to AggregatedRLStats init method
             kwargs = {'total': total}
             
-            # Get field names from the cursor
-            keys = [col[0] for col in cursor.description]
-            
-            
-            for row in cursor.fetchall():
-                row = dict(zip(keys, row))
+            for row in queryset:
                 # Create a fake language object and associate it to the object key
-                kwargs.update({'object': Language(code=row['language_code'], 
-                    name=row['language_name'])})
-
-                try:
-                    # SQLite returns the date as plain text instead of a
-                    # datetime.datetime object.
-                    last_update = datetime.datetime.strptime(
-                        row['last_update'], '%Y-%m-%d %H:%M:%S.%f')
-                except TypeError:
-                    last_update = row['last_update']
-                    
                 kwargs.update({
-                    'last_update': last_update, 
+                    'object': Language(code=row['language__code'], 
+                        name=row['language__name']),
+                    'last_update': row['last_update'], 
                     'translated': row['translated']
                     })
 
                 yield AggregatedRLStats(**kwargs)
 
-        cursor = connection.cursor()
-        cursor.execute("""
-            SELECT
-                translations_language.code AS language_code,
-                translations_language.name AS language_name,
-                CAST(SUM(resources_rlstats.translated) AS INT) AS translated,
-                MAX(resources_rlstats.last_update) as last_update
-            FROM translations_language
-            INNER JOIN resources_rlstats
-                ON translations_language.id = resources_rlstats.language_id
-            INNER JOIN resources_resource
-                ON resources_rlstats.resource_id = resources_resource.id
-            INNER JOIN projects_project AS outsourced_project
-                ON resources_resource.project_id = outsourced_project.id
-            LEFT OUTER JOIN projects_project AS hub_project
-                ON outsourced_project.outsource_id = hub_project.id
-            WHERE
-                hub_project.id = %s OR
-                outsourced_project.id = %s
-            GROUP BY
-                translations_language.name,
-                translations_language.code;""" % (project.id, project.id))
+        queryset = self.by_project(project).order_by('language__code'
+            ).values('language__code', 'language__name').annotate(
+            translated=Sum('translated')).annotate(
+            last_update=Max('last_update'))
 
-        return fetchall_as_aggregated_rlstats(cursor)
+        return as_aggregated_rlstats(queryset)
 
     def by_project_aggregated(self, project, group_by=None):
         """

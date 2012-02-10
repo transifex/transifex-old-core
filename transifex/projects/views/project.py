@@ -304,9 +304,8 @@ def project_detail(request, project_slug):
     source_languages = Language.objects.filter(Q(id=project.source_language.id) | 
         Q(id__in=project.outsourcing.all().values('source_language').distinct())).distinct()
    
-    # FIXME: It doesn't filter stuff by user for private projects, but is it 
-    # really an issue? Will a private project outsource stuff to an open project?
-    language_stats = RLStats.objects.by_project_language_aggregated_raw(project)
+    language_stats = RLStats.objects.for_user(request.user
+        ).by_project_language_aggregated(project)
 
     teams = project.team_set.annotate(request_count=Count('join_requests')
         ).values('language__code', 'request_count')
