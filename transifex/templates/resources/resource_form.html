@@ -24,22 +24,39 @@ Edit {{resource}}
   </h2>
 {% endblock %}
 
+{% block extracss %}
+{{ block.super }}
+<style type="text/css">
+.txf-checkbox{min-height:30px;}
+</style>
+{% endblock %}
+
 {% block content_main %}
-
-
 <div class="separate-header clearfix">
 	<h3  class="sh-label">{% trans "Edit the details of the translation resource" %}</h3>
 </div>
 
-
 <div class="tx-form">
-  <form action='' method='post' enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        <tbody>
-        {% form_as_table_rows resource_form %}
-        {% form_as_table_rows url_form %}
-        </tbody>
-    </table>
+  <form action='' method='post' enctype="multipart/form-data">{% csrf_token %}    
+    <fieldset>
+      {% for field in resource_form %}
+      <div class="tx-form-field clearfix">
+      {{ field.errors }}
+      {{ field.label_tag }}
+      {{ field }}
+      </div>
+      {% endfor %}
+    </fieldset>
+
+    <fieldset>
+      {% for field in url_form %}
+      <div class="tx-form-field clearfix">
+      {{ field.errors }}
+      {{ field.label_tag }}
+      {{ field }}
+      </div>
+      {% endfor %}
+    </fieldset>
 	<br />
 	{% blocktrans %}
 	<div class="i16 infomsg">

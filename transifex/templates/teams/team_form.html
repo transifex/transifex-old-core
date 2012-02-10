@@ -63,12 +63,18 @@ $(document).ready(function(){
   {% if perms.projects.add_team or is_coordinator %}
   <form class="tx-form" id="add_update_team" method="post" enctype="multipart/form-data" action="" class="microform submit_form">{% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}"/>
-      <table>
-          <tbody>
-          {% form_as_table_rows project_team_form %}
-          </tbody>
-      </table>
 
+    <fieldset>
+      {% for field in project_team_form %}
+      {% if not field.is_hidden %}
+        <div class="tx-form-field clearfix">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+        </div>
+      {% endif %}
+      {% endfor %}
+    </fieldset>
 
     <p class="i16 infomsg">{% blocktrans %}Please note that notification will not be sent when coordinators or members are added or removed on this page.{% endblocktrans %}</p>
 
