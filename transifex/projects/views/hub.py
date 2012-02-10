@@ -58,7 +58,7 @@ def project_hub_join_approve(request, project_slug, outsourced_project_slug):
             hub_request.delete()
 
             messages.success(request, _("You added '%(project)s' to the "
-                "'%(project_hub)s' project hub.")% {
+                "'%(project_hub)s' project hub")% {
                     'project':outsourced_project,
                     'project_hub':hub_request.project_hub})
 
@@ -100,7 +100,7 @@ def project_hub_join_deny(request, project_slug, outsourced_project_slug):
             hub_request.delete()
 
             messages.info(request, _("You rejected the request of "
-                "'%(project)s' to join the '%(project_hub)s' project hub.")% {
+                "'%(project)s' to join the '%(project_hub)s' project hub")% {
                     'project': outsourced_project,
                     'project_hub':_hub_request.project_hub})
 
@@ -140,7 +140,7 @@ def project_hub_join_withdraw(request, project_slug):
             _hub_request = copy.copy(hub_request)
             hub_request.delete()
             messages.success(request, _("Request to join '%s' project hub "
-                "was withdrew.") % _hub_request.project_hub)
+                "was withdrawn") % _hub_request.project_hub)
 
             # ActionLog & Notification
             # TODO: Use signals
