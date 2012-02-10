@@ -10,6 +10,7 @@ from transifex.resources.models import *
 from transifex.resources.backends import ResourceBackend, FormatsBackend
 from transifex.resources.formats.pofile import POHandler, POTHandler, \
         PoParseError
+from transifex.resources.formats.compilation import Mode
 from transifex.resources.tests.lib.base import FormatsBaseTestCase
 from transifex.addons.copyright.models import Copyright
 
@@ -146,6 +147,15 @@ class TestPoFile(FormatsBaseTestCase):
 
         self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 11)
+
+        self._mark_translation_as_reviewed(self.resource,
+                [
+                    '{0} result',
+                    'Location',
+                ],
+                self.language_ar, 7
+        )
+
         return handler
 
     def _test_po_compile(self, handler):
@@ -154,6 +164,8 @@ class TestPoFile(FormatsBaseTestCase):
                 'en_compiled.po')
         trans_compiled_file = os.path.join(os.path.dirname(__file__),
                 'ar_compiled.po')
+        trans_compiled_file_reviewed = os.path.join(os.path.dirname(__file__),
+                'ar_compiled_for_review.po')
         handler.bind_resource(self.resource)
         handler.set_language(Language.objects.get(code='en_US'))
         compiled_template = handler.compile()
@@ -167,9 +179,23 @@ class TestPoFile(FormatsBaseTestCase):
         compiled_template = str(po)
         self.assertEqual(compiled_template,
                 expected_compiled_template)
+
         handler.set_language(self.language_ar)
         compiled_template = handler.compile()
         f = open(trans_compiled_file, 'r')
+        expected_compiled_template = f.read()
+        f.close()
+        po = polib.pofile(compiled_template)
+        epo = polib.pofile(expected_compiled_template)
+        po.metadata['PO-Revision-Date'] = epo.metadata['PO-Revision-Date']
+        po.metadata['Last-Translator'] = epo.metadata['Last-Translator']
+        compiled_template = str(po)
+        self.assertEqual(compiled_template,
+                expected_compiled_template)
+
+        handler.set_language(self.language_ar)
+        compiled_template = handler.compile(mode=Mode.REVIEWED)
+        f = open(trans_compiled_file_reviewed, 'r')
         expected_compiled_template = f.read()
         f.close()
         po = polib.pofile(compiled_template)
