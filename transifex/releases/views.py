@@ -113,20 +113,21 @@ def release_language_detail(request, project_slug, release_slug, language_code):
     release = get_object_or_404(Release, slug__exact=release_slug,
         project__id=project.pk)
 
-    stats = RLStats.objects.select_related('resource',
-        'resource__project').public().by_release_and_language(release, language)
+    stats = RLStats.objects.select_related('resource', 'resource__project',
+        'lock', 'last_committer', 'resource__priority').public(
+        ).by_release_and_language(release, language)
 
-    private_stats = RLStats.objects.select_related('resource',
-        'resource__project', 'lock').for_user(request.user
+    private_stats = RLStats.objects.select_related('resource', 'resource__project',
+        'lock', 'last_committer', 'resource__priority').for_user(request.user
             ).private().by_release_and_language(release, language)
 
-    empty_rlstats = Resource.objects.filter(id__in=release.resources.all(),
-        project__private=False).exclude(
+    empty_rlstats = Resource.objects.select_related('project').filter(
+        id__in=release.resources.all(), project__private=False).exclude(
         id__in=stats.values('resource'))
 
-    empty_private_rlstats = Resource.objects.for_user(request.user).filter(
-        id__in=release.resources.all(), project__private=True).exclude(
-        id__in=private_stats.values('resource'))
+    empty_private_rlstats = Resource.objects.select_related('project'
+        ).for_user(request.user).filter(id__in=release.resources.all(),
+        project__private=True).exclude(id__in=private_stats.values('resource'))
 
     return render_to_response('projects/release_language_detail.html', {
         'project': project,
