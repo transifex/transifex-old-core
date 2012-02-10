@@ -10,6 +10,7 @@ from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.core.validators import validate_slug
+from django.db import connection
 from django.db import models, connection
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +28,12 @@ from transifex.resources.utils import invalidate_template_cache
 from transifex.resources.signals import post_update_rlstats
 
 
+class AggregatedRLStats(object):
+    def __init__(self, **kwargs):
+        # For all kwargs entries passed, create an related attr in the instance
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
 def _aggregate_rlstats(rlstats_query, grouping_key, total=None):
     """
     Yield AggregatedRLStats objects resulting from grouped and summed RLStats
@@ -35,9 +42,6 @@ def _aggregate_rlstats(rlstats_query, grouping_key, total=None):
     Parameters:
     rlstats_query: This is the queryset of RLStats to be aggregated
     """
-
-    class AggregatedRLStats(object):
-        pass
 
     # Here grouping happens by the grouping_key. If it's a foreign key
     # (resource, language) you have to make sure that __unicode__() method
@@ -848,6 +852,63 @@ class RLStatsQuerySet(models.query.QuerySet):
             total=Sum('total_entities'))['total']
         return _aggregate_rlstats(self.by_project(project).order_by('language__code'),
             'language', total)
+
+    def by_project_language_aggregated_raw(self, project):
+        """
+        Aggregate stats for a ``project`` and group them by language using
+        a raw SQL query.
+        
+        It doesn't handle private projects that might be outsourcing access 
+        to an open project. In this case the stats of the private project are 
+        also returned in the aggregated objects.
+        """
+        
+        def fetchall_as_aggregated_rlstats(cursor):
+            """
+            Yield each row from a cursor as a AggregatedRLStats object.
+            """
+            total = Resource.objects.by_project(project).aggregate(
+                total=Sum('total_entities'))['total']
+                
+            # Create a kwargs var to be passed to AggregatedRLStats init method
+            kwargs = {'total': total}
+            
+            # Get field names from the cursor
+            keys = [col[0] for col in cursor.description]
+            
+            for row in cursor.fetchall():
+                # Create a fake language object and associate it to the object key
+                kwargs.update({'object': Language(code=row[0], name=row[1])})
+                # Dropping the first 2 fields from the query, because they are
+                # used above, update the kwargs dict with the other fields 
+                # returned by the cursor.
+                kwargs.update(dict(zip(keys[2:], row[2:])))
+                yield AggregatedRLStats(**kwargs)
+
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT
+                translations_language.code AS language_code,
+                translations_language.name AS language_name,
+                CAST(SUM(resources_rlstats.translated) AS INT) AS translated,
+                MAX(resources_rlstats.last_update) as last_update
+            FROM translations_language
+            INNER JOIN resources_rlstats
+                ON translations_language.id = resources_rlstats.language_id
+            INNER JOIN resources_resource
+                ON resources_rlstats.resource_id = resources_resource.id
+            INNER JOIN projects_project AS outsourced_project
+                ON resources_resource.project_id = outsourced_project.id
+            LEFT OUTER JOIN projects_project AS hub_project
+                ON outsourced_project.outsource_id = hub_project.id
+            WHERE
+                hub_project.id = %s OR
+                outsourced_project.id = %s
+            GROUP BY
+                translations_language.name,
+                translations_language.code;""" % (project.id, project.id))
+
+        return fetchall_as_aggregated_rlstats(cursor)
 
     def by_project_aggregated(self, project, group_by=None):
         """
