@@ -136,9 +136,9 @@ class FormatsBackend(object):
             self.resource, self.language, filename=filename
         )
         if handler is None:
-            msg = "Invalid i18n method used: %s" % self.resource.i18n_method
-            logger.error(msg)
-            raise FormatsBackendError(msg)
+            msg = "Files of type %s are not supported."
+            logger.error(msg % self.resource.i18n_method)
+            raise FormatsBackendError(msg % self.resource.i18n_method)
         return self._import_content(handler, content, True)
 
     @need_language
@@ -153,9 +153,9 @@ class FormatsBackend(object):
         """
         handler = self._get_handler(self.resource, self.language)
         if handler is None:
-            msg = "Invalid i18n method used: %s" % self.resource.i18n_method
-            logger.error(msg)
-            raise FormatsBackendError(msg)
+            msg = "Files of type %s are not supported."
+            logger.error(msg % self.resource.i18n_method)
+            raise FormatsBackendError(msg % self.resource.i18n_method)
         return self._import_content(handler, content, False)
 
     def _get_handler(self, resource, language, filename=None):
