@@ -77,9 +77,10 @@ def release_detail(request, project_slug, release_slug):
     resources = Resource.objects.select_related('project',
         'source_language').filter(releases=release, project__private=False
         ).order_by('project__name')
-    source_languages = set()
-    for resource in resources:
-        source_languages.add(resource.source_language)
+
+    source_languages = Language.objects.filter(
+        id__in=resources.values('project__source_language')).distinct()
+
     if request.user in (None, AnonymousUser()):
         private_resources = []
     else:
