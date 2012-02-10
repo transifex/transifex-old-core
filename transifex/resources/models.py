@@ -10,7 +10,6 @@ from hashlib import md5
 from django.conf import settings
 from django.core.cache import cache
 from django.core.validators import validate_slug
-from django.db import connection
 from django.db import models, connection
 from django.db.models import Q, Sum
 from django.utils.translation import ugettext_lazy as _
@@ -876,13 +875,26 @@ class RLStatsQuerySet(models.query.QuerySet):
             # Get field names from the cursor
             keys = [col[0] for col in cursor.description]
             
+            
             for row in cursor.fetchall():
+                row = dict(zip(keys, row))
                 # Create a fake language object and associate it to the object key
-                kwargs.update({'object': Language(code=row[0], name=row[1])})
-                # Dropping the first 2 fields from the query, because they are
-                # used above, update the kwargs dict with the other fields 
-                # returned by the cursor.
-                kwargs.update(dict(zip(keys[2:], row[2:])))
+                kwargs.update({'object': Language(code=row['language_code'], 
+                    name=row['language_name'])})
+
+                try:
+                    # SQLite returns the date as plain text instead of a
+                    # datetime.datetime object.
+                    last_update = datetime.datetime.strptime(
+                        row['last_update'], '%Y-%m-%d %H:%M:%S.%f')
+                except TypeError:
+                    last_update = row['last_update']
+                    
+                kwargs.update({
+                    'last_update': last_update, 
+                    'translated': row['translated']
+                    })
+
                 yield AggregatedRLStats(**kwargs)
 
         cursor = connection.cursor()
