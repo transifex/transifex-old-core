@@ -136,7 +136,7 @@ class Project(models.Model):
     """
 
     private = models.BooleanField(default=False, verbose_name=_('Private'),
-        help_text=_('A private project is visible only by you and your team.'
+        help_text=_('A private project is visible only by you and your team. '
                     'Moreover, private projects are limited according to billing '
                     'plans for the user account.'))
     slug = models.SlugField(_('Slug'), max_length=30, unique=True,
@@ -346,7 +346,7 @@ class HubRequest(models.Model):
             "another project."))
     user = models.ForeignKey(User, verbose_name=_('User'),
         blank=False, null=False,
-        help_text=_("User that The project hub to outsource teams from."))
+        help_text=_("User who does the project hub joining request."))
 
     created = models.DateTimeField(auto_now_add=True, editable=False)
 

@@ -55,7 +55,7 @@ class ReleaseForm(forms.ModelForm):
             if resource.project.private:
                 if self.user not in resource.project.maintainers.all():
                     raise ValidationError(
-                     _("%s is an unaccessible private resource."
+                     _("%s is an inaccessible private resource. "
                        "Remove it!" % resource.name)
                     )
         return resources_list
