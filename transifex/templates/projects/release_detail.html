@@ -161,17 +161,17 @@
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td class="tableobject">
-          <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a> <span class="locale">({{ stat.object.code }})</span>
-          {% if stat.object in source_languages %}
-             <span style="padding-left:1em; color: #999;"><strong>{% trans "Source language" %}</strong></span>
-          {% endif %}
-          </td>
+          <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a>
+        </td>
         <td class="tablecompletion">
+        {% if stat.object in source_languages %}
+           <span style="color: #aaa;">{% trans "Source language" %}</span>
+        {% else %}
           {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
           {% endwith %}
+        {% endif %}
         </td>
-
         <td class="tablelastupd">
         {% with stat.last_update as last_update %}
         <span class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ last_update|date:'U' }}">
