@@ -290,13 +290,18 @@
                       // Provide the necessary html fragment for each plural rule
                       for(rule in plural_types){
                           if(plural_types[rule] in clean_array["translations"]){
+                              translation_text = html_escape(clean_array["translations"][plural_types[rule]]);
+                              if (translation_text[0] == '\n')
+                                  translation_text = '\n' + translation_text;
+                              else if (translation_text.substr(0, 2) == '\r\n')
+                                  translation_text = '\r\n' + translation_text;
                               if(plural_types[rule]=='other'){
-                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '">' + html_escape(clean_array["translations"][plural_types[rule]]) + '</textarea>';
+                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation default_translation" id="translation_' + oObj.iDataRow + '">' + translation_text + '</textarea>';
                                 if(plurals_counter>0)
                                     textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})">'+plural_types[rule]+'</span>';
                                 textareas += '</div>';
                               }else{
-                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation">' + html_escape(clean_array["translations"][plural_types[rule]]) + '</textarea>';
+                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation">' + translation_text + '</textarea>';
                                 if(plural_types[rule]=='zero'){
                                     textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='one'){
