@@ -111,10 +111,10 @@
 
     {% with private_resources|length as resources_number %}
     {% if private_resources %}
-      <dt class="resource i16">{% trans "Private resources:" %}</dt>
+      <dt class="resource i16">{% trans "Priv. resources:" %}</dt>
       <dd>
         <span id="private-resource-list-toggler" class="buttonized_simple" title="{% trans "Click here to show or hide the resource list" %}">
-        {% blocktrans %}This release has {{ resources_number }} private resources you have access to.{% endblocktrans %}
+        {% blocktrans %}{{ resources_number }} private resources you have access to{% endblocktrans %}
         </span>
         <ul id="private-resource-list" class="simple links" style="display:none;">
           {% for r in private_resources %}
