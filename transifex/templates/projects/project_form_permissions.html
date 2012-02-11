@@ -11,8 +11,11 @@
 
 {% block content_main %}
 
-<div class="obj_bigdetails ui-tabs-panel">
-<h3 class="pagetitle_wdesc">{% trans "Access control" %}</h3>
+<div class="obj_bigdetails">
+
+<div class="separate-header notopmargin clearfix">
+	<h3  class="sh-label">{% trans "Grant access" %}</h3>
+</div>
 
 {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translations" %}
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
@@ -23,8 +26,9 @@
 {% if not project.anyone_submit and not project.outsource %}
 <div class="separate">
 
-<p class="description">{% trans "Give write access to a translator to send translations to your project independent of a translation team." %}</p>
+<p>{% trans "Give write access to a translator to send translations to your project independent of a translation team." %}</p>
 
+<div class="tx-form">
 {% if form and not can_submit_translations_request %}
     {% include "txpermissions/permission_form.html" %}
 {% else %}
@@ -32,12 +36,18 @@
 {% endif %}
 </div>
 
+</div>
+
 
 {% get_permission_requests project as "all_permission_requests" %}
 {% if all_permission_requests %}
-<div class="list separate ">
-<h4>{% trans "Pending requests:" %}</h4>
-<ul>
+
+<div class="separate-header clearfix">
+	<h3  class="sh-label">{% trans "Pending requests:" %}</h3>
+</div>
+
+<div class="datalist ">
+<ul class="nomargin">
 {% for perm in all_permission_requests|dictsort:"user.username" %}
     <li>
             <img class="border" width="16" height="16" src="{{ perm.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
@@ -55,9 +65,13 @@
 {% get_permissions project as "all_permissions" %}
 {% if all_permissions %}
 {% autopaginate all_permissions 20 %}
-<div class="list separate">
-<h4>{% trans "Users with access to submit files:" %}</h4>
-<ul>
+
+<div class="separate-header clearfix">
+	<h3  class="sh-label">{% trans "Users with access to submit files:" %}</h3>
+</div>
+
+<div class="datalist">
+<ul class="nomargin">
 {% for perm in all_permissions|dictsort:"user.username" %}
     <li>
         <img class="border" width="16" height="16" src="{{ perm.user.profile.get_mugshot_url }}" style="vertical-align:middle"/>
