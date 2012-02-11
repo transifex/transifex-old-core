@@ -142,7 +142,7 @@
     <tr>
 		{% cache 604800 project_resource_details project.slug stat.slug LANGUAGE_CODE %}
       <td class="tableobject">
-        <a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}&nbsp;&raquo;</a>
+        <a href="{% url resource_detail project.slug stat.slug %}">{{ stat.name }}</a>
       </td>
       <td class="category_td_class">
         {% if stat.category %}
