@@ -123,24 +123,23 @@ class ProjectAccessControlForm(forms.ModelForm):
         {'typical': {
             'label': _('Typical project'),
             'help_text': _(
-                "This is the default option for most projects where"
-                "they work as a single project among the system.")
+                "Access control and teams are managed under a single project. "
+                "Best option for most cases.")
             }
         },
         {'hub': {
             'label': _('Project hub'),
             'help_text': _(
-                "Such projects function as \"parents\" for other \"children\" projects."
-                " Ideal in scenarios like Linux distributions that are composed of "
-                "many sub-projects."),
+                "Option for a parent project which will host translation teams "
+                "and will acts as an umbrella to others. Ideal for organizations "
+                "with multiple products."),
             }
         },
         {'outsourced': {
             'label': _('Outsourced project'),
             'help_text': _(
-                "Become a \"child\" of a hub project. If a person can contribute to "
-                "the hub project, it can contribute to this one as well. "
-                "Recommended for non-upstream projects"),
+                "Option for the child of a hub project. This project will have no "
+                "teams of its own but will re-use the parent's ones."),
             }
         },
     ]
@@ -153,13 +152,13 @@ class ProjectAccessControlForm(forms.ModelForm):
                 "<a href=\"http://www.youtube.com/watch?v=DCX3ZNDZAwY\" "
                 "target=\"_blank\">Imagine</a> all the people, sharing all the "
                 "world. Recommended for quick translations, and when a "
-                "pre-commit review process is in place.")
+                "post-translation, pre-commit review process is in place.")
             }
         },
         {'limited_access': {
             'label': _('Limited access (teams)'),
             'help_text': _(
-                "Give access to specific people. Translations teams will have "
+                "Give access to specific people. Language teams will have "
                 "access to their language's files only, and global writers "
                 "will have access to all translation files. Recommended for "
                 "most projects."),
