@@ -60,10 +60,6 @@ $(document).ready(function (){
 		$(this).toggleClass("active");
 		$(".tx-form #project-edit-advanced").slideToggle("fast",function(){$(".side-menu").css('height',$(".psettings-content").height());});
 	});
-	
-  $('.tx-form .required, .tx-form .field-helptext').each(function(){
-  	$(this).appendTo($(this).siblings('label'));
-  });
 
   $("select#id_project-source_language").chosen();
 });
