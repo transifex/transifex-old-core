@@ -84,7 +84,12 @@
     {% endif %}
 	<tr>
     <td class="tableobject">
+    
+    {% if not project.outsource %}
       <a href="{% url team_detail project.slug stat.object.code %}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
+    {% else %}
+      <span class="tipsy_enable" title="language code: {{ stat.object.code }}" style="color:#aaa;"><strong>{{ stat.object.name }}</strong></span>
+    {% endif %}
         {% if stat.object.code in available_teams_codes %}
           {% with stat.object.code as lang_code %}
             {% with teams|getitem:lang_code as request_count %}
