@@ -346,7 +346,7 @@ class HubRequest(models.Model):
             "another project."))
     user = models.ForeignKey(User, verbose_name=_('User'),
         blank=False, null=False,
-        help_text=_("User who does the project hub joining request."))
+        help_text=_("The user who is requesting to join the project hub."))
 
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
