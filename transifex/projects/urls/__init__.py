@@ -92,6 +92,10 @@ urlpatterns += patterns('',
     
     # Outsource / Hub
     url(
+        regex = PROJECT_URL_PARTIAL+r'access/outsource/$',
+        view = project_hub_projects,
+        name = 'project_hub_projects'),
+    url(
         regex = PROJECT_URL_PARTIAL+r'access/outsource/withdraw/$',
         view = project_hub_join_withdraw,
         name = 'project_hub_join_withdraw'),

@@ -8,10 +8,6 @@ from transifex.projects.urls import PROJECT_URL_PARTIAL
 # Project
 urlpatterns = patterns('',
     url(
-        regex = PROJECT_URL_PARTIAL+r'access/outsource/$',
-        view = project_hub_projects,
-        name = 'project_hub_projects'),
-    url(
         regex = PROJECT_URL_PARTIAL+r'access/outsource/projects/association/$',
         view = project_hub_projects_toggler,
         name = 'project_hub_projects_toggler'),
