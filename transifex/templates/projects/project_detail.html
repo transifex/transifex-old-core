@@ -107,7 +107,7 @@
 {% if project.outsource %}
 {% url project_detail project.outsource.slug as url_hub_project %}
 <div class="importantmsg" style="margin-top:4em;">
-  <p class="i16 infomsg" >{% blocktrans with project.outsource.name as hub_project %}This project does not maintain its own languages but has chosen to re-use the language translations of project <a href="{{ url_hub_project }}">{{hub_project}}</a>. You can go there and contribute :){% endblocktrans %}</p>
+  <p class="i16 infomsg" >{% blocktrans with project.outsource.name as hub_project %}This project does not maintain its own languages but has chosen to re-use the language translations of project <a href="{{ url_hub_project }}"><strong style="font-size:1.077em;">{{hub_project}}</strong></a>. You can go there and contribute :) <br/> Below you can see the translation progress.{% endblocktrans %}</p>
 </div>
 {% endif %}
 
