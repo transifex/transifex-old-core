@@ -26,7 +26,7 @@
         {% endif %}
       {% endif %}
 		</div>
-	</div> 
+	</div>
 
   {% if team_request_form %}
   {% if request.user.is_authenticated and not is_maintainer %}
@@ -34,13 +34,13 @@
     <table>
       <tbody>{% form_as_table_rows team_request_form %}</tbody>
     </table>
-  
+
     {% hook "team_request_join_additional.html" %}
-  
+
     <p class="submit">
       <input name="team_request" class="i16 submit buttonized" type="submit" value="{% trans "Request team" %}"/>
     </p>
-  
+
   </form>
   {% endif %}
   {% endif %}
@@ -76,7 +76,7 @@
       <th class="onlyarrow tablecompletion"></th>
       <th class="onlyarrow tablelastupd"></th>
      </tr>
-    {% with source_languages|laguage_codes_list as source_language_codes %}
+    {% with source_languages|language_codes_list as source_language_codes %}
     {% for stat in language_stats|sort_source_langs_first:source_languages %}
     {% if stat.first_translation %}
       </thead>
