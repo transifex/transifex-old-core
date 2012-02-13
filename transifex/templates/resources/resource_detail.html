@@ -206,7 +206,7 @@
   <tr class="stat_row" data-language="{{ stat.language.code }}">
       {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
       <td class="tableobject">
-        <span class="linkstyle">{{ stat.language.name }}</span>
+        <span class="linkstyle tipsy_enable" title="language code: {{ stat.language.code }}"><strong>{{ stat.language.name }}</strong></span>
         {% if stat.lock.valid %}
           <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% endif %}

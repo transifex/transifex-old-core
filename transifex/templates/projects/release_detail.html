@@ -161,7 +161,7 @@
     <tr id="stat_row_{{forloop.counter}}" class="nocursor">
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td class="tableobject">
-          <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}">{{ stat.object.name }}</a>
+          <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}" class="tipsy_enable" title="language code: {{stat.object.code}}">{{ stat.object.name }}</a>
         </td>
         <td class="tablecompletion">
         {% if stat.object in source_languages %}
