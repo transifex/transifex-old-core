@@ -34,7 +34,7 @@
 	  	<h3 class="sh-label">{% trans "Coordinators" %}</h3>
 	  </div>
 
-	  <ul>
+	  <ul class="nomargin">
 	    {% for c in coordinators|slice:"0:6" %}
 	    <li>
 	    	<div class="tt-details">
@@ -58,7 +58,7 @@
   	<h3  class="sh-label">{% trans "Waiting for approval" %}</h3>
 	</div>
 	
-  <ul>
+  <ul class="nomargin">
   {% for access_request in team_access_requests|dictsort:"user.username" %}
     <li>
       <div class="tt-details">
@@ -102,7 +102,7 @@
 	</div>
 
   {% if members %}
-  <ul>
+  <ul class="nomargin">
   {% for m in members|dictsort:"username" %}
     <li>
       <div class="tt-details">

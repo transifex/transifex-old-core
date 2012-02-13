@@ -51,7 +51,7 @@
     {% for team_request in team_requests %}
       <li class="clearfix requested-row">
         <div class="tt-details">
-          <h5>{{ team_request.language.name }}</h5>
+          <span>{{ team_request.language.name }}</span>
           <span class="ttd-extra">(Requester: <a href="{% url profile_public team_request.user.username %}">{{ team_request.user.username }}</a>)</span>
       	</div>
         {% if is_maintainer %}
