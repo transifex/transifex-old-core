@@ -142,7 +142,7 @@ class QtCompiler(PluralCompiler):
                 if not translation.childNodes:
                     # Translation elemnent should have only one tag, the text
                     translation.attributes['type'] = 'unfinished'
-                elif not translations[translation.childNodes[0].nodeValue]:
+                elif not translations.get(translation.childNodes[0].nodeValue, None):
                     translation.attributes['type'] = 'unfinished'
                     translation.childNodes = []
 
