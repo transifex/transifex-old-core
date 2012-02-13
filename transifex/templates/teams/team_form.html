@@ -53,6 +53,8 @@ $(document).ready(function(){
 
 {% block content_main %}
 {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translations" %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+
 {% if language %}
 {% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 {% endif %}
@@ -63,8 +65,8 @@ $(document).ready(function(){
     <h3  class="sh-label">{% trans "Edit language" %}</h3>
   </div>
   {% endif %}
-  
-  {% if perms.projects.add_team or is_coordinator %}
+
+  {% if perms.projects.add_team or is_coordinator or is_maintainer %}
   <form class="tx-form" id="add_update_team" method="post" enctype="multipart/form-data" action="" class="microform submit_form">{% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}"/>
     {{ project_team_form.non_field_errors }}
