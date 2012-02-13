@@ -482,8 +482,7 @@ def get_translation_file(request, project_slug, resource_slug, lang_code,
         fb = FormatsBackend(resource, language)
         template = fb.compile_translation(**kwargs)
     except Exception, e:
-        messages.error(request,
-                       _("Error compiling translation file."))
+        messages.error(request, "Error compiling translation file.")
         logger.error("Error compiling '%s' file for '%s': %s" % (language,
             resource, str(e)))
         return HttpResponseRedirect(reverse('resource_detail',
