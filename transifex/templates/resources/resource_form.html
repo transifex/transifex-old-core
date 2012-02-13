@@ -16,6 +16,17 @@ Edit {{resource}}
     {{ block.super }} | Edit {{ resource}}
 {% endblock %}
 
+{% block extrajs %}
+{{ block.super }}
+<script type="text/javascript">
+$(document).ready(function(){
+  $('.tx-form .required, .tx-form .field-helptext').each(function(){
+  	$(this).appendTo($(this).siblings('label'));
+  });
+});
+</script>
+{% endblock %}
+
 {% block content_title %}
   <h2 class="pagetitle">
   {% if resource %}
@@ -27,7 +38,7 @@ Edit {{resource}}
 {% block extracss %}
 {{ block.super }}
 <style type="text/css">
-.txf-checkbox{min-height:30px;}
+.txf-checkbox{min-height:30px !important;}
 </style>
 {% endblock %}
 
@@ -38,22 +49,26 @@ Edit {{resource}}
 
 <div class="tx-form">
   <form action='' method='post' enctype="multipart/form-data">{% csrf_token %}    
+      {{ resource_form.non_field_errors }}
     <fieldset>
       {% for field in resource_form %}
       <div class="tx-form-field clearfix">
-      {{ field.errors }}
-      {{ field.label_tag }}
+      {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+	          {% if field.field.help_text %}<span class="field-helptext tipsy_enable" title="{{ field.help_text }}">?</span>{% endif %}
       {{ field }}
+      {{ field.errors }}
       </div>
       {% endfor %}
     </fieldset>
 
+     {{ url_form.non_field_errors }}
     <fieldset>
       {% for field in url_form %}
       <div class="tx-form-field clearfix">
-      {{ field.errors }}
-      {{ field.label_tag }}
+      {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+	          {% if field.field.help_text %}<span class="field-helptext tipsy_enable" title="{{ field.help_text }}">?</span>{% endif %}
       {{ field }}
+      {{ field.errors }}
       </div>
       {% endfor %}
     </fieldset>
@@ -84,6 +99,8 @@ Edit {{resource}}
 		<div class="separate-header clearfix">
 			<h3  class="sh-label">{% trans "Delete resource from Transifex" %}</h3>
 		</div>
+
+    <p style="margin-bottom:1em;">{% trans "By deleting the resource your translations will be lost:" %}</p>
 
     <div>
       <a class="i16 delete buttonized buttonized_warning" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete resource" %}</a>
