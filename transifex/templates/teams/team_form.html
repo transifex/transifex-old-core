@@ -67,7 +67,7 @@ $(document).ready(function(){
   {% if perms.projects.add_team or is_coordinator %}
   <form class="tx-form" id="add_update_team" method="post" enctype="multipart/form-data" action="" class="microform submit_form">{% csrf_token %}
     <input type="hidden" name="next" value="{{ next }}"/>
-    {{ team_form.non_field_errors }}
+    {{ project_team_form.non_field_errors }}
     {% for hidden in project_team_form.hidden_fields %}
       {{ hidden }}
     {% endfor %}
