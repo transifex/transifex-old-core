@@ -68,7 +68,7 @@ class JoomlaINIHandler(MarkedSourceCompilerFactory, Handler):
     CompilerClass = JoomlaCompiler
 
     def _escape(self, s):
-        return  s.replace('\\', '\\\\').replace('\n', r'\\n').replace('\r', r'\\r')
+        return  s.replace('\n', r'\n').replace('\r', r'\r')
 
     def _unescape(self, s):
         return s.replace('\\n', '\n').replace('\\r', '\r')
