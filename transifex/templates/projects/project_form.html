@@ -23,17 +23,6 @@
   {% endif %}
 {% endblock %}
 
-{% block extrajs %}
-{{ block.super }}
-<script type="text/javascript">
-$(document).ready(function(){
-		$('.tx-form .required, .tx-form .field-helptext').each(function(){
-			$(this).appendTo($(this).siblings('label'));
-		});
-});
-</script>
-{% endblock %}
-
 {% block content_title %}
   <h2 class="pagetitle with_description">
   {% if not project %}
