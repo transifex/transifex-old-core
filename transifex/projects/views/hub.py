@@ -220,7 +220,7 @@ def project_hub_projects_toggler(request, project_slug):
 
         result = {
             'style': 'connect',
-            'title': _('Disassociate it'),
+            'title': _('Disassociate'),
             'outsourced_project_slug': outsourced_project_slug,
             'url': url,
             'error': None,
