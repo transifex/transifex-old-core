@@ -17,7 +17,7 @@
   {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
   {% with project.outsourcing.all as outsourcing_projects %}
-  <div class="separate-header clearfix">
+  <div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% blocktrans %}Hub projects{% endblocktrans %}</h3>
 	</div>
   {% include "projects/project_hub_join_requests.html" %}
