@@ -166,30 +166,9 @@
 
 
 {% if can_submit_translation and resource.accept_translations or is_maintainer %}
-
 <div id="new_translation_box1" class="no-display">
-
-{% comment %}
-    I kept this in order to remember to fix the languages in the templatetags.
-    The change should respect the below permissions!!!
-
-    <select name="translation_languages" class="language">
-        <option value="">{% trans "Select language" %}</option>
-        {% if is_maintainer or request.user.is_superuser %}
-          {% for language in languages %}
-              <option value="{{ language.code }}">{{ language.name }}</option>
-          {% endfor %}
-        {% else %}
-          {% for team in user_teams %}
-              <option value="{{ team.language.code }}">{{ team.language.name }}</option>
-          {% endfor %}
-        {% endif %}
-    </select>
-{% endcomment %}
-
 {% upload_resource_translation_button request resource '' 'button-global' 'True' %}
 </div>
-
 {% endif %}
 
 

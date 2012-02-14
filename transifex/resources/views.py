@@ -49,15 +49,8 @@ def resource_detail(request, project_slug, resource_slug):
     """
     Return the details overview of a project resource.
     """
-    resource = get_object_or_404(Resource.objects.select_related(), project__slug = project_slug,
-                                 slug = resource_slug)
-
-    # We want the teams to check in which languages user is permitted to translate.
-    user_teams = []
-    if getattr(request, 'user') and request.user.is_authenticated():
-        user_teams = Team.objects.filter(project=resource.project).filter(
-            Q(coordinators=request.user)|
-            Q(members=request.user)).distinct()
+    resource = get_object_or_404(Resource.objects.select_related(),
+        project__slug=project_slug, slug=resource_slug)
 
     try:
         autofetch_url = resource.url_info
@@ -70,20 +63,21 @@ def resource_detail(request, project_slug, resource_slug):
     statslist = RLStats.objects.select_related('language', 'last_committer',
         'lock','resource').by_resource(resource).exclude(
             language = F('resource__source_language'))
+
     tmp = []
     for i in statslist_src:
         tmp.append(i)
     for i in statslist:
         tmp.append(i)
     statslist = tmp
-    return render_to_response("resources/resource_detail.html",
-        { 'project' : resource.project,
-          'resource' : resource,
-          'autofetch_url': autofetch_url,
-          'languages' : Language.objects.order_by('name'),
-          'user_teams' : user_teams,
-          'statslist': statslist },
-        context_instance = RequestContext(request))
+
+    return render_to_response("resources/resource_detail.html", {
+        'project': resource.project,
+        'resource': resource,
+        'autofetch_url': autofetch_url,
+        'languages': Language.objects.order_by('name'),
+        'statslist': statslist
+    }, context_instance = RequestContext(request))
 
 
 @one_perm_required_or_403(pr_resource_delete,
