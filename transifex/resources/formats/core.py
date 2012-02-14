@@ -558,7 +558,7 @@ class Handler(object):
             se.delete()
         self._update_template(self.template)
 
-        strings_deleted = len(original_sources)
+        strings_deleted = len(untouched_ses)
         return strings_added, strings_updated, strings_deleted
 
     def _save_translation(self, user, overwrite_translations):

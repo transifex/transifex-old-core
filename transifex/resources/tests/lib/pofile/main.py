@@ -156,6 +156,23 @@ class TestPoFile(FormatsBaseTestCase):
                 self.language_ar, 7
         )
 
+        #update resource with the same source file and
+        #check that the resource.last_update does not
+        #change from its previous value
+        last_update = self.resource.last_update
+        handler.bind_file('%s/tests.pot' %
+            os.path.split(__file__)[0])
+        l = Language.objects.get(code='en_US')
+        handler.set_language(l)
+        handler.parse_file(True)
+        handler.save2db(is_source=True)
+        self.assertEqual(self.resource.last_update, last_update)
+
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 6)
+
+        self.assertEqual( len(Translation.objects.filter(source_entity__resource=r,
+            language=l)), 7)
+
         return handler
 
     def _test_po_compile(self, handler):
