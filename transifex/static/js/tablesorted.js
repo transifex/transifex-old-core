@@ -41,6 +41,8 @@ $(document).ready(function(){
     },
     textExtraction: function(node) {  
       switch (node.cellIndex){
+        case 0:
+            return $("span:first strong", node).text();
         // Stats column
         case 1:
           return $(".stats_string_resource", node).text();
