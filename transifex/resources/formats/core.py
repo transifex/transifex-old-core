@@ -769,7 +769,7 @@ class Handler(object):
                     "%(resource)s." % {'language': self.language, 
                     'resource': self.resource})
             logger.error("Error during parsing for resource %s -> %s" % (
-                self.resource, msg))
+                self.resource, msg), exc_info=True)
             raise self.HandlerParseError(msg)
         if is_source:
             self.template = self._generate_template(obj)
