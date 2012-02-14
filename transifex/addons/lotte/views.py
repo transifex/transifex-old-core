@@ -221,6 +221,8 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
                        'language': language,
                        'sender': request.user}
             object_list = [project, resource, language]
+            if team:
+                object_list.append(team)
             action_logging(request.user, object_list, nt, context=context)
     else:
         modified = False
