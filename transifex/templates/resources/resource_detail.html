@@ -200,8 +200,6 @@
     <th class="onlyarrow tablecompletion"></th>
     <th class="onlyarrow tablelastupd"></th>
    </tr>
-  </thead>
-  <tbody>
   {% for stat in statslist %}
   <tr class="stat_row" data-language="{{ stat.language.code }}">
       {% cache 604800 resource_details_lang resource.project.slug resource.slug stat.language.code LANGUAGE_CODE %}
@@ -235,6 +233,10 @@
       {% endwith %}
       </td>
   </tr>
+  {% ifequal resource.source_language stat.language %}
+  </thead>
+  <tbody>
+  {% endifequal %}
 {% endfor %}
   </tbody>
 </table>
