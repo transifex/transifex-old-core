@@ -16,7 +16,7 @@ function toggle_entries(entries_status){
 $(document).ready(function(){
 
   $(".tablesorter.teamlist").tablesorter({
-    sortList: [[0,0]],
+    sortList: [[1,1],[0,0]],
     textExtraction: function(node) {
       switch (node.cellIndex){
           case 0:
