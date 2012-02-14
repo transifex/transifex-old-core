@@ -64,6 +64,8 @@ $(document).ready(function(){
       },
       textExtraction: function(node) {
           switch (node.cellIndex){
+              case 0:
+                  return $("a:first", node).text();
               // Stats column
               case 1:
                   return $(".stats_string_resource", node).text();
@@ -85,6 +87,8 @@ $(document).ready(function(){
     },
     textExtraction: function(node) {  
       switch (node.cellIndex){
+        case 0:
+            return $("span:first", node).text();
         // Stats column
         case 1:
             return $(".stats_string_resource", node).text();
