@@ -38,10 +38,29 @@ def team_off(request, project, *args, **kwargs):
 
     Usage: '@access_off(team_off)' in front on any team view.
     """
-    return render_to_response('teams/team_off.html', {
-        'project_overview': True,
+    language_code = kwargs.get('language_code', None)
+    if language_code:
+        language = Language.objects.by_code_or_alias_or_404(language_code)
+        extra_context = {
+            'parent_template': 'teams/team_menu.html',
+            'language': language,
+            'project_team_members': True,
+        }
+    else:
+        extra_context = {
+            'parent_template': 'projects/project_menu.html',
+            'project_overview': True,
+        }
+
+    context = {
         'project': project,
-    }, context_instance=RequestContext(request))
+    }
+
+    context.update(extra_context)
+
+    return render_to_response('teams/team_off.html', context,
+        context_instance=RequestContext(request)
+    )
 
 
 def _team_create_update(request, project_slug, language_code=None, extra_context=None):
