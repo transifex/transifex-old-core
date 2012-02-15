@@ -97,8 +97,16 @@
 {% endif %}
 
 
-{% if project.is_hub %}
-<div class="generic_form">
+
+
+<div class="list" style="clear:both">
+
+  <div class="separate-header clearfix" style="margin-bottom:0;">
+  	<h3  class="sh-label">{% blocktrans %}Language resources{% endblocktrans %}</h3>
+	</div>
+	
+	{% if project.is_hub %}
+<div id="hub-project-selector" class="tx-form">
   <form id="filter-form" action="" method="get">
     <fieldset style="margin: inherit auto;" class="compact">
       {% for hidden in filter_form.hidden_fields %}{{ hidden }}{% endfor %}
@@ -110,12 +118,6 @@
   </form>
 </div>
 {% endif %}
-
-<div class="list" style="clear:both">
-
-  <div class="separate-header clearfix">
-  	<h3  class="sh-label">{% blocktrans %}Language resources{% endblocktrans %}</h3>
-	</div>
 	
   {% if statslist %}
   <table class="stats-table tablesorter langdetail">
