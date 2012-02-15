@@ -133,7 +133,7 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('django.views.generic',
     url(
-        r'^tag/(?P<tag>.+)/$',
+        r'^tag/(?P<tag>[^/]+)/$',
         tagged_object_list,
         dict(queryset_or_model=Project, allow_empty=True,
              template_object_name='project'),
