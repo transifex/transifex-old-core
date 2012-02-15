@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 from transifex.languages.models import Language
+from transifex.projects.models import Project
 from transifex.teams.models import Team, TeamRequest
 from transifex.txcommon.widgets import SelectWithDisabledOptions
 
@@ -140,3 +141,17 @@ class TeamRequestSimpleForm(forms.ModelForm):
         if pk in self.disabled_langs:
             raise forms.ValidationError(_(u'Enter a valid value.'))
         return data
+
+
+class ProjectsFilterForm(forms.Form):
+
+    projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all(),
+        required=False, help_text=_('Select the projects you want to filter.'))
+        
+    def __init__(self, project, *args, **kwargs):
+        super(ProjectsFilterForm, self).__init__(*args, **kwargs)
+        
+        projects = self.fields["projects"].queryset.filter(
+            Q(id=project.id) | Q(outsource=project))
+        self.fields["projects"].queryset = projects
+        self.fields["projects"].empty_label = None

@@ -92,6 +92,24 @@
 </div>
 {% endif %}
 
+
+{% if project.is_hub %}
+
+<div class="generic_form">
+<fieldset style="margin: inherit auto;" class="compact">
+  <legend><span class="i16 filter">{% trans "Filter results" %}</span></legend>
+        <form action="" method="get">
+          <table class="definition">
+            {% form_as_table_rows filter_form %}
+          <tr>
+            <td></td>
+            <td><input type="submit" class="i16 submit buttonized" value="{% trans "Go" %}"/></td></tr>
+          </table>
+        </form>
+</fieldset>
+</div>
+    
+{% endif %}
 <div class="list" style="clear:both">
 
   <div class="separate-header clearfix">

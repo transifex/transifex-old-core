@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db import transaction
+from django.db.models import Q
 from django.dispatch import Signal
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -22,7 +23,7 @@ from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.signals import pre_team_request, pre_team_join, ClaNotSignedError
 from transifex.resources.models import RLStats, Resource
-from transifex.teams.forms import TeamSimpleForm, TeamRequestSimpleForm
+from transifex.teams.forms import TeamSimpleForm, TeamRequestSimpleForm, ProjectsFilterForm
 from transifex.teams.models import Team, TeamAccessRequest, TeamRequest
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -179,6 +180,19 @@ def team_detail(request, project_slug, language_code):
 
     team = Team.objects.get_or_none(project, language.code)
 
+    projects_filter = []
+    projects_filter_initial = {}
+    if not hasattr(request.GET, 'projects'):
+        projects_filter_initial = {'projects': 
+            Project.objects.filter(Q(id=project.id) | Q(outsource=project)
+                ).values_list('id', flat=True)}
+    
+    filter_form = ProjectsFilterForm(project, request.GET, 
+        initial=projects_filter_initial)
+    
+    if filter_form.is_valid():
+        projects_filter = filter_form.cleaned_data['projects'] 
+    
     if team and request.user.is_authenticated():
         user_access_request = request.user.teamaccessrequest_set.filter(
             team__pk=team.pk)
@@ -186,11 +200,19 @@ def team_detail(request, project_slug, language_code):
         user_access_request = None
 
     statslist = RLStats.objects.select_related('resource', 'resource__project',
-        'lock', 'last_committer', 'resource__priority'
-        ).by_project_and_language(project, language)
+        'lock', 'last_committer', 'resource__priority')
+
+    if projects_filter:
+        statslist = statslist.filter(resource__project__in=projects_filter)
+
+    statslist = statslist.by_project_and_language(project, language)
 
     empty_rlstats = Resource.objects.select_related('project'
         ).by_project(project).exclude(id__in=statslist.values('resource'))
+
+    if projects_filter:
+        empty_rlstats = empty_rlstats.filter(project__in=projects_filter)
+
 
     return render_to_response("teams/team_detail.html", {
         "project": project,
@@ -200,6 +222,7 @@ def team_detail(request, project_slug, language_code):
         "project_team_page": True,
         "statslist": statslist,
         "empty_rlstats": empty_rlstats,
+        "filter_form": filter_form,
     }, context_instance=RequestContext(request))
 
 @access_off(team_off)
