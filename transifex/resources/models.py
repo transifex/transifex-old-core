@@ -25,7 +25,7 @@ from transifex.txcommon.db.models import CompressedTextField, \
 from transifex.txcommon.log import logger
 from transifex.resources.utils import invalidate_template_cache
 from transifex.resources.signals import post_update_rlstats
-
+from transifex.resources.tasks import check_and_notify_resource_full_reviewed
 
 class AggregatedRLStats(object):
     def __init__(self, **kwargs):
@@ -1041,3 +1041,5 @@ class Template(models.Model):
         verbose_name = _('Template')
         verbose_name_plural = _('Templates')
         ordering = ['resource']
+
+post_update_rlstats.connect(check_and_notify_resource_full_reviewed)

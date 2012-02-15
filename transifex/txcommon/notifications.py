@@ -309,6 +309,14 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
+            {
+                "label": "project_resource_full_reviewed",
+                "display": _("Resource translation 100% reviewed"),
+                "description": _("when a resource translation of one of your "
+                    "projects reach 100% reviewed strings"),
+                "default": 2,
+                "show_to_user": True,
+            },
     ]
 
 
