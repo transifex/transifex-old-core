@@ -64,7 +64,7 @@
     {% if project.tags %}
       	<dt class="i16 tag">{% trans "Tags:" %}</dt>
       	<dd class="compact fadecontent hideover">
-        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag %}">{{ tag }}</a> {% endfor %}
+        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag.url_name %}">{{ tag }}</a> {% endfor %}
 	      </dd>
     {% endif %}
 
