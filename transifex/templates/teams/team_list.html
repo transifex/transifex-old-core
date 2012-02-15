@@ -17,7 +17,7 @@
   <div class="separate-header clearfix">
   	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
 		<div class="separate-buttons">
-		  {% if request.user.is_authenticated and not is_maintainer %}
+		  {% if request.user.is_authenticated and not is_maintainer and not project.outsource %}
       <a class="i16 language-add" id="request-team-button" href="javascript:;">Request language</a>
       {% endif %}
       {% if not project.anyone_submit and not project.outsource %}
