@@ -307,8 +307,15 @@ def project_detail(request, project_slug):
     language_stats = RLStats.objects.for_user(request.user
         ).by_project_language_aggregated(project)
 
-    teams = project.team_set.annotate(request_count=Count('join_requests')
-        ).values('language__code', 'request_count')
+    teams = project.team_set.annotate(
+        request_count=Count('join_requests'),
+        member_count=Count('members'),
+        reviewer_count=Count('reviewers'),
+        coordinator_count=Count('coordinators')
+    ).values(
+        'language__code', 'request_count', 'member_count',
+        'reviewer_count', 'coordinator_count'
+    )
 
     available_teams_codes = project.available_teams.values_list('language__code',
         flat=True)
@@ -320,7 +327,8 @@ def project_detail(request, project_slug):
     for t in teams:
         lang_code = t['language__code']
         request_count = t['request_count']
-        team_dict[lang_code] = request_count
+        total_members = t['member_count'] + t['coordinator_count'] + t['reviewer_count']
+        team_dict[lang_code] = (request_count, total_members)
 
     return render_to_response('projects/project_detail.html', {
         'project_overview': True,

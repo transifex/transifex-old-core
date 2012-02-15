@@ -95,9 +95,12 @@
       {% else %}    
         {% if stat.object.code in available_teams_codes %}
           {% with stat.object.code as lang_code %}
-            {% with teams|getitem:lang_code as request_count %}
-              {% if request_count %}
-              <a style="color:#999;" href="{% url team_members project.slug lang_code %}">({{ request_count }} join requests)</a>
+            {% with teams|getitem:lang_code as team_counts %}
+              {% if team_counts.0 %}
+              <a style="color:#999;" href="{% url team_members project.slug lang_code %}">({{ team_counts.0 }} join requests)</a>
+              {% endif %}
+              {% if team_counts.1 %}
+              <a style="color:#999;" href="{% url team_members project.slug lang_code %}">({{ team_counts.1 }} people in total)</a>
               {% endif %}
             {% endwith %}
           {% endwith %}
