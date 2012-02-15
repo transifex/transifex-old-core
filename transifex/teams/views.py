@@ -180,16 +180,9 @@ def team_detail(request, project_slug, language_code):
 
     team = Team.objects.get_or_none(project, language.code)
 
+    filter_form = ProjectsFilterForm(project, request.GET)
+
     projects_filter = []
-    projects_filter_initial = {}
-    if not hasattr(request.GET, 'projects'):
-        projects_filter_initial = {'projects': 
-            Project.objects.filter(Q(id=project.id) | Q(outsource=project)
-                ).values_list('id', flat=True)}
-    
-    filter_form = ProjectsFilterForm(project, request.GET, 
-        initial=projects_filter_initial)
-    
     if filter_form.is_valid():
         projects_filter = filter_form.cleaned_data['projects'] 
     
@@ -212,7 +205,6 @@ def team_detail(request, project_slug, language_code):
 
     if projects_filter:
         empty_rlstats = empty_rlstats.filter(project__in=projects_filter)
-
 
     return render_to_response("teams/team_detail.html", {
         "project": project,
