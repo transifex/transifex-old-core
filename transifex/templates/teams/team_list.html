@@ -90,6 +90,9 @@
     {% else %}
       <span class="tipsy_enable" title="language code: {{ stat.object.code }}" style="color:#999;"><strong>{{ stat.object.name }}</strong></span>
     {% endif %}
+      {% if stat.object.code in source_language_codes  %}
+        <span style="color:#aaa;">({% trans "source language "%})</span>
+      {% else %}    
         {% if stat.object.code in available_teams_codes %}
           {% with stat.object.code as lang_code %}
             {% with teams|getitem:lang_code as request_count %}
@@ -99,15 +102,12 @@
             {% endwith %}
           {% endwith %}
         {% endif %}
+      {% endif %}
     </td>
-    <td class="tablecompletion">
-    {% if stat.object.code in source_language_codes  %}
-        <span style="color:#aaa;">{% trans "source language "%}</span>
-      {% else %}
+    <td class="tablecompletion">    
       {% with 180 as barwidth %}
           {% stats_bar_simple stat barwidth %}
       {% endwith %}
-    {% endif %}
     </td>
     <td class="tablelastupd">
       <span  class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ stat.last_update|date:'U' }}">{{ stat.last_update|date:"M d, h:ia" }}</span>
