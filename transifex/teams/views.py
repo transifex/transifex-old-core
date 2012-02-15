@@ -196,7 +196,7 @@ def team_detail(request, project_slug, language_code):
         'lock', 'last_committer', 'resource__priority')
 
     if projects_filter:
-        statslist = statslist.filter(resource__project__in=projects_filter)
+        statslist = statslist.filter(resource__project__in=[projects_filter,])
 
     statslist = statslist.by_project_and_language(project, language)
 
@@ -204,7 +204,7 @@ def team_detail(request, project_slug, language_code):
         ).by_project(project).exclude(id__in=statslist.values('resource'))
 
     if projects_filter:
-        empty_rlstats = empty_rlstats.filter(project__in=projects_filter)
+        empty_rlstats = empty_rlstats.filter(project__in=[projects_filter,])
 
     return render_to_response("teams/team_detail.html", {
         "project": project,

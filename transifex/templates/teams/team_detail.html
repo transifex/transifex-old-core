@@ -14,6 +14,10 @@
   $(function(){
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
     $("#join-facebox-trigger").facebox();
+    $("#id_projects").chosen();
+    $('#id_projects').change(function() {
+      $("#filter-form").submit();
+    });
    })
 </script>
 {% endblock %}
@@ -98,12 +102,9 @@
 <div class="generic_form">
 <fieldset style="margin: inherit auto;" class="compact">
   <legend><span class="i16 filter">{% trans "Filter results" %}</span></legend>
-        <form action="" method="get">
+        <form id="filter-form" action="" method="get">
           <table class="definition">
             {% form_as_table_rows filter_form %}
-          <tr>
-            <td></td>
-            <td><input type="submit" class="i16 submit buttonized" value="{% trans "Go" %}"/></td></tr>
           </table>
         </form>
 </fieldset>
