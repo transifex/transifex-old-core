@@ -7,7 +7,9 @@ Redis backend.
 import cPickle as pickle
 import functools
 from redis import StrictRedis, ConnectionError
+from django.conf import settings
 from transifex.txcommon.log import logger
+
 
 def redis_exception_handler(func):
     """Decorator to handle redis backend exceptions."""
@@ -24,7 +26,11 @@ def redis_exception_handler(func):
 class TxRedis(object):
     """Wrapper class around redis for Transifex."""
 
-    def __init__(self, host='127.0.0.1', port=6379, db=0):
+    def __init__(self, host=None, port=None, db=0):
+        if host is None:
+            host = settings.REDIS_HOST
+        if port is None:
+            port = settings.REDIS_PORT
         self._r = StrictRedis(host=host, port=port, db=db)
 
     def __getattr__(self, name):
