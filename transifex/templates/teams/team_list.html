@@ -10,6 +10,24 @@
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
+<script type="text/javascript">
+$(document).ready(function (){
+  $("#langmemb-switch").click(function(){
+  var current_btn = $(this).find(".min-button");
+  
+  if(current_btn.hasClass("alllangs")){
+    current_btn.removeClass("alllangs").addClass("onlymembers").text("Show all languages");  
+    $("table.stats-table tr.nomembers:not(.sourcelang)").hide();
+    }
+  else{
+    current_btn.removeClass("onlymembers").addClass("alllangs").text("Show languages with members");
+    $(".stats-table tr.nomembers:not(.sourcelang)").show();
+    }
+  
+  })
+});
+</script>
+
 <div class="obj_bigdetails">
 
 <div class="project_create">
@@ -69,6 +87,12 @@
   {% endif %}
 
   {% if language_stats %}
+  <div id="langmemb-switch-container" class="clearfix" style="margin-top:0.8em;margin-bottom:0.3em;">
+    <div id="langmemb-switch" class="clearfix">
+      <span class="min-button right alllangs">{% trans "Show languages with members" %}</span>
+    </div>
+  </div>
+  
   <table class="stats-table tablesorter teamlist">
     <thead>
      <tr>
@@ -82,7 +106,7 @@
       </thead>
       <tbody>
     {% endif %}
-	<tr>
+	<tr {% if not stat.object.code in available_teams_codes %} class="nomembers{% if stat.object.code in source_language_codes  %} sourcelang{%endif%}" {% endif %} >
     <td class="tableobject">
     
     {% if not project.outsource %}
