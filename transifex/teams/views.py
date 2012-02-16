@@ -184,7 +184,7 @@ def team_detail(request, project_slug, language_code):
 
     projects_filter = []
     if filter_form.is_valid():
-        projects_filter = filter_form.cleaned_data['projects'] 
+        projects_filter = filter_form.cleaned_data['project'] 
     
     if team and request.user.is_authenticated():
         user_access_request = request.user.teamaccessrequest_set.filter(

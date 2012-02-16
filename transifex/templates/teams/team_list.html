@@ -111,7 +111,7 @@ $(document).ready(function (){
     {% if not project.outsource %}
       <a href="{% url team_detail project.slug stat.object.code %}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
     {% else %}
-      <a href="{% url team_detail project.outsource.slug stat.object.code %}?projects={{ project.id }}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
+      <a href="{% url team_detail project.outsource.slug stat.object.code %}?project={{ project.id }}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
     {% endif %}
 
     {% if stat.object.code in source_language_codes  %}

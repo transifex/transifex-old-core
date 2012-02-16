@@ -145,12 +145,12 @@ class TeamRequestSimpleForm(forms.ModelForm):
 
 class ProjectsFilterForm(forms.Form):
 
-    projects = forms.ModelChoiceField(queryset=Project.objects.all(),
+    project = forms.ModelChoiceField(queryset=Project.objects.all(),
         empty_label=_('All projects'), required=False,)
 
     def __init__(self, project, *args, **kwargs):
         super(ProjectsFilterForm, self).__init__(*args, **kwargs)
 
-        projects = self.fields["projects"].queryset.filter(
+        project = self.fields["project"].queryset.filter(
             Q(id=project.id) | Q(outsource=project))
-        self.fields["projects"].queryset = projects
+        self.fields["project"].queryset = project
