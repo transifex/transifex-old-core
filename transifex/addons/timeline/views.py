@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.projects.models import Project
-from transifex.projects.permissions import pr_project_private_perm
+from transifex.projects.permissions import pr_project_add_change
 from actionlog.models import LogEntry
 from filters import LogEntryFilter
 
@@ -28,7 +28,7 @@ def user_timeline(request, *args, **kwargs):
 
 
 @login_required
-@one_perm_required_or_403(pr_project_private_perm,
+@one_perm_required_or_403(pr_project_add_change,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
 def project_timeline(request, project_slug, *args, **kwargs):
     """
