@@ -10,37 +10,12 @@
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
-<script type="text/javascript">
-$(document).ready(function (){
-  $("#langmemb-switch").click(function(){
-  var current_btn = $(this).find(".linkstyle");
-  
-  if(current_btn.hasClass("alllangs")){
-    current_btn.removeClass("alllangs").addClass("onlymembers").text("(Show all languages)");  
-    $("table.stats-table tr.nomembers:not(.sourcelang)").hide();
-    }
-  else{
-    current_btn.removeClass("onlymembers").addClass("alllangs").text("(Show only those accepting translators)");
-    $(".stats-table tr.nomembers:not(.sourcelang)").show();
-    }
-  
-  })
-});
-</script>
-
 <div class="obj_bigdetails">
 
 <div class="project_create">
 
   <div class="separate-header clearfix">
   	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
-		  <div id="langmemb-switch-container left" style="margin-bottom:0.2em;">
-		{% if not project.anyone_submit %}
-    <div id="langmemb-switch">
-      <span class="linkstyle left alllangs" style="margin-top:6px;margin-bottom:0;font-size:0.923em;">{% trans "(Show only those accepting translators)" %}</span>
-    </div>
-    {% endif %}
-  </div>
 		<div class="separate-buttons">
 		  {% if request.user.is_authenticated and not is_maintainer and not project.outsource %}
       <a class="i16 language-add" id="request-team-button" href="javascript:;">Request language</a>
