@@ -72,7 +72,7 @@
 		  {% hook "project.html" menu %}
 		  {% if perms.projects.change_project or is_maintainer %}
 		  {% url project_edit project_slug=project.slug as url_project_edit%}{% url project_delete project_slug=project.slug as url_project_delete %}{% url project_access_control_edit project_slug=project.slug as url_project_access_control_edit %}{% url project_timeline project_slug=project.slug as url_project_timeline %}{% url project_add_permission project_slug=project.slug as url_project_permission%}
-		  <li class="{% if request.path == url_project_edit or request.path == url_project_delete or request.path == url_project_access_control_edit or request.path == url_project_timeline or request.path == url_project_permission%}selected{% endif %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
+		  <li class="{% if project_manage or request.path == url_project_edit or request.path == url_project_delete or request.path == url_project_access_control_edit or request.path == url_project_timeline or request.path == url_project_permission%}selected{% endif %}"><a href="{% url project_edit project_slug=project.slug %}">{% trans "Manage" %}</a></li>                                                
 		  {% endif %}
 		</ul>
 	</div>            
