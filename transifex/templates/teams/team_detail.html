@@ -32,7 +32,7 @@
 
 {% if not project.anyone_submit %}
   <div class="separate-header notopmargin clearfix" style="background:none; margin-bottom:0.8em;padding-bottom:0px;">
-  	<h3  class="sh-label">{% trans "Language Progress" %}</h3>
+  	<h3  class="sh-label">{% trans "Overall Progress" %}</h3>
   	<div class="separate-buttons">		
 		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
 			<a id="join-facebox-trigger" class="i16 team_join nude-button" href="#facebox-joinmember">{% trans 'Join language translation' %}</a>	
@@ -136,7 +136,7 @@
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
   {% cache 604800 team_details project.slug language.code stat.resource.id LANGUAGE_CODE %}
       <td class="tableobject">
-      <span class="linkstyle">{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</span>
+      <span class="linkstyle"><strong>{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</strong></span>
       {% if stat.lock.valid %}
           <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
       {% else %}
