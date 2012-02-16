@@ -33,14 +33,14 @@
 {% endblock %}
 
 {% block content_header_sec %}
+  {% url project_detail project.outsource.slug as url_hub_project %}
 	{% if project.anyone_submit %}
   <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/ffa-project.png)center top no-repeat;">
 	<p>{% trans "Free for all"%}</p>
 	</span>
 	{% endif %}
 	{% if project.outsource %}
-  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/outsource-project.png)center top no-repeat;">
-	<p>{% trans "Outsourcing"%}</p>
+  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/outsource-project.png)center top no-repeat;"><a class="tipsy_enable" title="{% blocktrans with project.outsource.name as hub_project %} Go to hub: {{hub_project}} {% endblocktrans %}" href="{{ url_hub_project }}" style="display:block;"><p>{% trans "Child project" %}</p></a>
 	</span>
 	{% endif %}
 	{% if project.is_hub %}
