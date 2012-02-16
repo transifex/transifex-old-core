@@ -308,10 +308,10 @@ def project_detail(request, project_slug):
         ).by_project_language_aggregated(project)
 
     teams = project.team_set.annotate(
-        request_count=Count('join_requests'),
-        member_count=Count('members'),
-        reviewer_count=Count('reviewers'),
-        coordinator_count=Count('coordinators')
+        request_count=Count('join_requests', distinct=True),
+        member_count=Count('members', distinct=True),
+        reviewer_count=Count('reviewers', distinct=True),
+        coordinator_count=Count('coordinators', distinct=True)
     ).values(
         'language__code', 'request_count', 'member_count',
         'reviewer_count', 'coordinator_count'
