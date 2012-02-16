@@ -13,14 +13,14 @@
 <script type="text/javascript">
 $(document).ready(function (){
   $("#langmemb-switch").click(function(){
-  var current_btn = $(this).find(".min-button");
+  var current_btn = $(this).find(".linkstyle");
   
   if(current_btn.hasClass("alllangs")){
-    current_btn.removeClass("alllangs").addClass("onlymembers").text("Show all languages");  
+    current_btn.removeClass("alllangs").addClass("onlymembers").text("(Show all languages)");  
     $("table.stats-table tr.nomembers:not(.sourcelang)").hide();
     }
   else{
-    current_btn.removeClass("onlymembers").addClass("alllangs").text("Show languages with members");
+    current_btn.removeClass("onlymembers").addClass("alllangs").text("(Show only those accepting translators)");
     $(".stats-table tr.nomembers:not(.sourcelang)").show();
     }
   
@@ -34,6 +34,11 @@ $(document).ready(function (){
 
   <div class="separate-header clearfix">
   	<h3 class="sh-label notopmargin">{% trans "Languages" %}</h3>
+		  <div id="langmemb-switch-container left" style="margin-bottom:0.2em;">
+    <div id="langmemb-switch">
+      <span class="linkstyle left alllangs" style="margin-top:6px;margin-bottom:0;font-size:0.923em;">{% trans "(Show only those accepting translators)" %}</span>
+    </div>
+  </div>
 		<div class="separate-buttons">
 		  {% if request.user.is_authenticated and not is_maintainer and not project.outsource %}
       <a class="i16 language-add" id="request-team-button" href="javascript:;">Request language</a>
@@ -87,12 +92,6 @@ $(document).ready(function (){
   {% endif %}
 
   {% if language_stats %}
-  <div id="langmemb-switch-container" class="clearfix" style="margin-bottom:0.3em;">
-    <div id="langmemb-switch" class="clearfix">
-      <span class="min-button right alllangs">{% trans "Show languages with members" %}</span>
-    </div>
-  </div>
-  
   <table class="stats-table tablesorter teamlist">
     <thead>
      <tr>
