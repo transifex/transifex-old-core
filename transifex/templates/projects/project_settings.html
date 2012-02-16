@@ -26,8 +26,6 @@
 </p>
 {% endblock %}
 
-
-
 {% block basejs %}
 {{ block.super }}
 <script type="text/javascript" src="{{ STATIC_URL }}js/project_settings.js"></script>
@@ -36,9 +34,9 @@
 {% block extrajs %}
 {{ block.super }}
 <script type="text/javascript">
-	$(document).ready(function(){
-		$(".tx-form #id_project-maintainers_text").parents(".tx-form-field").addClass("txf-maintainers");
-	});
+    $(document).ready(function(){
+        $(".tx-form #id_project-maintainers_text").parents(".tx-form-field").addClass("txf-maintainers");
+    });
 </script>
 {% endblock %}
 
@@ -46,25 +44,19 @@
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 {% if project %}
-	<div class="grid_4 alpha side-menu left-side" style="height:100%;margin-top:50px;">
-		{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
-		<ul style="height:100%;">
-			{% url project_edit project.slug as url_project_edit %}
-			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_project_edit }}">{% trans "Edit project" %}</a></li>
-			{% url project_delete project.slug as url_project_delete %}
-			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'delete' %}active{% endif %}"><a href="{{ url_project_delete }}">{% trans "Delete project" %}</a></li>
-
-		{% if is_maintainer %}
-			{% url project_access_control_edit project.slug as url_project_access_control_edit %}
-			<li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Access control" %}</a></li>
-		{% endif %}
-
-			{% hook "project.html" settings_menu %}
-		</ul>
-	</div>
+    <div class="grid_4 alpha side-menu left-side" style="height:100%;margin-top:50px;">
+        {% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
+        <ul style="height:100%;">
+            {% url project_edit project.slug as url_project_edit %}
+            <li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and not site_section.4 %}active{% endif %}"><a href="{{ url_project_edit }}">{% trans "Edit project" %}</a></li>
+            {% url project_delete project.slug as url_project_delete %}
+            <li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'delete' %}active{% endif %}"><a href="{{ url_project_delete }}">{% trans "Delete project" %}</a></li>
+            {% url project_access_control_edit project.slug as url_project_access_control_edit %}
+            <li class="inner-item {% if site_section.0 == 'projects' and site_section.3 == 'edit' and site_section.4 == 'access' %}active{% endif %}"><a href="{{ url_project_access_control_edit }}">{% trans "Access control" %}</a></li>
+            {% hook "project.html" settings_menu %}
+        </ul>
+    </div>
 {% endif %}
-
-
 
 <div class="grid_12 psettings-content omega">{% block psettings_header %}{% endblock %}{% block project_settings_content %}{% endblock %}</div>
 
