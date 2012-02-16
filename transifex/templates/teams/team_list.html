@@ -112,29 +112,29 @@ $(document).ready(function (){
     {% if not project.outsource %}
       <a href="{% url team_detail project.slug stat.object.code %}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
     {% else %}
-      <span class="tipsy_enable" title="language code: {{ stat.object.code }}" style="color:#999;"><strong>{{ stat.object.name }}</strong></span>
+      <a href="{% url team_detail project.outsource.slug stat.object.code %}?projects={{ project.id }}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
     {% endif %}
-      {% if stat.object.code in source_language_codes  %}
-        <span style="color:#aaa;">({% trans "source language "%})</span>
-      {% else %}    
-        {% if stat.object.code in available_teams_codes %}
-          {% with stat.object.code as lang_code %}
-            {% with teams|getitem:lang_code as team_counts %}
-              {% if team_counts.1 %}
-              <a class="tteamstats  tipsy_enable" title="{% blocktrans with teams|getitem:lang_code as team_counts %}this language has {{ team_counts.1 }} members{% endblocktrans %}" href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}">
-                <span>{{ team_counts.1 }}</span>                                       
-              </a>
-              {% endif %}
-              {% if team_counts.0 %}
-              <a class="tteamstats gray tipsy_enable" title="{% blocktrans %}there are {{ team_counts.0 }} join requests{% endblocktrans %}" href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}">
-                <span>{{ team_counts.0 }}</span>
-              </a>
-              {% endif %}
-              
-            {% endwith %}
+
+    {% if stat.object.code in source_language_codes  %}
+      <span style="color:#aaa;">({% trans "source language "%})</span>
+    {% else %}
+      {% if stat.object.code in available_teams_codes %}
+        {% with stat.object.code as lang_code %}
+          {% with teams|getitem:lang_code as team_counts %}
+            {% if team_counts.1 %}
+            <a class="tteamstats  tipsy_enable" title="{% blocktrans with teams|getitem:lang_code as team_counts %}this language has {{ team_counts.1 }} members{% endblocktrans %}" href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}">
+              <span>{{ team_counts.1 }}</span>
+            </a>
+            {% endif %}
+            {% if team_counts.0 %}
+            <a class="tteamstats gray tipsy_enable" title="{% blocktrans %}there are {{ team_counts.0 }} join requests{% endblocktrans %}" href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}">
+              <span>{{ team_counts.0 }}</span>
+            </a>
+            {% endif %}
           {% endwith %}
-        {% endif %}
+        {% endwith %}
       {% endif %}
+    {% endif %}
     </td>
     <td class="tablecompletion">    
       {% with 180 as barwidth %}
