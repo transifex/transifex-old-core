@@ -307,7 +307,7 @@ def project_detail(request, project_slug):
     language_stats = RLStats.objects.for_user(request.user
         ).by_project_language_aggregated(project)
 
-    teams = project.team_set.annotate(
+    teams = project.available_teams.annotate(
         request_count=Count('join_requests', distinct=True),
         member_count=Count('members', distinct=True),
         reviewer_count=Count('reviewers', distinct=True),
