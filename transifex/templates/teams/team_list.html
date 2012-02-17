@@ -98,18 +98,15 @@
         {% if stat.object.code in available_teams_codes %}
           {% with stat.object.code as lang_code %}
             {% with teams|getitem:lang_code as team_counts %}
-              {% if team_counts.1 %}
-              <a class="tteamstats  tipsy_enable" title="{% blocktrans with teams|getitem:lang_code as team_counts %}this language has {{ team_counts.1 }} members{% endblocktrans %}" href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}">
-                <span>{{ team_counts.1 }}</span>
-              </a>
-              {% endif %}
               {% if team_counts.0 %}
-              <a class="tteamstats gray tipsy_enable" title="{% blocktrans %}there are {{ team_counts.0 }} join requests{% endblocktrans %}" href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}">
-                <span>{{ team_counts.0 }}</span>
+              <a href="{% if project.outsource %} {% url team_members project.outsource.slug lang_code %} {% else %}{% url team_members project.slug lang_code %}{% endif %}" style="color:#999;">
+                <span>({{ team_counts.0 }} {% trans "join requests" %})</span>
               </a>
               {% endif %}
             {% endwith %}
           {% endwith %}
+        {% else %}
+        <span style="color:#aaa;">({% trans "no team yet" %})</span>
         {% endif %}
       {% endif %}
     {% endif %}
