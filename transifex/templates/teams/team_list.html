@@ -98,7 +98,7 @@
     {% endif %}
 
     {% if stat.object.code in source_language_codes  %}
-      <span style="color:#aaa;">({% trans "source language "%})</span>
+      <span style="color:#aaa;">{% trans "(source language)"%}</span>
     {% else %}
       {% if not project.anyone_submit %}
         {% if stat.object.code in available_teams_codes %}
@@ -121,7 +121,7 @@
             {% endwith %}
           {% endwith %}
         {% else %}
-        <span style="color:#aaa;">({% trans "no team yet" %})</span>
+        <span style="color:#aaa;">{% trans "(no team yet)" %}</span>
         {% endif %}
       {% endif %}
     {% endif %}
