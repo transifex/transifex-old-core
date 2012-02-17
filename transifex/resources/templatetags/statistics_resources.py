@@ -5,8 +5,7 @@ from transifex.txcommon.utils import StatBarsPositions
 
 register = template.Library()
 
-@register.inclusion_tag("resources/stats_bar_simple.html")
-def stats_bar_simple(stat, width=100):
+def calculate_stats(stat, width=100):
     """
     Create a HTML bar to present the statistics of an object.
 
@@ -34,6 +33,23 @@ def stats_bar_simple(stat, width=100):
             'pos': StatBarsPositions([('trans', trans_percent),
                                       ('untrans', untrans_percent)], width),
             'width':width}
+
+
+@register.inclusion_tag("resources/stats_bar_simple.html")
+def stats_bar_simple(stat, width=100):
+
+    return calculate_stats(stat, width)
+
+@register.inclusion_tag("resources/stats_bar_simple.html")
+def stats_bar_simple_args(translated, total, width=100):
+    
+    class Stats(object):
+        def __init__(self, translated, total):
+            self.translated = translated
+            self.total = total
+    
+    return calculate_stats(Stats(translated, total), width)
+    
 
 @register.inclusion_tag("resources/stats_bar_actions.html")
 def stats_bar_actions(stat, width=100):

@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.dispatch import Signal
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -200,12 +200,16 @@ def team_detail(request, project_slug, language_code):
 
     statslist = statslist.by_project_and_language(project, language)
 
-    empty_rlstats = Resource.objects.select_related('project'
-        ).by_project(project).exclude(id__in=statslist.values('resource'))
+    empty_rlstats = Resource.objects.select_related('project', 'priority'
+        ).by_project(project).exclude(id__in=statslist.values('resource')
+        ).order_by('project__name')
 
     if projects_filter:
         empty_rlstats = empty_rlstats.filter(project__in=[projects_filter,])
 
+    total_entries = Resource.objects.by_project(project).aggregate(
+        total_entities=Sum('total_entities'))['total_entities']
+    
     return render_to_response("teams/team_detail.html", {
         "project": project,
         "language": language,
@@ -215,6 +219,7 @@ def team_detail(request, project_slug, language_code):
         "statslist": statslist,
         "empty_rlstats": empty_rlstats,
         "filter_form": filter_form,
+        "total_entries": total_entries,
     }, context_instance=RequestContext(request))
 
 @access_off(team_off)

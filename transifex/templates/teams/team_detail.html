@@ -18,7 +18,7 @@
     $('#id_project').change(function() {
       $("#filter-form").submit();
     });
-   })
+   })  
 </script>
 {% endblock %}
 
@@ -180,40 +180,69 @@
 
   <script type="text/javascript">
     jQuery(document).ready(function($){
-      $("#stat_row_{{forloop.counter}}").click(function(){
-      	jQuery.facebox({ ajax: '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}' })
-      });
-		})
+        $("#stat_row_{{forloop.counter}}").click(function(){
+            jQuery.facebox({ ajax: '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}' })
+        });
+    })
   </script>
   {% endfor %}
+  
+  
+  {% for resource in empty_rlstats %}
+
+  <tr id="empty_stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+  {% cache 604800 team_details project.slug language.code resource.id LANGUAGE_CODE %}
+      <td class="tableobject">
+      <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
+      {% if not resource.accept_translations %}
+        <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_red.png" title="{% trans "Not accepting translations at the moment" %}"/>
+      {% endif %}
+      </td>
+      <td class="tablecompletion">
+      {% with 200 as barwidth %}
+          {% stats_bar_simple_args 0 total_entries barwidth %}
+      {% endwith %}
+      </td>
+  {% endcache %}
+      <td class="tablelastupd">
+        <span  class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ last_update|date:'U' }}">
+          {% trans "no activity yet" %}
+        </span>
+  </td>
+
+    <td class="priority_level" style="text-align:center">
+      <span style="border:0">
+        {% with resource.priority.level as priority_level %}
+        {% with resource.priority.display_level as display_level %}
+          <span class="priority_sort" style="display:none">{{ priority_level }}</span>
+          <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
+        {% endwith %}
+        {% endwith %}
+      </span>
+    </td>
+  </tr>
+
+  <script type="text/javascript">
+    jQuery(document).ready(function($){
+      $("#empty_stat_row_{{forloop.counter}}").click(function(){
+        jQuery.facebox({ ajax: '{% url resource_actions resource.project.slug resource.slug language.code %}' })
+      });
+                })
+  </script>
+  {% endfor %}
+  
+  
   </table>
   {% else %}
     <p>{% trans "No resources are registered for this project yet." %}</p>
   {% endif %}
 </div>
 
- {% if empty_rlstats %}
-  <br />
-   {% blocktrans with language.name as language_name %}The following resources don't have any translations in {{ language_name }} and also don't have a team associated with this language:{% endblocktrans %}</span>
-  <table class="stat_table_font stats_table highlighted tablesorter_resource" style="clear:both;margin-top:0.5em;width:100%">
-  <tbody>
-  {% for resource in empty_rlstats %} 
-    <tr title="{% trans 'click for resource details' %}">
-      <td style="padding-left:1em;">
-        <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a></span>
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-  </table>
- {% endif %}
-
-
 </div>
 
 {% if team %}
 <div class="separate-header clearfix">
-	<h3  class="sh-label">{% trans "History" %}</h3>
+    <h3  class="sh-label">{% trans "History" %}</h3>
 </div>
 {% load tx_action_log %}
 {% get_log 5 as action_log for_object team %}
@@ -222,10 +251,10 @@
 {% else %}
 <ul class="actionlist nomargin">
 {% for entry in action_log %}
-	<li class="i16 {{entry.action_type}}">
-	    <p>{{ entry.message|safe }}</p> 
-	    <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
-	</li>
+    <li class="i16 {{entry.action_type}}">
+        <p>{{ entry.message|safe }}</p> 
+        <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
+    </li>
 {% endfor %}
 </ul>
 {% endif %}
