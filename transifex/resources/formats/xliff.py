@@ -11,6 +11,7 @@ from __future__ import absolute_import
 import re, collections
 import xml.dom.minidom
 import xml.parsers.expat
+from copy import copy
 from xml.sax.saxutils import escape as xml_escape
 from django.utils.translation import ugettext, ugettext_lazy as _
 from django.db.models import get_model
@@ -37,6 +38,8 @@ class XliffParseError(ParseError):
 class XliffCompileError(CompileError):
     pass
 
+
+plural_id_regex = re.compile(r'.+\[\d\]')
 
 class XliffCompiler(PluralCompiler):
     """Compiler for xliff files."""
@@ -128,6 +131,9 @@ class XliffHandler(SimpleCompilerFactory, Handler):
 
     CompilerClass = XliffCompiler
 
+    def _get_context(self, context):
+        return context
+
     def _getText(self, nodelist):
         rc = []
         for node in nodelist:
@@ -137,13 +143,19 @@ class XliffHandler(SimpleCompilerFactory, Handler):
                 rc.append(node.toxml())
         return ''.join(rc)
 
+    def _serialize_occurrences(self, occurrences):
+        """Serialize the occurrences list for saving to db."""
+        return ', '.join(
+            [':'.join([i for i in t ]) for t in occurrences]
+        )
+
     def _parse(self, is_source, lang_rules):
         """
         Parses XLIFF file and exports all entries as GenericTranslations.
         """
         resource = self.resource
 
-        context = ""
+        context = []
         content = self.content.encode('utf-8')
         try:
             self.doc = xml.dom.minidom.parseString(content)
@@ -151,8 +163,12 @@ class XliffHandler(SimpleCompilerFactory, Handler):
 
             if root.tagName != "xliff":
                 raise XliffParseError(_("Root element is not 'xliff'"))
+            if not root.attributes.get('version', None):
+                raise self.HandlerParseError(_("Root element 'xliff' "\
+                        "does not have a 'version' attribute"))
             for node in root.childNodes:
-                if node.nodeType == node.ELEMENT_NODE and node.localName == "file":
+                if node.nodeType == node.ELEMENT_NODE and \
+                        node.localName == "file":
                     self.parse_tag_file(node, is_source)
         except Exception, e:
             raise self.HandlerParseError(e.message)
@@ -160,73 +176,110 @@ class XliffHandler(SimpleCompilerFactory, Handler):
         return self.doc.toxml()
 
     def parse_tag_file(self, file_node, is_source=False):
+        self.trans_unit_id_list = []
+        source_language = file_node.attributes.get('source-language', '').value
+        original = file_node.attributes.get('original', '').value
+        datatype = file_node.attributes.get('datatype', '').value
+        target_language_node = file_node.attributes.get('target-language', '')
+        if target_language_node:
+            target_language = target_language_node.value
+        else:
+            target_language = ''
+        if self.resource and source_language.replace('-', '_') != \
+                self.resource.source_language.code:
+            return
+        if target_language and \
+                target_language.replace('-', '_') != \
+                self.language.code:
+            return
+        context = [original, source_language, datatype]
         for node in file_node.childNodes:
             if node.nodeType == node.ELEMENT_NODE and node.localName == "body":
-                self.parse_tag_body(node, is_source)
+                self.parse_tag_body(node, is_source, context=copy(context))
 
-    def parse_tag_body(self, body_node, is_source=False):
+    def parse_tag_body(self, body_node, is_source=False, context=[]):
         for node in body_node.childNodes:
             if node.nodeType == node.ELEMENT_NODE and node.localName == "group":
-                self.parse_tag_group(node, is_source)
+                self.parse_tag_group(node, is_source, context=copy(context))
             if node.nodeType == node.ELEMENT_NODE and node.localName == "trans-unit":
-                self.parse_tag_trans_unit(node, is_source, context=[])
+                self.parse_tag_trans_unit(node, is_source, context=copy(context))
             # there is no way to handle bin-unit in transifex
 
-    def parse_tag_group(self, group_node, is_source=False, context=None):
-        if not context:
-            context = []
-        if group_node.attributes.get('restype', None) and \
-                group_node.attributes.get('id', None) and \
+    def parse_tag_group(self, group_node, is_source=False, context=[],
+            comment=[], occurrence=[]):
+        if is_source:
+            for node in group_node.childNodes:
+                if node.nodeType == node.ELEMENT_NODE and node.localName == "context-group":
+                    # context-group has to be in XML before occurence of trans-unit, so it
+                    # is ok to populate context this way
+                    occurrence.extend(self.parse_tag_context_group(node))
+                if node.nodeType == node.ELEMENT_NODE and node.localName == "note":
+                    comment.extend(self.parse_tag_note(node))
+        if group_node.attributes.get('restype', None) and\
                 group_node.attributes['restype'].value == "x-gettext-plurals":
             pluralized = True
             nplural_file = 0
             nplural = self.language.get_pluralrules_numbers()
+            nplural_names = self.language.get_pluralrules()
+            plural_forms = len(nplural)
             trans_unit_nodes = []
+            common_id = ''
             for node in group_node.childNodes:
                 if node.nodeType == node.ELEMENT_NODE and node.localName == "trans-unit":
+                    node_id = node.attributes.get('id', '').value
+                    if not plural_id_regex.match(node_id):
+                        return
+                    if nplural_file == 0:
+                        common_id = node_id[:-3]
+                    else:
+                        if node_id[:-3] != common_id:
+                            return
+                    if int(node_id[-2:-1]) != nplural_file:
+                        return
                     nplural_file += 1
                     trans_unit_nodes.append(node)
-                if node.nodeType == node.ELEMENT_NODE and node.localName == "context-group":
-                    context.extend(self.parse_tag_context_group(node, is_source))
+            if len(trans_unit_nodes) != plural_forms:
+                return
             source = ""
-            source_node = trans_unit_nodes[nplural.index(1)].getElementsByTagName("source")[0]
+            target = ""
+            source_node = trans_unit_nodes[nplural.index(1)
+                    ].getElementsByTagName("source")[0]
             if len(source_node.childNodes)>1:
                 source = self._getText(source_node.childNodes)
             else:
                 source = source_node.firstChild.data
-            if is_source:
-                if nplural_file != 2:
-                    raise self.HandlerParseError(_("Your source file has more than two plurals which is not supported."))
-                for n, node in enumerate(trans_unit_nodes):
-                    if n == 0:
-                        rule = 1
-                    else:
-                        rule = 5
-                    self.parse_tag_trans_unit(node, is_source, [i for i in context], source_string = source, rule=rule)
-            else:
-                if nplural_file != len(nplural):
-                    raise self.HandlerParseError(_("Your translation file does not have the supported number of plurals."))
-
-                for n, node in enumerate(trans_unit_nodes):
-                    self.parse_tag_trans_unit(node, is_source, [i for i in context], source_string = source, rule=nplural[n])
+            context.extend([common_id])
+            for n, node in enumerate(trans_unit_nodes):
+                rule = nplural[n]
+                self.parse_tag_trans_unit(node, is_source,
+                        context=copy(context),
+                        source_string = source, rule=rule)
             return
 
         for node in group_node.childNodes:
-            if node.nodeType == node.ELEMENT_NODE and node.localName == "group":
-                self.parse_tag_group(node, is_source, [i for i in context])
-            if node.nodeType == node.ELEMENT_NODE and node.localName == "trans-unit":
-                self.parse_tag_trans_unit(node, is_source, [i for i in context])
-            if node.nodeType == node.ELEMENT_NODE and node.localName == "context-group":
-                # context-group has to be in XML before occurence of trans-unit, so it
-                # is ok to populate context this way
-                context.extend(self.parse_tag_context_group(node, is_source))
+            if node.nodeType == node.ELEMENT_NODE and\
+                    node.localName == "group":
+                self.parse_tag_group(node, is_source, context=copy(context),
+                        comment=copy(comment), occurrence=copy(occurrence))
+            if node.nodeType == node.ELEMENT_NODE and\
+                    node.localName == "trans-unit":
+                self.parse_tag_trans_unit(node, is_source, context=copy(context),
+                        comment=copy(comment), occurrence=copy(occurrence))
         # TODO prop-group, note, count-group
         # there is no way to handle bin-unit in transifex
 
-    def parse_tag_trans_unit(self, trans_unit_node, is_source=False, context=[], source_string=None, rule=None):
+    def parse_tag_trans_unit(self, trans_unit_node, is_source=False,
+            context=[], source_string=None, rule=None,
+            comment=[], occurrence=[]):
         source = ""
-        if not rule and not trans_unit_node.attributes.get('id', None):
+        trans_unit_id = trans_unit_node.attributes.get('id', None) and\
+                trans_unit_node.attributes.get('id', None).value or ''
+        if not rule and not trans_unit_id:
             return
+        if trans_unit_id in self.trans_unit_id_list:
+            return
+        else:
+            self.trans_unit_id_list.append(trans_unit_id)
         source_node = trans_unit_node.getElementsByTagName("source")[0]
         if len(source_node.childNodes)>1:
             for i in source_node.childNodes:
@@ -237,18 +290,40 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             pluralized = True
         else:
             pluralized = False
+            context.extend([trans_unit_id])
         for node in trans_unit_node.childNodes:
-            if node.nodeType == node.ELEMENT_NODE and node.localName == "context-group" and not source_string and not rule:
-                context.extend(self.parse_tag_context_group(node, is_source))
+            if node.nodeType == node.ELEMENT_NODE and\
+                    node.localName == "context-group" and\
+                    not source_string and not rule:
+                occurrence.extend(self.parse_tag_context_group(
+                    node, is_source))
+            elif node.nodeType == node.ELEMENT_NODE and\
+                    node.localName == 'note' and not pluralized:
+                comment.extend(self.parse_tag_note(node))
             # TODO prop-group, note, count-group, alt-trans
         # TODO seq-source
         context = escape_context(context)
+        translation = ""
+        target = None
+        if trans_unit_node.getElementsByTagName("target"):
+            target = trans_unit_node.getElementsByTagName('target')[0]
+            if len(target.childNodes)>1:
+                translation = self._getText(target.childNodes)
+            else:
+                if target.firstChild:
+                    translation = target.firstChild.data
+                else:
+                    translation = u""
+        else:
+            translation = u""
         if is_source:
-            translation = source
+            translation = translation or source
             if pluralized:
                 source = source_string
-            target = self.doc.createElement("target")
+            if not target:
+                target = self.doc.createElement("target")
             target.childNodes = []
+            context = self._get_context(context)
             if source_string and rule:
                 target.appendChild(self.doc.createTextNode(
                     ("%(hash)s_pl_%(rule)s" % {'hash': hash_tag(
@@ -271,24 +346,15 @@ class XliffHandler(SimpleCompilerFactory, Handler):
         else:
             if pluralized:
                 source = source_string
-            target_list = trans_unit_node.getElementsByTagName("target")
-            if target_list:
-                if len(target_list[0].childNodes)>1:
-                    translation = self._getText(target_list[0].childNodes)
-                else:
-                    if target_list[0].firstChild:
-                        translation = target_list[0].firstChild.data
-                    else:
-                        translation = u""
-            else:
-                translation = u""
             if not translation:
                 return
             # TODO - do something with inline elements
         if pluralized:
             self.stringset.add(
                     source, translation, context=context,
-                    rule=rule, pluralized=True
+                    rule=rule, pluralized=True,
+                    occurrences=self._serialize_occurrences(occurrence),
+                    comment='\n'.join(comment)
              )
             """
              self.stringset_.strings.append(GenericTranslation(source,
@@ -298,7 +364,9 @@ class XliffHandler(SimpleCompilerFactory, Handler):
              """
         else:
             self.stringset.add(
-                    source, translation, context=context
+                    source, translation, context=context,
+                    occurrences=self._serialize_occurrences(occurrence),
+                    comment='\n'.join(comment)
              )
             """
             self.stringset_.strings.append(GenericTranslation(source,
@@ -309,15 +377,41 @@ class XliffHandler(SimpleCompilerFactory, Handler):
 
     def parse_tag_context_group(self, context_group_node, is_source=False):
         result = []
-        for node in context_group_node.childNodes:
-            if node.nodeType == node.ELEMENT_NODE and node.localName == "context":
-                result.append(self.parse_tag_context(node, is_source))
+        if context_group_node.attributes.get('purpose', '') and \
+                context_group_node.attributes.get(
+                        'purpose', '').value == 'location':
+            sourcefile = ''
+            linenumber = ''
+            for node in context_group_node.childNodes:
+                if node.nodeType == node.ELEMENT_NODE and\
+                        node.localName == "context":
+                    if node.attributes.get('context-type', '') and \
+                            node.attributes.get('context-type', '').value ==\
+                            'sourcefile':
+                        soucefile = self.parse_tag_context(node)
+                    elif node.attributes.get('context-type', '') and \
+                            node.attributes.get('context-type', '').value ==\
+                            'linenumber':
+                        linenumber = self.parse_tag_context(node)
+                if sourcefile and linenumber:
+                    result.append((sourcefile, linenumber))
         return result
 
-    def parse_tag_context(self, context_node, is_source=False):
+    def parse_tag_context(self, context_node):
         content =  self._getText(context_node.childNodes)
-        context_type = context_node.attributes['context-type'].value
-        return "%s: %s" % (context_type, content.replace("\n", " "))
+        context_type = context_node.attributes.get('context-type','') and\
+                context_node.attributes.get('context-type','').value or ''
+        if context_type == 'linenumber':
+            content = int(content)
+        return content
+
+    def parse_tag_note(self, note_node):
+        if note_node.attributes.get('from', '') and \
+                note_node.attributes.get('from', '').value == 'developer':
+            note =  self._getText(note_node.childNodes)
+            if note:
+                return [note]
+        return []
 
     def _escape(self, s):
         return xml_escape(s, {"'": "&apos;", '"': '&quot;'})
