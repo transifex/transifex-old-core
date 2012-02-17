@@ -65,7 +65,20 @@
 
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="actions_popup">
-	<h4>{% trans "Resource:" %}&nbsp;{{ stats.resource.project.name|truncate_chars:"30" }} &raquo; {{ stats.resource.name|truncate_chars:"30" }} &raquo; {{ stats.language.name|truncate_chars:"20" }}</h4>
+	<h4>
+      {% trans "Resource" %}:
+      <a href="{% url project_detail project.slug %}" style="color:#444;">
+        {{ stats.resource.project.name|truncate_chars:"30" }}
+      </a>
+      &raquo;
+      <a href="{% url resource_detail project.slug resource.slug %}" style="color:#444;">
+        {{ stats.resource.name|truncate_chars:"30" }}
+      </a>
+      &raquo;
+      <a href="{% url team_detail project.slug target_language.code %}" style="color:#444;">
+        {{ stats.language.name|truncate_chars:"20" }}
+      </a>
+    </h4>
   <div class="first_level title_wrapper" style="padding-top:0;border-top:none;">
     
     <div class="details_font">
