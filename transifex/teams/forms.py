@@ -146,7 +146,7 @@ class TeamRequestSimpleForm(forms.ModelForm):
 class ProjectsFilterForm(forms.Form):
 
     project = forms.ModelChoiceField(queryset=Project.objects.all(),
-        empty_label=_('All projects'), required=False,)
+        empty_label=_('All child projects'), required=False,)
 
     def __init__(self, project, *args, **kwargs):
         super(ProjectsFilterForm, self).__init__(*args, **kwargs)

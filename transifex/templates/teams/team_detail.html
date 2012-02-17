@@ -107,7 +107,7 @@
 	
 	{% if project.is_hub %}
 <div id="hub-project-selector" class="tx-form clearfix">
-  <form id="filter-form" action="" method="get">
+  <form id="filter-form" style="float:right;" action="" method="get">
     <fieldset style="margin: inherit auto;" class="compact">
       {% for hidden in filter_form.hidden_fields %}{{ hidden }}{% endfor %}
       {% for field in filter_form.visible_fields %}
@@ -116,6 +116,7 @@
       {% endfor %}
     </fieldset>
   </form>
+  <span style="float:right;padding-top:9px;padding-right:5px;">{%trans "Show resources from:" %}</span>
 </div>
 {% endif %}
 	
@@ -198,10 +199,10 @@
   <tbody>
   {% for resource in empty_rlstats %} 
     <tr title="{% trans 'click for resource details' %}">
-        <td style="padding-left:1em;">
-          <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a></span>
-        </td>
-        </tr>
+      <td style="padding-left:1em;">
+        <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a></span>
+      </td>
+    </tr>
   {% endfor %}
   </tbody>
   </table>
