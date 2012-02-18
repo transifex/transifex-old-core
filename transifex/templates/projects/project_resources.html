@@ -104,7 +104,7 @@
       var resource_priority_cycle_url = '{% url cycle_resource_priority project.slug "1111111111" %}';
       $("a.resource_priority_trigger").each(function(){
         $(this).click(function(e){
-          event.stopPropagation();
+          e.stopPropagation();
           $('.tipsy').remove();
           id_string = $(this).attr("id");
           var slug = id_string.substring(id_string.indexOf("_")+1);
