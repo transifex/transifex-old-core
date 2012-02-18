@@ -69,7 +69,7 @@ class WikiHandler(FillEmptyCompilerFactory, Handler):
                 "%(hash)s_tr" % {'hash': hash_tag(source, context)},
                 template
             )
-            self.stringset.strings.append(
-                GenericTranslation(source, trans, context=context)
+            self.stringset.add(
+                source, trans, context=context
             )
         return template
