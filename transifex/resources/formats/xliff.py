@@ -200,9 +200,11 @@ class XliffHandler(SimpleCompilerFactory, Handler):
     def parse_tag_body(self, body_node, is_source=False, context=[]):
         for node in body_node.childNodes:
             if node.nodeType == node.ELEMENT_NODE and node.localName == "group":
-                self.parse_tag_group(node, is_source, context=copy(context))
+                self.parse_tag_group(node, is_source, context=copy(context),
+                        occurrence=[])
             if node.nodeType == node.ELEMENT_NODE and node.localName == "trans-unit":
-                self.parse_tag_trans_unit(node, is_source, context=copy(context))
+                self.parse_tag_trans_unit(node, is_source, context=copy(context),
+                        occurrence=[])
             # there is no way to handle bin-unit in transifex
 
     def parse_tag_group(self, group_node, is_source=False, context=[],
@@ -252,21 +254,20 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             for n, node in enumerate(trans_unit_nodes):
                 rule = nplural[n]
                 self.parse_tag_trans_unit(node, is_source,
-                        context=copy(context),
+                        context=copy(context), occurrence=copy(occurrence),
                         source_string = source, rule=rule)
-            return
-
-        for node in group_node.childNodes:
-            if node.nodeType == node.ELEMENT_NODE and\
-                    node.localName == "group":
-                self.parse_tag_group(node, is_source, context=copy(context),
-                        comment=copy(comment), occurrence=copy(occurrence))
-            if node.nodeType == node.ELEMENT_NODE and\
-                    node.localName == "trans-unit":
-                self.parse_tag_trans_unit(node, is_source, context=copy(context),
-                        comment=copy(comment), occurrence=copy(occurrence))
-        # TODO prop-group, note, count-group
-        # there is no way to handle bin-unit in transifex
+        else:
+            for node in group_node.childNodes:
+                if node.nodeType == node.ELEMENT_NODE and\
+                        node.localName == "group":
+                    self.parse_tag_group(node, is_source, context=copy(context),
+                            comment=copy(comment), occurrence=copy(occurrence))
+                if node.nodeType == node.ELEMENT_NODE and\
+                        node.localName == "trans-unit":
+                    self.parse_tag_trans_unit(node, is_source, context=copy(context),
+                            comment=copy(comment), occurrence=copy(occurrence))
+            # TODO prop-group, note, count-group
+            # there is no way to handle bin-unit in transifex
 
     def parse_tag_trans_unit(self, trans_unit_node, is_source=False,
             context=[], source_string=None, rule=None,
@@ -349,6 +350,17 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             if not translation:
                 return
             # TODO - do something with inline elements
+
+        occurrence = list(set(occurrence))
+        if not is_source and not pluralized:
+            if trans_unit_node.attributes.get('approved', None) and\
+                    trans_unit_node.attributes.get(
+                            'approved').value == 'no':
+               self._add_suggestion_string(
+                    source, translation, context=context,
+                    occurrences=self._serialize_occurrences(occurrence)
+               )
+               return
         if pluralized:
             self.stringset.add(
                     source, translation, context=context,
@@ -388,7 +400,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
                     if node.attributes.get('context-type', '') and \
                             node.attributes.get('context-type', '').value ==\
                             'sourcefile':
-                        soucefile = self.parse_tag_context(node)
+                        sourcefile = self.parse_tag_context(node)
                     elif node.attributes.get('context-type', '') and \
                             node.attributes.get('context-type', '').value ==\
                             'linenumber':
@@ -401,8 +413,6 @@ class XliffHandler(SimpleCompilerFactory, Handler):
         content =  self._getText(context_node.childNodes)
         context_type = context_node.attributes.get('context-type','') and\
                 context_node.attributes.get('context-type','').value or ''
-        if context_type == 'linenumber':
-            content = int(content)
         return content
 
     def parse_tag_note(self, note_node):
