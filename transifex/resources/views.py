@@ -214,67 +214,18 @@ def save_source_file(resource, user, content, method, filename=None):
     return fb.import_source(content, filename)
 
 
-# Restrict access only for private projects
-# Allow even anonymous access on public projects
 @one_perm_required_or_403(pr_project_private_perm,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def resource_actions(request, project_slug=None, resource_slug=None,
                      target_lang_code=None):
     """
-    Ajax view that returns an fancybox template snippet for resource specific
-    actions.
+    AJAX view for the resource-language popup on the resource details page.
     """
     resource = get_object_or_404(
         Resource.objects.select_related('project'),
-        project__slug=project_slug, slug=resource_slug
+        project__slug=project_slug,
+        slug=resource_slug
     )
-    target_language = get_object_or_404(Language, code=target_lang_code)
-    project = resource.project
-    # Get the team if exists to use it for permissions and links
-    team = Team.objects.get_or_none(project, target_lang_code)
-
-    disabled_languages_ids = RLStats.objects.filter(resource=resource
-        ).values_list('language', flat=True).distinct()
-
-    languages = Language.objects.filter()
-
-    lock = Lock.objects.get_valid(resource, target_language)
-
-    # We want the teams to check in which languages user is permitted to translate.
-    user_teams = []
-    if getattr(request, 'user') and request.user.is_authenticated():
-        user_teams = Team.objects.filter(project=resource.project).filter(
-            Q(coordinators=request.user)|
-            Q(members=request.user)).distinct()
-
-    stats = get_object_or_404(RLStats, resource=resource, language=target_language)
-    wordcount = resource.wordcount
-
-    return render_to_response("resources/resource_actions.html",
-    { 'project' : project,
-      'resource' : resource,
-      'target_language' : target_language,
-      'team' : team,
-      'languages': languages,
-      'disabled_languages_ids': disabled_languages_ids,
-      'lock': lock,
-      'user_teams': user_teams,
-      'stats': stats,
-      'wordcount': wordcount,
-      },
-    context_instance = RequestContext(request))
-
-
-@one_perm_required_or_403(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
-def resource_actions(request, project_slug=None, resource_slug=None,
-                     target_lang_code=None):
-    """
-    Ajax view that returns an fancybox template snippet for resource specific
-    actions.
-    """
-    resource = get_object_or_404(Resource.objects.select_related('project'), project__slug = project_slug,
-                                 slug = resource_slug)
     target_language = get_object_or_404(Language, code=target_lang_code)
     project = resource.project
     # Get the team if exists to use it for permissions and links
