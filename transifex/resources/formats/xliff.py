@@ -131,7 +131,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
 
     CompilerClass = XliffCompiler
 
-    def _get_context(self, context):
+    def _get_context(self, trans_unit_node, context):
         return context
 
     def _getText(self, nodelist):
@@ -304,6 +304,7 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             # TODO prop-group, note, count-group, alt-trans
         # TODO seq-source
         context = escape_context(context)
+        context = self._get_context(trans_unit_node, context)
         translation = ""
         target = None
         if trans_unit_node.getElementsByTagName("target"):
@@ -324,7 +325,6 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             if not target:
                 target = self.doc.createElement("target")
             target.childNodes = []
-            context = self._get_context(context)
             if source_string and rule:
                 target.appendChild(self.doc.createTextNode(
                     ("%(hash)s_pl_%(rule)s" % {'hash': hash_tag(
