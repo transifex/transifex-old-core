@@ -22,33 +22,20 @@
     });
   };
 })( jQuery );
-// General Tooltip function
-function tooltip(targetnode, message){
 
-    $(targetnode).qtip({
-      content: message,
-      position: {
-         corner: {
-            target: 'topRight',
-            tooltip: 'bottomLeft'
-         }
-      },
-      style: {
-         name: 'cream',
-         color: '#685D40',
-         padding: '7px 13px',
-         width: {
-            max: 350,
-            min: 0
-         },
-         border: {
-            width: 3,
-            radius: 3
-         },
-         tip: true
-      }
-    })
-}
+$(document).ready(function(){
+	$("#search_input").placeholder();
+  
+  /*tipsy*/
+  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+  
+  /*autohide messages*/
+	var msg_fade_out = function() {
+		$("div.messages").animate({opacity:0,height:0});
+		}
+	setTimeout(msg_fade_out, 3000);
+});
+
 
 /**
   * This function escapes the html elements found in a html string!
