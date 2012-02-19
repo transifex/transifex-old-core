@@ -238,7 +238,7 @@
 {% for entry in action_log %}
 	<li class="i16 {{entry.action_type}}">
 	    <p>{{ entry.message|safe }}</p> 
-	    <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
+        <span class="timestamp">{{ entry.action_time|timesince }} ago by {{entry.user}}</span>
 	</li>
 {% endfor %}
 </ul>
