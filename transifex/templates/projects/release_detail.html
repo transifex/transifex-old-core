@@ -160,15 +160,14 @@
       {% cache 604799 release_details release.id stat.object.id LANGUAGE_CODE%}
         <td class="tableobject">
           <a href="{% url release_language_detail release.project.slug release.slug stat.object.code %}" class="tipsy_enable" title="language code: {{stat.object.code}}">{{ stat.object.name }}</a>
+        {% if stat.object in source_languages %}
+           <span style="color: #aaa;">({% trans "source language" %})</span>
+        {% endif %}
         </td>
         <td class="tablecompletion">
-        {% if stat.object in source_languages %}
-           <span style="color: #aaa;">{% trans "Source language" %}</span>
-        {% else %}
           {% with 200 as barwidth %}
             {% stats_bar_simple stat barwidth %}
           {% endwith %}
-        {% endif %}
         </td>
         <td class="tablelastupd">
         {% with stat.last_update as last_update %}
