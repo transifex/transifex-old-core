@@ -102,8 +102,10 @@ class JoomlaINIHandler(MarkedSourceCompilerFactory, Handler):
                 continue
 
             escaped_trans = self.jformat.get_translation(trans)
+            source = source.strip()
+            trans = trans.strip()
             if isinstance(self.jformat, JoomlaIniNew):
-                trans = trans.strip()[1:-1]
+                trans = trans[1:-1]
             context = ""        # We use empty context
 
             if is_source:
