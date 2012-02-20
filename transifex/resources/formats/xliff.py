@@ -21,7 +21,7 @@ from .core import Handler, ParseError, CompileError
 from .compilation import PluralCompiler, SimpleCompilerFactory
 from .resource_collections import StringSet, GenericTranslation
 from .utils.decorators import *
-from .utils.hash_tag import hash_tag, escape_context, hash_regex
+from .utils.hash_tag import hash_tag, escape_context, hash_regex, _HashRegex
 
 # Resources models
 Resource = get_model('resources', 'Resource')
@@ -30,6 +30,7 @@ SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
 Storage = get_model('storage', 'StorageFile')
 
+plural_regex = _HashRegex(plurals=True).plural_regex
 
 class XliffParseError(ParseError):
     pass
@@ -47,59 +48,78 @@ class XliffCompiler(PluralCompiler):
     def getElementByTagName(self, element, tagName, noneAllowed = False):
         elements = element.getElementsByTagName(tagName)
         if not noneAllowed and not elements:
-            raise self.HandlerParseError(_("Element '%s' not found!" % tagName))
+            raise XliffCompileError(_("Element '%s' not found!" % tagName))
         if len(elements) > 1:
-            raise self.HandlerParseError(_("Multiple '%s' elements found!" % tagName))
+            raise XliffCompileError(_("Multiple '%s' elements found!" % tagName))
         return elements[0]
+
+    def get_plural_index(self, count, rule):
+        return rule
 
     def _update_plural_hashes(self, translations, content):
         """Modify template content to handle plural data in target language"""
+        i18n_type = self.resource.i18n_type
         if isinstance(content, unicode):
             content = content.encode('utf-8')
         doc = xml.dom.minidom.parseString(content)
         root = doc.documentElement
+        source_language = self.resource.source_language
         rules = self.language.get_pluralrules_numbers()
+        source_rules = source_language.get_pluralrules_numbers()
         if self.language == self.resource.source_language:
             return content
         for group_node in root.getElementsByTagName("group"):
             if group_node.attributes.has_key('restype') and \
-                    group_node.attributes.has_key('id') and \
                     group_node.attributes['restype'].value == "x-gettext-plurals":
                 trans_unit_nodes = group_node.getElementsByTagName("trans-unit")
             else:
                 continue
+            cont = False
+            for n, node in enumerate(trans_unit_nodes):
+                node_id = node.attributes.get('id') and\
+                        node.attributes.get('id').value
+                try:
+                    target = self.getElementByTagName(node, 'target')
+                except XliffCompileError, e:
+                    cont = True
+                    break
+                if target:
+                    target_text = target.firstChild.data or ''
+                    if not plural_regex.match(target_text):
+                        cont = True
+                        break
+                if n == 0:
+                    id_text = node_id[:-3]
+                else:
+                    if id_text != node_id[:-3]:
+                        cont = True
+                        break
+            if n != len(source_rules) - 1:
+                continue
+            if cont:
+                continue
             for count,rule in enumerate(rules):
-                if rule == 0:
-                    clone = trans_unit_nodes[1].cloneNode(deep=True)
-                    target = self.getElementByTagName(clone, "target")
-                    target.firstChild.data = target.firstChild.data[:-1] + '0'
-                    clone.setAttribute("id",
-                            group_node.attributes["id"].value+'[%d]'%count)
+                index = self.get_plural_index(count, rule)
+                if rule in source_rules:
+                    clone = trans_unit_nodes[source_rules.index(rule)
+                            ]
+                else:
+                    clone = trans_unit_nodes[source_rules.index(5)
+                            ].cloneNode(deep=True)
+                target = self.getElementByTagName(clone, "target")
+                clone.setAttribute("id", id_text + '[%d]'%count)
+                target.firstChild.data = target.firstChild.data[:-1] +\
+                        '%d' % index
+                if rule not in source_rules:
+                    for n, r in enumerate(source_rules):
+                        if rule < r:
+                            break
                     indent_node = trans_unit_nodes[
-                            0].previousSibling.cloneNode(deep=True)
+                            n].previousSibling.cloneNode(deep=True)
                     group_node.insertBefore(
-                            indent_node, trans_unit_nodes[0].previousSibling)
+                        indent_node, trans_unit_nodes[n].previousSibling)
                     group_node.insertBefore(
-                            clone, trans_unit_nodes[0].previousSibling)
-                if rule == 1:
-                    trans_unit_nodes[0].setAttribute(
-                        "id", group_node.attributes["id"].value+'[%d]'%count)
-                if rule in range(2, 5):
-                    clone = trans_unit_nodes[1].cloneNode(deep=True)
-                    target = self.getElementByTagName(clone, "target")
-                    target.firstChild.data = target.firstChild.data[:-1] +\
-                            '%d'%rule
-                    clone.setAttribute("id", group_node.attributes["id"].value\
-                            +'[%d]'%count)
-                    indent_node = trans_unit_nodes[
-                            1].previousSibling.cloneNode(deep=True)
-                    group_node.insertBefore(
-                        indent_node, trans_unit_nodes[1].previousSibling)
-                    group_node.insertBefore(
-                            clone, trans_unit_nodes[1].previousSibling)
-                if rule == 5:
-                    trans_unit_nodes[1].setAttribute(
-                        "id", group_node.attributes["id"].value+'[%d]'%count)
+                            clone, trans_unit_nodes[n].previousSibling)
         content = doc.toxml()
         return content
 
