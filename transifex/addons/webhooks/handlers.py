@@ -40,9 +40,8 @@ def visit_url(sender, **kwargs):
     else:
         post_function = requests.post
 
-    try:
-        hooks = WebHook.objects.filter(project=project)
-    except WebHook.DoesNotExist:
+    hooks = WebHook.objects.filter(project=project)
+    if not hooks:
         logger.debug("Project %s has no web hooks" % project.slug)
         return
 
