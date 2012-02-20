@@ -89,7 +89,7 @@ NOTICE_TYPES = [
             {
                 "label": "project_hub_join_denied",
                 "display": _("Denied to join project hub"),
-                "description": _("when a proejct is denied to join a "
+                "description": _("when a project is denied to join a "
                                  "project  hub"),
                 "default": 2,
                 "show_to_user": True,
