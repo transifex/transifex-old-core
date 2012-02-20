@@ -11,50 +11,50 @@
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <script type="text/javascript">
     $(document).ready(function(){
-        $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+      $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
-        {% if request.user.is_authenticated %}
-        $("#new_translation1").click( function (){
-            $("#new_translation_box1").slideToggle();
-        });
+      {% if request.user.is_authenticated %}
+      $("#new_translation1").click( function (){
+          $("#new_translation_box1").slideToggle();
+      });
 
-        $("#start_new_translation").click( function() {
-            var target_lang_code = $("#target_language_span > select").val();
-            var translate_url_tmpl = '{% url translate_resource resource.project.slug resource.slug 111111111 %}'
+      $("#start_new_translation").click( function() {
+          var target_lang_code = $("#target_language_span > select").val();
+          var translate_url_tmpl = '{% url translate_resource resource.project.slug resource.slug 111111111 %}'
 
-            if ( target_lang_code != "" ) {
-                window.location = translate_url_tmpl.replace('111111111', target_lang_code);
-            } else {
-                alert('{% trans "Please select a target language first."|escapejs %}');
-            }
-        });
-        {% endif %}
+          if ( target_lang_code != "" ) {
+              window.location = translate_url_tmpl.replace('111111111', target_lang_code);
+          } else {
+              alert('{% trans "Please select a target language first."|escapejs %}');
+          }
+      });
+      {% endif %}
 
-        {% if is_maintainer %}
-        var resource_priority_cycle_url = '{% url cycle_resource_priority resource.project.slug resource.slug %}';
-        $("a.resource_priority_trigger").click(function(){
-            $(this).load(resource_priority_cycle_url, function(response, status, xhr) {
-                if (status == "error") {
-                    var msg = '{% trans "Sorry but there was an error: " %}';
-                    alert(msg + xhr.status + " " + xhr.statusText);
-                }
-            });
-        });
-        {% endif %}
+      {% if is_maintainer %}
+      var resource_priority_cycle_url = '{% url cycle_resource_priority resource.project.slug resource.slug %}';
+      $("a.resource_priority_trigger").click(function(){
+          $(this).load(resource_priority_cycle_url, function(response, status, xhr) {
+              if (status == "error") {
+                  var msg = '{% trans "Sorry but there was an error: " %}';
+                  alert(msg + xhr.status + " " + xhr.statusText);
+              }
+          });
+      });
+      {% endif %}
 
-        var $target_language_select = $('select#id_button-target_language');
-        $target_language_select.addClass('chzn-select');
-        $('span#selectbutton-target_language').remove();
-        $target_language_select.chosen();
-        /* FIXME: Search input box appears wider than the parent element.*/
-        $("div#id_button-target_language_chzn").find('input[type="text"]').width('210px');
+      var $target_language_select = $('select#id_button-target_language');
+      $target_language_select.addClass('chzn-select');
+      $('span#selectbutton-target_language').remove();
+      $target_language_select.chosen();
+      /* FIXME: Search input box appears wider than the parent element.*/
+      $("div#id_button-target_language_chzn").find('input[type="text"]').width('210px');
 
-        $(".stat_row").click(function() {
-          var lang_code = $(this).data('language');
-          var actions_url_tmpl = '{% url resource_actions resource.project.slug resource.slug 1111111111 %}';
-          var actions_url = actions_url_tmpl.replace('1111111111', lang_code)
-          $.facebox({ ajax: actions_url })
-        });
+      $(".stat_row").click(function() {
+        var lang_code = $(this).data('language');
+        var actions_url_tmpl = '{% url resource_actions resource.project.slug resource.slug 1111111111 %}';
+        var actions_url = actions_url_tmpl.replace('1111111111', lang_code)
+        $.facebox({ ajax: actions_url })
+      });
     });
 </script>
 {% endblock %}
@@ -238,7 +238,7 @@
 {% for entry in action_log %}
 	<li class="i16 {{entry.action_type}}">
 	    <p>{{ entry.message|safe }}</p> 
-        <span class="timestamp">{{ entry.action_time|timesince }} ago by {{entry.user}}</span>
+        <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
 	</li>
 {% endfor %}
 </ul>
