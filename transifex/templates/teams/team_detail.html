@@ -135,7 +135,7 @@
   {% for stat in statslist %}
 
   <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-  {% cache 604800 team_details project.slug language.code stat.resource.id LANGUAGE_CODE %}
+  {% cache 604800 team_details stat.resource.project.slug language.code stat.resource.id LANGUAGE_CODE %}
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</strong></span>
       {% if stat.lock.valid %}
@@ -191,7 +191,7 @@
   {% for resource in empty_rlstats %}
 
   <tr id="empty_stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-  {% cache 604800 team_details project.slug language.code resource.id LANGUAGE_CODE %}
+  {% cache 604800 team_details stat.resource.project.slug language.code resource.id LANGUAGE_CODE %}
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
       {% if not resource.accept_translations %}
