@@ -18,7 +18,7 @@
     $('#id_project').change(function() {
       $("#filter-form").submit();
     });
-   })  
+   })
 </script>
 {% endblock %}
 
@@ -33,14 +33,14 @@
 {% if not project.anyone_submit %}
   <div class="separate-header notopmargin clearfix" style="background:none; margin-bottom:0.8em;padding-bottom:0px;">
   	<h3  class="sh-label">{% trans "Overall Progress" %}</h3>
-  	<div class="separate-buttons">		
-		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
-			<a id="join-facebox-trigger" class="i16 team_join nude-button" href="#facebox-joinmember">{% trans 'Join team' %}</a>	
+  	<div class="separate-buttons">
+		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
+			<a id="join-facebox-trigger" class="i16 team_join nude-button" href="#facebox-joinmember">{% trans 'Join team' %}</a>
 		{% endif %}
 	  </div>
 
 	  <div class="no-display">
-		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}	  
+		{% if request.user.is_authenticated and not perms.projects.submit_translations and not can_submit_translations and not user_access_request %}
 		<div id="facebox-joinmember"  class="facebox-content">
 		<div class="facebox-content">
       {% if team %}
@@ -59,7 +59,7 @@
 		</div>
 	  </div>
 		{% endif %}
-	  
+
 	  </div>
 
 	</div>
@@ -104,7 +104,7 @@
   <div class="separate-header clearfix" style="margin-bottom:0;">
   	<h3  class="sh-label">{% blocktrans %}Language resources{% endblocktrans %}</h3>
 	</div>
-	
+
 	{% if project.is_hub %}
 <div id="hub-project-selector" class="tx-form clearfix">
   <form id="filter-form" style="float:right;" action="" method="get">
@@ -119,7 +119,7 @@
   <span style="float:right;padding-top:9px;padding-right:5px;">{%trans "Show resources from:" %}</span>
 </div>
 {% endif %}
-	
+
   {% if statslist %}
   <table class="stats-table tablesorter langdetail">
   <thead>
@@ -186,12 +186,12 @@
     })
   </script>
   {% endfor %}
-  
-  
+
+
   {% for resource in empty_rlstats %}
 
   <tr id="empty_stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
-  {% cache 604800 team_details stat.resource.project.slug language.code resource.id LANGUAGE_CODE %}
+  {% cache 604800 team_details resource.project.slug language.code resource.id LANGUAGE_CODE %}
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
       {% if not resource.accept_translations %}
@@ -230,8 +230,8 @@
                 })
   </script>
   {% endfor %}
-  
-  
+
+
   </table>
   {% else %}
     <p>{% trans "No resources are registered for this project yet." %}</p>
@@ -252,7 +252,7 @@
 <ul class="actionlist nomargin">
 {% for entry in action_log %}
     <li class="i16 {{entry.action_type}}">
-        <p>{{ entry.message|safe }}</p> 
+        <p>{{ entry.message|safe }}</p>
         <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
     </li>
 {% endfor %}
