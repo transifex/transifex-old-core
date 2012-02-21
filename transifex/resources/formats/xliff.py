@@ -21,7 +21,8 @@ from .core import Handler, ParseError, CompileError
 from .compilation import PluralCompiler, SimpleCompilerFactory
 from .resource_collections import StringSet, GenericTranslation
 from .utils.decorators import *
-from .utils.hash_tag import hash_tag, escape_context, hash_regex, _HashRegex
+from .utils.hash_tag import hash_tag, escape_context, hash_regex,\
+        pluralized_hash_regex, _HashRegex
 
 # Resources models
 Resource = get_model('resources', 'Resource')
@@ -55,6 +56,14 @@ class XliffCompiler(PluralCompiler):
 
     def get_plural_index(self, count, rule):
         return rule
+
+    def _apply_translations(self, translations, text):
+        if isinstance(text, str):
+            text = text.decode('UTF-8')
+        regex = pluralized_hash_regex()
+        return regex.sub(
+            lambda m: translations.get(m.group(0), m.group(0)), text
+        )
 
     def _update_plural_hashes(self, translations, content):
         """Modify template content to handle plural data in target language"""
