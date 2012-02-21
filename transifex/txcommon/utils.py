@@ -1,8 +1,33 @@
+from __future__ import absolute_import
 import gc
 import operator
 from django.core.urlresolvers import get_resolver
-from transifex.txcommon.log import logger
+from django.views.generic.simple import direct_to_template
+from django.views.decorators.http import condition
 from django.conf import settings
+from transifex.txcommon.log import logger
+from datastores.txredis import TxRedisMapper, redis_exception_handler
+
+
+STATIC_CACHE_KEY_LAST_MODIFIED = 'tx_static_pages_last_modified'
+STATIC_CACHE_KEY_ETAG = 'tx_static_pages_etag'
+
+
+@redis_exception_handler
+def static_etag(*args, **kwargs):
+    r = TxRedisMapper()
+    return r.get(STATIC_CACHE_KEY_ETAG)
+
+
+@redis_exception_handler
+def static_last_modified(*args, **kwargs):
+    r = TxRedisMapper()
+    return r.get(STATIC_CACHE_KEY_LAST_MODIFIED)
+
+cached_direct_to_template = condition(
+    last_modified_func=static_last_modified, etag_func=static_etag
+)(direct_to_template)
+
 
 def log_skip_transaction_test(msg):
     if not settings.DATABASES['default']['ENGINE'].endswith('postgresql_psycopg2'):
@@ -244,7 +269,7 @@ def queryset_iterator(queryset, chunksize=1000):
     memory. Using the iterator() method only causes it to not preload all the
     classes.
 
-    Note that the implementation of the iterator does not support ordered 
+    Note that the implementation of the iterator does not support ordered
     query sets.
     """
     pk = 0
