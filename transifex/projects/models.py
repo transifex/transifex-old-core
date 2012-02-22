@@ -264,6 +264,14 @@ class Project(models.Model):
         return self.resources.aggregate(Sum('wordcount'))['wordcount__sum'] or 0
 
     @property
+    def num_languages(self):
+        return Language.objects.filter(rlstats__resource__project=self).distinct().count()
+
+    @property
+    def max_hostable_wordcount(self):
+        return self.num_languages * self.wordcount
+
+    @property
     def entities(self):
         return self.resources.aggregate(Sum('total_entities'))['total_entities__sum'] or 0
 
