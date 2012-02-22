@@ -16,7 +16,8 @@ from tagging_autocomplete.widgets import TagAutocomplete
 
 from transifex.projects.models import Project
 from transifex.projects.signals import (project_access_control_form_start,
-                                        project_form_init, project_form_save)
+                                        project_form_init, project_form_save,
+                                        project_private_check)
 from transifex.txcommon.widgets import SplitSelectDateTimeWidget
 
 
@@ -36,7 +37,11 @@ class ProjectForm(forms.ModelForm):
             'bug_tracker', 'source_language', 'logo',
         )
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, owner, *args, **kwargs):
+        # we need this because the number of private projects validation may
+        # depend on the owner's subscription
+        self.owner = owner
+
         super(ProjectForm, self).__init__(*args, **kwargs)
         # Disable the source_language widget when updating
         if self.instance and self.instance.id:
@@ -49,6 +54,10 @@ class ProjectForm(forms.ModelForm):
         retval = super(ProjectForm, self).save(*args, **kwargs)
         project_form_save.send(sender=ProjectForm, form=self, instance=retval)
         return retval
+
+    def clean_private(self):
+        project_private_check.send(sender=ProjectForm, instance=self)
+        return self.cleaned_data['private']
 
     def clean_tags(self):
         project_tags_list = self.cleaned_data['tags']

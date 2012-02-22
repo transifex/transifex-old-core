@@ -69,7 +69,7 @@ class TestWebHookHandlers(BaseTestCase):
     """Test signal handlers for project edit form."""
 
     def test_add_field(self):
-        kwargs = {'form': ProjectForm()}
+        kwargs = {'form': ProjectForm(None)}
         add_web_hook_field(None, **kwargs)
         self.assertIn('webhook', kwargs['form'].fields)
 
