@@ -61,8 +61,10 @@ def _project_create_update(request, project_slug=None,
         project = None
 
     if request.method == 'POST':
-        project_form = ProjectForm(request.user, request.POST, request.FILES,
-                                   instance=project, prefix='project')
+        project_form = ProjectForm(
+            request.POST, request.FILES, instance=project, prefix='project',
+            owner=request.user
+        )
         if project_form.is_valid():
             project = project_form.save(commit=False)
             project_id = project.id

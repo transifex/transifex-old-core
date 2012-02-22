@@ -37,10 +37,10 @@ class ProjectForm(forms.ModelForm):
             'bug_tracker', 'source_language', 'logo',
         )
 
-    def __init__(self, owner, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         # we need this because the number of private projects validation may
         # depend on the owner's subscription
-        self.owner = owner
+        self.owner = kwargs.get('owner', None)
 
         super(ProjectForm, self).__init__(*args, **kwargs)
         # Disable the source_language widget when updating
@@ -302,3 +302,7 @@ class ProjectAccessControlForm(forms.ModelForm):
             del cleaned_data["project_type"]
 
         return cleaned_data
+
+    def clean_project_type(self):
+        project_type_check.send(sender=ProjectForm, instance=self)
+        return self.cleaned_data['project_type']
