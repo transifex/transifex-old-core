@@ -53,7 +53,8 @@ class TestValidators(TestCase):
         v(old, new)
         new = "blah www.transifex.net blah"
         self.assertRaises(ValidationError, v, old, new)
-        new = "blah http://www.transifex.net blah"
+        # Check typos
+        new = "blah http://www.trasnifex.net blah"
         self.assertRaises(ValidationError, v, old, new)
         new = "blah-blah"
         self.assertRaises(ValidationError, v, old, new)
