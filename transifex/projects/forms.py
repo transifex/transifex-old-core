@@ -40,7 +40,7 @@ class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # we need this because the number of private projects validation may
         # depend on the owner's subscription
-        self.owner = kwargs.get('owner', None)
+        self.owner = kwargs.pop('owner', None)
 
         super(ProjectForm, self).__init__(*args, **kwargs)
         # Disable the source_language widget when updating

@@ -104,8 +104,8 @@ def _project_create_update(request, project_slug=None,
         else:
             initial_data = {"maintainers": [request.user.pk]}
 
-        project_form = ProjectForm(request.user, instance=project,
-                                   prefix='project', initial=initial_data)
+        project_form = ProjectForm(instance=project, prefix='project',
+                                   initial=initial_data)
 
     return render_to_response(template_name, {
         'project_form': project_form,
