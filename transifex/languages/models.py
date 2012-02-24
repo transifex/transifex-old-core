@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
+
 class LanguageManager(models.Manager):
     def by_code_or_alias(self, code):
         """
@@ -171,3 +172,17 @@ class Language(models.Model):
             rules.append(4)
         rules.append(5)
         return rules
+
+
+class LanguagesAsChoices(object):
+
+    def __init__(self):
+        self._cache = None
+
+    def __call__(self):
+        if self._cache is None:
+            self._cache = [(l.code, l) for l in Language.objects.all()]
+        return self._cache
+
+language_choice_list = LanguagesAsChoices()
+
