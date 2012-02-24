@@ -49,7 +49,7 @@ class ResourceBackend(object):
             slug: The slug of the resource.
             name: The name of the resource.
             method: The i18n method of theresource.
-            source_language: A Language instance of the source langauge set.
+            source_language: A Language instance of the source language set.
             content: The content of the resource's source file.
             user: The user that creates the resource.
             extra_data: Any extra info for the Resource constructor.

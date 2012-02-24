@@ -125,7 +125,7 @@ class TestFileExtensions(unittest.TestCase):
     def test_po_extensions(self):
         """Test PO/POT extensions.
 
-        If langauge is None: extension == 'pot'.
+        If language is None: extension == 'pot'.
         """
         self.resource.i18n_method = 'PO'
         for lang in ('en', 'el', None):
