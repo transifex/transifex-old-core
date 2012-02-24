@@ -62,7 +62,7 @@ $(document).ready(function() {
       {% if translation.last_update %}<span>{{ translation.last_update|timesince }}</span>{% endif %}
       {% if translation.user %}
         <span>
-          <a href="{% url profile_public translation.user.username %}">{% blocktrans with translation.user as user %}by {{ user }}{% endblocktrans %}</a>
+          {% trans "by" %} <a href="{% url profile_public translation.user.username %}">{% blocktrans with translation.user as user %}{{ user }}{% endblocktrans %}</a>
         </span>
         &nbsp;
         <img class="border top" alt="{{ translation.user }}" width="16" height="16" src="{{ translation.user.profile.get_mugshot_url }}"/>
