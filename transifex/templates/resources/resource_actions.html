@@ -292,7 +292,7 @@
                 {% blocktrans %}Translation last updated {% endblocktrans %}
                 {% if last_committer %}
                   {% trans "by" %}
-                  <strong>{{ last_committer }}</strong> ({{ last_update|timesince }})
+                  <a href="{% url profile_public last_committer.username %}"><strong>{{ last_committer }}</strong></a> ({{ last_update|timesince }})
                 {% else %}
                   {{ last_update|timesince }}
                 {% endif %}
