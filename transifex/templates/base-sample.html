@@ -161,13 +161,13 @@
     {% endblock %}
     </div>
     <div class="wrapper">
-      {% block content %}
-        <div id="body_sec">{% block content_sec %}{% endblock %}</div>
-        <div id="body_main" class=" grid_16 clearfix">
-          
-        {% block content_main %}{% endblock %}
-        </div>
-      {% endblock %}
+        
+		{% block content %}
+		<div class="wrapper clearfix">
+			<div id="content_main" class="grid_16">{% block content_main %}{% endblock %}</div>
+		</div>
+		{% endblock %}
+    
     </div>
     <div id="content_footer">
       {% block content_footer %}{% endblock %}

@@ -11,14 +11,14 @@
     <h2 class="pagetitle">{% blocktrans with project.name as project_name %}Say goodbye to <em>{{ project_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
-{% block content %}
+{% block content_main %}
 
 <p>
   {% blocktrans with project.name as project_name %}Are you sure you want to permanently delete the registered project '{{ project_name }}'?{% endblocktrans %}
 </p>
 
   <form action='' method='post'>{% csrf_token %}
-    <input type="submit" class="i16 submit buttonized" value="{% trans "Yes, I'm sure!" %}" />
+    <input type="submit" class="i16 submit buttonized" value='{% trans "Yes, I'm sure!" %}' />
   </form>
 
 {% endblock %}

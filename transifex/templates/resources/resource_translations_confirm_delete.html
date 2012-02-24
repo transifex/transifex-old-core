@@ -20,7 +20,7 @@ Delete <em>{{ language_name }}</em>
     <h2 class="pagetitle">{% blocktrans with resource.name as resource_name and language.name as language_name %}Say goodbye to all translations for <em>{{ language_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
-{% block content %}
+{% block content_main %}
 
 <p>{% blocktrans with resource.name as resource_name and language.name as language_name %}
   Are you sure you want to permanently delete the translations for '{{ language_name }}' of '{{ resource_name}}'?

@@ -14,7 +14,7 @@
   <h2 class="pagetitle">{% blocktrans with release.name as release_name %}Say goodbye to <em>{{ release_name }}</em>?{% endblocktrans %}</h2>
 {% endblock %}
 
-{% block content %}
+{% block content_main %}
 
 <p>{% blocktrans with release.project.name as project_name and release.name as release_name %}Are you sure you want to permanently delete the release '{{ release_name }}' which works on {{ project_name }}?{% endblocktrans %}</p>
 
