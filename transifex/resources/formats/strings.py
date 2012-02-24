@@ -45,7 +45,7 @@ class AppleStringsCompiler(Compiler):
         line = r'(?P<prefix>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|'\
                r'(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.'\
                r'[^"\\]*)*))_txss(?P<suffix>"\s*;)'
-        regex = re.compile(line, re.U)
+        regex = re.compile(line, re.U|re.DOTALL)
         self.compiled_template = regex.sub(
             lambda m: '/* ' + m.group('prefix') + m.group('suffix') + ' */',
             self.compiled_template
@@ -71,7 +71,11 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
     def _escape(self, s):
         return s.replace('"', '\\"').replace('\n', r'\n').replace('\r', r'\r')
 
+    def _unescape_key(self, s):
+        return s.replace('\\\n', '')
+
     def _unescape(self, s):
+        s = s.replace('\\\n', '')
         return s.replace('\\"', '"').replace(r'\n', '\n').replace(r'\r', '\r')
 
     def _get_content(self, filename=None, content=None):
@@ -130,7 +134,7 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
         f = self.content
         #regex for finding all comments in a file
         cp = r'(?:/\*(?P<comment>(?:[^*]|(?:\*+[^*/]))*\**)\*/)'
-        p = re.compile(r'(?:%s[ \t]*[\n]|[\r\n]|[\r]){0,1}(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)'%cp, re.U)
+        p = re.compile(r'(?:%s[ \t]*[\n]|[\r\n]|[\r]){0,1}(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)'%cp, re.DOTALL|re.U)
         c = re.compile(r'\s*/\*(.|\s)*?\*/\s*', re.U)
         ws = re.compile(r'\s+', re.U)
         buf = u""
@@ -153,6 +157,7 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
                     buf += f[end:m.end()]
                 end = m.end()
             end = end_
+            key = self._unescape_key(key)
             if is_source:
                 if not value.strip():
                     buf += line
