@@ -26,6 +26,7 @@ from transifex.resources.formats.utils.decorators import *
 from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation, SourceEntityCollection, TranslationCollection
+from transifex.teams.models import Team
 
 
 # Temporary
@@ -359,6 +360,10 @@ class Handler(object):
             'sender': user
         }
         object_list = [self.resource.project, self.resource, self.language]
+        team = Team.objects.get_or_none(project=self.resource.project,
+                                        language=self.language)
+        if team:
+            object_list.append(team)
 
         # if we got no user, skip the log
         if user:
