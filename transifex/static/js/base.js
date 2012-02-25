@@ -11,7 +11,7 @@
     }
     
     this.each(function(){
-    	$(this).children("fieldset").prepend("<div class='first-tdfc grid_5 alpha'></div><div class='second-tdfc grid_5'></div>"); 
+    	$(this).children("fieldset").prepend("<div class='first-tdfc grid_4 alpha'></div><div class='second-tdfc grid_4'></div>"); 
 
 			for (num=0; num < settings.fieldsLeft.length;num++)
 			$("#"+settings.fieldsLeft[num]).appendTo("#"+this.id+" .first-tdfc");

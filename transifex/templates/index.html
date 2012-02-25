@@ -29,7 +29,7 @@ div#content{padding-top:1em;}
 {% block content_main %}
 
 
-<div id="intro" class="grid_10">
+<div id="intro" class="grid_8">
   <p class="promo">{% trans "Transifex is a service aimed at helping translators keep track of their favorite translation projects." %}</p>
   <span id="ip-bottom-quote"></span>
   <div class="searchform content_header_prim">
@@ -42,7 +42,7 @@ div#content{padding-top:1em;}
 </div>
 </div>
 {% if not request.user.is_authenticated %}
-<div id="login_index" class="grid_6">
+<div id="login_index" class="grid_3">
   <div>
   {% include "simpleauth/login_box.html" %}
   </div>

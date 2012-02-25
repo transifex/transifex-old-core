@@ -60,7 +60,7 @@
 {% block header_menu %}
 {% if not project.anyone_submit %}
 <div id="teamcode-arrow"><div id="teamcode">{{ language.code }}</div><span></span></div>
-<div class="tab-wrapper grid_13">
+<div class="tab-wrapper grid_12">
   <ul  class="tabs clearfix">     
     <li class="{% if project_team_page %}selected{% endif %} alpha"><a href="{% url team_detail project.slug language.code %}">{% trans "Overview" %}</a></li>
     {% if not project.anyone_submit %}
