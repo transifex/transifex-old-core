@@ -27,9 +27,30 @@ class JoomlaCompileError(CompileError):
 class JoomlaCompiler(Compiler):
     """Compiler for Joomla .ini files."""
 
+    def _iter_by_line(self, content):
+        """Iterate the content by line."""
+        for line in content.split(self.linesep):
+            yield line
+
     def _examine_content(self, content):
         """Determine the version of the file."""
-        self.jformat = JoomlaIniVersion.create(content)
+        if "\r\n" in content:         # windows line ending
+            self.linesep = "\r\n"
+        else:
+            self.linesep = "\n"
+        for line in self._iter_by_line(content):
+            if not line or line.startswith(('#', ';',)):
+                continue
+            try:
+                source, trans = line.split('=', 1)
+                if trans.strip().startswith('"') and\
+                        trans.strip().endswith('"'):
+                    self.jformat = JoomlaIniNew()
+                else:
+                    self.jformat = JoomlaIniOld()
+                break
+            except ValueError:
+                continue
         return content
 
     def _post_compile(self):
@@ -78,11 +99,11 @@ class JoomlaINIHandler(MarkedSourceCompilerFactory, Handler):
         Parse an INI file and create a stringset with all entries in the file.
         """
         content = self.content
-        self.jformat = JoomlaIniVersion.create(self.content)
         self._find_linesep(content)
         comment = ""
 
         buf = ''
+        initialized = False
         for line in self._iter_by_line(content):
             # Skip empty lines and comments
             if not line or line.startswith(self.comment_chars):
@@ -96,6 +117,13 @@ class JoomlaINIHandler(MarkedSourceCompilerFactory, Handler):
 
             try:
                 source, trans = line.split('=', 1)
+                if not initialized:
+                    if trans.strip().startswith('"') and\
+                            trans.strip().endswith('"'):
+                        self.jformat = JoomlaIniNew()
+                    else:
+                        self.jformat = JoomlaIniOld()
+                    initialized = True
             except ValueError:
                 # Maybe abort instead of skipping?
                 logger.warning('Could not parse line "%s". Skipping...' % line)

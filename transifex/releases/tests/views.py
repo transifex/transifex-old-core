@@ -43,7 +43,7 @@ class ReleasesViewsTests(base.BaseTestCase):
         self.assertContains(resp, "Untranslated: %s" % self.resource.source_entities.count())
 
     def test_release_language_detail(self):
-        """Test langauge detail for a release"""
+        """Test language detail for a release"""
         url = reverse('release_language_detail', args=[self.project.slug, self.release.slug, self.language_ar.code])
         resp = self.client['anonymous'].get(url)
         self.assertContains(resp,'50%', status_code=200)

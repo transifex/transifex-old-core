@@ -1,7 +1,7 @@
 {% extends "threadedcomments_base.html" %}
 {% load threadedcommentstags %}
 
-{% block content %}
+{% block content_main %}
     <p>Are you sure that you would like to delete this comment?</p>
 	{% if comment %}
         <div id="comment_preview">{% auto_transform_markup comment %}</div>

@@ -21,7 +21,7 @@
 
 {% url socialauth_begin 'twitter' as social_twitter_url %}
 {% if social_twitter_url %}
-	<div class="side-menu grid_4 alpha left-side">
+	<div class="side-menu grid_3 alpha left-side">
 		{% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
 		<ul>
 			<li class="head">Account</li>
@@ -38,6 +38,6 @@
 
 {% endif %}
 
-<div class="grid_12 omega psettings-content">{% block userena_header %}{% endblock %}{% block userena_content%}{% endblock %}</div>
+<div class="grid_9 omega psettings-content">{% block userena_header %}{% endblock %}{% block userena_content%}{% endblock %}</div>
 
 {% endblock %}

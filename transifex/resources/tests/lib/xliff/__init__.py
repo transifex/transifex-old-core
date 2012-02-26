@@ -42,8 +42,8 @@ class TestXliffParser(FormatsBaseTestCase):
                 if s.translation.strip() != '':
                     translations += 1
             if file == 'example.xlf':
-                self.assertEqual(entities, 10)
-                self.assertEqual(translations, 10)
+                self.assertEqual(entities, 8)
+                self.assertEqual(translations, 8)
             else:
                 self.assertEqual(entities, 7)
                 self.assertEqual(translations, 7)
@@ -61,12 +61,12 @@ class TestXliffParser(FormatsBaseTestCase):
         r = self.resource
         l = r.source_language
         # Check that all entities with not null are created in the db
-        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 9)
+        self.assertEqual( SourceEntity.objects.filter(resource=r).count(), 7)
 
         # Check that all source translations are there
         self.assertEqual(
             len(Translation.objects.filter(source_entity__resource=r,
-                language=l)), 10
+                language=l)), 8
         )
 
         # Import and save the finish translation
@@ -86,7 +86,7 @@ class TestXliffParser(FormatsBaseTestCase):
 
         handler.save2db()
         # Check if all Source strings are untouched
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 9)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 7)
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 7)
@@ -108,7 +108,7 @@ class TestXliffParser(FormatsBaseTestCase):
 
         handler.save2db()
         # Check if all Source strings are untouched
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 9)
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 7)
         # Check that all translations are there
         self.assertEqual(len(Translation.objects.filter(source_entity__resource=r,
             language=l)), 9)

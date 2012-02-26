@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.languages.models import Language
 from transifex.resources.formats.registry import registry
-from transifex.languages.models import Language
+from transifex.languages.models import Language, language_choice_list
 from transifex.resources.models import Resource
 from transifex.resources.formats.core import ParseError
 from transifex.resources.backends import ResourceBackend, \
@@ -26,7 +26,6 @@ class CreateResourceForm(forms.ModelForm):
 
     i18n_choices = sorted(registry.descriptions(), key=lambda m: m[1])
     i18n_choices.insert(0, ('', '-' * 10))
-    language_choices = [(l.code, l) for l in Language.objects.all()]
 
     source_file = forms.FileField(label=_("Resource File"))
     i18n_method = forms.ChoiceField(
@@ -47,7 +46,7 @@ class ResourceTranslationForm(forms.Form):
     Form to to be used for creating new translations.
     """
 
-    language_choices = [(l.code, l) for l in Language.objects.all()]
+    language_choices = language_choice_list()
     language_choices.insert(0, ('', '-' * 10))
 
     translation_file = forms.FileField(label=_("Translation File"))

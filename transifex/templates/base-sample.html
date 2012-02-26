@@ -151,23 +151,23 @@
         {% block breadcrumb %}{% homelink %}{% endblock %}
       </div>
       {% endcomment %}
-      <div id="content_title" class="grid_13">
+      <div id="content_title" class="grid_10">
         {% block content_title %}{% endblock %}
       </div>
-      <div id="content_header_sec" class="grid_3">
+      <div id="content_header_sec" class="grid_2">
         {% block content_header_sec %}{% endblock %}
       </div>
-      <div id="header_menu" class="grid_16 clearfix">{% block header_menu%}{% endblock %} </div>
+      <div id="header_menu" class="grid_12 clearfix">{% block header_menu%}{% endblock %} </div>
     {% endblock %}
     </div>
     <div class="wrapper">
-      {% block content %}
-        <div id="body_sec">{% block content_sec %}{% endblock %}</div>
-        <div id="body_main" class=" grid_16 clearfix">
-          
-        {% block content_main %}{% endblock %}
-        </div>
-      {% endblock %}
+        
+		{% block content %}
+		<div class="wrapper clearfix">
+			<div id="content_main" class="grid_12">{% block content_main %}{% endblock %}</div>
+		</div>
+		{% endblock %}
+    
     </div>
     <div id="content_footer">
       {% block content_footer %}{% endblock %}

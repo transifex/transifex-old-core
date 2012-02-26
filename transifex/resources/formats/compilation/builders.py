@@ -46,7 +46,7 @@ class TranslationsBuilder(object):
         """
         return Translation.objects.filter(
             source_entity__in=ids, language=self.resource.source_language
-        ).values_list(*self._fields)
+        ).values_list(*self._fields).order_by()
 
     def _single_output(self, iterable):
         """Output of builder for non-pluralized formats."""
@@ -79,7 +79,7 @@ class AllTranslationsBuilder(TranslationsBuilder):
         """
         translations = Translation.objects.filter(
             resource=self.resource, language=self.language
-        ).values_list(*self._fields).iterator()
+        ).values_list(*self._fields).order_by().iterator()
         return self._output(translations)
 
 
@@ -103,7 +103,7 @@ class ReviewedTranslationsBuilder(TranslationsBuilder):
         """
         translations = Translation.objects.filter(
             reviewed=True, resource=self.resource, language=self.language
-        ).values_list(*self._fields).iterator()
+        ).values_list(*self._fields).order_by().iterator()
         return self._output(translations)
 
 
@@ -117,10 +117,10 @@ class SourceTranslationsBuilder(TranslationsBuilder):
         """
         translations = Translation.objects.filter(
             resource=self.resource, language=self.language
-        ).values_list(*self._fields)
+        ).values_list(*self._fields).order_by()
         source_entities = set(SourceEntity.objects.filter(
                 resource=self.resource
-        ).values_list('id', flat=True))
+        ).values_list('id', flat=True).order_by())
         missing_ids = source_entities - set(map(lambda x: x[0], translations))
         if not missing_ids:
             iterable = translations
@@ -142,10 +142,10 @@ class ReviewedSourceTranslationsBuilder(TranslationsBuilder):
         """
         translations = Translation.objects.filter(
             reviewed=True, resource=self.resource, language=self.language
-        ).values_list(*self._fields)
+        ).values_list(*self._fields).order_by()
         source_entities = set(SourceEntity.objects.filter(
                 resource=self.resource
-        ).values_list('id', flat=True))
+        ).values_list('id', flat=True).order_by())
         missing_ids = source_entities - set(map(lambda x: x[0], translations))
         if not missing_ids:
             iterable = translations

@@ -44,7 +44,7 @@
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
 {% if project %}
-    <div class="grid_4 alpha side-menu left-side" style="height:100%;margin-top:50px;">
+    <div class="grid_3 alpha side-menu left-side" style="height:100%;margin-top:50px;">
         {% comment %}Dirty hack. Will use django-guardian in the future.{% endcomment %}
         <ul style="height:100%;">
             {% url project_edit project.slug as url_project_edit %}
@@ -58,6 +58,6 @@
     </div>
 {% endif %}
 
-<div class="grid_12 psettings-content omega">{% block psettings_header %}{% endblock %}{% block project_settings_content %}{% endblock %}</div>
+<div class="grid_9 psettings-content omega">{% block psettings_header %}{% endblock %}{% block project_settings_content %}{% endblock %}</div>
 
 {% endblock %}

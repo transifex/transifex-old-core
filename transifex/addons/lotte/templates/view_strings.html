@@ -175,7 +175,7 @@
 
 {% block body_class %}project_list{% endblock %}
 
-{% block content %}
+{% block content_main %}
 {% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
 
   <table class="definition stats_totals" id="stats_table">
