@@ -361,7 +361,7 @@ class Handler(object):
         }
         object_list = [self.resource.project, self.resource, self.language]
         team = Team.objects.get_or_none(project=self.resource.project,
-                                        language=self.language)
+                                        language_code=self.language.code)
         if team:
             object_list.append(team)
 
