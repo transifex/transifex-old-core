@@ -81,6 +81,19 @@ class DefaultProjectQuerySet(models.query.QuerySet):
             pass
         return Permission.objects.filter(user=user, content_type=ct, approved=True)
 
+    def involved_with(self, user):
+        """
+        Returns all projects that the given user is involved in (as a project
+        maintainer, team coordinator or team member).
+
+        Includes private projects.
+        """
+        return self.filter(
+            Q(maintainers__in=[user]) |
+            Q(team__coordinators__in=[user]) |
+            Q(team__members__in=[user])
+        ).distinct()
+
     def for_user(self, user):
         """
         Filter available projects based on the user doing the query. This
