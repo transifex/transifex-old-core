@@ -40,6 +40,7 @@
   <script type="text/javascript" src="{% static "lotte/js/jquery.jeditable.mini.js" %}"></script>
   <script type="text/javascript" src="{% static "lotte/js/jquery.spellchecker.js" %}"></script>
   <script type="text/javascript" src="{% static "js/tx.jquery.bidi.js" %}"></script>
+  {% hook "glossary_highlight.html" glossaryjs %}
 <script type="text/javascript">
 
     /* Global variables */
@@ -461,6 +462,7 @@
                 {% if RTL %}
                     $('textarea.translation').bidi();
                 {% endif %}
+                {% hook "glossary_highlight.html" fndrawcallback %}
 	    }
         }).fnSetFilteringDelay(500);
 
