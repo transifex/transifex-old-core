@@ -245,22 +245,29 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             Q(coordinators=request.user)|
             Q(members=request.user)).distinct()
 
-    stats = get_object_or_404(RLStats, resource=resource, language=target_language)
+    try:
+        stats = RLStats.objects.get(resource=resource, language=target_language)
+    except RLStats.DoesNotExist:
+        stats = RLStats(
+            untranslated=resource.total_entities,
+            resource=resource,
+            language=target_language
+        )
+
     wordcount = resource.wordcount
 
-    return render_to_response("resources/resource_actions.html",
-    { 'project' : project,
-      'resource' : resource,
-      'target_language' : target_language,
-      'team' : team,
-      'languages': languages,
-      'disabled_languages_ids': disabled_languages_ids,
-      'lock': lock,
-      'user_teams': user_teams,
-      'stats': stats,
-      'wordcount': wordcount,
-      },
-    context_instance = RequestContext(request))
+    return render_to_response("resources/resource_actions.html", {
+        'project': project,
+        'resource': resource,
+        'target_language': target_language,
+        'team': team,
+        'languages': languages,
+        'disabled_languages_ids': disabled_languages_ids,
+        'lock': lock,
+        'user_teams': user_teams,
+        'stats': stats,
+        'wordcount': wordcount,
+    }, context_instance = RequestContext(request))
 
 
 # Restrict access only for private projects
