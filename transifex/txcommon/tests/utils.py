@@ -234,7 +234,7 @@ def response_in_browser(resp, halt=True):
     """
 
     import tempfile, webbrowser, time
-    with tempfile.NamedTemporaryFile() as f:
+    with tempfile.NamedTemporaryFile(suffix='.html') as f:
         f.write(resp.content)
         f.flush()
         webbrowser.open(f.name)
