@@ -568,10 +568,6 @@ class TranslationHandler(BaseHandler):
         return self._read(request, project_slug, resource_slug, lang_code, is_pseudo)
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
-    @method_decorator(one_perm_required_or_403(
-            pr_resource_add_change,
-            (Project, 'slug__exact', 'project_slug')
-    ))
     def update(self, request, project_slug, resource_slug,
                lang_code, api_version=2):
         return self._update(request, project_slug, resource_slug, lang_code)
@@ -632,13 +628,15 @@ class TranslationHandler(BaseHandler):
     def _update(self, request, project_slug, resource_slug, lang_code=None):
         # Permissions handling
         try:
-            resource = Resource.objects.get(
+            resource = Resource.objects.select_related('project').get(
                 slug=resource_slug, project__slug=project_slug
             )
         except Resource.DoesNotExist:
             return rc.NOT_FOUND
+        source_push = False
         if lang_code == "source":
             language = resource.source_language
+            source_push = True
         else:
             try:
                 language =  Language.objects.by_code_or_alias(lang_code)
@@ -653,7 +651,9 @@ class TranslationHandler(BaseHandler):
 
         team = Team.objects.get_or_none(resource.project, lang_code)
         check = ProjectPermission(request.user)
-        if (not check.submit_translations(team or resource.project) or\
+        if source_push and not check.maintain(resource.project):
+            return rc.FORBIDDEN
+        elif (not check.submit_translations(team or resource.project) or\
             not resource.accept_translations) and not\
                 check.maintain(resource.project):
             return rc.FORBIDDEN
