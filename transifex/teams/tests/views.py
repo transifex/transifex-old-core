@@ -3,7 +3,7 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 
 from languages.models import Language
-from transifex.teams.models import TeamRequest
+from transifex.teams.models import TeamRequest, TeamAccessRequest
 from transifex.teams.models import Team
 from txcommon.tests import base, utils
 
@@ -55,6 +55,40 @@ class TestTeams(base.BaseTestCase):
             {'language':language.id}, follow=True)
         self.assertContains(resp, "You requested creation of the &#39;%s&#39; team."%(language.name))
         self.assertEqual(resp.status_code, 200)
+
+        #test team request after a team is created
+        self.test_create_team()
+        self.assertTrue(TeamAccessRequest.objects.get(user=self.user[
+            'registered'], team__project=self.project,
+            team__language=self.language_ar))
+        self.assertFalse(TeamRequest.objects.filter(user=self.user[
+            'registered'], project=self.project))
+
+        Team.objects.get(project=self.project,
+                language=self.language_ar).delete()
+
+        resp = self.client['registered'].post(url,
+            {'language':language.id}, follow=True)
+        self.assertContains(resp, "You requested creation of the &#39;%s&#39; team."%(language.name))
+        self.assertEqual(resp.status_code, 200)
+
+        url = reverse('team_create', args=[self.project.slug])
+        DATA = {
+            'language': self.language_ar.id,
+            'project': self.project.id,
+            'coordinators': '|%s|' % User.objects.all()[0].id,
+            'members': '|%s|' % self.user['registered'].id,
+        }
+        resp = self.client['maintainer'].post(url, data=DATA, follow=True)
+        self.assertTemplateUsed(resp, 'teams/team_detail.html')
+        self.assertEqual(resp.context['team'].project.id, self.project.id)
+        self.assertEqual(resp.context['team'].language.id, self.language_ar.id)
+        self.assertIn(User.objects.all()[0], resp.context['team'].coordinators.all())
+        self.assertFalse(TeamAccessRequest.objects.filter(user=self.user[
+            'registered'], team__project=self.project,
+            team__language=self.language_ar))
+        self.assertFalse(TeamRequest.objects.filter(user=self.user[
+            'registered'], project=self.project))
 
     def test_team_request_deny(self):
         """Test denial of a team request"""

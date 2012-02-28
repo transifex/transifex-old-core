@@ -63,6 +63,20 @@ def team_off(request, project, *args, **kwargs):
         context_instance=RequestContext(request)
     )
 
+def update_team_request(team):
+    project = team.project
+    language = team.language
+    try:
+        team_request = project.teamrequest_set.get(
+                language=language)
+        user = team_request.user
+        if not (user in team.members.all() or user in team.coordinators.all()\
+                or user in team.reviewers.all()):
+            team_access_request = TeamAccessRequest.objects.create(
+                    user=user, team=team, created=team_request.created)
+        team_request.delete()
+    except TeamRequest.DoesNotExist, e:
+        pass
 
 def _team_create_update(request, project_slug, language_code=None, extra_context=None):
     """
@@ -110,6 +124,7 @@ def _team_create_update(request, project_slug, language_code=None, extra_context
 
             # Logging action
             action_logging(request.user, [project, team], nt, context=context)
+            update_team_request(team)
 
             if settings.ENABLE_NOTICES:
                 # Send notification for those that are observing this project
