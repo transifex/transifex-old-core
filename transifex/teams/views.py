@@ -191,8 +191,7 @@ def team_update(request, project_slug, language_code):
     (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def team_detail(request, project_slug, language_code):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
-    language = get_object_or_404(Language.objects.select_related(), code=language_code)
-
+    language = Language.objects.by_code_or_alias_or_404(language_code)
     team = Team.objects.get_or_none(project, language.code)
 
     filter_form = ProjectsFilterForm(project, request.GET)
@@ -235,6 +234,7 @@ def team_detail(request, project_slug, language_code):
         "empty_rlstats": empty_rlstats,
         "filter_form": filter_form,
         "total_entries": total_entries,
+        "coordinators": team.coordinators.all()[:6],
     }, context_instance=RequestContext(request))
 
 @access_off(team_off)

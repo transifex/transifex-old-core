@@ -77,17 +77,15 @@
       <dd>{{ team.mainlist|mungify:team.mainlist }} </a></dd>
     {% endif %}
 
-    {% with team.coordinators.all as coordinators %}
     {% if coordinators %}
       <dt class="i16 coordinators">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</dt>
       <dd>
-        {% for c in coordinators|slice:"0:6" %}
+        {% for c in coordinators %}
           <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
           <a href="{% url profile_public c.username %}">{{ c.username }}</a>
         {% endfor %}
       </dd>
     {% endif %}
-    {% endwith %}
   </dl>
 </div>
 {% else %}

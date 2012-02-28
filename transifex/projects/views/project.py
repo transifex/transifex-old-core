@@ -341,7 +341,8 @@ def project_detail(request, project_slug):
         'source_languages': source_languages,
         'team_request_form': team_request_form,
         'available_teams_codes': available_teams_codes,
-        'team_requests': team_requests
+        'team_requests': team_requests,
+        'maintainers': project.maintainers.all()[:6],
     }, context_instance=RequestContext(request))
 
 

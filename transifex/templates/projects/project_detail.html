@@ -77,11 +77,10 @@
 
     {% hook "additional_project_details.html" %}
 
-    {% with project.maintainers.all as maintainers %}
     {% if maintainers %}
 	      <dt class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</dt>
 	      <dd>
-	        {% for m in maintainers|slice:"0:6" %}
+	        {% for m in maintainers %}
 	        <div class="maintainer-detail">
 	          <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
 	          <a href="{% url profile_public m.username %}">{{m.username}}</a>
@@ -89,7 +88,6 @@
 	        {% endfor %}
 	      </dd>
     {% endif %}
-    {% endwith %}
 
 </dl>
 
