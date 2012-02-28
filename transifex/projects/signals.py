@@ -44,4 +44,8 @@ project_access_control_form_start = Signal(providing_args=['instance', 'project'
 project_form_init = Signal(providing_args=['form'])
 project_form_save = Signal(providing_args=['form', 'instance'])
 
+#Signals used by subscriptions
+project_private_check = Signal(providing_args=['instance'])
+project_type_check = Signal(providing_args=['instance'])
+
 class ClaNotSignedError(Exception): pass
