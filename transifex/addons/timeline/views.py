@@ -30,7 +30,7 @@ def user_timeline(request, *args, **kwargs):
 
 @login_required
 @one_perm_required_or_403(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
 def project_timeline(request, project_slug, *args, **kwargs):
     """
     Present a log of the latest actions on the project.
