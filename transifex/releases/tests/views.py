@@ -104,14 +104,14 @@ class ReleasesViewsTests(base.BaseTestCase):
         resp = self.client['maintainer'].get(reverse('release_detail',
             args=[self.project.slug, 'nice-release']))
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
-        self.assertContains(resp, "1 private resources you have access to.")
+        self.assertContains(resp, "1 private resources you have access to")
         self.assertContains(resp, "Portuguese (Brazil)")
 
         # Priv proj member can see the private resource.
         resp = self.client['team_member'].get(reverse('release_detail',
             args=[self.project.slug, 'nice-release']))
         self.assertContains(resp, "Release 'Nice Release'", status_code=200)
-        self.assertContains(resp, "1 private resources you have access to.")
+        self.assertContains(resp, "1 private resources you have access to")
         self.assertContains(resp, "Portuguese (Brazil)")
 
         # Priv proj non-member cannot see the private resource.
@@ -132,9 +132,9 @@ class ReleasesViewsTests(base.BaseTestCase):
 
     def test_release_delete(self):
         """Test deleting a release"""
-        release = Release.objects.create(slug='nice-release', name='Nice', 
+        release = Release.objects.create(slug='nice-release', name='Nice',
             project=self.project)
-        release.resources.add(self.resource)        
+        release.resources.add(self.resource)
         url = reverse('release_delete', args=[self.project.slug, release.slug])
         resp = self.client['maintainer'].post(url, {}, follow=True)
         self.assertContains(resp, "was deleted.", status_code=200)
@@ -163,7 +163,7 @@ class ReleasesViewsTests(base.BaseTestCase):
             Release.DoesNotExist, self.project.releases.get, slug='nice-release'
         )
         self.assertTemplateUsed(r, "projects/release_form.html")
-        self.assertContains(r, "unaccessible private resource")
+        self.assertContains(r, "inaccessible private resource")
 
     def test_add_release_button_shown_on_project_deatils_page(self):
         response = self.client['maintainer'].get(self.urls['project'])
