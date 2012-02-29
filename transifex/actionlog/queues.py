@@ -70,6 +70,10 @@ def _log_to_project_history(project, action_time, message):
     r.lpush(key, data=data)
     r.ltrim(key, 0, 4)
 
+    # Store logs in hubs, too
+    if project.outsource:
+        _log_to_project_history(project.outsource)
+
 
 @redis_exception_handler
 def _log_to_resource_history(resource, action_time, message):

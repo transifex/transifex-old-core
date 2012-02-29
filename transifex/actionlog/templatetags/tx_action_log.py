@@ -1,8 +1,9 @@
 from django import template
 from django.conf import settings
 from django.db.models import get_model
+from django.contrib.contenttypes.models import ContentType
 from actionlog.models import LogEntry
-from actionlog.queues import redis_key_for_resource
+from actionlog.queues import redis_key_for_resource, redis_key_for_project
 from datastores.txredis import TxRedisMapper, redis_exception_handler
 
 register = template.Library()
@@ -87,10 +88,19 @@ class RecentLogNode(template.Node):
         redis_key = self.key_func(self.obj)
         events = self._action_logs_from_redis(redis_key)
         if events is None:
-            events = LogEntry.objects.filter(
-                content_type=ContentType.objects.get_for_model(self.model),
-                object_id=self.obj.id
-            )
+            Project = get_model('projects', 'Project')
+            if isinstance(self.obj, Project) and self.obj.is_hub:
+                ids = [self.obj.id, ]
+                ids += self.obj.outsourcing.all().values_list('id', flat=True)
+                events = LogEntry.objects.filter(
+                    content_type=ContentType.objects.get_for_model(Project),
+                    object_id__in=ids
+                )[:5]
+            else:
+                events = LogEntry.objects.filter(
+                    content_type=ContentType.objects.get_for_model(self.model),
+                    object_id=self.obj.id
+                )[:5]
         context[self.context_var] = events
 
     @redis_exception_handler
@@ -102,8 +112,8 @@ class RecentLogNode(template.Node):
         return r.lrange(key, 0, -1)
 
 
-def recent_resource_log(parser, token):
-    """Return the most recent logs of the specified resource."""
+def _parse_recent_log_args(token):
+    """Parse the token of a recent log tags and return the useful values."""
     tokens = token.split_contents()
     if len(tokens) != 4:
         msg = "Wrong number of arguments for %s."
@@ -111,11 +121,24 @@ def recent_resource_log(parser, token):
     elif tokens[2] != 'as':
         msg = "Wrong syntax for %s: third argument must be the keyword 'as'"
         raise template.TemplateSyntaxError(msg % tokens[0])
-    resource = tokens[1]
-    context_var = tokens[3]
+    return (tokens[1], tokens[3])
+
+
+def recent_resource_log(parser, token):
+    """Return the most recent logs of the specified resource."""
+    (resource, context_var) = _parse_recent_log_args(token)
     Resource = get_model('resources', 'Resource')
     return RecentLogNode(Resource, resource, redis_key_for_resource, context_var)
+
+
+def recent_project_log(parser, token):
+    """Return the most recent logs of the specified resource."""
+    (project, context_var) = _parse_recent_log_args(token)
+    Project = get_model('projects', 'Project')
+    return RecentLogNode(Project, project, redis_key_for_project, context_var)
+
 
 register.tag('get_log', DoGetLog('get_log'))
 register.tag('get_public_log', DoGetLog('get_public_log'))
 register.tag('recent_resource_log', recent_resource_log)
+register.tag('recent_project_log', recent_project_log)

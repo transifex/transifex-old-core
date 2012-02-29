@@ -9,7 +9,6 @@ import markdown
 from django.conf import settings
 from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
-from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_slug
@@ -331,33 +330,6 @@ class Project(models.Model):
             return os.path.join(settings.STATIC_URL, settings.PROJECT_LOGO_DEFAULT)
         else:
             return None
-
-    def get_action_logs(self):
-        """
-        Return actionlog entries for the given project plus the actionlogs of
-        the hub projects, in case it's a hub.
-        """
-        events = self._action_logs_from_redis()
-        if events is not None:
-            return events
-        # Fallback to db -- really needed?
-        ids = [self.id]
-        if self.is_hub:
-            ids += self.outsourcing.all().values_list('id', flat=True)
-        return LogEntry.objects.filter(
-            content_type=ContentType.objects.get_for_model(Project),
-            object_id__in=ids)
-
-    @property
-    def recent_history_key(self):
-        """Get the key to use in the recent history list in redis."""
-        return 'project:history:%s' % self.slug
-
-    @redis_exception_handler
-    def _action_logs_from_redis(self):
-        """Get the action logs from redis."""
-        r = TxRedisMapper()
-        return r.lrange(self.recent_history_key, 0, -1)
 
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
