@@ -56,7 +56,11 @@ class TestTeams(base.BaseTestCase):
         self.assertContains(resp, "You requested creation of the &#39;%s&#39; team."%(language.name))
         self.assertEqual(resp.status_code, 200)
 
+    def test_team_requests_on_team_creation(self):
         #test team request after a team is created
+        language = self.language_ar
+        url = reverse('team_request', args=[self.project.slug])
+        self.test_team_request()
         self.test_create_team()
         self.assertTrue(TeamAccessRequest.objects.get(user=self.user[
             'registered'], team__project=self.project,
