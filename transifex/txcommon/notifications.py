@@ -311,9 +311,9 @@ NOTICE_TYPES = [
             },
             {
                 "label": "project_resource_full_reviewed",
-                "display": _("Resource translation 100% reviewed"),
+                "display": _("Resource translation fully reviewed"),
                 "description": _("when a resource translation of one of your "
-                    "projects reach 100% reviewed strings"),
+                    "projects becomes fully reviewed"),
                 "default": 2,
                 "show_to_user": True,
             },
