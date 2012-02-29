@@ -17,7 +17,8 @@ from tagging_autocomplete.widgets import TagAutocomplete
 from transifex.projects.models import Project
 from transifex.projects.signals import (project_access_control_form_start,
                                         project_form_init, project_form_save,
-                                        project_private_check)
+                                        project_private_check,
+                                        project_type_check)
 from transifex.txcommon.widgets import SplitSelectDateTimeWidget
 
 
