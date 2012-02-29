@@ -2,26 +2,24 @@
 {% load i18n %}
 {% url release_create project_slug=project.slug as release_create %}
 
-{% with project.releases.all as releases %}
-
 {% if releases %}
 
   <div id="releases" class="releases">
-  
+
   {% if not releases_heading %}
   <div class="separate-header clearfix">
   	<h3  class="sh-label notopmargin">{% trans "Project releases" %}</h3>
   	{% if perms.projects.pr_release_add_change or is_maintainer %}
   	<div class="separate-buttons"><a class="i16 add nude-button" href="{{ release_create }}" title="{% trans 'Add' %}">{% trans "Add new release "%}</a></div>
-  	{% endif %}  
-	</div> 
+  	{% endif %}
+	</div>
   {% else %}
   <div class="separate-header clearfix">
   	<h3  class="sh-label notopmargin">{{ releases_heading }}{% render_metacount releases _("releases") %}</h3>
 	</div>
   {% endif %}
 
-  
+
   <div class="release_list">
     <ul class="nomargin">
     {% for release in releases %}
@@ -50,6 +48,3 @@
     </div>
   {% endif %}
 {% endif %}
-
-{% endwith %}
-

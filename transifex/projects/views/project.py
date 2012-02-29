@@ -346,6 +346,7 @@ def project_detail(request, project_slug):
         'available_teams_codes': available_teams_codes,
         'team_requests': team_requests,
         'maintainers': project.maintainers.select_related('profile').all()[:6],
+        'releases': project.releases.select_related('project').all(),
     }, context_instance=RequestContext(request))
 
 
