@@ -3,6 +3,7 @@ import re, httplib
 from polib import escape, unescape
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.core.cache import cache
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -162,6 +163,8 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         auto_translate = GtModel.objects.get(project=project)
     except GtModel.DoesNotExist:
         auto_translate = None
+    if cache.get('lotte_%s' % request.session.session_key, None):
+        cache.delete('lotte_%s' % request.session.session_key)
 
     return render_to_response("translate.html", {
         'project': project,
@@ -311,10 +314,11 @@ def stringset_handling(request, project_slug, lang_code, resource_slug=None,
     review = check.proofread(project, language)
 
     # FIXME Do we need to check for non-POST requests and return an error?
-    return _get_stringset(request.POST, resources, language, review=review)
+    return _get_stringset(request.POST, resources, language, review=review,
+            session=request.session)
 
 
-def _get_stringset(post_data, resources, language, review=False, *args, **kwargs):
+def _get_stringset(post_data, resources, language, review=False, session='', *args, **kwargs):
     """Return the source strings for the specified resources and language
     based on the filters active in the request.
 
@@ -327,7 +331,8 @@ def _get_stringset(post_data, resources, language, review=False, *args, **kwargs
     source_language = get_source_language(resources)
     try:
         source_strings = _get_source_strings_for_request(
-            post_data, resources, source_language, language
+            post_data, resources, source_language, language,
+            session
         )
     except LotteBadRequestError, e:
         logger.warning("Error in lotte filters: %s" % e.message, exc_info=True)
@@ -483,7 +488,8 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
     return HttpResponse(status=200)
 
 
-def _get_source_strings_for_request(post_data, resources, source_language, language):
+def _get_source_strings_for_request(post_data, resources, source_language,
+        language, session):
     """Return the source strings that correspond to the filters in the request.
 
     Use powers of two for each possible filter, so that we can get a unique
@@ -559,12 +565,29 @@ def _get_source_strings_for_request(post_data, resources, source_language, langu
         _get_none_source_strings,
         _get_none_source_strings,
     ]
-
-    return querysets[index](
-        resources=resources,
-        language=language,
-        users=users
-    )
+    if cache.get('lotte_%s' % session.session_key, None):
+        cached_data = cache.get('lotte_%s' % session.session_key)
+        if index != cached_data['index']:
+            qset = querysets[index](
+                resources=resources,
+                language=language,
+                users=users
+            )
+            cached_data['index'] = index
+            cached_data['qset'] = qset
+            cache.set('lotte_%s' % session.session_key, cached_data)
+            return qset
+        else:
+            return cached_data['qset']
+    else:
+        qset =  querysets[index](
+            resources=resources,
+            language=language,
+            users=users
+        )
+        cache.set('lotte_%s' % session.session_key, {'index': index,
+            'qset': qset})
+        return qset
 
 
 def _get_all_source_strings(resources, *args, **kwargs):
