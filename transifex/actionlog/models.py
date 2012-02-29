@@ -1,5 +1,6 @@
 import datetime
 from django.db import models
+from django.db.models import get_model
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
@@ -11,7 +12,8 @@ from django.utils.translation import get_language, activate
 from notification.models import NoticeType
 from transifex.txcommon.log import logger
 try:
-    from datastores import TxRedisMapper, ConnectionError
+    from datastores import TxRedisMapper, ConnectionError, \
+            redis_exception_handler
     USE_REDIS = True
 except ImportError, e:
     logger.debug("Redis backend not imported.")
@@ -276,6 +278,7 @@ def _log_to_queues(o, user_id, action_time, message):
     try:
         if isinstance(o, Project):
             _log_to_recent_project_actions(o, user_id, action_time, message)
+            _log_to_project_history(o, action_time, message)
     except ConnectionError, e:
         logger.critical("Cannot connect to redis: %s" % e, exc_info=True)
         return
@@ -313,3 +316,16 @@ def _log_to_recent_project_actions(p, user_id, action_time, message):
     except Exception, e:
         msg = "Error saving latest event to redis: %s"
         logger.error(msg % e, exc_info=True)
+
+
+@redis_exception_handler
+def _log_to_project_history(project, action_time, message):
+    """Log a message to a project's history queue."""
+    Project = get_model('projects', 'Project')
+    data = {
+        'action_time': action_time,
+        'message': message,
+    }
+    r = TxRedisMapper()
+    r.lpush(project.recent_history_key, data=data)
+    r.ltrim(key, 0, 4)

@@ -31,10 +31,11 @@ from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
 from transifex.projects.signals import project_created, project_deleted
 from transifex.languages.models import Language
+from datastores import TxRedisMapper, redis_exception_handler
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"])
 
-# Settings for the Project.logo field, based on the userena settings mugshot 
+# Settings for the Project.logo field, based on the userena settings mugshot
 # settings
 PROJECT_LOGO_SETTINGS = {'size': (settings.USERENA_MUGSHOT_SIZE,
                                   settings.USERENA_MUGSHOT_SIZE),
@@ -328,7 +329,7 @@ class Project(models.Model):
         # Check for a default image.
         elif getattr(settings, 'PROJECT_LOGO_DEFAULT', None):
             return os.path.join(settings.STATIC_URL, settings.PROJECT_LOGO_DEFAULT)
-        else: 
+        else:
             return None
 
     def get_action_logs(self):
@@ -336,12 +337,27 @@ class Project(models.Model):
         Return actionlog entries for the given project plus the actionlogs of
         the hub projects, in case it's a hub.
         """
+        events = self._action_logs_from_redis()
+        if events is not None:
+            return events
+        # Fallback to db -- really needed?
         ids = [self.id]
         if self.is_hub:
             ids += self.outsourcing.all().values_list('id', flat=True)
         return LogEntry.objects.filter(
             content_type=ContentType.objects.get_for_model(Project),
             object_id__in=ids)
+
+    @property
+    def recent_history_key(self):
+        """Get the key to use in the recent history list in redis."""
+        return 'project:history:%s' % self.slug
+
+    @redis_exception_handler
+    def _action_logs_from_redis(self):
+        """Get the action logs from redis."""
+        r = TxRedisMapper()
+        return r.lrange(self.recent_history_key, 0, -1)
 
 try:
     tagging.register(Project, tag_descriptor_attr='tagsobj')
