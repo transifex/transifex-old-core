@@ -62,7 +62,7 @@ class UpdateTranslationForm(forms.Form):
     translation_file = forms.FileField(label=_("Translation File"))
     target_language = forms.ChoiceField(
         label=_('Language'), widget=forms.HiddenInput,
-        choices=[(l.code, l) for l in Language.objects.all()],
+        choices=language_choice_list(),
         help_text=_("The language of the translation.")
     )
 
