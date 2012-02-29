@@ -8,20 +8,14 @@ def entity_translation(source_entity, language):
 
 
 @register.filter
-def sort_source_langs_first(rlstats, source_languages):
+def sort_source_langs_first(rlstats, source_language_codes):
     """
     Take a RLStats aggregated queryset and move the entries related to the
     source_languages to the top of the list.
     """
-    try:
-        codes = language_codes_list(source_languages)
-    except AttributeError, e:
-        # FIXME
-        # source_languages is empty tuple
-        codes = []
     rlstats_source_list, rlstats_list = [], []
     for r in rlstats:
-        if r.object.code in codes:
+        if r.object.code in source_language_codes:
             rlstats_source_list.append(r)
         else:
             rlstats_list.append(r)

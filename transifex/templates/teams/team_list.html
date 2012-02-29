@@ -82,15 +82,14 @@
       <th class="onlyarrow tablecompletion"></th>
       <th class="onlyarrow tablelastupd"></th>
      </tr>
-    {% with source_languages|language_codes_list as source_language_codes %}
-    {% for stat in language_stats|sort_source_langs_first:source_languages %}
+    {% for stat in language_stats|sort_source_langs_first:source_language_codes %}
     {% if stat.first_translation %}
       </thead>
       <tbody>
     {% endif %}
 	<tr {% if not stat.object.code in available_teams_codes %} class="nomembers{% if stat.object.code in source_language_codes  %} sourcelang{%endif%}" {% endif %} >
     <td class="tableobject">
-    
+
     {% if not project.outsource %}
       <a href="{% url team_detail project.slug stat.object.code %}"  class="tipsy_enable" title="language code: {{ stat.object.code }}" >{{ stat.object.name }}</a>
     {% else %}
@@ -126,7 +125,7 @@
       {% endif %}
     {% endif %}
     </td>
-    <td class="tablecompletion">    
+    <td class="tablecompletion">
       {% with 180 as barwidth %}
           {% stats_bar_simple stat barwidth %}
       {% endwith %}
@@ -136,7 +135,6 @@
     </td>
   </tr>
   {% endfor %}
-  {% endwith %}
   </tbody>
   </table>
   {% else %}

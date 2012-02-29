@@ -306,13 +306,15 @@ def project_detail(request, project_slug):
     project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
     team_request_form = TeamRequestSimpleForm(project)
 
-    source_languages = Language.objects.filter(Q(id=project.source_language.id) |
-        Q(id__in=project.outsourcing.all().values('source_language').distinct())).distinct()
+    source_language_codes = Language.objects.filter(
+        Q(id=project.source_language.id) |
+        Q(id__in=project.outsourcing.all().values('source_language').distinct())
+    ).distinct().values_list('code', flat=True)
 
     language_stats = RLStats.objects.for_user(request.user
         ).by_project_language_aggregated(project)
 
-    teams = project.available_teams.annotate(
+    teams = project.available_teams.values('id').annotate(
         request_count=Count('join_requests', distinct=True),
         member_count=Count('members', distinct=True),
         reviewer_count=Count('reviewers', distinct=True),
@@ -341,7 +343,7 @@ def project_detail(request, project_slug):
         'teams': team_dict,
         'languages': Language.objects.all(),
         'language_stats': language_stats,
-        'source_languages': source_languages,
+        'source_language_codes': source_language_codes,
         'team_request_form': team_request_form,
         'available_teams_codes': available_teams_codes,
         'team_requests': team_requests,
