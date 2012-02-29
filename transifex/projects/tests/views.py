@@ -59,7 +59,7 @@ class ProjectViewsTests(base.BaseTestCase, base.NoticeTypes):
 
     def test_project_edit(self):
         resp = self.client['maintainer'].get(self.urls['project_edit'])
-        self.assertContains(resp, "Edit Test Project", status_code=200)
+        self.assertContains(resp, "Edit the details of your project", status_code=200)
         self.assertContains(resp, self.project.maintainers.all()[0])
         self.assertNotContains(resp, "Owner")
         #save edited project

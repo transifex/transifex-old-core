@@ -66,7 +66,6 @@ URL_ROLES_OUTSOURCE = {
         'POST:/projects/p/project1/access/rq/1/approve/',
     ],
     '(200, {}, "Outsourcing")':[
-        'GET:/projects/p/project1/languages/add/',
         'GET:/projects/p/project1/language/pt_BR/',
         'GET:/projects/p/project1/language/pt_BR/members/',
         'GET:/projects/p/project1/language/pt_BR/edit/',
@@ -76,10 +75,13 @@ URL_ROLES_OUTSOURCE = {
         'POST:/projects/p/project1/language/pt_BR/deny/diegobz/',
         'POST:/projects/p/project1/language/pt_BR/withdraw/',
         'POST:/projects/p/project1/language/pt_BR/leave/',
-        'POST:/projects/p/project1/languages/request/',
         'POST:/projects/p/project1/language/el/approve/',
         'POST:/projects/p/project1/language/el/deny/',
     ],
+    '(200, {}, "Child project")': [
+        'GET:/projects/p/project1/languages/add/',
+        'POST:/projects/p/project1/languages/request/',
+     ]
 }
 
 class ProjectAccessControlTestCase(BaseTestCase):
@@ -195,12 +197,17 @@ class ProjectAccessControlTestCase(BaseTestCase):
         """Test edit of project access control"""
         url = reverse('project_access_control_edit', args=[self.project.slug,])
         resp = self.client['maintainer'].get(url)
-        self.assertContains(resp, '<label for="id_access_control_1"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, '<label for="id_access_control_1">'\
+                '<input checked="checked" name="access_control" value='\
+                '"limited_access"', status_code=200)
 
         #change access control to outsourced access
-        DATA = {'project_type':'outsourced', 'access_control':"free_for_all", 'next': url, 'outsource': '22'}
+        DATA = {'project_type':'outsourced', 'access_control':"free_for_all",
+                'next': url, 'outsource': '22'}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
-        self.assertContains(resp, '<label for="id_project_type_2"><input checked="checked" type="radio"', status_code=200)
+        self.assertContains(resp, '<label for="id_project_type_2"><input'\
+                ' checked="checked" name="project_type" value="outsourced"',
+                status_code=200)
 
         #change access control to outsourced with not outsource field filled
         DATA = {'project_type':'outsourced', 'next': url, 'outsource': ''}
@@ -223,7 +230,8 @@ class ProjectAccessControlTestCase(BaseTestCase):
         self.assertContains(resp, 'This field is required', status_code=200)
 
         #change access control as hub and free for all
-        DATA = {'project_type':'hub', 'access_control':"free_for_all", 'next': url, 'outsource': ''}
+        DATA = {'project_type':'hub', 'access_control':"free_for_all",
+                'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
         self.assertContains(resp, 'Free for all')
         self.assertContains(resp, 'Hub')
