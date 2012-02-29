@@ -11,14 +11,22 @@
 
 {% block extra_head %}
 <script type="text/javascript">
-  $(function(){
-    $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-    $("#join-facebox-trigger").facebox();
-    $('#id_project').chosen();
-    $('#id_project').change(function() {
-      $("#filter-form").submit();
-    });
-   })
+$(function(){
+  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+  $("#join-facebox-trigger").facebox();
+  $('#id_project').chosen();
+  $('#id_project').change(function() {
+    $("#filter-form").submit();
+  });
+
+  $(".stat-row").click(function() {
+    var project_slug = $(this).data('project');
+    var resource_slug = $(this).data('resource');
+    var actions_url_tmpl = '{% url resource_actions 11111 22222 language.code %}';
+    var actions_url = actions_url_tmpl.replace('11111', project_slug).replace('22222', resource_slug);
+    $.facebox({ ajax: actions_url })
+  });
+})
 </script>
 {% endblock %}
 
@@ -29,7 +37,6 @@
 {% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 
 <div class="obj_bigdetails">
-
 {% if not project.anyone_submit %}
   <div class="separate-header notopmargin clearfix" style="background:none; margin-bottom:0.8em;padding-bottom:0px;">
   	<h3  class="sh-label">{% trans "Overall Progress" %}</h3>
@@ -95,8 +102,6 @@
 {% endif %}
 
 
-
-
 <div class="list" style="clear:both">
 
   <div class="separate-header clearfix" style="margin-bottom:0;">
@@ -131,8 +136,7 @@
   <tbody>
 
   {% for stat in statslist %}
-
-  <tr id="stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+  <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
   {% cache 604800 team_details stat.resource.project.slug language.code stat.resource.id LANGUAGE_CODE %}
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</strong></span>
@@ -175,20 +179,11 @@
       </span>
     </td>
   </tr>
-
-  <script type="text/javascript">
-    jQuery(document).ready(function($){
-        $("#stat_row_{{forloop.counter}}").click(function(){
-            jQuery.facebox({ ajax: '{% url resource_actions stat.resource.project.slug stat.resource.slug language.code %}' })
-        });
-    })
-  </script>
   {% endfor %}
 
 
   {% for resource in empty_rlstats %}
-
-  <tr id="empty_stat_row_{{forloop.counter}}" title="{% trans 'click for translation' %}">
+  <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ resource.project.slug }}" data-resource="{{ resource.slug }}">
   {% cache 604800 team_details resource.project.slug language.code resource.id LANGUAGE_CODE %}
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
@@ -219,17 +214,7 @@
       </span>
     </td>
   </tr>
-
-  <script type="text/javascript">
-    jQuery(document).ready(function($){
-      $("#empty_stat_row_{{forloop.counter}}").click(function(){
-        jQuery.facebox({ ajax: '{% url resource_actions resource.project.slug resource.slug language.code %}' })
-      });
-                })
-  </script>
   {% endfor %}
-
-
   </table>
   {% else %}
     <p>{% trans "No resources are registered for this project yet." %}</p>

@@ -199,7 +199,7 @@ def team_detail(request, project_slug, language_code):
     projects_filter = []
     if filter_form.is_valid():
         projects_filter = filter_form.cleaned_data['project'] 
-    
+
     if team and request.user.is_authenticated():
         user_access_request = request.user.teamaccessrequest_set.filter(
             team__pk=team.pk)
@@ -223,7 +223,12 @@ def team_detail(request, project_slug, language_code):
 
     total_entries = Resource.objects.by_project(project).aggregate(
         total_entities=Sum('total_entities'))['total_entities']
-    
+
+    if team:
+        coordinators = team.coordinators.all()[:6]
+    else:
+        coordinators = None
+
     return render_to_response("teams/team_detail.html", {
         "project": project,
         "language": language,
@@ -234,7 +239,6 @@ def team_detail(request, project_slug, language_code):
         "empty_rlstats": empty_rlstats,
         "filter_form": filter_form,
         "total_entries": total_entries,
-        "coordinators": team.coordinators.all()[:6],
     }, context_instance=RequestContext(request))
 
 @access_off(team_off)
