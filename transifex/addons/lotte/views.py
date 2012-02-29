@@ -575,7 +575,8 @@ def _get_source_strings_for_request(post_data, resources, source_language,
             )
             cached_data['index'] = index
             cached_data['qset'] = qset
-            cache.set('lotte_%s' % session.session_key, cached_data)
+            cache.set('lotte_%s' % session.session_key, cached_data,
+                    2*60*60)
             return qset
         else:
             return cached_data['qset']
@@ -586,7 +587,7 @@ def _get_source_strings_for_request(post_data, resources, source_language,
             users=users
         )
         cache.set('lotte_%s' % session.session_key, {'index': index,
-            'qset': qset})
+            'qset': qset}, 2*60*60)
         return qset
 
 
