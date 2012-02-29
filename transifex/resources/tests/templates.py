@@ -115,15 +115,16 @@ class ResourcesTemplateTests(BaseTestCase):
             self.assertNotContains(resp, 'Forbidden_access', status_code=403)
 
     def test_disabled_visit_team_resource_actions(self):
-        """Test that languages with no team or existing translations don't have
-        an action page."""
+        """Test that resource actions page will work even when there is no
+        RLStat object, allowing to start translations for new languages."""
         # We chose Finnish language which has no corresponding project team.
         lang = Language.objects.by_code_or_alias('fi')
         resp = self.client['maintainer'].get(
             reverse('resource_actions', args=[self.resource.project.slug,
-                                              self.resource.slug, lang.code]),
+                self.resource.slug, lang.code]),
         )
-        self.assertEqual(resp.status_code, 404)
+        self.assertTemplateUsed(resp, 'resources/resource_actions.html')
+        self.assertEqual(resp.status_code, 200)
 
     def test_resource_details_team_and_zero_percent(self):
         """Test that languages with teams and 0% are presented."""
