@@ -98,7 +98,7 @@
   	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
   	{% if perms.projects.edit_resource or is_maintainer or request.user.is_superuser %}
   	<div class="separate-buttons"><a class="i16 edit nude-button" href="{% url resource_edit project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Edit resource" %}</a></div>
-  	{% endif %}  
+  	{% endif %}
 	</div>
 
 
@@ -118,7 +118,7 @@
             {% trans "No translations accepted" %}
         {% endif %}
       </dd>
-      
+
     {% if resource.priority %}
     {% with resource.priority.level as priority_level %}
     {% with resource.priority.display_level as display_level %}
@@ -156,7 +156,7 @@
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
 <div class="separate-header  clearfix">
 	<h3  class="sh-label">{% blocktrans with resource.available_languages|length as num_of_langs %}Available languages ({{ num_of_langs }}){% endblocktrans %}</h3>
-	{% if can_submit_translation and resource.accept_translations or is_maintainer %}  
+	{% if can_submit_translation and resource.accept_translations or is_maintainer %}
   <div class="separate-buttons"><a id="new_translation1" class="i16 nude-button add tipsy_enable linkstyle" title="{% blocktrans %}If you cannot see your language, click the button below to translate( You must belong to a language team of this project, to be able to translate! ){% endblocktrans %}">{% trans "Add new translation" %}</a></div>
 	{% endif %}
 </div>
@@ -192,7 +192,7 @@
           <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% endif %}
       </td>
-      <td class="tablecompletion">	
+      <td class="tablecompletion">
 	      {% with 200 as barwidth %}
 	        {% stats_bar_simple stat barwidth %}
 	      {% endwith %}
@@ -230,14 +230,14 @@
 </div>
 
 {% load tx_action_log %}
-{% get_log 5 as action_log for_object resource %}
+{% recent_resource_log resource as action_log %}
 {% if not action_log %}
 <p class="i16 infomsg">{% trans 'No actions recorded yet :)' %}</p>
 {% else %}
 <ul class="actionlist nomargin">
 {% for entry in action_log %}
 	<li class="i16 {{entry.action_type}}">
-	    <p>{{ entry.message|safe }}</p> 
+	    <p>{{ entry.message|safe }}</p>
         <span class="timestamp">{{ entry.action_time|timesince }} ago</span>
 	</li>
 {% endfor %}
