@@ -163,8 +163,10 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         auto_translate = GtModel.objects.get(project=project)
     except GtModel.DoesNotExist:
         auto_translate = None
+    """
     if cache.get('lotte_%s' % request.session.session_key, None):
         cache.delete('lotte_%s' % request.session.session_key)
+    """
 
     return render_to_response("translate.html", {
         'project': project,
@@ -565,6 +567,7 @@ def _get_source_strings_for_request(post_data, resources, source_language,
         _get_none_source_strings,
         _get_none_source_strings,
     ]
+    """
     if cache.get('lotte_%s' % session.session_key, None):
         cached_data = cache.get('lotte_%s' % session.session_key)
         if index != cached_data['index']:
@@ -589,6 +592,12 @@ def _get_source_strings_for_request(post_data, resources, source_language,
         cache.set('lotte_%s' % session.session_key, {'index': index,
             'qset': qset}, 2*60*60)
         return qset
+    """
+    return querysets[index](
+            resources=resources,
+            language=language,
+            users=users
+        )
 
 
 def _get_all_source_strings(resources, *args, **kwargs):
