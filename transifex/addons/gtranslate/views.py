@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
+from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import simplejson
@@ -41,7 +42,16 @@ def languages(request, project_slug):
 
     try:
         service = Gtranslate.objects.get(project__slug=project_slug)
-        resp = service.languages(target_lang)
+        service_type = service.service_type
+        if service_type == 'BT':
+            cache_key = 'bing_translate'
+        elif service_type == 'GT':
+            cache_key == 'google_translate'
+        if cache.get(cache_key, None):
+            resp = cache.get('bing_translate')
+        else:
+            resp = service.languages(target_lang)
+            cache.set(cache_key, resp, 24*60*60)
         return HttpResponse(resp)
     except Gtranslate.DoesNotExist:
         return HttpResponse(simplejson.dumps({"error": "Auto-translate not available."}))
