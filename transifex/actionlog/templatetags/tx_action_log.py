@@ -148,7 +148,7 @@ def recent_team_log(parser, token):
 
 
 register.tag('get_log', DoGetLog('get_log'))
-register.tag('recent_team_log', recent_team_log)
 register.tag('get_public_log', DoGetLog('get_public_log'))
 register.tag('recent_resource_log', recent_resource_log)
 register.tag('recent_project_log', recent_project_log)
+register.tag('recent_team_log', recent_team_log)
