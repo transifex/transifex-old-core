@@ -93,3 +93,18 @@ def _log_to_resource_history(resource, action_time, action_type, message):
     r = TxRedisMapper()
     r.lpush(key, data=data)
     r.ltrim(key, 0, 4)
+
+
+@redis_exception_handler
+def _log_to_team_history(team, action_time, action_type, message):
+    """Log a message to a team's history queue."""
+    Resource = get_model('teams', 'Team')
+    key = redis_key_for_team(team)
+    data = {
+        'action_time': action_time,
+        'message': message,
+        'action_type': action_type,
+    }
+    r = TxRedisMapper()
+    r.lpush(key, data=data)
+    r.ltrim(key, 0, 4)

@@ -228,7 +228,7 @@ $(function(){
     <h3  class="sh-label">{% trans "History" %}</h3>
 </div>
 {% load tx_action_log %}
-{% get_log 5 as action_log for_object team %}
+{% recent_team_log team as action_log %}
 {% if not action_log %}
 <p>{% trans 'None available' %}</p>
 {% else %}
