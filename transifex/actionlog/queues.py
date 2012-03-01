@@ -62,13 +62,14 @@ def _log_to_recent_project_actions(p, user_id, action_time, message):
 
 
 @redis_exception_handler
-def _log_to_project_history(project, action_time, message):
+def _log_to_project_history(project, action_time, action_type, message):
     """Log a message to a project's history queue."""
     Project = get_model('projects', 'Project')
     key = redis_key_for_project(project)
     data = {
         'action_time': action_time,
         'message': message,
+        'action_type': action_type,
     }
     r = TxRedisMapper()
     r.lpush(key, data=data)
@@ -87,6 +88,7 @@ def _log_to_resource_history(resource, action_time, message):
     data = {
         'action_time': action_time,
         'message': message,
+        'action_type': action_type,
     }
     r = TxRedisMapper()
     r.lpush(key, data=data)
