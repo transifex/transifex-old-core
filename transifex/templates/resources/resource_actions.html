@@ -57,6 +57,7 @@
 
 </script>
 
+{% hook "pro_files.html" script %}
 
 <style>
 .more_actions .tipsy_enable{font-weight:bold;float:right;color:#bbb;cursor:default;display:none;}
@@ -255,6 +256,7 @@
                 </div>
             {% endif %}
           </li>
+          {% hook "pro_files.html" links %}
           {% endifnotequal %}
 
           {% if resource.source_language == target_language and request.user.is_authenticated %}
