@@ -18,6 +18,10 @@ def redis_key_for_project(project):
     return 'project:history:%s' % project.slug
 
 
+def redis_key_for_team(team):
+    return 'team:history:%s:%s' % (team.project_id, team.language_id)
+
+
 @redis_exception_handler
 def log_to_queues(o, user_id, action_time, message):
     """Log actions to redis' queues."""
