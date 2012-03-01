@@ -41,7 +41,7 @@ class TxRedis(object):
 class TxRedisMapper(TxRedis):
     """A redis wrapper which provides support for objects, too."""
 
-    set_methods = ['set', 'lpush',]
+    set_methods = ['set', 'lpush', 'rpush', ]
     get_methods = ['get', 'lrange', 'lpop',]
 
     def __getattr__(self, name):
