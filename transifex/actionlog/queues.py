@@ -81,9 +81,9 @@ def _log_to_project_history(project, action_time, action_type, message):
 
 
 @redis_exception_handler
-def _log_to_resource_history(resource, action_time, message):
-    """Log a message to a respurce's history queue."""
-    Resource = get_model('resource', 'Resource')
+def _log_to_resource_history(resource, action_time, action_type, message):
+    """Log a message to a resource's history queue."""
+    Resource = get_model('resources', 'Resource')
     key = redis_key_for_resource(resource)
     data = {
         'action_time': action_time,
