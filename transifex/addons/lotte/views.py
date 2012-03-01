@@ -943,6 +943,9 @@ def _save_translation(source_string, translations, target_language, user):
                     raise LotteBadRequestError(
                         _("The translation string is empty")
                     )
+        except LotteBadRequestError, e:
+            logger.debug("%s" % e, exc_info=True)
+            raise
         # catch-all. if we don't save we _MUST_ inform the user
         except Exception, e:
             msg = _(
