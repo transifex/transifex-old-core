@@ -4,8 +4,9 @@ from __future__ import absolute_import
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.contenttypes.models import ContentType
 from transifex.actionlog.models import LogEntry
+from transifex.actionlog.queues import redis_key_for_project
 from datastores.txredis import TxRedisMapper
-from ...models import Project
+from transifex.projects.models import Project
 
 
 class Command(BaseCommand):
@@ -32,12 +33,13 @@ class Command(BaseCommand):
             object_id__in=ids
         )[:5]
         r = TxRedisMapper()
-        key = project.recent_history_key
+        key = redis_key_for_project(project)
         for entry in entries:
             data = {
                 'action_time': entry.action_time,
                 'message': entry.message,
+                'action_type': entry.action_type
             }
-            r.lpush(key, data=data)
+            r.rpush(key, data=data)
         r.ltrim(key, 0, 4)
 
