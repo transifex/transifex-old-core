@@ -46,10 +46,12 @@
 
 {% block content_title%}
 <h2 class="pagetitle with_description">{% trans "Register" %}</h2>
-<div class="description"></div>
+<div class="description">{% trans "Get started with transifex and optimize your localization workflow" %}</div>
 {% endblock %}
 
 {% block content_main %}
+
+<div class="grid_7 alpha">
 <div class="separate-header clearfix" style="width:556px;"><div class="sh-label">{% trans "Credentials"%}</div></div>
 
 <form id="signup-form" class="tx-form dual" action="" method="post" style="width:700px;">
@@ -82,9 +84,11 @@
 
   <input type="submit" class="i16 tick buttonized" value="{% trans "Sign up"%}" />
 </form>
+</div>
 
-
-
+<div class="grid_5 omega">
+<img src="{{ STATIC_URL }}images/register-screenshot.jpg"/>
+</div>
 
 
 {% endblock %}
