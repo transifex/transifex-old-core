@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 19:19+0000\n"
+"POT-Creation-Date: 2012-03-02 11:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,8 @@ msgstr ""
 
 #: addons/autofetch/models.py:28 addons/copyright/models.py:89
 #: resources/models.py:391 resources/models.py:680 resources/models.py:922
-#: resources/models.py:1035 templates/resources/resource_actions.html:69
+#: resources/models.py:1035 templates/resources/resource_actions copy.html:68
+#: templates/resources/resource_actions.html:70
 msgid "Resource"
 msgstr ""
 
@@ -295,6 +296,7 @@ msgstr ""
 
 #: addons/copyright/models.py:97
 #: addons/lotte/templates/tab_details_snippet.html:79
+#: addons/lotte2/templates/tab_details_snippet.html:79
 msgid "Comment"
 msgstr ""
 
@@ -545,91 +547,99 @@ msgid ""
 "transifex command-line client."
 msgstr ""
 
-#: addons/lotte/views.py:414
+#: addons/lotte/views.py:416
 msgid "Save the specific change"
 msgstr ""
 
-#: addons/lotte/views.py:415
+#: addons/lotte/views.py:417
 msgid "Check spelling"
 msgstr ""
 
-#: addons/lotte/views.py:416
+#: addons/lotte/views.py:418
 msgid "Undo to initial text"
 msgstr ""
 
-#: addons/lotte/views.py:430 addons/lotte/views.py:432
+#: addons/lotte/views.py:432 addons/lotte/views.py:434
 msgid "Reviewed string"
 msgstr ""
 
-#: addons/lotte/views.py:777
+#: addons/lotte/views.py:786
 msgid "Source string cannot be identified in the DB"
 msgstr ""
 
-#: addons/lotte/views.py:784
+#: addons/lotte/views.py:793
 msgid "The resource of this source string is not accepting translations."
 msgstr ""
 
-#: addons/lotte/views.py:807
+#: addons/lotte/views.py:816
 msgid ""
 "Cannot save unless plural translations are either completely specified or "
 "entirely empty!"
 msgstr ""
 
-#: addons/lotte/views.py:904
+#: addons/lotte/views.py:913
 msgid "You are not allowed to edit a reviewed string."
 msgstr ""
 
-#: addons/lotte/views.py:935
+#: addons/lotte/views.py:944
 msgid "The translation string is empty"
 msgstr ""
 
-#: addons/lotte/views.py:940
+#: addons/lotte/views.py:952
 #, python-format
 msgid "Error occurred while trying to save translation: %s"
 msgstr ""
 
-#: addons/lotte/views.py:1100
+#: addons/lotte/views.py:1112
 msgid "Permission error."
 msgstr ""
 
-#: addons/lotte/views.py:1102 projects/views/hub.py:183
+#: addons/lotte/views.py:1114 projects/views/hub.py:183
 msgid "Bad request."
 msgstr ""
 
-#: addons/lotte/views.py:1120
+#: addons/lotte/views.py:1132
 msgid "No such Source Entity for the given project."
 msgstr ""
 
-#: addons/lotte/views.py:1127
+#: addons/lotte/views.py:1139
 msgid "Ops! Something weird happened. The admins were notified about it."
 msgstr ""
 
 #: addons/lotte/templates/filters_menu_resources.html:16
 #: addons/lotte/templates/filters_menu_users.html:16
+#: addons/lotte2/templates/filters_menu_resources.html:16
+#: addons/lotte2/templates/filters_menu_users.html:16
 msgid "No active contributor!"
 msgstr ""
 
 #: addons/lotte/templates/more_languages.html:20
+#: addons/lotte2/templates/more_languages.html:20
 msgid "No active languages!"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:31
+#: addons/lotte2/templates/tab_details_snippet.html:31
 msgid "Reverted to original comment from file."
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:46
+#: addons/lotte2/templates/tab_details_snippet.html:46
 msgid "Cancel"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:47
+#: addons/lotte2/templates/tab_details_snippet.html:47
 msgid "OK"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:48
+#: addons/lotte2/templates/tab_details_snippet.html:48
 msgid "Click to edit..."
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:49
+#: addons/lotte2/templates/tab_details_snippet.html:49
 msgid "Click here to add a comment"
 msgstr ""
 
@@ -638,7 +648,8 @@ msgid "Last translation:"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:65
-#: templates/resources/resource_actions.html:296
+#: templates/resources/resource_actions copy.html:310
+#: templates/resources/resource_actions.html:298
 msgid "by"
 msgstr ""
 
@@ -649,14 +660,17 @@ msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:75
 #: addons/lotte/templates/translate.html:262
+#: addons/lotte2/templates/tab_details_snippet.html:75
 msgid "Key"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:75
+#: addons/lotte2/templates/tab_details_snippet.html:75
 msgid "String ID:"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:76
+#: addons/lotte2/templates/tab_details_snippet.html:76
 #: addons/timeline/templates/timeline/timeline_base.html:46
 #: addons/txapps/models.py:49 languages/models.py:61
 #: languages/migrations/0001_initial.py:14
@@ -668,23 +682,29 @@ msgid "Description"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:76
+#: addons/lotte2/templates/tab_details_snippet.html:76
 msgid "Description:"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:80
+#: addons/lotte2/templates/tab_details_snippet.html:80
 msgid "Comment: "
 msgstr ""
 
-#: addons/lotte/templates/tab_details_snippet.html:85 resources/models.py:364
+#: addons/lotte/templates/tab_details_snippet.html:85
+#: addons/lotte2/templates/tab_details_snippet.html:85 resources/models.py:364
 msgid "Occurrences"
 msgstr ""
 
 #: addons/lotte/templates/tab_details_snippet.html:85
+#: addons/lotte2/templates/tab_details_snippet.html:85
 msgid "Occurrences:"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:10
-#: addons/lotte/templates/view_strings.html:8 addons/txapps/models.py:64
+#: addons/lotte/templates/view_strings.html:8
+#: addons/lotte2/templates/translate.html:9
+#: addons/lotte2/templates/view_strings.html:8 addons/txapps/models.py:64
 #: templates/base-sample.html:90 templates/projects/base.html:6
 #: templates/projects/project_list.html:14
 #: templates/resources/resource_detail.html:64
@@ -694,6 +714,8 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:13
 #: addons/lotte/templates/view_strings.html:11
+#: addons/lotte2/templates/translate.html:12
+#: addons/lotte2/templates/view_strings.html:11
 #, python-format
 msgid "Translate to %(lang)s"
 msgstr ""
@@ -706,31 +728,37 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:169
 #: addons/lotte/templates/view_strings.html:41
+#: addons/lotte2/templates/view_strings.html:41
 msgid "Processing..."
 msgstr ""
 
 #: addons/lotte/templates/translate.html:170
 #: addons/lotte/templates/view_strings.html:42
+#: addons/lotte2/templates/view_strings.html:42
 msgid "Show _MENU_ entries"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:171
 #: addons/lotte/templates/view_strings.html:43
+#: addons/lotte2/templates/view_strings.html:43
 msgid "No matching records found"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:172
 #: addons/lotte/templates/view_strings.html:44
+#: addons/lotte2/templates/view_strings.html:44
 msgid "Showing _START_ to _END_ of _TOTAL_ entries"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:173
 #: addons/lotte/templates/view_strings.html:45
+#: addons/lotte2/templates/view_strings.html:45
 msgid "Nothing to show"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:175
 #: addons/lotte/templates/view_strings.html:46
+#: addons/lotte2/templates/view_strings.html:46
 msgid "(filtered from _MAX_ total entries)"
 msgstr ""
 
@@ -740,21 +768,25 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:180
 #: addons/lotte/templates/view_strings.html:51
+#: addons/lotte2/templates/view_strings.html:51
 msgid "First"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:181
 #: addons/lotte/templates/view_strings.html:52
+#: addons/lotte2/templates/view_strings.html:52
 msgid "Previous"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:182
 #: addons/lotte/templates/view_strings.html:53
+#: addons/lotte2/templates/view_strings.html:53
 msgid "Next"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:183
 #: addons/lotte/templates/view_strings.html:54
+#: addons/lotte2/templates/view_strings.html:54
 msgid "Last"
 msgstr ""
 
@@ -776,6 +808,7 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:350
 #: addons/lotte/templates/view_strings.html:123
+#: addons/lotte2/templates/view_strings.html:123
 msgid "Loading strings..."
 msgstr ""
 
@@ -853,6 +886,7 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:878
 #: addons/lotte/templates/view_strings.html:185
+#: addons/lotte2/templates/view_strings.html:185
 msgid "Translated"
 msgstr ""
 
@@ -862,12 +896,14 @@ msgid "Remaining"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:896
-#: addons/lotte/templates/view_strings.html:201 resources/models.py:663
+#: addons/lotte/templates/view_strings.html:201
+#: addons/lotte2/templates/view_strings.html:201 resources/models.py:663
 msgid "Reviewed"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:905
 #: addons/lotte/templates/view_strings.html:210
+#: addons/lotte2/templates/view_strings.html:210
 msgid "Total"
 msgstr ""
 
@@ -879,6 +915,7 @@ msgstr ""
 
 #: addons/lotte/templates/translate.html:919
 #: addons/lotte/templates/view_strings.html:224
+#: addons/lotte2/templates/view_strings.html:224
 #: addons/trans_memory/templates/search_translation.html:52
 msgid "Translation"
 msgstr ""
@@ -892,7 +929,8 @@ msgid "Save all"
 msgstr ""
 
 #: addons/lotte/templates/translate.html:935
-#: templates/resources/resource_actions.html:273
+#: templates/resources/resource_actions copy.html:287
+#: templates/resources/resource_actions.html:275
 msgid "Delete translations"
 msgstr ""
 
@@ -913,7 +951,25 @@ msgid "Auto save"
 msgstr ""
 
 #: addons/lotte/templates/view_strings.html:48
+#: addons/lotte2/templates/view_strings.html:48
 msgid "Search:"
+msgstr ""
+
+#: addons/lotte2/templates/tab_details_snippet.html:61
+msgid "Last Translation:"
+msgstr ""
+
+#: addons/lotte2/templates/tab_details_snippet.html:65
+#, python-format
+msgid "by %(user)s"
+msgstr ""
+
+#: addons/lotte2/templates/view_strings.html:193
+msgid "Untranslated"
+msgstr ""
+
+#: addons/lotte2/templates/view_strings.html:223 resources/models.py:675
+msgid "Source String"
 msgstr ""
 
 #: addons/priorities/models.py:8
@@ -1099,7 +1155,7 @@ msgid "Filter"
 msgstr ""
 
 #: addons/timeline/templates/timeline/timeline_base.html:31
-#: templates/timeline.html:24 templates/teams/team_detail.html:248
+#: templates/timeline.html:24 templates/teams/team_detail.html:233
 msgid "None available"
 msgstr ""
 
@@ -1507,7 +1563,7 @@ msgid ""
 "its own but will re-use the parent's ones."
 msgstr ""
 
-#: projects/forms.py:159 templates/projects/project_menu.html:45
+#: projects/forms.py:159 templates/projects/project_menu.html:49
 #: templates/teams/team_menu.html:39
 msgid "Free for all"
 msgstr ""
@@ -1546,7 +1602,7 @@ msgid ""
 "disassociated to it."
 msgstr ""
 
-#: projects/models.py:151 templates/projects/project_menu.html:59
+#: projects/models.py:151 templates/projects/project_menu.html:63
 #: templates/teams/team_menu.html:54
 msgid "Private"
 msgstr ""
@@ -1873,7 +1929,7 @@ msgid ""
 msgstr ""
 
 #: releases/models.py:69 templates/projects/project_hub_projects.html:10
-#: templates/projects/project_menu.html:77
+#: templates/projects/project_menu.html:81
 #: templates/projects/project_resources.html:14
 #: templates/resources/resource_detail.html:76
 msgid "Resources"
@@ -2162,10 +2218,6 @@ msgstr ""
 
 #: resources/models.py:664
 msgid "Marks if the translation has been reviewed or not."
-msgstr ""
-
-#: resources/models.py:675
-msgid "Source String"
 msgstr ""
 
 #: resources/models.py:678
@@ -2593,94 +2645,94 @@ msgstr ""
 msgid "team access requests"
 msgstr ""
 
-#: teams/views.py:285
+#: teams/views.py:290
 #, python-format
 msgid "The team '%s' was deleted."
 msgstr ""
 
-#: teams/views.py:333
+#: teams/views.py:338
 #, python-format
 msgid "You are already on the '%s' team."
 msgstr ""
 
-#: teams/views.py:344
+#: teams/views.py:349
 #, python-format
 msgid "You requested to join the '%s' team."
 msgstr ""
 
-#: teams/views.py:366
+#: teams/views.py:371
 #, python-format
 msgid "You already requested to join the '%s' team."
 msgstr ""
 
-#: teams/views.py:370
+#: teams/views.py:375
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you join a translation team"
 msgstr ""
 
-#: teams/views.py:399
+#: teams/views.py:404
 #, python-format
 msgid "User '%(user)s' is already on the '%(team)s' team."
 msgstr ""
 
-#: teams/views.py:406
+#: teams/views.py:411
 #, python-format
 msgid "You added '%(user)s' to the '%(team)s' team."
 msgstr ""
 
-#: teams/views.py:455
+#: teams/views.py:460
 #, python-format
 msgid ""
 "You rejected the request by user '%(user)s' to join the '%(team)s' team."
 msgstr ""
 
-#: teams/views.py:501
+#: teams/views.py:506
 #, python-format
 msgid "You withdrew your request to join the '%s' team."
 msgstr ""
 
-#: teams/views.py:545
+#: teams/views.py:550
 #, python-format
 msgid "You left the '%s' team."
 msgstr ""
 
-#: teams/views.py:567
+#: teams/views.py:572
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr ""
 
-#: teams/views.py:590
+#: teams/views.py:595
 msgid "Please select a language before submitting the form."
 msgstr ""
 
-#: teams/views.py:603
+#: teams/views.py:608
 #, python-format
 msgid "'%s' team already exists."
 msgstr ""
 
-#: teams/views.py:609
+#: teams/views.py:614
 #, python-format
 msgid "A request to create the '%s' team already exists."
 msgstr ""
 
-#: teams/views.py:626
+#: teams/views.py:631
 #, python-format
 msgid "You requested creation of the '%s' team."
 msgstr ""
 
-#: teams/views.py:650
+#: teams/views.py:655
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you submit a team creation request."
 msgstr ""
 
-#: teams/views.py:679
+#: teams/views.py:684
 #, python-format
 msgid "You approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 
-#: teams/views.py:723
+#: teams/views.py:728
 #, python-format
 msgid "You rejected the request by '%(user)s' for a '%(team)s' team."
 msgstr ""
@@ -2864,7 +2916,8 @@ msgstr ""
 msgid "Filter results"
 msgstr ""
 
-#: templates/timeline.html:17 templates/resources/resource_actions.html:178
+#: templates/timeline.html:17 templates/resources/resource_actions
+#: copy.html:192 templates/resources/resource_actions.html:179
 msgid "Go"
 msgstr ""
 
@@ -3501,7 +3554,7 @@ msgstr ""
 
 #: templates/projects/project_detail.html:121
 #: templates/resources/resource_detail.html:230
-#: templates/teams/team_detail.html:243
+#: templates/teams/team_detail.html:228
 msgid "History"
 msgstr ""
 
@@ -3729,31 +3782,31 @@ msgid ""
 "%(project_name)stranslation, %(project_name)s crowdsourcing "
 msgstr ""
 
-#: templates/projects/project_menu.html:49
+#: templates/projects/project_menu.html:53
 #, python-format
 msgid " Go to %(hub_project)s hub"
 msgstr ""
 
-#: templates/projects/project_menu.html:49
+#: templates/projects/project_menu.html:53
 msgid "Child project"
 msgstr ""
 
-#: templates/projects/project_menu.html:54 templates/teams/team_menu.html:49
+#: templates/projects/project_menu.html:58 templates/teams/team_menu.html:49
 msgid "Hub"
 msgstr ""
 
-#: templates/projects/project_menu.html:69
+#: templates/projects/project_menu.html:73
 msgid "Project overview"
 msgstr ""
 
-#: templates/projects/project_menu.html:73
+#: templates/projects/project_menu.html:77
 #, python-format
 msgid " Hub project <span class=\"tab-stat\">%(counter)s</span> "
 msgid_plural "Hub projects <span class=\"tab-stat\">%(counter)s</span> "
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/projects/project_menu.html:81
+#: templates/projects/project_menu.html:85
 msgid "Manage"
 msgstr ""
 
@@ -3880,7 +3933,7 @@ msgstr ""
 
 #: templates/projects/project_resources.html:157
 #: templates/projects/release_detail.html:175
-#: templates/teams/team_detail.html:155 templates/teams/team_detail.html:206
+#: templates/teams/team_detail.html:159 templates/teams/team_detail.html:201
 #: templates/teams/team_list.html:135
 msgid "Last update"
 msgstr ""
@@ -3893,7 +3946,7 @@ msgid "no translations yet"
 msgstr ""
 
 #: templates/projects/project_resources.html:191
-#: templates/teams/team_detail.html:235
+#: templates/teams/team_detail.html:220
 msgid "No resources are registered for this project yet."
 msgstr ""
 
@@ -4025,19 +4078,19 @@ msgstr[1] ""
 #: templates/projects/release_language_detail.html:145
 #: templates/projects/release_language_detail.html:215
 #: templates/resources/resource_detail.html:193
-#: templates/teams/team_detail.html:140
+#: templates/teams/team_detail.html:144
 msgid "Locked"
 msgstr ""
 
 #: templates/projects/release_language_detail.html:148
 #: templates/projects/release_language_detail.html:218
-#: templates/teams/team_detail.html:143 templates/teams/team_detail.html:196
+#: templates/teams/team_detail.html:147 templates/teams/team_detail.html:191
 msgid "Not accepting translations at the moment"
 msgstr ""
 
 #: templates/projects/release_language_detail.html:174
 #: templates/projects/release_language_detail.html:234
-#: templates/teams/team_detail.html:160 templates/teams/team_detail.html:207
+#: templates/teams/team_detail.html:164 templates/teams/team_detail.html:202
 msgid "no activity yet"
 msgstr ""
 
@@ -4070,174 +4123,212 @@ msgid ""
 "\"%(release_create)s\">add one</a>?"
 msgstr ""
 
+#: templates/resources/resource_actions copy.html:26
 #: templates/resources/resource_actions.html:26
 #: templates/resources/resource_detail.html:28
 msgid "Please select a target language first."
 msgstr ""
 
+#: templates/resources/resource_actions copy.html:37
 #: templates/resources/resource_actions.html:37
 msgid "Trying to lock resource..."
 msgstr ""
 
-#: templates/resources/resource_actions.html:85
+#: templates/resources/resource_actions copy.html:84
+#: templates/resources/resource_actions.html:86
 #, python-format
 msgid " Total:&nbsp;%(total_entities)s strings, %(wordcount)s words"
 msgstr ""
 
-#: templates/resources/resource_actions.html:86
+#: templates/resources/resource_actions copy.html:87
 #, python-format
-msgid " Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
+msgid "Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
 msgstr ""
 
-#: templates/resources/resource_actions.html:87
-#, python-format
-msgid " Remaining:&nbsp;%(trans_count)s strings (%(trans_wordcount)s words) "
-msgstr ""
-
-#: templates/resources/resource_actions.html:103
+#: templates/resources/resource_actions copy.html:111
+#: templates/resources/resource_actions.html:104
 msgid ""
 "<span title=\"The source language cannot be translated\">Source language</"
 "span>"
 msgstr ""
 
-#: templates/resources/resource_actions.html:110
+#: templates/resources/resource_actions copy.html:118
+#: templates/resources/resource_actions.html:111
 #, python-format
 msgid ""
 "Warning: This resource is currently locked by '%(lock_owner)s'. He might be "
 "working on it right now."
 msgstr ""
 
-#: templates/resources/resource_actions.html:110
-#: templates/resources/resource_actions.html:112
-#: templates/resources/resource_actions.html:116
-#: templates/resources/resource_actions.html:121
-#: templates/resources/resource_actions.html:124
+#: templates/resources/resource_actions copy.html:118 copy.html:120
+#: copy.html:124 copy.html:129 copy.html:132
+#: templates/resources/resource_actions.html:111
+#: templates/resources/resource_actions.html:113
+#: templates/resources/resource_actions.html:117
+#: templates/resources/resource_actions.html:122
+#: templates/resources/resource_actions.html:125
 msgid "Translate now"
 msgstr ""
 
-#: templates/resources/resource_actions.html:121
+#: templates/resources/resource_actions copy.html:129
+#: templates/resources/resource_actions.html:122
 msgid "This resource is currently not accepting translations"
 msgstr ""
 
-#: templates/resources/resource_actions.html:124
+#: templates/resources/resource_actions copy.html:132
+#: templates/resources/resource_actions.html:125
 #, python-format
 msgid ""
 "To translate you need to be logged in and a member of the %(lang_name)s team"
 msgstr ""
 
-#: templates/resources/resource_actions.html:133
+#: templates/resources/resource_actions copy.html:144
+#: templates/resources/resource_actions.html:134
 #: templates/resources/stats_bar_simple.html:4
 msgid "Translated: "
 msgstr ""
 
-#: templates/resources/resource_actions.html:133
+#: templates/resources/resource_actions copy.html:144
+#: templates/resources/resource_actions.html:134
 msgid "Remaining: "
 msgstr ""
 
-#: templates/resources/resource_actions.html:148
+#: templates/resources/resource_actions copy.html:162
+#: templates/resources/resource_actions.html:149
 msgid "View strings online"
 msgstr ""
 
-#: templates/resources/resource_actions.html:156
+#: templates/resources/resource_actions copy.html:170
+#: templates/resources/resource_actions.html:157
 msgid "Visit language team"
 msgstr ""
 
-#: templates/resources/resource_actions.html:162
-#: templates/resources/resource_actions.html:182
-#: templates/resources/resource_actions.html:189
+#: templates/resources/resource_actions copy.html:176 copy.html:196
+#: copy.html:203 templates/resources/resource_actions.html:163
+#: templates/resources/resource_actions.html:183
+#: templates/resources/resource_actions.html:190
 msgid "Clone to new language"
 msgstr ""
 
-#: templates/resources/resource_actions.html:164
+#: templates/resources/resource_actions copy.html:178
+#: templates/resources/resource_actions.html:165
 msgid ""
 "Copy all the translations from this language to a new (chosen) language in "
 "the specific resource. This will copy the pluralized translations too, if "
 "and only if the two languages have exactly the same plural rules"
 msgstr ""
 
-#: templates/resources/resource_actions.html:184
-#: templates/resources/resource_actions.html:191
+#: templates/resources/resource_actions copy.html:198 copy.html:205
+#: templates/resources/resource_actions.html:185
+#: templates/resources/resource_actions.html:192
 msgid ""
 "Copy all the translations from this language to a new (chosen) language in "
 "the specific resource. This will copy the pluralized translations too, if "
 "and only if the two languages have exactly the same plural rules."
 msgstr ""
 
-#: templates/resources/resource_actions.html:199
-#: templates/resources/resource_actions.html:201
+#: templates/resources/resource_actions copy.html:213 copy.html:215
+#: templates/resources/resource_actions.html:200
+#: templates/resources/resource_actions.html:202
 msgid "Download for use"
 msgstr ""
 
-#: templates/resources/resource_actions.html:201
+#: templates/resources/resource_actions copy.html:215
+#: templates/resources/resource_actions.html:202
 msgid "You must login to be able to download the translations."
 msgstr ""
 
-#: templates/resources/resource_actions.html:204
+#: templates/resources/resource_actions copy.html:218
+#: templates/resources/resource_actions.html:205
 msgid ""
 "Add only translated strings into the file. Untranslated strings are NOT "
 "filled with source strings."
 msgstr ""
 
-#: templates/resources/resource_actions.html:211
-#: templates/resources/resource_actions.html:215
+#: templates/resources/resource_actions copy.html:225 copy.html:229
+#: templates/resources/resource_actions.html:212
+#: templates/resources/resource_actions.html:216
 msgid "Download original pot file"
 msgstr ""
 
-#: templates/resources/resource_actions.html:214
+#: templates/resources/resource_actions copy.html:228
+#: templates/resources/resource_actions.html:215
 msgid "You must login to be able to download the pot file."
 msgstr ""
 
-#: templates/resources/resource_actions.html:219
+#: templates/resources/resource_actions copy.html:233
+#: templates/resources/resource_actions.html:220
 msgid "PO file template."
 msgstr ""
 
-#: templates/resources/resource_actions.html:229
+#: templates/resources/resource_actions copy.html:243
+#: templates/resources/resource_actions.html:230
 msgid "You must login to be able to download the file."
 msgstr ""
 
-#: templates/resources/resource_actions.html:231
+#: templates/resources/resource_actions copy.html:245
+#: templates/resources/resource_actions.html:232
 msgid "Download only reviewed translations"
 msgstr ""
 
-#: templates/resources/resource_actions.html:234
+#: templates/resources/resource_actions copy.html:248
+#: templates/resources/resource_actions.html:235
 msgid ""
 "Add only reviewed translations into the file. Untranslated strings are not "
 "filled at all."
 msgstr ""
 
-#: templates/resources/resource_actions.html:243
+#: templates/resources/resource_actions copy.html:257
+#: templates/resources/resource_actions.html:244
 msgid "Resource cannot be locked"
 msgstr ""
 
-#: templates/resources/resource_actions.html:243
-#: templates/resources/resource_actions.html:247
+#: templates/resources/resource_actions copy.html:257 copy.html:261
+#: templates/resources/resource_actions.html:244
+#: templates/resources/resource_actions.html:248
 msgid "Download for translation"
 msgstr ""
 
-#: templates/resources/resource_actions.html:247
+#: templates/resources/resource_actions copy.html:261
+#: templates/resources/resource_actions.html:248
 msgid "You must login to use this action"
 msgstr ""
 
-#: templates/resources/resource_actions.html:250
+#: templates/resources/resource_actions copy.html:264
+#: templates/resources/resource_actions.html:251
 msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action. Untranslated strings are filled by source strings."
 msgstr ""
 
-#: templates/resources/resource_actions.html:265
+#: templates/resources/resource_actions copy.html:279
+#: templates/resources/resource_actions.html:267
 msgid "Get pseudo translations"
 msgstr ""
 
-#: templates/resources/resource_actions.html:283
+#: templates/resources/resource_actions copy.html:297
+#: templates/resources/resource_actions.html:285
 msgid "This resource currently is not accepting translations."
 msgstr ""
 
-#: templates/resources/resource_actions.html:294
+#: templates/resources/resource_actions copy.html:308
+#: templates/resources/resource_actions.html:296
 msgid "Translation last updated "
 msgstr ""
 
-#: templates/resources/resource_actions.html:302
+#: templates/resources/resource_actions copy.html:316
+#: templates/resources/resource_actions.html:304
 msgid "No translation yet"
+msgstr ""
+
+#: templates/resources/resource_actions.html:87
+#, python-format
+msgid " Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
+msgstr ""
+
+#: templates/resources/resource_actions.html:88
+#, python-format
+msgid " Remaining:&nbsp;%(trans_count)s strings (%(trans_wordcount)s words) "
 msgstr ""
 
 #: templates/resources/resource_confirm_delete.html:4
@@ -4514,43 +4605,43 @@ msgid ""
 "works on %(project_name)s?"
 msgstr ""
 
-#: templates/teams/team_detail.html:35
+#: templates/teams/team_detail.html:42
 msgid "Overall Progress"
 msgstr ""
 
-#: templates/teams/team_detail.html:38
+#: templates/teams/team_detail.html:45
 msgid "Join team"
 msgstr ""
 
-#: templates/teams/team_detail.html:49 templates/teams/team_detail.html:56
+#: templates/teams/team_detail.html:56 templates/teams/team_detail.html:63
 msgid "Join language translation"
 msgstr ""
 
-#: templates/teams/team_detail.html:76
+#: templates/teams/team_detail.html:83
 msgid "Mainlist:"
 msgstr ""
 
-#: templates/teams/team_detail.html:81
+#: templates/teams/team_detail.html:88
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/teams/team_detail.html:93
+#: templates/teams/team_detail.html:100
 msgid ""
 "Since this project is \"Free for all\" anyone can contribute. You don't have "
 "to be a member!"
 msgstr ""
 
-#: templates/teams/team_detail.html:103
+#: templates/teams/team_detail.html:108
 msgid "Language resources"
 msgstr ""
 
-#: templates/teams/team_detail.html:117
+#: templates/teams/team_detail.html:122
 msgid "Show resources from:"
 msgstr ""
 
-#: templates/teams/team_detail.html:135 templates/teams/team_detail.html:191
+#: templates/teams/team_detail.html:139 templates/teams/team_detail.html:186
 msgid "click for translation"
 msgstr ""
 
@@ -5082,11 +5173,15 @@ msgstr ""
 msgid "Billing information"
 msgstr ""
 
-#: templates/userena/signup_form.html:53
+#: templates/userena/signup_form.html:49
+msgid "Get started with transifex and optimize your localization workflow"
+msgstr ""
+
+#: templates/userena/signup_form.html:55
 msgid "Credentials"
 msgstr ""
 
-#: templates/userena/signup_form.html:84
+#: templates/userena/signup_form.html:86
 msgid "Sign up"
 msgstr ""
 
@@ -5463,15 +5558,12 @@ msgid "when a resource translation you are watching changes"
 msgstr ""
 
 #: txcommon/notifications.py:314
-#, python-format
-msgid "Resource translation 100% reviewed"
+msgid "Resource translation fully reviewed"
 msgstr ""
 
 #: txcommon/notifications.py:315
-#, python-format
 msgid ""
-"when a resource translation of one of your projects reach 100% reviewed "
-"strings"
+"when a resource translation of one of your projects becomes fully reviewed"
 msgstr ""
 
 #: txcommon/views.py:124
