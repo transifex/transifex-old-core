@@ -27,8 +27,9 @@ from transifex.txcommon.views import json_result, json_error
 @one_perm_required_or_403(pr_project_add_change,
     (Project, 'slug__exact', 'project_slug'), anonymous_access=False)
 def project_hub_projects(request, project_slug):
-    """"""
-    project = get_object_or_404(Project.objects.select_related(), slug=project_slug)
+    project = get_object_or_404(
+        Project.objects.select_related(), slug=project_slug
+    )
 
     return render_to_response('projects/project_hub_projects.html', {
         'project': project,
@@ -42,7 +43,7 @@ def project_hub_projects(request, project_slug):
 @transaction.commit_on_success
 def project_hub_join_approve(request, project_slug, outsourced_project_slug):
 
-    hub_request = get_object_or_404(HubRequest, 
+    hub_request = get_object_or_404(HubRequest,
         project__slug=outsourced_project_slug,
         project_hub__slug=project_slug)
 
@@ -68,7 +69,7 @@ def project_hub_join_approve(request, project_slug, outsourced_project_slug):
                        'sender': request.user}
 
             # Logging action
-            action_logging(request.user, [outsourced_project, 
+            action_logging(request.user, [outsourced_project,
                 hub_request.project_hub], nt, context=context)
 
             if settings.ENABLE_NOTICES:
@@ -88,7 +89,7 @@ def project_hub_join_approve(request, project_slug, outsourced_project_slug):
 @transaction.commit_on_success
 def project_hub_join_deny(request, project_slug, outsourced_project_slug):
 
-    hub_request = get_object_or_404(HubRequest, 
+    hub_request = get_object_or_404(HubRequest,
         project__slug=outsourced_project_slug,
         project_hub__slug=project_slug)
 
@@ -111,7 +112,7 @@ def project_hub_join_deny(request, project_slug, outsourced_project_slug):
                        'sender': request.user}
 
             # Logging action
-            action_logging(request.user, [outsourced_project, 
+            action_logging(request.user, [outsourced_project,
                 _hub_request.project_hub], nt, context=context)
 
             if settings.ENABLE_NOTICES:
@@ -150,7 +151,7 @@ def project_hub_join_withdraw(request, project_slug):
                        'sender': request.user}
 
             # Logging action
-            action_logging(request.user, [_hub_request.project, 
+            action_logging(request.user, [_hub_request.project,
                 hub_request.project_hub], nt, context=context)
 
             if settings.ENABLE_NOTICES:
@@ -181,7 +182,7 @@ def project_hub_projects_toggler(request, project_slug):
     outsourced_project_slug = request.POST.get('outsourced_project_slug', None)
     if not outsourced_project_slug:
         return json_error(_('Bad request.'))
-  
+
     try:
         outsourced_project = project.outsourcing.get(slug=outsourced_project_slug)
         outsourced_project.outsource = None
@@ -213,7 +214,7 @@ def project_hub_projects_toggler(request, project_slug):
 
     except Project.DoesNotExist:
 
-        outsourced_project = get_object_or_404(Project, 
+        outsourced_project = get_object_or_404(Project,
             slug=outsourced_project_slug)
         outsourced_project.outsource = project
         outsourced_project.save()
