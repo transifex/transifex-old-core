@@ -74,7 +74,7 @@
     		{% if project.is_hub and is_maintainer %}
     	  <li class="{% if hub_projects_page %}selected{% endif %}">
     		  <a href="{% url project_hub_projects project.slug %}">
-        {% blocktrans count project.outsourcing.count as counter %} Hub project <span class="tab-stat">{{ counter }}</span> {% plural %}Hub projects <span class="tab-stat">{{ counter }}</span> {% endblocktrans %}
+        {% blocktrans count project.outsourcing.count as counter %} Hub project <span class="tab-stat">{{ counter }}</span> {% plural %}Child projects <span class="tab-stat">{{ counter }}</span> {% endblocktrans %}
           </a>
         </li>
         {% endif %}
