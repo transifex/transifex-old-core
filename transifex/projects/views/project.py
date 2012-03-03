@@ -29,6 +29,8 @@ from transifex.releases.handlers import update_all_release
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.utils import invalidate_template_cache
 from transifex.teams.forms import TeamRequestSimpleForm
+from django.contrib.contenttypes.models import ContentType
+from transifex.projects.models import Permission
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -260,7 +262,9 @@ def handle_stats_on_access_control_edit(project):
 
 def _delete_project(request, project):
     project_ = copy.copy(project)
+    project_type = ContentType.objects.get_for_model(project_)
     project.delete()
+    Permission.objects.filter(content_type__pk=project_type.id,object_id=project_.id).delete()
 
     messages.success(request, _("The project '%s' was deleted." % project.name))
 
