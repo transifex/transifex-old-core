@@ -46,7 +46,7 @@ def languages(request, project_slug):
         if service_type == 'BT':
             cache_key = 'bing_translate'
         elif service_type == 'GT':
-            cache_key == 'google_translate'
+            cache_key = 'google_translate'
         if cache.get(cache_key, None):
             resp = cache.get(cache_key)
         else:
