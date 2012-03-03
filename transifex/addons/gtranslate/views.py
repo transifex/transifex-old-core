@@ -48,7 +48,7 @@ def languages(request, project_slug):
         elif service_type == 'GT':
             cache_key == 'google_translate'
         if cache.get(cache_key, None):
-            resp = cache.get('bing_translate')
+            resp = cache.get(cache_key)
         else:
             resp = service.languages(target_lang)
             cache.set(cache_key, resp, 24*60*60)
