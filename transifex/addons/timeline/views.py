@@ -40,7 +40,7 @@ def project_timeline(request, project_slug, *args, **kwargs):
     """
     project = get_object_or_404(Project, slug=project_slug)
     log_entries = LogEntry.objects.by_object(project)
-    f = LogEntryFilter(request.GET, queryset=log_entries)
+    f = LogEntryFilter(request.POST, queryset=log_entries)
     # The template needs both these variables. The first is used in filtering,
     # the second is used for pagination and sorting.
     kwargs.setdefault('extra_context', {}).update(
