@@ -9,7 +9,7 @@
 
 <div class="tx-form">
 
-		<form action="" method="POST">{% csrf_token %}            
+		<form action="" method="POST">{% csrf_token %} 
       <fieldset>
 				{% for field in f.form %}
 				<div class="tx-form-field clearfix" style="min-height:20px;">
@@ -18,7 +18,7 @@
 				{{ field }}
 				</div>
 				{% endfor %}
-      </fieldset>  
+      </fieldset>
 			<input type="submit" class="i16 action buttonized" id="timeline-submit" style="margin-top:10px;" value="{% trans "Filter" %}"/></td></tr>
     </form>
 
