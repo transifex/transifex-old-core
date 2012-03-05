@@ -83,7 +83,7 @@ $(document).ready(function(){
     $('.suggestion_select_button a').click(function(){
         var new_value = $(this).parents('.suggestion_line').find('.suggestion_text').html();
         var trans = $(this).parents('tr.metatr').prev('tr').find('td.trans div textarea.default_translation')
-        trans.val(new_value);
+        trans.val(html_unescape(new_value));
 
         // Update stringset now!!!
         if ( stringset ) {
