@@ -9,85 +9,32 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.txcommon.log import logger
 
 
-class KeyObj(object):
-    """
-    An object to store keys of key_dict used in _update_key_dict()
-    method of class StringSet. This is required because lists cannot
-    be used as dictionary keys. But context for a source string may
-    also be a list in some cases.
-    """
-    def __init__(self, hash_tr, context):
-        self.hash_tr = hash_tr
-        self.context = context
-
-    def __hash__(self):
-        return hash(hash_tag(self.hash_tr, self.context))
-
-    def __eq__(self, other):
-        if isinstance(other, self.__class__) and \
-            self.hash_tr == other.hash_tr and \
-            self.context == other.context:
-            return True
-        return False
-
 class StringSet(object):
-    """
-    Store a list of Translation objects for a given language.
-    """
+    """Store a list of Translation objects for a given language."""
+
     def __init__(self):
-        self.strings = []
+        self._strings = set()
         self.target_language = None
-        self.key_dict = {}
 
-    def _update_key_dict(self, *args, **kwargs):
-        try:
-            source_entity = args[0]
-            translation = args[1]
-            context = kwargs['context']
-            hash_tr = hash_tag(source_entity, context)
-            rule = kwargs.get('rule', 5)
-            key = KeyObj(hash_tr, context)
-            if key in self.key_dict and self.key_dict[key].get(
-                    rule, None):
-                return False
-            else:
-                if key in self.key_dict:
-                    self.key_dict[key][rule] = [translation, kwargs]
-                else:
-                    self.key_dict[key] = {
-                                rule: [translation, kwargs]
-                            }
-                return True
-        except Exception, e:
-            logger.warning("Error during parsing: %s" % unicode(e),
-                    exc_info=True)
-            return False
+    def add(self, translation):
+        """Add a new translation."""
+        self._strings.add(translation)
 
-    def add(self, *args, **kwargs):
-        """
-        Append a GenericTranslation object to self.strings array so that
-        so that (source_entity, context, rule) is unique among all such
-        objects in self.strings
-        """
-        if self._update_key_dict(*args, **kwargs):
-            self.strings.append(GenericTranslation(*args, **kwargs))
+    def __in__(self, elem):
+        return elem in self._strings
 
-    def strings_grouped_by_context(self):
-        d = {}
-        for i in self.strings:
-            if i.context in d:
-                d[i.context].append(i)
-            else:
-                d[i.context] = [i,]
-        return d
+    def __iter__(self):
+        return iter(self._strings)
+
+    def __len__(self):
+        return len(self._strings)
 
     def to_json(self):
         return json.dumps(self, cls=CustomSerializer)
 
 
 class GenericTranslation(object):
-    """
-    Store translations of any kind of I18N type (POT, Qt, etc...).
+    """Store translations of any kind of I18N type (POT, Qt, etc...).
 
     Parameters:
         source_entity - The original entity found in the source code.
@@ -115,19 +62,19 @@ class GenericTranslation(object):
         self.obsolete = obsolete
 
     def __hash__(self):
-        if STRICT:
-            return hash((self.source_entity, self.translation,
-                self.occurrences))
-        else:
-            return hash((self.source_entity, self.translation))
+        return hash((self.source_entity, self.context))
 
     def __eq__(self, other):
-        if isinstance(other, self.__class__) and \
-            self.source_entity == other.source_entity and \
-            self.translation == other.translation and \
-            self.context == other.context:
+        correct_class = isinstance(other, self.__class__)
+        same_se = self.source_entity == other.source_entity
+        same_ctxt = self.context == other.context
+        if correct_class and same_se and same_ctxt:
             return True
         return False
+
+    def __unicode__(self):
+        msg = u'(%s, %s): %s'
+        return msg % (self.source_entity, self.context, self.translation)
 
 
 class ResourceItems(object):

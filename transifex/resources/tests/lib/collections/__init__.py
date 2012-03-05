@@ -4,7 +4,7 @@
 import unittest
 from transifex.resources.models import SourceEntity, Translation
 from transifex.resources.formats.core import SourceEntityCollection, \
-        TranslationCollection, GenericTranslation
+        TranslationCollection, GenericTranslation, StringSet
 
 
 class TestResourceCollections(unittest.TestCase):
@@ -71,3 +71,36 @@ class TestResourceCollections(unittest.TestCase):
         col.add(t3)
         self.assertTrue(t3 in col)
         self.assertTrue(len(col._items), 3)
+
+
+class TestStringSet(unittest.TestCase):
+    """Test stringset class."""
+
+    def setUp(self):
+        self.stringset = StringSet()
+
+    def test_correct_addition(self):
+        """Test that entries are correctly added to a StringSet."""
+        t1 = GenericTranslation('se1', 'trans1', context='')
+        t2 = GenericTranslation('se2', 'trans2', context='')
+        t3 = GenericTranslation('se2', 'trans1', context='c3')
+        translations = [t1, t2, t3, ]
+        for idx, t in enumerate(translations, start=1):
+            self.stringset.add(t)
+            self.assertEquals(len(self.stringset), idx)
+            for old_t in translations[:idx]:
+                self.assertIn(old_t, self.stringset)
+
+    def test_adding_duplicates(self):
+        """Test that adding a duplicate element only keeps one."""
+        t1 = GenericTranslation('se', 'trans1', context='')
+        self.stringset.add(t1)
+        self.assertEquals(len(self.stringset), 1)
+        self.assertIn(t1, self.stringset)
+        t2 = GenericTranslation('se', 'trans2', context='')
+        self.stringset.add(t2)
+        self.assertEquals(len(self.stringset), 1)
+        self.assertIn(t2, self.stringset)
+        for t in self.stringset:
+            self.assertEqual(t1.translation, t.translation)
+
