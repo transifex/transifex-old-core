@@ -5,12 +5,7 @@ from django.core.urlresolvers import get_resolver
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import condition
 from django.conf import settings
-from django.template import Context
-from django.template.loader import get_template
-from django.templatetags.cache import CacheNode
 from django.core.cache import cache
-from django.utils.hashcompat import md5_constructor
-from django.utils.http import urlquote
 from transifex.txcommon.log import logger
 from datastores.txredis import TxRedisMapper, redis_exception_handler
 
@@ -343,55 +338,3 @@ class StatBarsPositions(dict):
             r = int(round(float(fr) / totsegwidth))
             self[segment[0]] = self.BarPos(r - l, l)
         return
-
-
-def invalidate_template_cache(fragment_name, *variables):
-    """This function invalidates a template cache.
-
-    The template cache is named `fragment_name` and the variables are
-    included in *variables. For example:
-
-    {% cache 500 project_details project.slug LANGUAGE_CODE%}
-        ...
-    {% endcache %}
-
-    We invalidate this by calling:
-     -  invalidate_template_cache("project_details", project.slug)
-    """
-    for lang,code in settings.LANGUAGES:
-        cur_vars = list(variables)
-        cur_vars.append(unicode(lang))
-        args = md5_constructor(u':'.join([urlquote(var) for var in cur_vars]))
-        cache_key = 'template.cache.%s.%s' % (fragment_name, args.hexdigest())
-        cache.delete(cache_key)
-
-
-def update_template_cache(template_name, fragment_names, key_vars, **extra):
-    """Update the template cache with the new data.
-
-    The caches will be invalidated in the order given.
-    """
-    t = get_template(template_name)
-    nodes = t.nodelist.get_nodes_by_type(CacheNode)
-    for f_name in fragment_names:
-        for node in nodes:
-            if f_name == node.fragment_name:
-                set_fragment_content(node, key_vars, **extra)
-                break
-
-
-def set_fragment_content(node, key_vars, **extra):
-    """Set the rendered content of a template fragment."""
-    try:
-        for lang, code in settings.LANGUAGES:
-            cur_vars = key_vars.keys()
-            cur_vars.append(unicode(lang))
-            args = md5_constructor(u':'.join([urlquote(var) for var in cur_vars]))
-            cache_key = 'template.cache.%s.%s' % (node.fragment_name, args.hexdigest())
-            key_vars.update(extra)
-            key_vars['use_l10n'] = True
-            key_vars['LANGUAGE_CODE'] = lang
-            value = node.nodelist.render(context=Context(key_vars))
-            cache.set(cache_key, value, settings.CACHE_MIDDLEWARE_SECONDS)
-    except Exception, e:
-        invalidate_template_cache(node.fragment_name, key_vars.keys())
