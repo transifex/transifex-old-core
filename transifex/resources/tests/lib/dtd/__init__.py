@@ -23,7 +23,7 @@ class TestDTDHandler(BaseTestCase):
         )
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
-        self.assertEqual(len(handler.stringset.strings), 4)
+        self.assertEqual(len(handler.stringset), 4)
         content = [
             (u' Nonsense line from the movie "The Day The Earth Stood Still". ',
                 u"robots.pagetitle",
@@ -36,9 +36,10 @@ class TestDTDHandler(BaseTestCase):
                 u"robots.errorShortDescText",
                 u"We have come to visit you in peace & with goodwill!"),
             ]
-        self.assertEqual(len(handler.stringset.strings), 4)
-        for i in range(0, 3):
-            s = handler.stringset.strings[i]
+        self.assertEqual(len(handler.stringset), 4)
+        for i, s in enumerate(handler.stringset):
+            if i == 3:
+                break
             self.assertEqual(s.comment, content[i][0])
             self.assertEqual(s.source_entity, content[i][1])
             self.assertEqual(s.translation, content[i][2])
@@ -55,7 +56,7 @@ class TestDTDHandler(BaseTestCase):
         )
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
-        self.assertEqual(len(handler.stringset.strings), 3)
+        self.assertEqual(len(handler.stringset), 3)
         content = [
             (u"robots.pagetitle",
                 u'Ґорт! Клаату барада ніхто!'),
@@ -64,9 +65,8 @@ class TestDTDHandler(BaseTestCase):
             (u"robots.errorShortDescText",
                 u"Ми прийшли до вас з миром!"),
             ]
-        self.assertEqual(len(handler.stringset.strings), 3)
-        for i in range(0, 3):
-            s = handler.stringset.strings[i]
+        self.assertEqual(len(handler.stringset), 3)
+        for i, s in enumerate(handler.stringset):
             self.assertEqual(s.source_entity, content[i][0])
             self.assertEqual(s.translation, content[i][1])
 

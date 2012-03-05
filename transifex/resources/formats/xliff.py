@@ -391,30 +391,18 @@ class XliffHandler(SimpleCompilerFactory, Handler):
                )
                return
         if pluralized:
-            self.stringset.add(
+            self.stringset.add(GenericTranslation(
                     source, translation, context=context,
                     rule=rule, pluralized=True,
                     occurrences=self._serialize_occurrences(occurrence),
                     comment='\n'.join(comment)
-             )
-            """
-             self.stringset_.strings.append(GenericTranslation(source,
-                    translation, rule=rule,
-                    context=context, pluralized=True, fuzzy=False,
-                    obsolete=False))
-             """
+             ))
         else:
-            self.stringset.add(
+            self.stringset.add(GenericTranslation(
                     source, translation, context=context,
                     occurrences=self._serialize_occurrences(occurrence),
                     comment='\n'.join(comment)
-             )
-            """
-            self.stringset_.strings.append(GenericTranslation(source,
-                    translation, rule=5,
-                    context=context, pluralized=False, fuzzy=False,
-                    obsolete=False))
-            """
+             ))
 
     def parse_tag_context_group(self, context_group_node, is_source=False):
         result = []

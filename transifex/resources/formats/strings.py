@@ -174,10 +174,11 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
             elif not SourceEntity.objects.filter(resource=resource, string=key).exists() or not value.strip():
                 # ignore keys with no translation
                 continue
-            self.stringset.strings.append(GenericTranslation(key,
-                self._unescape(value), rule=5, context=context,
-                pluralized=False, fuzzy=False, comment=comment,
-                obsolete=False))
+            self.stringset.add(GenericTranslation(
+                    key, self._unescape(value), rule=5, context=context,
+                    pluralized=False, fuzzy=False, comment=comment,
+                    obsolete=False
+            ))
         while len(f[end:]):
             m = c.match(f, end) or ws.match(f, end)
             if not m or m.start() != end:

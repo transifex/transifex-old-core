@@ -38,7 +38,7 @@ class TestPoFile(FormatsBaseTestCase):
         # POT has no associated language
         self.assertEqual(self.stringset.target_language, None)
 
-        for s in self.stringset.strings:
+        for s in self.stringset:
             # Testing if source entity and translation are the same
             if not s.pluralized:
                 self.assertEqual(s.source_entity, s.translation)
@@ -66,7 +66,7 @@ class TestPoFile(FormatsBaseTestCase):
 
         nplurals = 0
 
-        for s in self.stringset.strings:
+        for s in self.stringset:
 
             # Testing plural number
             if s.source_entity == '{0} results':
@@ -99,7 +99,7 @@ class TestPoFile(FormatsBaseTestCase):
         self.stringset = handler.stringset
         nplurals = 0
 
-        for s in self.stringset.strings:
+        for s in self.stringset:
 
             # Testing if source entity and translation are NOT the same
             self.assertNotEqual(s.source_entity, s.translation)

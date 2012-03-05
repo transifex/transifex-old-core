@@ -114,5 +114,5 @@ class StorageFile(models.Model):
             except Language.DoesNotExist:
                 pass
 
-        self.total_strings = len([s for s in stringset.strings if s.rule==5])
+        self.total_strings = len([s for s in stringset if s.rule==5])
         return

@@ -75,7 +75,7 @@ class TestJavaProperties(FormatsBaseTestCase):
         self.stringset = handler.stringset
         entities = 0
         translations = 0
-        for s in self.stringset.strings:
+        for s in self.stringset:
             entities += 1
             if s.translation.strip() != '':
                 translations += 1
@@ -117,7 +117,7 @@ class TestJavaProperties(FormatsBaseTestCase):
 
         entities = 0
         translations = 0
-        for s in handler.stringset.strings:
+        for s in handler.stringset:
             entities += 1
             if s.translation.strip() != '':
                 translations += 1

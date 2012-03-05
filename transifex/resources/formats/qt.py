@@ -352,7 +352,7 @@ class LinguistHandler(SimpleCompilerFactory, Handler):
                                 _getText(translation.childNodes),
                                 context=context_name + comment,
                                 occurrences= ";".join(occurrences))
-                            self.suggestions.strings.append(suggestion)
+                            self.suggestions.add(suggestion)
                         else:
                             logger.error("Element 'translation' attribute "\
                                 "'type' is neither 'unfinished' nor 'obsolete'")

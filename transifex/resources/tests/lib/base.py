@@ -27,11 +27,11 @@ class FormatsBaseTestCase(base.BaseTestCase):
         compiler.language = handler.language
         sources = [
             (idx, "%s" % hash_tag(s.source_entity, ""))
-            for idx, s in enumerate(handler.stringset.strings)
+            for idx, s in enumerate(handler.stringset)
         ]
         translations = dict([
             (idx, s.translation)
-            for idx, s in enumerate(handler.stringset.strings)
+            for idx, s in enumerate(handler.stringset)
         ])
         with patch.object(compiler, '_get_source_strings') as smock:
             with patch.object(compiler, '_tset', create=True) as tmock:
@@ -58,7 +58,7 @@ class FormatsBaseTestCase(base.BaseTestCase):
             content = content.decode(encoding)
         return content
 
-    def _save_source(self, handler, resource, source_file, 
+    def _save_source(self, handler, resource, source_file,
             source_entity_count, source_translation_count):
         """Save source translations
             handler: Handler instance for i18n_type
@@ -91,7 +91,7 @@ class FormatsBaseTestCase(base.BaseTestCase):
         resource: a Resource instance
         target_lang: target language instance
         translation_file: path to translation file
-        translation_count: expected count for translations saved in 
+        translation_count: expected count for translations saved in
             target_lang for resource
 
         Returns a handler

@@ -79,7 +79,7 @@ class TestAppleStrings(FormatsBaseTestCase):
                 self.stringset = handler.stringset
                 entities = 0
                 translations = 0
-                for s in self.stringset.strings:
+                for s in self.stringset:
                     entities += 1
                     if s.translation.strip() != '':
                         translations += 1

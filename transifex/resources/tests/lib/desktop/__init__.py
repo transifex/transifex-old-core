@@ -67,5 +67,5 @@ class TestDesktopHandler(FormatsBaseTestCase):
         )
         self.handler.bind_file(filename)
         self.handler.parse_file(is_source=True)
-        self.assertEquals(len(self.handler.stringset.strings), 2)
+        self.assertEquals(len(self.handler.stringset), 2)
 

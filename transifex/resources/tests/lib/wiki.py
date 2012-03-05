@@ -13,17 +13,17 @@ class TestWikiHandler(TestCase):
         content = "Text {{italics|is}}\n\nnew {{italics|par\n\npar}}.\n\nTers"
         handler.content = content
         handler._parse(None, None)
-        self.assertEquals(len(handler.stringset.strings), 3)
+        self.assertEquals(len(handler.stringset), 3)
 
         handler.stringset = StringSet()
         content = "Text {{italics|is}}\n\n\n\nnew {{italics|par\n\npar}}.\n\nTers"
         handler.content = content
         handler._parse(None, None)
-        self.assertEquals(len(handler.stringset.strings), 3)
+        self.assertEquals(len(handler.stringset), 3)
 
         handler.stringset = StringSet()
         content = ("Text {{italics|is}} {{bold|bold}}\n\n\n\nnew "
                    "{{italics|par\n\npar}}.\n\nTers")
         handler.content = content
         handler._parse(None, None)
-        self.assertEquals(len(handler.stringset.strings), 3)
+        self.assertEquals(len(handler.stringset), 3)

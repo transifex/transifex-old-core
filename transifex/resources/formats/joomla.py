@@ -152,8 +152,10 @@ class JoomlaINIHandler(MarkedSourceCompilerFactory, Handler):
                 #ignore keys with no translation
                 context=""
                 continue
-            self.stringset.add(source, self._unescape(escaped_trans),
-                    context=context, comment=comment)
+            self.stringset.add(GenericTranslation(
+                    source, self._unescape(escaped_trans),
+                    context=context, comment=comment
+            ))
             comment = ""
         return buf[:buf.rfind(self.linesep)]
 

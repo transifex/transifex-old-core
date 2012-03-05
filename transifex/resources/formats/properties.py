@@ -149,7 +149,9 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
                 # ignore keys with no translation
                 continue
 
-            self.stringset.add(key, self._unescape(value), context=context)
+            self.stringset.add(GenericTranslation(
+                    key, self._unescape(value), context=context
+            ))
         return template
 
     def _key_value_from_line(self, line):

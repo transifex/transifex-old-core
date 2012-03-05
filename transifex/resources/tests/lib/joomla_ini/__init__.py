@@ -26,7 +26,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
 
     def test_quote_removal(self):
         self.parser.parse_file(is_source=True)
-        for s in self.parser.stringset.strings:
+        for s in self.parser.stringset:
             self.assertFalse(s.translation.startswith('"'))
         self.compare_to_actual_file(self.parser, self.file)
 
@@ -34,7 +34,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.parse_file(is_source=True)
         entities = 0
         translations = 0
-        for s in self.parser.stringset.strings:
+        for s in self.parser.stringset:
             entities += 1
             if s.translation.strip() != '':
                 translations += 1
@@ -76,7 +76,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.bind_content(content)
         self.parser.parse_file(is_source=True)
         translation_strings = []
-        for s in self.parser.stringset.strings:
+        for s in self.parser.stringset:
             translation_strings.append(s.translation)
         self.assertEqual(translation_strings, ['Translation with "quotes"',
                 'Translation with a quote "'])
@@ -87,7 +87,7 @@ class TestJoomlaIni(FormatsBaseTestCase):
         self.parser.bind_content(content)
         self.parser.parse_file(is_source=True)
         translation_strings = []
-        for s in self.parser.stringset.strings:
+        for s in self.parser.stringset:
             translation_strings.append(s.translation)
         self.assertEqual(translation_strings, ['Translation with "quotes"',
                 'Translation with a quote "'])
@@ -96,7 +96,9 @@ class TestJoomlaIni(FormatsBaseTestCase):
         content = 'KEY1=Translation\\nwith new line \\r\\n'
         self.parser.bind_content(content)
         self.parser.parse_file(is_source=True)
-        translation_string = self.parser.stringset.strings[0].translation
+        self.assertEqual(len(self.parser.stringset), 1)
+        for s in self.parser.stringset:
+            translation_string = s.translation
         self.assertEqual(translation_string, 'Translation\nwith new line \r\n')
 
     def apply_translation(self, t, compiler):

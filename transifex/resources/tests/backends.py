@@ -47,7 +47,6 @@ class TestResourceBackend(TestBackend):
             source_language=self.source_lang, content=self.content,
             user=self.maintainer, extra_data={'accept_translations': True}
         )
-        r = Resource.objects.get(slug='test')
         self.assertEquals(res[0], 6)
         self.assertEquals(res[1], 0)
 

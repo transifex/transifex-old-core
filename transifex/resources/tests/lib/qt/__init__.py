@@ -51,7 +51,7 @@ class TestQtFile(FormatsBaseTestCase):
         self.stringset = handler.stringset
         entities = 0
 
-        for s in self.stringset.strings:
+        for s in self.stringset:
             # Testing if source entity and translation are the same
             if not s.pluralized:
                 self.assertEqual(messages[s.source_entity], s.translation)
@@ -79,7 +79,7 @@ class TestQtFile(FormatsBaseTestCase):
         nplurals = 0
         entities = 0
 
-        for s in self.stringset.strings:
+        for s in self.stringset:
 
             # Testing plural number
             if s.source_entity == '%n FILES PROCESSED.' and s.pluralized:
@@ -457,9 +457,8 @@ class TestQtFile(FormatsBaseTestCase):
         handler.bind_resource(self.resource)
         handler.set_language(self.language)
         handler.parse_file(is_source=True)
-        strings = handler.stringset.strings
-        self.assertEquals(len(strings), 15)
-        for s in strings:
+        self.assertEquals(len(handler.stringset), 15)
+        for s in handler.stringset:
             if s.source_entity == "PROCESSING START...":
                 self.assertEquals(
                     s.translation, "Starting scan and copy process..."

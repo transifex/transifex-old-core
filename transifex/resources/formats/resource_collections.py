@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-A series of classes that hold collections of the resources' app objects.
-"""
+"""A series of classes that hold collections of the resources' app objects."""
 
 from django.utils import simplejson as json
 from transifex.resources.models import SourceEntity, Translation
@@ -13,12 +11,20 @@ class StringSet(object):
     """Store a list of Translation objects for a given language."""
 
     def __init__(self):
-        self._strings = set()
+        # We use a list to sort strings in order and a
+        # set to store already seen entries.
+        self._strings = []
+        self._seen = set()
         self.target_language = None
 
     def add(self, translation):
-        """Add a new translation."""
-        self._strings.add(translation)
+        """Add a new translation.
+
+        Duplicates are ignored.
+        """
+        if translation not in self._seen:
+            self._strings.append(translation)
+            self._seen.add(translation)
 
     def __in__(self, elem):
         return elem in self._strings
@@ -62,13 +68,14 @@ class GenericTranslation(object):
         self.obsolete = obsolete
 
     def __hash__(self):
-        return hash((self.source_entity, self.context))
+        return hash((self.source_entity, tuple(self.context), self.rule))
 
     def __eq__(self, other):
         correct_class = isinstance(other, self.__class__)
         same_se = self.source_entity == other.source_entity
         same_ctxt = self.context == other.context
-        if correct_class and same_se and same_ctxt:
+        same_rule = self.rule == other.rule
+        if all([correct_class, same_se, same_ctxt, same_rule]):
             return True
         return False
 

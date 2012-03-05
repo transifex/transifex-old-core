@@ -99,12 +99,13 @@ class DTDHandler(SimpleCompilerFactory, Handler):
         latest_comment = ""
         for (orig, key, value, comment) in re.findall(re_tag, text):
             if key:
-                self.stringset.strings.append(GenericTranslation(key,
-                    self._unescape(value[1:-1]),
-                    rule=5, # no plural forms
-                    context=context, comment=latest_comment,
-                    pluralized=False, fuzzy=False,
-                    obsolete=False))
+                self.stringset.add(GenericTranslation(
+                        key, self._unescape(value[1:-1]),
+                        rule=5, # no plural forms
+                        context=context, comment=latest_comment,
+                        pluralized=False, fuzzy=False,
+                        obsolete=False
+                ))
                 if is_source:
                     hashed_entity = orig.replace(value,
                         '"%(hash)s_tr"' % {'hash': hash_tag(key, context)} )

@@ -295,11 +295,11 @@ class Handler(object):
 
     def _add_translation_string(self, *args, **kwargs):
         """Adds to instance a new translation string."""
-        self.stringset.strings.append(GenericTranslation(*args, **kwargs))
+        self.stringset.add(GenericTranslation(*args, **kwargs))
 
     def _add_suggestion_string(self, *args, **kwargs):
         """Adds to instance a new suggestion string."""
-        self.suggestions.strings.append(GenericTranslation(*args, **kwargs))
+        self.suggestions.add(GenericTranslation(*args, **kwargs))
 
     @need_resource
     def compile(self, language=None, pseudo=None, mode=Mode.DEFAULT):
@@ -487,7 +487,7 @@ class Handler(object):
         strings_updated = 0
         strings_deleted = 0
         try:
-            for j in self.stringset.strings:
+            for j in self.stringset:
                 if j in source_entities:
                     se = source_entities.get(j)
                     if se in new_entities:
@@ -522,7 +522,7 @@ class Handler(object):
             source_entities = self._init_source_entity_collection(new_sources)
             new_translations = []
             updated_translations = set([])
-            for j in self.stringset.strings:
+            for j in self.stringset:
                 se = source_entities.get(j)
                 if self._should_skip_translation(se, j):
                     continue
@@ -551,7 +551,7 @@ class Handler(object):
             raise
 
         sg_handler = self.SuggestionFormat(self.resource, self.language, user)
-        sg_handler.add_from_strings(self.suggestions.strings)
+        sg_handler.add_from_strings(self.suggestions)
         new_entities = SourceEntity.objects.exclude(
             pk__in=[s.pk for s in original_sources]
         ).filter(
@@ -596,7 +596,7 @@ class Handler(object):
         strings_updated = 0
         strings_deleted = 0
         try:
-            for j in self.stringset.strings:
+            for j in self.stringset:
                 if j not in source_entities:
                     continue
                 else:
@@ -651,7 +651,7 @@ class Handler(object):
             )
             raise
         sg_handler = self.SuggestionFormat(self.resource, self.language, user)
-        sg_handler.add_from_strings(self.suggestions.strings)
+        sg_handler.add_from_strings(self.suggestions)
         return strings_added, strings_updated, strings_deleted
 
     def _update_stats_of_resource(self, resource, language, user):
@@ -768,10 +768,10 @@ class Handler(object):
             msg = "Error when parsing file for resource %s: %s"
             logger.error(msg % (self.resource, e), exc_info=True)
             raise
-        if self.resource and not self.stringset.strings:
+        if self.resource and not self.stringset:
             msg = _("We're not able to extract any string from the file "
                     "uploaded for language %(language)s in resource "
-                    "%(resource)s." % {'language': self.language, 
+                    "%(resource)s." % {'language': self.language,
                     'resource': self.resource})
             logger.error("Error during parsing for resource %s -> %s" % (
                 self.resource, msg), exc_info=True)
