@@ -25,6 +25,7 @@ from transifex.projects import signals
 
 from transifex.languages.models import Language
 from transifex.projects.permissions.project import ProjectPermission
+from transifex.projects.signals import project_outsourced_changed
 from transifex.releases.handlers import update_all_release
 from transifex.resources.models import Resource, RLStats
 from transifex.resources.utils import invalidate_template_cache
@@ -145,6 +146,7 @@ def project_access_control_edit(request, project_slug):
             project_hub = project.outsource
             hub_request = None
 
+            # TODO call signal project_outsourced_changed
             if 'outsourced' != project_type:
                 project.outsource = None
             else:

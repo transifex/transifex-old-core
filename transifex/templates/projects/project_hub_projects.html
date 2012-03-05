@@ -3,6 +3,7 @@
 {% load project_hub %}
 {% load txcommontags %}
 {% load permissions %}
+{% load cache %}
 
 
 {% block project_header %}
@@ -22,6 +23,7 @@
   	<h3  class="sh-label">{% blocktrans %}Hub projects{% endblocktrans %}</h3>
 	</div>
   {% include "projects/project_hub_join_requests.html" %}
+  {% cache 604800 hub_projects project LANGUAGE_CODE%}
   {% if outsourcing_projects %}
     <div class="datalist">
       <ul class="nomargin">
@@ -40,5 +42,6 @@
   {% else %}
       <span class="i16 infomsg">{% trans "No project is outsourcing access to this project hub." %}</span>
   {% endif %}
+  {% endcache %}
   {% endwith %}
 {% endblock %}

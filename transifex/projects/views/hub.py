@@ -15,6 +15,7 @@ from actionlog.models import action_logging
 from notification import models as notification
 from transifex.projects.models import Project, HubRequest
 from transifex.projects.permissions import *
+from transifex.projects.signals import project_outsourced_changed
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -171,7 +172,6 @@ def project_hub_join_withdraw(request, project_slug):
 @one_perm_required_or_403(pr_project_add_change,
     (Project, "slug__exact", "project_slug"),)
 def project_hub_projects_toggler(request, project_slug):
-
     project = get_object_or_404(Project, slug=project_slug)
     url = reverse('project_hub_projects_toggler', args=(project_slug,))
 
@@ -230,9 +230,5 @@ def project_hub_projects_toggler(request, project_slug):
     except Exception, e:
         return json_error(e.message, result)
 
+    project_outsourced_changed.send(sender=project)
     return json_result(result)
-
-
-
-
-

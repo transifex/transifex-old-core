@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
 import os
 from datetime import datetime
 import tagging
@@ -28,9 +30,12 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from transifex.actionlog.models import LogEntry
 from transifex.txcommon.db.models import ChainerManager
 from transifex.txcommon.log import log_model, logger
-from transifex.projects.signals import project_created, project_deleted
 from transifex.languages.models import Language
 from datastores import TxRedisMapper, redis_exception_handler
+from .signals import project_created, project_deleted, \
+        project_outsourced_changed
+from .handlers import on_outsource_change
+
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"])
 
@@ -371,3 +376,7 @@ class HubRequest(models.Model):
         unique_together = ("project",)
         verbose_name = _('hub joining request')
         verbose_name_plural = _('hub joining requests')
+
+
+# Connect to signals
+project_outsourced_changed.connect(on_outsource_change)

@@ -48,4 +48,7 @@ project_form_save = Signal(providing_args=['form', 'instance'])
 project_private_check = Signal(providing_args=['instance'])
 project_type_check = Signal(providing_args=['instance'])
 
+# Cache signals
+project_outsourced_changed = Signal(providing_args=['project'])
+
 class ClaNotSignedError(Exception): pass
