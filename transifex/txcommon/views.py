@@ -29,11 +29,14 @@ from transifex.projects.models import Project
 from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
-from transifex.txcommon.haystack_utils import (prepare_solr_query_string,
-    fulltext_fuzzy_match_filter, fulltext_project_search_filter)
+from transifex.txcommon.haystack_utils import (support_fulltext_search, 
+    prepare_solr_query_string, fulltext_fuzzy_match_filter, 
+    fulltext_project_search_filter)
 from transifex.txcommon.feeds import TxNoticeUserFeed
 
 from notification.decorators import basic_auth_required, simple_basic_auth_callback
+
+FULLTEXT = support_fulltext_search()
 
 @basic_auth_required(realm='Notices Feed', callback_func=simple_basic_auth_callback)
 def feed_for_user(request):
@@ -54,9 +57,8 @@ def search(request):
     search_terms = query_string.split()
     index_query = SearchQuerySet().models(Project)
     spelling_suggestion = None
-    #FIXME: Workaround for https://github.com/toastdriven/django-haystack/issues/364
-    # Only the else part should be necessary.
-    if settings.HAYSTACK_SEARCH_ENGINE == 'simple':
+
+    if not FULLTEXT:
         results = index_query.auto_query(query_string)
     else:
         try:

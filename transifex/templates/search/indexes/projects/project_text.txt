@@ -1,5 +1,1 @@
-{{ object.slug }}
-{{ object.name }}
-{{ object.description }}
-{{ object.long_description }}
-{{ object.bug_tracker }}
+{{ object.slug }} {{ object.name }} {{ object.description }} {{ object.long_description|default:'' }} {{ object.bug_tracker|default:'' }}

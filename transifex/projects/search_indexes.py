@@ -1,21 +1,20 @@
 import datetime
-from haystack.indexes import *
-from haystack import site
-
+from haystack import indexes
 from transifex.projects.models import Project
 
+class ProjectIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
 
-class ProjectIndex(RealTimeSearchIndex):
-
-    text = CharField(document=True, use_template=True)
+    text = indexes.CharField(document=True, use_template=True)
     
-    slug = CharField(model_attr='slug', null=False)
-    name = CharField(model_attr='name', null=False, boost=1.125)
-    description = CharField(model_attr='description', null=True)
-    tags = MultiValueField()
+    slug = indexes.CharField(model_attr='slug', null=False)
+    name = indexes.CharField(model_attr='name', null=False, boost=1.125)
+    description = indexes.CharField(model_attr='description', null=True)
+    tags = indexes.MultiValueField()
 
-    # django-haystack-1.2 needs it along with the custom prepare method
-    suggestions = CharField()
+    suggestions = indexes.FacetCharField()
+
+    def get_model(self):
+        return Project
 
     def prepare(self, obj):
         prepared_data = super(ProjectIndex, self).prepare(obj)
@@ -26,7 +25,7 @@ class ProjectIndex(RealTimeSearchIndex):
     def index_queryset(self):
         """Used when the entire index for model is updated."""
         # Do not index private projects
-        return Project.objects.exclude(private=True).filter(
+        return self.get_model().objects.exclude(private=True).filter(
             modified__lte=datetime.datetime.now())
 
     def should_update(self, instance, **kwargs):
@@ -39,23 +38,20 @@ class ProjectIndex(RealTimeSearchIndex):
 
     # TODO: Newer version of django-haystack has support for .using() and this
     # method needs to be refactored once using that.
-    def update_object(self, instance, **kwargs):
+    def update_object(self, instance, using=None, **kwargs):
         """
         Update the index for a single object. Attached to the class's
         post-save hook.
         """
         # Check to make sure we want to index this first.
         if self.should_update(instance, **kwargs):
-            self.backend.update(self, [instance])
+            self._get_backend(using).update(self, [instance])
         else:
             # self.should_update checks whether a project is private or not.
             # If it was open and now it's private, it should be removed from the
             # indexing. Private projects should NOT be indexed for now.
-            self.remove_object(instance, **kwargs)
-
+            self.remove_object(instance, using, **kwargs)
 
     def get_updated_field(self):
         """Project mode field used to identify new/modified object to index."""
         return 'modified'
-
-site.register(Project, ProjectIndex)

@@ -1,26 +1,23 @@
 import re, operator
-from pysolr import SolrCoreAdmin
 from django.conf import settings
+
+from haystack import connections
+from haystack.backends.solr_backend import SolrSearchBackend
+from haystack.constants import DEFAULT_ALIAS
+from haystack.inputs import Raw
+from haystack.query import SQ
 
 from transifex.txcommon.log import logger
 
-class HaystackError(Exception):
-    pass
+def support_fulltext_search(using=DEFAULT_ALIAS):
+    """
+    Method to check whether django-haystack backend used supports fulltext 
+    search or not.
+    """
 
-def check_haystack_error(func):
-    """Decorator to check whether haystack backend is up and running or not."""
-    from haystack.query import SearchQuerySet
-    def wrapper(*args, **kwargs):
-        if settings.HAYSTACK_SEARCH_ENGINE == 'solr':
-            try:
-                soldadmin = SolrCoreAdmin(SearchQuerySet().query.backend.conn.url)
-                soldadmin.status()
-                func(*args, **kwargs)
-            except Exception, e:
-                logger.error('Error contacting SOLR backend: %s' % 
-                    getattr(e, 'reason', e), exc_info=True)
-                raise HaystackError('Error contacting SOLR backend.')
-    return wrapper
+    if isinstance(connections[using].get_backend(), SolrSearchBackend):
+        return True
+    return False
 
 def fulltext_project_search_filter(string):
     """
@@ -38,14 +35,13 @@ def fulltext_project_search_filter(string):
     >>> fulltext_project_search_filter(prepare_solr_query_string(value))
     <SQ: OR (name__exact=Test^1.2 OR description__exact=Test^1.1 OR text__exact=Test~)>
     """
-    from haystack.query import SQ
     if string:
         filters = []
         for w in string.split():
-            filters.append(SQ(slug='%s^1.2' % w))
-            filters.append(SQ(name='%s^1.2' % w))
-            filters.append(SQ(description='%s^1.1' % w))
-            filters.append(SQ(text='%s~' % w))
+            filters.append(SQ(slug=Raw('%s^1.2' % w)))
+            filters.append(SQ(name=Raw('%s^1.2' % w)))
+            filters.append(SQ(description=Raw('%s^1.1' % w)))
+            filters.append(SQ(text=Raw('"%s~"' % w)))
         return reduce(operator.__or__, filters)
     else:
         return SQ(text='')
@@ -65,12 +61,12 @@ def fulltext_fuzzy_match_filter(string):
     >>> fulltext_fuzzy_match_filter(prepare_solr_query_string(value)):
     <SQ: OR (text__exact=Test~ OR text__exact=link~ OR text__exact=for~)>
     """
-    from haystack.query import SQ
+
     # TODO: Searching in this way might be slow. We should investigate 
     # alternatives for it.
     if string:
         return reduce(operator.__or__, 
-            [SQ(text='"%s~"' % w) for w in string.split()])
+            [SQ(text=Raw('"%s~"' % w)) for w in string.split()])
     else:
         return SQ(text='""')
 
