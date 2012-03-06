@@ -159,14 +159,14 @@ class LogEntry(models.Model):
     user = models.ForeignKey(User, verbose_name=_('User'), blank=True,
         null=True, related_name="actionlogs")
 
-    object_id = models.IntegerField(blank=True, null=True)
+    object_id = models.IntegerField(blank=True, null=True, db_index=True)
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
                                      related_name="actionlogs")
 
     object = generic.GenericForeignKey('content_type', 'object_id')
 
     action_type = models.ForeignKey(NoticeType, verbose_name=_('Action type'))
-    action_time = models.DateTimeField(_('Action time'))
+    action_time = models.DateTimeField(_('Action time'), db_index=True)
     object_name = models.CharField(blank=True, max_length=200)
     message = models.TextField(blank=True, null=True)
 
