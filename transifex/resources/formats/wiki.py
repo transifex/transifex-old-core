@@ -55,7 +55,10 @@ class WikiHandler(FillEmptyCompilerFactory, Handler):
                 prev_text_pos = -1
             elif par_pos < t_open_pos or t_open_pos == -1:
                 source = trans = self.content[prev_text_pos:par_pos].strip()
-                prev_split_pos = prev_text_pos = par_pos + 2
+                if par_pos == -1:
+                    prev_split_pos = prev_text_pos = -1
+                else:
+                    prev_split_pos = prev_text_pos = par_pos + 2
             else:
                 t_end_pos = self.content.find(template_ends, prev_split_pos + 1)
                 prev_split_pos = t_end_pos
