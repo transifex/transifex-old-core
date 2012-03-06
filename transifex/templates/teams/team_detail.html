@@ -14,8 +14,8 @@
 $(function(){
   $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
   $("#join-facebox-trigger").facebox();
-  $('#id_project').chosen();
-  $('#id_project').change(function() {
+  $('#filter-form #id_project').chosen();
+  $('#filter-form #id_project').change(function() {
     $("#filter-form").submit();
   });
 
