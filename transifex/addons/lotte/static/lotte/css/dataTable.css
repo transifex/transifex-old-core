@@ -157,7 +157,9 @@ table.display td.center {
 	text-align: center;
 }
 
-
+table#stringset_table td.msg {
+  max-width: 250px;
+}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * DataTables sorting
@@ -638,8 +640,12 @@ textarea.untranslated{
 }
 
 .source_string, .source_string_plural {
-  overflow:visible;
+  overflow-x: hidden;
   text-shadow: 1px 1px 0px #fff;
   padding-bottom:1.25em;
   white-space:pre-wrap;
+}
+
+.source_string:hover, .source_string_plural:hover {
+  overflow-x: auto;
 }
