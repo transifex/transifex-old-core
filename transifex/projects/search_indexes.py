@@ -1,5 +1,7 @@
 import datetime
 from haystack import indexes
+from django.contrib.contenttypes.models import ContentType
+from transifex.actionlog.models import LogEntry
 from transifex.projects.models import Project
 
 class ProjectIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
@@ -10,16 +12,37 @@ class ProjectIndex(indexes.RealTimeSearchIndex, indexes.Indexable):
     name = indexes.CharField(model_attr='name', null=False, boost=1.125)
     description = indexes.CharField(model_attr='description', null=True)
     tags = indexes.MultiValueField()
+    created = indexes.DateTimeField(model_attr='created', null=False)
 
+    activity = indexes.IntegerField()
     suggestions = indexes.FacetCharField()
+
 
     def get_model(self):
         return Project
+
+    @property
+    def _get_content_type(self):
+        return ContentType.objects.get_for_model(self.get_model())
+
+    @property
+    def _six_month_ago(self):
+        """Return date from 6 month ago."""
+        return datetime.datetime.now() - datetime.timedelta(6*365/12)
 
     def prepare(self, obj):
         prepared_data = super(ProjectIndex, self).prepare(obj)
         prepared_data['suggestions'] = prepared_data['text']
         prepared_data['tags'] = [tag.name for tag in obj.tagsobj]
+        
+        # Number of actionlog for the last 6 months
+        activity = LogEntry.objects.filter(
+            content_type=self._get_content_type,
+            object_id=obj.id,
+            action_time__gte=self._six_month_ago
+            ).order_by().count()
+        prepared_data['activity'] = activity if activity else 0
+
         return prepared_data
 
     def index_queryset(self):
