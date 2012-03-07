@@ -138,7 +138,7 @@ def _team_create_update(request, project_slug, language_code=None, extra_context
                 except NoticeType.DoesNotExist:
                     pass
 
-            return HttpResponseRedirect(reverse("team_detail",
+            return HttpResponseRedirect(reverse("team_members",
                                         args=[project.slug, team.language.code]))
     else:
         form = TeamSimpleForm(project, language_code, instance=team)
