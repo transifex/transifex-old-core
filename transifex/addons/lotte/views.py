@@ -357,6 +357,7 @@ def _get_stringset(post_data, resources, language, review=False, session='', *ar
             query = Q()
             for term in search.split():
                 query &= Q(string__icontains=term)
+                query |= Q(source_entity__string__icontains=term)
             if query:
                 source_entities = translated_strings.filter(query).values('source_entity')
                 query |= Q(source_entity__in=source_entities)
