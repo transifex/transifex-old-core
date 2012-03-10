@@ -55,10 +55,20 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
         string with backslashes in the store method.
         So let us do the same.
         """
+        s = s.replace(r'\t', '\t')\
+            .replace(r'\f', '\f')\
+            .replace(r'\n', '\n')\
+            .replace(r'\r', '\r')
         return (
-            s.replace(':', '\:')
-            .replace('=', '\=')
-            .replace('\\', '\\\\')
+            s.replace('\\', r'\\')
+            .replace(':', r'\:')
+            .replace('=', r'\=')
+            .replace('!', r'\!')
+            .replace('#', r'\#')
+            .replace('\t', r'\t')
+            .replace('\f', r'\f')
+            .replace('\n', r'\n')
+            .replace('\r', r'\r')
         )
 
     def _is_escaped(self, line, index):
@@ -96,9 +106,15 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
 
     def _unescape(self, value):
         """Reverse the escape of special characters."""
-        return (value.replace('\:', ':')
-                     .replace('\=', '=')
-                     .replace('\\\\', '\\')
+        return (value.replace(r'\:', ':')
+                     .replace(r'\#', '#')
+                     .replace(r'\!', '!')
+                     .replace(r'\=', '=')
+                     .replace(r'\t', '\t')
+                     .replace(r'\f', '\f')
+                     .replace(r'\n', '\n')
+                     .replace(r'\r', '\r')
+                     .replace(r'\\', '\\')
         )
 
     def _visit_value(self, value):
