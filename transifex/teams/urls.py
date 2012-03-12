@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
+from django.views.generic.simple import redirect_to
 from transifex.teams.views import *
 
 TEAM_PARTIAL_URL =  r'language/(?P<language_code>[\-_@\w\.]+)/'
@@ -57,4 +58,6 @@ urlpatterns = patterns('',
         regex = TEAM_PARTIAL_URL + r'deny/$',
         view = team_request_deny,
         name = 'team_request_deny',),
+    # Legacy redirect
+    url(r'teams/$', redirect_to, {'url': '/projects/p/%(project_slug)s/'}),
 )
