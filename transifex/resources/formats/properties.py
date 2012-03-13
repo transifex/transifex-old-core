@@ -168,6 +168,8 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
             self.stringset.add(GenericTranslation(
                     key, self._unescape(value), context=context
             ))
+        if is_source:
+            template = template[:-1]
         return template
 
     def _key_value_from_line(self, line):
