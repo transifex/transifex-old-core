@@ -169,7 +169,7 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
                     key, self._unescape(value), context=context
             ))
         if is_source:
-            template = template[:-1]
+            template = template[:-1*(len(self.linesep))]
         return template
 
     def _key_value_from_line(self, line):
