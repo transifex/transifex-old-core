@@ -139,7 +139,8 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
         #regex for finding all comments in a file
         cp = r'(?:/\*(?P<comment>(?:[^*]|(?:\*+[^*/]))*\**)\*/)'
         p = re.compile(r'(?:%s[ \t]*[\n]|[\r\n]|[\r]){0,1}(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)'%cp, re.DOTALL|re.U)
-        c = re.compile(r'\s*/\*(.|\s)*?\*/\s*', re.U)
+        #c = re.compile(r'\s*/\*(.|\s)*?\*/\s*', re.U)
+        c = re.compile(r'//[^\n]*\n|/\*(?:.|[\r\n])*?\*/', re.U)
         ws = re.compile(r'\s+', re.U)
         buf = u""
         end=0
