@@ -67,14 +67,16 @@ class TestAppleStrings(FormatsBaseTestCase):
     def test_strings_parser(self):
         """STRINGS parsing tests."""
         # Parsing STRINGS content
-        files = ['test_utf_16.strings', 'test_utf_8.strings',]
+        files = ['test_utf_16.strings', 'test_utf_8.strings',
+                'test_utf_8_with_BOM.strings',]
         for i in range(1, 9):
             files.append('bad%d.strings'%i)
         for file_ in files:
             handler = AppleStringsHandler()
             handler.bind_file(os.path.join(os.path.dirname(__file__), file_))
             handler.set_language(self.resource.source_language)
-            if file_ in ['test_utf_16.strings', 'test_utf_8.strings']:
+            if file_ in ['test_utf_16.strings', 'test_utf_8.strings',
+                    'test_utf_8_with_BOM.strings']:
                 handler.parse_file(is_source=True)
                 self.stringset = handler.stringset
                 entities = 0
@@ -83,8 +85,12 @@ class TestAppleStrings(FormatsBaseTestCase):
                     entities += 1
                     if s.translation.strip() != '':
                         translations += 1
-                self.assertEqual(entities, 4)
-                self.assertEqual(translations, 4)
+                if file_ == 'test_utf_8_with_BOM.strings':
+                    count = 1
+                else:
+                    count = 4
+                self.assertEqual(entities, count)
+                self.assertEqual(translations, count)
             else:
                 self.assertRaises(StringsParseError, handler.parse_file, is_source=True)
 

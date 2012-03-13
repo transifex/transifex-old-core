@@ -132,6 +132,10 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
         resource = self.resource
         context = ""
         f = self.content
+        prefix = ""
+        if f.startswith(u'\ufeff'):
+            prefix = u'\ufeff'
+            f = f.lstrip(u'\ufeff')
         #regex for finding all comments in a file
         cp = r'(?:/\*(?P<comment>(?:[^*]|(?:\*+[^*/]))*\**)\*/)'
         p = re.compile(r'(?:%s[ \t]*[\n]|[\r\n]|[\r]){0,1}(?P<line>(("(?P<key>[^"\\]*(?:\\.[^"\\]*)*)")|(?P<property>\w+))\s*=\s*"(?P<value>[^"\\]*(?:\\.[^"\\]*)*)"\s*;)'%cp, re.DOTALL|re.U)
@@ -188,4 +192,6 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
             end = m.end()
             if end == 0:
                 break
+        if is_source:
+            buf = prefix + buf
         return buf
