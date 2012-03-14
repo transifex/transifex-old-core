@@ -269,6 +269,90 @@ class SampleData(TransactionLanguages, TransactionTranslations,
         TransactionNoticeTypes):
     """A class that has all sample data defined."""
 
+class TransactionBaseTestCase(SampleData, TransactionTestCase,):
+    fixtures = ["sample_users", "sample_site", "sample_languages", "sample_data"]
+
+    def __init__(self, *args, **kwargs):
+        super(TransactionBaseTestCase, self).__init__(*args, **kwargs)
+
+        # Useful for writing tests: Enter ipython anywhere w/ ``self.ipython()``
+        try:
+            from IPython.frontend.terminal.embed import InteractiveShellEmbed as shell
+            self.ipython = shell()
+        except ImportError:
+            pass
+
+        #FIXME: This should not happen, since it diverges away the test suite
+        # from the actual deployment.
+        # Remove the caching middlewares because they interfere with the
+        # anonymous client.
+        deactivate_caching_middleware()
+        deactivate_csrf_middleware()
+        # Disable actionlog, which in turn disables noticetype requirement.
+        settings.ACTIONLOG_ENABLED = False
+
+    def setUp(self):
+        """Set up a sample set of base objects for inherited tests.
+
+        If you are inheriting the class and overriding setUp, don't forget to
+        call super::
+
+          from transifex.txcommon.tests import (base, utils)
+          class TestClassName(base.BaseTestCase)
+              def setUp(self):
+                  super(TestClassName, self).setUp()
+
+        """
+        super(TransactionBaseTestCase, self).setUp()
+
+        # Add django-authority permission for writer
+        self.permission = AuPermission.objects.create(
+            codename='project_perm.submit_translations',
+            approved=True, user=self.user['writer'],
+            content_object=self.project, creator=self.user['maintainer'])
+
+        # Create teams
+        self.team = Team.objects.get_or_create(language=self.language,
+            project=self.project, creator=self.user['maintainer'])[0]
+        self.team_private = Team.objects.get_or_create(language=self.language,
+            project=self.project_private, creator=self.user['maintainer'])[0]
+        self.team.coordinators.add(self.user['team_coordinator'])
+        self.team.members.add(self.user['team_member'])
+        self.team_private.coordinators.add(self.user['team_coordinator'])
+        self.team_private.members.add(self.user['team_member'])
+
+        # Create a release
+        self.release = Release.objects.create(slug="releaseslug1",
+            name="Release1", project=self.project)
+        self.release.resources.add(self.resource)
+        self.release_private = Release.objects.create(slug="releaseslug2",
+            name="Release2", project=self.project_private)
+        self.release_private.resources.add(self.resource_private)
+
+
+        # Create common URLs
+        # Easier to call common URLs in your view/template unit tests.
+        self.urls = {
+            'project': reverse('project_detail', args=[self.project.slug]),
+            'project_edit': reverse('project_edit', args=[self.project.slug]),
+            'project_resources': reverse('project_resources', args=[self.project.slug]),
+            'resource': reverse('resource_detail', args=[self.resource.project.slug, self.resource.slug]),
+            'resource_actions': reverse('resource_actions', args=[self.resource.project.slug, self.resource.slug, self.language.code]),
+            'resource_edit': reverse('resource_edit', args=[self.resource.project.slug, self.resource.slug]),
+            'translate': reverse('translate_resource', args=[self.resource.project.slug, self.resource.slug, self.language.code]),
+            'release': reverse('release_detail', args=[self.release.project.slug, self.release.slug]),
+            'release_create': reverse('release_create', args=[self.project.slug]),
+            'team': reverse('team_detail', args=[self.resource.project.slug,
+                                                 self.language.code]),
+
+            'project_private': reverse('project_detail', args=[self.project_private.slug]),
+            'resource_private': reverse('resource_detail', args=[self.resource_private.project.slug, self.resource_private.slug]),
+            'translate_private': reverse('translate_resource', args=[self.resource_private.project.slug, self.resource_private.slug, self.language.code]),
+        }
+
+        from django.core import management
+        management.call_command('txstatsupdate', verbosity=0)
+
 
 class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
     """Provide a solid test case for all tests to inherit from."""
