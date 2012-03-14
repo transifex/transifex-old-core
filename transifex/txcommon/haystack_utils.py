@@ -66,7 +66,7 @@ def fulltext_fuzzy_match_filter(string):
     # alternatives for it.
     if string:
         return reduce(operator.__or__, 
-            [SQ(text=Raw('"%s~"' % w)) for w in string.split()])
+            [SQ(text=Raw('"%s~"' % w)) for w in string.split()[:1000]])
     else:
         return SQ(text='""')
 
