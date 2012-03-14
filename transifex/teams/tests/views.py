@@ -32,7 +32,9 @@ class TestTeams(base.BaseTestCase):
             'members': '|',
         }
         resp = self.client['maintainer'].post(url, data=DATA, follow=True)
-        self.assertTemplateUsed(resp, 'teams/team_detail.html')
+        #from ipdb import set_trace; set_trace()
+        #self.response_in_browser(resp)
+        self.assertTemplateUsed(resp, 'teams/team_members.html')
         self.assertEqual(resp.context['team'].project.id, self.project.id)
         self.assertEqual(resp.context['team'].language.id, self.language_ar.id)
         self.assertIn(User.objects.all()[0], resp.context['team'].coordinators.all())
@@ -84,7 +86,7 @@ class TestTeams(base.BaseTestCase):
             'members': '|%s|' % self.user['registered'].id,
         }
         resp = self.client['maintainer'].post(url, data=DATA, follow=True)
-        self.assertTemplateUsed(resp, 'teams/team_detail.html')
+        self.assertTemplateUsed(resp, 'teams/team_members.html')
         self.assertEqual(resp.context['team'].project.id, self.project.id)
         self.assertEqual(resp.context['team'].language.id, self.language_ar.id)
         self.assertIn(User.objects.all()[0], resp.context['team'].coordinators.all())
