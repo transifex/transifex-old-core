@@ -59,7 +59,7 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
             .replace(r'\f', '\f')\
             .replace(r'\n', '\n')\
             .replace(r'\r', '\r')
-        return (
+        s = (
             s.replace('\\', r'\\')
             .replace(':', r'\:')
             .replace('=', r'\=')
@@ -70,6 +70,10 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
             .replace('\n', r'\n')
             .replace('\r', r'\r')
         )
+
+        if s.startswith(' '):
+            s = '\\' + s
+        return s
 
     def _is_escaped(self, line, index):
         """Returns True, if the character at index is escaped by backslashes.
@@ -121,6 +125,11 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
         """Give a chance to check the value from the file before using it."""
         return value
 
+    def _check_escaped_ws(self, line):
+        if line and line.startswith('\\ '):
+            line = line[1:]
+        return line
+
     def _parse(self, is_source, lang_rules):
         """Parse a .properties content and create a stringset with
         all entries in it.
@@ -146,8 +155,7 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
                 # Read next line
                 nextline = self._prepare_line(lines.next())
                 # This line will become part of the value
-                line = line[:-1] + self._prepare_line(nextline)
-
+                line = line[:-1] + self._check_escaped_ws(nextline)
             key, value, old_value = self._key_value_from_line(line)
             if is_source:
                 if not value:
@@ -164,7 +172,6 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
             elif not SourceEntity.objects.filter(resource=resource, string=key).exists():
                 # ignore keys with no translation
                 continue
-
             self.stringset.add(GenericTranslation(
                     key, self._unescape(value), context=context
             ))
@@ -175,5 +182,6 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
     def _key_value_from_line(self, line):
         """Get the key and the value from a line of the file."""
         key, value = self._split(line)
-        return (key, self._visit_value(value), value)
+        value_ = self._check_escaped_ws(value)
+        return (key, self._visit_value(value_), value)
 
