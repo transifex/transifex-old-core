@@ -22,9 +22,11 @@
 {% block content_title %}
 {% with project.description as short_desc %}
 <div class="lastchild-emf">
+<h2 class="pagetitle{% if short_desc %} with_description{% endif %}">
 {% block project_header %}
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
+<span><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></span>
 {% endblock %}
+</h2>
 </div>
 
 {% block current_description %}

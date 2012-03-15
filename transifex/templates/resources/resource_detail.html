@@ -72,10 +72,10 @@
 
 {% block project_header %}
 {{block.super}}
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}">&nbsp;/&nbsp;</h2>
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}"><a href="{% url project_resources project.slug %}">{% trans "Resources" %}</a></h2>
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}">&nbsp;/&nbsp;</h2>
-<h2 class="pagetitle with_description">{{ resource.name }}</h2>
+<span>&nbsp;/&nbsp;</span>
+<span><a href="{% url project_resources project.slug %}">{% trans "Resources" %}</a></span>
+<span>&nbsp;/&nbsp;</span>
+<span>{{ resource.name }}</span>
 {% endblock%}
 
 {% block content_main %}

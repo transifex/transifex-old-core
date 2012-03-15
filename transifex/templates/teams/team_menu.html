@@ -16,11 +16,13 @@
 {% with project.description as short_desc %}
 
 <div class="lastchild-emf">
+<h2 class="pagetitle{% if short_desc %} with_description{% endif %}">
 {% block project_header %}
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
-<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
-<h2 class="pagetitle with_description"><a href="{% url team_detail project.slug language.code %}">{% blocktrans with language.name as language_name and language.code as language_code %}{{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup></a>{% endblocktrans %}</h2>
+<span><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></span>
+<span>&nbsp;/&nbsp;</span>
+<span><a href="{% url team_detail project.slug language.code %}">{% blocktrans with language.name as language_name and language.code as language_code %}{{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup></a>{% endblocktrans %}</span>
 {% endblock %}
+</h2>
 </div>
 
 {% block current_description %}

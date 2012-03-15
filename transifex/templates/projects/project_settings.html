@@ -9,10 +9,9 @@
     {% trans "New project" %}
   </h2>
   {% else %}
-  {{block.super}}<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
-  <h2 class="pagetitle with_description">
-    {% blocktrans with project.name as project_name %}Edit{% endblocktrans %}
-  </h2>
+  {{block.super}}
+  <span>&nbsp;/&nbsp;</span>
+  <span>{% blocktrans with project.name as project_name %}Edit{% endblocktrans %}</span>
   {% endif %}
 {% endblock %}
 

@@ -18,7 +18,7 @@
 
 {% block project_header %}
 {% with project.description as short_desc %}
-{{block.super}}<h2 class="pagetitle{% if short_desc %} with_description{% endif %}">&nbsp;/&nbsp;</h2><h2 class="pagetitle with_description">&nbsp;{% trans "Timeline" %}</h2>
+{{block.super}}<span>&nbsp;/&nbsp;</span><span>&nbsp;{% trans "Timeline" %}</span>
 {% endwith %}
 {% endblock%}
 

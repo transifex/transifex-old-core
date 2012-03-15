@@ -26,16 +26,19 @@ $(document).ready(function(){
 {% block content_title %}
 {% with project.description as short_desc %}
 <div class="lastchild-emf">
-{% block project_header %}
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}"><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></h2>
-<h2 class="pagetitle with_description">&nbsp;/&nbsp;</h2>
 <h2 class="pagetitle with_description">
+{% block project_header %}
+
+<span><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></span>
+<span>&nbsp;/&nbsp;</span>
+<span>
 {% if team_create %}
-{% blocktrans %}Create team{% endblocktrans %}</h2>
+{% blocktrans %}Create team{% endblocktrans %}</span>
 {% else %}
-{% blocktrans with language.name as language_name and language.code as language_code %}{{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</h2>
+{% blocktrans with language.name as language_name and language.code as language_code %}{{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</span>
 {% endif %}
 {% endblock%}
+</h2>
 </div>
 
 {% block current_description %}
