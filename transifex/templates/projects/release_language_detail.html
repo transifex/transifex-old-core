@@ -123,7 +123,7 @@
 <div class="list" style="clear:both">
 {% if stats %}
 
-  <div class="separate-header clearfix">
+  <div class="separate-header notopmargin clearfix">
   	<h3  class="sh-label">{% blocktrans count resources|length as counter %}Resource under this Release{% plural %}Resources under this Release{% endblocktrans %}</h3>
 	</div>
 
@@ -140,7 +140,7 @@
   <tbody>
   {% for stat in stats %}
     <tr class="stat-row" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
-      <td class="tableobject">
+      <td class="tableobject tipsy_enable" title="{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
@@ -164,13 +164,10 @@
       </td>
       <td class="tablelastupd">
         {% with stat.last_update as last_update %}
-        <span unixdate="{{ last_update|date:'U' }}">
+        <span class="i16 table-update" unixdate="{{ last_update|date:'U' }}">
           {% with stat.last_committer as last_committer %}
           {% if last_update %}
               {{ last_update|timesince }}
-              {% if last_committer %}
-              by {{ last_committer }}
-              {% endif %}
           {% else %}
               {% trans "no activity yet" %}
           {% endif %}
@@ -210,8 +207,8 @@
   <tbody>
   {% for stat in private_stats %}
     <tr class="stat-row" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
-        <td class="tableobject">
-        <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
+        <td class="tableobject tipsy_enable" title="{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}" >
+        <span class="linkstyle tipsy_enable" >{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
             <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
         {% else %}
