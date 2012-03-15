@@ -3,7 +3,7 @@
 	<h4>{% blocktrans with project.name as project_name %}{{ project_name }} CLA{% endblocktrans %}</h4>
 	<div id='cla_signed'>
 	
-	<h3>{% trans "Users that have signed the CLA:" %}</h3>
+	<p class="infomsg">{% trans "Users that have signed the CLA:" %}</p>
 	{% if signed_user_list %}
 	    <hr />
 	    <ul>
