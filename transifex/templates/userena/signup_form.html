@@ -62,9 +62,7 @@
     </div>
     <div class="clearfix">
     {% for field in form %}
-    <div id="signup-form-{{ field.name }}-errors">
-        {{ field.errors }}
-    </div>
+
     {% comment %} Displaying checkboxes differently {% endcomment %}
     {% if field.name == 'tos' %}
     <p class="checkbox">
@@ -75,6 +73,9 @@
     {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
     {% if field.field.help_text %}<span class="field-helptext tipsy_enable" title="{{ field.help_text }}">?</span>{% endif %} 
     {{ field }}
+    <div id="signup-form-{{ field.name }}-errors">
+        {{ field.errors }}
+    </div>
     </div>
     {% endif %}
     {% endfor %}
