@@ -133,7 +133,6 @@ def project_update(request, project_slug):
 @one_perm_required_or_403(pr_project_add_change,
     (Project, 'slug__exact', 'project_slug'))
 def project_access_control_edit(request, project_slug):
-
     project = get_object_or_404(Project, slug=project_slug)
     outsourced = project.outsource
     if request.method == 'POST':
@@ -180,6 +179,7 @@ def project_access_control_edit(request, project_slug):
 
                     return HttpResponseRedirect(reverse('project_detail',args=[project.slug]),)
 
+
             if 'hub' == project_type:
                 project.is_hub = True
             else:
@@ -205,6 +205,7 @@ def project_access_control_edit(request, project_slug):
             project.save()
             form.save_m2m()
             handle_stats_on_access_control_edit(project)
+            project_outsourced_changed.send(sender=project_hub)
 
             if outsourced and not project.outsource:
                 # Drop resources from all-resources release of the hub project

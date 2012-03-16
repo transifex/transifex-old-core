@@ -81,6 +81,7 @@ def project_hub_join_approve(request, project_slug, outsourced_project_slug):
             transaction.rollback()
             logger.error("Something weird happened: %s" % str(e))
 
+        project_outsourced_changed.send(sender=hub_request.project_hub)
     return HttpResponseRedirect(reverse("project_detail", args=(project_slug,)))
 
 
@@ -124,6 +125,7 @@ def project_hub_join_deny(request, project_slug, outsourced_project_slug):
             transaction.rollback()
             logger.error("Something weird happened: %s" % e.message)
 
+        project_outsourced_changed.send(sender=hub_request.project_hub)
     return HttpResponseRedirect(reverse("project_detail", args=(project_slug,)))
 
 
@@ -159,7 +161,6 @@ def project_hub_join_withdraw(request, project_slug):
                 # Send notification for maintainers, coordinators and the user
                 notification.send(_hub_request.project_hub.maintainers.all(),
                     nt, context)
-
         except IntegrityError, e:
             transaction.rollback()
             logger.error("Something weird happened: %s" % e.message)
