@@ -80,7 +80,9 @@ def _log_to_project_history(project, action_time, action_type, message):
 
     # Store logs in hubs, too
     if project.outsource:
-        _log_to_project_history(project.outsource)
+        _log_to_project_history(
+            project.outsource, action_time, action_type, message
+        )
 
 
 @redis_exception_handler
