@@ -27,11 +27,14 @@ def log_to_queues(o, user_id, action_time, action_type, message):
     """Log actions to redis' queues."""
     Project = get_model('projects', 'Project')
     Resource = get_model('resources', 'Resource')
+    Team = get_model('teams', 'Team')
     if isinstance(o, Project):
         _log_to_recent_project_actions(o, user_id, action_time, message)
         _log_to_project_history(o, action_time, action_type, message)
     elif isinstance(o, Resource):
         _log_to_resource_history(o, action_time, action_type, message)
+    elif isinstance(o, Team):
+        _log_to_team_history(o, action_time, action_type, message)
 
 
 def _log_to_recent_project_actions(p, user_id, action_time, message):
