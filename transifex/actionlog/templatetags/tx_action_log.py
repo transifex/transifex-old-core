@@ -104,6 +104,7 @@ class RecentLogNode(template.Node):
                     object_id=self.obj.id
                 )[:5]
         context[self.context_var] = events
+        return ""
 
     @redis_exception_handler
     def _action_logs_from_redis(self, key):
