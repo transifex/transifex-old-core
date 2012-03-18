@@ -55,7 +55,7 @@ class XliffCompiler(PluralCompiler):
         return elements[0]
 
     def get_plural_index(self, count, rule):
-        return rule
+        return count
 
     def _apply_translations(self, translations, text):
         if isinstance(text, str):
@@ -357,7 +357,9 @@ class XliffHandler(SimpleCompilerFactory, Handler):
             if source_string and rule:
                 target.appendChild(self.doc.createTextNode(
                     ("%(hash)s_pl_%(rule)s" % {'hash': hash_tag(
-                        source_string, context), 'rule':rule})
+                        source_string, context),
+                        'rule':self.language.get_pluralrules_numbers().index(
+                            rule)})
                 ))
             else:
                 target.appendChild(self.doc.createTextNode(
