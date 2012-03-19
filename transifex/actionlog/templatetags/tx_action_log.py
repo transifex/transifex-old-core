@@ -86,14 +86,14 @@ class RecentLogNode(template.Node):
         self.context_var = context_var
 
     def render(self, context):
-        self.obj = template.Variable(self.obj).resolve(context)
-        redis_key = self.key_func(self.obj)
+        obj = template.Variable(self.obj).resolve(context)
+        redis_key = self.key_func(obj)
         events = self._action_logs_from_redis(redis_key)
         if events is None:
             Project = get_model('projects', 'Project')
-            if isinstance(self.obj, Project) and self.obj.is_hub:
-                ids = [self.obj.id, ]
-                ids += self.obj.outsourcing.all().values_list('id', flat=True)
+            if isinstance(obj, Project) and obj.is_hub:
+                ids = [obj.id, ]
+                ids += obj.outsourcing.all().values_list('id', flat=True)
                 events = LogEntry.objects.filter(
                     content_type=ContentType.objects.get_for_model(Project),
                     object_id__in=ids
@@ -101,7 +101,7 @@ class RecentLogNode(template.Node):
             else:
                 events = LogEntry.objects.filter(
                     content_type=ContentType.objects.get_for_model(self.model),
-                    object_id=self.obj.id
+                    object_id=obj.id
                 )[:5]
         context[self.context_var] = events
         return ""
