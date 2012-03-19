@@ -21,6 +21,7 @@ from django.dispatch import Signal
 from django.forms import ModelForm
 from django.utils.html import escape
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 
 from authority.models import Permission
 from notification.models import ObservedItem
