@@ -157,7 +157,8 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
             while end < start:
                 m = c.match(f, end, start) or ws.match(f, end, start)
                 if not m or m.start() != end:
-                    raise StringsParseError("Invalid syntax.")
+                    raise StringsParseError("Invalid syntax: %s" %\
+                            f[end:start])
                 if is_source:
                     buf += f[end:m.end()]
                 end = m.end()
@@ -187,7 +188,7 @@ class AppleStringsHandler(AppleMarkedSourceCompilerFactory, Handler):
         while len(f[end:]):
             m = c.match(f, end) or ws.match(f, end)
             if not m or m.start() != end:
-                raise StringsParseError("Invalid syntax.")
+                raise StringsParseError("Invalid syntax: %s" %  f[end:])
             if is_source:
                 buf += f[end:m.end()]
             end = m.end()
