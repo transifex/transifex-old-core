@@ -45,9 +45,9 @@
     var autotranslate_url = '{% url autotranslate_proxy project.slug %}';
     var supportedlangs_url = '{% url supported_langs project.slug %}';
     {% if auto_translate %}
-    var autotranslate_type = "{{ auto_translate.service_type }}";
+        var autotranslate_type = "{{ auto_translate.service_type }}";
     {% else %}
-    var autotranslate_type = "";
+        var autotranslate_type = "";
     {% endif %}
     /* The instance of the StringSet class which has references to all the objects of the table */
     var stringset = null;
@@ -87,13 +87,12 @@
     if ($.inArray("{{target_language.code}}", spellcheck_langs) >= 0) {
     	var spellcheck_url = '{% url spellcheckurl project.slug resource.slug target_language.code %}';
     	var enable_spellcheck = true;
-    }
-    else {
+    } else {
     	var enable_spellcheck = false;
     }
     // Used to manage extra tabs
     var toolbars = [];
-    toolbars[0] = ['lotte', lotte_tabs]
+    toolbars[0] = ['lotte', lotte_tabs];
 
     function onWindowCloseOrLoad(e) {
         if (!$("#toggle_autosave").is(":checked") && lotteStatus.updated){
