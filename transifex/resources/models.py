@@ -382,6 +382,10 @@ class SourceEntity(models.Model):
         null=False, default=False,
         help_text=_("Whether the entity is pluralized."))
 
+    # The order of the entity in the source file. Used by some formats
+    # when importing files not generated from Transifex.
+    order = models.PositiveIntegerField('Order', blank=True, null=True)
+
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
     last_update = models.DateTimeField(auto_now=True, editable=False)
