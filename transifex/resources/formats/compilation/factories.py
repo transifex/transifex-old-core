@@ -32,12 +32,12 @@ class CompilerFactory(object):
         """
         tdec = self._get_translation_decorator(pseudo_type)
         tset = self._get_translation_setter(language, mode)
-        compiler = self._get_compiler()
+        compiler = self._get_compiler(mode)
         compiler.translation_decorator = tdec
         compiler.translation_set = tset
         return compiler
 
-    def _get_compiler(self):
+    def _get_compiler(self, mode=None):
         """Construct the compiler to use.
 
         We use by default ``cls.CompilerClass``. If a format does not have

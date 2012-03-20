@@ -288,9 +288,7 @@ class Handler(object):
             return None
 
     def _escape(self, s):
-        """
-        Escape special characters in string.
-        """
+        """Escape special characters in string."""
         return s
 
     def _add_translation_string(self, *args, **kwargs):
