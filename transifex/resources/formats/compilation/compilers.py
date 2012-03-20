@@ -125,7 +125,7 @@ class Compiler(object):
             resource=self.resource
         ).values_list(
             'id', 'string_hash', 'pluralized'
-        )
+        ).order_by()
 
     def _visit_translation(self, s):
         """Have a chance to handle translation strings."""
