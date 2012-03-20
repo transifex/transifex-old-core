@@ -117,16 +117,16 @@
         }
     });
 
-    function unique(a){
+    function unique(arr){
         /* Drop duplicated entries from an array (list) */
-        var r = new Array();
-        o:for(var i = 0, n = a.length; i < n; i++){
-            for(var x = 0, y = r.length; x < y; x++){
-                if(r[x]==a[i]) continue o;
+        var retval = new Array();
+        for(var i = 0; i < arr.length ; i++) {
+            // `if a[i] not in retval`
+            if(retval.indexOf(arr[i]) == -1) {
+                retval.push(arr[i]);
             }
-            r[r.length] = a[i];
         }
-        return r;
+        return retval;
     }
 
     function saveError(){
