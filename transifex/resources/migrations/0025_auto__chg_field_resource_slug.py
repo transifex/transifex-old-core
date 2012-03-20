@@ -11,15 +11,9 @@ class Migration(SchemaMigration):
         # Changing field 'Resource.slug'
         db.alter_column('resources_resource', 'slug', self.gf('django.db.models.fields.SlugField')(max_length=200))
 
-        # Removing index on 'Resource', fields ['slug']
-        db.delete_index('resources_resource', ['slug'])
-
 
     def backwards(self, orm):
         
-        # Adding index on 'Resource', fields ['slug']
-        db.create_index('resources_resource', ['slug'])
-
         # Changing field 'Resource.slug'
         db.alter_column('resources_resource', 'slug', self.gf('django.db.models.fields.SlugField')(max_length=50))
 
