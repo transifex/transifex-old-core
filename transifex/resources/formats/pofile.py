@@ -150,7 +150,7 @@ class GettextHandler(SimpleCompilerFactory, Handler):
                 stripped_content += line + "\n"
         return stripped_content
 
-    def _get_compiler(self):
+    def _get_compiler(self, mode=None):
         """Construct the compiler to use."""
         return self.CompilerClass(
             resource=self.resource, format_encoding=self.format_encoding

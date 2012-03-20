@@ -114,7 +114,7 @@ class DesktopHandler(SimpleCompilerFactory, Handler):
         """Return True, if this is a group header."""
         return line[0] == '[' and line[-1] == ']'
 
-    def _get_compiler(self):
+    def _get_compiler(self, mode=None):
         """Choose between source and single translation compilers."""
         if self.language == self.resource.source_language:
             return DesktopSourceCompiler(self.resource)
