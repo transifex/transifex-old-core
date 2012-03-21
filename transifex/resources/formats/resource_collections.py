@@ -55,7 +55,7 @@ class GenericTranslation(object):
     """
     def __init__(self, source_entity, translation, occurrences=None,
             comment=None, flags=None, context=None, rule=5, pluralized=False,
-            fuzzy=False, obsolete=False):
+            fuzzy=False, obsolete=False, order=None):
         self.source_entity = source_entity
         self.translation = translation
         self.context = context
@@ -66,6 +66,7 @@ class GenericTranslation(object):
         self.pluralized = pluralized
         self.fuzzy = fuzzy
         self.obsolete = obsolete
+        self.order = order
 
     def __hash__(self):
         return hash((self.source_entity, tuple(self.context), self.rule))

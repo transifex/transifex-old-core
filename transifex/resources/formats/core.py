@@ -495,6 +495,7 @@ class Handler(object):
                     se.pluralized = j.pluralized
                     se.developer_comment = j.comment or ""
                     se.occurrences = j.occurrences
+                    se.order = j.order
                     # se.save()
                     updated_entities.add(se)
                 else:
@@ -508,6 +509,7 @@ class Handler(object):
                         flags = j.flags or "",
                         developer_comment = j.comment or "",
                         occurrences = j.occurrences,
+                        order = j.order
                     )
                     # Add it to list with new entities
                     new_entities.append(se)
