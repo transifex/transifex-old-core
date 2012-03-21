@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load i18n %}
 {% load txcommontags %}
 {% load compress %}
@@ -9,60 +10,59 @@
   <title>{% block title %}{% trans "Transifex" %}{% endblock %}</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   {% block basecss %}
-  <link media="screen" href="{{ STATIC_URL }}css/base.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}css/txo-style.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}css/stats.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}css/icons.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}css/tipsy.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}css/facebox.css" rel="stylesheet" type="text/css" />
-  <link media="screen" href="{{ STATIC_URL }}css/chosen.css" rel="stylesheet" type="text/css" />
-  <link media="screen" href="{{ STATIC_URL }}css/jquery.autocomplete.css" rel="stylesheet" type="text/css"/>
-  <link media="screen" href="{{ STATIC_URL }}css/tablesorter.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/base.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/txo-style.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/stats.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/icons.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/tipsy.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/facebox.css" %}" rel="stylesheet" type="text/css" />
+  <link media="screen" href="{% static "css/chosen.css" %}" rel="stylesheet" type="text/css" />
+  <link media="screen" href="{% static "css/jquery.autocomplete.css" %}" rel="stylesheet" type="text/css"/>
+  <link media="screen" href="{% static "css/tablesorter.css" %}" type="text/css" rel="stylesheet" />
   {% endblock %}
   {% hook "base.html" headcss %}
   {% block basejs %}
 
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
   <script type="text/javascript">
-    var STATIC_URL = "{{ STATIC_URL }}";
     var csrf_token = "{% csrf_token %}";
     if (typeof jQuery == 'undefined') {
-        document.write(unescape("%3Cscript src='{{ STATIC_URL }}js/jquery.min.js' type='text/javascript'%3E%3C/script%3E"));
+        document.write(unescape("%3Cscript src='{% static 'js/jquery.min.js' %}' type='text/javascript'%3E%3C/script%3E"));
     }
   </script>
   <script type="text/javascript" src="{% url jsi18n %}"></script>
 
   {% compress js %}
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/chosen.jquery.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/json2.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.placeholder.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.tablesorter.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.tipsy.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/ajaxupload.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/sprintf.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/tx.core.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/ajaxcsrf.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/facebox.js"></script>
-	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery.autocomplete.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/file_submit.js"></script>
+  <script type="text/javascript" src="{% static "js/lib/chosen.jquery.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/json2.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.placeholder.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.tablesorter.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/base.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.tipsy.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/ajaxupload.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/sprintf.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/tx.core.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/ajaxcsrf.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/lib/facebox.js" %}"></script>
+	<script type="text/javascript" src="{% static "js/lib/jquery.autocomplete.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/file_submit.js" %}"></script>
   <script type="text/javascript">
-  $.facebox.settings.loadingImage = '{{ STATIC_URL }}images/loading.gif';
-  $.facebox.settings.closeImage = '{{ STATIC_URL }}images/closelabel.png';
+  $.facebox.settings.loadingImage = '{% static 'images/loading.gif' %}';
+  $.facebox.settings.closeImage = '{% static 'images/closelabel.png' %}';
   </script>
   {% endcompress %}
   {% endblock %}
   {% hook "base.html" headjs %}
 
   {% block shortcut_icon %}
-  <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" type="image/x-icon" />
   {% endblock %}
   {% block extracss %}{% endblock %}
   {% block extrajs %}{% endblock %}
   {% block extra_head %}{% endblock %}
   {% block final_head %}
     {% ifequal LANGUAGE_DIRECTION 'rtl' %}
-      <link media="screen" href="{{ STATIC_URL }}css/rtl.css" type="text/css" rel="stylesheet" />
+      <link media="screen" href="{% static "css/rtl.css" %}" type="text/css" rel="stylesheet" />
     {% endifequal %}
   {% endblock %}
   {% hook "base.html" head %}
@@ -78,7 +78,7 @@
   <div id="header">
     <div id="logo">
       <a class="simlink" href="{% url transifex.home %}" title="{% trans "Go to the start page" %}">
-        {% block logo %}<img border="0" src="{{ STATIC_URL }}images/tx-logo.png"  alt="{% trans "Go to start page" %}" width="200" />{% endblock %}
+        {% block logo %}<img border="0" src="{% static "images/tx-logo.png" %}"  alt="{% trans "Go to start page" %}" width="200" />{% endblock %}
       </a>
     </div>
     <div id="navmenu">
@@ -161,13 +161,13 @@
     {% endblock %}
     </div>
     <div class="wrapper">
-        
+
 		{% block content %}
 		<div class="wrapper clearfix">
 			<div id="content_main" class="grid_12">{% block content_main %}{% endblock %}</div>
 		</div>
 		{% endblock %}
-    
+
     </div>
     <div id="content_footer">
       {% block content_footer %}{% endblock %}

@@ -1,4 +1,5 @@
 {% extends "projects/base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load txcommontags %}
 
@@ -15,7 +16,7 @@
 {% endblock %}
 
 {% block extracss %}
- 	<link media="screen" href="{{ STATIC_URL }}css/explore.css" type="text/css" rel="stylesheet" />
+ 	<link media="screen" href="{% static "css/explore.css" %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block content_main %}

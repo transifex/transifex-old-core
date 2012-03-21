@@ -1,4 +1,5 @@
+{% load staticfiles %}
 {% load i18n %}
 
 <span class="priority_sort nodisplay">{{ priority.level }}</span>
-<img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ priority.display_level }}.png" style="border:0" title="{{ priority.display_level }}"/>
+<img class="res_tipsy_enable" src="{% static "priorities/images/{{ priority.display_level }}.png" %}" style="border:0" title="{{ priority.display_level }}"/>

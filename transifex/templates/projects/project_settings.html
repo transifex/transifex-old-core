@@ -1,4 +1,5 @@
 {% extends "projects/project_menu.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load addons %}
 {% load permissions %}
@@ -27,7 +28,7 @@
 
 {% block basejs %}
 {{ block.super }}
-<script type="text/javascript" src="{{ STATIC_URL }}js/project_settings.js"></script>
+<script type="text/javascript" src="{% static "js/project_settings.js" %}"></script>
 {% endblock %}
 
 {% block extrajs %}

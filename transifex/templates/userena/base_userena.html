@@ -1,11 +1,12 @@
 {% extends "userena/mount_userena.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load addons %}
 
 
 {% block basecss %}
 {{ block.super }}
-  <link media="screen" href="{{ STATIC_URL }}css/userspace.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "css/userspace.css" %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block extrajs %}

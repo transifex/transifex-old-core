@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load i18n %}
 {% load humanize %}
 {% load tx_action_log %}
@@ -24,12 +25,12 @@
 
                 <a href="{% url project_detail project_slug %}">{{ mproject }}</a>
                 {% if mproject.private %}
-                <img class="icon_private tipsy_enable lock" title='{% trans "This is a \"Private\" project. Private projects are accessible by specific users in Transifex." %}' src="{{ STATIC_URL }}images/icons/bullet_lock.png" style="border:0;">
+                <img class="icon_private tipsy_enable lock" title='{% trans "This is a \"Private\" project. Private projects are accessible by specific users in Transifex." %}' src="{% static "images/icons/bullet_lock.png" %}" style="border:0;">
                 {% endif %}
 
                     <span class="attributes" style="float:right;">
                    {% comment %} {% ifequal mproject.owner user %}
-                    <img class="icon_owner tipsy_enable explain" title='{% trans "You are the \"Owner\" of the project." %}' src="{{ STATIC_URL }}images/icons/bkey.png" style="border:0">
+                    <img class="icon_owner tipsy_enable explain" title='{% trans "You are the \"Owner\" of the project." %}' src="{% static "images/icons/bkey.png" %}" style="border:0">
                     {% endifequal %}{% endcomment %}
                     <a href="{% url project_edit mproject.slug %}">{% trans "Edit" %}</a>
                     </span>

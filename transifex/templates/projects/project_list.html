@@ -1,4 +1,5 @@
 {% extends "projects/base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load txcommontags %}
 {% load pagination_tags %}
@@ -25,13 +26,13 @@
 {% endblock %}
 
 {% block extracss %}
-<link media="screen" href="{{ STATIC_URL }}css/explore.css" type="text/css" rel="stylesheet" />
+<link media="screen" href="{% static "css/explore.css" %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block content_header_sec %}
 <p>
   <a class="simlink rss_feed" href="{% url project_latest_feed %}" title="{% trans "Projects feed" %}">
-    <span>{% trans "Subscribe to this feed" %}</span>&nbsp;<img border="0" src="{{ STATIC_URL }}images/icons/feed.png" />
+    <span>{% trans "Subscribe to this feed" %}</span>&nbsp;<img border="0" src="{% static "images/icons/feed.png" %}" />
   </a>
 </p>
 {% endblock %}

@@ -1,11 +1,12 @@
 {% extends "projects/project_menu.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load statistics_resources %}
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_language_feed release.project.slug release.slug language.code %}" />
-  <script type="text/javascript" src="{{ STATIC_URL }}js/houdini.js"></script>
-  <link media="screen" href="{{ STATIC_URL }}css/houdini.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="{% static "js/houdini.js" %}"></script>
+  <link media="screen" href="{% static "css/houdini.css" %}" type="text/css" rel="stylesheet" />
 
   <script type="text/javascript">
     $(function(){
@@ -143,10 +144,10 @@
       <td class="tableobject tipsy_enable" title="{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}">
         <span class="linkstyle">{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
-            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
+            <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_lock.png" %}" title="{% trans "Locked" %}"/>
         {% else %}
           {% if not stat.resource.accept_translations %}
-          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_red.png" title="{% trans 'Not accepting translations at the moment' %}"/>
+          <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_red.png" %}" title="{% trans 'Not accepting translations at the moment' %}"/>
           {% endif %}
         {% endif %}
       </td>
@@ -180,7 +181,7 @@
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
+            <img class="res_tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="{{ display_level }}"/>
         {% endwith %}
         {% endwith %}
         </span>
@@ -210,10 +211,10 @@
         <td class="tableobject tipsy_enable" title="{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}" >
         <span class="linkstyle tipsy_enable" >{{ stat.resource.project.name }} &rarr; {{ stat.resource.name }}</span>
         {% if stat.lock.valid %}
-            <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
+            <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_lock.png" %}" title="{% trans "Locked" %}"/>
         {% else %}
           {% if not stat.resource.accept_translations %}
-          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_red.png" title="{% trans 'Not accepting translations at the moment' %}"/>
+          <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_red.png" %}" title="{% trans 'Not accepting translations at the moment' %}"/>
           {% endif %}
         {% endif %}
         </td>
@@ -240,7 +241,7 @@
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-            <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="{{ display_level }}"/>
+            <img class="tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="{{ display_level }}"/>
         {% endwith %}
         {% endwith %}
         </span>

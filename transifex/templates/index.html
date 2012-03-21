@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load txcommontags %}
 
@@ -13,11 +14,11 @@ div#content{padding-top:1em;}
 #intro .promo{
 	font-family: "Georgia", serif;
 	padding:1em 1em 0 1em;
-	background:transparent url({{STATIC_URL}}images/icons/quote-open.png) 0 0 no-repeat;	font-size:130%;}
+	background:transparent url({% static "images/icons/quote-open.png" %}) 0 0 no-repeat; font-size:130%;}
 #ip-bottom-quote {
 	display:block;
-	height:1em;	
-	background:transparent url({{STATIC_URL}}images/icons/quote-close.png) 98% 0 no-repeat;}
+	height:1em;
+	background:transparent url({% static "images/icons/quote-close.png" %}) 98% 0 no-repeat;}
 }
 </style>
 {% endblock%}

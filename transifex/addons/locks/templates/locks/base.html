@@ -1,7 +1,8 @@
+{% load staticfiles %}
 {% load compress %}
 
 {% block headcss %}
 {% compress css %}
-<link media="screen" href="{{ STATIC_URL }}locks/css/icons.css" type="text/css" rel="stylesheet" />
+<link media="screen" href="{% static "locks/css/icons.css" %}" type="text/css" rel="stylesheet" />
 {% endcompress %}
 {% endblock %}

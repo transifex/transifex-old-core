@@ -1,4 +1,5 @@
 {% extends "projects/project_menu.html" %}
+{% load staticfiles %}
 {% load humanize %}
 {% load i18n %}
 {% load cache %}
@@ -86,7 +87,7 @@
   <!--{% if resource.project.private %}
   <span id="private_project_banner" class="ui-corner-all">
     {% trans "Private project"%}
-    <img style="vertical-align:top" src="{{ STATIC_URL }}images/icons/lock.png" title="Private project">
+    <img style="vertical-align:top" src="{% static "images/icons/lock.png" %}" title="Private project">
   </span>
   {% endif %}-->
  {% endcomment %}
@@ -126,10 +127,10 @@
       <dd>
         {% if is_maintainer %}
             <a class="resource_priority_trigger" style="cursor:pointer">
-            <img src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" class="noborder" title="{{ display_level }}"/>
+            <img src="{% static "priorities/images/{{ display_level }}.png" %}" class="noborder" title="{{ display_level }}"/>
             </a>
         {% else %}
-            <img class="res_tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" class="noborder" title="{{ display_level }}"/>
+            <img class="res_tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" class="noborder" title="{{ display_level }}"/>
         {% endif %}
       </dd>
     {% endwith %}
@@ -189,7 +190,7 @@
         {% endifequal %}
 
         {% if stat.lock.valid %}
-          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
+          <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_lock.png" %}" title="{% trans "Locked" %}"/>
         {% endif %}
       </td>
       <td class="tablecompletion">

@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load pagination_tags %}
 {% load search_filters %}
 {% load resources_common_tags %}
 
 {% block extracss %}
-<link media="screen" href="{{ STATIC_URL }}trans_memory/css/search_translation.css" type="text/css" rel="stylesheet" />
+<link media="screen" href="{% static "trans_memory/css/search_translation.css" %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}

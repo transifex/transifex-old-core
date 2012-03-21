@@ -1,4 +1,5 @@
 {% extends "teams/team_menu.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load cache %}
 {% load pagination_tags %}
@@ -141,10 +142,10 @@ $(function(){
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ stat.resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ stat.resource.name }}</strong></span>
       {% if stat.lock.valid %}
-          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_lock.png" title="{% trans "Locked" %}"/>
+          <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_lock.png" %}" title="{% trans "Locked" %}"/>
       {% else %}
         {% if not stat.resource.accept_translations %}
-          <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_red.png" title="{% trans "Not accepting translations at the moment" %}"/>
+          <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_red.png" %}" title="{% trans "Not accepting translations at the moment" %}"/>
         {% endif %}
       {% endif %}
       </td>
@@ -173,7 +174,7 @@ $(function(){
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
           <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
+          <img class="tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="Priority: {{ display_level }}"/>
         {% endwith %}
         {% endwith %}
       </span>
@@ -188,7 +189,7 @@ $(function(){
       <td class="tableobject">
       <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
       {% if not resource.accept_translations %}
-        <img class="tipsy_enable bullet" src="{{ STATIC_URL }}images/icons/bullet_red.png" title="{% trans "Not accepting translations at the moment" %}"/>
+        <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_red.png" %}" title="{% trans "Not accepting translations at the moment" %}"/>
       {% endif %}
       </td>
       <td class="tablecompletion">
@@ -208,7 +209,7 @@ $(function(){
         {% with resource.priority.level as priority_level %}
         {% with resource.priority.display_level as display_level %}
           <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          <img class="tipsy_enable" src="{{ STATIC_URL }}priorities/images/{{ display_level }}.png" style="border:0" title="Priority: {{ display_level }}"/>
+          <img class="tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="Priority: {{ display_level }}"/>
         {% endwith %}
         {% endwith %}
       </span>

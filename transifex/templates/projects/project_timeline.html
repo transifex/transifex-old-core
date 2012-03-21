@@ -1,11 +1,12 @@
 {% extends "projects/project_menu.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load pagination_tags %}
 {% load sorting_tags %}
 {% load txcommontags %}
 
 {% block extra_head %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+<script type="text/javascript" src="{% static "js/tablesorted.js" %}"></script>
 {% endblock %}
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "Timeline" %}{% endblock %}

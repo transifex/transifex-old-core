@@ -1,7 +1,8 @@
+{% load staticfiles %}
 {% load i18n %}
 {% load truncate %}
 
-  <link media="screen" href="{{ STATIC_URL }}suggestions/css/lotte_suggestions.css" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "suggestions/css/lotte_suggestions.css" %}" type="text/css" rel="stylesheet" />
 
 <script>
 /* document ready. do stuff */
@@ -109,7 +110,7 @@ $(document).ready(function(){
             url: '{% url entity_suggestion_vote_up source_entity.id lang_code 1111111111 %}'.replace('1111111111', suggestion_id),
             data: {},
             success: function(data) {
-                        $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
+                        $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{% static "images/icons/tick.png" %}">');
 
                         // ISSUE A load to RENDERER
                         metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
@@ -148,7 +149,7 @@ $(document).ready(function(){
             url: '{% url entity_suggestion_vote_down source_entity.id lang_code 1111111111 %}'.replace('1111111111', suggestion_id),
             data: {},
             success: function(data) {
-                        $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{{ STATIC_URL }}images/icons/tick.png">');
+                        $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{% static "images/icons/tick.png" %}">');
 
                         // ISSUE A load to RENDERER
                         metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
@@ -197,16 +198,16 @@ $(document).ready(function(){
         <div class="suggestion_text">{{ suggestion.string }}</div>
         <div class="suggestion_score">
           <a href='#' class="vote_up_trigger">
-            <img src="{{STATIC_URL}}images/icons/vote_up.png" class="vote_up" title="{% trans "Vote up for this translation suggestion (click again to undo)." %}" />
+            <img src="{% static "images/icons/vote_up.png" %}" class="vote_up" title="{% trans "Vote up for this translation suggestion (click again to undo)." %}" />
           </a>
           <span class="score_value" title="{% trans "The score of the suggestion, indicating its popularity among translators." %}">{{ suggestion.score_rounded }}</span>
           <a href='#' class="vote_down_trigger">
-            <img src="{{STATIC_URL}}images/icons/vote_down.png" class="vote_down" title="{% trans "Vote down for this translation suggestion (click again to undo)." %}"/>
+            <img src="{% static "images/icons/vote_down.png" %}" class="vote_down" title="{% trans "Vote down for this translation suggestion (click again to undo)." %}"/>
           </a>
         </div>
         {% if current_translation %}
         {% ifequal current_translation.string suggestion.string %}
-          <div class="suggestion_select_current"><span><img title="{% trans "This is the currently accepted translation." %}" src="{{STATIC_URL}}images/icons/big_tick.png" /></span></div>
+          <div class="suggestion_select_current"><span><img title="{% trans "This is the currently accepted translation." %}" src="{% static "images/icons/big_tick.png" %}" /></span></div>
         {% else %}
           <div class="suggestion_select_button"><a class="i16 tick buttonized">{% trans "Use this!" %}</a></div>
         {% endifequal %}

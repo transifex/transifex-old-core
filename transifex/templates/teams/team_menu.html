@@ -1,4 +1,5 @@
 {% extends "projects/base.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load addons %}
 {% load txcommontags %}
@@ -8,7 +9,7 @@
 {% block extrajs %}
   {% if project %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
-  <script type="text/javascript" src="{{ STATIC_URL }}js/tablesorted.js"></script>
+  <script type="text/javascript" src="{% static "js/tablesorted.js" %}"></script>
   {% endif %}
 {% endblock %}
 
@@ -37,22 +38,22 @@
 
 {% block content_header_sec %}
 	{% if project.anyone_submit %}
-  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/ffa-project.png)center top no-repeat;">
+  <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/ffa-project.png" %})center top no-repeat;">
 	<p>{% trans "Free for all"%}</p>
 	</span>
 	{% endif %}
 	{% if project.outsource %}
-  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/outsource-project.png)center top no-repeat;">
+  <span id="private_project_banner" class="project-sign" style="background:url({% static"images/icons/outsource-project.png" %})center top no-repeat;">
 	<p>{% trans "Outsourcing"%}</p>
 	</span>
 	{% endif %}
 	{% if project.is_hub %}
-  <span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/hub-project.png)center top no-repeat;">
+  <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/hub-project.png" %})center top no-repeat;">
 	<p>{% trans "Hub"%}</p>
 	</span>
 	{% endif %}
 	{% if project.private %}
-	<span id="private_project_banner" class="project-sign" style="background:url({{ STATIC_URL }}images/icons/private-project.png)center top no-repeat;">
+	<span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/private-project.png" %})center top no-repeat;">
 	<p>{% trans "Private"%}</p>
 	</span>
 	{% endif %}
@@ -63,14 +64,14 @@
 {% if not project.anyone_submit %}
 <div id="teamcode-arrow"><div id="teamcode">{{ language.code }}</div><span></span></div>
 <div class="tab-wrapper grid_10">
-  <ul  class="tabs clearfix">     
+  <ul  class="tabs clearfix">
     <li class="{% if project_team_page %}selected{% endif %} alpha"><a href="{% url team_detail project.slug language.code %}">{% trans "Overview" %}</a></li>
     {% if not project.anyone_submit %}
     <li class="{% if project_team_members or project_team_form %}selected{% endif %} alpha"><a href="{% url team_members project.slug language.code %}">{% trans "Members" %}</a></li>
     {% endif %}
     {% hook "team.html" menu %}
   </ul>
-</div>   
+</div>
 {% endif %}
 {% endblock %}
 

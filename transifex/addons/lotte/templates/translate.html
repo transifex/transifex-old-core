@@ -1,4 +1,5 @@
 {% extends "projects/project_detail_childs.html" %}
+{% load staticfiles %}
 {% load humanize %}
 {% load i18n %}
 {% load permissions %}
@@ -18,26 +19,26 @@
 {% block extra_head %}
 {% get_permission "project_perm.proofread" for request.user and resource.project,target_language as "is_reviewer" %}
 
-  <link media="screen" href="{{ STATIC_URL }}lotte/css/webtrans.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}lotte/css/dataTable.css" type="text/css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}lotte/css/ui.tabs.lotte.css" type="text/css" rel="stylesheet"/>
-  <link media="screen" href="{{ STATIC_URL }}lotte/css/jquery.whitespaceHighlight.css" type="text/css" rel="stylesheet"/>
-  <link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}lotte/css/spellchecker.css" />
+  <link media="screen" href="{% static "lotte/css/webtrans.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "lotte/css/dataTable.css" %}" type="text/css" rel="stylesheet" />
+  <link media="screen" href="{% static "lotte/css/ui.tabs.lotte.css" %}" type="text/css" rel="stylesheet"/>
+  <link media="screen" href="{% static "lotte/css/jquery.whitespaceHighlight.css" %}" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" type="text/css" media="screen" href="{% static "lotte/css/spellchecker.css" %}" />
   <!--[if IE]>
-    <link media="screen" href="{{ STATIC_URL }}lotte/css/ie.lotte.css" type="text/css" rel="stylesheet"/>
+    <link media="screen" href="{% static "lotte/css/ie.lotte.css" %}" type="text/css" rel="stylesheet"/>
   <![endif]-->
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.fnSetFilteringDaley.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dataTables.customFullNumbersPagination.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.dotimeout.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/shortcut.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/tx.lotte2.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/footpanel.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.hoverIntent.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.whitespaceHighlight.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.textarea-expander.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.jeditable.mini.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}lotte/js/jquery.spellchecker.js"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.dataTables.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.dataTables.fnSetFilteringDaley.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.dataTables.customFullNumbersPagination.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.dotimeout.min.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/shortcut.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/tx.lotte2.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/footpanel.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.hoverIntent.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.whitespaceHighlight.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.textarea-expander.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.jeditable.mini.js" %}"></script>
+  <script type="text/javascript" src="{% static "lotte/js/jquery.spellchecker.js" %}"></script>
 
 <script type="text/javascript">
 

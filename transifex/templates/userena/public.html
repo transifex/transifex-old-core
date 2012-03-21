@@ -1,4 +1,5 @@
 {% extends "userena/base_userena.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load txcommontags %}
 {% load pagination_tags %}
@@ -12,7 +13,7 @@
 {% block content_sec %}
   <p>
     <a class="simlink rss_feed" href="{% url user_feed profile.user %}" title="{% trans "User feed" %}">
-      <span>{% trans "Subscribe to this feed" %}</span>&nbsp;<img border="0" src="{{ STATIC_URL }}images/icons/feed.png" />
+      <span>{% trans "Subscribe to this feed" %}</span>&nbsp;<img border="0" src="{% static "images/icons/feed.png" %}" />
     </a>
   </p>
 {% endblock %}

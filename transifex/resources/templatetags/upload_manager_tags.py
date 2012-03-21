@@ -101,7 +101,6 @@ def create_translation_form(context, request, resource, language=None,
         'resource_translation_form': form,
         'translate_online': translate_online,
         'create': True,
-        'static_url': context['STATIC_URL'],
     }
 
 
@@ -125,5 +124,4 @@ def update_translation_form(context, request, resource, language=None,
         'update_translation_form': form,
         'translate_online': False,
         'create': False,
-        'static_url': context['STATIC_URL'],
     }

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% load i18n %}
 {% load addons %}
 
@@ -6,13 +7,13 @@
 
 {% block basecss %}
 {{ block.super }}
-  <link type="text/css" href="{{ STATIC_URL }}css/password_indicator.css" rel="stylesheet" />
-  <link media="screen" href="{{ STATIC_URL }}css/userspace.css" type="text/css" rel="stylesheet" />
+  <link type="text/css" href="{% static "css/password_indicator.css" %}" rel="stylesheet" />
+  <link media="screen" href="{% static "css/userspace.css" %}" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block basejs %}
 {{ block.super }}
-  <script type="text/javascript" src="{{ STATIC_URL }}js/password_strength_plugin.js"></script>
+  <script type="text/javascript" src="{% static "js/password_strength_plugin.js" %}"></script>
   <script type="text/javascript">
 		$(document).ready(function(){
 		  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
@@ -88,7 +89,7 @@
 </div>
 
 <div class="grid_5 omega">
-<img src="{{ STATIC_URL }}images/register-screenshot.jpg"/>
+<img src="{% static "images/register-screenshot.jpg" %}"/>
 </div>
 
 

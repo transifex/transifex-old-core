@@ -1,8 +1,9 @@
+{% load staticfiles %}
 {% load i18n %}
 {% if extra_helptext %}
 {% if icon %}
 <a class="inline" href="#{{ code_name }}" title="Help page">
-    <img src="{{ STATIC_URL }}images/icons/help.png" class="noborder">
+    <img src="{% static "images/icons/help.png" %}" class="noborder">
 </a>
 {% else %}
 (<a class="inline" href="#{{ code_name }}" title="Help">{% trans "...more" %}</a>)

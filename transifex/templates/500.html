@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 {% load i18n %}
@@ -5,14 +6,14 @@
 <head>
   <title>Transifex | {% trans "Page unavailable" %}</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <link media="screen" href="{{ STATIC_URL }}css/base.css" type="text/css" rel="stylesheet" />
-  <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.ico" type="image/x-icon" />
+  <link media="screen" href="{% static "css/base.css" %}" type="text/css" rel="stylesheet" />
+  <link rel="shortcut icon" href="{% static "images/favicon.ico" %}" type="image/x-icon" />
 </head>
 <body>
 <div id="wrapper">
   <div id="header">
     <div id="logo">
-        <img border="0" src="{{ STATIC_URL }}images/tx-logo.png"/>
+        <img border="0" src="{% static "images/tx-logo.png" %}"/>
     </div>
   </div>
   <div id="content">
