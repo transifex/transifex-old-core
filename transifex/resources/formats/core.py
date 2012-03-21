@@ -778,29 +778,3 @@ class Handler(object):
             raise self.HandlerParseError(msg)
         if is_source:
             self.template = self._generate_template(obj)
-
-
-class ResourceItems(object):
-    """base class for collections for resource items (source entities,
-    translations, etc).
-    """
-
-    def __init__(self):
-        self._items = {}
-
-    def get(self, item):
-        """Get a source entity in the collection or None."""
-        key = self._generate_key(item)
-        return self._items.get(key, None)
-
-    def add(self, item):
-        """Add a source entity to the collection."""
-        key = self._generate_key(item)
-        self._items[key] = item
-
-    def __contains__(self, item):
-        key = self._generate_key(item)
-        return key in self._items
-
-    def __iter__(self):
-        return iter(self._items)
