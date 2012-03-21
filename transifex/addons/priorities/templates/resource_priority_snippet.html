@@ -1,5 +1,9 @@
 {% load staticfiles %}
 {% load i18n %}
+{% laod priority_images %}
 
 <span class="priority_sort nodisplay">{{ priority.level }}</span>
-<img class="res_tipsy_enable" src="{% static "priorities/images/{{ priority.display_level }}.png" %}" style="border:0" title="{{ priority.display_level }}"/>
+
+{% with priority.level|priority_image_path as priority_image %}
+<img class="res_tipsy_enable" src="{% static priority_image %}" style="border:0" title="{{ priority.display_level }}"/>
+{% endwith %}

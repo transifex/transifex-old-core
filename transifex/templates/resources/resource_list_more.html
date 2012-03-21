@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load permissions %}
 {% load statistics_resources %}
+{% load priority_images %}
 
 {% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 {% for stat in statslist %}
@@ -28,15 +29,17 @@
     </span>
     </td>
     <td class="priority_level" style="width:100px;text-align:center">
+        {% with stat.resource.priority.level|priority_image_path as priority_image %}
         {% if is_maintainer %}
             <a id="priority_{{ stat.resource.slug }}" class="resource_priority_trigger" style="cursor:pointer">
             <span class="priority_sort" style="display:none">{{ stat.resource.priority.level }}</span>
-            <img src="{% static "priorities/images/{{ stat.resource.priority.display_level }}.png" %}" style="border:0" title="{{ stat.resource.priority.display_level }}"/>
+            <img src="{% static priority_image %}" style="border:0" title="{{ stat.resource.priority.display_level }}"/>
             </a>
         {% else %}
             <span class="priority_sort" style="display:none">{{ stat.resource.priority.level }}</span>
-            <img class="tipsy_enable" src="{% static "priorities/images/{{ stat.resource.priority.display_level }}.png" %}" style="border:0" title="{{ stat.resource.priority.display_level }}"/>
+            <img class="tipsy_enable" src="{% static priority_image %}" style="border:0" title="{{ stat.resource.priority.display_level }}"/>
         {% endif %}
+        {% endwith %}
     </td>
 </tr>
 {% endfor %}

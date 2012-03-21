@@ -7,6 +7,7 @@
 {% load permissions %}
 {% load truncate %}
 {% load upload_manager_tags %}
+{% load priority_images %}
 
 {% block extra_head %}
 {% get_permission "project_perm.maintain" for request.user and resource.project as "is_maintainer" %}
@@ -123,16 +124,18 @@
     {% if resource.priority %}
     {% with resource.priority.level as priority_level %}
     {% with resource.priority.display_level as display_level %}
+    {% with priority_level|priority_image_path as priority_image %}
       <dt class="i16 ruby">{% trans "Priority level:" %}</dt>
       <dd>
         {% if is_maintainer %}
             <a class="resource_priority_trigger" style="cursor:pointer">
-            <img src="{% static "priorities/images/{{ display_level }}.png" %}" class="noborder" title="{{ display_level }}"/>
+            <img src="{% static priority_image %}" class="noborder" title="{{ display_level }}"/>
             </a>
         {% else %}
-            <img class="res_tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" class="noborder" title="{{ display_level }}"/>
+            <img class="res_tipsy_enable" src="{% static priority_image %}" class="noborder" title="{{ display_level }}"/>
         {% endif %}
       </dd>
+    {% endwith %}
     {% endwith %}
     {% endwith %}
     {% endif %}

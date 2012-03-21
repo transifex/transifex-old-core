@@ -7,7 +7,7 @@
 {% load permissions %}
 {% load statistics_resources %}
 {% load upload_manager_tags %}
-
+{% load priority_images %}
 
 
 {% block project_header %}
@@ -37,7 +37,7 @@
       var tablesorter_resource = $(".tablesorter");
       tablesorter_resource.tablesorter({
         widgets: ['zebra'],
-        sortList: [[0,0]], 
+        sortList: [[0,0]],
         textExtraction: { // Take value inside an object for the columns
           0: function(node) {return $("a", node).text(); },
           1: function(node) {
@@ -172,15 +172,18 @@
       <td class="priority_level" style="text-align:center">
         {% with stat.priority__level as priority_level %}
         {% with stat.priority__display as display_level %}
+        {% with priority_level|priority_image_path as priority_image %}
         {% if is_maintainer %}
         <a id="priority_{{ stat.slug }}" class="resource_priority_trigger" style="cursor:pointer">
-          <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          <img class="res_tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="Priority: {{ display_level }}"/>
+          <span class="priority_sort" style="display:none">{{
+          priority_level }}</span>
+          <img class="res_tipsy_enable" src="{% static priority_image %}" style="border:0" title="Priority: {{ display_level }}"/>
         </a>
         {% else %}
         <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-        <img class="res_tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="Priority: {{ display_level }}"/>
+        <img class="res_tipsy_enable" src="{% static priority_image %}" style="border:0" title="Priority: {{ display_level }}"/>
         {% endif %}
+        {% endwith %}
         {% endwith %}
         {% endwith %}
       </td>

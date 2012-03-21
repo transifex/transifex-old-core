@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 {% load statistics_resources %}
+{% load priority_images %}
 
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url release_language_feed release.project.slug release.slug language.code %}" />
@@ -23,7 +24,7 @@
                 3: { sorter: 'number' },
                 4: { sorter: 'number' }
             },
-            textExtraction: function(node) {  
+            textExtraction: function(node) {
                 switch (node.cellIndex){
                     // Category column
                     case 0:
@@ -180,8 +181,10 @@
         <span style="border:0">
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
+        {% with priority_level|priority_image_path as priority_image %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-            <img class="res_tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="{{ display_level }}"/>
+            <img class="res_tipsy_enable" src="{% static priority_image %}" style="border:0" title="{{ display_level }}"/>
+        {% endwith %}
         {% endwith %}
         {% endwith %}
         </span>
@@ -195,7 +198,7 @@
   <div class="separate-header clearfix">
   	<h3  class="sh-label">{% blocktrans %}Private resources you have access to{% endblocktrans %}</h3>
 	</div>
- 
+
   <table class="stats-table tablesorter rltemplate">
   <thead>
   <tr>
@@ -240,8 +243,10 @@
         <span>
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
+        {% with priority_level|priority_image_path as priority_image %}
             <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-            <img class="tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="{{ display_level }}"/>
+            <img class="tipsy_enable" src="{% static priority_image %}" style="border:0" title="{{ display_level }}"/>
+        {% endwith %}
         {% endwith %}
         {% endwith %}
         </span>
@@ -258,7 +263,7 @@
    The following resources don't have any translations in {{ language.name }} and also don't have a team associated with this language:</span>
   <table class="stats-table tablesorter rltemplate" style="clear:both;margin-top:0.5em;width:100%">
   <tbody>
-  {% for resource in empty_rlstats %} 
+  {% for resource in empty_rlstats %}
     <tr title="{% trans 'click for resource details' %}">
         <td style="padding-left:1em;">
           <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a></span>
@@ -266,7 +271,7 @@
 	</tr>
   {% endfor %}
   {% if empty_private_rlstats %}
-   {% for resource in empty_private_rlstats %} 
+   {% for resource in empty_private_rlstats %}
     <tr title="{% trans 'click for resource details' %}">
       <td>
        <span>{{ forloop.counter }}) <a href="{% url resource_detail resource.project.slug resource.slug %}">{{ resource.project.name}} &rarr; {{ resource.name }}</a> (private)</span>
@@ -277,7 +282,7 @@
   </tbody>
   </table>
  {% endif %}
-   
+
 </div>
 
 {% endblock %}

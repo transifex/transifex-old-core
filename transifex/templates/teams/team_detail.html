@@ -9,6 +9,7 @@
 {% load addons %}
 {% load statistics_resources %}
 {% load project_tags %}
+{% load priority_images %}
 
 {% block extra_head %}
 <script type="text/javascript">
@@ -174,7 +175,9 @@ $(function(){
         {% with stat.resource.priority.level as priority_level %}
         {% with stat.resource.priority.display_level as display_level %}
           <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          <img class="tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="Priority: {{ display_level }}"/>
+          {% with priority_level|priority_image_path as priority_image %}
+          <img class="tipsy_enable" src="{% static priority_image %}" style="border:0" title="Priority: {{ display_level }}"/>
+          {% endwith %}
         {% endwith %}
         {% endwith %}
       </span>
@@ -209,7 +212,9 @@ $(function(){
         {% with resource.priority.level as priority_level %}
         {% with resource.priority.display_level as display_level %}
           <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          <img class="tipsy_enable" src="{% static "priorities/images/{{ display_level }}.png" %}" style="border:0" title="Priority: {{ display_level }}"/>
+          {% with priority_level|priority_image_path as priority_image %}
+          <img class="tipsy_enable" src="{% static priority_image %}" style="border:0" title="Priority: {{ display_level }}"/>
+          {% endwith %}
         {% endwith %}
         {% endwith %}
       </span>
