@@ -189,7 +189,6 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     """
     Exiting Lotte
     """
-
     if request.method != 'POST':
         return HttpResponse(status=405)
 
@@ -209,10 +208,9 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
         resources = Resource.objects.filter(slug=resource_slug, project=project)
         if not resources:
             raise Http404
-        url = reverse('resource_detail', args=[project_slug, resource_slug])
     else:
         resources = Resource.objects.filter(project=project)
-        url = reverse('project_detail', args=[project_slug])
+
 
     data = simplejson.loads(request.raw_post_data)
 
@@ -235,11 +233,13 @@ def exit(request, project_slug, lang_code, resource_slug=None, *args, **kwargs):
     lotte_done.send(None, request=request, resources=resources,
         language=language, modified=modified)
 
+    redirect_url = reverse('team_detail', args=[project_slug, language.code])
+
     if request.is_ajax():
-        json = simplejson.dumps(dict(redirect=url))
+        json = simplejson.dumps(dict(redirect=redirect_url))
         return HttpResponse(json, mimetype='application/json')
 
-    return HttpResponseRedirect(url)
+    return HttpResponseRedirect(redirect_url)
 
 
 # Restrict access only for private projects
