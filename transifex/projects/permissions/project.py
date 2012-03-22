@@ -39,7 +39,8 @@ class ProjectPermission(BasePermission):
 
     def maintain(self, project=None):
         if project:
-            if project.maintainers.filter(id=self.user.id):
+            if project.maintainers.filter(id=self.user.id) or \
+                project.owner == self.user:
                 return True
         return False
     maintain.short_description=_('Is allowed to maintain this project')
