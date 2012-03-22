@@ -14,6 +14,7 @@ from django.dispatch import Signal
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.http import Http404
 from django.utils.translation import ugettext as _
 
 from actionlog.models import action_logging
@@ -213,6 +214,9 @@ def team_detail(request, project_slug, language_code):
         statslist = statslist.filter(resource__project__in=[projects_filter,])
 
     statslist = statslist.by_project_and_language(project, language)
+
+    if not statslist:
+        raise Http404
 
     empty_rlstats = Resource.objects.select_related('project', 'priority'
         ).by_project(project).exclude(id__in=statslist.values('resource')
