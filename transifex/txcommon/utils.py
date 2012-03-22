@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-import gc
+import gc, re
 import operator
 from django.core.urlresolvers import get_resolver
 from django.views.generic.simple import direct_to_template
@@ -281,6 +281,21 @@ def queryset_iterator(queryset, chunksize=1000):
             pk = row.pk
             yield row
         gc.collect()
+
+def normalize_query(query_string,
+        findterms=re.compile(r'\'([^\']+)\'|"([^"]+)"|(\S+)').findall,
+    normspace=re.compile(r'\s{2,}').sub):
+    """
+    Splits the query string in individual keywords, getting rid of unnecessary
+    spaces and grouping quoted words together.
+    Example:
+
+    >>> normalize_query('  some random  words "with   quotes  " and   spaces')
+    ['some', 'random', 'words', 'with quotes', 'and', 'spaces']
+
+    """
+    return list(set([normspace(' ', (t[0] or t[1] or t[2]).strip()) for t in
+        findterms(query_string)]))
 
 
 class StatBarsPositions(dict):

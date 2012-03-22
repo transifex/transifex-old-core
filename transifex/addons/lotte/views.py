@@ -33,6 +33,7 @@ from transifex.resources.formats.validators import create_error_validators, \
         create_warning_validators, ValidationError
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
+from transifex.txcommon.utils import normalize_query
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
@@ -355,7 +356,7 @@ def _get_stringset(post_data, resources, language, review=False, session='', *ar
         if not search == '':
             search, search_filter_query = get_search_filter_query(search)
             query = Q()
-            for term in search.split():
+            for term in normalize_query(search):
                 query &= Q(string__icontains=term)
                 query |= Q(source_entity__string__icontains=term)
             if query:
