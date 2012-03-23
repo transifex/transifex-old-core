@@ -955,7 +955,7 @@ lotte_tabs = function(that) {
             previous_open.removeClass('current');
         }
 
-        nTr.after('<tr class="metatr suggestions"><td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
+        nTr.after('<tr class="metatr suggestions"><td colspan="3" class="inject_here"><div style="text-align:center"></div></td></tr>');
         var source_id = parseInt(nTr.find('.source_id').text());
 
         // Get the details and inject them.
