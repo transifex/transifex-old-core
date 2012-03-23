@@ -66,10 +66,12 @@ def search(request):
             qfilter = fulltext_project_search_filter(query_string)
             results = index_query.filter(qfilter)
             spelling_suggestion = results.spelling_suggestion(query_string)
+            count = results.count()
         except TypeError:
             results = []
+            count = 0
 
-    logger.debug("Searched for %s. Found %s results." % (query_string, results.count()))
+    logger.debug("Searched for %s. Found %s results." % (query_string, count))
     return render_to_response("search.html",
         {'query': query_string,
          'terms': search_terms,
