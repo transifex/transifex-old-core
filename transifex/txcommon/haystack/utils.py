@@ -43,8 +43,6 @@ def fulltext_project_search_filter(string):
             filters.append(SQ(description=Raw('%s^1.1' % w)))
             filters.append(SQ(text=Raw('"%s~"' % w)))
         return reduce(operator.__or__, filters)
-    else:
-        return SQ(text='')
 
 def fulltext_fuzzy_match_filter(string):
     """
