@@ -130,6 +130,9 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
             line = line[1:]
         return line
 
+    def _prepare_line(self, line):
+        return line.rstrip('\r\n').lstrip()
+
     def _parse(self, is_source, lang_rules):
         """Parse a .properties content and create a stringset with
         all entries in it.
