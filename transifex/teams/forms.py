@@ -36,11 +36,14 @@ class TeamSimpleForm(forms.ModelForm):
         fields = ('language', 'coordinators', 'members', 'reviewers', 'mainlist',
             'project', 'creator')
 
-    def __init__(self, project, language_code=None, *args, **kwargs):
+    def __init__(self, project, language=None, *args, **kwargs):
         super(TeamSimpleForm, self).__init__(*args, **kwargs)
         self.fields['project'].widget = forms.HiddenInput()
         self.fields['project'].initial = project.pk
         self.fields['creator'].widget = forms.HiddenInput()
+
+        if language:
+            self.fields['language'].initial = language.pk
 
         # Lets filter the language field based on the teams already created.
         # We don't need to enable a language if there is a team for it already.
@@ -63,11 +66,20 @@ class TeamSimpleForm(forms.ModelForm):
 
             # We don't need an empty label
             self.fields["language"].empty_label = None
+        
+        # For languages with no teams
+        elif language:
+            # Allow only the selected language to be in the list
+            self.disabled_langs = Language.objects.exclude(
+                code=language.code).values_list('pk', flat=True)
+
+            # We don't need an empty label
+            self.fields["language"].empty_label = None
         else:
             # Create list of languages to be disabled excluding the current
-            # language_code and also the language of teams already created.
+            # language and also the language of teams already created.
             self.disabled_langs = Team.objects.filter(project=project).exclude(
-                language__code=language_code).values_list('language__pk', flat=True)
+                language=language).values_list('language__pk', flat=True)
 
         # Setting custom widget with list of ids that should be disabled
         self.fields["language"].widget = SelectWithDisabledOptions(

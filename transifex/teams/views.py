@@ -88,17 +88,18 @@ def _team_create_update(request, project_slug, language_code=None, extra_context
     respective views.
     """
     project = get_object_or_404(Project, slug=project_slug)
-    team = None
+    team, language = None, None
 
     if language_code:
+        language = get_object_or_404(Language, code=language_code)
         try:
             team = Team.objects.get(project__pk=project.pk,
-                language__code=language_code)
+                language=language)
         except Team.DoesNotExist:
             pass
 
     if request.POST:
-        form = TeamSimpleForm(project, language_code, request.POST, instance=team)
+        form = TeamSimpleForm(project, language, request.POST, instance=team)
         form.data["creator"] = request.user.pk
         if form.is_valid():
             team=form.save(commit=False)
@@ -142,7 +143,7 @@ def _team_create_update(request, project_slug, language_code=None, extra_context
             return HttpResponseRedirect(reverse("team_members",
                                         args=[project.slug, team.language.code]))
     else:
-        form = TeamSimpleForm(project, language_code, instance=team)
+        form = TeamSimpleForm(project, language, instance=team)
 
     context = {
         "project": project,
