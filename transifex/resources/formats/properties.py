@@ -161,7 +161,7 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
                 line = line[:-1] + self._check_escaped_ws(nextline)
             key, value, old_value = self._key_value_from_line(line)
             if is_source:
-                if not value:
+                if not (value and value.strip()):
                     template += line + self.linesep
                     # Keys with no values should not be shown to translator
                     continue
