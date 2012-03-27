@@ -384,7 +384,8 @@ class SourceEntity(models.Model):
 
     # The order of the entity in the source file. Used by some formats
     # when importing files not generated from Transifex.
-    order = models.PositiveIntegerField('Order', blank=True, null=True)
+    order = models.PositiveIntegerField('Order', db_column='appearance_order',
+        blank=True, null=True)
 
     # Timestamps
     created = models.DateTimeField(auto_now_add=True, editable=False)
