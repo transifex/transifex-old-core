@@ -520,62 +520,77 @@
         });
         {% endif %}
 
-        /* move to the next page */
-        shortcut.add('Alt+l', function(evt) {
-            if ( stringset.current_box ) {
-                stringset.current_box.blur();
-            }
-            oTable.fnPageChange('next');
-        },{
-            'type':'keydown',
-        });
-        /* move to the previous page */
-        shortcut.add('Alt+j', function(evt) {
-            if ( stringset.current_box ) {
-                stringset.current_box.blur();
-            }
-            oTable.fnPageChange('previous')
-        },{
-            'type':'keydown',
-        });
-        /* move up in the trans boxes */
-        shortcut.add('Alt+i', function(evt) {
-            if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:not(.metatr):last-child').find('textarea.default_translation').focus();
-            } else {
-                stringset.current_box.blur();
-                stringset.current_box.parents('.trans').parent().prevAll(':not(.metatr):first').find('textarea.default_translation').focus();
-            }
-        },{
-            'type':'keydown',
-        });
-        /* move down in the trans boxes */
-        shortcut.add('Alt+k', function(evt) {
-            if ( ! stringset.current_box ) {
-                $("#stringset_table").find('tr:not(.metatr):nth-child(1)').find('textarea.default_translation').focus();
-            } else {
-                stringset.current_box.blur();
-                stringset.current_box.parents('.trans').parent().nextAll(':not(.metatr):first').find('textarea.default_translation').focus();
-            }
-        },{
-            'type':'keydown',
-        });
-        /* copy source */
-        shortcut.add('Alt+g', function(evt) {
-            if ( ! stringset.current_box ) {
-                return false;
-            }
-            // Trigger the copy source action
-            stringset.current_box.parents('.trans').find(".copy_source").click();
-        });
-        /* auto translate */
-        shortcut.add('Alt+t', function(evt) {
-            if ( ! stringset.current_box ) {
-                return false;
-            }
-            // Trigger the auto translate action
-            stringset.current_box.parents('.trans').find(".suggest").click();
-        });
+		function addShortcuts() {
+			// next page
+			shortcut.add('Alt+l', function(evt) {
+				if (stringset.current_box) {
+					stringset.current_box.blur();
+				}
+				oTable.fnPageChange('next');
+			}, {'type':'keydown',});
+
+			// previous page
+			shortcut.add('Alt+j', function(evt) {
+				if (stringset.current_box) {
+					stringset.current_box.blur();
+				}
+				oTable.fnPageChange('previous')
+			}, {'type':'keydown',});
+
+			// row up
+			shortcut.add('Alt+i', function(evt) {
+				if (!stringset.current_box) {
+					$("#stringset_table").find('tr:not(.metatr):last-child').find('textarea.default_translation').focus();
+				} else {
+					stringset.current_box.blur();
+					stringset.current_box.parents('.trans').parent().prevAll(':not(.metatr):first').find('textarea.default_translation').focus();
+				}
+			}, {'type':'keydown',});
+
+			// row down
+			shortcut.add('Alt+k', function(evt) {
+				if (!stringset.current_box ) {
+					$("#stringset_table").find('tr:not(.metatr):nth-child(1)').find('textarea.default_translation').focus();
+				} else {
+					stringset.current_box.blur();
+					stringset.current_box.parents('.trans').parent().nextAll(':not(.metatr):first').find('textarea.default_translation').focus();
+				}
+			}, {'type':'keydown',});
+
+			// copy source
+			shortcut.add('Alt+g', function(evt) {
+				if (!stringset.current_box) {
+					return false;
+				}
+				stringset.current_box.parents('.trans').find(".copy_source").click();
+			});
+
+			// auto translate
+			shortcut.add('Alt+t', function(evt) {
+				if (!stringset.current_box) {
+					return false;
+				}
+				stringset.current_box.parents('.trans').find(".suggest").click();
+			});
+		}
+		addShortcuts();
+
+		function removeShortcuts() {
+			shortcut.remove('Alt+l');
+			shortcut.remove('Alt+j');
+			shortcut.remove('Alt+i');
+			shortcut.remove('Alt+k');
+			shortcut.remove('Alt+g');
+			shortcut.remove('Alt+t');
+		}
+
+        $("#toggle_shortcuts").click( function() {
+            if ($(this).is(":checked")){
+				addShortcuts();
+			} else {
+				removeShortcuts();
+			}
+		});
 
         /* SETTINGS togglers */
         $("#toggle_verbose").click( function() {
@@ -950,6 +965,10 @@
                     <li class="auto_save">
                         <input id="toggle_autosave" type="checkbox" checked="checked"/>
                         <span>{% trans "Auto save" %}</span>
+                    </li>
+                    <li class="shortcuts">
+                        <input id="toggle_shortcuts" type="checkbox" checked="checked"/>
+                        <span>{% trans "Enable shortcuts" %}</span>
                     </li>
                 </ul>
             </div>
