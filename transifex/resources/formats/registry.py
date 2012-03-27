@@ -62,7 +62,7 @@ class _FormatsRegistry(object):
         return [
             (m, SafeString('%s (%s)' % (v['description'], v['file-extensions'])))
             for m, v in self.methods.items()
-            if m != 'POT'
+            if m != 'POT' and m != 'HTML_LEGACY' and m != 'XHTML_LEGACY'
         ]
 
     def extensions_for(self, m):
