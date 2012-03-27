@@ -104,12 +104,13 @@ def run_command(command, *args, **kw):
     logger.debug("  CWD: '%s'" % cwd)
 
     # Start the process
-    proc = subprocess.Popen(command,
-                            cwd=cwd,
-                            stdin=stdin,
-                            stderr=subprocess.PIPE,
-                            stdout=subprocess.PIPE,
-                            env=env,)
+    try:
+        proc = subprocess.Popen(command, cwd=cwd, stdin=stdin,
+            stderr=subprocess.PIPE, stdout=subprocess.PIPE, env=env,)
+    except OSError, e:
+        status = "Command '%s' not found." % command[0]
+        logger.debug(status)
+        raise CommandError(command, status, '', '')
 
     # Write the contents to the pipe
     if _input:
