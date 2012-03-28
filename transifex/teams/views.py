@@ -549,8 +549,10 @@ def team_leave(request, project_slug, language_code):
 
     if request.POST:
         try:
-            if request.user in team.members.all():
+            if (team.members.filter(username=request.user.username).exists() or
+                team.reviewers.filter(username=request.user.username).exists()):
                 team.members.remove(request.user)
+                team.reviewers.remove(request.user)
                 messages.info(request, _(
                     "You left the '%s' team."
                     ) % team.language.name)
