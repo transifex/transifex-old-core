@@ -119,6 +119,14 @@ class TeamSimpleForm(forms.ModelForm):
                     "both Coordinators and Reviewers lists. Please make "
                     "sure that the lists are unique.") % ', '.join(users))
 
+        if members and reviewers:
+            intersection = set(members).intersection(reviewers)
+            if intersection:
+                users = [User.objects.get(pk=c).username for c in intersection]
+                raise forms.ValidationError(_("User(s) %s cannot be in "
+                    "both Members and Reviewers lists. Please make "
+                    "sure that the lists are unique.") % ', '.join(users))
+
         return cleaned_data
 
 
