@@ -18,6 +18,11 @@ def calculate_stats(stat, width=100):
     total = stat.total
     trans = stat.translated
 
+    # Fail-safe check
+    # TODO add to the setting part, not getting.
+    if trans > total:
+        trans = 0
+
     try:
         trans_percent = (trans * 100 / total)
     except ZeroDivisionError:
@@ -42,14 +47,14 @@ def stats_bar_simple(stat, width=100):
 
 @register.inclusion_tag("resources/stats_bar_simple.html")
 def stats_bar_simple_args(translated, total, width=100):
-    
+
     class Stats(object):
         def __init__(self, translated, total):
             self.translated = translated
             self.total = total
-    
+
     return calculate_stats(Stats(translated, total), width)
-    
+
 
 @register.inclusion_tag("resources/stats_bar_actions.html")
 def stats_bar_actions(stat, width=100):
