@@ -20,7 +20,8 @@
   $("div.language_chooser a").click( function(){
     var target_lang_code = $("div.language_chooser select").val();
     if (target_lang_code != "") {
-        request_url = window.location+'l/{{ stats.language.code }}/clone/'+target_lang_code+'/';
+        request_url = '{% url clone_translate resource.project.slug resource.slug stats.language.code 111111111 %}';
+        request_url = request_url.replace('111111111', target_lang_code);
         window.location = request_url;
     } else {
         alert('{% trans "Please select a target language first."|escapejs %}');
