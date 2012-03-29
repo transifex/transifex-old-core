@@ -16,6 +16,7 @@ class StringSet(object):
         self._strings = []
         self._seen = set()
         self.target_language = None
+        self._order = 0
 
     def add(self, translation):
         """Add a new translation.
@@ -23,6 +24,8 @@ class StringSet(object):
         Duplicates are ignored.
         """
         if translation not in self._seen:
+            translation.order = self._order
+            self._order += 1
             self._strings.append(translation)
             self._seen.add(translation)
 
