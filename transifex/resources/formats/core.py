@@ -474,7 +474,7 @@ class Handler(object):
         Raises:
             Any exception.
         """
-        qs = SourceEntity.objects.filter(resource=self.resource)
+        qs = SourceEntity.objects.filter(resource=self.resource).iterator()
         original_sources = list(qs) # TODO Use set() instead? Hash by pk
         updated_entities = set([])
         new_entities = []
@@ -517,7 +517,7 @@ class Handler(object):
 
             SourceEntity.objects.bulk_insert(new_entities)
             SourceEntity.objects.bulk_update(updated_entities)
-            qs = SourceEntity.objects.filter(resource=self.resource)
+            qs = SourceEntity.objects.filter(resource=self.resource).iterator()
             new_sources = list(qs) # TODO Use set() instead? Hash by pk
             source_entities = self._init_source_entity_collection(new_sources)
             new_translations = []
@@ -556,14 +556,16 @@ class Handler(object):
             pk__in=[s.pk for s in original_sources]
         ).filter(
             resource=self.resource
-        )
+        ).iterator()
         untouched_ses = set(original_sources) - updated_entities
-        sg_handler.create_suggestions(untouched_ses, new_entities)
+        sg_handler.create_suggestions(untouched_ses, list(new_entities))
         for se in untouched_ses:
             se.delete()
         self._update_template(self.template)
 
         strings_deleted = len(untouched_ses)
+        del new_entities, original_sources, updated_entities, untouched_ses
+        del new_sources
         return strings_added, strings_updated, strings_deleted
 
     def _save_translation(self, user, overwrite_translations):
@@ -652,6 +654,7 @@ class Handler(object):
             raise
         sg_handler = self.SuggestionFormat(self.resource, self.language, user)
         sg_handler.add_from_strings(self.suggestions)
+        del new_translations, updated_translations, source_entities, translations
         return strings_added, strings_updated, strings_deleted
 
     def _update_stats_of_resource(self, resource, language, user):
