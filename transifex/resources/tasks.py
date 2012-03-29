@@ -10,13 +10,14 @@ def check_and_notify_resource_full_reviewed(**kwargs):
     """
     Handler to notify maintainers about 100% reviewed translations.
     """ 
-    if settings.ENABLE_NOTICES:
+    rlstats = kwargs.pop('sender')
+    if (settings.ENABLE_NOTICES and 
+        rlstats.resource.source_language != rlstats.language):
+
         logger.debug("resource: Checking if resource translation is fully "
-                "reviewed.")
-        rlstats = kwargs.pop('sender')
-        if (rlstats.resource.source_language != rlstats.language and
-            rlstats.reviewed_perc == 100):
-            
+            "reviewed: %s (%s)" % (rlstats.resource, rlstats.language.code))
+
+        if rlstats.reviewed_perc == 100:
             logger.debug("resource: Resource translation is fully reviewed.")
 
             # Notification
