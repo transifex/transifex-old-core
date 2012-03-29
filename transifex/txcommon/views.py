@@ -60,7 +60,11 @@ def search(request):
     spelling_suggestion = None
 
     if not FULLTEXT:
-        results = index_query.auto_query(query_string)
+        try:
+            results = index_query.auto_query(query_string)
+            count = results.count()
+        except TypeError:
+            count = 0
     else:
         try:
             qfilter = fulltext_project_search_filter(query_string)
