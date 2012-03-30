@@ -188,7 +188,7 @@ $(document).ready(function(){
       {% for suggestion in suggestions %}
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
-          <img class="border top" alt="{{ suggestion.user }}" width="32" height="32" src="{{ suggestion.user.profile.get_mugshot_url }}" />
+          <img class="border" alt="{{ suggestion.user }}" width="32" height="32" src="{{ suggestion.user.profile.get_mugshot_url }}" />
 		{% if suggestion.user %} 
           <a href="{% url profile_public suggestion.user.username %}">
             <span>{{ suggestion.user }}</span>
@@ -214,16 +214,15 @@ $(document).ready(function(){
         {% else %}
           <div class="suggestion_select_button"><a class="i16 tick buttonized">{% trans "Use this!" %}</a></div>
         {% endif %}
-        <div class="nomargin nopadding clear"></div>
+
       </div>
       {% endfor %}
-  <div class="clear">&nbsp;</div>
   {% endif %}
 
     <div class="title_line"><span class="title">{% trans "New suggestion" %}</span></div>
     <div class="suggestion_create">
       <div class="suggestion_user">
-          <img class="border top" alt="{{ request.user }}" width="32" height="32" src="{{ request.user.profile.get_mugshot_url }}" />
+          <img class="border" alt="{{ request.user }}" width="32" height="32" src="{{ request.user.profile.get_mugshot_url }}" />
           <span>{% trans "You!" %}</span>
       </div>
       <div class="suggestion_textarea">

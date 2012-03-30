@@ -36,7 +36,7 @@ $(document).ready(function(){
                     $('#new_suggestion_'+{{ source_entity.id }}).val('');
 
                     // ISSUE A load to RENDERER
-                    metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
+                    metatr.html('<td colspan="4" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
                     var nTr = metatr.prev('tr');
 
                     // Increase suggestions count
@@ -117,7 +117,7 @@ $(document).ready(function(){
                         $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{% static "images/icons/tick.png" %}">');
 
                         // ISSUE A load to RENDERER
-                        metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
+                        metatr.html('<td colspan="4" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
                         var nTr = metatr.prev('tr');
 
                         var source_id = {{ source_entity.id }};
@@ -156,7 +156,7 @@ $(document).ready(function(){
                         $('#suggestion_'+suggestion_id+' .score_value').html('<img src="{% static "images/icons/tick.png" %}">');
 
                         // ISSUE A load to RENDERER
-                        metatr.html('<td colspan="3" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
+                        metatr.html('<td colspan="4" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td>');
                         var nTr = metatr.prev('tr');
 
                         var source_id = {{ source_entity.id }};
@@ -192,7 +192,7 @@ $(document).ready(function(){
       {% for suggestion in suggestions %}
       <div id="suggestion_{{ suggestion.id }}" class="suggestion_line {% if forloop.last %}last_line{% endif %}">
         <div class="suggestion_user">
-          <img class="border top" alt="{{ suggestion.user }}" width="32" height="32" src="{{ suggestion.user.profile.get_mugshot_url }}" />
+          <img class="border" alt="{{ suggestion.user }}" width="32" height="32" src="{{ suggestion.user.profile.get_mugshot_url }}" />
 		{% if suggestion.user %} 
           <a href="{% url profile_public suggestion.user.username %}">
             <span>{{ suggestion.user }}</span>
@@ -221,13 +221,12 @@ $(document).ready(function(){
         <div class="nomargin nopadding clear"></div>
       </div>
       {% endfor %}
-  <div class="clear">&nbsp;</div>
   {% endif %}
 
     <div class="title_line"><span class="title">{% trans "New suggestion" %}</span></div>
     <div class="suggestion_create">
       <div class="suggestion_user">
-          <img class="border top" alt="{{ request.user }}" width="32" height="32" src="{{ request.user.profile.get_mugshot_url }}" />
+          <img class="border" alt="{{ request.user }}" width="32" height="32" src="{{ request.user.profile.get_mugshot_url }}" />
           <span>{% trans "You!" %}</span>
       </div>
       <div class="suggestion_textarea">
