@@ -169,6 +169,11 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         cache.delete('lotte_%s' % request.session.session_key)
     """
 
+    #Set rtl to True if target_language is an RTL language
+    rtl = False
+    if target_language.code in settings.RTL_LANGUAGE_CODES:
+        rtl = True
+
     return render_to_response("translate.html", {
         'project': project,
         'resource': translation_resource,
@@ -182,7 +187,8 @@ def translate(request, project_slug, lang_code, resource_slug=None,
         'languages': Language.objects.all(),
         'auto_translate': auto_translate,
         'spellcheck_supported_langs': SPELLCHECK_SUPPORTED_LANGS,
-        'team_language': team_language
+        'team_language': team_language,
+        'RTL': rtl,
     }, context_instance = RequestContext(request))
 
 @login_required
