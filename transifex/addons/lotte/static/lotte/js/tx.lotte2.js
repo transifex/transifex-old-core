@@ -583,38 +583,12 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     // Make the focused textarea current in the StringSet!
     this.bindFocusTextArea = function() {
         $('tr td textarea.translation', this.bound_table).focus(function() {
-
-            var suggestions_tab = $(this).parents('tr').find('.show_suggestions');
-            var previous_suggestions_tab = stringset.current_box && stringset.current_box.parents('tr').find('.show_suggestions');
-            if(! previous_suggestions_tab || (previous_suggestions_tab.get(0) != suggestions_tab.get(0))) {
-                // close all open tabs
-                $('.tabs_trigger.current').click();
-
-                // open current string's suggestion tab
-                var suggestions_tab = $(this).parents('tr').find('.show_suggestions');
-                suggestions_tab.click();
-
-                // scroll page to focused textarea
-                $(document).scrollTop($(this).offset().top - 54);
-            }
-
-            // var suggestions_tab = $(this).parents('tr').find('.show_suggestions');
-            // if(stringset.current_box) {
-            //     var previous_suggestions_tab = stringset.current_box.parents('tr').find('.show_suggestions');
-            //     if(previous_suggestions_tab.get(0) != suggestions_tab.get(0)) {
-            //         previous_suggestions_tab.click();
-            //         suggestions_tab.click();
-            //     }
-            // } else {
-            //     suggestions_tab.click();
-            // }
-
             stringset.current_box = $(this);
             var textarea = stringset.current_box;
             var id;
             if(textarea.hasClass('default_translation')){
               id = parseInt(textarea.attr("id").split("_")[1]); // Get the id of current textarea -> binding index
-            } else {
+            }else{
               id = parseInt(textarea.parents('td.trans').find('.default_translation').attr("id").split("_")[1]); // Get the id of current textarea -> binding index
             }
             if (id != this_stringset.current_id) {
@@ -630,35 +604,35 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     }
 
     // saves last modified stringset
-    this.pushModifiedString = function() {
-        if ( this_stringset.current_string && this_stringset.must_push ) {
-            if ( this_stringset.current_string.modified && this_stringset.must_push ) {
-                /* add timeout and then submit. using the id, this timeout can be canceled */
-                $.doTimeout(this_stringset.current_id.toString(), 1, function(){
-                    /* push the string to server */
-                    this_stringset.push();
-                });
-            }
-        }
-	}
-	// Auto save on some specific clicks on textarea focusout
-	this.pushOnClick = function() {
-			$(document).click(function (e) {
-					if ($(e.target).parents().filter('tr').length && $(e.target).parents('tr').children('td.trans').length){
-						var id = parseInt($(e.target).parents("tr").find("textarea.translation").attr("id").split("_")[1]);
-						switch (id) {
-							case this_stringset.current_id : break;
-						default :
-							this_stringset.pushModifiedString();
+		this.pushModifiedString = function() {
+				if ( this_stringset.current_string && this_stringset.must_push ) {
+					if ( this_stringset.current_string.modified && this_stringset.must_push ) {
+	            /* add timeout and then submit. using the id, this timeout can be canceled */
+	            $.doTimeout(this_stringset.current_id.toString(), 1, function(){
+	                /* push the string to server */
+	                this_stringset.push();
+	            });
+	        }
+				}
+		}
+		// Auto save on some specific clicks on textarea focusout
+		this.pushOnClick = function() {
+				$(document).click(function (e) {
+						if ($(e.target).parents().filter('tr').length && $(e.target).parents('tr').children('td.trans').length){
+							var id = parseInt($(e.target).parents("tr").find("textarea.translation").attr("id").split("_")[1]);
+							switch (id) {
+								case this_stringset.current_id : break;
+							default :
+								this_stringset.pushModifiedString();
+							}
 						}
-					}
-					else {
-						if (!($(e.target).hasClass('spellcheck-badwords') || $(e.target).parents('div').hasClass('spellcheck-badwords')
-							|| ($(e.target).parents('div').hasClass('spellcheck-suggestbox'))))
-							this_stringset.pushModifiedString();
-					}
-				})
-	}
+						else {
+							if (!($(e.target).hasClass('spellcheck-badwords') || $(e.target).parents('div').hasClass('spellcheck-badwords')
+								|| ($(e.target).parents('div').hasClass('spellcheck-suggestbox'))))
+								this_stringset.pushModifiedString();
+						}
+					})
+		}
     // Bind the onblur autosave event
     this.bindBlurTextArea = function() {
         $('tr td textarea.translation', this.bound_table).blur(function() {
@@ -955,7 +929,7 @@ lotte_tabs = function(that) {
             previous_open.removeClass('current');
         }
 
-        nTr.after('<tr class="metatr suggestions"><td colspan="4" class="inject_here"><div style="text-align:center"></div></td></tr>');
+        nTr.after('<tr class="metatr suggestions"><td colspan="4" class="inject_here"><div style="text-align:center"><span class="i16 action_go">loading ...</span></div></td></tr>');
         var source_id = parseInt(nTr.find('.source_id').text());
 
         // Get the details and inject them.
