@@ -15,6 +15,7 @@ from transifex.resources.api import ResourceHandler, FileHandler, StatsHandler, 
 from transifex.storage.api import StorageHandler
 from transifex.releases.api import ReleaseHandler
 from transifex.actionlog.api import ActionlogHandler
+from transifex.api.views import reject_legacy_api
 
 auth = CustomHttpBasicAuthentication(realm='Transifex API')
 
@@ -32,69 +33,24 @@ formats_handler = Resource(FormatsHandler, authentication=auth)
 urlpatterns = patterns('',
     url(
         r'^languages/$',
-        Resource(LanguageHandler),
+        reject_legacy_api,
         {'api_version': 1},
         name='api.languages',
     ), url(
         r'^projects/$',
-        project_handler,
+        reject_legacy_api,
         {'api_version': 1},
         name='api_projects',
     ), url(
-        r'^project/(?P<project_slug>[-\w]+)/$',
-        never_cache(project_handler),
+        r'^project/',
+        reject_legacy_api,
         {'api_version': 1},
         name='api_project',
      ), url(
-        r'^project/(?P<project_slug>[-\w]+)/files/$',
-        projectresource_handler,
-        {'api_version': 1},
-        name='api_project_files',
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resources/$',
-        never_cache(resource_handler),
-        {'api_version': 1},
-        name="api_resources",
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/$',
-        never_cache(resource_handler),
-        {'api_version': 1},
-        name='api_resource',
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/release/(?P<release_slug>[-\w]+)/$',
-        never_cache(release_handler),
-        {'api_version': 1},
-        name='api_release',
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/$',
-        never_cache(stats_handler),
-        {'api_version': 1},
-        name='api_resource_stats',
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/(?P<lang_code>[\-_@\w\.]+)/$',
-        never_cache(stats_handler),
-        {'api_version': 1},
-        name='api_resource_stats',
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w\.]+)/$',
-        never_cache(projectresource_handler),
-        {'api_version': 1},
-        name='api_resource_storage',
-    ), url(
-        r'^project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w\.]+)/file/$',
-        never_cache(translationfile_handler),
-        {'api_version': 1},
-        name='api_translation_file',
-    ), url(
-        r'^storage/$',
-        storage_handler,
+        r'^storage/',
+        reject_legacy_api,
         {'api_version': 1},
         name='api.storage',
-    ), url(
-        r'^storage/(?P<uuid>[-\w]+)/$',
-        storage_handler,
-        {'api_version': 1},
-        name='api.storage.file',
     ), url(
         r'^2/projects/$',
         never_cache(project_handler),
@@ -146,70 +102,10 @@ urlpatterns = patterns('',
         {'api_version': 2},
         name='apiv2_release',
     ), url(
-        r'^1/languages/$',
-        Resource(LanguageHandler),
+        r'^1/',
+        reject_legacy_api,
         {'api_version': 1},
         name='api.languages',
-    ), url(
-        r'^1/projects/$',
-        project_handler,
-        {'api_version': 1},
-        name='api_projects',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/$',
-        never_cache(project_handler),
-        {'api_version': 1},
-        name='api_project',
-     ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/files/$',
-        projectresource_handler,
-        {'api_version': 1},
-        name='api_project_files',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/resources/$',
-        never_cache(resource_handler),
-        {'api_version': 1},
-        name="api_resources",
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/$',
-        never_cache(resource_handler),
-        {'api_version': 1},
-        name='api_resource',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/release/(?P<release_slug>[-\w]+)/$',
-        never_cache(release_handler),
-        {'api_version': 1},
-        name='api_release',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/$',
-        never_cache(stats_handler),
-        {'api_version': 1},
-        name='api_resource_stats',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/(?P<lang_code>[\-_@\w\.]+)/$',
-        never_cache(stats_handler),
-        {'api_version': 1},
-        name='api_resource_stats',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w\.]+)/$',
-        never_cache(projectresource_handler),
-        {'api_version': 1},
-        name='api_resource_storage',
-    ), url(
-        r'^1/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/(?P<language_code>[\-_@\w\.]+)/file/$',
-        never_cache(translationfile_handler),
-        {'api_version': 1},
-        name='api_translation_file',
-    ), url(
-        r'^1/storage/$',
-        storage_handler,
-        {'api_version': 1},
-        name='api.storage',
-    ), url(
-        r'^1/storage/(?P<uuid>[-\w]+)/$',
-        storage_handler,
-        {'api_version': 1},
-        name='api.storage.file',
     ), url(
         r'^2/actionlog/$',
         actionlog_handler,
