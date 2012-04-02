@@ -111,7 +111,6 @@ class QtCompiler(PluralCompiler):
                 message.attributes['numerus'].value=='yes':
                 source = _getElementByTagName(message, "source")
                 numerusforms = message.getElementsByTagName('numerusform')
-                translation.childNodes  = []
 
                 # If we have an id for the message use this as the source
                 # string, otherwise use the actual source string
@@ -124,20 +123,22 @@ class QtCompiler(PluralCompiler):
                 plural_keys = {}
                 lang_rules = language.get_pluralrules_numbers()
                 m = plural_regex.search(numerusforms[0].firstChild.data)
-                string_hash = m.group('md5')
-                # Initialize all plural rules up to the las
-                for p,n in enumerate(lang_rules):
-                    plural_keys[p] = "%s_pl_%d" % (string_hash, p)
+                if m:
+                    translation.childNodes  = []
+                    string_hash = m.group('md5')
+                    # Initialize all plural rules up to the las
+                    for p,n in enumerate(lang_rules):
+                        plural_keys[p] = "%s_pl_%d" % (string_hash, p)
 
-                message.setAttribute('numerus', 'yes')
-                for key in plural_keys.iterkeys():
-                    e = doc.createElement("numerusform")
-                    e.appendChild(
-                        doc.createTextNode(plural_keys[key])
-                    )
-                    translation.appendChild(e)
-                    if not translations[plural_keys[key]]:
-                        translation.attributes['type'] = 'unfinished'
+                    message.setAttribute('numerus', 'yes')
+                    for key in plural_keys.iterkeys():
+                        e = doc.createElement("numerusform")
+                        e.appendChild(
+                            doc.createTextNode(plural_keys[key])
+                        )
+                        translation.appendChild(e)
+                        if not translations[plural_keys[key]]:
+                            translation.attributes['type'] = 'unfinished'
             else:
                 if not translation.childNodes:
                     # Translation elemnent should have only one tag, the text
