@@ -583,6 +583,22 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
     // Make the focused textarea current in the StringSet!
     this.bindFocusTextArea = function() {
         $('tr td textarea.translation', this.bound_table).focus(function() {
+            if(window.autosuggestions) {
+                var suggestions_tab = $(this).parents('tr').find('.show_suggestions');
+                var previous_suggestions_tab = stringset.current_box && stringset.current_box.parents('tr').find('.show_suggestions');
+                if(! previous_suggestions_tab || (previous_suggestions_tab.get(0) != suggestions_tab.get(0))) {
+                    // close all open tabs
+                    $('.tabs_trigger.current').click();
+
+                    // open current string's suggestion tab
+                    var suggestions_tab = $(this).parents('tr').find('.show_suggestions');
+                    suggestions_tab.click();
+
+                    // scroll page to focused textarea
+                    $(document).scrollTop($(this).offset().top - 54);
+                }
+            }
+
             stringset.current_box = $(this);
             var textarea = stringset.current_box;
             var id;

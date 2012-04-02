@@ -597,6 +597,13 @@
 				removeShortcuts();
 			}
 		});
+        $("#toggle_autosuggestions").click( function() {
+            if ($(this).is(":checked")){
+				window.autosuggestions = true;
+			} else {
+				window.autosuggestions = false;
+			}
+		});
 
         /* SETTINGS togglers */
         $("#toggle_verbose").click( function() {
@@ -975,6 +982,10 @@
                     <li class="shortcuts">
                         <input id="toggle_shortcuts" type="checkbox" checked="checked"/>
                         <span>{% trans "Enable shortcuts" %}</span>
+                    </li>
+                    <li class="auto_open_suggestions">
+                        <input id="toggle_autosuggestions" type="checkbox" />
+                        <span>{% trans "Enable suggestions auto-open" %}</span>
                     </li>
                 </ul>
             </div>
