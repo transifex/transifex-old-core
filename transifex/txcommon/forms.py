@@ -23,10 +23,12 @@ class EditProfileForm(UserenaEditProfileForm):
 
     class Meta:
         model = get_profile_model()
-        exclude = ('user', 'privacy',)
-        fields = ('first_name', 'last_name', 'location', 'languages', 'tags', 'mugshot', 'blog',
-            'linked_in', 'twitter', 'about', 'looking_for_work')
-            
+        exclude = ('user', 'privacy', 'mugshot', )
+        fields = (
+            'first_name', 'last_name', 'location', 'languages', 'tags', 'blog',
+            'linked_in', 'twitter', 'about', 'looking_for_work'
+        )
+
 
 
 
@@ -35,6 +37,6 @@ class CustomContactForm(ContactForm):
     subject = forms.CharField(max_length=150, widget=forms.TextInput())
 
     def __init__(self, data=None, files=None, request=None, *args, **kwargs):
-        super(CustomContactForm, self).__init__(data=data, files=files, 
+        super(CustomContactForm, self).__init__(data=data, files=files,
             request=request, *args, **kwargs)
         self.fields.keyOrder = ['name', 'email', 'subject', 'body']
