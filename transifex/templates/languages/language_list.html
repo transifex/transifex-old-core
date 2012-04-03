@@ -1,4 +1,4 @@
-{% extends "languages/base.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% load i18n %}
 {% load txcommontags %}
@@ -10,8 +10,6 @@
 {% block extra_head %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url languages_latest_feed %}" />
 {% endblock %}
-
-{% block breadcrumb %}{% homelink %} &raquo; {% trans "Languages" %}{% endblock %}
 
 {% block content_title %}<h2 class="pagetitle">{% trans "Languages on Transifex" %} {% render_metacount language_list _("languages") %}</h2>{% endblock %}
 
