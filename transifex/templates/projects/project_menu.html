@@ -12,11 +12,14 @@
 
 {% block page_keywords %}{% blocktrans with project.name as project_name %} localization, {{ project_name }} localization, localization platform, {{ project_name }}translation, {{ project_name }} crowdsourcing {% endblocktrans %}{% endblock %}
 
-{% block extrajs %}
-  <script type="text/javascript" src="{% static "js/tablesorted.js" %}"></script>
+{% block extra_head %}
   {% if project %}
   <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
   {% endif %}
+{% endblock %}
+
+{% block extrajs %}
+  <script type="text/javascript" src="{% static "js/tablesorted.js" %}"></script>
 {% endblock %}
 
 {% block content_title %}

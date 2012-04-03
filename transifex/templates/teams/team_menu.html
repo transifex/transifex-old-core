@@ -6,11 +6,12 @@
 {% load permissions %}
 {% load txpermissions %}
 
+{% block extra_head %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
+{% endblock %}
+
 {% block extrajs %}
-  {% if project %}
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
-  <script type="text/javascript" src="{% static "js/tablesorted.js" %}"></script>
-  {% endif %}
+<script type="text/javascript" src="{% static "js/tablesorted.js" %}"></script>
 {% endblock %}
 
 {% block content_title %}

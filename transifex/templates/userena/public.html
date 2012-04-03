@@ -6,8 +6,10 @@
 
 {% block title %}{{ profile.user }}'s public profile{% endblock %}
 {% block robots %}noindex,nofollow{% endblock %}
+{% block extrajs %}{% endblock %}
 
-{% block extrajs %}
+{% block extra_head %}
+<link rel="alternate" type="application/rss+xml" title="User activity | Activity by {{ profile.user }}" href= "{% url user_feed profile.user %}" />
 {% endblock %}
 
 {% block content_sec %}
@@ -18,11 +20,6 @@
   </p>
 {% endblock %}
 
-{% block extra_head %}
-    <link rel="alternate" type="application/rss+xml"
-        title="User activity | Activity by {{ profile.user }}"
-        href= "{% url user_feed profile.user %}" />
-{% endblock %}
 
 {% block breadcrumb %}{% homelink %} &raquo; {% trans "Profile" %} &raquo; {{ profile.user }}{% endblock %}
 
