@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 import gc, re
 import operator
+import csv
+from cStringIO import StringIO
 from django.core.urlresolvers import get_resolver
 from django.views.generic.simple import direct_to_template
 from django.views.decorators.http import condition
@@ -353,3 +355,30 @@ class StatBarsPositions(dict):
             r = int(round(float(fr) / totsegwidth))
             self[segment[0]] = self.BarPos(r - l, l)
         return
+
+
+def read_csv_content(content, delimiter=',', quotechar='"', encoding='UTF-8'):
+    """Read a csv text into a list"""
+    if isinstance(content, unicode):
+        content = content.encode(encoding)
+
+    f = StringIO(content)
+    reader = csv.reader(f, delimiter=delimiter, quotechar=quotechar)
+
+    values = []
+
+    for row in reader:
+        values.append([element.decode(encoding) for element in row])
+
+    return values
+
+
+def write_csv_content(rows, delimiter=',', quotechar='"', encoding='UTF-8'):
+    """write a list of rows to a csv text"""
+    f = StringIO()
+    writer = csv.writer(f, delimiter=delimiter, quotechar=quotechar)
+
+    for row in rows:
+        writer.writerow([element.encode(encoding) for element in row])
+
+    return f.getvalue().decode(encoding)
