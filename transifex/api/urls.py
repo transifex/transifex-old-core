@@ -52,6 +52,11 @@ urlpatterns = patterns('',
         {'api_version': 1},
         name='api.storage',
     ), url(
+        r'^1/',
+        reject_legacy_api,
+        {'api_version': 1},
+        name='api.languages',
+    ), url(
         r'^2/projects/$',
         never_cache(project_handler),
         {'api_version': 2},
@@ -101,11 +106,6 @@ urlpatterns = patterns('',
         never_cache(release_handler),
         {'api_version': 2},
         name='apiv2_release',
-    ), url(
-        r'^1/',
-        reject_legacy_api,
-        {'api_version': 1},
-        name='api.languages',
     ), url(
         r'^2/actionlog/$',
         actionlog_handler,
