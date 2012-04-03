@@ -84,7 +84,7 @@ else:
         url(regex   =   r'^accounts/(?P<username>[\.\w]+)/edit/$',
             view    =   login_required(userena_views.profile_edit),
             name    =   'userena_profile_edit'),
- 
+
         url(regex   =   r'^accounts/',
             view    =   include('userena.urls')),
 
@@ -114,5 +114,5 @@ if settings.SERVE_MEDIA:
         url(r'^site_media/media/(?P<path>.*)$', 'django.views.static.serve', {
             'document_root': settings.MEDIA_ROOT,
         }),
-        url(r'^', include('django.contrib.staticfiles.urls'))
+        url(r'^', include('staticfiles.urls'))
    )
