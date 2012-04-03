@@ -12,8 +12,6 @@
 
 {% block body_class %}{{ block.super }} project_detail{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; {{ project.name }}{% endblock %}
-
 {% block extra_head %}
 {{ block.super }}
 <script type="text/javascript">
@@ -109,7 +107,7 @@
 {%endif%}
 {% endwith %}
 
-{% include "teams/team_list.html" %}
+{% include "projects/project_detail_languages.html" %}
 
 {% include "projects/release_list.html" %}
 
