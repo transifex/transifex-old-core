@@ -110,37 +110,10 @@ def user_timeline(request, *args, **kwargs):
     log_entries = LogEntry.objects.by_user(request.user)
     f = LogEntryFilter(request.GET, queryset=log_entries)
 
-    return render_to_response("txcommon/user_timeline.html",
-        {'f': f,
-         'actionlog': f.qs},
-        context_instance = RequestContext(request))
-
-
-@login_required
-def user_nudge(request, username):
-    """View for nudging a user"""
-    user = get_object_or_404(User, username=username)
-    ctype = ContentType.objects.get_for_model(user)
-
-    #It's just allowed to re-nudge the same person after 15 minutes
-    last_minutes = datetime.datetime.today() - datetime.timedelta(minutes=15)
-
-    log_entries = LogEntry.objects.filter(user=request.user,
-        object_id=user.pk, content_type=ctype, action_time__gt=last_minutes)
-
-    if log_entries:
-        messages.warning(request,
-                         _("You can't re-nudge the same user in a short amount of time."))
-    elif user.pk == request.user.pk:
-        messages.warning(request, _("You can't nudge yourself."))
-    else:
-        context={'performer': request.user}
-        nt= 'user_nudge'
-        action_logging(request.user, [user], nt, context=context)
-        notification.send([user], nt, context)
-        messages.success(request, _("You have nudged '%s'.") % user)
-
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    return render_to_response("txcommon/user_timeline.html", {
+        'f': f,
+        'actionlog': f.qs
+    }, context_instance = RequestContext(request))
 
 
 def profile_public(request, username, template_name='userena/public.html'):
