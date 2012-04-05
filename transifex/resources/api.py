@@ -555,6 +555,206 @@ class FileHandler(BaseHandler):
         return rc.DELETED
 
 
+class SingleTranslationHandler(BaseHandler):
+    """Read and update a single translation"""
+    allowed_methods = ('GET', 'PUT')
+
+    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
+    @method_decorator(one_perm_required_or_403(
+            pr_project_private_perm,
+            (Project, 'slug__exact', 'project_slug')
+    ))
+    def read(self, request, project_slug, resource_slug,
+            language_code, source_hash, api_version=2):
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            resource = Resource.objects.get(slug=resource_slug,
+                    project=project)
+        except Resource.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            source_entity = SourceEntity.objects.get(string_hash=source_hash,
+                    resource=resource)
+        except SourceEntity.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            language = Language.objects.by_code_or_alias(language_code)
+        except Language.DoesNotExist, e:
+            return rc.NOT_FOUND
+
+        translations = TranslationModel.objects.filter(
+                source_entity=source_entity, language=language)
+
+        if not translations:
+            return rc.NOT_FOUND
+
+        field_map = {
+                'source_entity__id': 'source_entity_id',
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+                'source_entity__pluralized': 'pluralized'
+        }
+
+        fields = field_map.keys()
+
+        return _generate_translations_dict(
+                translations.values(*fields),
+                field_map, True)
+
+    @require_mime('json')
+    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
+    @method_decorator(one_perm_required_or_403(
+            pr_project_private_perm,
+            (Project, 'slug__exact', 'project_slug')
+    ))
+    def update(self, request, project_slug, resource_slug,
+            language_code, source_hash, api_version=2):
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            resource = Resource.objects.get(slug=resource_slug,
+                    project=project)
+        except Resource.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            source_entity = SourceEntity.objects.get(string_hash=source_hash,
+                    resource=resource)
+        except SourceEntity.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            language = Language.objects.by_code_or_alias(language_code)
+        except Language.DoesNotExist, e:
+            return rc.NOT_FOUND
+
+        if language == source_entity.resource.source_language:
+            return rc.FORBIDDEN
+        data = request.data
+        user = data.get('user') and User.objects.get(username=data.get(
+            'user')) or request.user
+
+        team = Team.objects.get_or_none(project, language.code)
+        check = ProjectPermission(user)
+        if (not check.submit_translations(team or resource.project) or\
+            not resource.accept_translations) and not\
+                check.maintain(resource.project):
+            return rc.FORBIDDEN
+
+        translations = TranslationModel.objects.filter(
+                source_entity=source_entity, language=language)
+
+        if not translations:
+            return rc.NOT_FOUND
+
+        reviewed = translations[0].reviewed
+
+        update_fields = {}
+        if check.proofread(project, language):
+            if data.get('reviewed') != None:
+                update_fields['reviewed'] = data.get('reviewed')
+        else:
+            if reviewed:
+                return rc.FORBIDDEN
+
+        translation_strings = data.get('translation')
+
+        update_fields['user'] = user
+
+        if not source_entity.pluralized:
+            update_fields['string']=translation_strings
+            translations.filter(rule=5).update(**update_fields)
+        else:
+            nplurals = language.get_pluralrules_numbers()
+            for rule in translation_strings.keys():
+                if not translation_strings.get(rule, '').strip():
+                    translation_strings.pop(rule)
+            plural_forms = translation_strings.keys()
+            plural_forms.sort()
+            if nplurals != plural_forms:
+                return rc.BAD_REQUEST
+            for rule in translation_strings.keys():
+                update_fields['string'] = translation_strings[rule]
+                translations.filter(rule=rule).update(**update_fields)
+
+        field_map = {
+                'source_entity__id': 'source_entity_id',
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+                'source_entity__pluralized': 'pluralized'
+        }
+
+        fields = field_map.keys()
+
+        return _generate_translations_dict(
+                translations.values(*fields),
+                field_map, True)
+
+
+def _generate_translations_dict(translations, field_map={}, single=False):
+    """Generate result to returned to the user for the related translations"""
+    result = []
+    buf = {}
+    for count, translation in enumerate(translations):
+        d = {}
+        append = True
+        pluralized = False
+        index = -1
+        if translation.get('source_entity__pluralized'):
+            if buf.get(translation.get('source_entity__id')):
+                index = buf.get(translation.get('source_entity__id'))
+                d = result[index]
+                append = False
+            else:
+                buf[translation.get('source_entity__id')] = count
+            pluralized = True
+        for key in field_map.keys():
+            if pluralized:
+                if key == 'string':
+                    if append:
+                        d[field_map[key]] = {translation['rule']:\
+                                translation['string']}
+                    else:
+                        d[field_map[key]][translation['rule']] =\
+                                translation['string']
+                elif key == 'wordcount':
+                    if append:
+                        d[field_map[key]] = translation['wordcount']
+                    else:
+                        d[field_map[key]] += translation['wordcount']
+                else:
+                    d[field_map[key]] = translation[key]
+            else:
+                d[field_map[key]] = translation[key]
+
+        if append:
+            result.append(d)
+        else:
+           result[index] = d
+    if single:
+        if result:
+            result = result[0]
+        else:
+            result = ""
+    return result
+
 class TranslationObjectsHandler(BaseHandler):
     """
     Read and update a set of translations in
@@ -626,50 +826,7 @@ class TranslationObjectsHandler(BaseHandler):
 
         translations = TranslationModel.objects.filter(**filters
                 ).values(*fields)
-        return self._generate_translations_dict(translations, field_map)
-
-
-    def _generate_translations_dict(self, translations, field_map={}):
-        result = []
-        buf = {}
-        for count, translation in enumerate(translations):
-            d = {}
-            append = True
-            pluralized = False
-            index = -1
-            if translation.get('source_entity__pluralized'):
-                if buf.get(translation.get('source_entity__id')):
-                    index = buf.get(translation.get('source_entity__id'))
-                    d = result[index]
-                    append = False
-                else:
-                    buf[translation.get('source_entity__id')] = count
-                pluralized = True
-            for key in field_map.keys():
-                if pluralized:
-                    if key == 'string':
-                        if append:
-                            d[field_map[key]] = {translation['rule']:\
-                                    translation['string']}
-                        else:
-                            d[field_map[key]][translation['rule']] =\
-                                    translation['string']
-                    elif key == 'wordcount':
-                        if append:
-                            d[field_map[key]] = translation['wordcount']
-                        else:
-                            d[field_map[key]] += translation['wordcount']
-                    else:
-                        d[field_map[key]] = translation[key]
-                else:
-                    d[field_map[key]] = translation[key]
-
-            if append:
-                result.append(d)
-            else:
-               result[index] = d
-
-        return result
+        return _generate_translations_dict(translations, field_map)
 
 
     @require_mime('json')
@@ -800,7 +957,7 @@ class TranslationObjectsHandler(BaseHandler):
                 fields.append(f[0])
                 field_map_[f[0]] = f[1]
 
-        return self._generate_translations_dict(
+        return _generate_translations_dict(
                 TranslationModel.objects.filter(source_entity__id__in=se_ids,
                     language=language).values(*fields),
                 field_map_)
