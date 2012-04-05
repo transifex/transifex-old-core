@@ -28,7 +28,7 @@ function handleResponse(response) {
     link_tx.target = "_blank";
     link_tx.href = "{{SITE_URL_PREFIX}}{% url transifex.home %}";
     link_tx.title = "See more information on Transifex.net";
-    link_tx.innerHTML = "<img border=\"0\" src=\"{% static "charts/images/tx-logo-micro.png\" %}"/>";
+    link_tx.innerHTML = '<img border="0" src="{% static "charts/images/tx-logo-micro.png" %}"/>';
 
     link_resource = document.createElement("a");
     link_resource.target = "_blank";
