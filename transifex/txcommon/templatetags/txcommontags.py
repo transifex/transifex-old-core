@@ -275,7 +275,8 @@ class TooltipNode(Node):
         id = self.id.resolve(context)
         return """<script type=\"text/javascript\">\ntooltip("#%s-%s", "%s");\n</script>""" % (self.prefix, id, output)
 
-def GetSettings(Node):
+class GetSettings(Node):
+
     def __init__(self, variable_name, context_variable):
         self.variable_name = variable_name
         self.context_variable = context_variable
