@@ -4,7 +4,7 @@ from django.core import management
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models.loading import get_model
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from django.test.client import Client
 from django.contrib.auth.models import User, Group, Permission as DjPermission
 from django.contrib.contenttypes.models import ContentType

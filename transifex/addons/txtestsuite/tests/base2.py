@@ -582,8 +582,10 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
             else:
                 databases = [DEFAULT_DB_ALIAS]
             for db in databases:
-                call_command('flush', verbosity=0, interactive=False, database=db)
-                call_command('loaddata', *fixtures, **{'verbosity': 0, 'database': db})
+                management.call_command('flush', verbosity=0,
+                interactive=False, database=db)
+                management.call_command('loaddata', *fixtures, **{
+                    'verbosity': 0, 'database': db})
 
         else:
             if getattr(self, 'multi_db', False):
