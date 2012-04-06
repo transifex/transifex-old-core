@@ -26,7 +26,7 @@
   <form class="tx-form dual" action="" enctype="multipart/form-data" method="post">
     {% csrf_token %}
 	  <fieldset>
-     {% get_fieldset first_name,last_name,location,languages,tags,mugshot,blog,linked_in,twitter,about,looking_for_work as profile_fields from form %}	  
+     {% get_fieldset first_name,last_name,location,languages,tags,blog,linked_in,twitter,about,looking_for_work as profile_fields from form %}
       {% for field in profile_fields %}
         <div id='{{field.html_name}}' class="tx-form-field">
           {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
