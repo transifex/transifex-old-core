@@ -36,6 +36,9 @@ class MozillaPropertiesHandler(PropertiesHandler):
     HandlerCompileError = MozillaPropertiesCompileError
     CompilerClass = PropertiesCompiler
 
+    escaped_unicode_pattern = re.compile(
+            r'\\[uU]([0-9A-Fa-f]{4})')
+
     def _escape(self, s):
         return (s.replace('\\', r'\\')
                  .replace('\n', r'\n')
@@ -52,7 +55,7 @@ class MozillaPropertiesHandler(PropertiesHandler):
 
     def _visit_value(self, value):
         if value:
-            return re.sub(r'\\[uU]([0-9A-Fa-f]{4})',
-                    lambda m: unichr(int(m.group(1), 16)), value)
-        else:
-            return value
+            return self.escaped_unicode_pattern.sub(
+                    lambda m: unichr(int(m.group(1), 16)),
+                    value
+            )
