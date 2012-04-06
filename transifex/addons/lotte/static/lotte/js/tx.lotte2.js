@@ -635,7 +635,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
 		this.pushOnClick = function() {
 				$(document).click(function (e) {
 						if ($(e.target).parents().filter('tr').length && $(e.target).parents('tr').children('td.trans').length){
-							var id = parseInt($(e.target).parents("tr").find("textarea.translation").attr("id").split("_")[1]);
+              var id = parseInt($(e.target).parents("tr").find("textarea.translation").attr("id").split("_")[1]);
 							switch (id) {
 								case this_stringset.current_id : break;
 							default :
@@ -829,8 +829,18 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             var a=$(this);
             var plural_orig = $('.msg .source_string_plural', a.parents('tr'));
             var orig=$('.msg .source_string', a.parents('tr')).whitespaceHighlight("reset");
-            if(plural_orig.length > 0)
+            var pluralized = false;
+            if(plural_orig.length > 0){
+              pluralized = true;
               orig = orig.substring(orig.indexOf('</span>')+7);
+              plurals_dict = {};
+              plural_orig.each(function(index, element){
+                var s = $(element).whitespaceHighlight("reset");
+                s = s.substring(s.indexOf('</span>')+7);
+                var rule = $(element).attr('rule');
+                plurals_dict[rule] = s;
+              });
+            }
             // Get the default (other) translation textarea and corresponding string object
             var default_textarea = $('textarea.default_translation', a.parents('tr'));
             // Get the id of current textarea -> binding index
@@ -839,6 +849,14 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
             $('textarea.translation', a.parents('tr')).each(function(){
                 var trans=$(this);
                 trans.val(html_unescape(orig));
+                if (pluralized) {
+                  var rule = trans.prev('span').attr('rule');
+                  var s = plurals_dict[rule];
+                  if (s){
+                    s = html_unescape(s);
+                    trans.val(s);
+                  }
+                }
                 /* Mark the translated field as modified */
                 string.translate(trans.val(), trans.prev('span.rule').attr('rule'));
                 if (string.modified) {

@@ -225,7 +225,7 @@
                                 source_divs += '<span class="plural_title">'+plural_types[rule]+': </span>'
                               source_divs += html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</div>'
                             }else
-                              source_divs += '<p class="source_string_plural"><span class="plural_title">'+plural_types[rule]+': </span>' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
+                              source_divs += '<p class="source_string_plural" rule="'+plural_types[rule]+'"><span class="plural_title">'+plural_types[rule]+': </span>' + html_escape(clean_array["source_dict"]["source_strings"][plural_types[rule]]) + '</p>'
                             plurals_counter++;
                         }
                     }
