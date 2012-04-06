@@ -29,7 +29,6 @@ Resource = get_model('resources', 'Resource')
 Translation = get_model('resources', 'Translation')
 SourceEntity = get_model('resources', 'SourceEntity')
 Template = get_model('resources', 'Template')
-Storage = get_model('storage', 'StorageFile')
 
 plural_regex = _HashRegex(plurals=True).plural_regex
 

@@ -21,7 +21,6 @@ from transifex.resources.decorators import method_decorator
 from transifex.resources.formats.registry import registry
 from transifex.resources.handlers import get_project_teams
 from transifex.resources.models import *
-from transifex.storage.models import StorageFile
 from transifex.teams.models import Team
 from transifex.txcommon.log import logger
 from transifex.txcommon.decorators import one_perm_required_or_403
@@ -75,12 +74,9 @@ class ProjectHandler(BaseHandler):
         """
         # Reset fields to default value
         ProjectHandler.fields = ProjectHandler.default_fields
-        if api_version == 2:
-            if "details" in request.GET.iterkeys():
-                if project_slug is None:
-                    return rc.NOT_IMPLEMENTED
-                ProjectHandler.fields = ProjectHandler.details_fields
-        else:
+        if "details" in request.GET.iterkeys():
+            if project_slug is None:
+                return rc.NOT_IMPLEMENTED
             ProjectHandler.fields = ProjectHandler.details_fields
         return self._read(request, project_slug)
 
@@ -91,17 +87,14 @@ class ProjectHandler(BaseHandler):
         API call to create new projects via POST.
         """
         data = getattr(request, 'data', None)
-        if api_version == 2:
-            if project_slug is not None:
-                return BAD_REQUEST("POSTing to this url is not allowed.")
-            if data is None:
-                return BAD_REQUEST(
-                    "At least parameters 'slug', 'name' and "
-                    "'source_language' are needed."
-                )
-            return self._create(request, data)
-        else:
-            return self._createv1(request, data)
+        if project_slug is not None:
+            return BAD_REQUEST("POSTing to this url is not allowed.")
+        if data is None:
+            return BAD_REQUEST(
+                "At least parameters 'slug', 'name' and "
+                "'source_language' are needed."
+            )
+        return self._create(request, data)
 
     @require_mime('json')
     @method_decorator(one_perm_required_or_403(pr_project_add_change,
@@ -115,10 +108,7 @@ class ProjectHandler(BaseHandler):
         data = request.data
         if data is None:
             return BAD_REQUEST("Empty request.")
-        if api_version == 2:
-            return self._update(request, project_slug, data)
-        else:
-            return self._updatev1(request, project_slug, data)
+        return self._update(request, project_slug, data)
 
     @method_decorator(one_perm_required_or_403(pr_project_delete,
         (Project, 'slug__exact', 'project_slug')))
@@ -216,57 +206,6 @@ class ProjectHandler(BaseHandler):
         p.save()
         return rc.CREATED
 
-    def _createv1(self, request, data):
-        """
-        Create a new project following the v1 API.
-        """
-        outsource = data.pop('outsource', {})
-        maintainers = data.pop('maintainers', {})
-        lang = data.pop('source_language', 'en')
-        try:
-            source_language = Language.objects.by_code_or_alias(lang)
-        except Language.DoesNotExist:
-            return BAD_REQUEST("Language %s does not exist." % lang)
-        try:
-            p, created = Project.objects.get_or_create(
-                source_language=source_language, **data)
-        except:
-            return BAD_REQUEST("Project not found")
-
-        if created:
-            # Owner
-            p.owner = request.user
-
-            # Outsourcing
-            if outsource:
-                try:
-                    outsource_project = Project.objects.get(slug=outsource)
-                except Project.DoesNotExist:
-                    # maybe fail when wrong user is given?
-                    pass
-                p.outsource = outsource_project
-
-            # Handler m2m with maintainers
-            if maintainers:
-                for user in maintainers.split(','):
-                    try:
-                        p.maintainers.add(User.objects.get(username=user))
-                    except User.DoesNotExist:
-                        # maybe fail when wrong user is given?
-                        pass
-            else:
-                p.maintainers.add(p.owner)
-
-            try:
-                p.full_clean()
-            except ValidationError, e:
-                return BAD_REQUEST("%s" % e)
-            p.save()
-
-            return rc.CREATED
-        else:
-            return BAD_REQUEST("Unsupported request")
-
     def _update(self, request, project_slug, data):
         try:
             self._check_fields(data.iterkeys(), extra_exclude=['slug'])
@@ -323,48 +262,6 @@ class ProjectHandler(BaseHandler):
             return BAD_REQUEST("Error parsing request data: %s" % e)
         return rc.ALL_OK
 
-    def _updatev1(self, request, project_slug, data):
-        """
-        Update a project per API v1.
-        """
-        outsource = data.pop('outsource', {})
-        maintainers = data.pop('maintainers', {})
-        try:
-            p = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist:
-            return BAD_REQUEST("Project not found")
-        try:
-            for key,value in data.items():
-                if key == 'slug':
-                    continue
-                setattr(p, key,value)
-                # Outsourcing
-            if outsource:
-                if outsource == p.slug:
-                    return BAD_REQUEST("Original and outsource projects are the same.")
-                try:
-                    outsource_project = Project.objects.get(slug=outsource)
-                except Project.DoesNotExist:
-                    # maybe fail when wrong user is given?
-                    pass
-                p.outsource = outsource_project
-
-            # Handler m2m with maintainers
-            if maintainers:
-                # remove existing maintainers
-                p.maintainers.all().clear()
-                # add then all anew
-                for user in maintainers.split(','):
-                    try:
-                        p.maintainers.add(User.objects.get(username=user))
-                    except User.DoesNotExist:
-                        # maybe fail when wrong user is given?
-                        pass
-            p.save()
-        except Exception, e:
-            return BAD_REQUEST("Error parsing request data: %s" % e)
-        return rc.ALL_OK
-
     def _delete(self, request, project_slug):
         try:
             project = Project.objects.get(slug=project_slug)
@@ -391,205 +288,3 @@ class ProjectHandler(BaseHandler):
         for field in fields:
             if field not in self.allowed_fields or field in extra_exclude:
                 raise AttributeError(field)
-
-
-class ProjectResourceHandler(BaseHandler):
-    """
-    API handler for creating resources under projects
-    """
-
-    allowed_methods = ('POST', 'PUT')
-
-    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
-    @method_decorator(one_perm_required_or_403(pr_resource_add_change,
-        (Project, 'slug__exact', 'project_slug')))
-    @transaction.commit_manually
-    def create(self, request, project_slug, api_version=1):
-        """
-        Create resource for project by UUID of StorageFile.
-        """
-        if "application/json" in request.content_type:
-            if "uuid" in request.data:
-                uuid = request.data['uuid']
-                project = Project.objects.get(slug=project_slug)
-                try:
-                    storagefile = StorageFile.objects.get(uuid=uuid)
-                except StorageFile.DoesNotExist, e:
-                    transaction.rollback()
-                    return BAD_REQUEST("Specified uuid is invalid.")
-                resource_slug = None
-                if "slug" in request.data:
-                    resource_slug = request.data['slug']
-                    if len(resource_slug) > 51:
-                        transaction.rollback()
-                        return BAD_REQUEST("Resouce slug is too long "
-                            "(Max. 50 chars).")
-
-                slang = project.source_language
-                if slang is not None and storagefile.language != slang:
-                    return BAD_REQUEST(
-                        "You have to use %s for source language" % slang
-                    )
-
-                try:
-                    resource, created = Resource.objects.get_or_create(
-                        slug = resource_slug or slugify(storagefile.name),
-                        source_language = storagefile.language,
-                        project = project
-                    )
-                except DatabaseError, e:
-                    transaction.rollback()
-                    logger.error(e.message, exc_info=True)
-                    return BAD_REQUEST(e.message)
-                except IntegrityError, e:
-                    transaction.rollback()
-                    logger.error(e.message, exc_info=True)
-                    return BAD_REQUEST(e.message)
-
-                if created:
-                    resource.name = resource_slug or storagefile.name
-                    resource.save()
-                    # update i18n_type
-                    i18n_type = registry.guess_method(storagefile.get_storage_path())
-                    if not i18n_type:
-                        transaction.rollback()
-                        return BAD_REQUEST("File type not supported.")
-                    resource.i18n_method = i18n_type
-                    resource.save()
-                else:
-                    i18n_type = resource.i18n_method
-
-                # Set StorageFile to 'bound' status, which means that it is
-                # bound to some translation resource
-                storagefile.bound = True
-                storagefile.save()
-
-                logger.debug("Going to insert strings from %s (%s) to %s/%s" %
-                    (storagefile.name, storagefile.uuid, project.slug,
-                    resource.slug))
-
-                strings_added, strings_updated = 0, 0
-                fhandler = storagefile.find_parser()
-                fhandler.bind_file(filename=storagefile.get_storage_path())
-                fhandler.bind_resource(resource)
-                fhandler.set_language(storagefile.language)
-
-                try:
-                    fhandler.is_content_valid()
-                    fhandler.parse_file(True)
-                    strings_added, strings_updated = fhandler.save2db(True,
-                        user=request.user)
-                except Exception, e:
-                    transaction.rollback()
-                    return BAD_REQUEST("Resource not created. Could not "
-                        "import file: %s" % e)
-                else:
-                    messages = []
-                    if strings_added > 0:
-                        messages.append(_("%i strings added") % strings_added)
-                    if strings_updated > 0:
-                        messages.append(_("%i strings updated") % strings_updated)
-                retval= {
-                    'strings_added': strings_added,
-                    'strings_updated': strings_updated,
-                    'redirect': reverse('resource_detail',args=[project_slug,
-                        resource.slug])
-                    }
-                logger.debug("Extraction successful, returning: %s" % retval)
-
-                if created:
-                    post_resource_save.send(sender=None, instance=resource,
-                            created=created, user=request.user)
-
-                # transaction has been commited by save2db
-                # but logger message above marks it dirty again
-                transaction.commit()
-
-                return HttpResponse(simplejson.dumps(retval),
-                    mimetype='text/plain')
-
-            else:
-                transaction.rollback()
-                return BAD_REQUEST("Request data missing.")
-        else:
-            transaction.rollback()
-            return BAD_REQUEST("Unsupported request")
-
-    def update(self, request, project_slug, resource_slug, language_code=None, api_version=1):
-        """
-        Update resource translations of a project by the UUID of a StorageFile.
-        """
-        try:
-            project = Project.objects.get(slug=project_slug)
-            resource = Resource.objects.get(slug=resource_slug,
-                project=project)
-        except (Project.DoesNotExist, Resource.DoesNotExist):
-            return rc.NOT_FOUND
-
-        # Permissions handling
-        team = Team.objects.get_or_none(project, language_code)
-        check = ProjectPermission(request.user)
-        if (not check.submit_translations(team or project) or\
-            not resource.accept_translations) and not\
-                check.maintain(project):
-            return rc.FORBIDDEN
-
-        if "application/json" in request.content_type:
-            if "uuid" in request.data:
-                uuid = request.data['uuid']
-                storagefile = StorageFile.objects.get(uuid=uuid)
-                language = storagefile.language
-
-                logger.debug("Going to insert strings from %s (%s) to %s/%s" %
-                    (storagefile.name, storagefile.uuid, project_slug,
-                    resource.slug))
-
-                strings_added, strings_updated = 0, 0
-                fhandler = storagefile.find_parser()
-                language = storagefile.language
-                fhandler.bind_file(filename=storagefile.get_storage_path())
-                fhandler.set_language(language)
-                fhandler.bind_resource(resource)
-                fhandler.is_content_valid()
-
-                try:
-                    fhandler.parse_file()
-                    strings_added, strings_updated = fhandler.save2db(
-                        user=request.user)
-                except Exception, e:
-                    logger.error(e.message, exc_info=True)
-                    return BAD_REQUEST("Error importing file: %s" % e)
-                else:
-                    messages = []
-                    if strings_added > 0:
-                        messages.append(_("%i strings added") % strings_added)
-                    if strings_updated > 0:
-                        messages.append(_("%i strings updated") % strings_updated)
-                retval= {
-                    'strings_added':strings_added,
-                    'strings_updated':strings_updated,
-                    'redirect':reverse('resource_detail',args=[project_slug,
-                        resource.slug])
-                    }
-
-                logger.debug("Extraction successful, returning: %s" % retval)
-
-                # Set StorageFile to 'bound' status, which means that it is
-                # bound to some translation resource
-                storagefile.bound = True
-                storagefile.save()
-
-                # If any string added/updated
-                if retval['strings_added'] > 0 or retval['strings_updated'] > 0:
-                    modified = True
-                else:
-                    modified=False
-                post_submit_translation.send(None, request=request,
-                    resource=resource, language=language, modified=modified)
-
-                return HttpResponse(simplejson.dumps(retval),
-                    mimetype='application/json')
-            else:
-                return BAD_REQUEST("Missing request data.")
-        else:
-            return BAD_REQUEST("Unsupported request")

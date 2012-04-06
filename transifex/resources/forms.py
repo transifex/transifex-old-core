@@ -10,7 +10,7 @@ from transifex.resources.models import Resource
 from transifex.resources.formats.core import ParseError
 from transifex.resources.backends import ResourceBackend, \
         ResourceBackendError, content_from_uploaded_file
-from transifex.storage.models import StorageFile
+
 
 class ResourceForm(forms.ModelForm):
 

@@ -13,7 +13,6 @@ from transifex.projects.api import ProjectHandler, ProjectResourceHandler
 from transifex.resources.api import ResourceHandler, FileHandler, StatsHandler, \
         TranslationHandler, FormatsHandler, TranslationObjectsHandler,\
         SingleTranslationHandler
-from transifex.storage.api import StorageHandler
 from transifex.releases.api import ReleaseHandler
 from transifex.actionlog.api import ActionlogHandler
 from transifex.api.views import reject_legacy_api
@@ -22,7 +21,6 @@ auth = CustomHttpBasicAuthentication(realm='Transifex API')
 
 resource_handler = Resource(ResourceHandler, authentication=auth)
 release_handler = Resource(ReleaseHandler, authentication=auth)
-storage_handler = Resource(StorageHandler, authentication=auth)
 project_handler = Resource(ProjectHandler, authentication=auth)
 projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
 translationfile_handler = Resource(FileHandler, authentication=auth)

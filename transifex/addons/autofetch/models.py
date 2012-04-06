@@ -10,7 +10,6 @@ import os
 import urllib2, urlparse
 from uuid import uuid4
 
-StorageFile = models.get_model("storage", "StorageFile")
 
 class URLInfo(models.Model):
 
