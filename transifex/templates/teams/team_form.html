@@ -35,7 +35,7 @@ $(document).ready(function(){
 {% if team_create %}
 {% blocktrans %}Create team{% endblocktrans %}</span>
 {% else %}
-{% blocktrans with language.name as language_name and language.code as language_code %}{{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup>{% endblocktrans %}</span>
+{% blocktrans with language.name as language_name and language.code as language_code %}Edit {{ language_name }} <sup class="entry_metalink">{{ language_code }}</sup> team{% endblocktrans %}</span>
 {% endif %}
 {% endblock%}
 </h2>
@@ -53,6 +53,8 @@ $(document).ready(function(){
 
 {% block team_menu %}
 {% endblock %}
+
+
 
 {% block content_main %}
 {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translations" %}
@@ -106,10 +108,11 @@ $(document).ready(function(){
     <h3  class="sh-label">{% trans "Delete language-team" %}</h3>
   </div>
     
-  <p style="margin-bottom:1em;">{% trans "Do you wish to delete the team? Translations will not be lost:" %}</p>
-  <p><a class="i16 delete buttonized" href="{% url team_delete project.slug language.code %}">{% trans "Delete language" %}</a>
-  </p>
+  <p style="margin-bottom:1em;">{% trans "Do you wish to delete the team?" %}</p>
   <p class="i16 infomsg">{% blocktrans %}After deleting the team of this language its translations will remain. <br/>The language will be deleted only after deleting the translations of all resources.{% endblocktrans %}</p>
+  <p style="margin-top:2em;"><a class="i16 delete buttonized" href="{% url team_delete project.slug language.code %}">{% trans "Delete language" %}</a>
+  </p>
+
 
   {% endif %}
   {% endif %}
