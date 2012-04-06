@@ -12,7 +12,4 @@
 <p>{% trans "It seems your account has been disabled." %}</p>
 <p>{% trans "It is likely that you have created an account but haven't activated it yet. Please check your e-mail inbox." %}</p>
 <p>{% trans "If you feel that injustice has been done to you, feel free to contact the administrators to find out why." %}</p>
-{% if not viewed_user.userena_signup.activation_key_expired %}
-<p>{% trans "In case you did not receive your account activation email, please click on " %}<a id="resend_activation_link" href="{% url resend_activation_link %}">{% trans "Resend activation link" %}</a></p>
-{% endif %}
 {% endblock %}
