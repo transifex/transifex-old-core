@@ -30,8 +30,8 @@ from transifex.projects.models import Project
 from transifex.simpleauth.forms import RememberMeAuthForm
 from transifex.txcommon.filters import LogEntryFilter
 from transifex.txcommon.log import logger
-from transifex.txcommon.haystack.utils import (support_fulltext_search, 
-    prepare_solr_query_string, fulltext_fuzzy_match_filter, 
+from transifex.txcommon.haystack.utils import (support_fulltext_search,
+    prepare_solr_query_string, fulltext_fuzzy_match_filter,
     fulltext_project_search_filter)
 from transifex.txcommon.feeds import TxNoticeUserFeed
 
@@ -118,7 +118,9 @@ def user_timeline(request, *args, **kwargs):
 
 def profile_public(request, username, template_name='userena/public.html'):
     """User public profile page."""
-    user = get_object_or_404(User, username=username)
+    user = get_object_or_404(
+        User.objects.select_related('profile'), username=username
+    )
     teams_coordinating = user.team_coordinators.public()
     projects_maintaining = Project.objects.maintained_by(user).public()
 
