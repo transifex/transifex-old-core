@@ -9,8 +9,8 @@ from transifex.api.authentication import CustomHttpBasicAuthentication
 #auth = OAuthAuthentication(realm='Transifex API')
 
 from transifex.languages.api import LanguageHandler
-from transifex.projects.api import ProjectHandler, ProjectResourceHandler
-from transifex.resources.api import ResourceHandler, FileHandler, StatsHandler, \
+from transifex.projects.api import ProjectHandler
+from transifex.resources.api import ResourceHandler, StatsHandler, \
         TranslationHandler, FormatsHandler, TranslationObjectsHandler,\
         SingleTranslationHandler
 from transifex.releases.api import ReleaseHandler
@@ -22,8 +22,6 @@ auth = CustomHttpBasicAuthentication(realm='Transifex API')
 resource_handler = Resource(ResourceHandler, authentication=auth)
 release_handler = Resource(ReleaseHandler, authentication=auth)
 project_handler = Resource(ProjectHandler, authentication=auth)
-projectresource_handler = Resource(ProjectResourceHandler, authentication=auth)
-translationfile_handler = Resource(FileHandler, authentication=auth)
 stats_handler = Resource(StatsHandler, authentication=auth)
 translation_handler = Resource(TranslationHandler, authentication=auth)
 actionlog_handler = Resource(ActionlogHandler, authentication=auth)

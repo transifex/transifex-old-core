@@ -112,13 +112,10 @@ class ResourceHandler(BaseHandler):
         """
         # Reset fields to default value
         ResourceHandler.fields = self.default_fields
-        if api_version == 2:
-            if "details" in request.GET:
-                if resource_slug is None:
-                    return rc.NOT_IMPLEMENTED
-                ResourceHandler.fields = ResourceHandler.details_fields
-        else:
-            ResourceHandler.fields = ResourceHandler.apiv1_fields
+        if "details" in request.GET:
+            if resource_slug is None:
+                return rc.NOT_IMPLEMENTED
+            ResourceHandler.fields = ResourceHandler.details_fields
         return self._read(request, project_slug, resource_slug)
 
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
@@ -128,28 +125,25 @@ class ResourceHandler(BaseHandler):
         Create new resource under project `project_slug` via POST
         """
         data = getattr(request, 'data', None)
-        if api_version == 2:
-            if resource_slug is not None:
-                return BAD_REQUEST("POSTing to this url is not allowed.")
-            if data is None:
-                return BAD_REQUEST(
-                    "At least parameters 'slug', 'name', 'i18n_type' "
-                    "and 'source_language' must be specified,"
-                    " as well as the source strings."
-                )
-            try:
-                res = self._create(request, project_slug, data)
-            except BadRequestError, e:
-                return BAD_REQUEST(unicode(e))
-            except NotFoundError, e:
-                return rc.NOT_FOUND
-            t = Translation.get_object("create", request)
-            res = t.__class__.to_http_for_create(t, res)
-            if res.status_code == 200:
-                res.status_code = 201
-            return res
-        else:
-            return self._createv1(request, project_slug, resource_slug, data)
+        if resource_slug is not None:
+            return BAD_REQUEST("POSTing to this url is not allowed.")
+        if data is None:
+            return BAD_REQUEST(
+                "At least parameters 'slug', 'name', 'i18n_type' "
+                "and 'source_language' must be specified,"
+                " as well as the source strings."
+            )
+        try:
+            res = self._create(request, project_slug, data)
+        except BadRequestError, e:
+            return BAD_REQUEST(unicode(e))
+        except NotFoundError, e:
+            return rc.NOT_FOUND
+        t = Translation.get_object("create", request)
+        res = t.__class__.to_http_for_create(t, res)
+        if res.status_code == 200:
+            res.status_code = 201
+        return res
 
     @require_mime('json')
     @method_decorator(one_perm_required_or_403(pr_resource_add_change,
@@ -263,34 +257,6 @@ class ResourceHandler(BaseHandler):
         except ResourceBackendError, e:
             raise BadRequestError(unicode(e))
 
-    @require_mime('json')
-    def _createv1(self, request, project_slug, resource_slug, data):
-        try:
-            project = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist:
-            return rc.NOT_FOUND
-        slang = data.pop('source_language', None)
-        source_language = None
-
-        if not source_language:
-            return BAD_REQUEST("No or wrong source language was specified.")
-
-        try:
-            r, created = Resource.objects.get_or_create(
-                project=project, **data
-            )
-            r.full_clean()
-
-            if created:
-                post_resource_save.send(sender=None, instance=r,
-                        created=created, user=request.user)
-
-        except ValidationError, e:
-            return BAD_REQUEST("Invalid arguments given: %s" % unicode(e))
-        except:
-            return BAD_REQUEST("The json you provided is misformatted.")
-        return rc.CREATED
-
     def _update(self, request, project_slug, resource_slug):
         data = getattr(request, 'data', None)
         if not data:            # Check for {} as well
@@ -385,7 +351,6 @@ class ResourceHandler(BaseHandler):
             msg = "No content or file found"
             logger.warning(msg)
             raise NoContentError(msg)
-
 
 
 class StatsHandler(BaseHandler):
@@ -483,76 +448,6 @@ class StatsHandler(BaseHandler):
                     'reviewed_percentage': '%s%%' % stat.reviewed_perc,
             }
         return res
-
-class FileHandler(BaseHandler):
-    allowed_methods = ('GET', 'DELETE', )
-
-    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
-    @method_decorator(one_perm_required_or_403(pr_project_private_perm,
-        (Project, 'slug__exact', 'project_slug')))
-    def read(self, request, project_slug, resource_slug=None,
-             language_code=None, api_version=1):
-        """
-        API Handler to export translation files from the database
-        """
-        try:
-            resource = Resource.objects.get(
-                project__slug=project_slug, slug=resource_slug
-            )
-            language = Language.objects.by_code_or_alias(code=language_code)
-        except (Resource.DoesNotExist, Language.DoesNotExist), e:
-            return BAD_REQUEST("%s" % e )
-
-        try:
-            fb = FormatsBackend(resource, language)
-            template = fb.compile_translation(None)
-        except Exception, e:
-            logger.error(unicode(e), exc_info=True)
-            return BAD_REQUEST("Error compiling the translation file: %s" %e )
-
-        response = HttpResponse(
-            template, mimetype=registry.mimetypes_for(resource.i18n_method)[0]
-        )
-        response['Content-Disposition'] = (
-            'attachment; filename*="UTF-8\'\'%s_%s%s"' % (
-                urllib.quote(resource.name.encode('UTF-8')), language.code,
-                registry.file_extension_for(resource, language)
-            )
-        )
-
-        return response
-
-    @method_decorator(one_perm_required_or_403(
-            pr_resource_translations_delete,
-            (Project, "slug__exact", "project_slug")))
-    def delete(self, request, project_slug, resource_slug=None,
-               language_code=None, api_version=1):
-        """
-        DELETE requests for translations.
-        """
-        try:
-            resource = Resource.objects.get(
-                slug=resource_slug, project__slug=project_slug
-            )
-        except Resource.DoesNotExist, e:
-            return rc.NOT_FOUND
-
-        # Error message to use in case user asked to
-        # delete the source translation
-        source_error_msg = "You cannot delete the translation in the" \
-                " source language."
-        try:
-            language = Language.objects.by_code_or_alias(language_code)
-        except Language.DoesNotExist:
-            return rc.NOT_FOUND
-        if language == resource.source_language:
-            return BAD_REQUEST(source_error_msg)
-        if language not in resource.available_languages:
-            return rc.NOT_FOUND
-
-        t = Translation.get_object("delete", request, resource, language)
-        t.delete()
-        return rc.DELETED
 
 
 class TranslationBaseHandler(BaseHandler):
