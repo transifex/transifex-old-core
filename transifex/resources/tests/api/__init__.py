@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 import os
+from mock import Mock
+from piston.utils import rc
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
-from django.test import TransactionTestCase
+from django.test import TransactionTestCase, TestCase
 from django.conf import settings
 from django.utils import unittest
 from django.contrib.auth.models import User, Permission
 from transifex.txcommon.tests.base import Users, TransactionNoticeTypes,\
-                            TransactionUsers
+                            TransactionUsers, TransactionBaseTestCase,\
+                            BaseTestCase
 from transifex.txcommon.utils import log_skip_transaction_test
-from transifex.resources.models import Resource, RLStats
-from transifex.resources.api import ResourceHandler
+from transifex.resources.models import Resource, RLStats, SourceEntity
+from transifex.resources.api import ResourceHandler, TranslationObjectsHandler
 from transifex.resources.formats.registry import registry
 from transifex.resources.tests.api.base import APIBaseTests
 from transifex.projects.models import Project
@@ -983,3 +986,358 @@ class TestFormatsAPI(APIBaseTests):
         self.assertEqual(res.status_code, 200)
         json = simplejson.loads(res.content)
         self.assertEqual(registry.available_methods, json)
+
+
+class UnitTestTranslationObjectsHandler(TestCase):
+    def setUp(self):
+        self.obj = TranslationObjectsHandler()
+    def test_fieldmap_and_fields(self):
+        request = Mock()
+        request.GET = {}
+        expected_fieldmap = {
+            'source_entity__id': 'source_entity_id',
+            'source_entity__string': 'key',
+            'source_entity__context': 'context',
+            'string': 'translation',
+        }
+        expected_fields = [
+            'source_entity__id', 'source_entity__string',
+            'source_entity__context', 'string',
+            'source_entity__pluralized',
+            'rule',
+        ]
+        fieldmap, fields = self.obj._get_fieldmap_and_fields(request)
+        self.assertEqual(fieldmap, expected_fieldmap)
+        self.assertEqual(fields, expected_fields)
+
+        request.GET['details'] = ''
+        expected_fieldmap.update({
+            'reviewed': 'reviewed',
+            'wordcount': 'wordcount',
+            'last_update': 'last_update',
+            'user__username': 'user',
+            'source_entity__position': 'position',
+            'source_entity__occurrences': 'occurrences',
+            'source_entity__pluralized': 'pluralized'
+        })
+
+        expected_fields.extend([
+            'reviewed', 'wordcount', 'last_update', 'user__username',
+            'source_entity__position', 'source_entity__occurrences',
+        ])
+
+        fieldmap, fields = self.obj._get_fieldmap_and_fields(request)
+        self.assertEqual(fieldmap, expected_fieldmap)
+        self.assertEqual(fields, expected_fields)
+
+    def test_get_filters(self):
+        request = Mock()
+        resource = Mock()
+        language = Mock()
+        request.GET = {}
+        filters = self.obj._get_filters(request, resource, language)
+        expected_filters = {'resource': resource, 'language':language}
+        self.assertEqual(filters, expected_filters)
+
+        request.GET['key'] = 'foo'
+        filters = self.obj._get_filters(request, resource, language)
+        expected_filters['source_entity__string__contains'] = 'foo'
+        self.assertEqual(filters, expected_filters)
+
+        request.GET['context'] = 'bar'
+        filters = self.obj._get_filters(request, resource, language)
+        expected_filters['source_entity__context__contains'] = 'bar'
+        self.assertEqual(filters, expected_filters)
+
+    def test_check_data(self):
+        self.assertTrue(self.obj._check_data(None))
+        self.assertTrue(self.obj._check_data({}))
+        self.assertTrue(self.obj._check_data(""))
+        self.assertFalse(self.obj._check_data([{}]))
+
+    def test_check_user_perms(self):
+        self.assertFalse(self.obj._check_user_perms(
+                can_submit_translations=False
+            ))
+        translation_objs = [Mock()]
+        translation_objs[0].reviewed = False
+        self.assertFalse(self.obj._check_user_perms(
+                can_submit_translations=True,
+            ))
+        self.assertFalse(self.obj._check_user_perms(
+                accept_translations=True,
+            ))
+        self.assertFalse(self.obj._check_user_perms(
+                is_maintainer=True,
+            ))
+
+        self.assertFalse(self.obj._check_user_perms(
+                can_submit_translations=True,
+                accept_translations=True,
+            ))
+
+        self.assertTrue(self.obj._check_user_perms(
+                can_submit_translations=True,
+                accept_translations=True,
+                translation_objs=translation_objs
+            ))
+
+        self.assertTrue(self.obj._check_user_perms(
+                is_maintainer=True,
+                translation_objs=translation_objs
+            ))
+
+        translation_objs[0].reviewed = True
+        self.assertFalse(self.obj._check_user_perms(
+                can_submit_translations=True,
+                accept_translations=True,
+                translation_objs=translation_objs
+            )    
+        )
+        self.assertTrue(self.obj._check_user_perms(
+                can_submit_translations=True,
+                accept_translations=True,
+                can_review=True,
+                translation_objs=translation_objs
+            )    
+        )
+
+    def test_collect_updated_translations(self):
+        t1 = Mock()
+        t1.rule = 5
+        t1.reviewed = True
+        user = Mock()
+        translation = {'translation': 'foo', 'reviewed': False}
+
+        se_id = 1
+        trans_obj_dict = {se_id: [t1]}
+        updated_translations = []
+        pluralized = False
+        self.obj._collect_updated_translations(translation, trans_obj_dict,
+                se_id, updated_translations, user, pluralized)
+        self.assertTrue(t1 in updated_translations)
+        self.assertEqual(t1.user, user)
+        self.assertEqual(t1.reviewed, False)
+        self.assertEqual(t1.string, 'foo')
+
+        t2 = Mock()
+        t2.rule = 1
+        t2.reviewed = False
+        translation = {'translation':{'1':'foo1', '5':'foo5'}}
+        updated_translations = []
+        trans_obj_dict[se_id].append(t2)
+        pluralized = True
+        self.obj._collect_updated_translations(translation, trans_obj_dict,
+                se_id, updated_translations, user, pluralized)
+        self.assertTrue(t1 in updated_translations)
+        self.assertTrue(t2 in updated_translations)
+        self.assertEqual(t2.user, user)
+        self.assertEqual(t2.reviewed, False)
+        self.assertEqual(t2.string, 'foo1')
+        self.assertEqual(t1.string, 'foo5')
+
+    def test_check_plural_forms(self):
+        translation = {'translation': {1: 'one', 5: 'other'}}
+        nplurals = [1, 5]
+        self.assertEqual(self.obj._check_plural_forms(translation,
+            nplurals), {'pluralized': True, 'error':False})
+        translation = {'translation': {0: 'zero', 1: 'one', 5: 'other'}}
+        nplurals = [1, 5]
+        self.assertEqual(self.obj._check_plural_forms(translation,
+            nplurals), {'pluralized': True, 'error':True})
+        translation = {'translation': {1: 'one', 5: 'other'}}
+        nplurals = [0, 1, 5]
+        self.assertEqual(self.obj._check_plural_forms(translation,
+            nplurals), {'pluralized': True, 'error':True})
+        translation = {'translation': '   '}
+        nplurals = [1, 5]
+        self.assertEqual(self.obj._check_plural_forms(translation,
+            nplurals), {'pluralized': False, 'error':True})
+        translation = {'translation': 'foo'}
+        self.assertEqual(self.obj._check_plural_forms(translation,
+            nplurals), {'pluralized': False, 'error':False})
+
+    def test_get_update_fieldmap_and_fields(self):
+        keys = ['source_entity_id', 'key', 'context', 'user']
+        field_map, fields = self.obj._get_update_fieldmap_and_fields(keys)
+        self.assertEqual(field_map, {
+                'source_entity__id': 'source_entity_id',
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'user__username': 'user'
+            }
+        )
+        expected_fields = field_map.keys()
+        expected_fields.extend(['source_entity__pluralized', 'rule'])
+        expected_fields.sort()
+        fields.sort()
+        self.assertEqual(fields, expected_fields)
+
+
+
+class SystemTestTranslationStrings(BaseTestCase):
+    def test_check_read_perms(self):
+        obj = TranslationObjectsHandler()
+        value = obj._check_read_perms('foo', 'resource1', 'foo')
+        self.assertEqual(value.status_code, 404)
+        value = obj._check_read_perms('project1', 'foo', 'foo')
+        self.assertEqual(value.status_code, 404)
+        value = obj._check_read_perms('project1', 'resource1', 'foo')
+        self.assertEqual(value.status_code, 404)
+        value = obj._check_read_perms('project1', 'resource1', 'ar')
+        self.assertEqual(value, (self.project, self.resource, self.language_ar))
+
+    def test_check_update_perms(self):
+        obj = TranslationObjectsHandler()
+        value = obj._check_update_perms('project1', 'resource1', 'ar')
+        self.assertEqual(value, (self.project, self.resource, self.language_ar))
+        value = obj._check_update_perms('project1', 'resource1', 'en_US')
+        self.assertEqual(value.status_code, 401)
+
+    def test_read_translations(self):
+        response = self.client['team_member'].get(reverse(
+            'translation_strings',
+            args=['project1', 'resource1', self.language_ar.code]))
+        self.assertEqual(response.status_code, 200)
+
+
+
+class SystemTestPutTranslationStrings(TransactionBaseTestCase):
+    """Test updating translation strings"""
+    def _setUp_test_put_translations(self):
+        """Create some source strings and translations"""
+        self.entity = self.resource.entities[0]
+
+        self.source_entity1 = SourceEntity.objects.create(string='String2',
+            context='Context2', occurrences='Occurrences2',
+            resource=self.resource)
+        self.source_entity2 = SourceEntity.objects.create(string='String3',
+            context='Context3', occurrences='Occurrences3',
+            resource=self.resource)
+        self.source_entity3 = SourceEntity.objects.create(string='String4',
+            context='Context4', occurrences='Occurrences4',
+            resource=self.resource)
+        self.source_entity4 = SourceEntity.objects.create(string='String5',
+            context='context5',occurrences='Occurreneces5',
+            resource=self.resource)
+
+        # Set some custom translation data
+        # Source strings
+        self.source_string1 = self.source_entity1.translations.create(
+            string="String2",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
+
+        self.source_string2 = self.source_entity2.translations.create(
+            string="String3",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
+
+        self.source_string3 = self.source_entity3.translations.create(
+            string="String4",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
+
+        self.source_string4 = self.source_entity4.translations.create(
+            string="String with arguments: %s %d",
+            language = self.language_en,
+            user=self.user['maintainer'], rule=5,
+            resource=self.resource
+        )
+
+        self.source_string_plural1 = \
+                self.source_entity_plural.translations.create(
+            string="SourceArabicTrans1",
+            language=self.language_en,
+            user=self.user["maintainer"], rule=1,
+            resource=self.resource
+        )
+        self.source_string_plural2 = \
+                self.source_entity_plural.translations.create(
+            string="SourceArabicTrans2",
+            language=self.language_en,
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
+        # Translation strings
+        self.source_entity1.translations.create(
+            string="ArabicString2", language=self.language_ar,
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
+        self.source_entity2.translations.create(
+            string="", language=self.language_ar,
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
+
+        self.source_entity_plural.translations.create(
+            string="ArabicTrans0", language=self.language_ar,
+            user=self.user["maintainer"], rule=0,
+            resource=self.resource
+        )
+        self.source_entity_plural.translations.create(
+            string="ArabicTrans1", language=self.language_ar,
+            user=self.user["maintainer"], rule=1,
+            resource=self.resource
+        )
+        self.source_entity_plural.translations.create(
+            string="ArabicTrans2", language=self.language_ar,
+            user=self.user["maintainer"], rule=2,
+            resource=self.resource
+        )
+        self.source_entity_plural.translations.create(
+            string="ArabicTrans3", language=self.language_ar,
+            user=self.user["maintainer"], rule=3,
+            resource=self.resource
+        )
+        self.source_entity_plural.translations.create(
+            string="ArabicTrans4", language=self.language_ar,
+            user=self.user["maintainer"], rule=4,
+            resource=self.resource
+        )
+        self.source_entity_plural.translations.create(
+            string="ArabicTrans5", language=self.language_ar,
+            user=self.user["maintainer"], rule=5,
+            resource=self.resource
+        )
+
+    def test_put_translations(self):
+        """test updating translation strings"""
+        self._setUp_test_put_translations()
+        response = self.client['team_member'].get(reverse(
+            'translation_strings',
+            args=['project1', 'resource1', self.language_ar.code]))
+        self.assertEqual(response.status_code, 200)
+        json = simplejson.loads(response.content)
+        for index, item in enumerate(json):
+            if item['source_entity_id'] == 3:
+                item['translation'] = {'0': '0', '1': '1', '2': '2', '3': '3',
+                        '4': '4', '5': '5'}
+                json[index] = item
+            if item['source_entity_id'] == 5:
+                item['translation'] = '       '
+                json[index] = item
+
+        response = self.client['maintainer'].put(reverse(
+            'translation_strings',
+            args=['project1', 'resource1', self.language_ar.code]),
+            data = simplejson.dumps(json),
+            content_type="application/json")
+
+        expected_json = []
+        for item in json:
+            if item['source_entity_id'] in [3, 1]:
+                expected_json.append(item)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(simplejson.loads(response.content), expected_json)
+        self.assertTrue(self.source_entity1.translations.get(
+            string="ArabicString2"))
+
