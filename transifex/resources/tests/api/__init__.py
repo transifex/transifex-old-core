@@ -15,6 +15,7 @@ from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import Resource, RLStats, SourceEntity
 from transifex.resources.api import ResourceHandler, TranslationObjectsHandler
 from transifex.resources.formats.registry import registry
+from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.tests.api.base import APIBaseTests
 from transifex.projects.models import Project
 from transifex.languages.models import Language
@@ -1201,112 +1202,11 @@ class SystemTestTranslationStrings(BaseTestCase):
         self.assertEqual(response.status_code, 200)
 
 
-
 class SystemTestPutTranslationStrings(TransactionBaseTestCase):
     """Test updating translation strings"""
     def _setUp_test_put_translations(self):
         """Create some source strings and translations"""
-        self.entity = self.resource.entities[0]
-
-        self.source_entity1 = SourceEntity.objects.create(string='String2',
-            context='Context2', occurrences='Occurrences2',
-            resource=self.resource)
-        self.source_entity2 = SourceEntity.objects.create(string='String3',
-            context='Context3', occurrences='Occurrences3',
-            resource=self.resource)
-        self.source_entity3 = SourceEntity.objects.create(string='String4',
-            context='Context4', occurrences='Occurrences4',
-            resource=self.resource)
-        self.source_entity4 = SourceEntity.objects.create(string='String5',
-            context='context5',occurrences='Occurreneces5',
-            resource=self.resource)
-
-        # Set some custom translation data
-        # Source strings
-        self.source_string1 = self.source_entity1.translations.create(
-            string="String2",
-            language = self.language_en,
-            user=self.user['maintainer'], rule=5,
-            resource=self.resource
-        )
-
-        self.source_string2 = self.source_entity2.translations.create(
-            string="String3",
-            language = self.language_en,
-            user=self.user['maintainer'], rule=5,
-            resource=self.resource
-        )
-
-        self.source_string3 = self.source_entity3.translations.create(
-            string="String4",
-            language = self.language_en,
-            user=self.user['maintainer'], rule=5,
-            resource=self.resource
-        )
-
-        self.source_string4 = self.source_entity4.translations.create(
-            string="String with arguments: %s %d",
-            language = self.language_en,
-            user=self.user['maintainer'], rule=5,
-            resource=self.resource
-        )
-
-        self.source_string_plural1 = \
-                self.source_entity_plural.translations.create(
-            string="SourceArabicTrans1",
-            language=self.language_en,
-            user=self.user["maintainer"], rule=1,
-            resource=self.resource
-        )
-        self.source_string_plural2 = \
-                self.source_entity_plural.translations.create(
-            string="SourceArabicTrans2",
-            language=self.language_en,
-            user=self.user["maintainer"], rule=5,
-            resource=self.resource
-        )
-        # Translation strings
-        self.source_entity1.translations.create(
-            string="ArabicString2", language=self.language_ar,
-            user=self.user["maintainer"], rule=5,
-            resource=self.resource
-        )
-        self.source_entity2.translations.create(
-            string="", language=self.language_ar,
-            user=self.user["maintainer"], rule=5,
-            resource=self.resource
-        )
-
-        self.source_entity_plural.translations.create(
-            string="ArabicTrans0", language=self.language_ar,
-            user=self.user["maintainer"], rule=0,
-            resource=self.resource
-        )
-        self.source_entity_plural.translations.create(
-            string="ArabicTrans1", language=self.language_ar,
-            user=self.user["maintainer"], rule=1,
-            resource=self.resource
-        )
-        self.source_entity_plural.translations.create(
-            string="ArabicTrans2", language=self.language_ar,
-            user=self.user["maintainer"], rule=2,
-            resource=self.resource
-        )
-        self.source_entity_plural.translations.create(
-            string="ArabicTrans3", language=self.language_ar,
-            user=self.user["maintainer"], rule=3,
-            resource=self.resource
-        )
-        self.source_entity_plural.translations.create(
-            string="ArabicTrans4", language=self.language_ar,
-            user=self.user["maintainer"], rule=4,
-            resource=self.resource
-        )
-        self.source_entity_plural.translations.create(
-            string="ArabicTrans5", language=self.language_ar,
-            user=self.user["maintainer"], rule=5,
-            resource=self.resource
-        )
+        self = create_sample_translations(self)
 
     def test_put_translations(self):
         """test updating translation strings"""
@@ -1341,3 +1241,178 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
         self.assertTrue(self.source_entity1.translations.get(
             string="ArabicString2"))
 
+
+def create_sample_translations(cls):
+    self = cls
+    self.entity = self.resource.entities[0]
+
+    self.source_entity1 = SourceEntity.objects.create(string='String2',
+        context='Context2', occurrences='Occurrences2',
+        resource=self.resource)
+    self.source_entity2 = SourceEntity.objects.create(string='String3',
+        context='Context3', occurrences='Occurrences3',
+        resource=self.resource)
+    self.source_entity3 = SourceEntity.objects.create(string='String4',
+        context='Context4', occurrences='Occurrences4',
+        resource=self.resource)
+    self.source_entity4 = SourceEntity.objects.create(string='String5',
+        context='context5',occurrences='Occurreneces5',
+        resource=self.resource)
+
+    for se in SourceEntity.objects.all():
+        se.string_hash = hash_tag(se.string, se.context or '')
+        se.save()
+
+    # Set some custom translation data
+    # Source strings
+    self.source_string1 = self.source_entity1.translations.create(
+        string="String2",
+        language = self.language_en,
+        user=self.user['maintainer'], rule=5,
+        resource=self.resource
+    )
+
+    self.source_string2 = self.source_entity2.translations.create(
+        string="String3",
+        language = self.language_en,
+        user=self.user['maintainer'], rule=5,
+        resource=self.resource
+    )
+
+    self.source_string3 = self.source_entity3.translations.create(
+        string="String4",
+        language = self.language_en,
+        user=self.user['maintainer'], rule=5,
+        resource=self.resource
+    )
+
+    self.source_string4 = self.source_entity4.translations.create(
+        string="String with arguments: %s %d",
+        language = self.language_en,
+        user=self.user['maintainer'], rule=5,
+        resource=self.resource
+    )
+
+    self.source_string_plural1 = \
+            self.source_entity_plural.translations.create(
+        string="SourceArabicTrans1",
+        language=self.language_en,
+        user=self.user["maintainer"], rule=1,
+        resource=self.resource
+    )
+    self.source_string_plural2 = \
+            self.source_entity_plural.translations.create(
+        string="SourceArabicTrans2",
+        language=self.language_en,
+        user=self.user["maintainer"], rule=5,
+        resource=self.resource
+    )
+    # Translation strings
+    self.source_entity1.translations.create(
+        string="ArabicString2", language=self.language_ar,
+        user=self.user["maintainer"], rule=5,
+        resource=self.resource
+    )
+    self.source_entity2.translations.create(
+        string="", language=self.language_ar,
+        user=self.user["maintainer"], rule=5,
+        resource=self.resource
+    )
+
+    self.source_entity_plural.translations.create(
+        string="ArabicTrans0", language=self.language_ar,
+        user=self.user["maintainer"], rule=0,
+        resource=self.resource
+    )
+    self.source_entity_plural.translations.create(
+        string="ArabicTrans1", language=self.language_ar,
+        user=self.user["maintainer"], rule=1,
+        resource=self.resource
+    )
+    self.source_entity_plural.translations.create(
+        string="ArabicTrans2", language=self.language_ar,
+        user=self.user["maintainer"], rule=2,
+        resource=self.resource
+    )
+    self.source_entity_plural.translations.create(
+        string="ArabicTrans3", language=self.language_ar,
+        user=self.user["maintainer"], rule=3,
+        resource=self.resource
+    )
+    self.source_entity_plural.translations.create(
+        string="ArabicTrans4", language=self.language_ar,
+        user=self.user["maintainer"], rule=4,
+        resource=self.resource
+    )
+    self.source_entity_plural.translations.create(
+        string="ArabicTrans5", language=self.language_ar,
+        user=self.user["maintainer"], rule=5,
+        resource=self.resource
+    )
+    return self
+
+
+class SystemTestSingleTranslationHandler(BaseTestCase):
+    def setUp(self):
+        """Create some source strings and translations"""
+        super(SystemTestSingleTranslationHandler, self).setUp()
+        self = create_sample_translations(self)
+
+    def test_single_translation_handler(self):
+        #read
+        string_hash = self.source_entity1.string_hash
+        response = self.client['team_member'].get(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),)
+
+        self.assertEqual(response.status_code, 200)
+        json = simplejson.loads(response.content)
+        self.assertEqual(json['translation'], self.source_entity1.translations.\
+                get(language=self.language_ar).string)
+
+        #update
+        json['translation'] = 'Hello world'
+        json['reviewed'] = True
+        response = self.client['team_member'].put(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 401)
+        json['reviewed'] = True
+        response = self.client['maintainer'].put(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(simplejson.loads(response.content)['translation'],
+                'Hello world')
+
+        string_hash = self.source_entity_plural.string_hash
+        response = self.client['team_member'].get(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),)
+
+        self.assertEqual(response.status_code, 200)
+        json = simplejson.loads(response.content)
+        expected_translations = {}
+        for translation in self.source_entity_plural.translations.filter(
+                language=self.language_ar):
+            expected_translations[str(translation.rule)] = translation.string
+        self.assertEqual(json['translation'], expected_translations)
+
+        json['translation']['0'] = 'foo'
+        response = self.client['maintainer'].put(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(simplejson.loads(response.content)['translation'],
+                json['translation'])
+        self.assertEqual(self.source_entity_plural.translations.get(
+            rule=0).string, json['translation']['0'])

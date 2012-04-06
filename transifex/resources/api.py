@@ -555,158 +555,6 @@ class FileHandler(BaseHandler):
         return rc.DELETED
 
 
-class SingleTranslationHandler(BaseHandler):
-    """Read and update a single translation"""
-    allowed_methods = ('GET', 'PUT')
-
-    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
-    @method_decorator(one_perm_required_or_403(
-            pr_project_private_perm,
-            (Project, 'slug__exact', 'project_slug')
-    ))
-    def read(self, request, project_slug, resource_slug,
-            language_code, source_hash, api_version=2):
-        try:
-            project = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            resource = Resource.objects.get(slug=resource_slug,
-                    project=project)
-        except Resource.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            source_entity = SourceEntity.objects.get(string_hash=source_hash,
-                    resource=resource)
-        except SourceEntity.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            language = Language.objects.by_code_or_alias(language_code)
-        except Language.DoesNotExist, e:
-            return rc.NOT_FOUND
-
-        translations = TranslationModel.objects.filter(
-                source_entity=source_entity, language=language)
-
-        if not translations:
-            return rc.NOT_FOUND
-
-        field_map = {
-                'source_entity__id': 'source_entity_id',
-                'source_entity__string': 'key',
-                'source_entity__context': 'context',
-                'string': 'translation',
-                'reviewed': 'reviewed',
-                'wordcount': 'wordcount',
-                'last_update': 'last_update',
-                'user__username': 'user',
-                'source_entity__position': 'position',
-                'source_entity__occurrences': 'occurrences',
-                'source_entity__pluralized': 'pluralized'
-        }
-
-        fields = field_map.keys()
-
-        return _generate_translations_dict(
-                translations.values(*fields),
-                field_map, True)
-
-    @require_mime('json')
-    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
-    @method_decorator(one_perm_required_or_403(
-            pr_project_private_perm,
-            (Project, 'slug__exact', 'project_slug')
-    ))
-    def update(self, request, project_slug, resource_slug,
-            language_code, source_hash, api_version=2):
-        try:
-            project = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            resource = Resource.objects.get(slug=resource_slug,
-                    project=project)
-        except Resource.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            source_entity = SourceEntity.objects.get(string_hash=source_hash,
-                    resource=resource)
-        except SourceEntity.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            language = Language.objects.by_code_or_alias(language_code)
-        except Language.DoesNotExist, e:
-            return rc.NOT_FOUND
-
-        if language == source_entity.resource.source_language:
-            return rc.FORBIDDEN
-        data = request.data
-        user = data.get('user') and User.objects.get(username=data.get(
-            'user')) or request.user
-
-        team = Team.objects.get_or_none(project, language.code)
-        check = ProjectPermission(user)
-        if (not check.submit_translations(team or resource.project) or\
-            not resource.accept_translations) and not\
-                check.maintain(resource.project):
-            return rc.FORBIDDEN
-
-        translations = TranslationModel.objects.filter(
-                source_entity=source_entity, language=language)
-
-        if not translations:
-            return rc.NOT_FOUND
-
-        reviewed = translations[0].reviewed
-
-        update_fields = {}
-        if check.proofread(project, language):
-            if data.get('reviewed') != None:
-                update_fields['reviewed'] = data.get('reviewed')
-        else:
-            if reviewed:
-                return rc.FORBIDDEN
-
-        translation_strings = data.get('translation')
-
-        update_fields['user'] = user
-
-        if not source_entity.pluralized:
-            update_fields['string']=translation_strings
-            translations.filter(rule=5).update(**update_fields)
-        else:
-            nplurals = language.get_pluralrules_numbers()
-            for rule in translation_strings.keys():
-                if not translation_strings.get(rule, '').strip():
-                    translation_strings.pop(rule)
-            plural_forms = translation_strings.keys()
-            plural_forms.sort()
-            if nplurals != plural_forms:
-                return rc.BAD_REQUEST
-            for rule in translation_strings.keys():
-                update_fields['string'] = translation_strings[rule]
-                translations.filter(rule=rule).update(**update_fields)
-
-        field_map = {
-                'source_entity__id': 'source_entity_id',
-                'source_entity__string': 'key',
-                'source_entity__context': 'context',
-                'string': 'translation',
-                'reviewed': 'reviewed',
-                'wordcount': 'wordcount',
-                'last_update': 'last_update',
-                'user__username': 'user',
-                'source_entity__position': 'position',
-                'source_entity__occurrences': 'occurrences',
-                'source_entity__pluralized': 'pluralized'
-        }
-
-        fields = field_map.keys()
-
-        return _generate_translations_dict(
-                translations.values(*fields),
-                field_map, True)
-
 class TranslationBaseHandler(BaseHandler):
     allowed_methods = ('GET', 'PUT')
     def _generate_translations_dict(self, translations, field_map={},
@@ -721,7 +569,7 @@ class TranslationBaseHandler(BaseHandler):
             pluralized = False
             index = -1
             if translation.get('source_entity__pluralized'):
-                if buf.get(translation.get('source_entity__id')):
+                if buf.get(translation.get('source_entity__id')) != None:
                     index = buf.get(translation.get('source_entity__id'))
                     d = result[index]
                     append = False
@@ -757,14 +605,6 @@ class TranslationBaseHandler(BaseHandler):
             else:
                 result = ""
         return result
-
-
-class TranslationObjectsHandler(TranslationBaseHandler):
-    """
-    Read and update a set of translations in
-    a language for a resource.
-    """
-    allowed_methods = ('GET', 'PUT')
 
     def _get_fieldmap_and_fields(self, request):
         fields = [
@@ -948,6 +788,174 @@ class TranslationObjectsHandler(TranslationBaseHandler):
             fields.append('rule')
 
         return (field_map_, fields)
+
+
+class SingleTranslationHandler(TranslationBaseHandler):
+    """Read and update a single translation"""
+    allowed_methods = ('GET', 'PUT')
+
+    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
+    @method_decorator(one_perm_required_or_403(
+            pr_project_private_perm,
+            (Project, 'slug__exact', 'project_slug')
+    ))
+    def read(self, request, project_slug, resource_slug,
+            language_code, source_hash, api_version=2):
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            resource = Resource.objects.get(slug=resource_slug,
+                    project=project)
+        except Resource.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            source_entity = SourceEntity.objects.get(string_hash=source_hash,
+                    resource=resource)
+        except SourceEntity.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            language = Language.objects.by_code_or_alias(language_code)
+        except Language.DoesNotExist, e:
+            return rc.NOT_FOUND
+
+        translations = TranslationModel.objects.filter(
+                source_entity=source_entity, language=language)
+
+        if not translations:
+            return rc.NOT_FOUND
+
+        field_map = {
+                'source_entity__id': 'source_entity_id',
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+                'source_entity__pluralized': 'pluralized'
+        }
+
+        fields = field_map.keys()
+        fields.append('rule')
+
+        return self._generate_translations_dict(
+                translations.values(*fields),
+                field_map, True)
+
+    @require_mime('json')
+    @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
+    @method_decorator(one_perm_required_or_403(
+            pr_project_private_perm,
+            (Project, 'slug__exact', 'project_slug')
+    ))
+    def update(self, request, project_slug, resource_slug,
+            language_code, source_hash, api_version=2):
+        try:
+            project = Project.objects.get(slug=project_slug)
+        except Project.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            resource = Resource.objects.get(slug=resource_slug,
+                    project=project)
+        except Resource.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            source_entity = SourceEntity.objects.get(string_hash=source_hash,
+                    resource=resource)
+        except SourceEntity.DoesNotExist, e:
+            return rc.NOT_FOUND
+        try:
+            language = Language.objects.by_code_or_alias(language_code)
+        except Language.DoesNotExist, e:
+            return rc.NOT_FOUND
+
+        if language == source_entity.resource.source_language:
+            return rc.FORBIDDEN
+        data = request.data
+        user = data.get('user') and User.objects.get(username=data.get(
+            'user')) or request.user
+
+        team = Team.objects.get_or_none(project, language.code)
+        if request.user not in project.maintainers.all() and not (team\
+                and request.user in team.coordinators.all()):
+            return rc.FORBIDDEN
+
+        check = ProjectPermission(user)
+        if (not check.submit_translations(team or resource.project) or\
+            not resource.accept_translations) and not\
+                check.maintain(resource.project):
+            return rc.FORBIDDEN
+
+        translations = TranslationModel.objects.filter(
+                source_entity=source_entity, language=language)
+
+        if not translations:
+            return rc.NOT_FOUND
+
+        reviewed = translations[0].reviewed
+
+        update_fields = {}
+        if check.proofread(project, language):
+            if data.get('reviewed') != None:
+                update_fields['reviewed'] = data.get('reviewed')
+        else:
+            if reviewed:
+                return rc.FORBIDDEN
+
+        translation_strings = data.get('translation')
+
+        update_fields['user'] = user
+
+        if not source_entity.pluralized:
+            update_fields['string']=translation_strings
+            translations.filter(rule=5).update(**update_fields)
+        else:
+            nplurals = language.get_pluralrules_numbers()
+            for rule in translation_strings.keys():
+                if not translation_strings.get(rule, '').strip():
+                    translation_strings.pop(rule)
+            plural_forms = translation_strings.keys()
+            plural_forms = [int(r) for r in plural_forms]
+            plural_forms.sort()
+            if nplurals != plural_forms:
+                return rc.BAD_REQUEST
+            for rule in translation_strings.keys():
+                update_fields['string'] = translation_strings[rule]
+                translations.filter(rule=rule).update(**update_fields)
+
+        field_map = {
+                'source_entity__id': 'source_entity_id',
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+                'source_entity__pluralized': 'pluralized'
+        }
+
+        fields = field_map.keys()
+        fields.append('rule')
+
+        return self._generate_translations_dict(
+                translations.values(*fields),
+                field_map, True)
+
+
+class TranslationObjectsHandler(TranslationBaseHandler):
+    """
+    Read and update a set of translations in
+    a language for a resource.
+    """
+    allowed_methods = ('GET', 'PUT')
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
