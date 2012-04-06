@@ -1093,14 +1093,14 @@ class UnitTestTranslationObjectsHandler(TestCase):
                 can_submit_translations=True,
                 accept_translations=True,
                 translation_objs=translation_objs
-            )    
+            )
         )
         self.assertTrue(self.obj._check_user_perms(
                 can_submit_translations=True,
                 accept_translations=True,
                 can_review=True,
                 translation_objs=translation_objs
-            )    
+            )
         )
 
     def test_collect_updated_translations(self):
@@ -1173,7 +1173,6 @@ class UnitTestTranslationObjectsHandler(TestCase):
         expected_fields.sort()
         fields.sort()
         self.assertEqual(fields, expected_fields)
-
 
 
 class SystemTestTranslationStrings(BaseTestCase):
@@ -1372,7 +1371,6 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
 
         #update
         json['translation'] = 'Hello world'
-        json['reviewed'] = True
         response = self.client['team_member'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
                 string_hash]),
@@ -1380,6 +1378,23 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             content_type="application/json"
         )
         self.assertEqual(response.status_code, 401)
+        response = self.client['team_coordinator'].put(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 401)
+        json['user'] = 'team_member'
+        response = self.client['maintainer'].put(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 401)
+        self.team.language=self.language_ar
+        self.team.save()
         json['reviewed'] = True
         response = self.client['maintainer'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
@@ -1390,6 +1405,30 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(simplejson.loads(response.content)['translation'],
                 'Hello world')
+        self.assertEqual(simplejson.loads(response.content)['reviewed'],
+                False)
+        json['user'] = 'team_coordinator'
+        response = self.client['team_coordinator'].put(reverse(
+            'translation_string', args=[self.project.slug,
+                self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(simplejson.loads(response.content)['translation'],
+                'Hello world')
+        self.assertEqual(simplejson.loads(response.content)['reviewed'],
+                True)
+        json['user'] = 'team_member'
+        response = self.client['team_coordinator'].put(reverse(
+            'translation_string', args=[self.project.slug,
+                self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps(json),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 401)
 
         string_hash = self.source_entity_plural.string_hash
         response = self.client['team_member'].get(reverse('translation_string',
@@ -1405,6 +1444,9 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
         self.assertEqual(json['translation'], expected_translations)
 
         json['translation']['0'] = 'foo'
+        json['reviewed'] = False
+        self.source_entity_plural.translations.filter(language=self.language_ar
+                ).update(reviewed=True)
         response = self.client['maintainer'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
                 string_hash]),
@@ -1416,3 +1458,25 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
                 json['translation'])
         self.assertEqual(self.source_entity_plural.translations.get(
             rule=0).string, json['translation']['0'])
+        self.assertFalse(self.source_entity_plural.translations.filter(
+            language=self.language_ar)[0].reviewed)
+
+        source_entity = self.resource.source_entities.create(
+                string="FOO", context="None",
+                string_hash = hash_tag("FOO", "None"))
+        string_hash = source_entity.string_hash
+        response = self.client['team_member'].get(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),)
+
+        self.assertEqual(response.status_code, 404)
+        response = self.client['maintainer'].put(reverse('translation_string',
+            args=[self.project.slug, self.resource.slug, self.language_ar.code,
+                string_hash]),
+            data=simplejson.dumps({
+                'translation': 'foo bar'
+            }),
+            content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 404)
+
