@@ -37,15 +37,22 @@ class MozillaPropertiesHandler(PropertiesHandler):
     CompilerClass = PropertiesCompiler
 
     def _escape(self, s):
-        """
-        Escape special characters in Mozilla properties files.
+        return (s.replace('\\', r'\\')
+                 .replace('\n', r'\n')
+                 .replace('\r', r'\r')
+                 .replace('\t', r'\t')
+        )
 
-        Java escapes the '=' and ':' in the value
-        string with backslashes in the store method.
-        Mozilla escapes only '\\'.
-        """
-        return s.replace('\\', '\\\\')
+    def _unescape(self, s):
+        return (s.replace(r'\n', '\n')
+                 .replace(r'\r', '\r')
+                 .replace(r'\t', '\t')
+                 .replace(r'\\', '\\')
+        )
 
-    def _unescape(self, value):
-        """Reverse the escape of special characters."""
-        return value.replace('\\\\', '\\')
+    def _visit_value(self, value):
+        if value:
+            return re.sub(r'\\[uU]([0-9A-Fa-f]{4})',
+                    lambda m: unichr(int(m.group(1), 16)), value)
+        else:
+            return value
