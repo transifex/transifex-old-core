@@ -36,7 +36,7 @@
 
   <!-- Userbars are not so important so put them into the end -->
   <div class="details">
-  
+
   <div class="separate-header clearfix">
   	<h3  class="sh-label">{% blocktrans %}Userbars{% endblocktrans %}</h3>
 	</div>
@@ -76,15 +76,20 @@
     };
 
     $(document).ready(function (){
+        var filenames = ["{% static "widgets/images/transifex-userbar.png" %}", "{% static "widgets/images/transifex-userbar-2.png" %}"]
 
         $("#userbar-menu").change(function(){
-            snippet = $("#userbar-snippet");
-            filename = $("#userbar-menu option:selected").val();
-            if (filename == "") {
+            var snippet = $("#userbar-snippet");
+            var filename = $("#userbar-menu option:selected").val();
+            if (filename == "transifex-userbar") {
+                filename = filenames[0]
+            } else if (filename == "transifex-userbar-2") {
+                filename = filenames[1]
+            } else {
                 snippet.slideUp("slow");
                 return;
             }
-            code = "<a href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\">\n";
+            var code = "<a href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\">\n";
             code += "<img border=\"0\" src=\"{% static "widgets/images/" %}" +filename+".png\">\n";
             code += "</a>";
             snippet.html(code.entityify());
