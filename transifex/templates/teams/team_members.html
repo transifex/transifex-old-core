@@ -21,12 +21,6 @@
 
 <div class="obj_bigdetails">
 
-{% if perms.projects.change_team or is_coordinator %}
-<div class="clearfix">
-  <a class="i16 settings nude-button right" href="{% url team_update project.slug language.code %}">{% trans "Manage members" %}</a>
-</div>
-{% endif %}
-
 <div class="datalist clearfix">
 	{% with team.coordinators.all as coordinators %}
 	{% if coordinators %}
