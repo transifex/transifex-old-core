@@ -90,7 +90,7 @@
                 return;
             }
             var code = "<a href=\"{{SITE_URL_PREFIX}}{% url transifex.home %}\">\n";
-            code += "<img border=\"0\" src=\"{% static "widgets/images/" %}" +filename+".png\">\n";
+            code += "<img border=\"0\" src=\"" + filename + "\">\n";
             code += "</a>";
             snippet.html(code.entityify());
             snippet.slideDown("slow");
