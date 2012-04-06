@@ -159,6 +159,7 @@ class NewLineAtEndValidator(BaseValidator):
 
     def validate(self, old, new):
         old = unescape(old)
+        new = unescape(new)
         old_has_newline = old[-1] == '\n'
         new_has_newline = new[-1] == '\n'
         if old_has_newline != new_has_newline:
