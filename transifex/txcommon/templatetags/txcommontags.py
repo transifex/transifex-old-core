@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 from django import template
+from django.conf import settings
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.utils.html import conditional_escape
@@ -274,6 +275,20 @@ class TooltipNode(Node):
         id = self.id.resolve(context)
         return """<script type=\"text/javascript\">\ntooltip("#%s-%s", "%s");\n</script>""" % (self.prefix, id, output)
 
+def GetSettings(Node):
+    def __init__(self, variable_name, context_variable):
+        self.variable_name = variable_name
+        self.context_variable = context_variable
+
+    def render(self, context):
+        try:
+            context[self.context_variable] = settings.__getattr__(
+                    self.variable_name)
+        except AttributeError:
+            context[self.context_variable] = False
+
+        return ""
+
 def do_tooltip(parser, token):
     try:
         bits = token.split_contents()
@@ -289,3 +304,21 @@ def do_tooltip(parser, token):
     return TooltipNode(prefix, id, nodelist)
 
 register.tag('tooltip', do_tooltip)
+
+def get_settings(parser, token):
+    """
+    {% settings VARIABLE_NAME as variable_name %}
+    """
+    bits = token.split_contents()
+    if len(bits) == 2:
+        variable_name = bits[1]
+        context_variable = variable_name
+    elif len(bits) == 4 and bits[2] == 'as':
+        variable_name = bits[1]
+        context_variable = bits[3]
+    else:
+        raise TemplateSyntaxError("%r expects a single argument or "\
+                "two arguments separated by 'as'." % bits[0])
+    return GetSettings(variable_name, context_variable)
+
+register.tag('settings', get_settings)
