@@ -8,6 +8,7 @@ from django.conf import settings
 from django.forms import ValidationError
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.utils import simplejson
@@ -521,16 +522,9 @@ class TranslationBaseHandler(BaseHandler):
             language_code):
         try:
             project = Project.objects.get(slug=project_slug)
-        except Project.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
-            resource = Resource.objects.get(slug=resource_slug,
-                    project=project)
-        except Resource.DoesNotExist, e:
-            return rc.NOT_FOUND
-        try:
+            resource = Resource.objects.get(slug=resource_slug, project=project)
             language = Language.objects.by_code_or_alias(language_code)
-        except Language.DoesNotExist, e:
+        except ObjectDoesNotExist, e:
             return rc.NOT_FOUND
         return (project, resource, language)
 
