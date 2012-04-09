@@ -17,7 +17,7 @@ function handleResponse(response) {
     }
     var data = response.getDataTable();
 
-    container = document.getElementById('transifex_chart');
+    container = document.getElementById('txchart-{{ project.slug }}-{{ resource.slug }}');
     container.style.textAlign = "center";
 
     chart_div = document.createElement('div');
