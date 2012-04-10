@@ -95,6 +95,8 @@ def on_resource_save(sender, instance, created, user, **kwargs):
     Called on resource post save and passes a user object in addition to the
     saved instance. Used for logging the create/update of a resource.
     """
+    if kwargs.get('actionlog') == False:
+        return
     # ActionLog
     context = {'resource': instance,
                'sender': user}
