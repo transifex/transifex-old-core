@@ -8,7 +8,7 @@ class Migration(SchemaMigration):
 
     depends_on = (
         ("projects", "0001_initial"),
-        ("storage", "0001_initial"),
+        # ("storage", "0001_initial"),
         ("languages", "0001_initial"),
     )
 
