@@ -13,11 +13,12 @@ a#cla_facebox{margin-left:12px;}
 	<p id="cla_checkbox">{{ form.cla_enable }}
 	{{ form.cla_enable.help_text }}</p>
 	<div id="cla_textarea" style="display: none;margin-top:1em;">
-		<div class="clearfix" style="float:right;margin-right:18px;">
-		      <a id="cla_facebox" title="{% trans "Show full CLA text" %}" href="{{ project.cla.get_absolute_url }}">{% trans "Show full CLA text" %}</a>
-		
-		      <a id="cla_facebox" title="{% trans "Show a list of users who have signed the CLA" %}" href="{{ project.cla.get_users_url }}">{% trans "Show CLA signees" %}</a>
-		</div>
+    {% if project.cla %}
+    <div class="clearfix" style="float:right;margin-right:18px;">
+      <a id="cla_facebox" title="{% trans "Show full CLA text" %}" href="{{ project.cla.get_absolute_url }}">{% trans "Show full CLA text" %}</a>
+      <a id="cla_facebox" title="{% trans "Show a list of users who have signed the CLA" %}" href="{{ project.cla.get_users_url }}">{% trans "Show CLA signees" %}</a>
+    </div>
+    {% endif %}
     <label for="id_cla_license_text">{{ form.cla_license_text.help_text }}:</label>
     {% if form.cla_license_text.errors %}
     <p class="fielderrors">
