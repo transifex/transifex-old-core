@@ -1,5 +1,4 @@
-{% extends "projects/project_menu.html" %}
-{% comment %}This is the view under /projects/p/PROJECT_SLUG/cla{% endcomment %}
+{% extends "base.html" %}
 {% load i18n %}
 {% load txcommontags %}
 
@@ -7,19 +6,36 @@
 
 {% block title %}{{ block.super }} | {{ project.name }} | {% trans "CLA" %}{% endblock %}
 
-{% block breadcrumb %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project.name }}</a> &raquo; {% trans "CLA" %}{% endblock %}
-
 {% block extrajs %}
-    {{ block.super }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("a#cla_facebox").facebox();
-        });
-    </script>
+  {{ block.super }}
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("a#cla_facebox").facebox();
+    });
+  </script>
+{% endblock %}
+
+{% block content_title %}
+{% with project.description as short_desc %}
+  <div class="lastchild-emf">
+    <h2 class="pagetitle{% if short_desc %} with_description{% endif %}">
+      {% block project_header %}
+      <span><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></span>
+      {% endblock %}
+    </h2>
+</div>
+
+{% block current_description %}
+  {% if short_desc %}
+  <div class="description">
+	  <p>{{ project.description }}</p>
+  </div>
+  {% endif %}
+{% endblock %}
+{% endwith %}
 {% endblock %}
 
 {% block content_main %}
-
 <div class="obj_bigdetails ui-tabs-panel">
     <h2 class="name">
     {% blocktrans with project.name as project_name %}{{ project_name }} CLA{% endblocktrans %}
