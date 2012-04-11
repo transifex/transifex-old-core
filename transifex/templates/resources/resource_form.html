@@ -48,7 +48,7 @@ $(document).ready(function(){
 </div>
 
 <div class="tx-form">
-  <form action='' method='post' enctype="multipart/form-data">{% csrf_token %}    
+  <form action='' method='post' enctype="multipart/form-data">{% csrf_token %}
       {{ resource_form.non_field_errors }}
     <fieldset>
       {% for field in resource_form %}
@@ -77,7 +77,7 @@ $(document).ready(function(){
 	<div class="i16 infomsg">
 		<p>To enable automatic "fetching" of your source language strings by
 		Transifex, enter a URL to your source file (e.g. POT file). Refer to
-		<a href="http://help.transifex.net/user-guide/projects.html#projects-and-resources">the documentation</a>
+		<a href="http://help.transifex.com/user-guide/projects.html#projects-and-resources">the documentation</a>
 		for more information.</p>
 
 		<p><strong>Warning</strong>: Transifex will overwrite the existing source strings
