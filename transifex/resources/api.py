@@ -422,8 +422,18 @@ class TranslationBaseHandler(BaseHandler):
     allowed_methods = ('GET', 'PUT')
     def _generate_translations_dict(self, translations, field_map={},
             single=False):
-        """Generate result to returned to the user for the related
-        translations"""
+        """
+        Generate result to returned to the user for the related
+        translations
+        Args:
+            translations: A translation values dictionary
+            field_map: A dictionary mapping the keys of dictionary
+                       translation to the keys used in output JSON
+            single: A boolean, True if it's for SingleTranslationHandler
+
+        Returns:
+            A dictionary
+        """
         result = []
         buf = {}
         for count, translation in enumerate(translations):
@@ -470,6 +480,15 @@ class TranslationBaseHandler(BaseHandler):
         return result
 
     def _get_fieldmap_and_fields(self, request):
+        """
+        Get fieldmap and fields from request.
+
+        Args:
+            request: An HTTP request object.
+        Returns:
+            A tuple, (field_map, fields) where field_map is a dictionary
+            and fields is a list
+        """
         fields = [
                 'source_entity__id', 'source_entity__string',
                 'source_entity__context', 'string',
@@ -502,6 +521,15 @@ class TranslationBaseHandler(BaseHandler):
         return (field_map, fields)
 
     def _get_filters(self, request, resource, language):
+        """
+        Get filters for querying Translation
+        Args:
+            request: An HTTP request object
+            resource: A Resource object
+            language: A language object
+        Returns:
+            A dictionary
+        """
 
         filters = {
                 'resource': resource,
@@ -518,8 +546,21 @@ class TranslationBaseHandler(BaseHandler):
 
         return filters
 
-    def _check_read_perms(self, project_slug, resource_slug,
+    def _check_read_request_params(self, project_slug, resource_slug,
             language_code):
+        """Check read request parameters, if the objects related to
+        the parameters exist. Return rc.NOT_FOUND if an object for
+        a parameter is not found.
+
+        Args:
+            project_slug: A project slug
+            resource_slug: A resource slug
+            language_code: A language code
+        Returns:
+            If objects for all parameters are found, then return
+            a tuple, (project, resource, language)
+            else return rc.NOT_FOUND
+        """
         try:
             project = Project.objects.get(slug=project_slug)
             resource = Resource.objects.get(slug=resource_slug, project=project)
@@ -528,16 +569,30 @@ class TranslationBaseHandler(BaseHandler):
             return rc.NOT_FOUND
         return (project, resource, language)
 
-    def _check_update_perms(self, project_slug, resource_slug,
+    def _check_update_request_params(self, project_slug, resource_slug,
             language_code):
-        read_perms = self._check_read_perms(project_slug, resource_slug,
-                language_code)
-        if not isinstance(read_perms, tuple):
-            return read_perms
+        """Check update request parameters, if the objects related to
+        the parameters exist. Return rc.NOT_FOUND if an object for
+        a parameter is not found.
 
-        if read_perms[2] == read_perms[1].source_language:
+        Args:
+            project_slug: A project slug
+            resource_slug: A resource slug
+            language_code: A language code
+        Returns:
+            If objects for all parameters are found, then return
+            a tuple, (project, resource, language),
+            else if language == source language, the return rc.FORBIDDEN
+            else return rc.NOT_FOUND
+        """
+        read_params = self._check_read_request_params(project_slug,
+                resource_slug, language_code)
+        if not isinstance(read_params, tuple):
+            return read_params
+
+        if read_params[2] == read_params[1].source_language:
             return rc.FORBIDDEN
-        return read_perms
+        return read_params
 
     def _check_data(self, translations):
         if not translations:
@@ -546,6 +601,18 @@ class TranslationBaseHandler(BaseHandler):
             return rc.BAD_REQUEST
 
     def _get_trans_obj_dict(self, translations, language):
+        """
+        Get a dictionary where source_entity id is mapped to
+        translations.
+
+        Args:
+            translations: A dictionary containing translation data
+                          from request.data
+            language: A Language object
+
+        Returns:
+            A dictionary
+        """
         se_ids = []
         for translation in translations:
             se_id = translation.get('source_entity_id')
@@ -566,6 +633,17 @@ class TranslationBaseHandler(BaseHandler):
     def _check_user_perms(self, can_submit_translations=False,
             accept_translations=False, is_maintainer=False,
             can_review=False, translation_objs=[]):
+        """
+        Check if user has necessary permissions.
+        Args:
+            can_submit_translations: A boolean
+            accept_translations: A boolean
+            is_maintainer: A boolean
+            can_review: A boolean
+            translation_objs: A list
+        Returns:
+            A boolean
+        """
         if (not can_submit_translations or\
             not accept_translations) and not\
                 is_maintainer:
@@ -579,6 +657,18 @@ class TranslationBaseHandler(BaseHandler):
 
     def _collect_updated_translations(self, translation, trans_obj_dict,
             se_id, updated_translations, user, pluralized):
+        """
+        Collect updated translations
+        Args:
+            translation: A dictionary representing a translation(s) in
+                         request JSON
+            trans_obj_dict: A dictionary mapping source_entity id to
+                           translations
+            se_id: An integer representing source_entity id
+            updated_translations: A list of updated translations
+            user: A User object
+            pluaralized: A boolean
+        """
         for t in trans_obj_dict.get(se_id):
             t.user = user
             if translation.has_key('reviewed'):
@@ -591,6 +681,19 @@ class TranslationBaseHandler(BaseHandler):
             updated_translations.append(t)
 
     def _check_plural_forms(self, translation, nplurals):
+        """Check plural forms of a translation group
+
+        Args:
+            translation: A dictionary representing a translation(s) in
+                         request JSON
+            nplurals: A list containing plural rule numbers for a language
+        Returns:
+            A dictionary
+            {
+                'pluralized': A boolean,
+                'error': A boolean
+            }
+        """
         result = {'pluralized': False, 'error':False}
         if isinstance(translation.get('translation'), dict):
             result['pluralized'] = True
@@ -609,6 +712,12 @@ class TranslationBaseHandler(BaseHandler):
 
     @transaction.commit_manually
     def _update_translations(self, updated_translations):
+        """Bulk update translations
+        Args:
+            updated_translations: A list of updated Translation objects
+        Returns:
+            On error, return BAD_REQUEST()
+        """
         try:
             TranslationModel.objects.bulk_update(updated_translations)
             transaction.commit()
@@ -617,6 +726,12 @@ class TranslationBaseHandler(BaseHandler):
             return BAD_REQUEST(unicode(e))
 
     def _get_update_fieldmap_and_fields(self, keys):
+        """Get fieldmap and fields for a PUT request.
+        Args:
+            keys: A list of dictionary keys for request.data
+        Returns:
+            A tuple, (dictionary, list)
+        """
         field_map = {
                 'source_entity__id': 'source_entity_id',
                 'source_entity__string': 'key',
@@ -820,12 +935,12 @@ class TranslationObjectsHandler(TranslationBaseHandler):
     ))
     def read(self, request, project_slug, resource_slug,
             language_code, api_version=2):
-        read_perms = self._check_read_perms(project_slug, resource_slug,
-                language_code)
-        if isinstance(read_perms, tuple):
-            project, resource, language = read_perms
+        read_params = self._check_read_request_params(project_slug,
+                resource_slug, language_code)
+        if isinstance(read_params, tuple):
+            project, resource, language = read_params
         else:
-            return read_perms
+            return read_params
 
         field_map, fields =\
                 self._get_fieldmap_and_fields(request)
@@ -844,12 +959,12 @@ class TranslationObjectsHandler(TranslationBaseHandler):
     ))
     def update(self, request, project_slug, resource_slug,
             language_code, api_version=2):
-        update_perms = self._check_update_perms(project_slug,
+        update_params = self._check_update_request_params(project_slug,
                 resource_slug, language_code)
-        if not isinstance(update_perms, tuple):
-            return update_perms
+        if not isinstance(update_params, tuple):
+            return update_params
         else:
-            project, resource, language = update_perms
+            project, resource, language = update_params
         translations = request.data
 
         checked_data =  self._check_data(translations)
