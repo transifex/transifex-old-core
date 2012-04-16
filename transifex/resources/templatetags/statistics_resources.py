@@ -17,6 +17,7 @@ def calculate_stats(stat, width=100):
     """
     total = stat.total
     trans = stat.translated
+    reviewed = stat.reviewed
 
     # Fail-safe check
     # TODO add to the setting part, not getting.
@@ -37,7 +38,10 @@ def calculate_stats(stat, width=100):
             'trans': trans,
             'pos': StatBarsPositions([('trans', trans_percent),
                                       ('untrans', untrans_percent)], width),
-            'width':width}
+            'width':width,
+            'reviewed': reviewed,
+            'source_language': stat.resource.source_language,
+            'language': stat.language}
 
 
 @register.inclusion_tag("resources/stats_bar_simple.html")
