@@ -87,7 +87,7 @@
              {% blocktrans with stats.total|intcomma as total_entities and wordcount|intcomma as wordcount %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
              {% blocktrans with stats.translated|intcomma as trans_count and stats.translated_wordcount|intcomma as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}<br/>
              {% blocktrans with stats.untranslated|intcomma as trans_count and stats.untranslated_wordcount|intcomma as trans_wordcount %} Remaining:&nbsp;{{ trans_count }} strings ({{ trans_wordcount }} words) {% endblocktrans %}<br/>
-             {% blocktrans with stats.reviewed|intcomma as reviewed_count %} Reviewed:&nbsp;{{ reviewed_count }} strings {% endblocktrans %}<br/>
+             {% ifnotequal resource.source_language target_language %}{% blocktrans with stats.reviewed|intcomma as reviewed_count %} Reviewed:&nbsp;{{ reviewed_count }} strings {% endblocktrans %}<br/>{% endifnotequal %}
              {% hook 'matches_overview.html' %}  
     </div>
     <span class="translate_button_wrapper">
@@ -130,7 +130,7 @@
 
     <div class="stats_wrapper">
       {% with 390 as barwidth %}
-      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }}<br/>{% trans "Remaining: " %}{{ stats.untranslated }}<br/>{% trans "Reviewed: " %}{{ stats.reviewed }}">
+      <div class="stats tipsy_enable" style='width:{{ barwidth|add:"60" }}px;' title="{% trans "Translated: " %}{{ stats.translated }}<br/>{% trans "Remaining: " %}{{ stats.untranslated }}{% ifnotequal resource.source_language target_language %}<br/>{% trans "Reviewed: " %}{{ stats.reviewed }}{% endifnotequal %}">
           <div class="stats_string_resource_actions">
               {{ stats.translated|percentage:stats.total }}
           </div>
