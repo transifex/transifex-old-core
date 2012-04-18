@@ -40,21 +40,21 @@ a img { border: none; }
 
 /* 	TYPOGRAPHY
 	--------------------------------------------------------------------------*/
-body  { font: 			13px/1.385 'Droid Sans', sans-serif; /* 13/21 px */
-				font-family:  	'Droid Sans','Helvetica','Arial' sans-serif;
+body  { font: 			13px/1.385 'Open Sans', sans-serif; /* 13/21 px */
+				font-family:  	'Open Sans','Helvetica','Arial' sans-serif;
 				color: 			#444;
 				background: 	#fff;
 }
 
 h1, h2, h3,
 h4, h5, h6 { color: #444;
-			 font-family: 'Droid Sans','Helvetica', sans-serif;
+			 font-family: 'Open Sans','Helvetica', sans-serif;
 			 font-weight: normal;
 			 line-height: 1;
 			 margin: 5px 0; }
 
 h1 { font-size: 2.154em; } /* 28 */
-h2 { font-size: 2em;margin-bottom: 0.75em; font-weight: bold;color:#3a4752;}
+h2 { font-size: 2em;margin-bottom: 0.75em; font-weight: 600;color:#3a4752;}
 h3 { font-size: 1.077em;margin: 1.4em 0em;color:#c8711e;text-transform: uppercase; }
 h4 { font-size: 1.2em;margin: 1em 0;line-height: 1.4em; }	/* 18 */
 h5 { font-size: 1.077em; }	/* 16 */
@@ -240,7 +240,6 @@ input.nude-button{background-color: transparent;border: none;}
 	border-radius: 2px;
 	padding: 6px 10px;
 	font-size: 13px;
-	font-family: 'Droid Sans';
 	max-width: 200px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -271,10 +270,11 @@ input.buttonized:focus,
 }
 
 .microform input[type="submit"].blist, a.buttonized.blist,span.buttonized.blist{
-padding: 4px 10px 3px 27px;
+padding: 4px 10px 3px 10px;
 font-weight: normal;
 font-size: 0.923em;
 }
+.microform input[type="submit"].blist.i16, a.buttonized.blist.i16,span.buttonized.blist.i16{padding-left: 27px;}
 
 .list-buttonized{border:1px solid #e5e5e5;padding: 3px 8px 3px 8px;font-size: 12px;text-shadow:#fff 1px 1px 0px;-moz-border-radius: 2px;-webkit-border-radius: 2px;	border-radius: 2px;}
 
@@ -458,8 +458,8 @@ input:focus, textarea:focus { border: 1px solid #818181; }
 q, blockquote 	{ font-style: italic; }
 q 				{ quotes: "\201C" "\201D" "\2018" "\2019"; }
 q:lang(el) 		{ quotes: "\00AB" "\00BB" "\0027" "\0027"; }
-blockquote 		{ font-family: 'Droid Serif',Georgia, Times, serif; margin: 1em 3em; }
-.seriftext,.description,.quotes,.timestamp,.tweet_time,.long_description	{ font-family: 'Droid Serif',Georgia, Times, serif;}
+blockquote 		{ font-family: 'Open Serif',Georgia, Times, serif; margin: 1em 3em; }
+.seriftext,.quotes,.timestamp,.tweet_time,.long_description	{ font-family: 'Droid Serif',Georgia, Times, serif;}
 
 /* 	Preformatted
 	--------------------------------------------------------------------------*/
@@ -572,7 +572,7 @@ ul.actionlist li p{margin-bottom: 0;}
 
 .separate-header{padding-bottom: 5px;background:transparent url(../images/section-bborder.png) bottom left repeat-x;margin: 3em 0 1em 0;}
 .separate-header.notopmargin{margin-top:0;}
-.separate-header .sh-label{font-size: 1.077em;color: #C57230;margin: 0;font-weight: bold;padding: 7px 10px 4px 0px;float: left;}
+.separate-header .sh-label{font-size: 1.077em;color: #C57230;margin: 0;font-weight: 600;padding: 7px 10px 4px 0px;float: left;}
 .separate-buttons{display:inline;float:right; clear:right;margin: 8px 10px 0 7px;font-size: 1.077;}
 .separate-buttons a{margin-left:15px;}
 .separate-buttons a.active{font-weight: bold;}
