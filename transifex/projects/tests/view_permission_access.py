@@ -18,6 +18,7 @@ URL_ROLES = SortedDict({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/feed/':{
         'anonymous':(200,),
@@ -26,6 +27,7 @@ URL_ROLES = SortedDict({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/':{
         'anonymous':(200,),
@@ -34,6 +36,7 @@ URL_ROLES = SortedDict({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/edit/':{
         'anonymous':(302,),
@@ -42,6 +45,7 @@ URL_ROLES = SortedDict({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/edit/access/':{
         'anonymous':(302,),
@@ -50,6 +54,7 @@ URL_ROLES = SortedDict({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/access/pm/add/':{
         'anonymous':(302,),
@@ -58,6 +63,7 @@ URL_ROLES = SortedDict({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     #'POST:/projects/p/project1/access/pm/1/delete/':{
         #'anonymous':(302,),
@@ -90,6 +96,7 @@ URL_ROLES = SortedDict({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
 })
 
@@ -102,6 +109,7 @@ URL_ROLES.update({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/resource/resource1/edit/':{
         'anonymous':(403,),
@@ -110,6 +118,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/resource/resource1/delete/':{
         'anonymous':(403,),
@@ -118,6 +127,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'POST:/projects/p/project1/resource/resource1/l/pt_BR/':{
         'anonymous':(302,),
@@ -126,6 +136,7 @@ URL_ROLES.update({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/resource/resource1/l/pt_BR/view/':{
         'anonymous':(200,),
@@ -134,6 +145,7 @@ URL_ROLES.update({
         'writer':(200, {}, "#stringset_table"),
         'team_coordinator':(200, {}, "#stringset_table"),
         'team_member':(200, {}, "#stringset_table"),
+        'reviewer':(200, {}, "#stringset_table"),
         },
     'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/for_use/':{
         'anonymous':(302,),
@@ -142,6 +154,7 @@ URL_ROLES.update({
         'writer':(302,),
         'team_coordinator':(302,),
         'team_member':(302,),
+        'reviewer':(302,),
         },
     'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/for_translation/':{
         'anonymous':(302,),
@@ -150,6 +163,7 @@ URL_ROLES.update({
         'writer':(302,),
         'team_coordinator':(302,),
         'team_member':(302,),
+        'reviewer':(302,),
         },
     'GET:/projects/p/project1/resource/resource1/l/pt_BR/download/reviewed/':{
         'anonymous':(302,),
@@ -158,6 +172,7 @@ URL_ROLES.update({
         'writer':(302,),
         'team_coordinator':(302,),
         'team_member':(302,),
+        'reviewer':(302,),
         },
 })
 
@@ -170,6 +185,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/r/releaseslug1/':{
         'anonymous':(200,),
@@ -178,6 +194,7 @@ URL_ROLES.update({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/r/releaseslug1/edit/':{
         'anonymous':(302,),
@@ -186,6 +203,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/r/releaseslug1/delete/':{
         'anonymous':(302,),
@@ -194,6 +212,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/r/releaseslug1/l/pt_BR/':{
         'anonymous':(200,),
@@ -202,6 +221,7 @@ URL_ROLES.update({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
 })
 
@@ -214,6 +234,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/language/pt_BR/':{
         'anonymous':(200,),
@@ -222,6 +243,7 @@ URL_ROLES.update({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/language/pt_BR/members/':{
         'anonymous':(200,),
@@ -230,6 +252,7 @@ URL_ROLES.update({
         'writer':(200,),
         'team_coordinator':(200,),
         'team_member':(200,),
+        'reviewer':(200,),
         },
     'GET:/projects/p/project1/language/pt_BR/edit/':{
         'anonymous':(302,),
@@ -238,6 +261,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(200,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'GET:/projects/p/project1/language/pt_BR/delete/':{
         'anonymous':(302,),
@@ -246,6 +270,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'POST:/projects/p/project1/language/pt_BR/request/':{
         'anonymous':(302,),
@@ -254,6 +279,7 @@ URL_ROLES.update({
         'writer':(302,),
         'team_coordinator':(302,),
         'team_member':(302,),
+        'reviewer':(302,),
         },
     'POST:/projects/p/project1/language/pt_BR/approve/diegobz/':{
         'anonymous':(302,),
@@ -262,6 +288,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(404,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'POST:/projects/p/project1/language/pt_BR/deny/diegobz/':{
         'anonymous':(302,),
@@ -270,6 +297,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(404,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'POST:/projects/p/project1/language/pt_BR/withdraw/':{
         'anonymous':(302,),
@@ -278,6 +306,7 @@ URL_ROLES.update({
         'writer':(404,),
         'team_coordinator':(404,),
         'team_member':(404,),
+        'reviewer':(404,),
         },
     'POST:/projects/p/project1/language/pt_BR/leave/':{
         'anonymous':(302,),
@@ -286,6 +315,7 @@ URL_ROLES.update({
         'writer':(302,),
         'team_coordinator':(302,),
         'team_member':(302,),
+        'reviewer':(302,),
         },
     'POST:/projects/p/project1/languages/request/':{
         'anonymous':(302,),
@@ -294,6 +324,7 @@ URL_ROLES.update({
         'writer':(302,),
         'team_coordinator':(302,),
         'team_member':(302,),
+        'reviewer':(302,),
         },
     'POST:/projects/p/project1/language/el/approve/':{
         'anonymous':(302,),
@@ -302,6 +333,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
     'POST:/projects/p/project1/language/el/deny/':{
         'anonymous':(302,),
@@ -310,6 +342,7 @@ URL_ROLES.update({
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
+        'reviewer':(403,),
         },
 })
 
@@ -343,3 +376,7 @@ class ViewPermissionAccessTestCase(BaseTestCase):
     def testTeamMemberUser(self):
         """Check URL access for authenticated team member."""
         check_page_status(self, 'team_member', URL_ROLES)
+
+    def testReviewerUser(self):
+        """Check URL access for authenticated reviewer."""
+        check_page_status(self, 'reviewer', URL_ROLES)

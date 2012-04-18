@@ -59,7 +59,7 @@ class ProjectPermission(BasePermission):
     coordinate_team.short_description = _("Is allowed to coordinate a "
         "team project")
 
-    def proofread(self, project=None, language=None):
+    def proofread(self, project=None, language=None, any_team=False):
         if project:
             if self.maintain(project):
                 # Maintainers can review
@@ -70,6 +70,11 @@ class ProjectPermission(BasePermission):
                 if team:
                     if self.user in team.reviewers.all() or self.user in team.coordinators.all():
                         return True
+            elif any_team:
+                user_teams = project.team_set.filter(
+                    Q(reviewers=self.user)).distinct()
+                if user_teams:
+                    return True
         return False
     proofread.short_description = _("Is allowed to review translations for "
         "a team project")
@@ -133,7 +138,8 @@ class ProjectPermission(BasePermission):
                     return False
                 # Maintainers, writers (submitters, coordinators, members)
                 return self.maintain(project) or \
-                    self.submit_translations(project, any_team=True)
+                    self.submit_translations(project, any_team=True) or\
+                    self.proofread(project, any_team=True)
             else:
                 # The project is public so let them continue
                 return True
