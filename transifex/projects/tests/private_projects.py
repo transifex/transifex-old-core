@@ -128,7 +128,8 @@ class PrivateProjectTest(BaseTestCase):
             self.failUnlessEqual(response.status_code, 403)
 
         # Check people who should have access to the private project
-        for user in ['maintainer', 'team_coordinator', 'team_member']: # 'writer',
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']: # 'writer',
             response = self.client[user].get(self.urls['project_private'])
             self.failUnlessEqual(response.status_code, 200)
 
@@ -143,7 +144,8 @@ class PrivateProjectTest(BaseTestCase):
             self.failUnlessEqual(response.status_code, 403)
 
         # Check people who should have access to the private project
-        for user in ['maintainer', 'team_coordinator', 'team_member']: # 'writer',
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']: # 'writer',
             response = self.client[user].get(self.urls['resource_private'])
             self.failUnlessEqual(response.status_code, 200)
 
@@ -160,7 +162,8 @@ class PrivateProjectTest(BaseTestCase):
             self.failUnlessEqual(response.status_code, 403)
 
         # Check people who should have access to the private project
-        for user in ['maintainer', 'writer', 'team_coordinator', 'team_member']:
+        for user in ['maintainer', 'writer', 'team_coordinator',
+                'team_member', 'reviewer']:
             response = self.client[user].get(url)
             self.failUnlessEqual(response.status_code, 403)
 
@@ -336,6 +339,32 @@ class PrivateProjectTest(BaseTestCase):
                     '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
                         self.user['team_member'].username)
                 ]
+            },
+            'reviewer' : {
+                200 : [
+                    '/projects/p/%s/language/%s/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/members/' %(self.project_private.slug, self.language.code)
+                ],
+                302 : [
+                    '/projects/p/%s/language/%s/request/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/leave/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/languages/request/' % self.project_private.slug
+                ],
+                404 : [
+                    '/projects/p/%s/language/%s/withdraw/' %(self.project_private.slug, self.language.code),
+                ],
+                403 : [
+                    '/projects/p/%s/languages/add/' % self.project_private.slug,
+                    '/projects/p/%s/language/%s/edit/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/delete/' %(self.project_private.slug, self.language.code),
+                    # TODO: Add a second team to check if coordinator has access too.
+                    '/projects/p/%s/language/%s/approve/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/deny/' %(self.project_private.slug, self.language.code),
+                    '/projects/p/%s/language/%s/approve/%s/' % (self.project_private.slug, self.language.code,
+                        self.user['team_member'].username),
+                    '/projects/p/%s/language/%s/deny/%s/' % (self.project_private.slug, self.language.code,
+                        self.user['team_member'].username)
+                ]
             }
         }
 
@@ -364,7 +393,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer', 'team_coordinator', 'team_member']:# 'writer',
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']:# 'writer',
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 200)
 
@@ -377,7 +407,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 302)
 
-        for user in ['registered', 'team_coordinator', 'team_member']:
+        for user in ['registered', 'team_coordinator', 'team_member',
+                'reviewer']:
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
@@ -402,7 +433,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer',  'team_coordinator', 'team_member']: # 'writer'?
+        for user in ['maintainer',  'team_coordinator', 'team_member',
+                'reviewer']: # 'writer'?
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 200)
 
@@ -419,7 +451,7 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['team_coordinator', 'team_member']:
+        for user in ['team_coordinator', 'team_member', 'reviewer']:
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
@@ -446,7 +478,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403) # better 404?
 
-        for user in ['maintainer', 'team_coordinator', 'team_member']: #'writer'?
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']: #'writer'?
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 302) # why not 200?
 
@@ -459,7 +492,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 302)
 
-        for user in ['team_coordinator', 'team_member', 'registered']:
+        for user in ['team_coordinator', 'team_member', 'registered',
+                'reviewer']:
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
@@ -545,7 +579,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].post(URL, follow=True)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer', 'team_coordinator', 'team_member']: #'writer',
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']: #'writer',
             response = self.client[user].post(URL, follow=True)
             self.failUnlessEqual(response.status_code, 200)
 
@@ -589,7 +624,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].post(URL, follow=True)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer', 'team_coordinator', 'team_member']: #'writer',
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']: #'writer',
             response = self.client[user].post(URL, follow=True)
             self.failUnlessEqual(response.status_code, 200)
 
@@ -630,7 +666,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].post(URL, follow=True)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer', 'team_coordinator', 'team_member']: # 'writer',
+        for user in ['maintainer', 'team_coordinator', 'team_member',
+                'reviewer']: # 'writer',
             response = self.client[user].post(URL, follow=True)
             self.failUnlessEqual(response.status_code, 200)
 
@@ -656,7 +693,8 @@ class PrivateProjectTest(BaseTestCase):
                 self.failUnlessEqual(response.status_code, 403)
 
         # For now charts are disabled for private projects
-        for user in ['maintainer', 'writer', 'team_coordinator', 'team_member']:
+        for user in ['maintainer', 'writer', 'team_coordinator',
+                'team_member', 'reviewer']:
             for url in URLs:
                 response = self.client[user].get(url)
                 self.failUnlessEqual(response.status_code, 403)
@@ -677,7 +715,8 @@ class PrivateProjectTest(BaseTestCase):
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 403)
 
-        for user in ['maintainer', 'team_coordinator', 'team_member']:
+        for user in ['maintainer', 'team_coordinator',
+                'team_member', 'reviewer']:
             response = self.client[user].get(URL)
             self.failUnlessEqual(response.status_code, 200)
 
@@ -722,6 +761,13 @@ class ProjectLookupsTests(BaseTestCase):
         self.assertTrue(self.user['team_member'] in self.team_private.members.all())
         self.assertFalse(self.user['team_member'] in self.project_private.maintainers.all())
         resp = self.client['team_member'].get('/ajax/ajax_lookup/projects', {'q': 'p', 'limit': '150', })
+        self.assertContains(resp, public_project, status_code=200)
+        self.assertContains(resp, private_project, status_code=200)
+
+        # Test that a private project is visible to a reviewer of its teams
+        self.assertTrue(self.user['reviewer'] in self.team_private.members.all())
+        self.assertFalse(self.user['reviewer'] in self.project_private.maintainers.all())
+        resp = self.client['reviewer'].get('/ajax/ajax_lookup/projects', {'q': 'p', 'limit': '150', })
         self.assertContains(resp, public_project, status_code=200)
         self.assertContains(resp, private_project, status_code=200)
 
