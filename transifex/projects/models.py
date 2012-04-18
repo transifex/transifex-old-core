@@ -97,7 +97,8 @@ class DefaultProjectQuerySet(models.query.QuerySet):
         return self.filter(
             Q(maintainers__in=[user]) |
             Q(team__coordinators__in=[user]) |
-            Q(team__members__in=[user])
+            Q(team__members__in=[user]) |
+            Q(team__reviewers__in=[user])
         ).distinct()
 
     def for_user(self, user):
@@ -114,7 +115,8 @@ class DefaultProjectQuerySet(models.query.QuerySet):
                 projects = projects.exclude(
                     Q(private=True) & ~(Q(maintainers__in=[user]) |
                     Q(team__coordinators__in=[user]) |
-                    Q(team__members__in=[user]))).distinct()
+                    Q(team__members__in=[user]) |
+                    Q(team__reviewers__in=[user]))).distinct()
         return projects
 
     def public(self):
@@ -299,7 +301,8 @@ class Project(models.Model):
         """Return a queryset of all memebers of a project."""
         return User.objects.filter(
             Q(team_members__project=self) | Q(team_coordinators__project=self) |\
-            Q(projects_owning=self) | Q(projects_maintaining=self)
+            Q(team_reviewers__project=self) | Q(projects_owning=self) |\
+            Q(projects_maintaining=self)
         ).distinct()
 
     @property
