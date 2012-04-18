@@ -34,7 +34,8 @@ USER_ROLES = [
     'maintainer',
     'writer',
     'team_coordinator',
-    'team_member']
+    'team_member',
+    'reviewer']
 PASSWORD = '123412341234'
 
 
@@ -448,8 +449,10 @@ class TransactionBaseTestCase(SampleData, TransactionTestCase,):
             project=self.project_private, creator=self.user['maintainer'])[0]
         self.team.coordinators.add(self.user['team_coordinator'])
         self.team.members.add(self.user['team_member'])
+        self,team.reviewers.add(self.user['reviewer'])
         self.team_private.coordinators.add(self.user['team_coordinator'])
         self.team_private.members.add(self.user['team_member'])
+        self.team_private.reviewers.add(self.user['reviewer'])
 
         # Create a release
         self.release = Release.objects.create(slug="releaseslug1",
@@ -538,8 +541,10 @@ class BaseTestCase(Languages, NoticeTypes, Translations, TestCase):
             project=cls._project_private, creator=cls._user['maintainer'])[0]
         cls._team.coordinators.add(cls._user['team_coordinator'])
         cls._team.members.add(cls._user['team_member'])
+        cls._team.members.add(cls._user['reviewer'])
         cls._team_private.coordinators.add(cls._user['team_coordinator'])
         cls._team_private.members.add(cls._user['team_member'])
+        cls._team_private.members.add(cls._user['reviewer'])
 
         # Create a release
         cls._release = Release.objects.get_or_create(slug="releaseslug1",
