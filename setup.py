@@ -10,7 +10,7 @@ from setuptools.command.build_py import build_py as _build_py
 
 from transifex.txcommon import version
 
-readme_file = open(u'README')
+readme_file = open(u'README.rst')
 long_description = readme_file.read()
 readme_file.close()
 if long_description.startswith(BOM):
@@ -18,13 +18,13 @@ if long_description.startswith(BOM):
 long_description = long_description.decode('utf-8')
 
 package_data = {
-    '': ['LICENCE', 'README'],
+    '': ['LICENCE', 'README.rst'],
     'transifex': ['transifex/static/*.*']
 }
 
 def get_requirements(filename):
     """
-    Read requirements and dependency links from a file passed by parameter 
+    Read requirements and dependency links from a file passed by parameter
     and return them as two lists in a tuple.
     """
     def add_dependency_link(line):
@@ -77,7 +77,7 @@ setup(
     url="http://transifex.org/",
     license="GPLv2",
     install_requires=requirements,
-    dependency_links=dependency_links,    
+    dependency_links=dependency_links,
     zip_safe=False,
     packages=find_packages(),
     include_package_data=True,
