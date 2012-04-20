@@ -13,7 +13,9 @@ from transifex.txcommon.tests.base import Users, TransactionNoticeTypes,\
                             BaseTestCase
 from transifex.txcommon.utils import log_skip_transaction_test
 from transifex.resources.models import Resource, RLStats, SourceEntity
-from transifex.resources.api import ResourceHandler, TranslationObjectsHandler
+from transifex.resources.api import (ResourceHandler,
+        TranslationObjectsHandler, NoContentError, BadRequestError,
+        ForbiddenError, NotFoundError)
 from transifex.resources.formats.registry import registry
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.tests.api.base import APIBaseTests
@@ -1031,30 +1033,36 @@ class UnitTestTranslationObjectsHandler(TestCase):
         self.assertEqual(fieldmap, expected_fieldmap)
         self.assertEqual(fields, expected_fields)
 
-    def test_get_filters(self):
+    def test_get_translation_query_filters(self):
         request = Mock()
         resource = Mock()
         language = Mock()
         request.GET = {}
-        filters = self.obj._get_filters(request, resource, language)
+        filters = self.obj._get_translation_query_filters(request,
+                resource, language)
         expected_filters = {'resource': resource, 'language':language}
         self.assertEqual(filters, expected_filters)
 
         request.GET['key'] = 'foo'
-        filters = self.obj._get_filters(request, resource, language)
-        expected_filters['source_entity__string__contains'] = 'foo'
+        filters = self.obj._get_translation_query_filters(request,
+                resource, language)
+        expected_filters['source_entity__string__icontains'] = 'foo'
         self.assertEqual(filters, expected_filters)
 
         request.GET['context'] = 'bar'
-        filters = self.obj._get_filters(request, resource, language)
-        expected_filters['source_entity__context__contains'] = 'bar'
+        filters = self.obj._get_translation_query_filters(request,
+                resource, language)
+        expected_filters['source_entity__context__icontains'] = 'bar'
         self.assertEqual(filters, expected_filters)
 
-    def test_check_data(self):
-        self.assertTrue(self.obj._check_data(None))
-        self.assertTrue(self.obj._check_data({}))
-        self.assertTrue(self.obj._check_data(""))
-        self.assertFalse(self.obj._check_data([{}]))
+    def test_check_json_data(self):
+        self.assertRaises(NoContentError,
+                self.obj._check_json_data, None)
+        self.assertRaises(BadRequestError,
+                self.obj._check_json_data, {'foo':'bar'})
+        self.assertRaises(NoContentError,
+                self.obj._check_json_data, "")
+        self.assertTrue(self.obj._check_json_data([{}]))
 
     def test_check_user_perms(self):
         self.assertFalse(self.obj._check_user_perms(
@@ -1137,25 +1145,25 @@ class UnitTestTranslationObjectsHandler(TestCase):
         self.assertEqual(t2.string, 'foo1')
         self.assertEqual(t1.string, 'foo5')
 
-    def test_check_plural_forms(self):
+    def test_is_pluralized(self):
         translation = {'translation': {1: 'one', 5: 'other'}}
         nplurals = [1, 5]
-        self.assertEqual(self.obj._check_plural_forms(translation,
+        self.assertEqual(self.obj._is_pluralized(translation,
             nplurals), {'pluralized': True, 'error':False})
         translation = {'translation': {0: 'zero', 1: 'one', 5: 'other'}}
         nplurals = [1, 5]
-        self.assertEqual(self.obj._check_plural_forms(translation,
+        self.assertEqual(self.obj._is_pluralized(translation,
             nplurals), {'pluralized': True, 'error':True})
         translation = {'translation': {1: 'one', 5: 'other'}}
         nplurals = [0, 1, 5]
-        self.assertEqual(self.obj._check_plural_forms(translation,
+        self.assertEqual(self.obj._is_pluralized(translation,
             nplurals), {'pluralized': True, 'error':True})
         translation = {'translation': '   '}
         nplurals = [1, 5]
-        self.assertEqual(self.obj._check_plural_forms(translation,
+        self.assertEqual(self.obj._is_pluralized(translation,
             nplurals), {'pluralized': False, 'error':True})
         translation = {'translation': 'foo'}
-        self.assertEqual(self.obj._check_plural_forms(translation,
+        self.assertEqual(self.obj._is_pluralized(translation,
             nplurals), {'pluralized': False, 'error':False})
 
     def test_get_update_fieldmap_and_fields(self):
@@ -1176,23 +1184,30 @@ class UnitTestTranslationObjectsHandler(TestCase):
 
 
 class SystemTestTranslationStrings(BaseTestCase):
-    def test_check_read_perms(self):
+    def test_get_objects_from_read_request_params(self):
         obj = TranslationObjectsHandler()
-        value = obj._check_read_perms('foo', 'resource1', 'foo')
-        self.assertEqual(value.status_code, 404)
-        value = obj._check_read_perms('project1', 'foo', 'foo')
-        self.assertEqual(value.status_code, 404)
-        value = obj._check_read_perms('project1', 'resource1', 'foo')
-        self.assertEqual(value.status_code, 404)
-        value = obj._check_read_perms('project1', 'resource1', 'ar')
-        self.assertEqual(value, (self.project, self.resource, self.language_ar))
+        self.assertRaises(NotFoundError,
+                obj._get_objects_from_read_request_params,
+                'foo', 'resource1', 'foo')
+        self.assertRaises(NotFoundError,
+                obj._get_objects_from_read_request_params,
+                'project1', 'foo', 'foo')
+        self.assertRaises(NotFoundError,
+                obj._get_objects_from_read_request_params,
+                'project1', 'resource1', 'foo')
+        self.assertEqual(
+                obj._get_objects_from_read_request_params(
+                    'project1', 'resource1', 'ar'),
+                (self.project, self.resource, self.language_ar))
 
-    def test_check_update_perms(self):
+    def test_get_objects_from_update_request_params(self):
         obj = TranslationObjectsHandler()
-        value = obj._check_update_perms('project1', 'resource1', 'ar')
+        value = obj._get_objects_from_update_request_params(
+                'project1', 'resource1', 'ar')
         self.assertEqual(value, (self.project, self.resource, self.language_ar))
-        value = obj._check_update_perms('project1', 'resource1', 'en_US')
-        self.assertEqual(value.status_code, 401)
+        self.assertRaises(ForbiddenError,
+                obj._get_objects_from_update_request_params,
+                'project1', 'resource1', 'en_US')
 
     def test_read_translations(self):
         response = self.client['team_member'].get(reverse(
@@ -1377,14 +1392,14 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 500)
         response = self.client['team_coordinator'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
                 string_hash]),
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 500)
         json['user'] = 'team_member'
         response = self.client['maintainer'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
@@ -1392,7 +1407,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 500)
         self.team.language=self.language_ar
         self.team.save()
         json['reviewed'] = True
@@ -1428,7 +1443,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response.status_code, 500)
 
         string_hash = self.source_entity_plural.string_hash
         response = self.client['team_member'].get(reverse('translation_string',
@@ -1478,5 +1493,5 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             }),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 500)
 
