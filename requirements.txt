@@ -9,7 +9,6 @@ django-bulk>=0.1devel
 django-celery
 django_compressor
 django-filter
-django-haystack
 django-kombu
 django-picklefield
 django-piston==0.2.3
@@ -27,18 +26,18 @@ pygooglechart
 pysolr
 redis>=2.4.10
 requests
-South>=0.7.2
+South==0.7.3
 userprofile
 BeautifulSoup==3.2.0
 django-staticfiles==1.2.1
 
 -f http://trac.transifex.org/files/deps/contact_form-0.3.tar.gz
--f http://trac.transifex.org/files/deps/django-bulk-0.1devel.tar.gz
 -f https://github.com/toastdriven/django-haystack/tarball/259274e4127f723d76b893c87a82777f9490b960#egg=django-haystack
 -f http://trac.transifex.org/files/deps/django-piston-0.2.3.tar.gz
 -f http://trac.transifex.org/files/deps/django-sorting-0.1.tar.gz
 -f http://trac.transifex.org/files/deps/django-threadedcomments-0.9.tar.gz
 -f http://trac.transifex.org/files/deps/userprofile-0.7-r422-correct-validation.tar.gz
+-e git+git://github.com/mpessas/django-bulk.git#egg=django-bulk
 -e git+git://github.com/mpessas/django-tagging.git#egg=django-tagging
 -e git+git://github.com/jkal/django-notification.git#egg=django-notification
 -e git+git://github.com/jkal/django-pagination.git#egg=django-pagination
