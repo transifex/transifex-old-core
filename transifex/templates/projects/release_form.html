@@ -2,20 +2,18 @@
 {% load i18n %}
 {% load txcommontags %}
 
-{% block extra_head %}
-  <script type="text/javascript" src="/admin/jsi18n/"></script>
-  <script type="text/javascript" src="/media/admin/js/core.js"></script>
-  {{ form.media }}
+{% block extrajs %}
+{{ block.super }}
+<script type="text/javascript">
+$(document).ready(function(){
+  $('a[rel*=facebox]').facebox()
+});
+</script>
 {% endblock %}
 
 {% block title %}
   {% if not release %}{{ block.super }} | {% trans "Add a release" %}
   {% else %}{{ block.super }} | {% blocktrans with release.name as release_name %}Edit {{ release_name}}{% endblocktrans %}{% endif %}
-{% endblock %}
-
-{% block breadcrumb %}
-  {% if not release %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project }}</a> &raquo; {% trans "Add a release" %}
-  {% else %}{{ block.super }} &raquo; <a href="{{ project.get_absolute_url }}">{{ project }}</a> &raquo; {% blocktrans with release.name as release_name %}Edit <em>{{ release_name}}</em> release{% endblocktrans %}{% endif %}
 {% endblock %}
 
 {% block content_title %}
@@ -48,9 +46,21 @@
 	
 	<h3>{% trans "Delete release from Transifex" %}</h3>
 	<div>
-	  <a class="i16 delete buttonized buttonized_warning" href="{% url release_delete release.project.slug release.slug %}">{% trans "Delete release..." %}</a>
+	  <a class="i16 delete buttonized buttonized_warning" rel="facebox" href="#js-delete-release-confirm">{% trans "Delete release..." %}</a>
 	</div>
 	{% endif %}
+
+  <div id="js-delete-release-confirm" style="display:none">
+    <div class='facebox-content'>
+      <h4>{% blocktrans with release.name as release_name %}Say goodbye to <em>{{ release_name }}</em>?{% endblocktrans %}</h4>
+      <div class="warning">
+        <p>{% blocktrans with release.project.name as project_name and release.name as release_name %}Are you sure you want to permanently delete the release '{{ release_name }}' which works on {{ project_name }}?{% endblocktrans %}</p>
+      </div>
+      <form action="{% url release_delete release.project.slug release.slug %}" method="post">{% csrf_token %}
+        <input type="submit" class="i16 submit buttonized" value='{% trans "Yes, I am sure!" %}' />
+      </form>
+    </div>
+  </div>
 {% endif %}
 
 {% endblock %}
