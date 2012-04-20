@@ -429,6 +429,9 @@ input, textarea {
 
 input:focus, textarea:focus { border: 1px solid #818181; }
 
+/* support RTL BIDI in textarea */
+textarea.rtl { unicode-bidi: embed; direction: rtl; }
+
 /*Overriden form elements-----------------------------------------------------*/
 .tx-form select{margin: 10px 0;cursor: pointer;}
 .tx-form .chzn-container{width:250px !important;margin: 0.3em 0;}
