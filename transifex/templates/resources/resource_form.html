@@ -4,14 +4,6 @@
 {% load permissions %}
 {% load txpermissions %}
 
-{% block breadcrumb %}
-
-{{block.super}} »
-<a href="{% url project_list_recent %}">{% trans "Projects" %}</a> »
-<a href="{% url project_detail resource.project.slug %}">{{resource.project}}</a> »
-Edit {{resource}}
-{% endblock %}
-
 {% block title %}
     {{ block.super }} | Edit {{ resource}}
 {% endblock %}
