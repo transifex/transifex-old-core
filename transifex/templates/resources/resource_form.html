@@ -23,6 +23,7 @@ $(document).ready(function(){
   $('.tx-form .required, .tx-form .field-helptext').each(function(){
   	$(this).appendTo($(this).siblings('label'));
   });
+  $('a[rel*=facebox]').facebox()
 });
 </script>
 {% endblock %}
@@ -103,8 +104,20 @@ $(document).ready(function(){
     <p style="margin-bottom:1em;">{% trans "By deleting the resource your translations will be lost:" %}</p>
 
     <div>
-      <a class="i16 delete buttonized buttonized_warning" href="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}">{% trans "Delete resource" %}</a>
+      <a class="i16 delete buttonized buttonized_warning" rel="facebox" href="#js-delete-resource-confirm">{% trans "Delete resource" %}</a>
     </div>
     {% endif %}
+
+    <div id="js-delete-resource-confirm" style="display:none">
+      <div class='facebox-content'>
+        <h4>{% blocktrans with resource.name as resource_name %}Say goodbye to <em>{{ resource_name }}</em>?{% endblocktrans %}</h4>
+        <div class="warning">
+          <p>{% blocktrans with resource.name as resource_name %}Are you sure you want to permanently delete the translation resource '{{ resource_name }}'?{% endblocktrans %}</p></p>
+        </div>
+        <form action="{% url resource_delete project_slug=resource.project.slug resource_slug=resource.slug %}" method="post">{% csrf_token %}
+          <input type="submit" class="i16 submit buttonized" value='{% trans "Yes, I am sure!" %}' />
+        </form>
+      </div>
+    </div>
 {% endblock %}
 

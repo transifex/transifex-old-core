@@ -109,10 +109,8 @@ def resource_delete(request, project_slug, resource_slug):
         return HttpResponseRedirect(reverse('project_detail',
                                     args=[resource.project.slug]),)
     else:
-        return render_to_response(
-            'resources/resource_confirm_delete.html', {'resource': resource,},
-            context_instance=RequestContext(request))
-
+        return HttpResponseRedirect(reverse('resource_edit',
+            args=[resource.project.slug, resource.slug]))
 
 
 @one_perm_required_or_403(pr_resource_add_change,
