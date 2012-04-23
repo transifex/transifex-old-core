@@ -123,7 +123,7 @@ URL_ROLES.update({
     'GET:/projects/p/project1/resource/resource1/delete/':{
         'anonymous':(403,),
         'registered':(403,),
-        'maintainer':(200,),
+        'maintainer':(302,),
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
@@ -208,7 +208,7 @@ URL_ROLES.update({
     'GET:/projects/p/project1/r/releaseslug1/delete/':{
         'anonymous':(302,),
         'registered':(403,),
-        'maintainer':(200,),
+        'maintainer':(302,),
         'writer':(403,),
         'team_coordinator':(403,),
         'team_member':(403,),
