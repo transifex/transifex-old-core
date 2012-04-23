@@ -165,9 +165,8 @@ def release_delete(request, project_slug, release_slug):
         return HttpResponseRedirect(reverse('project_detail',
                                      args=(project_slug,)))
     else:
-        return render_to_response('projects/release_confirm_delete.html',
-                                  {'release': release,},
-                                  context_instance=RequestContext(request))
+        return HttpResponseRedirect(reverse('release_edit',
+            args=(project_slug, release_slug)))
 
 
 # Feeds

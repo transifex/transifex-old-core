@@ -609,7 +609,7 @@ class PermissionsTest(BaseTestCase):
         page_url = reverse('resource_delete',
                            args=[self.project.slug, self.resource.slug])
         resp = self.client['maintainer'].get(page_url)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 302)
         resp = self.client['maintainer'].post(page_url,follow=True)
         self.assertEqual(resp.status_code, 200)
 
@@ -690,6 +690,6 @@ class PermissionsTest(BaseTestCase):
                            args=[self.project_private.slug,
                                  self.resource_private.slug])
         resp = self.client['maintainer'].get(page_url)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 302)
         resp = self.client['maintainer'].post(page_url,follow=True)
         self.assertEqual(resp.status_code, 200)
