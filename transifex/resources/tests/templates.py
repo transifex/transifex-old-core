@@ -27,9 +27,6 @@ class ResourcesTemplateTests(BaseTestCase):
                             (self.resource.slug ,),
                             status_code=200)
         self.assertContains(resp,
-                            '<span class="priority_sort" style="display:none">%s</span>' %
-                            (self.resource.priority.level ,))
-        self.assertContains(resp,
                             '<img class="res_tipsy_enable" src="%spriorities/images/%s.png"' %
                             (settings.STATIC_URL,
                              self.resource.priority.display_level ))
