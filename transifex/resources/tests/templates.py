@@ -20,6 +20,11 @@ class ResourcesTemplateTests(BaseTestCase):
 
     def test_priority_table_snippet(self):
         """ Check that priority td is presented correctly."""
+        priority_dict = {
+                'Normal': 0,
+                'High': 1,
+                'Urgent': 2
+        }
         resp = self.client['maintainer'].get(self.urls['project_resources'])
         self.assertTemplateUsed(resp, 'projects/project_resources.html')
         self.assertContains(resp,
@@ -29,7 +34,7 @@ class ResourcesTemplateTests(BaseTestCase):
         self.assertContains(resp,
                             '<img class="res_tipsy_enable" src="%spriorities/images/%s.png"' %
                             (settings.STATIC_URL,
-                             self.resource.priority.display_level ))
+                             priority_dict.get(self.resource.priority.display_level) ))
         for user in ['anonymous', 'registered','team_member']:
             resp = self.client[user].get(self.urls['project'])
             self.assertNotContains(resp,
