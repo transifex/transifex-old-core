@@ -3,7 +3,7 @@
 {% load txcommontags %}
 
 {% block content_title %}
-	
+
 
 {% endblock %}
 
@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 	<form id="login-form" class="tx-form" action="" method="post">
 	  {% csrf_token %}
-	
+
 	  <fieldset style="  border-right:3px solid #EB8C25;">
 	    {{ form.non_field_errors }}
 	    {% for field in form %}
@@ -48,26 +48,36 @@ $(document).ready(function(){
 	  	  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 	</form>
 </div>
-	  
-<div id="login-utility-list" class="grid_4 omega">	
+
+{% settings USE_SOCIAL_LOGIN %}
+{% settings SOCIAL_AUTH_ENABLED_BACKENDS as BACKENDS %}
+
+<div id="login-utility-list" class="grid_4 omega">
   {# http://code.djangoproject.com/ticket/7239 #}
-  
+
+  {% if USE_SOCIAL_LOGIN %}
   <h5 class="i16 orange-arrow">{% trans "You can also login using:" %}</h5>
+  {% block social_login_backends %}
   <ul>
-	  {% url socialauth_begin 'twitter' as social_twitter_url %}
-		{% if social_twitter_url %}	
-
+        {% url socialauth_begin 'twitter' as social_twitter_url %}
+		{% if 'twitter' in BACKENDS and social_twitter_url %}
 		  <li><a id="twitter-login" href="{{ social_twitter_url }}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Twitter' %}"></a></li>
-		  <li><a id="linkedin-login" href="{% url socialauth_begin 'linkedin' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Linkedin' %}"></a></li>
-		  <li><a id="google-login" href="{% url socialauth_begin 'google-oauth2' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Google' %}"></a></li>
-		  <li><a id="facebook-login" href="{% url socialauth_begin 'facebook' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Facebook' %}"></a></li>		
-			
-
 		{% endif %}
-	</ul>
-		  <h5 style="margin-top:17px;" class="i16 orange-arrow">{% trans "Not yet a member?" %}&nbsp;<a href="{% url userena_signup %}"><strong>{% trans "Register now!" %}</strong></a></h5>
+		{% if 'linkedin' in BACKENDS %}
+		  <li><a id="linkedin-login" href="{% url socialauth_begin 'linkedin' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Linkedin' %}"></a></li>
+		{% endif %}
+		{% if 'google-oauth2' in BACKENDS %}
+		  <li><a id="google-login" href="{% url socialauth_begin 'google-oauth2' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Google' %}"></a></li>
+		{% endif %}
+		{% if 'facebook' in BACKENDS %}
+		  <li><a id="facebook-login" href="{% url socialauth_begin 'facebook' %}?next={{ request|get_next }}" class="social-login smooth-transition" title="{% trans 'Login using Facebook' %}"></a></li>
+		{% endif %}
+  </ul>
+  {% endblock %}
+  {% endif %}
+
+	<h5 style="margin-top:17px;" class="i16 orange-arrow">{% trans "Not yet a member?" %}&nbsp;<a href="{% url userena_signup %}"><strong>{% trans "Register now!" %}</strong></a></h5>
 </div>
-	
 
 
 </div>
