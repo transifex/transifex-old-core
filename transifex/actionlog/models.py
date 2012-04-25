@@ -56,11 +56,14 @@ def _user_counting(query):
                        'number': entry['number']})
     return result
 
-def _distinct_action_time(query):
+def _distinct_action_time(query, limit=None):
     """
     Distinct rows by the 'action_time' field, keeping in the query only the
     entry with the highest 'id' for the related set of entries with equal
     'action_time'.
+
+    If 'limit' is set, the function  will return the 'limit'-most-recent
+    actionlogs.
 
     Example:
 
@@ -89,22 +92,25 @@ def _distinct_action_time(query):
         Rows with the same 'action_time' are eliminated, keeping the one with
         highest 'id'.
     """
-    pks = query.values('action_time').annotate(
-        gid=models.Max('id')).order_by().values_list('gid', flat=True)
+    pks = query.values('action_time').annotate(gid=models.Max('id'))
+    if limit:
+        pks = pks.order_by('-id')[:limit]
+    else:
+        pks = pks.order_by()
+    pks = pks.values_list('gid', flat=True)
     return LogEntry.objects.select_related('user').filter(pk__in=pks)
 
-
 class LogEntryManager(models.Manager):
-    def by_object(self, obj):
+    def by_object(self, obj, limit):
         """Return LogEntries for a related object."""
         ctype = ContentType.objects.get_for_model(obj)
         q = self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
-        return _distinct_action_time(q)
+        return _distinct_action_time(q, limit)
 
-    def by_user(self, user):
+    def by_user(self, user, limit):
         """Return LogEntries for a specific user."""
         q = self.filter(user__pk__exact=user.pk)
-        return _distinct_action_time(q)
+        return _distinct_action_time(q, limit)
 
     def by_object_last_week(self, obj):
         """Return LogEntries of the related object for the last week."""
@@ -113,7 +119,7 @@ class LogEntryManager(models.Manager):
         return self.filter(content_type__pk=ctype.pk, object_id=obj.pk,
             action_time__gt=last_week_date)
 
-    def by_user_and_public_projects(self, user):
+    def by_user_and_public_projects(self, user, limit=None):
         """
         Return LogEntries for a specific user and his actions on public projects.
         """
@@ -122,7 +128,7 @@ class LogEntryManager(models.Manager):
         ctype = ContentType.objects.get(model='project')
         q = self.filter(user__pk__exact=user.pk, content_type=ctype,
                 object_id__in=Project.objects.filter(private=False))
-        return _distinct_action_time(q)
+        return _distinct_action_time(q, limit)
 
     def for_projects_by_user(self, user):
         """Return project LogEntries for a related user."""
