@@ -27,12 +27,8 @@ from transifex.resources.signals import post_save_translation
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation, SourceEntityCollection, TranslationCollection
 from transifex.teams.models import Team
+from transifex.resources.tasks import send_notices_for_formats
 
-
-# Temporary
-from transifex.txcommon import notifications as txnotification
-# Addons
-from watches.models import TranslationWatch
 
 """
 STRICT flag is used to switch between two parsing modes:
@@ -368,7 +364,7 @@ class Handler(object):
             action_logging(user, object_list, nt, context=context)
 
         if settings.ENABLE_NOTICES:
-            self._send_notices(signal=nt, extra_context=context)
+            send_notices_for_formats.delay(nt, context)
 
     def _init_source_entity_collection(self, se_list):
         """Initialize the source entities collection.
@@ -420,25 +416,6 @@ class Handler(object):
             'language': self.language
         })
         post_save_translation.send(sender=self, **kwargs)
-
-    def _send_notices(self, signal, extra_context):
-        txnotification.send_observation_notices_for(
-            self.resource.project, signal, extra_context
-        )
-
-        # if language is source language, notify all languages for the change
-        if self.language == self.resource.source_language:
-            for l in self.resource.available_languages:
-                twatch = TranslationWatch.objects.get_or_create(
-                    resource=self.resource, language=l)[0]
-                logger.debug(
-                    "addon-watches: Sending notification for '%s'" % twatch
-                )
-                txnotification.send_observation_notices_for(
-                    twatch,
-                    signal='project_resource_translation_changed',
-                    extra_context=extra_context
-                )
 
     def _should_skip_translation(self, se, trans):
         """Check if current translation should be skipped, ie not saved to db.
