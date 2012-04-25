@@ -124,7 +124,7 @@ class TestWatches(BaseTestCase):
         self.assertEqual(res.status_code, 201)
         new_resource = Resource.objects.get(slug='r1', project=self.project)
         self.assertEqual(ObservedItem.objects.filter(content_type__model='resource',
-            signal__in=self.resource_signals, object_id=new_resource.id).count(), 5)
+            signal__in=self.resource_signals, object_id=new_resource.id).count(), 6)
 
         for user in USER_ROLES:
             resp = self.client[user].post(self.url_project_toggle_watch, {},)

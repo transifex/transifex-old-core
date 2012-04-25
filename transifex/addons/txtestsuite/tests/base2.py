@@ -449,7 +449,7 @@ class TransactionBaseTestCase(SampleData, TransactionTestCase,):
             project=self.project_private, creator=self.user['maintainer'])[0]
         self.team.coordinators.add(self.user['team_coordinator'])
         self.team.members.add(self.user['team_member'])
-        self,team.reviewers.add(self.user['reviewer'])
+        self.team.reviewers.add(self.user['reviewer'])
         self.team_private.coordinators.add(self.user['team_coordinator'])
         self.team_private.members.add(self.user['team_member'])
         self.team_private.reviewers.add(self.user['reviewer'])

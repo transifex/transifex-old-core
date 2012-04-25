@@ -93,14 +93,15 @@ class ReleaseNotificationTests(base.BaseTestCase):
         # Sorted mails list
         mails = key_sort(mail.outbox, 'to')
 
-        self.assertEqual(len(mails), 4)
+        self.assertEqual(len(mails), 5)
         self.assertEqual(mails[0].subject, '[localhost] Release is in string '
             'freeze period: Release1')
 
         self.assertEqual(mails[0].to, ['maintainer3@localhost'])
         self.assertEqual(mails[1].to, ['maintainer@localhost'])
-        self.assertEqual(mails[2].to, ['team_coordinator@localhost'])
-        self.assertEqual(mails[3].to, ['team_member@localhost'])
+        self.assertEqual(mails[2].to, ['reviewer@localhost'])
+        self.assertEqual(mails[3].to, ['team_coordinator@localhost'])
+        self.assertEqual(mails[4].to, ['team_member@localhost'])
 
 
     def test_before_trans_deadline_notifications(self):
@@ -117,12 +118,13 @@ class ReleaseNotificationTests(base.BaseTestCase):
         # Sorted mails list
         mails = key_sort(mail.outbox, 'to')
 
-        self.assertEqual(len(mails), 2)
+        self.assertEqual(len(mails), 3)
         self.assertEqual(mails[0].subject, '[localhost] Release about '
         'to hit the translation deadline: Release1')
 
-        self.assertEqual(mails[0].to, ['team_coordinator@localhost'])
-        self.assertEqual(mails[1].to, ['team_member@localhost'])
+        self.assertEqual(mails[0].to, ['reviewer@localhost'])
+        self.assertEqual(mails[1].to, ['team_coordinator@localhost'])
+        self.assertEqual(mails[2].to, ['team_member@localhost'])
 
 
     def test_hit_trans_deadline_notifications(self):
@@ -141,14 +143,15 @@ class ReleaseNotificationTests(base.BaseTestCase):
         # Sorted mails list
         mails = key_sort(mail.outbox, 'to')
 
-        self.assertEqual(len(mails), 4)
+        self.assertEqual(len(mails), 5)
         self.assertEqual(mails[0].subject, '[localhost] Release has '
         'hit the translation deadline: Release1')
 
         self.assertEqual(mails[0].to, ['maintainer3@localhost'])
         self.assertEqual(mails[1].to, ['maintainer@localhost'])
-        self.assertEqual(mails[2].to, ['team_coordinator@localhost'])
-        self.assertEqual(mails[3].to, ['team_member@localhost'])
+        self.assertEqual(mails[2].to, ['reviewer@localhost'])
+        self.assertEqual(mails[3].to, ['team_coordinator@localhost'])
+        self.assertEqual(mails[4].to, ['team_member@localhost'])
 
 
     def test_string_freeze_breakage_outsourced(self):
