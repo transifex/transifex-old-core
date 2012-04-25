@@ -32,7 +32,8 @@ class ActionlogAPITests(base.BaseTestCase):
             if user == 'anonymous':
                 self.assertEqual(resp.status_code, 401)
             else:
-                if user in ['maintainer', 'team_member', 'team_coordinator']:
+                if user in ['maintainer', 'team_member', 'team_coordinator',
+                        'reviewer']:
                     self.assertEqual(resp.status_code, 200)
                 else:
                     self.assertEqual(resp.status_code, 401)
@@ -55,7 +56,8 @@ class ActionlogAPITests(base.BaseTestCase):
             #Test actionlogs for all teams in a private project
             resp = self.client[user].get(reverse('project_teams_actionlogs',
                 args=['project2']))
-            if user in ['maintainer', 'team_coordinator', 'team_member']:
+            if user in ['maintainer', 'team_coordinator', 'team_member',
+                    'reviewer']:
                 self.assertEqual(resp.status_code, 200)
             else:
                 self.assertEqual(resp.status_code, 401)
@@ -71,7 +73,8 @@ class ActionlogAPITests(base.BaseTestCase):
             #Test actionlogs for a team in a private project
             resp = self.client[user].get(reverse('project_team_actionlogs',
                 args=['project2', self.language.code]))
-            if user in ['maintainer', 'team_coordinator', 'team_member']:
+            if user in ['maintainer', 'team_coordinator', 'team_member',
+                    'reviewer']:
                 self.assertEqual(resp.status_code, 200)
             else:
                 self.assertEqual(resp.status_code, 401)
@@ -94,7 +97,8 @@ class ActionlogAPITests(base.BaseTestCase):
             #Test actionlogs for all releases in a private project
             resp = self.client[user].get(reverse('project_releases_actionlogs',
                 args=['project2']))
-            if user in ['maintainer', 'team_coordinator', 'team_member']:
+            if user in ['maintainer', 'team_coordinator', 'team_member',
+                    'reviewer']:
                 self.assertEqual(resp.status_code, 200)
             else:
                 self.assertEqual(resp.status_code, 401)
@@ -110,7 +114,8 @@ class ActionlogAPITests(base.BaseTestCase):
             #Test actionlogs for a release in a private project
             resp = self.client[user].get(reverse('project_release_actionlogs',
                 args=['project2', 'releaseslug2']))
-            if user in ['maintainer', 'team_coordinator', 'team_member']:
+            if user in ['maintainer', 'team_coordinator', 'team_member',
+                    'reviewer']:
                 self.assertEqual(resp.status_code, 200)
             else:
                 self.assertEqual(resp.status_code, 401)
@@ -133,7 +138,8 @@ class ActionlogAPITests(base.BaseTestCase):
             #Test actionlogs for all resources in a private project
             resp = self.client[user].get(reverse('project_resources_actionlogs',
                 args=['project2']))
-            if user in ['maintainer', 'team_coordinator', 'team_member']:
+            if user in ['maintainer', 'team_coordinator', 'team_member',
+                    'reviewer']:
                 self.assertEqual(resp.status_code, 200)
             else:
                 self.assertEqual(resp.status_code, 401)
@@ -149,7 +155,8 @@ class ActionlogAPITests(base.BaseTestCase):
             #Test actionlogs for a resource in a private project
             resp = self.client[user].get(reverse('project_resource_actionlogs',
                 args=['project2', 'resource1']))
-            if user in ['maintainer', 'team_coordinator', 'team_member']:
+            if user in ['maintainer', 'team_coordinator', 'team_member',
+                    'reviewer']:
                 self.assertEqual(resp.status_code, 200)
             else:
                 self.assertEqual(resp.status_code, 401)

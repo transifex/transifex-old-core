@@ -309,7 +309,7 @@ class ResourceAutofetchTests(base.BaseTestCase):
 
     def setUp(self, *args, **kwargs):
         super(ResourceAutofetchTests, self).setUp(*args, **kwargs)
-        self.SFILE = "http://code.indifex.com/transifex/raw/tip/transifex/locale/en/LC_MESSAGES/djangojs.po"
+        self.SFILE = "https://raw.github.com/transifex/transifex/devel/transifex/locale/en/LC_MESSAGES/djangojs.po"
         self.url_edit =  reverse('resource_edit', args=[self.project.slug, self.resource.slug])
 
 

@@ -93,8 +93,9 @@ class TestmakerLoggedIn(TestmakerBase):
         self.assertEqual(r.status_code, 403)
 
     def test_projectspexampleteamafdelete_128282090157(self):
-        r = self.c.post('/projects/p/project1/language/af/delete/', {'team_delete': "Yes, I'm sure!", })
-        r = self.c.get('/projects/p/project1/language/af/', {})
+        r = self.c.post('/projects/p/project1/language/ar/delete/', {'team_delete': "Yes, I'm sure!", })
+        self.assertEqual(r.status_code, 403)
+        r = self.c.get('/projects/p/project1/language/ar/', {})
         self.assertEqual(r.status_code, 200)
 
     # Edit project
