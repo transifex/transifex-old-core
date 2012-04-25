@@ -134,7 +134,6 @@ def resource_edit(request, project_slug, resource_slug):
             url_form = URLInfoForm(request.POST,)
         if resource_form.is_valid() and url_form.is_valid():
             try:
-                action_log = True
                 resource = resource_form.save(commit=False)
                 if resource_form.cleaned_data['sourcefile'] is not None:
                     method = resource.i18n_method
@@ -145,7 +144,6 @@ def resource_edit(request, project_slug, resource_slug):
                     save_source_file(
                         resource, request.user, content, method, filename
                     )
-                    action_log = False
 
                 urlinfo = url_form.save(commit=False)
                 resource_new = resource_form.save()
@@ -156,7 +154,6 @@ def resource_edit(request, project_slug, resource_slug):
                 if urlinfo.source_file_url:
                     try:
                         urlinfo.update_source_file(fake=True)
-                        action_log = False
                     except Exception, e:
                         url_form._errors['source_file_url'] = _("The URL you provided"
                             " doesn't link to a valid file.")
@@ -181,12 +178,8 @@ def resource_edit(request, project_slug, resource_slug):
                         if urlinfo.id:
                             urlinfo.delete()
 
-                # FIXME: whenever source file is updated as part of resource
-                # edit, duplicate actionlogs are generated. Setting action_log
-                # to False when source file is updated prevents generation
-                # of duplicate actionlog.
                 post_resource_save.send(sender=None, instance=resource_new,
-                    created=False, user=request.user, action_log=action_log)
+                    created=False, user=request.user)
 
                 return HttpResponseRedirect(reverse('resource_detail',
                     args=[resource.project.slug, resource.slug]))
