@@ -20,17 +20,23 @@ class LogNode(template.Node):
         return "<GetLog Node>"
 
     def render(self, context):
+        # XXX Should be fixed when ActionLog starts using Redis.
+        # XXX __init_ is executed only once (before template compilation).
+        # XXX NEEDS FIXING: get_public_log <limit>: limit is now useless.
+        self.limit = 5
+
         if self.user is not None:
             user = template.Variable(self.user).resolve(context)
             if self.log_type and self.log_type == 'get_public_log':
-                query = LogEntry.objects.by_user_and_public_projects(user)
+                query = LogEntry.objects.by_user_and_public_projects(
+                  user, self.limit)
             else:
-                query = LogEntry.objects.by_user(user)
+                query = LogEntry.objects.by_user(user, self.limit)
         elif self.object is not None:
             obj = template.Variable(self.object).resolve(context)
             query = LogEntry.objects.by_object(obj)
 
-        context[self.varname] = query[:self.limit]
+        context[self.varname] = query
         return ''
 
 class DoGetLog:
