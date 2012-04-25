@@ -327,7 +327,9 @@ def send_observation_notices_for(observed, signal='post_save', extra_context=Non
     """
     Send a notice for each registered user about an observed object.
     """
-    observed_items = ObservedItem.objects.all_for(observed, signal)
+    observed_items = ObservedItem.objects.all_for(
+        observed, signal
+    ).select_related('user', 'notice_type', 'observed_object')
     for item in observed_items:
         if extra_context is None:
             extra_context = {}
