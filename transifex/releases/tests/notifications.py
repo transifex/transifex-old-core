@@ -17,6 +17,11 @@ from transifex.txcommon.utils import key_sort
 class ReleaseNotificationTests(base.BaseTestCase):
     """Test notification of events around releases."""
 
+    def _gen_assert_msg(self, msg):
+        if settings.TX_ROOT != settings.PROJECT_PATH:
+            return msg.lstrip('[localhost] ')
+        return msg
+
     def setUp(self):
         self.current_path = os.path.split(__file__)[0]
         super(ReleaseNotificationTests, self).setUp()
@@ -70,8 +75,9 @@ class ReleaseNotificationTests(base.BaseTestCase):
         mails = key_sort(mail.outbox, 'to')
 
         self.assertEqual(len(mails), 2)
-        self.assertEqual(mails[0].subject, '[localhost] Release about to '
-            'enter the string freeze period: Release1')
+        self.assertEqual(mails[0].subject, self._gen_assert_msg(
+            '[localhost] Release about to '
+            'enter the string freeze period: Release1'))
 
         self.assertEqual(mails[0].to, ['maintainer3@localhost'])
         self.assertEqual(mails[1].to, ['maintainer@localhost'])
@@ -94,8 +100,9 @@ class ReleaseNotificationTests(base.BaseTestCase):
         mails = key_sort(mail.outbox, 'to')
 
         self.assertEqual(len(mails), 5)
-        self.assertEqual(mails[0].subject, '[localhost] Release is in string '
-            'freeze period: Release1')
+        self.assertEqual(mails[0].subject, self._gen_assert_msg(
+            '[localhost] Release is in string '
+            'freeze period: Release1'))
 
         self.assertEqual(mails[0].to, ['maintainer3@localhost'])
         self.assertEqual(mails[1].to, ['maintainer@localhost'])
@@ -119,8 +126,9 @@ class ReleaseNotificationTests(base.BaseTestCase):
         mails = key_sort(mail.outbox, 'to')
 
         self.assertEqual(len(mails), 3)
-        self.assertEqual(mails[0].subject, '[localhost] Release about '
-        'to hit the translation deadline: Release1')
+        self.assertEqual(mails[0].subject, self._gen_assert_msg(
+            '[localhost] Release about '
+            'to hit the translation deadline: Release1'))
 
         self.assertEqual(mails[0].to, ['reviewer@localhost'])
         self.assertEqual(mails[1].to, ['team_coordinator@localhost'])
@@ -144,8 +152,9 @@ class ReleaseNotificationTests(base.BaseTestCase):
         mails = key_sort(mail.outbox, 'to')
 
         self.assertEqual(len(mails), 5)
-        self.assertEqual(mails[0].subject, '[localhost] Release has '
-        'hit the translation deadline: Release1')
+        self.assertEqual(mails[0].subject, self._gen_assert_msg(
+            '[localhost] Release has '
+            'hit the translation deadline: Release1'))
 
         self.assertEqual(mails[0].to, ['maintainer3@localhost'])
         self.assertEqual(mails[1].to, ['maintainer@localhost'])
@@ -177,8 +186,9 @@ class ReleaseNotificationTests(base.BaseTestCase):
         mails = key_sort(mail.outbox, 'to')
 
         self.assertEqual(len(mails), 3)
-        self.assertEqual(mails[0].subject, '[localhost] Release string '
-        'freeze breakage: Release1')
+        self.assertEqual(mails[0].subject, self._gen_assert_msg(
+            '[localhost] Release string '
+            'freeze breakage: Release1'))
 
         self.assertEqual(mails[0].to, ['maintainer3@localhost'])
         self.assertEqual(mails[1].to, ['maintainer@localhost'])
