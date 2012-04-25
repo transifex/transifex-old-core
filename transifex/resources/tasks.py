@@ -29,3 +29,17 @@ def check_and_notify_resource_full_reviewed(**kwargs):
 
             notification.send(rlstats.resource.project.maintainers.all(),
                 nt, context)
+
+
+@task(name='send_notices_on_resource_changed', max_retries=2)
+def send_notices_for_resource_edited(resource, user):
+    """
+    Send notifications, when a resource has been edited.
+
+    Args:
+        resource: The resource that has been edited.
+        user: The user that did the update.
+    """
+    post_resource_save.send(
+        sender=None, instance=resource, created=False, user=user
+    )
