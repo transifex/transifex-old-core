@@ -122,7 +122,9 @@ class ProjectPermission(BasePermission):
                 if any_team and not team:
                     user_teams = project.team_set.filter(
                         Q(coordinators=self.user)|
-                        Q(members=self.user)).distinct()
+                        Q(members=self.user)|
+                        Q(reviewers=self.user)
+                    ).distinct()
                     if user_teams:
                         return True
         return False
