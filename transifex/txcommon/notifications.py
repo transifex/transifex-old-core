@@ -293,6 +293,14 @@ NOTICE_TYPES = [
                 "default": 2,
                 "show_to_user": True,
             },
+            {
+                "label": "project_resource_source_file_changed",
+                "display": _("Resource source file changed"),
+                "description": _("when the source file of a resource is"
+                        " changed"),
+                "default": 2,
+                "show_to_user": True,
+            },
             {   # Used only for ActionLog purposes.
                 "label": "project_resource_translated",
                 "display": _("Resource translated"),

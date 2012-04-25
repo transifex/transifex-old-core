@@ -348,7 +348,7 @@ class Handler(object):
         self._update_stats_of_resource(self.resource, self.language, user)
 
         if self.language == self.resource.source_language:
-            nt = 'project_resource_changed'
+            nt = 'project_resource_source_file_changed'
         else:
             nt = 'project_resource_translated'
         context = {
