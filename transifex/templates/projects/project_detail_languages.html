@@ -27,7 +27,7 @@
       <a class="i16 language-add" id="request-team-button" href="javascript:;">{% trans "Request language" %}</a>
       {% endif %}
       {% if not project.anyone_submit and not project.outsource %}
-        {% if perms.projects.change_team or is_maintainer %}
+        {% if is_maintainer %}
 		    <a class="i16 nude-button add" href="{% url team_create project.slug %}">{% trans "Create language" %}</a>
         {% endif %}
       {% endif %}
