@@ -3,7 +3,7 @@ from django.core import management
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django_addons.autodiscover import autodiscover_notifications
-from transifex.txcommon.tests.base import BaseTestCase
+from transifex.txcommon.tests.base import BaseTestCase, skip
 
 # TODO: Most of these are really unnecessary and will break again at some point
 # so they should be removed.
@@ -28,6 +28,7 @@ class TestmakerLoggedIn(TestmakerBase):
         super(TestmakerLoggedIn, self).setUp(*args, **kwargs)
         self.c = self.client["team_member"]
 
+    @skip
     def test_projects_128272193615(self):
         r = self.c.get('/projects/', {})
         self.assertEqual(r.status_code, 200)

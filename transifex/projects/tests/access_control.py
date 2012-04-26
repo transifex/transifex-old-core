@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from transifex.txcommon.tests.base import (Project, Language, Team, AuPermission,
-    BaseTestCase, USER_ROLES, create_users_and_clients)
+    BaseTestCase, USER_ROLES, create_users_and_clients, skip)
 from transifex.txcommon.tests.utils import (check_page_status,
     convert_url_roles, assert_status_code)
 
@@ -228,6 +228,11 @@ class ProjectAccessControlTestCase(BaseTestCase):
         DATA = {'project_type':'typical', 'next': url, 'outsource': ''}
         resp = self.client['maintainer'].post(url, DATA, follow=True)
         self.assertContains(resp, 'This field is required', status_code=200)
+
+    @skip
+    def test_project_hub_access_control_edit(self):
+        """Test edit of project hub access control"""
+        url = reverse('project_access_control_edit', args=[self.project.slug,])
 
         #change access control as hub and free for all
         DATA = {'project_type':'hub', 'access_control':"free_for_all",
