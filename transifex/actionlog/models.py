@@ -101,13 +101,13 @@ def _distinct_action_time(query, limit=None):
     return LogEntry.objects.select_related('user').filter(pk__in=pks)
 
 class LogEntryManager(models.Manager):
-    def by_object(self, obj, limit):
+    def by_object(self, obj, limit=None):
         """Return LogEntries for a related object."""
         ctype = ContentType.objects.get_for_model(obj)
         q = self.filter(content_type__pk=ctype.pk, object_id=obj.pk)
         return _distinct_action_time(q, limit)
 
-    def by_user(self, user, limit):
+    def by_user(self, user, limit=None):
         """Return LogEntries for a specific user."""
         q = self.filter(user__pk__exact=user.pk)
         return _distinct_action_time(q, limit)
