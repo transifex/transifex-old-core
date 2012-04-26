@@ -2,9 +2,10 @@ from django import template
 from django.conf import settings
 from django.db.models import get_model
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 from actionlog.models import LogEntry
 from actionlog.queues import redis_key_for_resource, redis_key_for_project, \
-        redis_key_for_team
+        redis_key_for_team, redis_key_for_user
 from datastores.txredis import TxRedisMapper, redis_exception_handler
 
 
@@ -154,8 +155,15 @@ def recent_team_log(parser, token):
     return RecentLogNode(Team, team, redis_key_for_team, context_var)
 
 
+def recent_user_log(parser, token):
+    """Return the most recent logs of the specified user."""
+    (user, context_var) = _parse_recent_log_args(token)
+    return RecentLogNode(User, user, redis_key_for_user, context_var)
+
+
 register.tag('get_log', DoGetLog('get_log'))
 register.tag('get_public_log', DoGetLog('get_public_log'))
 register.tag('recent_resource_log', recent_resource_log)
 register.tag('recent_project_log', recent_project_log)
 register.tag('recent_team_log', recent_team_log)
+register.tag('recent_user_log', recent_user_log)

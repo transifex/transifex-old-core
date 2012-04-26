@@ -266,6 +266,6 @@ def action_logging(user, object_list, action_type, message=None, context=None):
                     message = message)
             l.save()
             if settings.USE_REDIS:
-                log_to_queues(object, user.pk, time, action_type_obj, message)
+                log_to_queues(object, user, time, action_type_obj, message)
     except TypeError:
         raise TypeError("The 'object_list' parameter must be iterable")
