@@ -353,3 +353,44 @@ class StatBarsPositions(dict):
             r = int(round(float(fr) / totsegwidth))
             self[segment[0]] = self.BarPos(r - l, l)
         return
+
+def db_table_exists(table, cursor=None):
+    """
+    As seen in:
+    https://gist.github.com/527113/307c2dec09ceeb647b8fa1d6d49591f3352cb034
+    """
+    try:
+        if not cursor:
+            from django.db import connection
+            cursor = connection.cursor()
+        if not cursor:
+            raise Exception
+        table_names = connection.introspection.get_table_list(cursor)
+    except:
+        raise Exception("Unable to determine if the table '%s' exists" % table)
+    else:
+        return table in table_names
+
+def db_table_column_exists(table, column, cursor=None):
+    """
+    'Inspired' by db_table_exists()
+    """
+    try:
+        if not cursor:
+            from django.db import connection
+            cursor = connection.cursor()
+        if not cursor:
+            raise Exception
+
+        table_desc = connection.introspection.get_table_description(
+          cursor, table)
+
+        if not table_desc:
+            raise Exception("No db table with name %s", table)
+    except Exception as e:
+        raise Exception("Unable to determine if the table '%s' has a column "
+                        "named %s: %s" % (table, column, e))
+    else:
+        column_names = [col.name for col in table_desc]
+        return column in column_names
+
