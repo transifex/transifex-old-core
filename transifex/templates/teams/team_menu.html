@@ -1,4 +1,4 @@
-{% extends "projects/base.html"m %m
+{% extends "projects/base.html" %}
 {% load staticfiles %}
 {% load i18n %}
 {% load addons %}
@@ -6,8 +6,6 @@
 {% load permissions %}
 {% load txpermissions %}
 
-{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
-{% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 
 {% block extra_head %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
@@ -65,6 +63,8 @@
 
 
 {% block header_menu %}
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+{% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 {% if not project.anyone_submit %}
 <div id="teamcode-arrow"><div id="teamcode">{{ language.code }}</div><span></span></div>
 <div class="tab-wrapper grid_10">
@@ -75,15 +75,12 @@
     {% endif %}
     {% hook "team.html" menu %}
     {% if is_maintainer or is_coordinator %}
-    <li class="{% if project_team_form %}selected{% endif %}"><a href="{% url team_update project.slug language.code %}">{% trans "Edit language-team" %}</a></li>
+    <li class="{% if project_team_form %}selected{% endif %}"><a href="{% url team_update project.slug language.code %}">{% trans "Edit language team" %}</a></li>
     {% endif %}
   </ul>
 </div>
 {% endif %}
 {% endblock %}
-
-
-
 
 {% block content_main %}{% endblock %}
 {% block content_footer %}{% endblock %}
