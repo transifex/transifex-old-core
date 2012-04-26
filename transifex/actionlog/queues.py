@@ -6,6 +6,7 @@ Redis related stuff for action logs.
 
 from django.db.models import get_model
 from django.utils.encoding import force_unicode
+from django.contrib.auth.models import User
 from transifex.txcommon.log import logger
 from datastores.txredis import TxRedisMapper, redis_exception_handler
 
@@ -22,20 +23,24 @@ def redis_key_for_team(team):
     return 'team:history:%s:%s' % (team.project_id, team.language_id)
 
 
+def redis_key_for_user(user):
+    return 'user:history:%s' % user.id
+
+
 @redis_exception_handler
-def log_to_queues(o, user_id, action_time, action_type, message):
+def log_to_queues(o, user, action_time, action_type, message):
     """Log actions to redis' queues."""
     Project = get_model('projects', 'Project')
     Resource = get_model('resources', 'Resource')
     Team = get_model('teams', 'Team')
+    _log_to_user_history(user, action_time, action_type, message)
     if isinstance(o, Project):
-        _log_to_recent_project_actions(o, user_id, action_time, message)
+        _log_to_recent_project_actions(o, user.id, action_time, message)
         _log_to_project_history(o, action_time, action_type, message)
     elif isinstance(o, Resource):
         _log_to_resource_history(o, action_time, action_type, message)
     elif isinstance(o, Team):
         _log_to_team_history(o, action_time, action_type, message)
-
 
 def _log_to_recent_project_actions(p, user_id, action_time, message):
     """Log actions that refer to projects to a queue of most recent actions.
@@ -113,3 +118,18 @@ def _log_to_team_history(team, action_time, action_type, message):
     r = TxRedisMapper()
     r.lpush(key, data=data)
     r.ltrim(key, 0, 4)
+
+
+@redis_exception_handler
+def _log_to_user_history(user, action_time, action_type, message):
+    """Log a message to a user's history queue."""
+    key = redis_key_for_user(user)
+    data = {
+        'action_time': action_time,
+        'message': message,
+        'action_type': action_type,
+        'user': user.username
+    }
+    r = TxRedisMapper()
+    r.lpush(key, data=data)
+    r.ltrim(key, 0, 11)
