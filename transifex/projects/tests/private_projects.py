@@ -13,7 +13,8 @@ from django.test.client import Client
 from authority.models import Permission
 from django_addons.autodiscover import autodiscover_notifications
 
-from transifex.txcommon.tests.base import BaseTestCase, USER_ROLES, NoticeTypes
+from transifex.txcommon.tests.base import BaseTestCase, USER_ROLES,\
+        NoticeTypes, skip
 from transifex.txcommon.log import logger
 from transifex.languages.models import Language
 from transifex.projects.models import Project
@@ -25,15 +26,6 @@ from django.utils import unittest
 
 Watch = get_model('repowatch', 'Watch')
 POFileLock = get_model('locks', 'POFileLock')
-
-def skip(func):
-    func_name = func.__name__
-    def decorator(func):
-        msg = "%s skipped. Please implement it in your project path."%func_name
-        if settings.TX_ROOT != settings.PROJECT_PATH:
-            logger.debug(msg)
-        return unittest.skipUnless(settings.TX_ROOT == settings.PROJECT_PATH, msg)
-    return decorator
 
 class PrivateProjectTest(BaseTestCase):
     """

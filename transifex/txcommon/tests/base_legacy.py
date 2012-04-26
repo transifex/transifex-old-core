@@ -3,6 +3,7 @@ import os
 from django.core import management
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.utils import unittest
 from django.db.models.loading import get_model
 from django.test import TestCase, TransactionTestCase
 from django.test.client import Client
@@ -11,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils import unittest
 from django_addons.autodiscover import autodiscover_notifications
 from transifex.txcommon.notifications import NOTICE_TYPES
+from transifex.txcommon.log import logger
 
 # Load models
 Language = get_model('languages', 'Language')
@@ -20,6 +22,15 @@ Resource = get_model('resources', 'Resource')
 Release = get_model('releases', 'Release')
 Team = get_model('teams', 'Team')
 SourceEntity = get_model('resources', 'SourceEntity')
+
+def skip(func):
+    func_name = func.__name__
+    def decorator(func):
+        msg = "%s skipped. Please implement it in your project path."%func_name
+        if settings.TX_ROOT != settings.PROJECT_PATH:
+            logger.debug(msg)
+        return unittest.skipUnless(settings.TX_ROOT == settings.PROJECT_PATH, msg)
+    return decorator
 
 # Please refer to the README file in the tests directory for more info about
 # the various user roles.
