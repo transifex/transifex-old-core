@@ -1,10 +1,13 @@
-{% extends "projects/base.html" %}
+{% extends "projects/base.html"m %m
 {% load staticfiles %}
 {% load i18n %}
 {% load addons %}
 {% load txcommontags %}
 {% load permissions %}
 {% load txpermissions %}
+
+{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
+{% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
 
 {% block extra_head %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url project_feed param=project.slug %}" />
@@ -71,7 +74,7 @@
     <li class="{% if project_team_members %}selected{% endif %}"><a href="{% url team_members project.slug language.code %}">{% trans "Members" %}</a></li>
     {% endif %}
     {% hook "team.html" menu %}
-    {% if perms.projects.change_team or is_coordinator %}
+    {% if is_maintainer or is_coordinator %}
     <li class="{% if project_team_form %}selected{% endif %}"><a href="{% url team_update project.slug language.code %}">{% trans "Edit language-team" %}</a></li>
     {% endif %}
   </ul>
