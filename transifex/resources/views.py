@@ -244,7 +244,8 @@ def resource_actions(request, project_slug=None, resource_slug=None,
             Q(members=request.user)).distinct()
 
     try:
-        stats = RLStats.objects.get(resource=resource, language=target_language)
+        stats = RLStats.objects.select_related('lock').get(
+            resource=resource, language=target_language)
     except RLStats.DoesNotExist:
         stats = RLStats(
             untranslated=resource.total_entities,

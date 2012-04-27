@@ -20,7 +20,7 @@
   $("div.language_chooser a").click( function(){
     var target_lang_code = $("div.language_chooser select").val();
     if (target_lang_code != "") {
-        request_url = '{% url clone_translate resource.project.slug resource.slug stats.language.code 111111111 %}';
+        request_url = '{% url clone_translate resource.project.slug resource.slug target_language.code 111111111 %}';
         request_url = request_url.replace('111111111', target_lang_code);
         window.location = request_url;
     } else {
@@ -31,7 +31,7 @@
   if(!$("#download_for_translation a").hasClass('disabled')){
     $("#download_for_translation").click(function(){
         $.ajax({
-            url : '{% url lock_and_download_for_translation resource.project.slug resource.slug stats.language.code %}',
+            url : '{% url lock_and_download_for_translation resource.project.slug resource.slug target_language.code %}',
             contentType : 'application/json',
             type : 'POST',
             beforeSend: function(){
@@ -70,15 +70,15 @@
 	<h4>
       {% trans "Resource" %}:
       <a href="{% url project_detail project.slug %}" style="color:#444;">
-        {{ stats.resource.project.name|truncate_chars:"30" }}
+        {{ project.name|truncate_chars:"30" }}
       </a>
       &raquo;
       <a href="{% url resource_detail project.slug resource.slug %}" style="color:#444;">
-        {{ stats.resource.name|truncate_chars:"30" }}
+        {{ resource.name|truncate_chars:"30" }}
       </a>
       &raquo;
       <a href="{% url team_detail project.slug target_language.code %}" style="color:#444;">
-        {{ stats.language.name|truncate_chars:"20" }}
+        {{ target_language.name|truncate_chars:"20" }}
       </a>
     </h4>
   <div class="first_level title_wrapper" style="padding-top:0;border-top:none;">
@@ -97,7 +97,6 @@
       {% comment %} This permission is provided if team is not available and then only the maintainers can access lotte via "Translate now" {% endcomment %}
       {% get_permission "project_perm.submit_translations" for request.user and project as "can_submit_translation" %}
     {% endif %}
-	{% get_permission "project_perm.maintain" for request.user and project as "is_maintainer" %}
 
       {% ifequal resource.source_language target_language %}
         {% blocktrans %}<span title="The source language cannot be translated">Source language</span>{% endblocktrans %}
