@@ -35,7 +35,8 @@ class WikiHandler(FillEmptyCompilerFactory, Handler):
     HandlerCompileError = WikiCompileError
 
     def _parse(self, is_source, lang_rules):
-        par_splitter = "\n\n"
+        self._find_linesep(self.content)
+        par_splitter = self.linesep + self.linesep
         template_open = "{{"
         template_ends = "}}"
 
