@@ -28,9 +28,13 @@ class TestTeamModels(base.BaseTestCase):
     def test_teams_for_user(self):
         for user in ['reviewer', 'team_member', 'team_coordinator',
                 'maintainer']:
-            self.assertEqual(set(Team.objects.for_user(self.user[user]
-                ).values_list('pk')),
-                    set(Team.objects.filter(pk__in=[self.team.pk,
-                        self.team_private.pk]).values_list('pk'))
-            )
+            if user == 'maintainer':
+                self.assertFalse(Team.objects.for_user(self.user[user]))
+            else:
+                self.assertEqual(set(Team.objects.for_user(self.user[user]
+                    ).values_list('pk')),
+                        set(Team.objects.filter(pk__in=[self.team.pk,
+                            self.team_private.pk]).values_list('pk'))
+                )
+
 

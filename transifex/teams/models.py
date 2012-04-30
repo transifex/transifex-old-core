@@ -29,8 +29,6 @@ class TeamManager(models.Manager):
 
     def for_user(self, user):
         return self.filter(
-            Q(project__owner=user) |
-            Q(project__maintainers__in=[user]) |
             Q(coordinators__in=[user]) |
             Q(members__in=[user]) |
             Q(reviewers__in=[user])
