@@ -137,6 +137,7 @@ $(function(){
   </thead>
   <tbody>
 
+  {% autopaginate statslist 20 %}
   {% for stat in statslist %}
   <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
   {% cache 604800 team_details stat.resource.project.slug language.code stat.resource.id LANGUAGE_CODE %}
@@ -190,7 +191,7 @@ $(function(){
     <p>{% trans "No resources are registered for this project yet." %}</p>
   {% endif %}
 </div>
-
+  {% paginate %}
 </div>
 
 {% if team %}
