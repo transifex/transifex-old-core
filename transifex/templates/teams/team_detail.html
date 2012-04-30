@@ -185,42 +185,6 @@ $(function(){
   </tr>
   {% endfor %}
 
-
-  {% for resource in empty_rlstats %}
-  <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ resource.project.slug }}" data-resource="{{ resource.slug }}">
-  {% cache 604800 team_details resource.project.slug language.code resource.id LANGUAGE_CODE %}
-      <td class="tableobject">
-      <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
-      {% if not resource.accept_translations %}
-        <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_red.png" %}" title="{% trans "Not accepting translations at the moment" %}"/>
-      {% endif %}
-      </td>
-      <td class="tablecompletion">
-      {% with 200 as barwidth %}
-          {% stats_bar_simple_args 0 total_entries barwidth %}
-      {% endwith %}
-      </td>
-  {% endcache %}
-      <td class="tablelastupd">
-        <span  class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ last_update|date:'U' }}">
-          {% trans "no activity yet" %}
-        </span>
-  </td>
-
-    <td class="priority_level" style="text-align:center">
-      <span style="border:0">
-        {% with resource.priority.level as priority_level %}
-        {% with resource.priority.display_level as display_level %}
-          <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          {% with priority_level|priority_image_path as priority_image %}
-          <img class="tipsy_enable" src="{% static priority_image %}" style="border:0" title="Priority: {{ display_level }}"/>
-          {% endwith %}
-        {% endwith %}
-        {% endwith %}
-      </span>
-    </td>
-  </tr>
-  {% endfor %}
   </table>
   {% else %}
     <p>{% trans "No resources are registered for this project yet." %}</p>
