@@ -20,7 +20,6 @@ from django.contrib.syndication.views import feed
 
 from haystack.query import SearchQuerySet
 from notification import models as notification
-from userena.forms import AuthenticationForm
 from userena.views import password_change
 from userena.views import profile_edit as userena_profile_edit
 
@@ -28,12 +27,13 @@ from transifex.actionlog.models import LogEntry, action_logging
 from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.simpleauth.forms import RememberMeAuthForm
-from transifex.txcommon.filters import LogEntryFilter
-from transifex.txcommon.log import logger
-from transifex.txcommon.haystack.utils import (support_fulltext_search,
-    prepare_solr_query_string, fulltext_fuzzy_match_filter,
-    fulltext_project_search_filter)
 from transifex.txcommon.feeds import TxNoticeUserFeed
+from transifex.txcommon.filters import LogEntryFilter
+from transifex.txcommon.forms import TxAuthenticationForm
+from transifex.txcommon.haystack.utils import (support_fulltext_search,
+        prepare_solr_query_string, fulltext_fuzzy_match_filter,
+        fulltext_project_search_filter)
+from transifex.txcommon.log import logger
 
 from notification.decorators import basic_auth_required, simple_basic_auth_callback
 
@@ -88,7 +88,7 @@ def index(request):
     if settings.ENABLE_SIMPLEAUTH:
         form = RememberMeAuthForm()
     else:
-        form = AuthenticationForm()
+        form = TxAuthenticationForm()
     return render_to_response("index.html",
         {'form': form,
          'next': request.path,
