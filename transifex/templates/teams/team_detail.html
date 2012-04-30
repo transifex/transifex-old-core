@@ -192,6 +192,11 @@ $(function(){
   {% endif %}
 </div>
   {% paginate %}
+  <div class="pagination" style="display:none">
+    {% if page_obj.has_next %}
+    <a href="?page{{ page_suffix }}={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}"></a>
+    {% endif %}
+  </div>
 </div>
 
 {% if team %}
