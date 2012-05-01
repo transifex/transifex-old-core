@@ -233,7 +233,7 @@ function undoButtonClickHandler() {
     tr.find('span.rule').each(function(i){
         rule = $(this).attr('rule');
         string.translate(undo_value[rule], rule);
-        $(this).next('textarea').focus().val(undo_value[rule]);
+        $(this).next('textarea').focus().val(undo_value[rule]).keyup();
     });
     // Save the new value
     string.push();
