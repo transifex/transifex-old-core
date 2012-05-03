@@ -216,7 +216,7 @@ def team_detail(request, project_slug, language_code):
 
     statslist = statslist.by_project_and_language(project, language)
 
-    if not statslist:
+    if not statslist and not team:
         raise Http404
 
     empty_rlstats = Resource.objects.select_related('project', 'priority'
