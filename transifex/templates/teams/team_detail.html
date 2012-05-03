@@ -12,6 +12,7 @@
 {% load priority_images %}
 
 {% block extra_head %}
+<link type="text/css" href="{% static "css/jquery.jscrollpane.css" %}" rel="stylesheet" media="all" />
 <style  type="text/css">
 /**
  * Primary styles
@@ -117,13 +118,14 @@ $(function(){
   });
 })
 </script>
-
+  <script type="text/javascript" src="{% static "js/lib/mwheelIntent.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.mousewheel.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.jscrollpane.min.js" %}"></script>
   <script type="text/javascript" src="{% static "js/lib/debug.js" %}"></script>
   <script type="text/javascript" src="{% static "js/lib/jquery.infinitescroll.js" %}"></script>
-   <script type="text/javascript" src="{% static "js/scrollbehaviour.js" %}"></script>
-  <script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.cookie.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/scrollbehaviour.js" %}"></script>
 
-	</script>
 {% endblock %}
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
@@ -248,7 +250,7 @@ $(function(){
   </thead>
   <tbody id="stat-row-container">
 
-  {% autopaginate statslist 10 %}
+  {% autopaginate statslist 15 %}
   {% for stat in statslist %}
   <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
   {% cache 604800 team_details stat.resource.project.slug language.code stat.resource.id LANGUAGE_CODE %}
