@@ -613,7 +613,7 @@ class TranslationBaseHandler(BaseHandler):
         if not translations:
             raise NoContentError("Translations not found!")
         if not isinstance(translations, list):
-            raise BadRequestError("Traslations are not in a list!")
+            raise BadRequestError("Translations are not in a list!")
         return True
 
     def _translations_as_dict(self, translations, language):
@@ -648,7 +648,7 @@ class TranslationBaseHandler(BaseHandler):
 
     def _check_user_perms(self, can_submit_translations=False,
             accept_translations=False, is_maintainer=False,
-            can_review=False, translation_objs=[]):
+            can_review=False, translation_objs=[], translation={}):
         """
         Check if user has necessary permissions.
         Args:
@@ -657,6 +657,7 @@ class TranslationBaseHandler(BaseHandler):
             is_maintainer: A boolean
             can_review: A boolean
             translation_objs: A list
+            translation: A translation dictionary
         Returns:
             A boolean
         """
@@ -667,7 +668,8 @@ class TranslationBaseHandler(BaseHandler):
         if not translation_objs:
             return False
         reviewed = translation_objs[0].reviewed
-        if reviewed and not can_review:
+        if (reviewed or translation.get('reviewed') != reviewed) and\
+                not can_review:
             return False
         return True
 
@@ -815,12 +817,13 @@ class SingleTranslationHandler(TranslationBaseHandler):
                         resource.slug, language.code))
 
         reviewed = translations[0].reviewed
-        if check.proofread(project, language) and \
-                translation_data.get('reviewed') != None:
-            update_fields['reviewed'] = translation_data.get('reviewed')
-        elif reviewed:
+        can_review = check.proofread(project, language)
+        if (reviewed or translation_data.get('reviewed') != reviewed)\
+                and not can_review:
             raise ForbiddenError("User '%s' cannot update this reviewed "\
                     "translation." % user.username)
+        if isinstance(translation_data.get('reviewed'), bool):
+            update_fields['reviewed'] = translation_data.get('reviewed')
         update_fields['user'] = user
 
     def _update_translations(self, source_entity, language, translations,
@@ -856,7 +859,7 @@ class SingleTranslationHandler(TranslationBaseHandler):
             plural_forms = [int(r) for r in plural_forms]
             plural_forms.sort()
             if nplurals != plural_forms:
-                return rc.BAD_REQUEST
+                raise BadRequestError("Invalid plural forms in translation.")
             for rule in translation_strings.keys():
                 update_fields['string'] = translation_strings[rule]
                 translations.filter(rule=rule).update(**update_fields)
@@ -1010,7 +1013,9 @@ class TranslationObjectsHandler(TranslationBaseHandler):
             return rc.FORBIDDEN
 
         nplurals = language.get_pluralrules_numbers()
-        keys = translations[0].keys()
+        keys = ['source_entity_id', 'key', 'context', 'translation',
+                'reviewed', 'wordcount', 'last_update', 'user',
+                'position', 'occurrences', 'pluralized']
 
         trans_obj_dict = self._translations_as_dict(translations, language)
 
@@ -1021,7 +1026,7 @@ class TranslationObjectsHandler(TranslationBaseHandler):
             try:
                 se_id = translation.get('source_entity_id')
                 user = translation.get('user') and \
-                        User.objects.get(trasnlation.get('user')) or\
+                        User.objects.get(username=translation.get('user')) or\
                         request.user
 
                 check = ProjectPermission(user)
@@ -1038,7 +1043,8 @@ class TranslationObjectsHandler(TranslationBaseHandler):
                     'can_submit_translations': can_submit_translations,
                     'accept_translations': accept_translations,
                     'is_maintainer': is_maintainer,
-                    'translation_objs': translation_objs
+                    'translation_objs': translation_objs,
+                    'translation': translation
                 }
 
                 if not self._check_user_perms(**kwargs):

@@ -1088,26 +1088,37 @@ class UnitTestTranslationObjectsHandler(TestCase):
         self.assertTrue(self.obj._check_user_perms(
                 can_submit_translations=True,
                 accept_translations=True,
-                translation_objs=translation_objs
+                translation_objs=translation_objs,
+                translation={'reviewed': False}
+            ))
+
+        self.assertFalse(self.obj._check_user_perms(
+                can_submit_translations=True,
+                accept_translations=True,
+                translation_objs=translation_objs,
+                translation={'reviewed': True}
             ))
 
         self.assertTrue(self.obj._check_user_perms(
                 is_maintainer=True,
-                translation_objs=translation_objs
+                translation_objs=translation_objs,
+                translation={'reviewed': False}
             ))
 
         translation_objs[0].reviewed = True
         self.assertFalse(self.obj._check_user_perms(
                 can_submit_translations=True,
                 accept_translations=True,
-                translation_objs=translation_objs
+                translation_objs=translation_objs,
+                translation={'reviewed': False}
             )
         )
         self.assertTrue(self.obj._check_user_perms(
                 can_submit_translations=True,
                 accept_translations=True,
                 can_review=True,
-                translation_objs=translation_objs
+                translation_objs=translation_objs,
+                translation={'reviewed': True}
             )
         )
 
@@ -1227,7 +1238,8 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
         self._setUp_test_put_translations()
         response = self.client['team_member'].get(reverse(
             'translation_strings',
-            args=['project1', 'resource1', self.language_ar.code]))
+            args=['project1', 'resource1', self.language_ar.code]),
+            data={'details':''})
         self.assertEqual(response.status_code, 200)
         json = simplejson.loads(response.content)
         for index, item in enumerate(json):
@@ -1236,7 +1248,9 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
                         '4': '4', '5': '5'}
                 json[index] = item
             if item['source_entity_id'] == 5:
-                item['translation'] = '       '
+                item['translation'] = 'fooo'
+                item['user'] = 'team_member'
+                item['reviewed'] = True
                 json[index] = item
 
         response = self.client['maintainer'].put(reverse(
@@ -1247,18 +1261,21 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
 
         expected_json = []
         for item in json:
-            if item['source_entity_id'] in [3, 1]:
+            if item['source_entity_id'] == 3:
                 expected_json.append(item)
+            item.pop('last_update')
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(simplejson.loads(response.content), expected_json)
+        response_json = simplejson.loads(response.content)
+        for item in response_json:
+            item.pop('last_update')
+        self.assertEqual(response_json, expected_json)
         self.assertTrue(self.source_entity1.translations.get(
             string="ArabicString2"))
 
 
 def create_sample_translations(cls):
     self = cls
-    self.entity = self.resource.entities[0]
 
     self.source_entity1 = SourceEntity.objects.create(string='String2',
         context='Context2', occurrences='Occurrences2',
@@ -1417,11 +1434,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(simplejson.loads(response.content)['translation'],
-                'Hello world')
-        self.assertEqual(simplejson.loads(response.content)['reviewed'],
-                False)
+        self.assertEqual(response.status_code, 500)
         json['user'] = 'team_coordinator'
         response = self.client['team_coordinator'].put(reverse(
             'translation_string', args=[self.project.slug,
