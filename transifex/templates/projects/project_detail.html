@@ -21,6 +21,7 @@
       $("#request-team-form").slideToggle();
      });
     $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+    $(".persisthide").persisthide();    
    })
 </script>
 {% endblock %}
@@ -30,73 +31,82 @@
 
   <div class="obj_bigdetails">
 
-  <div class="details clearfix">
+  <div class="definition clearfix">
+  
+    <div class="basic-details clearfix">
+      <div class="detail-row">
+        <span class="i16 orange-arrow" style="padding-left:20px;font-size:1.077em;">{{ project.description }}</span>
+        {% if project.homepage %}
+        <span class="homepage-url ">
+          &nbsp;&mdash;&nbsp;&nbsp;<a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" class="">{{ project.homepage }}</a>
+        </span>
+        {% endif %}
+        
+        {% with project.trans_instructions as instructions_url %}
+        {% if instructions_url %}
+        &nbsp;&mdash;&nbsp;&nbsp;<a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank" >{% trans "Help pages" %}</a>
+        {% endif %}
+        {% endwith %}
+        <span class="wdg-link">{% hook "project.html" sep_but %}</span>
+      </div>       
+    </div>
+    
+    <div id="project-extra-details" class="persisthide extra-details clearfix">
 
-  <div class="separate-header notopmargin clearfix" style="margin-top:0;">
-  	<h3  class="sh-label">{% blocktrans %}Details{% endblocktrans %}</h3>
-  	{% if request.user.is_authenticated %}
-	    {% url notification.views.notices as notices_url %}
-	    {% if notices_url %}
-	      <div class="separate-buttons">
+      <div class="ph-content no-display">
+        <div class="detail-row">
+          
+          <div class="i16 maintainer project-maintainers clearfix">
+            
+            <span class="detlabel">{% trans "Maintainers:" %}</span>
+            <span class="user-indetails owner tipsy_enable" title="{% trans 'The owner of the project' %}" >
+              <img class="ui-corner-left" width="20" height="20" src="{{ project.owner.profile.get_mugshot_url }}" style=""/>
+              <a href="{% url profile_public project.owner %}" > {{project.owner}}</a>
+            </span>
+        
+          {% if maintainers %}
+            {% for m in maintainers %}
+            {% ifnotequal m.username project.owner.username %}
+            <span class="user-indetails">
+              <img class="ui-corner-left" width="20" height="20" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:top"/>
+              <a href="{% url profile_public m.username %}">{{m.username}}</a>
+            </span>
+            {% endifnotequal %}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+        
+        
+        <div class="detail-row">
+        
+          {% hook "additional_project_details.html" %}
+          
+          {% if project.tags %}
+        	<span class="i16 tag">
+          {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag.url_name %}">{{ tag }}</a> {% endfor %}
+          </span>
+          {% endif %}
+        </div>
+          
+        {% with project.long_description_html as long_desc %}
+        {% if long_desc %}
+        <div class="detail-row long_description">
+          {{ long_desc|truncatewords_html:"100"|safe }}
+        </div>
+        {% endif %}
+        {% endwith %}
+  
+      </div>
 
-	      	{% hook "project.html" sep_but %}
-	      </div>
-	    {% endif %}
-		{% endif %}
-	</div>
+      <div class="ph-trigger contracted">
+        <span></span>
+      </div>
+    
+    </div>
+    
 
-
-
-  <dl class="definition clearfix">
-    {% if project.homepage %}
-      <dt class="homepage i16">{% trans "Homepage:" %}</dt>
-      <dd class="fadecontent"><a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" >{{ project.homepage }}</a></dd>
-
-    {% endif %}
-
-    {% if project.tags %}
-      	<dt class="i16 tag">{% trans "Tags:" %}</dt>
-      	<dd class="compact fadecontent hideover">
-        {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag.url_name %}">{{ tag }}</a> {% endfor %}
-	      </dd>
-    {% endif %}
-
-    {% if project.bug_tracker %}
-      <dt class="bug i16">{% trans "Bug tracker:" %}</dt>
-      <dd class="hideover fadecontent"><a title="{% blocktrans with project.name as project_name %}Bug tracker for {{ project_name }}{% endblocktrans %}" href="{{ project.bug_tracker }}" target="_blank" >{{ project.bug_tracker }}</a></dd>
-    {% endif %}
-
-    {% with project.trans_instructions as instructions_url %}
-    {% if instructions_url %}
-      <dt class="file i16">{% trans "Documentation:" %}</dt>
-      <dd class="fadecontent"><a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank">{% trans "Translation help pages" %}</a></dd>
-    {% endif %}
-    {% endwith %}
-
-    {% hook "additional_project_details.html" %}
-
-    {% if maintainers %}
-	      <dt class="i16 maintainer">{% blocktrans count maintainers|length as counter %}Maintainer:{% plural %}Maintainers:{% endblocktrans %}</dt>
-	      <dd>
-	        {% for m in maintainers %}
-	        <div class="maintainer-detail">
-	          <img class="border" width="16" height="16" src="{{ m.profile.get_mugshot_url }}" style="vertical-align:middle"/>
-	          <a href="{% url profile_public m.username %}">{{m.username}}</a>
-	        </div>
-	        {% endfor %}
-	      </dd>
-    {% endif %}
-
-</dl>
-
-  {% with project.long_description_html as long_desc %}
-  {% if long_desc %}
-  <div class="long_description">
-    {{ long_desc|truncatewords_html:"100"|safe }}
-  </div>
-  {% endif %}
-  {% endwith %}
-
+    
 </div>
 
 {% with project.hub_requests.all as hub_requests %}

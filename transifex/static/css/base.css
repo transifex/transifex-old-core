@@ -284,7 +284,7 @@ font-size: 0.923em;
 .watch_remove{background:transparent url('../images/watchbutton.png') -31px 0px no-repeat;}
 .watch_add:hover{background-position-x: -31px;opacity: 0.85;cursor: pointer;}
 .watch_remove:hover{background-position-x: 0px; opacity: 0.85;cursor: pointer;}
-.cpanel-entry .watchbutton{height:16px;width: 16px;margin: 0px;display: block;}
+.cpanel-entry .watchbutton{height:16px;width: 16px;margin: 0px;display: block;height: 10px}
 
 /* Details Section
   -------------------------------------------------------------------------------------------------*/
@@ -294,6 +294,60 @@ dl.definition dd.fadecontent{white-space: nowrap; position: relative;overflow: h
 dl.definition ul {margin:0;}
 dl.definition dd.hideover{white-space: nowrap; overflow: hidden;}
 dd .maintainer-detail{float:left;margin:2px 4px;}
+
+.definition{margin-top: 1.2em;}
+.basic-details{font-weight: 600;}
+.basic-details .wdg-link{float: right;margin-right: 10px;
+margin-top: 3px;
+font-weight: 400;}
+.definition .detail-row{margin-top: 1.1em;}
+.definition .extra-details .detail-row:last-child{margin-bottom: 0.5em;}
+.definition .project-owner, .basic-details .project-maintainers {float: left;margin-right: 20px;}
+.definition .user-indetails a{line-height: 1em;font-size: 0.923em;display: block;float: left;padding: 3px 10px 3px 6px;}
+.definition .user-indetails img{vertical-align:top;float:left;vertical-align: top;margin-right: 2px;border-right:1px solid #c6cdd1;}
+
+.definition .ph-trigger{border-top:1px solid #eee;height: 12px;display: block;text-align: center;margin-top:0.4em;}
+.extra-details .ph-trigger span{height: 12px;width: 70px;display: inline-block;background: transparent url(../images/details-slide-buttons.png) no-repeat;opacity: 0.5;}
+.extra-details .ph-trigger span:hover{opacity: 1;cursor: pointer;}
+.extra-details.expanded .ph-trigger{margin-top: 14px;}
+.extra-details.expanded .ph-trigger span{background-position: -70px 0;margin-top: -13px;}
+.user-indetails.owner{border-color: #79A1B9;border-width: 1px;
+
+/* IE10 */ 
+background-image: -ms-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EBF4F7), color-stop(1, #D5E1ED));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
+
+/* Proposed W3C Markup */ 
+background-image: linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
+
+
+}
+.definition .user-indetails.owner img{border-color: #79A1B9;}
+.user-indetails{
+margin-right: 10px;float: left;
+background-image: -ms-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
+background-image: -moz-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
+background-image: -o-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F2F6F7), color-stop(1, #E6EBED));
+background-image: -webkit-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
+background-image: linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
+border:1px solid #C6CDD1;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+.detlabel{float: left;margin-right: 10px;line-height: 20px;}
 
 /* Menus
   -------------------------------------------------------------------------------------------------*/
@@ -590,7 +644,6 @@ tfoot 		{ font-style: italic; }
 tfoot td 	{ border-top: 1px solid #ddd; }
 caption     { font-style: italic; font-size: 0.923em; }
 
-
 /* 	Utilities
 	--------------------------------------------------------------------------*/
 
@@ -621,5 +674,5 @@ caption     { font-style: italic; font-size: 0.923em; }
 .project-sign{min-width:34px;padding-top:38px;display:inline-block;float:right;}
 .project-sign{margin-left:10px;}
 .project-sign p{font-size:12px;font-weight:normal;color:#888;text-align:center;}
-#project-logo-main{padding: 1px;margin-left:1em;float: right;}
+#project-logo-main{padding: 1px;margin-left:1em;float: right;-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;}
 

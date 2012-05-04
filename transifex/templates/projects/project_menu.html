@@ -70,7 +70,7 @@
 	{% if project %}
 	<div class="tab-wrapper grid_12">
 		<ul  class="tabs clearfix">
-		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project overview" %}</a></li>
+		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Overview" %}</a></li>
     		{% if project.is_hub and is_maintainer %}
     	  <li class="{% if hub_projects_page %}selected{% endif %}">
     		  <a href="{% url project_hub_projects project.slug %}">

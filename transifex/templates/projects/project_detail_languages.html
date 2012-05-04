@@ -14,7 +14,7 @@
 
 <div class="project_create">
 
-  <div class="separate-header clearfix">
+  <div class="separate-header clearfix" style="margin-top:2em;">
   	<h3 class="sh-label notopmargin">
   	{% if project.is_hub %}
     	{% trans "Hub language teams" %}
@@ -31,6 +31,8 @@
 		    <a class="i16 nude-button add" href="{% url team_create project.slug %}">{% trans "Create language" %}</a>
         {% endif %}
       {% endif %}
+      
+      {% hook "project.html" tmx_but %}
 		</div>
 	</div>
 
