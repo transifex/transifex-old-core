@@ -73,8 +73,8 @@ $(function(){
    /* ================== Table Container ================== */
 
   function createTableContainer(){
-    $("table.stats-table").wrap('<div class="tablewrapper" />')
-    $('div.tablewrapper').css({
+    $("table.stats-table").wrap('<div class="jscrollwrapper" />')
+    $('div.jscrollwrapper').css({
       'min-width': '1000px',
       'max-height': '500px',
       'overflow-y': 'scroll',
@@ -84,7 +84,7 @@ $(function(){
 
 
     //start jscrollpane for beautiful scrollbars
-    jscroll = $('.tablewrapper')
+    jscroll = $('.jscrollwrapper')
       .on('jsp-scroll-y', function(event, scrollPositionY, isAtTop, isAtBottom){
           console.log('Handle jsp-scroll-y', this,
 								'scrollPositionY=', scrollPositionY,
@@ -125,12 +125,12 @@ if(typeof jscroll !== 'undefined'){
       jscroll.data('jsp').destroy();
     }
 */
-    $("table.stats-table").unwrap('.tablewrapper')
+    $("table.stats-table").unwrap('.jscrollwrapper')
 
 
 
-    $('div.tablewrapper').off('mouseover.loadmore');
-    $('div.tablewrapper').off('mouseout.loadmore');
+    $('div.jscrollwrapper').off('mouseover.loadmore');
+    $('div.jscrollwrapper').off('mouseout.loadmore');
 
     $('#stat-row-container').infinitescroll('resume');
 
