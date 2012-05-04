@@ -2,11 +2,9 @@ $(function(){
 
   var jscroll;
 
-  createTableContainer()
-
    /* ================== Table Container ================== */
 
-  function createTableContainer(){
+
     $("table.stats-table").wrap('<div class="jscrollwrapper" />')
     $('div.jscrollwrapper').css({
       'min-width': '1000px',
@@ -17,29 +15,45 @@ $(function(){
     });
 
 
-    //start jscrollpane for beautiful scrollbars
-    jscroll = $('.jscrollwrapper')
-      .on('jsp-scroll-y', function(event, scrollPositionY, isAtTop, isAtBottom){
-          console.log('Handle jsp-scroll-y', this,
-								'scrollPositionY=', scrollPositionY,
-								'isAtTop=', isAtTop,
-								'isAtBottom=', isAtBottom);
-						if(isAtBottom){
-						jscroll.off('jsp-scroll-y');
-						  $('#stat-row-container').infinitescroll('retrieve');
-						}
-      })
-      .jScrollPane();
-
-      setTimeout(function(){
-     jscroll.data('jsp').reinitialise();
-     //pause infinitescroll
-    $('#stat-row-container').infinitescroll('pause');
-
-    },50)
+  /* ================== jScrollPane Scrolling Behaviour =====================*/
 
 
+  //start jscrollpane for beautiful scrollbars
+  jscroll = $('.jscrollwrapper')
+    .on('jsp-scroll-y', jscrollBehaviour)
+    .jScrollPane();
+
+  function jscrollBehaviour(event, scrollPositionY, isAtTop, isAtBottom){
+    if(isAtBottom){
+      jscroll.off('jsp-scroll-y');
+      $('#stat-row-container').infinitescroll('retrieve');
+    }
   }
+
+
+  //wait for drawing cause our bar is sensitive :-)
+  setTimeout(function(){
+    jscroll.data('jsp').reinitialise();
+    $('.jscrollwrapper .jspVerticalBar').fadeOut(0);
+
+    //pause infinitescroll
+    $('#stat-row-container').infinitescroll('pause');
+  },50)
+
+
+  /* ================== BODY Scrolling Behavior =====================*/
+
+
+    $('.jscrollwrapper').on('mouseleave.scrollbehaviour', function(){
+      $('.jscrollwrapper .jspVerticalBar').stop().fadeOut()
+    })
+    .on('mouseenter.scrollbehaviour', function(){
+      $('.jscrollwrapper .jspVerticalBar').stop().fadeIn()
+    })
+    .on('mousewheel.scrollbehaviour', function(event, delta){
+      event.stopPropagation()
+      event.preventDefault();
+  })
 
 
 
@@ -58,7 +72,7 @@ $(function(){
     debug		 	: false,
     dataType	 	: 'html',
     animate         : false,
-	//	img             : "{% static "images/icons/progress.gif" %}",
+    //	img             : "{% static "images/icons/progress.gif" %}",
     msgText         : "Loading more resources …" ,
     callback        : function(){console.log('Boom' + counter++);},
   }
@@ -67,17 +81,7 @@ $(function(){
      // update scrollbar and reassign scroll listener and handler
       if(typeof jscroll !== 'undefined'){
         jscroll.data('jsp').reinitialise();
-        jscroll = $('.jscrollwrapper')
-      .on('jsp-scroll-y', function(event, scrollPositionY, isAtTop, isAtBottom){
-          console.log('Handle jsp-scroll-y', this,
-								'scrollPositionY=', scrollPositionY,
-								'isAtTop=', isAtTop,
-								'isAtBottom=', isAtBottom);
-						if(isAtBottom){
-						jscroll.off('jsp-scroll-y');
-						  $('#stat-row-container').infinitescroll('retrieve');
-						}
-      })
+        $('.jscrollwrapper').on('jsp-scroll-y', jscrollBehaviour)
       }
 
 		//window.console && console.log('context: ',this);
