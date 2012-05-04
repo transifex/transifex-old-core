@@ -72,9 +72,11 @@ $(function(){
     debug		 	: false,
     dataType	 	: 'html',
     animate         : false,
-    //	img             : "{% static "images/icons/progress.gif" %}",
-    msgText         : "Loading more resources …" ,
     callback        : function(){console.log('Boom' + counter++);},
+    loading: {
+      img             : "http://www.deltametal.mk/system/pyrocms/themes/deltametal/images/loader_prodotti.gif",
+       msgText         : "Loading more resources …" ,
+    }
   }
   , function(newElements){
 
