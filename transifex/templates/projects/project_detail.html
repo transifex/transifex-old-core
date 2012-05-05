@@ -54,7 +54,10 @@
     <div id="project-extra-details" class="persisthide extra-details clearfix">
 
       <div class="ph-content no-display">
-        <div class="detail-row">
+       
+        <div class="detail-row clearfix">
+          
+          <div class="grid_9 alpha">
           
           <div class="i16 maintainer project-maintainers clearfix">
             
@@ -75,12 +78,16 @@
             {% endfor %}
           </div>
           {% endif %}
-        </div>
-        
+          </div>
+
+          <div class="grid_3 omega">
+          {% hook "additional_project_details.html" %}
+          </div>
+        </div>        
         
         <div class="detail-row">
         
-          {% hook "additional_project_details.html" %}
+          
           
           {% if project.tags %}
         	<span class="i16 tag">
