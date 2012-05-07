@@ -38,10 +38,6 @@
 {% endblock %}
 
 {% block content_header_sec %}
-  {% if project.logo %}
-  <img src="{{ project.get_logo_url }}" id="project-logo-main" height="48" width="48"/>
-  {% endif %}
-
   {% url project_detail project.outsource.slug as url_hub_project %}
 	{% if project.anyone_submit %}
   <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/ffa-project.png" %})center top no-repeat;">

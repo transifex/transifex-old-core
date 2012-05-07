@@ -2,7 +2,7 @@
   $.fn.extend({ 
     persisthide: function() {
       return this.each(function() {
-        
+
         phobj = $(this);
         phid = $(this).attr("id")+"-ph";
 

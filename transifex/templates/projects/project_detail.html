@@ -34,40 +34,25 @@
   <div class="definition clearfix">
   
     <div class="basic-details clearfix">
-      <div class="detail-row">
-        <span class="i16 orange-arrow" style="padding-left:20px;font-size:1.077em;color:#666;font-weight:100;">{{ project.description }}</span>
-        {% if project.homepage %}
-        <span class="homepage-url ">
-          &nbsp;&mdash;&nbsp;&nbsp;<a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" class="">{{ project.homepage }}</a>
-        </span>
-        {% endif %}
+      <div class="grid_10 alpha">
+      
+        <div class="detail-row">
+          <span class="i16 orange-arrow" style="padding-left:22px;">{{ project.description }}</span>
+          {% if project.homepage %}
+          <span class="homepage-url ">
+            &nbsp;&mdash;&nbsp;&nbsp;<a title="{% blocktrans with project.name as project_name %}Homepage for {{ project_name }}{% endblocktrans %}" href="{{ project.homepage }}" target="_blank" class=""><span style="font-weight:400;">{{ project.homepage }}</span></a>
+          </span>
+          {% endif %}
+        </div>  
         
-        {% with project.trans_instructions as instructions_url %}
-        {% if instructions_url %}
-        &nbsp;&mdash;&nbsp;&nbsp;<a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank" >{% trans "Help pages" %}</a>
-        {% endif %}
-        {% endwith %}
-        <span class="wdg-link">{% hook "project.html" sep_but %}</span>
-      </div>       
-    </div>
-    
-    <div id="project-extra-details" class="persisthide extra-details clearfix">
-
-      <div class="ph-content no-display">
-       
-        <div class="detail-row clearfix">
-          
-          <div class="grid_9 alpha">
-          
+        <div class="detail-row">
           <div class="i16 maintainer project-maintainers clearfix">
-            
             <span class="detlabel">{% trans "Maintainers:" %}</span>
             <span class="user-indetails owner tipsy_enable" title="{% trans 'The owner of the project' %}" >
               <img class="ui-corner-left" width="20" height="20" src="{{ project.owner.profile.get_mugshot_url }}" style=""/>
-              <a href="{% url profile_public project.owner %}" > {{project.owner}}</a>
+              <a href="{% url profile_public project.owner %}" >{{project.owner}}</a>
             </span>
-        
-          {% if maintainers %}
+            {% if maintainers %}
             {% for m in maintainers %}
             {% ifnotequal m.username project.owner.username %}
             <span class="user-indetails">
@@ -76,42 +61,54 @@
             </span>
             {% endifnotequal %}
             {% endfor %}
-          </div>
           {% endif %}
           </div>
+        </div>
+  
+      </div>      
+  
+      <div class="grid_2 omega">
+        {% if project.logo %}
+        <img src="{{ project.get_logo_url }}" id="project-logo-main" height="44" width="44"/>
+        {% endif %}    
+      </div>       
+    </div>
+    
+    
+    <div id="project-extra-details" class="persisthide extra-details clearfix">
 
-          <div class="grid_3 omega">
-          {% hook "additional_project_details.html" %}
-          </div>
-        </div>        
-        
+      <div class="ph-content no-display">           
         <div class="detail-row">
-        
-          
-          
           {% if project.tags %}
         	<span class="i16 tag">
           {% for tag in project.tagsobj.all|slice:"0:6" %}<a class="tag" href="{% url project_tag_list tag=tag.url_name %}">{{ tag }}</a> {% endfor %}
           </span>
           {% endif %}
         </div>
-          
-        {% with project.long_description_html as long_desc %}
-        {% if long_desc %}
-        <div class="detail-row long_description">
-          {{ long_desc|truncatewords_html:"100"|safe }}
+        
+        <div class="detail-row clearfix">
+          {% with project.long_description_html as long_desc %}
+          {% if long_desc %}
+          <div class=" grid_10 alpha">
+            <div class="long_description">
+              {{ long_desc|truncatewords_html:"100"|safe }}
+            </div>
+          </div>
+          {% endif %}
+          <div class="grid_2 omega" style="{% if long_desc %}text-align:right;padding-top:3px;{% endif %}">
+          {% with project.trans_instructions as instructions_url %}
+          {% if instructions_url %}
+          <a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank" >{% trans "Help pages" %}</a>
+          {% endif %}
+          {% endwith %}
+          {% endwith %}
         </div>
-        {% endif %}
-        {% endwith %}
-  
-      </div>
-
-      <div class="ph-trigger contracted">
-        <span></span>
-      </div>
-    
+      </div>    
     </div>
     
+    <div class="ph-trigger">
+      <span></span>
+    </div>
 
     
 </div>

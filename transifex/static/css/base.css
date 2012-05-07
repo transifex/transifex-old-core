@@ -286,6 +286,7 @@ font-size: 0.923em;
 .watch_remove:hover{background-position-x: 0px; opacity: 0.85;cursor: pointer;}
 .cpanel-entry .watchbutton{height:16px;width: 16px;margin: 0px;display: block;height: 10px}
 
+
 /* Details Section
   -------------------------------------------------------------------------------------------------*/
 dl.definition dt {padding: 3px 0px 3px 27px;float: left; width: 110px;white-space: nowrap;overflow: hidden;}
@@ -296,59 +297,38 @@ dl.definition dd.hideover{white-space: nowrap; overflow: hidden;}
 dd .maintainer-detail{float:left;margin:2px 4px;}
 
 .definition{margin-top: 1.2em;}
-.basic-details{font-weight: 600;}
+.basic-details{font-weight: 100;font-size: 1.077em;color:#666;}
 .basic-details .wdg-link{float: right;margin-right: 10px;
 margin-top: 3px;
 font-weight: 400;}
-.definition .detail-row{margin-top: 1em;}
+.definition .detail-row{margin-top: 0.9em;}
+.definition .basic-details .detail-row:first-child{margin-top: 0em;}
 .definition .extra-details .detail-row:last-child{margin-bottom: 0em;}
 .definition .project-owner, .basic-details .project-maintainers {float: left;margin-right: 20px;}
-.definition .user-indetails a{line-height: 1em;font-size: 0.923em;display: block;float: left;padding: 3px 10px 3px 6px;}
+.definition .user-indetails a{line-height: 1.2em;font-size: 12px;display: block;float: left;padding: 2px 10px 2px 6px;font-weight:400;}
 .definition .user-indetails img{vertical-align:top;float:left;vertical-align: top;margin-right: 2px;border-right:1px solid #c6cdd1;}
 
-.definition .ph-trigger{border-top:1px solid #dadada;height: 12px;display: block;text-align: center;margin-top:0.4em;}
+.definition .ph-trigger{border-top:1px solid #eee;height: 12px;display: block;text-align: center;margin-top:1.2em;}
 .extra-details .ph-trigger span{height: 12px;width: 70px;display: inline-block;background: transparent url(../images/details-slide-buttons.png) no-repeat;opacity: 0.5;}
 .extra-details .ph-trigger span:hover{opacity: 1;cursor: pointer;}
 .extra-details.expanded .ph-trigger{margin-top: 14px;}
 .extra-details.expanded .ph-trigger span{background-position: -70px 0;margin-top: -13px;}
-.user-indetails.owner{border-color: #79A1B9;border-width: 1px;
-
-/* IE10 */ 
-background-image: -ms-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
-
-/* Mozilla Firefox */ 
-background-image: -moz-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
-
-/* Opera */ 
-background-image: -o-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
-
-/* Webkit (Safari/Chrome 10) */ 
-background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #EBF4F7), color-stop(1, #D5E1ED));
-
-/* Webkit (Chrome 11+) */ 
-background-image: -webkit-linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
-
-/* Proposed W3C Markup */ 
-background-image: linear-gradient(top, #EBF4F7 0%, #D5E1ED 100%);
-
-
+.user-indetails.owner{
+  border-color: #79A1B9;
+  border-width: 1px;
+  background-color: #F2F6F7;
 }
 .definition .user-indetails.owner img{border-color: #79A1B9;}
 .user-indetails{
 margin-right: 10px;float: left;
-background-image: -ms-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
-background-image: -moz-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
-background-image: -o-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
-background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #F2F6F7), color-stop(1, #E6EBED));
-background-image: -webkit-linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
-background-image: linear-gradient(top, #F2F6F7 0%, #E6EBED 100%);
+background-color: #f5f5f5;
 border:1px solid #C6CDD1;
 -webkit-border-radius: 4px;
 -moz-border-radius: 4px;
 border-radius: 4px;
 }
 .detlabel{float: left;margin-right: 10px;line-height: 20px;}
-
+.team-statbar .stats{width:530px !important;}
 /* Menus
   -------------------------------------------------------------------------------------------------*/
 
@@ -674,5 +654,5 @@ caption     { font-style: italic; font-size: 0.923em; }
 .project-sign{min-width:34px;padding-top:38px;display:inline-block;float:right;}
 .project-sign{margin-left:10px;}
 .project-sign p{font-size:12px;font-weight:normal;color:#888;text-align:center;}
-#project-logo-main{padding: 1px;margin-left:1em;float: right;-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;}
+#project-logo-main{margin-top:8px;margin-left:1em;float: right;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
 
