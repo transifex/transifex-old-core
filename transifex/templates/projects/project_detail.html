@@ -74,7 +74,8 @@
       </div>       
     </div>
     
-    
+    {% with project.long_description_html as long_desc and project.trans_instructions as instructions_url %}
+    {% if project.tags or long_desc or instructions_url %}
     <div id="project-extra-details" class="persisthide extra-details clearfix">
 
       <div class="ph-content no-display">           
@@ -87,7 +88,6 @@
         </div>
         
         <div class="detail-row clearfix">
-          {% with project.long_description_html as long_desc %}
           {% if long_desc %}
           <div class=" grid_10 alpha">
             <div class="long_description">
@@ -96,12 +96,9 @@
           </div>
           {% endif %}
           <div class="grid_2 omega" style="{% if long_desc %}text-align:right;padding-top:3px;{% endif %}">
-          {% with project.trans_instructions as instructions_url %}
           {% if instructions_url %}
           <a title="{% trans "Documentation of the translation procedure of this project" %}" href="{{ instructions_url }}" target="_blank" >{% trans "Help pages" %}</a>
           {% endif %}
-          {% endwith %}
-          {% endwith %}
         </div>
       </div>    
     </div>
@@ -111,8 +108,10 @@
     </div>
 
     
-</div>
-
+  </div>
+  {% endif %}
+  {% endwith %}
+  
 {% with project.hub_requests.all as hub_requests %}
 {% if hub_requests and is_maintainer %}
 <p class="i16 infomsg">
