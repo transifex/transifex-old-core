@@ -40,22 +40,21 @@
 {% block content_header_sec %}
   {% url project_detail project.outsource.slug as url_hub_project %}
 	{% if project.anyone_submit %}
-  <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/ffa-project.png" %})center top no-repeat;">
-	<p>{% trans "Free for all"%}</p>
+  <span id="ffa_project_sign" class="project-sign">
+	<p>{% trans "FreeForAll"%}</p>
 	</span>
 	{% endif %}
 	{% if project.outsource %}
-  <span id="private_project_banner" class="project-sign"
-	style="background:url({% static "images/icons/outsource-project.png" %})center top no-repeat;"><a title="{% blocktrans with project.outsource.name as hub_project %} Go to {{hub_project}} hub{% endblocktrans %}" href="{{ url_hub_project }}" style="display:block;"><p>{% trans "Child project" %} </p></a>
+  <span id="cp_project_sign" class="project-sign"><a title="{% blocktrans with project.outsource.name as hub_project %} Go to {{hub_project}} hub{% endblocktrans %}" href="{{ url_hub_project }}" style="display:block;"><p>{% trans "Child" %} </p></a>
 	</span>
 	{% endif %}
 	{% if project.is_hub %}
-  <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/hub-project.png" %})center top no-repeat;">
+  <span id="hub_project_sign" class="project-sign">
 	<p>{% trans "Hub"%}</p>
 	</span>
 	{% endif %}
 	{% if project.private %}
-	<span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/private-project.png" %})center top no-repeat;">
+	<span id="private_project_sign" class="project-sign">
 	<p>{% trans "Private"%}</p>
 	</span>
 	{% endif %}
