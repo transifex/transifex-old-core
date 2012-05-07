@@ -39,13 +39,7 @@
   <script type="text/javascript" src="{% static "lotte/js/jquery.textarea-expander.js" %}"></script>
   <script type="text/javascript" src="{% static "lotte/js/jquery.jeditable.mini.js" %}"></script>
   <script type="text/javascript" src="{% static "lotte/js/jquery.spellchecker.js" %}"></script>
-
-  {% if RTL %}
-    <style type="text/css">
-        textarea.rtl{unicode-bidi: embed; direction: rtl;}
-    </style>
-  {% endif %}
-
+  <script type="text/javascript" src="{% static "js/tx.jquery.bidi.js" %}"></script>
 <script type="text/javascript">
 
     /* Global variables */
@@ -302,12 +296,12 @@
                               else if (translation_text.substr(0, 2) == '\r\n')
                                   translation_text = '\r\n' + translation_text;
                               if(plural_types[rule]=='other'){
-                                  textareas += '<div class="translation_wrapper"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation {% if RTL %}rtl {% endif %}default_translation" id="translation_' + oObj.iDataRow + '">' + translation_text + '</textarea>';
+                                  textareas += '<div class="translation_wrapper{% if RTL %} rtl_wrapper{% endif %}"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation {% if RTL %}rtl {% endif %}default_translation" id="translation_' + oObj.iDataRow + '">' + translation_text + '</textarea>';
                                 if(plurals_counter>0)
                                     textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_other}})">'+plural_types[rule]+'</span>';
                                 textareas += '</div>';
                               }else{
-                                textareas += '<div class="translation_wrapper"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation {% if RTL %}rtl {% endif %}">' + translation_text + '</textarea>';
+                                textareas += '<div class="translation_wrapper{% if RTL %} rtl_wrapper{% endif %}"><span class="rule nodisplay" rule="'+plural_types[rule]+'">'+plural_types[rule]+'</span><textarea class="translation {% if RTL %}rtl {% endif %}">' + translation_text + '</textarea>';
                                 if(plural_types[rule]=='zero'){
                                     textareas += '<span class="plural_label tag" title="Translation plural form for '+plural_types[rule]+' items (equation: {{ target_language.rule_zero }})">'+plural_types[rule]+'</span>';
                                 }else if(plural_types[rule]=='one'){
@@ -464,6 +458,9 @@
                     if (textareaHeight < srcHeight)
                         $(this).TextAreaExpander(srcHeight);
                 });
+                {% if RTL %}
+                    $('textarea.translation').bidi();
+                {% endif %}
 	    }
         }).fnSetFilteringDelay(500);
 
