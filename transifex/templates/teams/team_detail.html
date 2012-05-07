@@ -97,6 +97,13 @@
 #debug-trigger:hover,
 #debug.open #debug-trigger {
 	color: #ffef00;
+
+
+
+}
+
+#infscr-loading{
+  text-align:center;
 }
 
 </style>
@@ -124,7 +131,11 @@ $(function(){
   <script type="text/javascript" src="{% static "js/lib/debug.js" %}"></script>
   <script type="text/javascript" src="{% static "js/lib/jquery.infinitescroll.js" %}"></script>
   <script type="text/javascript" src="{% static "js/lib/jquery.cookie.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/scrollbehaviour.js" %}"></script>
+  <script type="text/javascript">
+    //Define loader icon to be used with javascript
+    var sloaderUrl = "{% static 'images/icons/scroll-ajax-loader.gif' %}";
+  </script>
+  <script type="text/javascript" src="{% static "js/tx.infinitescrollbehaviour.js" %}"></script>
 
 {% endblock %}
 
