@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib import messages
@@ -23,7 +24,7 @@ from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.permissions.project import ProjectPermission
-from transifex.projects.signals import post_resource_save, post_resource_delete
+from transifex.projects.signals import post_resource_delete
 from transifex.teams.models import Team
 from transifex.txcommon.decorators import one_perm_required_or_403
 from transifex.txcommon.log import logger
@@ -35,9 +36,9 @@ from transifex.resources.handlers import (invalidate_object_templates,
 from transifex.resources.formats.registry import registry
 from transifex.resources.backends import FormatsBackend, FormatsBackendError, \
         content_from_uploaded_file
-
 from autofetch.forms import URLInfoForm
 from autofetch.models import URLInfo
+from .tasks import send_notices_for_resource_edited
 
 Lock = get_model('locks', 'Lock')
 
@@ -173,8 +174,9 @@ def resource_edit(request, project_slug, resource_slug):
                         if urlinfo.id:
                             urlinfo.delete()
 
-                post_resource_save.send(sender=None, instance=resource_new,
-                    created=False, user=request.user)
+                send_notices_for_resource_edited.delay(
+                    resource_new, request.user
+                )
 
                 return HttpResponseRedirect(reverse('resource_detail',
                     args=[resource.project.slug, resource.slug]))
