@@ -27,7 +27,7 @@ from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.resources.models import Translation, Resource, SourceEntity, \
-        get_source_language
+    ReviewHistory, get_source_language
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.resources.formats.validators import create_error_validators, \
         create_warning_validators, ValidationError
@@ -484,6 +484,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
             language__code=lang_code,
         )
         translations.update(reviewed=True)
+        ReviewHistory.add_many(translations, request.user, reviewed=True)
 
     if 'false' in request_data:
         source_entity_ids = request_data['false']
@@ -492,6 +493,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
             language__code=lang_code,
         )
         translations.update(reviewed=False)
+        ReviewHistory.add_many(translations, request.user, reviewed=False)
 
     invalidate_stats_cache(resource, language, user=request.user)
 
