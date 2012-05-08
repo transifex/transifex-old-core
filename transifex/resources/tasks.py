@@ -34,7 +34,7 @@ def check_and_notify_resource_full_reviewed(**kwargs):
                 nt, context)
 
 
-def _notify_all_on_source_change(resource):
+def _notify_all_on_source_change(resource, context):
     """
     Send notifications to everyone involved with a resource.
 
@@ -68,7 +68,7 @@ def send_notices_for_formats(signal, context):
 
     txnotification.send_observation_notices_for(project, signal, context)
     if language == resource.source_language:
-        _notify_all_on_source_change(resource)
+        _notify_all_on_source_change(resource, context)
 
 
 @task(name='send_notices_on_resource_changed', max_retries=2)
