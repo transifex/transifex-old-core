@@ -2,6 +2,7 @@ from celery.decorators import task
 from notification import models as notification
 
 from django.conf import settings
+from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.txcommon import notifications as txnotification
 from transifex.projects.signals import post_resource_save
