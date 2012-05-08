@@ -449,9 +449,20 @@ fieldset    { margin:0; padding:0; border: none; }
 legend      { font-weight: bold; font-size: 1.125em; /* 18px */ padding: 0 0.2em; }
 label[for]  { margin-right: 0.2em; }
 
-input[type="email"], input[type="password"], input[type="text"], input[type="url"]{background-color: #fbfbfb;outline: none;padding:7px;}
-input[type="email"]:hover, input[type="password"]:hover, input[type="text"]:hover, input[type="url"]:hover {border-color: #999;}
-input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, input[type="url"]:focus {border-color: #3d658d;}
+input[type="email"], input[type="password"], input[type="text"], input[type="url"]{
+  background-color: #fbfbfb;
+  outline: none;
+  padding:8px 7px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  }
+input[type="email"]:hover, input[type="password"]:hover, input[type="text"]:hover, input[type="url"]:hover {
+  border-color: #999;
+  }
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus, input[type="url"]:focus {
+  border-color: #3d658d;
+  }
 
 
 input, textarea, select { font-family: sans-serif; margin: 0.3em 0; }
