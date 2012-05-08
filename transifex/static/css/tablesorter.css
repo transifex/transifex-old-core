@@ -2,7 +2,7 @@
 .stats-table{clear:both;margin-top:0.5em;width:100%;}
 .stats-table td,.stats-table th{display: block;float: left;overflow: hidden;white-space: nowrap;position: relative;height:32px;line-height: 32px;padding:0;background-color: transparent;}
 .stats-table td{border-bottom: 1px solid #E3EAEE;}
-.stats-table th{border-bottom:1px solid #D8DFE2;font-size: 1.077em;}
+.stats-table th{-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;font-size: 1.077em;background-color: #F5F8FA;}
 .stats-table th.onlyarrow{height: 12px;line-height: 12px;}
 .stats-table td span.i16{height: 32px;}
 .stats-table td img{padding-top: 8px;}
@@ -36,8 +36,8 @@ background: white;
 content: "";
 }
 table.stats-table thead tr th.onlyarrow.header{height: 12px;text-align: center;background-position: center center;border-bottom-width: 1px; padding: 0;margin: 0;line-height: 12px;border-top:1px solid transparent;}
-table.stats-table thead tr th.onlyarrow.header:hover{background-color:#F5F8FA;}
-table.stats-table thead tr th.onlyarrow.header.headerSortDown, table.stats-table thead tr th.onlyarrow.header.headerSortUp{border-top: 1px solid #D8DFE2;background-color:#F5F8FA;}
+table.stats-table thead tr th.onlyarrow.header:hover{background-color:#f0f4f7;}
+table.stats-table thead tr th.onlyarrow.header.headerSortDown, table.stats-table thead tr th.onlyarrow.header.headerSortUp{background-color:#f0f4f7;}
 .stats-table strong{font-weight: 600;}
 
 /*Custom widths*/
@@ -94,6 +94,9 @@ table.tablesorter thead tr .header {
   cursor: pointer;
   border-left: 2px solid #FFF;
   border-right: 2px solid #FFF;
+  -moz-box-shadow:    inset 0 0 8px #dce1e5;
+  -webkit-box-shadow: inset 0 0 8px #dce1e5;
+  box-shadow:         inset 0 0 8px #dce1e5;
 }
 
 table.tablesorter thead tr .headerSortUp {
