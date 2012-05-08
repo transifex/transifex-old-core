@@ -1062,20 +1062,20 @@ class ReviewHistory(models.Model):
     translation_id = models.IntegerField('Translation', blank=True,
         null=True, help_text='The ID of the translation under review.')
 
-    project_id = models.IntegerField("Project id", blank=False, null=False,
+    project_id = models.IntegerField('Project ID', blank=False, null=False,
         db_index=True, help_text='The project that this translation belongs to.')
 
     string = models.TextField(blank=False, null=False,
         help_text='The actual string content of translation.')
 
-    username = models.CharField('Committer', max_length=50, blank=True,
+    username = models.CharField('Reviewer', max_length=50, blank=True,
         null=True, db_index=True,
-        help_text='The user who committed the specific translation.')
+        help_text='The user who performed the review action.')
 
     created = models.DateTimeField(auto_now_add=True, editable=False,
         db_index=True)
 
-    # made review or unreviewed?
+    # made review or unreviewed
     action = models.CharField('Action', max_length=1, choices=REVIEW_ACTIONS)
 
     class Meta:
@@ -1083,13 +1083,13 @@ class ReviewHistory(models.Model):
 
     @immutable_property
     def translation(self):
-        """Property to return the related object based on translation_id field."""
+        """Property to return the related Translation object."""
         return Translation.objects.get(id=self.translation_id)
 
     @immutable_property
     def user(self):
         """
-        Property to return the related object based on username field.
+        Property to return the related User object based on username field.
 
         It may return None if user is not found.
         """
@@ -1100,6 +1100,7 @@ class ReviewHistory(models.Model):
 
     @classmethod
     def add_one(cls, translation, user, project_id, reviewed):
+        """Create a single history entry for a translation."""
         action = 'R' if reviewed else 'U'
         cls.objects.create(
             translation_id=translation.id,
@@ -1111,6 +1112,7 @@ class ReviewHistory(models.Model):
 
     @classmethod
     def add_many(cls, t, user, project_id, reviewed):
+        """Create multiple (or just one) entries."""
         if isinstance(t, Translation):
             cls.add_one(t, user, project_id, reviewed)
         elif isinstance(t, models.query.QuerySet):
