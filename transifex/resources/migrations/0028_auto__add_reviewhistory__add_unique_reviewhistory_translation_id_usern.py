@@ -12,6 +12,8 @@ class Migration(SchemaMigration):
         db.create_table('resources_reviewhistory', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('translation_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
+            ('project_id', self.gf('django.db.models.fields.IntegerField')(db_index=True)),
+            ('string', self.gf('django.db.models.fields.TextField')()),
             ('username', self.gf('django.db.models.fields.CharField')(db_index=True, max_length=50, null=True, blank=True)),
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, db_index=True, blank=True)),
             ('action', self.gf('django.db.models.fields.CharField')(max_length=1)),
@@ -23,7 +25,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'ReviewHistory', fields ['translation_id', 'username', 'created', 'action']
         db.delete_unique('resources_reviewhistory', ['translation_id', 'username', 'created', 'action'])
 
@@ -151,6 +153,8 @@ class Migration(SchemaMigration):
             'action': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'db_index': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'project_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
+            'string': ('django.db.models.fields.TextField', [], {}),
             'translation_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '50', 'null': 'True', 'blank': 'True'})
         },

@@ -484,7 +484,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
             language__code=lang_code,
         )
         translations.update(reviewed=True)
-        ReviewHistory.add_many(translations, request.user, reviewed=True)
+        ReviewHistory.add_many(translations, request.user, project.id, reviewed=True)
 
     if 'false' in request_data:
         source_entity_ids = request_data['false']
@@ -493,7 +493,7 @@ def proofread(request, project_slug, lang_code, resource_slug=None, *args, **kwa
             language__code=lang_code,
         )
         translations.update(reviewed=False)
-        ReviewHistory.add_many(translations, request.user, reviewed=False)
+        ReviewHistory.add_many(translations, request.user, project.id, reviewed=False)
 
     invalidate_stats_cache(resource, language, user=request.user)
 

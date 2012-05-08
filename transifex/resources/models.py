@@ -1062,6 +1062,12 @@ class ReviewHistory(models.Model):
     translation_id = models.IntegerField('Translation', blank=True,
         null=True, help_text='The ID of the translation under review.')
 
+    project_id = models.IntegerField("Project id", blank=False, null=False,
+        db_index=True, help_text='The project that this translation belongs to.')
+
+    string = models.TextField(blank=False, null=False,
+        help_text='The actual string content of translation.')
+
     username = models.CharField('Committer', max_length=50, blank=True,
         null=True, db_index=True,
         help_text='The user who committed the specific translation.')
@@ -1093,18 +1099,20 @@ class ReviewHistory(models.Model):
             return None
 
     @classmethod
-    def add_one(cls, t, u, reviewed):
+    def add_one(cls, translation, user, project_id, reviewed):
         action = 'R' if reviewed else 'U'
         cls.objects.create(
-            translation_id=t.id,
-            username=u.username,
+            translation_id=translation.id,
+            project_id=project_id,
+            string=translation.string,
+            username=user.username,
             action=action,
         )
 
     @classmethod
-    def add_many(cls, t, u, reviewed):
+    def add_many(cls, t, user, project_id, reviewed):
         if isinstance(t, Translation):
-            cls.add_one(t, u, reviewed)
+            cls.add_one(t, user, project_id, reviewed)
         elif isinstance(t, models.query.QuerySet):
             for translation in t:
-                cls.add_one(translation, u, reviewed)
+                cls.add_one(translation, user, project_id, reviewed)
