@@ -745,6 +745,7 @@ class Handler(object):
         try:
             obj = self._parse(is_source, lang_rules)
         except self.HandlerParseError, e:
+            content = self.content
             msg = "Error when parsing file for resource %s: %s"
             logger.error(msg % (self.resource, e), exc_info=True)
             raise
