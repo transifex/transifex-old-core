@@ -14,93 +14,6 @@
 {% block extra_head %}
 <link type="text/css" href="{% static "css/jquery.jscrollpane.css" %}" rel="stylesheet" media="all" />
 <style  type="text/css">
-/**
- * Primary styles
- *
- * Author: Luke Shumard
- * lukeshumard.com + @lukeshumard
- */
-
-#debug {
-	left: -140px;
-	position: fixed;
-	display: block;
-	width: 140px;
-	border-top: 1px solid #ccc;
-	top: 18px;
-	z-index: 9999;
-	transition: left .3s ease-out;
-	-webkit-transition: left .3s ease-out;
-	-moz-transition: left .3s ease-out;
-	-o-transition: left .3s ease-out;
-}
-
-#debug.open {
-	left: 0px;
-}
-
-#debug h3 {
-	margin: 0;
-	padding: 0;
-	background: #ccc;
-	height: 13px;
-	line-height: 1;
-	border: 0;
-	padding: 3px 0;
-	text-indent: 1.0em;
-
-}
-
-#debug-nav {
-
-}
-
-#debug-nav a {
-	display: block;
-	color: #333;
-	text-decoration: none;
-	margin: 6px 0;
-	padding: 2px;
-	text-indent: 1.0em;
-	font-size: 0.9em;
-}
-
-#debug-nav a span {
-	color: #999;
-}
-
-#debug-nav a:hover {
-	background: #ffef00;
-}
-
-#debug-nav a:hover span {
-	color: #333;
-}
-
-#debug-trigger {
-	display: block;
-	position: absolute;
-	top: -1px;
-	right: -20px;
-	width: 20px;
-	height: 20px;
-	background: #ccc;
-	color: #fff;
-	font-size: 2em;
-	overflow: hidden;
-	border: 0;
-	text-decoration: none;
-	line-height: 15px;
-	text-align: center;
-}
-
-#debug-trigger:hover,
-#debug.open #debug-trigger {
-	color: #ffef00;
-
-
-
-}
 
 #infscr-loading{
   text-align:center;
@@ -127,15 +40,31 @@ $(function(){
 </script>
   <script type="text/javascript" src="{% static "js/lib/mwheelIntent.js" %}"></script>
   <script type="text/javascript" src="{% static "js/lib/jquery.mousewheel.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/lib/jquery.jscrollpane.min.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/lib/debug.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.jscrollpane.js" %}"></script>
   <script type="text/javascript" src="{% static "js/lib/jquery.infinitescroll.js" %}"></script>
-  <script type="text/javascript" src="{% static "js/lib/jquery.cookie.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/tx.infinitescrollbehaviour.js" %}"></script>
   <script type="text/javascript">
+    //TODO: remove this with merge of codebase and put it in seperate file
+
     //Define loader icon to be used with javascript
     var sloaderUrl = "{% static 'images/icons/scroll-ajax-loader.gif' %}";
+
+    $(function(){
+      infScrollOptions = {
+        navSelector     : ".pagination",
+        nextSelector    : ".pagination a:first",
+        itemSelector    : "#stat-row-container tr.stat-row",
+        debug           : false,
+        loading: {
+          finishedMsg   : "",
+          img           : sloaderUrl,
+          msgText       : "Fetching more resources.." ,
+      }
+    };
+ $("table.stats-table").infscrollbehaviour({}, infScrollOptions);
+
+});
   </script>
-  <script type="text/javascript" src="{% static "js/tx.infinitescrollbehaviour.js" %}"></script>
 
 {% endblock %}
 
@@ -144,23 +73,6 @@ $(function(){
 {% block content_main %}
 {% get_permission "project_perm.submit_translations" for request.user and team as "can_submit_translations" %}
 {% get_permission "project_perm.coordinate_team" for request.user and project,language as "is_coordinator" %}
-
-<div id="debug">
-		<a href="#" id="debug-trigger">+</a>
-		<h3>Debug bar</h3>
-		<nav id="debug-nav">
-			<a href="#" rel="destroy">Destroy</a>
-			<a href="#" rel="pause">Pause</a>
-			<a href="#" rel="resume">Resume</a>
-			<a href="#" rel="toggle">Toggle</a>
-			<a href="#" rel="scroll">Scroll</a>
-			<a href="#" rel="unbind">Unbind</span></a>
-			<a href="#" rel="bind">Bind</span></a>
-			<a href="#" rel="retrieve">Retrieve</a>
-			<a href="#" rel="cthullu">Invalid command</a>
-			<a href="#" rel="pause" data-arg="the-apocalypse">Invalid argument</a>
-		</nav>
-	</div>
 
 <div class="obj_bigdetails">
 {% if not project.anyone_submit %}

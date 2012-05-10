@@ -27,8 +27,8 @@
        /* ================== Table Container ================== */
 
       var $jScrollWrapper = $('<div class="jscrollwrapper"></div>')
-      .css({  'min-width': opts.scrollWidth,
-              'max-height': opts.scrollHeight,
+      .css({  'min-width': opts.scrollWidth, //use min-width because width breaks with jscrollpane
+              'height': opts.scrollHeight,
               'overflow-y': 'scroll',
               'overflow-x': 'visible'
           });
@@ -50,7 +50,7 @@
       function jscrollBehaviour(event, scrollPositionY, isAtTop, isAtBottom){
         if(isAtBottom){
           $jScrollWrapper.off('jsp-scroll-y');
-          $(opts.appendToSelector).infinitescroll('retrieve');
+          $(opts.infScrollSelector).infinitescroll('retrieve');
         }
       }
 
@@ -58,13 +58,13 @@
 
 
 	// hide pagination the first time, cause infinite scroll can't manage to ;-)
-    $('.pagination').hide();
+    $(infScrollOptions.navSelector).hide();
 
     /* call infinite scroll plugin to load more rows when user reaches end of page
      * To see what the available infScrollOptions are , visit infinitescroll documentation
      * or take a peak at at the jquery.infinitescroll.js file.
     */
-    $(opts.appendToSelector).infinitescroll( infScrollOptions, function(newElements){
+    $(opts.infScrollSelector).infinitescroll( infScrollOptions, function(newElements){
 
        // redraw scrollbar and reassign scroll listener and handler
         if(typeof $jScrollWrapper !== 'undefined'){
@@ -105,7 +105,7 @@
   /* ================== Default Options =====================*/
 
   $.fn.infscrollbehaviour.defaults = {
-    appendToSelector: "#stat-row-container",
+    infScrollSelector: "#stat-row-container",
     scrollWidth: '980px',
     scrollHeight: '520px'
   };
@@ -113,18 +113,6 @@
 
 })(jQuery, window, document)
 
-$(function(){
-  infScrollOptions = {
-      navSelector     : ".pagination",
-      nextSelector    : ".pagination a.next",
-      itemSelector    : "#stat-row-container tr.stat-row",
-      debug           : false,
-      loading: {
-        finishedMsg   : "",
-        img           : sloaderUrl,
-        msgText       : "Fetching more resources.." ,
-      }
-  };
- $("table.stats-table").infscrollbehaviour({}, infScrollOptions);
 
-});
+
+
