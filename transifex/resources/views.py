@@ -410,9 +410,8 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
 
 # Restrict access only for private projects
 # DONT allow anonymous access
-@login_required
 @one_perm_required_or_403(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def get_translation_file(request, project_slug, resource_slug, lang_code,
     **kwargs):
     """
@@ -454,9 +453,8 @@ def get_translation_file(request, project_slug, resource_slug, lang_code,
 
 # Restrict access only for private projects
 # DONT allow anonymous access
-@login_required
 @one_perm_required_or_403(pr_project_private_perm,
-    (Project, 'slug__exact', 'project_slug'))
+    (Project, 'slug__exact', 'project_slug'), anonymous_access=True)
 def get_pot_file(request, project_slug, resource_slug):
     """
     View to download the pot file of the resource.
