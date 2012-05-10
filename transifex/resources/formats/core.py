@@ -745,9 +745,11 @@ class Handler(object):
         try:
             obj = self._parse(is_source, lang_rules)
         except self.HandlerParseError, e:
-            content = self.content
             msg = "Error when parsing file for resource %s: %s"
-            logger.error(msg % (self.resource, e), exc_info=True)
+            logger.error(msg % (self.resource, e), exc_info=True,
+                    extra={
+                        'tx_bad_upload_file': self.content
+                    })
             raise
         if self.resource and not self.stringset:
             msg = _("We're not able to extract any string from the file "
