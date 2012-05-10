@@ -47,11 +47,14 @@ $(function(){
         navSelector     : ".pagination",
         nextSelector    : ".pagination a:first",
         itemSelector    : "#stat-row-container tr.stat-row",
-        debug           : false,
+        errorCallback   : function () {
+          //when done, do a final reinitialise of the jscrollpane to adjust to content
+          $("table.stats-table").parents('.jscrollwrapper').data('jsp').reinitialise();
+        },
         loading: {
           finishedMsg   : "",
           img           : sloaderUrl,
-          msgText       : "Fetching more resources.." ,
+          msgText       : "" ,
       }
     };
  $("table.stats-table").infscrollbehaviour({}, infScrollOptions);

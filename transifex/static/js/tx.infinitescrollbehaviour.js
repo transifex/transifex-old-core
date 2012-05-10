@@ -30,9 +30,9 @@
       .css({  'min-width': opts.scrollWidth, //use min-width because width breaks with jscrollpane
               'height': opts.scrollHeight,
               'overflow-y': 'scroll',
-              'overflow-x': 'visible'
+              'overflow-x': 'visible',
+              'padding-bottom': '20px'
           });
-
 
        //get reference to scrollwrapper with the new content it containes
        $jScrollWrapper = $this.wrap($jScrollWrapper).parent();
@@ -68,8 +68,9 @@
 
        // redraw scrollbar and reassign scroll listener and handler
         if(typeof $jScrollWrapper !== 'undefined'){
+          $jScrollWrapper.css('padding-bottom', '0px');
           $jScrollWrapper.data('jsp').reinitialise();
-          $jScrollWrapper.on('jsp-scroll-y', jscrollBehaviour)
+          $jScrollWrapper.on('jsp-scroll-y', jscrollBehaviour);
         }
 
       });
