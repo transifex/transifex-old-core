@@ -94,11 +94,10 @@ class DefaultProjectQuerySet(models.query.QuerySet):
 
         Includes private projects.
         """
+        Team = get_model('teams', 'Team')
         return self.filter(
             Q(maintainers__in=[user]) |
-            Q(team__coordinators__in=[user]) |
-            Q(team__members__in=[user]) |
-            Q(team__reviewers__in=[user])
+            Q(team__in=Team.objects.for_user(user))
         ).distinct()
 
     def for_user(self, user):
@@ -112,11 +111,10 @@ class DefaultProjectQuerySet(models.query.QuerySet):
             projects = projects.filter(private=False)
         else:
             if not user.is_superuser:
+                Team = get_model('teams', 'Team')
                 projects = projects.exclude(
                     Q(private=True) & ~(Q(maintainers__in=[user]) |
-                    Q(team__coordinators__in=[user]) |
-                    Q(team__members__in=[user]) |
-                    Q(team__reviewers__in=[user]))).distinct()
+                    Q(team__in=Team.objects.for_user(user)))).distinct()
         return projects
 
     def public(self):

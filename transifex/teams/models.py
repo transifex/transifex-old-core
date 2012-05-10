@@ -27,6 +27,13 @@ class TeamManager(models.Manager):
     def private(self):
         return self.filter(project__private=True)
 
+    def for_user(self, user):
+        return self.filter(
+            Q(coordinators__in=[user]) |
+            Q(members__in=[user]) |
+            Q(reviewers__in=[user])
+        ).distinct()
+
 class Team(models.Model):
     """
     A team is a set of people that work together in pro of a project in a
