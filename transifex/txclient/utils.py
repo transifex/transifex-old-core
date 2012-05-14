@@ -19,7 +19,7 @@ def _process(request):
     version = extract_version(agent)
     if is_client_old(version):
         msg = 'User %s used old client version %s.'
-        logger.debug(msg % request.user.username, version)
+        logger.debug(msg % (request.user.username, version))
         notify_user(request.user)
 
 
@@ -29,7 +29,7 @@ def handle_client_request(f):
     """
     @wraps(f)
     def new_f(request, *args, **kwargs):
-        response = f(*args, **kwargs)
+        response = f(request, *args, **kwargs)
         if is_client_request(request):
             _process(request)
             response['X-Current-Client-Version'] = LATEST_VERSION
