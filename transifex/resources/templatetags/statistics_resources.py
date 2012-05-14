@@ -19,14 +19,12 @@ def calculate_stats(stat, width=100):
     total = stat.total
     trans = stat.translated
     reviewed = 0
-    resource = None
-    source_language = None
-    language = None
+    show_reviewed_stats = False
     if isinstance(stat, RLStats):
         reviewed = stat.reviewed
         resource = stat.resource
-        source_language = resource.source_language
-        language = stat.language
+        if resource.source_language != stat.language:
+            show_reviewed_stats = True
 
     # Fail-safe check
     # TODO add to the setting part, not getting.
@@ -48,10 +46,8 @@ def calculate_stats(stat, width=100):
             'pos': StatBarsPositions([('trans', trans_percent),
                                       ('untrans', untrans_percent)], width),
             'width':width,
-            'resource': resource,
             'reviewed': reviewed,
-            'source_language': source_language,
-            'language': language}
+            'show_reviewed_stats': show_reviewed_stats}
 
 
 @register.inclusion_tag("resources/stats_bar_simple.html")

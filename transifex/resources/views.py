@@ -251,6 +251,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
         )
 
     wordcount = resource.wordcount
+    show_reviewed_stats = resource.source_language != target_language
 
     return render_to_response("resources/resource_actions.html", {
         'project': project,
@@ -263,6 +264,7 @@ def resource_actions(request, project_slug=None, resource_slug=None,
         'user_teams': user_teams,
         'stats': stats,
         'wordcount': wordcount,
+        'show_reviewed_stats': show_reviewed_stats,
     }, context_instance = RequestContext(request))
 
 
