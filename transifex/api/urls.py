@@ -16,6 +16,8 @@ from transifex.resources.api import ResourceHandler, StatsHandler, \
 from transifex.releases.api import ReleaseHandler
 from transifex.actionlog.api import ActionlogHandler
 from transifex.api.views import reject_legacy_api
+from transifex.txclient import handle_client_request
+
 
 auth = CustomHttpBasicAuthentication(realm='Transifex API')
 
@@ -94,7 +96,7 @@ urlpatterns = patterns('',
         name='apiv2_translation',
     ), url(
         r'^2/project/(?P<project_slug>[-\w]+)/resource/(?P<resource_slug>[-\w]+)/stats/$',
-        never_cache(stats_handler),
+        handle_client_request(never_cache(stats_handler)),
         {'api_version': 2, 'lang_code': None},
         name='apiv2_stats',
     ), url(
