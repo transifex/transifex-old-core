@@ -362,42 +362,9 @@ class StatsHandler(BaseHandler):
         This is an API handler to display translation statistics for individual
         resources.
         """
-        if api_version == 2:
-            return self._get_stats(request=request, pslug=project_slug,
-            rslug=resource_slug, lang_code=lang_code)
-
-        # API v1 code
-        try:
-            resource = Resource.objects.get( project__slug = project_slug,
-                slug= resource_slug)
-        except Resource.DoesNotExist:
-            return BAD_REQUEST("Unknown resource %s" % resource_slug)
-
-        language = None
-        if lang_code:
-            try:
-                language = Language.objects.by_code_or_alias(lang_code)
-            except Language.DoesNotExist:
-                return BAD_REQUEST("Unknown language %s" % lang_code)
-
-
-        stats = RLStats.objects.by_resource(resource)
-        # TODO: If we're gonna use this as a generic stats generator, we should
-        # include more info in the json.
-        if language:
-            retval = {}
-            for stat in stats.by_language(language):
-                retval.update({stat.language.code:{"completed": "%s%%" %
-                    (stat.translated_perc),
-                    "translated_entities": stat.translated, "last_update":
-                    stat.last_update}})
-        else:
-            retval = []
-            for stat in stats:
-                retval.append({stat.language.code:{"completed": "%s%%" %
-                    (stat.translated_perc),
-                    "translated_entities": stat.translated}})
-        return retval
+        if api_version != 2:
+            return BAD_REQUEST('Wrong API version called.')
+        return self._get_stats(request, project_slug, resource_slug, lang_code)
 
     def _get_stats(self, request, pslug, rslug, lang_code):
         try:
