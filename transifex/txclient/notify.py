@@ -34,10 +34,25 @@ def _mail_already_sent(email):
     return False
 
 
-def _mail_user(email):
+def _mail_user(username, email):
     """Email the user about the old client used."""
-    subject = ''
-    body = ''
+    subject = 'Transifex client in use is outdated'
+    body = """Greetings %(username)s,
+
+here at Transifex we constantly try to deliver more and better features to our users.
+We noticed that recently you used our command line client to access transifex.
+Unfortunately, the version of the client that you used is outdated.
+
+If you would like to take advantage of all the new features that have been implemented
+in the newer versions, you can always visit %(install_url)s for a reminder on updating
+the client.
+
+For any questions that you may have, feel free to contact us at https://www.transifex.com/contact/
+
+Always at your service,
+the transifex team.
+https://www.transifex.com/""" % dict(username=username, install_url='http://bit.ly/txsetup')
+
     sender = settings.DEFAULT_FROM_EMAIL
     receipients = [email, ]
     send_mail(subject, body, sender, receipients, fail_silently=True)
@@ -54,4 +69,4 @@ def notify_user(user):
         return
 
     if not _mail_already_sent(user.email):
-        _mail_user(user.email)
+        _mail_user(user.username, user.email)
