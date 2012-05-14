@@ -6,6 +6,7 @@ from .conf import LATEST_VERSION
 from .versions import user_agent, is_client_request, extract_version, \
         is_client_old
 from .notify import notify_user
+from .log import logger
 
 
 def _process(request):
@@ -17,6 +18,8 @@ def _process(request):
     agent = user_agent(request)
     version = extract_version(agent)
     if is_client_old(version):
+        msg = 'User %s used old client version %s.'
+        logger.debug(msg % request.user.username, version)
         notify_user(request.user)
 
 
