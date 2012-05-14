@@ -1,6 +1,7 @@
 from django import template
 from django.utils.timesince import timesince
 from transifex.languages.models import Language
+from transifex.resources.models import RLStats
 from transifex.txcommon.utils import StatBarsPositions
 
 register = template.Library()
@@ -17,6 +18,13 @@ def calculate_stats(stat, width=100):
     """
     total = stat.total
     trans = stat.translated
+    reviewed = 0
+    show_reviewed_stats = False
+    if isinstance(stat, RLStats):
+        reviewed = stat.reviewed
+        resource = stat.resource
+        if resource.source_language != stat.language:
+            show_reviewed_stats = True
 
     # Fail-safe check
     # TODO add to the setting part, not getting.
@@ -37,7 +45,9 @@ def calculate_stats(stat, width=100):
             'trans': trans,
             'pos': StatBarsPositions([('trans', trans_percent),
                                       ('untrans', untrans_percent)], width),
-            'width':width}
+            'width':width,
+            'reviewed': reviewed,
+            'show_reviewed_stats': show_reviewed_stats}
 
 
 @register.inclusion_tag("resources/stats_bar_simple.html")
