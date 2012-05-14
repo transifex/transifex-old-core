@@ -5,10 +5,7 @@ from functools import wraps
 from .conf import LATEST_VERSION
 from .versions import user_agent, is_client_request, extract_version, \
         is_client_old
-
-
-def _notify_user(user):
-    pass
+from .notify import notify_user
 
 
 def _process(request):
@@ -20,7 +17,7 @@ def _process(request):
     agent = user_agent(request)
     version = extract_version(agent)
     if is_client_old(version):
-        _notify_user(request.user)
+        notify_user(request.user)
 
 
 def handle_client_request(f):
