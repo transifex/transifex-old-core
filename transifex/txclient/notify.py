@@ -34,29 +34,32 @@ def _mail_already_sent(email):
     return False
 
 
-def _mail_user(username, email):
+def _mail_user(name, email):
     """Email the user about the old client used."""
+
     subject = 'Transifex client in use is outdated'
     body = """Greetings %(username)s,
 
-here at Transifex we constantly try to deliver more and better features to our users.
-We noticed that recently you used our command line client to access transifex.
-Unfortunately, the version of the client that you used is outdated.
+here at Transifex we constantly try to deliver more and better features to our
+users.  We noticed that recently you used an outdated version of the client to
+access Transifex.com.
 
-If you would like to take advantage of all the new features that have been implemented
-in the newer versions, you can always visit %(install_url)s for a reminder on updating
-the client.
+If you would like to take advantage of all the new features that have been
+implemented in the newer versions, you can always visit %(install_url)s for
+instructions on how to install the latest version.
 
-For any questions that you may have, feel free to contact us at https://www.transifex.com/contact/
+For any questions that you may have, feel free to contact us at
+https://www.transifex.com/contact/
 
-Always at your service,
-the transifex team.
-https://www.transifex.com/""" % dict(username=username, install_url='http://bit.ly/txsetup')
+The Transifex team
+https://www.transifex.com/""" % dict(
+        username=name,
+        install_url='http://bit.ly/txsetup'
+        )
 
     sender = settings.DEFAULT_FROM_EMAIL
     receipients = [email, ]
     send_mail(subject, body, sender, receipients, fail_silently=True)
-
 
 
 def notify_user(user):
@@ -69,4 +72,12 @@ def notify_user(user):
         return
 
     if not _mail_already_sent(user.email):
-        _mail_user(user.username, user.email)
+        if user.first_name and user.last_name:
+            username = '%(first)s %(last)s' % dict(
+                first=user.first_name,
+                last=user.last_name,
+                )
+        else:
+            username = user.username
+
+        _mail_user(username, user.email)
