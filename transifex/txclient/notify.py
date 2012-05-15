@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import
 from django.conf import settings
 from django.core.mail import send_mail
 from datastores.txredis import TxRedis, redis_exception_handler
+from .conf import INTERVAL
 
-
-_LIFE_TIME = 24 * 60 * 60
 
 def _cache_key(email):
     """Key to use in Redis for emails."""
@@ -30,7 +30,7 @@ def _mail_already_sent(email):
     if r.exists(key):
         return True
     r.set(key, '')
-    r.expire(key, _LIFE_TIME)
+    r.expire(key, INTERVAL)
     return False
 
 
