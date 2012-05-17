@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import absolute_import
 import os
 import tempfile
 import urllib
@@ -44,21 +46,8 @@ from transifex.resources.handlers import invalidate_stats_cache
 
 from transifex.api.utils import BAD_REQUEST
 
-
-class BadRequestError(Exception):
-    pass
-
-
-class NoContentError(Exception):
-    pass
-
-
-class NotFoundError(Exception):
-    pass
-
-class ForbiddenError(Exception):
-    pass
-
+from .exceptions import BadRequestError, NoContentError, NotFoundError, \
+        ForbiddenError
 
 class ResourceHandler(BaseHandler):
     """
