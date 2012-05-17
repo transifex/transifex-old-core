@@ -25,7 +25,7 @@ from .exceptions import BadRequestError, NoContentError, NotFoundError, \
         ForbiddenError
 
 
-class TranslationBaseHandler(BaseHandler):
+class BaseTranslationHandler(BaseHandler):
 
     allowed_methods = ('GET', 'PUT', )
 
@@ -379,7 +379,7 @@ class TranslationBaseHandler(BaseHandler):
         return (field_map_, fields)
 
 
-class SingleTranslationHandler(TranslationBaseHandler):
+class SingleTranslationHandler(BaseTranslationHandler):
     """Read and update a single translation"""
 
     def _check_if_user_can_update_translation(self, project, resource,
@@ -593,7 +593,7 @@ class SingleTranslationHandler(TranslationBaseHandler):
             return rc.BAD_REQUEST(unicode(e))
 
 
-class TranslationObjectsHandler(TranslationBaseHandler):
+class TranslationObjectsHandler(BaseTranslationHandler):
     """
     Read and update a set of translations in
     a language for a resource.
