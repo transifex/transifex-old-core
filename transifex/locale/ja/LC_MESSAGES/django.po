@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the Transifex package.
 #
 # Translators:
-# Translators:
 # Hajime Taira <htaira@redhat.com>, 2011, 2012.
 # Masahiro Fujimoto <fujimoto@internet.ne.jp>, 2012.
 # Shinya Okano <tokibito@gmail.com>, 2011.
@@ -16,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-15 15:37+0000\n"
-"PO-Revision-Date: 2012-03-11 16:56+0000\n"
+"POT-Creation-Date: 2012-05-17 13:25+0000\n"
+"PO-Revision-Date: 2012-05-15 16:28+0000\n"
 "Last-Translator: Masahiro Fujimoto <fujimoto@internet.ne.jp>\n"
 "Language-Team: Japanese (http://www.transifex.net/projects/p/transifex/"
 "language/ja/)\n"
@@ -458,7 +457,7 @@ msgstr "%(user)sさんには%(lock)sのロックを解除する権限があり�
 
 #: addons/locks/notifications.py:15
 msgid "Lock expiration"
-msgstr "ロックの期限"
+msgstr "ロックの期限切れ"
 
 #: addons/locks/notifications.py:16
 msgid "when a lock for a translation resource will expire"
@@ -628,7 +627,7 @@ msgstr "翻訳文が空欄です"
 #: addons/lotte/views.py:962
 #, python-format
 msgid "Error occurred while trying to save translation: %s"
-msgstr "翻訳 %s を保存する際にエラーが発生しました。"
+msgstr "翻訳「%s」を保存する際にエラーが発生しました。"
 
 #: addons/lotte/views.py:1122
 msgid "Permission error."
@@ -719,11 +718,11 @@ msgstr "コメント："
 
 #: addons/lotte/templates/tab_details_snippet.html:85 resources/models.py:365
 msgid "Occurrences"
-msgstr "出現回数"
+msgstr "出現場所"
 
 #: addons/lotte/templates/tab_details_snippet.html:85
 msgid "Occurrences:"
-msgstr "出現回数："
+msgstr "出現場所："
 
 #: addons/lotte/templates/translate.html:11
 #: addons/lotte/templates/view_strings.html:9 addons/txapps/models.py:64
@@ -957,13 +956,12 @@ msgid "Auto save"
 msgstr "自動保存"
 
 #: addons/lotte/templates/translate.html:981
-#, fuzzy
 msgid "Enable shortcuts"
-msgstr "キーボードショートカット"
+msgstr "ショートカットを有効化"
 
 #: addons/lotte/templates/translate.html:985
 msgid "Enable suggestions auto-open"
-msgstr ""
+msgstr "自動提案表示を有効化"
 
 #: addons/lotte/templates/view_strings.html:49
 msgid "Search:"
@@ -1151,7 +1149,7 @@ msgid "Filter"
 msgstr "絞り込み"
 
 #: addons/timeline/templates/timeline/timeline_base.html:31
-#: templates/timeline.html:24 templates/teams/team_detail.html:239
+#: templates/timeline.html:24 templates/teams/team_detail.html:241
 msgid "None available"
 msgstr "利用できるものはありません"
 
@@ -1408,7 +1406,7 @@ msgstr "ユーザーバーのHTMLコードを表示："
 #, python-format
 msgid ""
 "This version of API is obsolete. Please have a look at %(url)s for details."
-msgstr ""
+msgstr "APIのバージョンが古くなっています。詳細は%(url)sをご覧ください。"
 
 #: languages/feeds.py:14
 #, python-format
@@ -1418,7 +1416,7 @@ msgstr "%(site_name)s での言語"
 #: languages/feeds.py:17
 #, python-format
 msgid "The languages spoken on %s."
-msgstr "%s で話されている言語"
+msgstr "%sで話されている言語"
 
 #: languages/models.py:62 languages/migrations/0001_initial.py:13
 #: languages/migrations/0002_added_rules_f.py:79
@@ -1482,9 +1480,8 @@ msgid "languages"
 msgstr "言語"
 
 #: projects/admin.py:18
-#, fuzzy
 msgid "permission"
-msgstr "パーミッションを付与する"
+msgstr "権限"
 
 #: projects/feeds.py:14
 #, python-format
@@ -1503,7 +1500,7 @@ msgstr "%(site_name)s（%(project)s内のリソース）"
 #: projects/feeds.py:38
 #, python-format
 msgid "Latest resources in project %s."
-msgstr "プロジェクト %s の最新のリソース。"
+msgstr "プロジェクト %s の最新のリソースです。"
 
 #: projects/feeds.py:58
 #, python-format
@@ -1838,7 +1835,7 @@ msgstr ""
 #: projects/views/hub.py:146
 #, python-format
 msgid "Request to join '%s' project hub was withdrawn"
-msgstr "%s プロジェクトハブへの参加リクエストが辞退されました"
+msgstr "「%s」プロジェクトハブへの参加リクエストが辞退されました"
 
 #: projects/views/hub.py:210
 msgid "Undo"
@@ -1852,12 +1849,12 @@ msgstr "関連付けの解除"
 #: projects/views/project.py:166
 #, python-format
 msgid "Requested to join the '%s' project hub."
-msgstr "%s プロジェクトハブへの参加をリクエストしました。"
+msgstr "「%s」プロジェクトハブへの参加をリクエストしました。"
 
 #: projects/views/project.py:270
 #, python-format
 msgid "The project '%s' was deleted."
-msgstr "プロジェクト %s は削除されました。"
+msgstr "プロジェクト「%s」は削除されました。"
 
 #: releases/feeds.py:31
 #, python-format
@@ -2035,7 +2032,7 @@ msgstr "リリースの通知"
 #: releases/views.py:154
 #, python-format
 msgid "The release '%s' was deleted."
-msgstr "リソース %s は削除されました。"
+msgstr "リソース「%s」は削除されました。"
 
 #: resources/api.py:1201
 #, python-format
@@ -2387,7 +2384,7 @@ msgstr "テンプレート"
 #: resources/views.py:103
 #, python-format
 msgid "The translation resource '%s' was deleted."
-msgstr "翻訳リソース %s は削除されました。"
+msgstr "翻訳リソース「%s」は削除されました。"
 
 #: resources/views.py:154
 msgid "The URL you provided doesn't link to a valid file."
@@ -2425,7 +2422,7 @@ msgstr "このリソースをロックする期間の延長に失敗しました
 #: resources/views.py:555
 #, python-format
 msgid "You cannot lock it right now! (Locked by %s )"
-msgstr "今はロックできません。(%s がロックしています)"
+msgstr "今はロックできません。(%sさんがロックしています)"
 
 #: resources/views.py:589
 msgid "You are not allowed to upload a translation."
@@ -2480,17 +2477,17 @@ msgid ""
 "in the system."
 msgstr ""
 "アップロードされたファイルの複数形の数が、システムで設定されたこの言語の複数"
-"形の数 (%s) と異なるため、ファイル内の複数形の項目がスキップされました。"
+"形の数（%s）と異なるため、ファイル内の複数形の項目がスキップされました。"
 
 #: resources/formats/qt.py:69 resources/formats/xliff.py:51
 #, python-format
 msgid "Element '%s' not found!"
-msgstr "要素 %s が見つかりません。"
+msgstr "要素「%s」が見つかりません。"
 
 #: resources/formats/qt.py:71 resources/formats/xliff.py:53
 #, python-format
 msgid "Multiple '%s' elements found!"
-msgstr "要素 %s が複数回出現しました。"
+msgstr "要素「%s」が複数回出現しました。"
 
 #: resources/formats/qt.py:192
 #, python-format
@@ -2533,7 +2530,7 @@ msgstr "翻訳文には空白文字のみを含めることができます。"
 msgid ""
 "Translation string doesn't contain the same number of '%s' as the source "
 "string."
-msgstr "翻訳文に原文にある数値%sが含まれていません。"
+msgstr "翻訳文に原文にある数値「%s」が含まれていません。"
 
 #: resources/formats/validators.py:115
 #, python-format
@@ -2633,8 +2630,8 @@ msgid ""
 "User(s) %s cannot be in both Coordinators and Members lists. Please make "
 "sure that the lists are unique."
 msgstr ""
-"ユーザー %s をコーディネーターとメンバーの両方に登録できません。リストに重複"
-"がないようにしてください。"
+"%sさんをコーディネーターとメンバーの両方に登録できません。リストに重複がない"
+"ようにしてください。"
 
 #: teams/forms.py:118
 #, python-format
@@ -2642,17 +2639,17 @@ msgid ""
 "User(s) %s cannot be in both Coordinators and Reviewers lists. Please make "
 "sure that the lists are unique."
 msgstr ""
-"ユーザー %s をコーディネーターとレビュー担当者の両方に登録できません。リスト"
-"に重複がないようにしてください。"
+"%sさんをコーディネーターとレビュー担当者の両方に登録できません。リストに重複"
+"がないようにしてください。"
 
 #: teams/forms.py:126
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "User(s) %s cannot be in both Members and Reviewers lists. Please make sure "
 "that the lists are unique."
 msgstr ""
-"ユーザー %s をコーディネーターとレビュー担当者の両方に登録できません。リスト"
-"に重複がないようにしてください。"
+"%sさんがメンバーとレビュー担当者を兼ねることはできません。それぞれのリストが"
+"重複しないようにしてください。"
 
 #: teams/forms.py:169
 msgid "All child projects"
@@ -2710,27 +2707,27 @@ msgstr "チームアクセス要求"
 msgid "team access requests"
 msgstr "チームアクセス要求"
 
-#: teams/views.py:295
+#: teams/views.py:305
 #, python-format
 msgid "The team '%s' was deleted."
-msgstr "翻訳チーム %s は削除されました。"
+msgstr "翻訳チーム「%s」は削除されました。"
 
-#: teams/views.py:343
+#: teams/views.py:353
 #, python-format
 msgid "You are already on the '%s' team."
-msgstr "あなたは既に %s チームに所属しています。"
+msgstr "あなたは既に「%s」チームに所属しています。"
 
-#: teams/views.py:354
+#: teams/views.py:364
 #, python-format
 msgid "You requested to join the '%s' team."
-msgstr "あなたは %s チームへの参加をリクエストしました。"
+msgstr "あなたは「%s」チームへの参加をリクエストしました。"
 
-#: teams/views.py:376
+#: teams/views.py:386
 #, python-format
 msgid "You already requested to join the '%s' team."
-msgstr "あなたは既に %s チームへの参加をリクエストしています。"
+msgstr "あなたは既に「%s」チームへの参加をリクエストしています。"
 
-#: teams/views.py:380
+#: teams/views.py:390
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you join a translation team"
@@ -2738,57 +2735,57 @@ msgstr ""
 "この翻訳チームに参加する前に、協力者ライセンス条項（CLA）に署名する必要があり"
 "ます。"
 
-#: teams/views.py:409
+#: teams/views.py:419
 #, python-format
 msgid "User '%(user)s' is already on the '%(team)s' team."
 msgstr "%(user)sさんはすでに%(team)sチームに所属しています。"
 
-#: teams/views.py:416
+#: teams/views.py:426
 #, python-format
 msgid "You added '%(user)s' to the '%(team)s' team."
 msgstr "あなたは%(user)sさんを%(team)sチームに追加しました。"
 
-#: teams/views.py:465
+#: teams/views.py:475
 #, python-format
 msgid ""
 "You rejected the request by user '%(user)s' to join the '%(team)s' team."
 msgstr "あなたは%(user)sさんからの%(team)sへの参加リクエストを拒否しました。"
 
-#: teams/views.py:511
+#: teams/views.py:521
 #, python-format
 msgid "You withdrew your request to join the '%s' team."
-msgstr "あなたは %s チームへの参加リクエストを辞退しました。"
+msgstr "あなたは「%s」チームへの参加リクエストを辞退しました。"
 
-#: teams/views.py:557
+#: teams/views.py:567
 #, python-format
 msgid "You left the '%s' team."
-msgstr "あなたは %s チームを退会しました。"
+msgstr "あなたは「%s」チームを退会しました。"
 
-#: teams/views.py:579
+#: teams/views.py:589
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "あなたは「%s」チームの一員ではありません。"
 
-#: teams/views.py:602
+#: teams/views.py:612
 msgid "Please select a language before submitting the form."
 msgstr "フォームを送信する前に、言語を選択してください。"
 
-#: teams/views.py:615
+#: teams/views.py:625
 #, python-format
 msgid "'%s' team already exists."
-msgstr "%s チームは既に存在します。"
+msgstr "「%s」チームは既に存在します。"
 
-#: teams/views.py:621
+#: teams/views.py:631
 #, python-format
 msgid "A request to create the '%s' team already exists."
-msgstr "既に存在する %s チームの作成をリクエストしようとしました。"
+msgstr "既に存在する「%s」チームの作成リクエスト。"
 
-#: teams/views.py:638
+#: teams/views.py:648
 #, python-format
 msgid "You requested creation of the '%s' team."
-msgstr "あなたは %s チームの作成をリクエストしました。"
+msgstr "あなたは「%s」チームの作成をリクエストしました。"
 
-#: teams/views.py:662
+#: teams/views.py:672
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you submit a team creation request."
@@ -2796,12 +2793,12 @@ msgstr ""
 "翻訳チームの作成をリクエストする前に、協力者ライセンス条項（CLA）に署名する必"
 "要があります。"
 
-#: teams/views.py:691
+#: teams/views.py:701
 #, python-format
 msgid "You approved the '%(team)s' team requested by '%(user)s'."
 msgstr "あなたは%(user)sさんからの%(team)sチームのリクエストを承認しました。"
 
-#: teams/views.py:735
+#: teams/views.py:745
 #, python-format
 msgid "You rejected the request by '%(user)s' for a '%(team)s' team."
 msgstr "あなたは%(user)sさんからの%(team)sチームのリクエストを拒否しました。"
@@ -2828,13 +2825,13 @@ msgid "Page not found"
 msgstr "ページが見つかりません"
 
 #: templates/404.html:13
-#, fuzzy
 msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://code.transifex.com/transifex/issues/'>let us know</a>."
 msgstr ""
-"間違っているリンクをクリックしたようです。当社のミスであるとお考えならば、<a "
-"href='http://transifex.org/newticket'>お知らせください</a>.。"
+"正しくないリンクをクリックしたようです。これがシステムの問題だと思われた場合"
+"は、<a href='http://code.transifex.com/transifex/issues/'>お知らせください</"
+"a>.。"
 
 #: templates/500.html:7 templates/500.html.py:22
 msgid "Page unavailable"
@@ -3114,7 +3111,6 @@ msgstr ""
 "スに関心のある人には、プロジェクトの更新を受け取ることができます。\n"
 
 #: templates/helptext/project_form_helptext.html:72
-#, fuzzy
 msgid ""
 "\n"
 "This field should contain the url for the maintenance, tracking system of\n"
@@ -3122,9 +3118,9 @@ msgid ""
 "http://code.transifex.com/transifex/issues/\n"
 msgstr ""
 "\n"
-"このフィールドはプロジェクトのメンテナンス、バグ追跡システムのURLを記入しま"
+"このフィールドにはプロジェクトのメンテナンスやバグ追跡システムのURLを記入しま"
 "す。たとえば、Transifexのバグ追跡システムは次の通りです。\n"
-"http://www.transifex.org/\n"
+"http://code.transifex.com/transifex/issues/\n"
 
 #: templates/helptext/project_form_helptext.html:83
 msgid ""
@@ -3188,15 +3184,14 @@ msgid "No languages registered yet. :-("
 msgstr "まだ登録されている言語がありません。 "
 
 #: templates/languages/language_list.html:34
-#, fuzzy
 msgid ""
 "Couldn't find your language? Please use the feedback form and <a href="
 "\"http://help.transifex.com/user-guide/faq.html#where-does-the-language-list-"
 "come-from-how-can-i-add-my-own\">let us know</a>!"
 msgstr ""
-"あなたの言語が見つかりませんか？フィードバックフォームを使用して、<a href="
-"\"http://help.transifex.net/user-guide/faq.html#where-does-the-language-list-"
-"come-from-how-can-i-add-my-own\">私たちに知らせてください</a>。"
+"ご自分の言語が見つからない場合は、フィードバックフォームを使用して<a href="
+"\"http://help.transifex.com/user-guide/faq.html#where-does-the-language-list-"
+"come-from-how-can-i-add-my-own\">お知らせください</a>。"
 
 #: templates/notification/notices.html:7 templates/notification/notices.html:8
 #: templates/notification/notices.html:9
@@ -3643,17 +3638,17 @@ msgstr ""
 "した</span>"
 
 #: templates/notification/project_team_join_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_name)s</a> <span class="
 "\"notice_action\">requested</span> to join the <a href=\"%(team_url)s\">"
 "%(team_name)s language translation</a> of the <a href=\"%(project_url)s\">"
 "%(project_name)s</a> project"
 msgstr ""
-"ユーザー <a href=\"%(user_url)s\">%(user_name)s</a> が <a href="
-"\"%(project_url)s\">%(project_name)s</a> プロジェクトの <a href="
-"\"%(team_url)s\">%(team_name)s への翻訳</a>に対する参加を<span class="
-"\"notice_action\">リクエストしました</span>"
+"<a href=\"%(user_url)s\">%(user_name)s</a>さんが <a href=\"%(project_url)s\">"
+"%(project_name)s</a> プロジェクトの <a href=\"%(team_url)s\">%(team_name)s へ"
+"の翻訳</a>に対する参加を<span class=\"notice_action\">リクエスト</span>しまし"
+"た"
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
@@ -3804,7 +3799,7 @@ msgstr "プロジェクトが外部委託アクセスをリクエストしまし
 
 #: templates/projects/project_detail.html:119
 #: templates/resources/resource_detail.html:234
-#: templates/teams/team_detail.html:234
+#: templates/teams/team_detail.html:236
 msgid "History"
 msgstr "履歴"
 
@@ -3875,7 +3870,7 @@ msgstr "（チームなし）"
 #: templates/projects/project_detail_languages.html:134
 #: templates/projects/project_resources.html:159
 #: templates/projects/release_detail.html:172
-#: templates/teams/team_detail.html:161 templates/teams/team_detail.html:205
+#: templates/teams/team_detail.html:194
 msgid "Last update"
 msgstr "最新のアップデート"
 
@@ -3981,14 +3976,12 @@ msgid "Users with access to submit files:"
 msgstr "ファイルを書き込む権限を持っているユーザー："
 
 #: templates/projects/project_hub_projects.html:11
-#, fuzzy
 msgid "Child projects"
 msgstr "子プロジェクト"
 
 #: templates/projects/project_hub_projects.html:15
-#, fuzzy
 msgid "List of the hub's child projects"
-msgstr "プロジェクト %s の履歴"
+msgstr "ハブの子プロジェクトの一覧"
 
 #: templates/projects/project_hub_projects.html:23
 msgid "Hub projects"
@@ -4103,7 +4096,7 @@ msgid "Project overview"
 msgstr "プロジェクト概要"
 
 #: templates/projects/project_menu.html:83
-#, fuzzy, python-format
+#, python-format
 msgid " Hub project <span class=\"tab-stat\">%(counter)s</span> "
 msgid_plural "Child projects <span class=\"tab-stat\">%(counter)s</span> "
 msgstr[0] "<span class=\"tab-stat\">%(counter)s</span>件のハブプロジェクト"
@@ -4241,7 +4234,7 @@ msgid "no translations yet"
 msgstr "まだ翻訳がありません"
 
 #: templates/projects/project_resources.html:196
-#: templates/teams/team_detail.html:226
+#: templates/teams/team_detail.html:223
 msgid "No resources are registered for this project yet."
 msgstr "まだこのプロジェクトに登録されたリソースがありません。"
 
@@ -4370,19 +4363,19 @@ msgstr[0] "このリリース配下のリソース"
 #: templates/projects/release_language_detail.html:148
 #: templates/projects/release_language_detail.html:217
 #: templates/resources/resource_detail.html:197
-#: templates/teams/team_detail.html:146
+#: templates/teams/team_detail.html:179
 msgid "Locked"
 msgstr "ロック中"
 
 #: templates/projects/release_language_detail.html:151
 #: templates/projects/release_language_detail.html:220
-#: templates/teams/team_detail.html:149 templates/teams/team_detail.html:195
+#: templates/teams/team_detail.html:182
 msgid "Not accepting translations at the moment"
 msgstr "現在は翻訳を受け付けていません"
 
 #: templates/projects/release_language_detail.html:174
 #: templates/projects/release_language_detail.html:236
-#: templates/teams/team_detail.html:166 templates/teams/team_detail.html:206
+#: templates/teams/team_detail.html:199
 msgid "no activity yet"
 msgstr "まだ活動していません"
 
@@ -4444,7 +4437,7 @@ msgstr "残り:&nbsp;%(trans_count)s 項目（%(trans_wordcount)s 語）"
 #: templates/resources/resource_actions.html:90
 #, python-format
 msgid " Reviewed:&nbsp;%(reviewed_count)s strings "
-msgstr ""
+msgstr "レビュー済み:&nbsp;%(reviewed_count)s 文字列"
 
 #: templates/resources/resource_actions.html:105
 msgid ""
@@ -4492,9 +4485,8 @@ msgstr "残り："
 
 #: templates/resources/resource_actions.html:135
 #: templates/resources/stats_bar_simple.html:4
-#, fuzzy
 msgid "Reviewed: "
-msgstr "レビュー済み"
+msgstr "レビュー済み: "
 
 #: templates/resources/resource_actions.html:150
 msgid "View strings online"
@@ -4621,11 +4613,11 @@ msgstr "リソースを編集"
 
 #: templates/resources/resource_detail.html:110
 msgid "Total strings:"
-msgstr "総項目数："
+msgstr "総項目数:"
 
 #: templates/resources/resource_detail.html:113
 msgid "words"
-msgstr "単語"
+msgstr "語"
 
 #: templates/resources/resource_detail.html:116
 msgid "Status:"
@@ -4633,11 +4625,11 @@ msgstr "状況:"
 
 #: templates/resources/resource_detail.html:119
 msgid "Accepting translations"
-msgstr "翻訳を受入れ中"
+msgstr "翻訳受け入れ中"
 
 #: templates/resources/resource_detail.html:121
 msgid "No translations accepted"
-msgstr "翻訳の受入れを休止中"
+msgstr "翻訳受け入れ停止中"
 
 #: templates/resources/resource_detail.html:129
 msgid "Priority level:"
@@ -4680,7 +4672,6 @@ msgid "Edit the details of the translation resource"
 msgstr "翻訳リソースの詳細を編集"
 
 #: templates/resources/resource_form.html:69
-#, fuzzy
 msgid ""
 "\n"
 "\t<div class=\"i16 infomsg\">\n"
@@ -4701,21 +4692,21 @@ msgid ""
 "\t"
 msgstr ""
 "\n"
-"\t<div class=\"i16 infomsg\">\n"
-"\t\t<p>Transifexによる翻訳元言語文字列の自動「フェッチ」を有効にするには、\n"
-"\t\tソースファイル (例えば POT ファイル) のURLを入力してください。\n"
-"\t\t詳しくは、<a href=\"http://help.transifex.net/user-guide/projects."
+"»<div class=\"i16 infomsg\">\n"
+"»»<p>Transifexによるソース言語文字列の自動「フェッチ」を有効にするには、\n"
+"»»ソースファイル (例えば POT ファイル) のURLを入力してください。\n"
+"»»詳しくは、<a href=\"http://help.transifex.com/user-guide/projects."
 "html#projects-and-resources\">ドキュメント</a>\n"
-"\t\tをご覧ください。</p>\n"
+"»»をご覧ください。</p>\n"
 "\n"
-"\t\t<p><b>警告</b>: Transifexは既存の原文や翻訳をリンクされた\n"
-"\t\tファイルで見つかったものに置き換えます。これによって<b>翻訳が失われる</b>"
-"場合があります。そのため、フォームを送信する前にURLが正しいファイルにリンクし"
-"ていることを確認してください。\n"
-"\t\t</p>\n"
-"\t\t</blink>\n"
-"\t</div>\n"
-"\t"
+"»»<p><b>警告</b>: Transifexは既存のソース文字列や翻訳をリンクされた\n"
+"ファイルで見つかったものに置き換えます。これによって<b>;翻訳が失われる</b>場"
+"合があります。そのため、フォームを送信する前にURLが正しいファイルにリンクして"
+"いることを確認してください。\n"
+"»»</p>\n"
+"»»</blink>\n"
+"»</div>\n"
+"»"
 
 #: templates/resources/resource_form.html:93
 msgid "Delete resource from Transifex"
@@ -4735,13 +4726,11 @@ msgid "Say goodbye to <em>%(resource_name)s</em>?"
 msgstr "<em>%(resource_name)s</em> とお別れしますか？"
 
 #: templates/resources/resource_form.html:107
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Are you sure you want to permanently delete the translation resource "
 "'%(resource_name)s'?"
-msgstr ""
-"\n"
-"  本当に翻訳リソース %(resource_name)s を完全に削除してよろしいでしょうか？\n"
+msgstr "本当に翻訳リソース %(resource_name)s を完全に削除してよろしいですか？"
 
 #: templates/resources/resource_list_more.html:16
 msgid "edit"
@@ -4810,25 +4799,23 @@ msgstr ""
 "\t\t\t\t"
 
 #: templates/resources/upload_create_resource_form.html:51
-#, fuzzy
 msgid ""
 "If your project have several files, it might be convenient to use the <a "
 "href=\"http://help.transifex.com/features/client/index.html#user-client\" "
 "target=\"_blank\">Transifex Client</a> for mass operations."
 msgstr ""
 "プロジェクトに多数のファイルがある場合は、全体を操作するために<a href="
-"\"http://help.transifex.net/features/client/index.html#user-client\" target="
+"\"http://help.transifex.com/features/client/index.html#user-client\" target="
 "\"_blank\">Transifex クライアント</a>をお使いになった方が便利かもしれません。"
 
 #: templates/resources/upload_create_resource_form.html:53
-#, fuzzy
 msgid ""
 "For extensive information on the supported file formats, visit the "
 "corresponding <a href=\"http://help.transifex.com/features/formats.html#user-"
 "formats\" target=\"_blank\">Transifex Help page</a>."
 msgstr ""
 "サポートしているファイル形式について詳しくは、<a href=\"http://help."
-"transifex.net/features/formats.html#user-formats\" target=\"_blank"
+"transifex.com/features/formats.html#user-formats\" target=\"_blank"
 "\">Transifex ヘルプページ</a>をご覧ください。"
 
 #: templates/resources/upload_create_resource_form.html:91
@@ -4910,28 +4897,28 @@ msgstr ""
 "本当に %(project_name)s の %(lang_name)s 言語チームを完全に削除してよろしいで"
 "すか？"
 
-#: templates/teams/team_detail.html:44
+#: templates/teams/team_detail.html:76
 msgid "Overall Progress"
 msgstr "全体の進捗"
 
-#: templates/teams/team_detail.html:47
+#: templates/teams/team_detail.html:79
 msgid "Join team"
 msgstr "チームに参加"
 
-#: templates/teams/team_detail.html:58 templates/teams/team_detail.html:65
+#: templates/teams/team_detail.html:90 templates/teams/team_detail.html:97
 msgid "Join language translation"
 msgstr "翻訳に参加"
 
-#: templates/teams/team_detail.html:85
+#: templates/teams/team_detail.html:117
 msgid "Mainlist:"
 msgstr "メインリスト:"
 
-#: templates/teams/team_detail.html:90
+#: templates/teams/team_detail.html:122
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "コーディネーター:"
 
-#: templates/teams/team_detail.html:102
+#: templates/teams/team_detail.html:134
 msgid ""
 "Since this project is \"Free for all\" anyone can contribute. You don't have "
 "to be a member!"
@@ -4939,15 +4926,15 @@ msgstr ""
 "このプロジェクトは「誰にでもフリー」なので、誰でも貢献できます。メンバーにな"
 "る必要はありません。"
 
-#: templates/teams/team_detail.html:110
+#: templates/teams/team_detail.html:142
 msgid "Language resources"
 msgstr "言語のリソース"
 
-#: templates/teams/team_detail.html:124
+#: templates/teams/team_detail.html:156
 msgid "Show resources from:"
 msgstr "次のリソースを表示する:"
 
-#: templates/teams/team_detail.html:141 templates/teams/team_detail.html:190
+#: templates/teams/team_detail.html:174
 msgid "click for translation"
 msgstr "クリックで翻訳"
 
@@ -4956,17 +4943,17 @@ msgid "Create team"
 msgstr "チームを作成"
 
 #: templates/teams/team_form.html:38
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Edit %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup> "
 "team"
 msgstr ""
-"%(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>"
+"%(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup> チー"
+"ムを編集"
 
 #: templates/teams/team_form.html:70
-#, fuzzy
 msgid "Edit language-team"
-msgstr "言語を編集"
+msgstr "言語チームを編集"
 
 #: templates/teams/team_form.html:92
 msgid ""
@@ -4981,16 +4968,16 @@ msgid ""
 "The current language has no teams. You can delete the whole language by "
 "deleting all the translations of all resources."
 msgstr ""
+"現在の言語にはチームがありません。すべてのリソースのすべての翻訳を削除するこ"
+"とで、すべての言語を削除することができます。"
 
 #: templates/teams/team_form.html:108
-#, fuzzy
 msgid "Delete language-team"
-msgstr "言語を削除"
+msgstr "言語チームを削除"
 
 #: templates/teams/team_form.html:111
-#, fuzzy
 msgid "Do you wish to delete the team?"
-msgstr "このチームを削除しますか？翻訳は失われません:"
+msgstr "このチームを削除しますか?"
 
 #: templates/teams/team_form.html:112
 msgid ""
@@ -4998,6 +4985,8 @@ msgid ""
 ">The language will be deleted only after deleting the translations of all "
 "resources."
 msgstr ""
+"この言語の翻訳チームを削除後、翻訳は残ります。<br/>言語はすべてのリソースの翻"
+"訳を削除すると削除されます。"
 
 #: templates/teams/team_form.html:113
 msgid "Delete language"
@@ -5043,9 +5032,8 @@ msgid "Overview"
 msgstr "概要"
 
 #: templates/teams/team_menu.html:78
-#, fuzzy
 msgid "Edit language team"
-msgstr "言語チームを訪問する"
+msgstr "言語チームを編集"
 
 #: templates/teams/team_off.html:12
 msgid "This project does not maintain its own translation teams"
@@ -5200,7 +5188,7 @@ msgstr "メールアドレスが変更されました。"
 
 #: templates/userena/email_confirm_complete.html:6
 msgid "New email"
-msgstr "新しいメール"
+msgstr "新しいメールアドレス"
 
 #: templates/userena/email_confirm_complete.html:8
 msgid "Your new email address is saved."
@@ -5519,7 +5507,7 @@ msgstr "%(user)sさんの最近の活動"
 #: txcommon/feeds.py:31
 #, python-format
 msgid "Recent activities by user %s."
-msgstr "%s さんの最近の活動"
+msgstr "%sさんの最近の活動"
 
 #: txcommon/feeds.py:57
 msgid "None"
@@ -5545,11 +5533,11 @@ msgstr "ブログ"
 #: txcommon/models.py:40 txcommon/migrations/0002_release_06_07.py:19
 #: txcommon/migrations/0004_new_userena_profile.py:81
 msgid "About yourself"
-msgstr "自分について"
+msgstr "自己紹介"
 
 #: txcommon/models.py:42
 msgid "Short description of yourself (140 chars)."
-msgstr "自分に関して簡単に説明します (140 文字)。"
+msgstr "あなた自身についての簡単な説明です（140文字）。"
 
 #: txcommon/models.py:43 txcommon/migrations/0002_release_06_07.py:18
 #: txcommon/migrations/0004_new_userena_profile.py:78
@@ -5558,15 +5546,15 @@ msgstr "仕事を探していますか?"
 
 #: txcommon/notifications.py:12
 msgid "New project created"
-msgstr "新規プロジェクトを作成した"
+msgstr "新規プロジェクトが作成された"
 
 #: txcommon/notifications.py:13
 msgid "when a new project is created"
-msgstr "新規プロジェクトが作成されたとき"
+msgstr "新しいプロジェクトが作成されたとき"
 
 #: txcommon/notifications.py:19
 msgid "Project modified"
-msgstr "プロジェクトを変更した"
+msgstr "プロジェクトが変更された"
 
 #: txcommon/notifications.py:20
 msgid "when a project is changed"
@@ -5574,7 +5562,7 @@ msgstr "プロジェクトが変更されたとき"
 
 #: txcommon/notifications.py:26
 msgid "Project deleted"
-msgstr "プロジェクトを削除した"
+msgstr "プロジェクトが削除された"
 
 #: txcommon/notifications.py:27
 msgid "when a project is deleted"
@@ -5582,49 +5570,55 @@ msgstr "プロジェクトが削除されたとき"
 
 #: txcommon/notifications.py:33
 msgid "Requested submit access to project"
-msgstr "プロジェクトへの参加をリクエストした"
+msgstr "プロジェクトへの参加がリクエストされた"
 
 #: txcommon/notifications.py:34
 msgid "when a user request access to submit files to a project"
-msgstr "ユーザーがプロジェクトにファイルを投稿するリクエストをしたとき"
+msgstr ""
+"ユーザーがプロジェクトにファイルを投稿するアクセス権をリクエストをしたとき"
 
 #: txcommon/notifications.py:41
 msgid "Denied submit access to project"
-msgstr "プロジェクトへの参加を拒否した"
+msgstr "プロジェクトへの参加が拒否された"
 
 #: txcommon/notifications.py:42
 msgid "when a maintainer denies a user access to submit files to a project"
-msgstr "プロジェクトにファイルを投稿するリクエストを管理者が拒否したとき"
+msgstr ""
+"管理者がプロジェクトにファイルを投稿するアクセス権のリクエストを拒否したとき"
 
 #: txcommon/notifications.py:49
 msgid "Withdrew request for submit access to project"
-msgstr "プロジェクトへの参加リクエストを辞退した"
+msgstr "プロジェクトへの参加リクエストが辞退された"
 
 #: txcommon/notifications.py:50
 msgid ""
 "when a user withdraws the request for access to submit files to a project"
-msgstr "ユーザーがプロジェクトにファイルを投稿するリクエストを撤回したとき"
+msgstr ""
+"ユーザーがプロジェクトにファイルを投稿するアクセス権のリクエストを撤回したと"
+"き"
 
 #: txcommon/notifications.py:57
 msgid "Granted submit access to project"
-msgstr "プロジェクトへの参加を許可した"
+msgstr "プロジェクトへの参加が許可された"
 
 #: txcommon/notifications.py:58
 msgid "when a maintainer grants a user access to submit files to a project"
-msgstr "管理者がユーザーにプロジェクトにファイルを投稿する許可をしたとき"
+msgstr ""
+"管理者がユーザーにプロジェクトにファイルを投稿するアクセス権を許可をしたとき"
 
 #: txcommon/notifications.py:65
 msgid "Revoked submit access to project"
-msgstr "プロジェクトへの参加を取り消した"
+msgstr "プロジェクトへの参加が取り消された"
 
 #: txcommon/notifications.py:66
 msgid ""
 "when a maintainer revokes the access of an user to submit files to a project"
-msgstr "管理者がユーザーのプロジェクトにファイルを投稿する許可を取り消したとき"
+msgstr ""
+"管理者がユーザーのプロジェクトにファイルを投稿するアクセス権を取り消したとき"
 
 #: txcommon/notifications.py:75
 msgid "Requested to join a project hub"
-msgstr "プロジェクトハブへの参加をリクエストしました。"
+msgstr "プロジェクトハブへの参加がリクエストされた"
 
 #: txcommon/notifications.py:76
 msgid "when a project requests to join a project hub"
@@ -5632,7 +5626,7 @@ msgstr "プロジェクトがプロジェクトハブへの参加をリクエス
 
 #: txcommon/notifications.py:83
 msgid "Approved to join project hub"
-msgstr "プロジェクトハブへの参加が承認されました"
+msgstr "プロジェクトハブへの参加が承認された"
 
 #: txcommon/notifications.py:84
 msgid "when a project is approved to join a project hub"
@@ -5640,7 +5634,7 @@ msgstr "プロジェクトのプロジェクトハブへの参加が承認され
 
 #: txcommon/notifications.py:91
 msgid "Denied to join project hub"
-msgstr "プロジェクトハブへの参加が拒否されました"
+msgstr "プロジェクトハブへの参加が拒否された"
 
 #: txcommon/notifications.py:92
 msgid "when a project is denied to join a project  hub"
@@ -5648,7 +5642,7 @@ msgstr "プロジェクトのプロジェクトハブへの参加が拒否され
 
 #: txcommon/notifications.py:99
 msgid "Withdrew request to join project hub"
-msgstr "プロジェクトハブへの参加を辞退しました"
+msgstr "プロジェクトハブへの参加が辞退された"
 
 #: txcommon/notifications.py:100
 msgid "when a project decides not to join a project hub"
@@ -5656,7 +5650,7 @@ msgstr "プロジェクトがプロジェクトハブへの参加をやめたと
 
 #: txcommon/notifications.py:107
 msgid "Project left project hub"
-msgstr "プロジェクトがプロジェクトハブを退会しました"
+msgstr "プロジェクトがプロジェクトハブを退会した"
 
 #: txcommon/notifications.py:108
 msgid "when a project leaves a project hub"
@@ -5664,7 +5658,7 @@ msgstr "プロジェクトがプロジェクトハブを退会したとき"
 
 #: txcommon/notifications.py:118
 msgid "Release added to project"
-msgstr "プロジェクトにリリースを追加した"
+msgstr "プロジェクトにリリースが追加された"
 
 #: txcommon/notifications.py:119
 msgid "when a release is added to a project"
@@ -5672,7 +5666,7 @@ msgstr "リリースがプロジェクトに追加されたとき"
 
 #: txcommon/notifications.py:125
 msgid "Release modified"
-msgstr "リリースを変更した"
+msgstr "リリースが変更された"
 
 #: txcommon/notifications.py:126
 msgid "when a release of a project is modified"
@@ -5680,7 +5674,7 @@ msgstr "プロジェクトのリリースが変更されたとき"
 
 #: txcommon/notifications.py:131
 msgid "Release deleted"
-msgstr "リリースを削除した"
+msgstr "リリースが削除された"
 
 #: txcommon/notifications.py:132
 msgid "when a release of a project is deleted"
@@ -5688,15 +5682,15 @@ msgstr "プロジェクトのリリースが削除されたとき"
 
 #: txcommon/notifications.py:137
 msgid "Release about to enter the string freeze period"
-msgstr "文字列の凍結時期に入ろうとしているリリース"
+msgstr "リリースの文字列の凍結時期が近づいた"
 
 #: txcommon/notifications.py:138
 msgid "when a release of a project is about to enter the String Freeze period"
-msgstr "プロジェクトのリリースが文字列の凍結時期に入ろうとしているとき"
+msgstr "プロジェクトのリリースが文字列の凍結時期が近づいたとき"
 
 #: txcommon/notifications.py:144
 msgid "Release is in string freeze period"
-msgstr "文字列の凍結時期に入ったリリース"
+msgstr "リリースが文字列の凍結時期に入った"
 
 #: txcommon/notifications.py:145
 msgid "when a release of a project is on enter the String Freeze period"
@@ -5704,7 +5698,7 @@ msgstr "プロジェクトのリリースが文字列の凍結時期に入った
 
 #: txcommon/notifications.py:151
 msgid "Release about to hit the translation deadline"
-msgstr "翻訳の締切が近づいているリリース"
+msgstr "リリースの翻訳の締切が近づいた"
 
 #: txcommon/notifications.py:152
 msgid ""
@@ -5713,7 +5707,7 @@ msgstr "プロジェクトのリリースが翻訳の締切日に近づいたと
 
 #: txcommon/notifications.py:158
 msgid "Release has hit the translation deadline"
-msgstr "翻訳の締切に来たリリース"
+msgstr "リリースの翻訳の締切がきた"
 
 #: txcommon/notifications.py:159
 msgid "when a release of a project hits the Translation Deadline date"
@@ -5721,11 +5715,11 @@ msgstr "プロジェクトのリリースが翻訳の締切日に来たとき"
 
 #: txcommon/notifications.py:165
 msgid "Release string freeze breakage"
-msgstr "文字列の凍結が破られたリリース"
+msgstr "リリースの文字列の凍結が解除された"
 
 #: txcommon/notifications.py:166
 msgid "when a release of a project has a string freeze breakage"
-msgstr "プロジェクトのリリースが文字列の凍結を破られたとき"
+msgstr "プロジェクトのリリースが文字列の凍結が解除されたとき"
 
 #: txcommon/notifications.py:176
 msgid "New team created"
@@ -5753,7 +5747,7 @@ msgstr "プロジェクトの翻訳チームが削除されたとき"
 
 #: txcommon/notifications.py:200
 msgid "Requested team creation"
-msgstr "チームの作成をリクエストした"
+msgstr "チームの作成がリクエストされた"
 
 #: txcommon/notifications.py:201
 msgid "when the creation of a translation team is requested for a project"
@@ -5761,7 +5755,7 @@ msgstr "プロジェクトに翻訳チームの作成がリクエストされた
 
 #: txcommon/notifications.py:208
 msgid "Denied request for team creation"
-msgstr "チームの作成のリクエストを拒否した"
+msgstr "チームの作成のリクエストが拒否された"
 
 #: txcommon/notifications.py:209
 msgid ""
@@ -5771,35 +5765,35 @@ msgstr "プロジェクトに翻訳チームの作成が管理者によって拒
 
 #: txcommon/notifications.py:216
 msgid "Requested to join translation team"
-msgstr "翻訳チームへの参加をリクエストした"
+msgstr "翻訳チームへの参加がリクエストされた"
 
 #: txcommon/notifications.py:217
 msgid "when a user requests to join a project translation team"
-msgstr "プロジェクトの翻訳チームへユーザーから参加リクエストが来たとき"
+msgstr "ユーザーからプロジェクトの翻訳チームへの参加がリクエストされたとき"
 
 #: txcommon/notifications.py:224
 msgid "Approved to join translation team"
-msgstr "翻訳チームへの参加を承認した"
+msgstr "翻訳チームへの参加が承認された"
 
 #: txcommon/notifications.py:225
 msgid "when a user is approved as a member of a project translation team"
-msgstr "プロジェクトの翻訳チームのメンバーとしてユーザーが承認されたとき"
+msgstr "ユーザーがプロジェクトの翻訳チームのメンバーとして承認されたとき"
 
 #: txcommon/notifications.py:232
 msgid "Denied to join translation team"
-msgstr "翻訳チームへの参加を拒否した"
+msgstr "翻訳チームへの参加が拒否された"
 
 #: txcommon/notifications.py:233
 msgid "when a user is denied as a member of a project translation team"
-msgstr "プロジェクトの翻訳チームのメンバーとしてユーザーが拒否されたとき"
+msgstr "ユーザーがプロジェクトの翻訳チームへの参加を拒否されたとき"
 
 #: txcommon/notifications.py:240
 msgid "Withdrew request to join team"
-msgstr "翻訳チームへの参加リクエストを辞退した"
+msgstr "翻訳チームへの参加リクエストが辞退された"
 
 #: txcommon/notifications.py:241
 msgid "when a user decides not to join a project translation team"
-msgstr "プロジェクトの翻訳チームのメンバーとしてユーザーが参加を拒否したとき"
+msgstr "ユーザーがプロジェクトの翻訳チームへの参加をやめたとき"
 
 #: txcommon/notifications.py:248
 msgid "User left translation team"
@@ -5811,7 +5805,7 @@ msgstr "プロジェクトの翻訳チームからユーザーが脱退したと
 
 #: txcommon/notifications.py:259
 msgid "Weekly project report for maintainers"
-msgstr "プロジェクトの管理者向け週次リポート"
+msgstr "プロジェクトの管理者向け週次レポート"
 
 #: txcommon/notifications.py:260
 msgid "when you receive the weekly report of projects that you maintain."
@@ -5819,7 +5813,7 @@ msgstr "管理しているプロジェクトの週次レポートを受け取っ
 
 #: txcommon/notifications.py:267
 msgid "User nudge"
-msgstr "ユーザーの催促"
+msgstr "ユーザーが催促した"
 
 #: txcommon/notifications.py:268
 msgid "when a user nudges you"
@@ -5827,31 +5821,31 @@ msgstr "ユーザーがあなたに催促したとき"
 
 #: txcommon/notifications.py:277
 msgid "Resource created"
-msgstr "リソースを作成した"
+msgstr "リソースが作成された"
 
 #: txcommon/notifications.py:278
 msgid "when a new resource is added to a project"
-msgstr "プロジェクトのリリースが追加されたとき"
+msgstr "プロジェクトのリソースが追加されたとき"
 
 #: txcommon/notifications.py:284
 msgid "Resource modified"
-msgstr "リソースを変更した"
+msgstr "リソースが変更された"
 
 #: txcommon/notifications.py:285
 msgid "when a resource of a project is changed"
-msgstr "プロジェクトのリリースが変更される場合"
+msgstr "プロジェクトのリソースが変更されたとき"
 
 #: txcommon/notifications.py:291
 msgid "Resource deleted"
-msgstr "リソースを削除した"
+msgstr "リソースが削除された"
 
 #: txcommon/notifications.py:292
 msgid "when a resource of a project is deleted"
-msgstr "プロジェクトのリリースが削除される場合"
+msgstr "プロジェクトのリソースが削除されたとき"
 
 #: txcommon/notifications.py:298
 msgid "Resource translated"
-msgstr "リソースを翻訳した"
+msgstr "リソースが翻訳された"
 
 #: txcommon/notifications.py:299
 msgid "when a translation is sent to a project resource"
@@ -5859,7 +5853,7 @@ msgstr "翻訳がプロジェクトのリソースに送信されたとき"
 
 #: txcommon/notifications.py:306
 msgid "Resource translation updated"
-msgstr "リソースの翻訳を更新した"
+msgstr "リソースの翻訳が更新された"
 
 #: txcommon/notifications.py:307
 msgid "when a resource translation you are watching changes"
@@ -5919,91 +5913,3 @@ msgstr "権限を削除しました。"
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "権限リクエストを削除しました。"
-
-#~ msgid "Last Translation:"
-#~ msgstr "最終翻訳："
-
-#~ msgid "by %(user)s"
-#~ msgstr "%(user)sによる"
-
-#~ msgid "Untranslated"
-#~ msgstr "未翻訳"
-
-#~ msgid "File uploaded successfully."
-#~ msgstr "ファイルをアップロードしました。"
-
-#~ msgid "File size in bytes"
-#~ msgstr "バイト単位でのファイル サイズ"
-
-#~ msgid "Source language"
-#~ msgstr "翻訳元言語"
-
-#~ msgid "Bound to any object"
-#~ msgstr "あらゆるオブジェクトにバインドする"
-
-#~ msgid ""
-#~ "Whether this file is bound to a project/translation resource, otherwise "
-#~ "show in the upload box"
-#~ msgstr ""
-#~ "このファイルをプロジェクトや翻訳のリソースに結び付けるかどうかです。それ以"
-#~ "外の場合は、アップロードボックスに表示します。"
-
-#~ msgid "The user who uploaded the specific file."
-#~ msgstr "指定のファイルをアップロードしたユーザーです。"
-
-#~ msgid "Total number of strings"
-#~ msgstr "総文字列数"
-
-#~ msgid "Edit <em>%(project_name)s</em>"
-#~ msgstr "<em>%(project_name)s</em> の編集"
-
-#~ msgid "Access control will be enabled once the project is created"
-#~ msgstr "プロジェクトが作成されるとアクセス制御が有効になります"
-
-#~ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
-#~ msgstr "<a href=\"%(project_url)s\">%(project_name)s</a> の編集中"
-
-#~ msgid "Delete %(release_name)s"
-#~ msgstr "%(release_name)s の削除"
-
-#~ msgid "Edit <em>%(release_name)s</em> release"
-#~ msgstr "<em>%(release_name)s</em> リリースの編集"
-
-#~ msgid "Translated:&nbsp;%(trans_count)s strings, %(trans_wordcount)s words "
-#~ msgstr "翻訳済み:&nbsp;%(trans_count)s 項目、%(trans_wordcount)s 語"
-
-#~ msgid "Delete %(resource_name)s"
-#~ msgstr "%(resource_name)s を削除する"
-
-#~ msgid "Delete <em>%(resource_name)s</em>"
-#~ msgstr "<em>%(resource_name)s</em> を削除する"
-
-#~ msgid "Manage members"
-#~ msgstr "メンバーを管理する"
-
-#~ msgid ""
-#~ "In case you did not receive your account activation email, please click "
-#~ "on "
-#~ msgstr "アカウント有効化メールが届かない場合は、クリックしてください: "
-
-#~ msgid "Resend activation link"
-#~ msgstr "アカウント有効化メール再送リンク"
-
-#~ msgid "Nudge %(user)s "
-#~ msgstr "%(user)sさんに催促する"
-
-#~ msgid "You can't re-nudge the same user in a short amount of time."
-#~ msgstr "短時間のうちに同じユーザーに催促することはできません。"
-
-#~ msgid "You can't nudge yourself."
-#~ msgstr "自分自身に催促することはできません。"
-
-#~ msgid "You have nudged '%s'."
-#~ msgstr "%s さんに催促しました。"
-
-#~ msgid ""
-#~ "You have to provide only the size as an integer (both sides will be "
-#~ "equal) and optionally, the username."
-#~ msgstr ""
-#~ "サイズだけは整数で（両側を等しく）設定する必要があり、可能ならばユーザー名"
-#~ "を設定してください。"

@@ -3,12 +3,12 @@
 # This file is distributed under the same license as the Transifex package.
 #
 # Translators:
-# Translators:
 # Camille Baldock <mademoisellegeek42@gmail.com>, 2012.
 #   <clbaldock@gmail.com>, 2011.
 # Diego Búrigo Zacarão <diegobz@indifex.com>, 2011.
 # Dimitris Glezos <glezos@indifex.com>, 2011.
 #   <garnelis@gmail.com>, 2012.
+# Jérôme Fenal <jfenal@gmail.com>, 2012.
 # Kévin Raymond <shaiton@fedoraproject.org>, 2011, 2012.
 # Linus Fredrich Levisse <linukcs@live.fr>, 2011.
 #   <mademoisellegeek42@gmail.com>, 2011.
@@ -18,9 +18,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-15 15:38+0000\n"
-"PO-Revision-Date: 2012-03-08 10:01+0000\n"
-"Last-Translator: John Kalantzis <jkal@indifex.com>\n"
+"POT-Creation-Date: 2012-05-17 13:25+0000\n"
+"PO-Revision-Date: 2012-05-15 15:43+0000\n"
+"Last-Translator: Ilias-Dimitrios Vrachnis <vid@transifex.com>\n"
 "Language-Team: French (http://www.transifex.net/projects/p/transifex/"
 "language/fr/)\n"
 "Language: fr\n"
@@ -996,9 +996,8 @@ msgid "Auto save"
 msgstr "Auto-sauvegarde"
 
 #: addons/lotte/templates/translate.html:981
-#, fuzzy
 msgid "Enable shortcuts"
-msgstr "Raccourcis clavier"
+msgstr ""
 
 #: addons/lotte/templates/translate.html:985
 msgid "Enable suggestions auto-open"
@@ -1196,7 +1195,7 @@ msgid "Filter"
 msgstr "Filtrer"
 
 #: addons/timeline/templates/timeline/timeline_base.html:31
-#: templates/timeline.html:24 templates/teams/team_detail.html:239
+#: templates/timeline.html:24 templates/teams/team_detail.html:241
 msgid "None available"
 msgstr "Aucun disponible"
 
@@ -1533,9 +1532,8 @@ msgid "languages"
 msgstr "Langues"
 
 #: projects/admin.py:18
-#, fuzzy
 msgid "permission"
-msgstr "Accorder l'autorisation"
+msgstr "autorisation"
 
 #: projects/feeds.py:14
 #, python-format
@@ -1628,7 +1626,7 @@ msgstr ""
 #: projects/forms.py:159 templates/projects/project_menu.html:54
 #: templates/teams/team_menu.html:44
 msgid "Free for all"
-msgstr "Gratuit pour tous"
+msgstr "Accès non limité"
 
 #: projects/forms.py:161
 msgid ""
@@ -2647,21 +2645,15 @@ msgstr ""
 
 #: resources/formats/validators.py:151
 msgid "Translation should not start with a newline (\\n)"
-msgstr ""
-"La traduction ne doit pas commencer par une nouvelle ligne (\n"
-")"
+msgstr "La traduction ne doit pas commencer par une nouvelle ligne (\\n)"
 
 #: resources/formats/validators.py:167
 msgid "Translation must end with a newline (\\n)"
-msgstr ""
-"La traduction doit finir par une nouvelle ligne (\n"
-")"
+msgstr "La traduction doit finir par une nouvelle ligne (\\n)"
 
 #: resources/formats/validators.py:169
 msgid "Translation should not end with a newline (\\n)"
-msgstr ""
-"La traduction ne devrait pas se terminer sur une nouvelle ligne (\n"
-")"
+msgstr "La traduction ne devrait pas se terminer sur une nouvelle ligne (\\n)"
 
 #: resources/formats/validators.py:188
 #, python-format
@@ -2750,14 +2742,11 @@ msgstr ""
 "listes sont uniques."
 
 #: teams/forms.py:126
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "User(s) %s cannot be in both Members and Reviewers lists. Please make sure "
 "that the lists are unique."
 msgstr ""
-"Le(s) utilisateurs(s) %s ne peuvent pas être à la fois dans la liste des "
-"Coordinateurs et la liste des Relecteurs. Merci de vous assurer que les "
-"listes sont uniques."
 
 #: teams/forms.py:169
 msgid "All child projects"
@@ -2815,27 +2804,27 @@ msgstr "requête d'accès à l'équipe"
 msgid "team access requests"
 msgstr "requêtes d'accès à l'équipe"
 
-#: teams/views.py:295
+#: teams/views.py:305
 #, python-format
 msgid "The team '%s' was deleted."
 msgstr "L'équipe '%s' a été supprimée"
 
-#: teams/views.py:343
+#: teams/views.py:353
 #, python-format
 msgid "You are already on the '%s' team."
 msgstr "Vous faites déjà partie de l'équipe '%s'."
 
-#: teams/views.py:354
+#: teams/views.py:364
 #, python-format
 msgid "You requested to join the '%s' team."
 msgstr "Vous avez demandé à rejoindre l'équipe '%s'."
 
-#: teams/views.py:376
+#: teams/views.py:386
 #, python-format
 msgid "You already requested to join the '%s' team."
 msgstr "Vous avez déjà demandé à rejoindre l'équipe '%s'."
 
-#: teams/views.py:380
+#: teams/views.py:390
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you join a translation team"
@@ -2843,17 +2832,17 @@ msgstr ""
 "Vous devez signer la Contribution License Agreement pour ce projet avant de "
 "pouvoir rejoindre une équipe de traduction."
 
-#: teams/views.py:409
+#: teams/views.py:419
 #, python-format
 msgid "User '%(user)s' is already on the '%(team)s' team."
 msgstr "L'utilisateur '%(user)s' fait déjà partie de l'équipe '%(team)s'."
 
-#: teams/views.py:416
+#: teams/views.py:426
 #, python-format
 msgid "You added '%(user)s' to the '%(team)s' team."
 msgstr "Vous avez ajouté '%(user)s' à l'équipe '%(team)s'."
 
-#: teams/views.py:465
+#: teams/views.py:475
 #, python-format
 msgid ""
 "You rejected the request by user '%(user)s' to join the '%(team)s' team."
@@ -2861,41 +2850,41 @@ msgstr ""
 "Vous avez rejeté la demande de l'utilisateur '%(user)s' de rejoindre "
 "l'équipe '%(team)s'."
 
-#: teams/views.py:511
+#: teams/views.py:521
 #, python-format
 msgid "You withdrew your request to join the '%s' team."
 msgstr "Vous avez annulé votre demande de rejoindre l'équipe '%s'."
 
-#: teams/views.py:557
+#: teams/views.py:567
 #, python-format
 msgid "You left the '%s' team."
 msgstr "Vous avez quitté l'équipe '%s'."
 
-#: teams/views.py:579
+#: teams/views.py:589
 #, python-format
 msgid "You are not in the '%s' team."
 msgstr "Vous n'appartenez pas à l'équipe « %s »."
 
-#: teams/views.py:602
+#: teams/views.py:612
 msgid "Please select a language before submitting the form."
 msgstr "Merci de sélectionner une langue avant d'envoyer ce formulaire."
 
-#: teams/views.py:615
+#: teams/views.py:625
 #, python-format
 msgid "'%s' team already exists."
 msgstr "L'équipe '%s' existe déjà."
 
-#: teams/views.py:621
+#: teams/views.py:631
 #, python-format
 msgid "A request to create the '%s' team already exists."
 msgstr "Une demande de création de l'équipe '%s' existe déjà."
 
-#: teams/views.py:638
+#: teams/views.py:648
 #, python-format
 msgid "You requested creation of the '%s' team."
 msgstr "Vous avez demandé la création de l'équipe '%s'."
 
-#: teams/views.py:662
+#: teams/views.py:672
 msgid ""
 "You need to sign the Contribution License Agreement for this project before "
 "you submit a team creation request."
@@ -2903,13 +2892,13 @@ msgstr ""
 "Vous devez signer la Contribution License Agreement pour ce projet avant de "
 "pouvoir soumettre une requête de création d'équipe"
 
-#: teams/views.py:691
+#: teams/views.py:701
 #, python-format
 msgid "You approved the '%(team)s' team requested by '%(user)s'."
 msgstr ""
 "Vous avez approuvé l'équipe '%(team)s' demandée par l'utilisateur '%(user)s'."
 
-#: teams/views.py:735
+#: teams/views.py:745
 #, python-format
 msgid "You rejected the request by '%(user)s' for a '%(team)s' team."
 msgstr "Vous avez rejeté la demande de '%(user)s' d'une équipe '%(team)s'."
@@ -2937,14 +2926,10 @@ msgid "Page not found"
 msgstr "Page introuvable"
 
 #: templates/404.html:13
-#, fuzzy
 msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://code.transifex.com/transifex/issues/'>let us know</a>."
 msgstr ""
-"Il semble que vous ayez suivi un mauvais lien.  Si vous pensez que l'erreur "
-"nous incombe, veuillez <a href='http://transifex.org/newticket'>nous en "
-"informer</a>."
 
 #: templates/500.html:7 templates/500.html.py:22
 msgid "Page unavailable"
@@ -3234,19 +3219,12 @@ msgstr ""
 "les mises à jour du projet.\n"
 
 #: templates/helptext/project_form_helptext.html:72
-#, fuzzy
 msgid ""
 "\n"
 "This field should contain the url for the maintenance, tracking system of\n"
 "the project. For example, the bug tracker url of transifex is at:\n"
 "http://code.transifex.com/transifex/issues/\n"
 msgstr ""
-"\n"
-"Ce champ devrait contenir l'URL pour la maintenance et le système de "
-"tracage\n"
-"de bugs pour ce projet. par exemple : l'URL du traqueur de Bugs pour "
-"Transifex est :\n"
-"http://www.transifex.org/\n"
 
 #: templates/helptext/project_form_helptext.html:83
 msgid ""
@@ -3314,15 +3292,11 @@ msgid "No languages registered yet. :-("
 msgstr "Aucune langue enregistrée pour le moment. :-("
 
 #: templates/languages/language_list.html:34
-#, fuzzy
 msgid ""
 "Couldn't find your language? Please use the feedback form and <a href="
 "\"http://help.transifex.com/user-guide/faq.html#where-does-the-language-list-"
 "come-from-how-can-i-add-my-own\">let us know</a>!"
 msgstr ""
-"Vous ne trouvez pas votre langue? Merci d'utiliser le formulaire de retour "
-"et <a href=\"http://help.transifex.net/user-guide/faq.html#where-does-the-"
-"language-list-come-from-how-can-i-add-my-own\">faites le nous savoir</a>!"
 
 #: templates/notification/notices.html:7 templates/notification/notices.html:8
 #: templates/notification/notices.html:9
@@ -3773,17 +3747,13 @@ msgstr ""
 "\"%(project_url)s\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_requested/notice.html:2
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "The user <a href=\"%(user_url)s\">%(user_name)s</a> <span class="
 "\"notice_action\">requested</span> to join the <a href=\"%(team_url)s\">"
 "%(team_name)s language translation</a> of the <a href=\"%(project_url)s\">"
 "%(project_name)s</a> project"
 msgstr ""
-"L'utilisateur <a href=\"%(user_url)s\">%(user_name)s</a> <span class="
-"\"notice_action\">a demandé</span> de rejoindre l'équipe de traduction <a "
-"href=\"%(team_url)s\">%(team_name)s</a> du projet <a href=\"%(project_url)s"
-"\">%(project_name)s</a>"
 
 #: templates/notification/project_team_join_withdrawn/notice.html:2
 #, python-format
@@ -3939,7 +3909,7 @@ msgstr "Des projets ont demandé d'externaliser l'accès"
 
 #: templates/projects/project_detail.html:119
 #: templates/resources/resource_detail.html:234
-#: templates/teams/team_detail.html:234
+#: templates/teams/team_detail.html:236
 msgid "History"
 msgstr "Historique"
 
@@ -3999,7 +3969,13 @@ msgid_plural ""
 "                        (%(counter)s join requests)\n"
 "                    "
 msgstr[0] ""
+"\n"
+"                        (%(counter)s demande d'adhésion)\n"
+"                    "
 msgstr[1] ""
+"\n"
+"                        (%(counter)s demandes d'adhésion)\n"
+"                    "
 
 #: templates/projects/project_detail_languages.html:123
 msgid "(no team yet)"
@@ -4008,7 +3984,7 @@ msgstr ""
 #: templates/projects/project_detail_languages.html:134
 #: templates/projects/project_resources.html:159
 #: templates/projects/release_detail.html:172
-#: templates/teams/team_detail.html:161 templates/teams/team_detail.html:205
+#: templates/teams/team_detail.html:194
 msgid "Last update"
 msgstr "Dernière mise à jour"
 
@@ -4116,14 +4092,12 @@ msgid "Users with access to submit files:"
 msgstr "Utilisateur pouvant soumettre des fichiers"
 
 #: templates/projects/project_hub_projects.html:11
-#, fuzzy
 msgid "Child projects"
-msgstr "Projets fils"
+msgstr ""
 
 #: templates/projects/project_hub_projects.html:15
-#, fuzzy
 msgid "List of the hub's child projects"
-msgstr "Historique du projet %s."
+msgstr ""
 
 #: templates/projects/project_hub_projects.html:23
 msgid "Hub projects"
@@ -4234,7 +4208,7 @@ msgid "Project overview"
 msgstr "Aperçu du projet"
 
 #: templates/projects/project_menu.html:83
-#, fuzzy, python-format
+#, python-format
 msgid " Hub project <span class=\"tab-stat\">%(counter)s</span> "
 msgid_plural "Child projects <span class=\"tab-stat\">%(counter)s</span> "
 msgstr[0] "Projet hub <span class=\"tab-stat\">%(counter)s</span> "
@@ -4379,7 +4353,7 @@ msgid "no translations yet"
 msgstr "pas encore de traductions"
 
 #: templates/projects/project_resources.html:196
-#: templates/teams/team_detail.html:226
+#: templates/teams/team_detail.html:223
 msgid "No resources are registered for this project yet."
 msgstr "Pas encore de ressources enregistrées pour ce projet"
 
@@ -4509,19 +4483,19 @@ msgstr[1] "ressources dans cette parution"
 #: templates/projects/release_language_detail.html:148
 #: templates/projects/release_language_detail.html:217
 #: templates/resources/resource_detail.html:197
-#: templates/teams/team_detail.html:146
+#: templates/teams/team_detail.html:179
 msgid "Locked"
 msgstr "Verrouillé"
 
 #: templates/projects/release_language_detail.html:151
 #: templates/projects/release_language_detail.html:220
-#: templates/teams/team_detail.html:149 templates/teams/team_detail.html:195
+#: templates/teams/team_detail.html:182
 msgid "Not accepting translations at the moment"
 msgstr "N'accepte pas de traductions en ce moment"
 
 #: templates/projects/release_language_detail.html:174
 #: templates/projects/release_language_detail.html:236
-#: templates/teams/team_detail.html:166 templates/teams/team_detail.html:206
+#: templates/teams/team_detail.html:199
 msgid "no activity yet"
 msgstr "pas encore d'activité"
 
@@ -4637,9 +4611,8 @@ msgstr "Restant: "
 
 #: templates/resources/resource_actions.html:135
 #: templates/resources/stats_bar_simple.html:4
-#, fuzzy
 msgid "Reviewed: "
-msgstr "Passé en revue"
+msgstr ""
 
 #: templates/resources/resource_actions.html:150
 msgid "View strings online"
@@ -4833,7 +4806,6 @@ msgid "Edit the details of the translation resource"
 msgstr "Editer les détails de la ressource de traduction."
 
 #: templates/resources/resource_form.html:69
-#, fuzzy
 msgid ""
 "\n"
 "\t<div class=\"i16 infomsg\">\n"
@@ -4853,27 +4825,6 @@ msgid ""
 "\t</div>\n"
 "\t"
 msgstr ""
-"\n"
-"\t<div class=\"i16 infomsg\">\n"
-"\t\t<p>Pour activer la récupération automatique de vos chaînes de caractères "
-"source par\n"
-"\t\tTransifex, saisir l'URL de votre fichier source (par exemple fichier "
-"POT). Référez-vous à\n"
-"\t\t<a href=\"http://help.transifex.net/user-guide/projects.html#projects-"
-"and-resources\">la documentation</a>\n"
-"\t\tpour plus d'informations.</p>\n"
-"\n"
-"\t\t<p><strong>Avertissement</strong>: Transifex écrasera les chaînes de "
-"caractères source\n"
-"\t\tet les traductions avec celles trouvées dans le fichier. Ceci peut "
-"entraîner\n"
-"\t\tla <b>perte de traductions</b>, donc vérifiez que le lien URL pointe "
-"vers le\n"
-"\t\tbon fichier avant d'envoyer le formulaire.\n"
-"\t\t</p>\n"
-"\t\t</blink>\n"
-"\t</div>\n"
-"\t"
 
 #: templates/resources/resource_form.html:93
 msgid "Delete resource from Transifex"
@@ -4893,14 +4844,11 @@ msgid "Say goodbye to <em>%(resource_name)s</em>?"
 msgstr "dire au revoir à <em>%(resource_name)s</em>?"
 
 #: templates/resources/resource_form.html:107
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Are you sure you want to permanently delete the translation resource "
 "'%(resource_name)s'?"
 msgstr ""
-"\n"
-"  Êtes-vous surs de vouloir supprimer définitivement la ressource de "
-"traduction '%(resource_name)s'?\n"
 
 #: templates/resources/resource_list_more.html:16
 msgid "edit"
@@ -4971,27 +4919,18 @@ msgstr ""
 "\t\t\t\t"
 
 #: templates/resources/upload_create_resource_form.html:51
-#, fuzzy
 msgid ""
 "If your project have several files, it might be convenient to use the <a "
 "href=\"http://help.transifex.com/features/client/index.html#user-client\" "
 "target=\"_blank\">Transifex Client</a> for mass operations."
 msgstr ""
-"Si votre projet comporte plusieurs fichiers, il peut être pratique "
-"d'utiliser le <a href=\"http://help.transifex.net/features/client/index."
-"html#user-client\" target=\"_blank\">Client Transifex</a> pour les "
-"opérations de masse."
 
 #: templates/resources/upload_create_resource_form.html:53
-#, fuzzy
 msgid ""
 "For extensive information on the supported file formats, visit the "
 "corresponding <a href=\"http://help.transifex.com/features/formats.html#user-"
 "formats\" target=\"_blank\">Transifex Help page</a>."
 msgstr ""
-"Pour plus d'informations sur les formats de fichiers supportés, aller sur "
-"la  <a href=\"http://help.transifex.net/features/formats.html#user-formats\" "
-"target=\"_blank\">page d'Aide Transifex </a> correspondante."
 
 #: templates/resources/upload_create_resource_form.html:91
 msgid "Create Resource"
@@ -5072,29 +5011,29 @@ msgstr ""
 "Êtes vous surs de vouloir supprimer définitivement l'équipe '%(lang_name)s' "
 "qui travaille sur %(project_name)s?"
 
-#: templates/teams/team_detail.html:44
+#: templates/teams/team_detail.html:76
 msgid "Overall Progress"
 msgstr ""
 
-#: templates/teams/team_detail.html:47
+#: templates/teams/team_detail.html:79
 msgid "Join team"
 msgstr "Rejoindre l'équipe"
 
-#: templates/teams/team_detail.html:58 templates/teams/team_detail.html:65
+#: templates/teams/team_detail.html:90 templates/teams/team_detail.html:97
 msgid "Join language translation"
 msgstr "Rejoindre la traduction"
 
-#: templates/teams/team_detail.html:85
+#: templates/teams/team_detail.html:117
 msgid "Mainlist:"
 msgstr "Liste de diffusion principale :"
 
-#: templates/teams/team_detail.html:90
+#: templates/teams/team_detail.html:122
 msgid "Coordinator:"
 msgid_plural "Coordinators:"
 msgstr[0] "Coordinateur :"
 msgstr[1] "Coordinateurs :"
 
-#: templates/teams/team_detail.html:102
+#: templates/teams/team_detail.html:134
 msgid ""
 "Since this project is \"Free for all\" anyone can contribute. You don't have "
 "to be a member!"
@@ -5102,15 +5041,15 @@ msgstr ""
 "Comme ce projet est \"Accessible à tous\" n'importe qui peut contribuer. "
 "Vous n'avez besoin d'être membre!"
 
-#: templates/teams/team_detail.html:110
+#: templates/teams/team_detail.html:142
 msgid "Language resources"
 msgstr "Ressources de la langue"
 
-#: templates/teams/team_detail.html:124
+#: templates/teams/team_detail.html:156
 msgid "Show resources from:"
 msgstr ""
 
-#: templates/teams/team_detail.html:141 templates/teams/team_detail.html:190
+#: templates/teams/team_detail.html:174
 msgid "click for translation"
 msgstr "Cliquez pour traduire"
 
@@ -5119,17 +5058,15 @@ msgid "Create team"
 msgstr "Créer une équipe"
 
 #: templates/teams/team_form.html:38
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "Edit %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup> "
 "team"
 msgstr ""
-"%(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup>"
 
 #: templates/teams/team_form.html:70
-#, fuzzy
 msgid "Edit language-team"
-msgstr "Modifier la langue"
+msgstr ""
 
 #: templates/teams/team_form.html:92
 msgid ""
@@ -5146,9 +5083,8 @@ msgid ""
 msgstr ""
 
 #: templates/teams/team_form.html:108
-#, fuzzy
 msgid "Delete language-team"
-msgstr "Supprimer la langue"
+msgstr ""
 
 #: templates/teams/team_form.html:111
 msgid "Do you wish to delete the team?"
@@ -5180,11 +5116,16 @@ msgid ""
 "\"%(url_connect)s\" title=\"Explore our community\" >Connect with them&nbsp;"
 "&raquo;</a> "
 msgstr ""
+" Des traducteurs peuvent vous aider à accélérer le processus "
+"d'internationalisation. <a href=\"%(url_connect)s\" title=\"Explorer notre "
+"communauté\">Entrer en contact avec eux&raquo;</a> "
 
 #: templates/teams/team_members.html:158
 msgid ""
 "Reviewers improve the quality of your translations. How about adding some?"
 msgstr ""
+"Les relecteurs vérifient la qualité de vos traductions. Pourquoi ne pas en "
+"ajouter ?"
 
 #: templates/teams/team_menu.html:26
 #, python-format
@@ -5202,9 +5143,8 @@ msgid "Overview"
 msgstr "Aperçu"
 
 #: templates/teams/team_menu.html:78
-#, fuzzy
 msgid "Edit language team"
-msgstr "Visiter la langue de l'équipe"
+msgstr ""
 
 #: templates/teams/team_off.html:12
 msgid "This project does not maintain its own translation teams"
@@ -5433,6 +5373,8 @@ msgid ""
 "An e-mail has been sent to your account explaining how to reset your "
 "password."
 msgstr ""
+"Un courriel expliquant comment réinitialiser votre mot de passe vous a été "
+"envoyé."
 
 #: templates/userena/password_reset_form.html:26
 msgid "Submit"
@@ -5625,6 +5567,8 @@ msgstr "Merci pour votre inscription!"
 msgid ""
 "You have been sent an e-mail with an activation link to the supplied email."
 msgstr ""
+"Un email contenant un lien d'activation a été envoyé à l'adresse courriel "
+"que vous avez fournie"
 
 #: templates/userena/signup_complete.html:13
 #, python-format
@@ -5821,7 +5765,7 @@ msgstr "A refusé de rejoindre le hub projet"
 
 #: txcommon/notifications.py:92
 msgid "when a project is denied to join a project  hub"
-msgstr ""
+msgstr "lorsqu'on refuse à un projet l'accès à un hub projet"
 
 #: txcommon/notifications.py:99
 msgid "Withdrew request to join project hub"
@@ -6118,82 +6062,3 @@ msgstr "Vous avez supprimé l'autorisation"
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Vous avez supprimé la demande d'autorisation"
-
-#~ msgid "Last Translation:"
-#~ msgstr "Dernière traduction :"
-
-#~ msgid "Untranslated"
-#~ msgstr "Non Traduit"
-
-#~ msgid "File uploaded successfully."
-#~ msgstr "Le fichier a été mis à jour avec succès."
-
-#~ msgid "File size in bytes"
-#~ msgstr "Taille du fichier en octets"
-
-#~ msgid "Source language"
-#~ msgstr "Langue source"
-
-#~ msgid "Bound to any object"
-#~ msgstr "Attaché à aucun objet"
-
-#~ msgid ""
-#~ "Whether this file is bound to a project/translation resource, otherwise "
-#~ "show in the upload box"
-#~ msgstr ""
-#~ "Soit ce fichier est attaché à un projet, soit il est affiché dans la "
-#~ "boîte de soumission."
-
-#~ msgid "The user who uploaded the specific file."
-#~ msgstr "L'utilisateur qui a soumis le fichier spécifié"
-
-#~ msgid "Total number of strings"
-#~ msgstr "Le nombre total de chaînes"
-
-#~ msgid "Edit <em>%(project_name)s</em>"
-#~ msgstr "Editer <em>%(project_name)s</em>"
-
-#~ msgid "Access control will be enabled once the project is created"
-#~ msgstr "Le contrôle d'accès sera activé une fois le projet créé."
-
-#~ msgid "Editing <a href=\"%(project_url)s\">%(project_name)s</a>"
-#~ msgstr "Edition de <a href=\"%(project_url)s\">%(project_name)s</a>"
-
-#~ msgid "Delete %(release_name)s"
-#~ msgstr "Supprimer %(release_name)s"
-
-#~ msgid "Edit <em>%(release_name)s</em> release"
-#~ msgstr "Éditer la parution <em>%(release_name)s</em>"
-
-#~ msgid "Delete %(resource_name)s"
-#~ msgstr "Effacer %(resource_name)s"
-
-#~ msgid "Delete <em>%(resource_name)s</em>"
-#~ msgstr "Effacer <em>%(resource_name)s</em>"
-
-#~ msgid "Manage members"
-#~ msgstr "Gérer les membres"
-
-#~ msgid "Resend activation link"
-#~ msgstr "Renvoyer le lien d'activation"
-
-#~ msgid "Nudge %(user)s "
-#~ msgstr "Wizzer %(user)s"
-
-#~ msgid "You can't re-nudge the same user in a short amount of time."
-#~ msgstr ""
-#~ "Vous ne pouvez pas re-wizzer le même utilisateur dans un court laps de "
-#~ "temps."
-
-#~ msgid "You can't nudge yourself."
-#~ msgstr "Vous ne pouvez pas vous wizzer."
-
-#~ msgid "You have nudged '%s'."
-#~ msgstr "vous avez wizzé '%s'."
-
-#~ msgid ""
-#~ "You have to provide only the size as an integer (both sides will be "
-#~ "equal) and optionally, the username."
-#~ msgstr ""
-#~ "Vous devez fournir uniquement la taille comme un entier (les deux côtés "
-#~ "seront égaux) et éventuellement, le nom d'utilisateur."
