@@ -22,7 +22,7 @@ $(function(){
     $("#filter-form").submit();
   });
 
-  $(".stat-row").click(function() {
+  $('#stat-row-container').on('click', '.stat-row', function() {
     var project_slug = $(this).data('project');
     var resource_slug = $(this).data('resource');
     var actions_url_tmpl = '{% url resource_actions 11111 22222 language.code %}';
