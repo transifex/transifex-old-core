@@ -233,7 +233,7 @@ function undoButtonClickHandler() {
     tr.find('span.rule').each(function(i){
         rule = $(this).attr('rule');
         string.translate(undo_value[rule], rule);
-        $(this).next('textarea').focus().val(undo_value[rule]);
+        $(this).next('textarea').focus().val(undo_value[rule]).keyup();
     });
     // Save the new value
     string.push();
@@ -818,6 +818,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                         }
                         a.removeClass("action_go");
                         a.addClass("action");
+                        trans.keyup();
                     });
                 });
                 return false;
@@ -874,6 +875,7 @@ function StringSet(json_object, push_url, from_lang, to_lang) {
                     $('tbody tr td.notes span#undo_' + id).removeClass('inactive');
                     $('tbody tr td.notes span#undo_' + id).unbind('click');
                     $('tbody tr td.notes span#undo_' + id).bind('click', undoButtonClickHandler);
+                    trans.keyup();
                     trans.focus();
                 }
             });

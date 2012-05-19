@@ -216,7 +216,7 @@ def team_detail(request, project_slug, language_code):
 
     statslist = statslist.by_project_and_language(project, language)
 
-    if not statslist:
+    if not statslist and not team:
         raise Http404
 
     empty_rlstats = Resource.objects.select_related('project', 'priority'
@@ -234,6 +234,17 @@ def team_detail(request, project_slug, language_code):
     else:
         coordinators = None
 
+    # HACK: For every resource without an RLStats object, we need to fool
+    # the template that there is one. So, we create the object without
+    # saving it to the DB and append it to the list. I know this is not very
+    # nice but I can't think of a nicer way to do it.
+    statslist = list(statslist)
+    for resource in empty_rlstats:
+        rl = RLStats(resource=resource, language=language,
+            untranslated=resource.total_entities,
+        )
+        statslist.append(rl)
+
     return render_to_response("teams/team_detail.html", {
         "project": project,
         "language": language,
@@ -241,7 +252,6 @@ def team_detail(request, project_slug, language_code):
         "user_access_request": user_access_request,
         "project_team_page": True,
         "statslist": statslist,
-        "empty_rlstats": empty_rlstats,
         "filter_form": filter_form,
         "total_entries": total_entries,
         "coordinators": coordinators,

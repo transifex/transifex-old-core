@@ -6,11 +6,13 @@
 {% get_suggestions source_entity.id for lang_code as suggestions %}
 
 <link media="screen" href="{% static "suggestions/css/lotte_suggestions.css" %}" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="{% static "js/tx.jquery.bidi.js" %}"></script>
 
 <script type="text/javascript">
 
 /* document ready. do stuff */
 $(document).ready(function(){
+    $('textarea').bidi();
 
     $('#send_suggestion_'+{{ source_entity.id }}).click(function(){
       var suggestion_string = $('#new_suggestion_'+{{ source_entity.id }}).val();

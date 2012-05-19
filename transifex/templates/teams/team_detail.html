@@ -12,16 +12,17 @@
 {% load priority_images %}
 
 {% block extra_head %}
+<link type="text/css" href="{% static "css/jquery.jscrollpane.css" %}" rel="stylesheet" media="all" />
 <script type="text/javascript">
 $(function(){
-  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s', live: true});
   $("#join-facebox-trigger").facebox();
   $('#filter-form #id_project').chosen();
   $('#filter-form #id_project').change(function() {
     $("#filter-form").submit();
   });
 
-  $(".stat-row").click(function() {
+  $('#stat-row-container').on('click', '.stat-row', function() {
     var project_slug = $(this).data('project');
     var resource_slug = $(this).data('resource');
     var actions_url_tmpl = '{% url resource_actions 11111 22222 language.code %}';
@@ -30,6 +31,37 @@ $(function(){
   });
 })
 </script>
+  <script type="text/javascript" src="{% static "js/lib/mwheelIntent.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.mousewheel.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.jscrollpane.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/lib/jquery.infinitescroll.js" %}"></script>
+  <script type="text/javascript" src="{% static "js/tx.infinitescrollbehaviour.js" %}"></script>
+  <script type="text/javascript">
+    //TODO: remove this with merge of codebase and put it in seperate file
+
+    //Define loader icon to be used with javascript
+    var sloaderUrl = "{% static 'images/icons/scroll-ajax-loader.gif' %}";
+
+    $(function(){
+      infScrollOptions = {
+        navSelector     : ".pagination",
+        nextSelector    : ".pagination a:first",
+        itemSelector    : "#stat-row-container tr.stat-row",
+        errorCallback   : function () {
+          //when done, do a final reinitialise of the jscrollpane to adjust to content
+          $("table.stats-table").parents('.jscrollwrapper').data('jsp').reinitialise();
+        },
+        loading: {
+          finishedMsg   : "",
+          img           : sloaderUrl,
+          msgText       : "" ,
+      }
+    };
+ $("table.stats-table").infscrollbehaviour({}, infScrollOptions);
+
+});
+  </script>
+
 {% endblock %}
 
 {% block title %}{{ block.super }} | {{ project.name }}{% endblock %}
@@ -135,8 +167,9 @@ $(function(){
       <th class="onlyarrow priority_level"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="stat-row-container">
 
+  {% autopaginate statslist 15 %}
   {% for stat in statslist %}
   <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ stat.resource.project.slug }}" data-resource="{{ stat.resource.slug }}">
   {% cache 604800 team_details stat.resource.project.slug language.code stat.resource.id LANGUAGE_CODE %}
@@ -185,48 +218,17 @@ $(function(){
   </tr>
   {% endfor %}
 
-
-  {% for resource in empty_rlstats %}
-  <tr class="stat-row" title="{% trans 'click for translation' %}" data-project="{{ resource.project.slug }}" data-resource="{{ resource.slug }}">
-  {% cache 604800 team_details resource.project.slug language.code resource.id LANGUAGE_CODE %}
-      <td class="tableobject">
-      <span class="linkstyle"><strong>{% if project.is_hub %}{{ resource.project.name }}&nbsp;&rarr;&nbsp;{% endif %} {{ resource.name }}</strong></span>
-      {% if not resource.accept_translations %}
-        <img class="tipsy_enable bullet" src="{% static "images/icons/bullet_red.png" %}" title="{% trans "Not accepting translations at the moment" %}"/>
-      {% endif %}
-      </td>
-      <td class="tablecompletion">
-      {% with 200 as barwidth %}
-          {% stats_bar_simple_args 0 total_entries barwidth %}
-      {% endwith %}
-      </td>
-  {% endcache %}
-      <td class="tablelastupd">
-        <span  class="i16 table-update tipsy_enable" title="{% trans 'Last update' %}" unixdate="{{ last_update|date:'U' }}">
-          {% trans "no activity yet" %}
-        </span>
-  </td>
-
-    <td class="priority_level" style="text-align:center">
-      <span style="border:0">
-        {% with resource.priority.level as priority_level %}
-        {% with resource.priority.display_level as display_level %}
-          <span class="priority_sort" style="display:none">{{ priority_level }}</span>
-          {% with priority_level|priority_image_path as priority_image %}
-          <img class="tipsy_enable" src="{% static priority_image %}" style="border:0" title="Priority: {{ display_level }}"/>
-          {% endwith %}
-        {% endwith %}
-        {% endwith %}
-      </span>
-    </td>
-  </tr>
-  {% endfor %}
   </table>
   {% else %}
     <p>{% trans "No resources are registered for this project yet." %}</p>
   {% endif %}
 </div>
-
+  {% paginate %}
+  <div class="pagination" style="display:none">
+    {% if page_obj.has_next %}
+    <a href="?page{{ page_suffix }}={{ page_obj.next_page_number }}{{ getvars }}{{ hashtag }}"></a>
+    {% endif %}
+  </div>
 </div>
 
 {% if team %}
@@ -254,4 +256,6 @@ $(function(){
 
 {% block content_footer %}
   <div id="content_footer_center"></div>
+
+
 {% endblock %}

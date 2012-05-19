@@ -26,10 +26,6 @@ if settings.ENABLE_ADDONS:
 
 PROJECTS_URL = '^projects/'
 
-js_info_dict = {
-    'domain' : 'djangojs',
-}
-
 urlpatterns += patterns('',
     url(r'^$', 'txcommon.views.index', name='transifex.home'),
     url(PROJECTS_URL, include('projects.urls')),
@@ -45,8 +41,6 @@ urlpatterns += patterns('',
     url(r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
     url(r'^contact/$', 'contact_form.views.contact_form',
         {'form_class': CustomContactForm}, name='contact_form'),
-    url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict,
-        name='jsi18n'),
 )
 
 if settings.ENABLE_CONTACT_FORM:

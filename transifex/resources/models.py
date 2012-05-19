@@ -26,6 +26,7 @@ from transifex.txcommon.log import logger
 from transifex.resources.utils import invalidate_template_cache
 from transifex.resources.signals import post_update_rlstats
 from transifex.resources.tasks import check_and_notify_resource_full_reviewed
+from transifex.txcommon.utils import immutable_property
 
 class AggregatedRLStats(object):
     def __init__(self, **kwargs):
@@ -1048,3 +1049,72 @@ class Template(models.Model):
         ordering = ['resource']
 
 post_update_rlstats.connect(check_and_notify_resource_full_reviewed)
+
+
+class ReviewHistory(models.Model):
+    """Keep a log of who reviewed what and when."""
+
+    REVIEW_ACTIONS = (
+        ('R', 'Reviewed'),
+        ('U', 'Unreviewed'),
+    )
+
+    translation_id = models.IntegerField('Translation', blank=True,
+        null=True, help_text='The ID of the translation under review.')
+
+    project_id = models.IntegerField('Project ID', blank=False, null=False,
+        db_index=True, help_text='The project that this translation belongs to.')
+
+    string = models.TextField(blank=False, null=False,
+        help_text='The actual string content of translation.')
+
+    username = models.CharField('Reviewer', max_length=50, blank=True,
+        null=True, db_index=True,
+        help_text='The user who performed the review action.')
+
+    created = models.DateTimeField(auto_now_add=True, editable=False,
+        db_index=True)
+
+    # made review or unreviewed
+    action = models.CharField('Action', max_length=1, choices=REVIEW_ACTIONS)
+
+    class Meta:
+        unique_together = ('translation_id', 'username', 'created', 'action')
+
+    @immutable_property
+    def translation(self):
+        """Property to return the related Translation object."""
+        return Translation.objects.get(id=self.translation_id)
+
+    @immutable_property
+    def user(self):
+        """
+        Property to return the related User object based on username field.
+
+        It may return None if user is not found.
+        """
+        try:
+            return User.objects.get(username=self.username)
+        except User.DoesNotExist:
+            return None
+
+    @classmethod
+    def add_one(cls, translation, user, project_id, reviewed):
+        """Create a single history entry for a translation."""
+        action = 'R' if reviewed else 'U'
+        cls.objects.create(
+            translation_id=translation.id,
+            project_id=project_id,
+            string=translation.string,
+            username=user.username,
+            action=action,
+        )
+
+    @classmethod
+    def add_many(cls, t, user, project_id, reviewed):
+        """Create multiple (or just one) entries."""
+        if isinstance(t, Translation):
+            cls.add_one(t, user, project_id, reviewed)
+        elif isinstance(t, models.query.QuerySet):
+            for translation in t:
+                cls.add_one(translation, user, project_id, reviewed)
