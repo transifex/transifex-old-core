@@ -23,7 +23,8 @@ from transifex.resources.models import Resource, SourceEntity, Translation
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.teams.models import Team
 from transifex.resources.handlers import invalidate_stats_cache
-from transifex.api.utils import BAD_REQUEST
+from transifex.api.utils import BAD_REQUEST, FORBIDDEN_REQUEST,\
+        NOT_FOUND_REQUEST
 from .exceptions import BadRequestError, NoContentError, NotFoundError, \
         ForbiddenError
 
@@ -385,7 +386,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
     """Read and update a single translation"""
 
     def _check_if_user_can_update_translation(self, project, resource,
-            language, user, request_user, translations, translation_data,
+            language, user, translations, translation_data,
             update_fields):
         """Check if user can update translations. This method
         also adds some data to update_fields.
@@ -404,17 +405,12 @@ class SingleTranslationHandler(BaseTranslationHandler):
             resource: A Resource instance
             language: A Language instance
             user: A User instance
-            request_user: An User instance (request.user)
             translations: A Translation queryset
             translation_data: A dictionary (request.data),
             update_fields: A dictionary containing fields to be
                     updated in the translations.
         """
         team = Team.objects.get_or_none(project, language.code)
-        if request_user not in project.maintainers.all() and not (team\
-                and request_user in team.coordinators.all()):
-            raise ForbiddenError("You are forbidden to update this(these) "\
-                    "translation(s).")
         check = ProjectPermission(user)
         if (not check.submit_translations(team or project) or\
             not resource.accept_translations) and not\
@@ -434,6 +430,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
             update_fields['reviewed'] = translation_data.get('reviewed')
         update_fields['user'] = user
 
+    @transaction.commit_on_success
     def _update_translations(self, source_entity, language, translations,
             translation_strings, update_fields):
         """Updates translations and returns a queryset for updated
@@ -486,18 +483,17 @@ class SingleTranslationHandler(BaseTranslationHandler):
         with the field names used in the JSON representation of the
         translations.
         """
-
         field_map = OrderedDict([
                 ('source_entity__string', 'key'),
                 ('source_entity__context', 'context'),
                 ('string', 'translation'),
                 ('reviewed', 'reviewed'),
+                ('source_entity__pluralized', 'pluralized'),
                 ('wordcount', 'wordcount'),
                 ('last_update', 'last_update'),
                 ('user__username', 'user'),
                 ('source_entity__position', 'position'),
                 ('source_entity__occurrences', 'occurrences'),
-                ('source_entity__pluralized', 'pluralized')
         ])
 
         fields = field_map.keys()
@@ -533,13 +529,13 @@ class SingleTranslationHandler(BaseTranslationHandler):
                     translations.values(*fields),
                     field_map, True)
         except NotFoundError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return NOT_FOUND_REQUEST(unicode(e))
         except NoContentError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
         except ForbiddenError, e:
-            return rc.FORBIDDEN(unicode(e))
+            return FORBIDDEN_REQUEST(unicode(e))
         except BadRequestError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
 
     @require_mime('json')
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
@@ -560,8 +556,12 @@ class SingleTranslationHandler(BaseTranslationHandler):
             except SourceEntity.DoesNotExist, e:
                 return rc.NOT_FOUND
             data = request.data
-            user = data.get('user') and User.objects.get(username=data.get(
-                'user')) or request.user
+            check = ProjectPermission(request.user)
+            if check.maintain(project):
+                user = data.get('user') and User.objects.get(
+                        username=data.get('user')) or request.user
+            else:
+                user = request.user
 
             translations = Translation.objects.filter(
                     source_entity=source_entity, language=language)
@@ -572,7 +572,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
             update_fields = {}
 
             self._check_if_user_can_update_translation(project, resource,
-                    language, user, request.user, translations,
+                    language, user, translations,
                     data, update_fields)
 
             translation_strings = data.get('translation')
@@ -585,13 +585,13 @@ class SingleTranslationHandler(BaseTranslationHandler):
                     translations.values(*fields),
                     field_map, True)
         except NotFoundError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return NOT_FOUND_REQUEST(unicode(e))
         except NoContentError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
         except ForbiddenError, e:
-            return rc.FORBIDDEN(unicode(e))
+            return FORBIDDEN_REQUEST(unicode(e))
         except BadRequestError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
 
 
 class TranslationObjectsHandler(BaseTranslationHandler):
@@ -599,9 +599,6 @@ class TranslationObjectsHandler(BaseTranslationHandler):
     Read and update a set of translations in
     a language for a resource.
     """
-    fields = (
-        'key', 'context', 'translation'
-    )
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
             pr_project_private_perm,
@@ -624,13 +621,13 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                     ).values(*fields)
             return self._generate_translations_dict(translations, field_map)
         except NotFoundError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return NOT_FOUND_REQUEST(unicode(e))
         except NoContentError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
         except ForbiddenError, e:
-            return rc.FORBIDDEN(unicode(e))
+            return FORBIDDEN_REQUEST(unicode(e))
         except BadRequestError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
 
     @require_mime('json')
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
@@ -647,15 +644,19 @@ class TranslationObjectsHandler(BaseTranslationHandler):
             translations = request.data
             self._check_json_data(translations)
             team = Team.objects.get_or_none(project, language.code)
-
-            if request.user not in project.maintainers.all() or (team and\
-                    request.user not in team.coordinators.all()):
-                return rc.FORBIDDEN
+            is_maintainer = False
+            check = ProjectPermission(request.user)
+            if check.maintain(project):
+                is_maintainer = True
+            elif not (check.submit_translations(team or project) or
+                    check.proofread(project, language)):
+                return FORBIDDEN_REQUEST(
+                        "You are not allowed to update translations.")
 
             nplurals = language.get_pluralrules_numbers()
             keys = ['key', 'context', 'translation',
-                    'reviewed', 'wordcount', 'last_update', 'user',
-                    'position', 'occurrences', 'pluralized']
+                    'reviewed', 'pluralized', 'wordcount',
+                    'last_update', 'user', 'position', 'occurrences',]
 
             trans_obj_dict = self._translations_as_dict(
                     translations, resource, language)
@@ -668,19 +669,22 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                     key = translation.get('key')
                     context = translation.get('context')
                     checksum = hash_tag(key, context)
-                    user = translation.get('user') and \
-                            User.objects.get(username=translation.get(
-                                'user')) or request.user
+                    if is_maintainer:
+                        user = translation.get('user') and \
+                                User.objects.get(username=translation.get(
+                                    'user')) or request.user
+                    else:
+                        user = request.user
 
                     check = ProjectPermission(user)
                     can_review = check.proofread(project, language)
                     can_submit_translations = check.submit_translations(
                             team or resource.project)
                     accept_translations = resource.accept_translations
-                    is_maintainer = check.maintain(resource.project)
 
                     translation_objs = trans_obj_dict.get(checksum)
-                    se_id = translation_objs[0].source_entity.id
+                    se = translation_objs[0].source_entity
+                    se_id = se.id
 
                     kwargs = {
                         'can_review': can_review,
@@ -692,11 +696,16 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                     }
 
                     if not self._check_user_perms(**kwargs):
-                        continue
+                        return FORBIDDEN_REQUEST("User '%(user)s' is not allowed to "
+                                "update translation for '%(se)s' in language "
+                                "'%(lang_code)s'." % {'user': user, 'se': se,
+                                'lang_code': language.code})
 
                     is_pluralized = self._is_pluralized(translation, nplurals)
                     if is_pluralized['error']:
-                        continue
+                        return BAD_REQUEST("Bad plural translations for "
+                                "'%(se)s' in language '%(lang_code)s'." % {
+                                    'se': se, 'lang_code': language.code})
                     pluralized = is_pluralized['pluralized']
 
                     self._collect_updated_translations(
@@ -718,10 +727,10 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                         language=language).values(*fields),
                     field_map)
         except NotFoundError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return NOT_FOUND_REQUEST(unicode(e))
         except NoContentError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))
         except ForbiddenError, e:
-            return rc.FORBIDDEN(unicode(e))
+            return FORBIDDEN_REQUEST(unicode(e))
         except BadRequestError, e:
-            return rc.BAD_REQUEST(unicode(e))
+            return BAD_REQUEST(unicode(e))

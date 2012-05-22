@@ -1262,18 +1262,7 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
             content_type="application/json")
 
         expected_json = []
-        for item in json:
-            if item['key'] == 'pluralized_String1' and item['context'] == 'Context1':
-                expected_json.append(item)
-            item.pop('last_update')
-
-        self.assertEqual(response.status_code, 200)
-        response_json = simplejson.loads(response.content)
-        for item in response_json:
-            item.pop('last_update')
-        self.assertEqual(response_json, expected_json)
-        self.assertTrue(self.source_entity1.translations.get(
-            string="ArabicString2"))
+        self.assertEqual(response.status_code, 403)
 
 
 def create_sample_translations(cls):
@@ -1458,7 +1447,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 200)
 
         string_hash = self.source_entity_plural.string_hash
         response = self.client['team_member'].get(reverse('translation_string',
