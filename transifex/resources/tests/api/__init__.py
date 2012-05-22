@@ -1400,14 +1400,14 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 403)
         response = self.client['team_coordinator'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
                 string_hash]),
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 403)
         json['user'] = 'team_member'
         response = self.client['maintainer'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
@@ -1415,7 +1415,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 403)
         self.team.language=self.language_ar
         self.team.save()
         json['reviewed'] = True
@@ -1425,7 +1425,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             data=simplejson.dumps(json),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.status_code, 403)
         json['user'] = 'team_coordinator'
         response = self.client['team_coordinator'].put(reverse(
             'translation_string', args=[self.project.slug,
