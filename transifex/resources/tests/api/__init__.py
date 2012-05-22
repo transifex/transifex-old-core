@@ -998,15 +998,17 @@ class UnitTestTranslationObjectsHandler(TestCase):
         request = Mock()
         request.GET = {}
         expected_fieldmap = {
-            'source_entity__id': 'source_entity_id',
             'source_entity__string': 'key',
             'source_entity__context': 'context',
             'string': 'translation',
+            'reviewed': 'reviewed',
+            'source_entity__pluralized': 'pluralized'
         }
         expected_fields = [
-            'source_entity__id', 'source_entity__string',
+            'source_entity__id',
+            'source_entity__string',
             'source_entity__context', 'string',
-            'source_entity__pluralized',
+            'reviewed', 'source_entity__pluralized',
             'rule',
         ]
         fieldmap, fields = self.obj._get_fieldmap_and_fields(request)
@@ -1015,17 +1017,15 @@ class UnitTestTranslationObjectsHandler(TestCase):
 
         request.GET['details'] = ''
         expected_fieldmap.update({
-            'reviewed': 'reviewed',
             'wordcount': 'wordcount',
             'last_update': 'last_update',
             'user__username': 'user',
             'source_entity__position': 'position',
             'source_entity__occurrences': 'occurrences',
-            'source_entity__pluralized': 'pluralized'
         })
 
         expected_fields.extend([
-            'reviewed', 'wordcount', 'last_update', 'user__username',
+            'wordcount', 'last_update', 'user__username',
             'source_entity__position', 'source_entity__occurrences',
         ])
 
@@ -1178,17 +1178,19 @@ class UnitTestTranslationObjectsHandler(TestCase):
             nplurals), {'pluralized': False, 'error':False})
 
     def test_get_update_fieldmap_and_fields(self):
-        keys = ['source_entity_id', 'key', 'context', 'user']
+        keys = ['source_entity_id', 'key', 'context', 'user',
+                'reviewed', 'pluralized']
         field_map, fields = self.obj._get_update_fieldmap_and_fields(keys)
         self.assertEqual(field_map, {
-                'source_entity__id': 'source_entity_id',
                 'source_entity__string': 'key',
                 'source_entity__context': 'context',
-                'user__username': 'user'
+                'user__username': 'user',
+                'reviewed': 'reviewed',
+                'source_entity__pluralized': 'pluralized'
             }
         )
         expected_fields = field_map.keys()
-        expected_fields.extend(['source_entity__pluralized', 'rule'])
+        expected_fields.extend(['rule'])
         expected_fields.sort()
         fields.sort()
         self.assertEqual(fields, expected_fields)
@@ -1243,11 +1245,11 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
         self.assertEqual(response.status_code, 200)
         json = simplejson.loads(response.content)
         for index, item in enumerate(json):
-            if item['source_entity_id'] == 3:
+            if item['key'] == 'pluralized_String1' and item['context'] == 'Context1':
                 item['translation'] = {'0': '0', '1': '1', '2': '2', '3': '3',
                         '4': '4', '5': '5'}
                 json[index] = item
-            if item['source_entity_id'] == 5:
+            if item['key'] == 'String2' and item['context'] == 'Context2':
                 item['translation'] = 'fooo'
                 item['user'] = 'team_member'
                 item['reviewed'] = True
@@ -1261,7 +1263,7 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
 
         expected_json = []
         for item in json:
-            if item['source_entity_id'] == 3:
+            if item['key'] == 'pluralized_String1' and item['context'] == 'Context1':
                 expected_json.append(item)
             item.pop('last_update')
 

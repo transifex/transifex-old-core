@@ -5,7 +5,9 @@ API for Translation objects.
 """
 
 from __future__ import absolute_import
+from collections import OrderedDict
 from django.db import transaction
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 from piston.handler import BaseHandler
@@ -18,6 +20,7 @@ from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.resources.decorators import method_decorator
 from transifex.resources.models import Resource, SourceEntity, Translation
+from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.teams.models import Team
 from transifex.resources.handlers import invalidate_stats_cache
 from transifex.api.utils import BAD_REQUEST
@@ -27,7 +30,7 @@ from .exceptions import BadRequestError, NoContentError, NotFoundError, \
 
 class BaseTranslationHandler(BaseHandler):
 
-    allowed_methods = ('GET', 'PUT', )
+    allowed_methods = ('GET', 'PUT',)
 
     def _generate_translations_dict(self, translations, field_map={},
                                     single=False):
@@ -46,7 +49,7 @@ class BaseTranslationHandler(BaseHandler):
         result = []
         buf = {}
         for count, translation in enumerate(translations):
-            d = {}
+            d = OrderedDict()
             append = True
             pluralized = False
             index = -1
@@ -100,33 +103,32 @@ class BaseTranslationHandler(BaseHandler):
         """
         fields = [
                 'source_entity__id', 'source_entity__string',
-                'source_entity__context', 'string',
+                'source_entity__context', 'string', 'reviewed',
                 'source_entity__pluralized',
                 'rule',
         ]
 
-        field_map = {
-                'source_entity__id': 'source_entity_id',
-                'source_entity__string': 'key',
-                'source_entity__context': 'context',
-                'string': 'translation',
-        }
+        field_map_elems = [
+                ('source_entity__string', 'key'),
+                ('source_entity__context', 'context'),
+                ('string', 'translation'),
+                ('reviewed', 'reviewed'),
+                ('source_entity__pluralized', 'pluralized')
+        ]
 
         if request.GET.has_key('details'):
             fields.extend([
-                'reviewed', 'wordcount', 'last_update', 'user__username',
+                'wordcount', 'last_update', 'user__username',
                 'source_entity__position', 'source_entity__occurrences',
             ])
-            field_map.update({
-                'reviewed': 'reviewed',
-                'wordcount': 'wordcount',
-                'last_update': 'last_update',
-                'user__username': 'user',
-                'source_entity__position': 'position',
-                'source_entity__occurrences': 'occurrences',
-                'source_entity__pluralized': 'pluralized'
-            })
-
+            field_map_elems.extend([
+                ('wordcount', 'wordcount'),
+                ('last_update', 'last_update'),
+                ('user__username', 'user'),
+                ('source_entity__position', 'position'),
+                ('source_entity__occurrences', 'occurrences'),
+            ])
+        field_map = OrderedDict(field_map_elems)
         return (field_map, fields)
 
     def _get_translation_query_filters(self, request, resource,
@@ -222,7 +224,7 @@ class BaseTranslationHandler(BaseHandler):
             raise BadRequestError("Translations are not in a list!")
         return True
 
-    def _translations_as_dict(self, translations, language):
+    def _translations_as_dict(self, translations, resource, language):
         """
         Get a dictionary where source_entity id is mapped to
         translations.
@@ -230,25 +232,26 @@ class BaseTranslationHandler(BaseHandler):
         Args:
             translations: A dictionary containing translation data
                           from request.data
+            resource: A Resource instance
             language: A Language object
 
         Returns:
             A dictionary
         """
-        se_ids = []
+        query = Q()
         for translation in translations:
-            se_id = translation.get('source_entity_id')
-            if se_id:
-                se_ids.append(se_id)
+            query |= Q(source_entity__string=translation['key'],
+                    source_entity__context=translation['context'])
+        query &= Q(resource=resource, language=language)
 
         trans_obj_dict = {}
-        for t in Translation.objects.filter(
-                source_entity__id__in=se_ids, language=language
-                ).select_related('source_entity', 'user').iterator():
-            if trans_obj_dict.get(t.source_entity.id):
-                trans_obj_dict.get(t.source_entity.id).append(t)
+        for t in Translation.objects.filter(query).select_related(
+                'source_entity', 'user').iterator():
+            se = t.source_entity
+            if trans_obj_dict.get(se.string_hash):
+                trans_obj_dict.get(se.string_hash).append(t)
             else:
-                trans_obj_dict[t.source_entity.id] = [t]
+                trans_obj_dict[se.string_hash] = [t]
 
         return trans_obj_dict
 
@@ -280,7 +283,7 @@ class BaseTranslationHandler(BaseHandler):
         return True
 
     def _collect_updated_translations(self, translation, trans_obj_dict,
-            se_id, updated_translations, user, pluralized):
+            checksum, updated_translations, user, pluralized):
         """
         Collect updated translations
         Args:
@@ -288,12 +291,12 @@ class BaseTranslationHandler(BaseHandler):
                          request JSON
             trans_obj_dict: A dictionary mapping source_entity id to
                            translations
-            se_id: An integer representing source_entity id
+            checksum: An md5 checksum for a key and context
             updated_translations: A list of updated translations
             user: A User object
             pluaralized: A boolean
         """
-        for t in trans_obj_dict.get(se_id):
+        for t in trans_obj_dict.get(checksum):
             t.user = user
             if translation.has_key('reviewed'):
                 t.reviewed = translation.get('reviewed')
@@ -350,19 +353,18 @@ class BaseTranslationHandler(BaseHandler):
         Returns:
             A tuple, (dictionary, list)
         """
-        field_map = {
-                'source_entity__id': 'source_entity_id',
-                'source_entity__string': 'key',
-                'source_entity__context': 'context',
-                'string': 'translation',
-                'reviewed': 'reviewed',
-                'wordcount': 'wordcount',
-                'last_update': 'last_update',
-                'user__username': 'user',
-                'source_entity__position': 'position',
-                'source_entity__occurrences': 'occurrences',
-                'source_entity__pluralized': 'pluralized'
-        }
+        field_map = OrderedDict([
+                ('source_entity__string', 'key'),
+                ('source_entity__context', 'context'),
+                ('string', 'translation'),
+                ('reviewed', 'reviewed'),
+                ('source_entity__pluralized', 'pluralized'),
+                ('wordcount', 'wordcount'),
+                ('last_update', 'last_update'),
+                ('user__username', 'user'),
+                ('source_entity__position', 'position'),
+                ('source_entity__occurrences', 'occurrences'),
+        ])
 
         fields = []
         field_map_ = {}
@@ -485,19 +487,18 @@ class SingleTranslationHandler(BaseTranslationHandler):
         translations.
         """
 
-        field_map = {
-                'source_entity__id': 'source_entity_id',
-                'source_entity__string': 'key',
-                'source_entity__context': 'context',
-                'string': 'translation',
-                'reviewed': 'reviewed',
-                'wordcount': 'wordcount',
-                'last_update': 'last_update',
-                'user__username': 'user',
-                'source_entity__position': 'position',
-                'source_entity__occurrences': 'occurrences',
-                'source_entity__pluralized': 'pluralized'
-        }
+        field_map = OrderedDict([
+                ('source_entity__string', 'key'),
+                ('source_entity__context', 'context'),
+                ('string', 'translation'),
+                ('reviewed', 'reviewed'),
+                ('wordcount', 'wordcount'),
+                ('last_update', 'last_update'),
+                ('user__username', 'user'),
+                ('source_entity__position', 'position'),
+                ('source_entity__occurrences', 'occurrences'),
+                ('source_entity__pluralized', 'pluralized')
+        ])
 
         fields = field_map.keys()
         fields.append('rule')
@@ -598,7 +599,9 @@ class TranslationObjectsHandler(BaseTranslationHandler):
     Read and update a set of translations in
     a language for a resource.
     """
-
+    fields = (
+        'key', 'context', 'translation'
+    )
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
             pr_project_private_perm,
@@ -650,19 +653,21 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                 return rc.FORBIDDEN
 
             nplurals = language.get_pluralrules_numbers()
-            keys = ['source_entity_id', 'key', 'context', 'translation',
+            keys = ['key', 'context', 'translation',
                     'reviewed', 'wordcount', 'last_update', 'user',
                     'position', 'occurrences', 'pluralized']
 
             trans_obj_dict = self._translations_as_dict(
-                    translations, language)
+                    translations, resource, language)
 
             updated_translations = []
             se_ids = []
 
             for translation in translations:
                 try:
-                    se_id = translation.get('source_entity_id')
+                    key = translation.get('key')
+                    context = translation.get('context')
+                    checksum = hash_tag(key, context)
                     user = translation.get('user') and \
                             User.objects.get(username=translation.get(
                                 'user')) or request.user
@@ -674,7 +679,8 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                     accept_translations = resource.accept_translations
                     is_maintainer = check.maintain(resource.project)
 
-                    translation_objs = trans_obj_dict.get(se_id)
+                    translation_objs = trans_obj_dict.get(checksum)
+                    se_id = translation_objs[0].source_entity.id
 
                     kwargs = {
                         'can_review': can_review,
@@ -694,7 +700,7 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                     pluralized = is_pluralized['pluralized']
 
                     self._collect_updated_translations(
-                            translation, trans_obj_dict, se_id,
+                            translation, trans_obj_dict, checksum,
                             updated_translations, user, pluralized)
 
                 except User.DoesNotExist, e:
