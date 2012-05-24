@@ -994,10 +994,30 @@ class TestFormatsAPI(APIBaseTests):
 class UnitTestTranslationObjectsHandler(TestCase):
     def setUp(self):
         self.obj = TranslationObjectsHandler()
-    def test_fieldmap_and_fields(self):
-        request = Mock()
-        request.GET = {}
+    def test_get_fieldmap(self):
         expected_fieldmap = {
+            'source_entity__string': 'key',
+            'source_entity__context': 'context',
+            'string': 'translation',
+            'reviewed': 'reviewed',
+            'source_entity__pluralized': 'pluralized'
+        }
+        fieldmap = self.obj._get_fieldmap(False)
+        self.assertEqual(fieldmap, expected_fieldmap)
+
+        expected_fieldmap.update({
+            'wordcount': 'wordcount',
+            'last_update': 'last_update',
+            'user__username': 'user',
+            'source_entity__position': 'position',
+            'source_entity__occurrences': 'occurrences',
+        })
+
+        fieldmap = self.obj._get_fieldmap(True)
+        self.assertEqual(fieldmap, expected_fieldmap)
+
+    def test_get_fields_for_translation_value_query_set(self):
+        fieldmap = {
             'source_entity__string': 'key',
             'source_entity__context': 'context',
             'string': 'translation',
@@ -1011,12 +1031,12 @@ class UnitTestTranslationObjectsHandler(TestCase):
             'reviewed', 'source_entity__pluralized',
             'rule',
         ]
-        fieldmap, fields = self.obj._get_fieldmap_and_fields(request)
-        self.assertEqual(fieldmap, expected_fieldmap)
+        fields = self.obj._get_fields_for_translation_value_query_set(fieldmap)
+        fields.sort()
+        expected_fields.sort()
         self.assertEqual(fields, expected_fields)
 
-        request.GET['details'] = ''
-        expected_fieldmap.update({
+        fieldmap.update({
             'wordcount': 'wordcount',
             'last_update': 'last_update',
             'user__username': 'user',
@@ -1028,9 +1048,9 @@ class UnitTestTranslationObjectsHandler(TestCase):
             'wordcount', 'last_update', 'user__username',
             'source_entity__position', 'source_entity__occurrences',
         ])
-
-        fieldmap, fields = self.obj._get_fieldmap_and_fields(request)
-        self.assertEqual(fieldmap, expected_fieldmap)
+        fields = self.obj._get_fields_for_translation_value_query_set(fieldmap)
+        fields.sort()
+        expected_fields.sort()
         self.assertEqual(fields, expected_fields)
 
     def test_get_translation_query_filters(self):
@@ -1055,70 +1075,70 @@ class UnitTestTranslationObjectsHandler(TestCase):
         expected_filters['source_entity__context__icontains'] = 'bar'
         self.assertEqual(filters, expected_filters)
 
-    def test_check_json_data(self):
+    def test_validate_translations_json_data(self):
         self.assertRaises(NoContentError,
-                self.obj._check_json_data, None)
+                self.obj._validate_translations_json_data, None)
         self.assertRaises(BadRequestError,
-                self.obj._check_json_data, {'foo':'bar'})
+                self.obj._validate_translations_json_data, {'foo':'bar'})
         self.assertRaises(NoContentError,
-                self.obj._check_json_data, "")
-        self.assertTrue(self.obj._check_json_data([{}]))
+                self.obj._validate_translations_json_data, "")
+        self.assertTrue(self.obj._validate_translations_json_data([{}]))
 
-    def test_check_user_perms(self):
-        self.assertFalse(self.obj._check_user_perms(
+    def test_user_has_update_perms(self):
+        self.assertFalse(self.obj._user_has_update_perms(
                 can_submit_translations=False
             ))
         translation_objs = [Mock()]
         translation_objs[0].reviewed = False
-        self.assertFalse(self.obj._check_user_perms(
+        self.assertFalse(self.obj._user_has_update_perms(
                 can_submit_translations=True,
             ))
-        self.assertFalse(self.obj._check_user_perms(
+        self.assertFalse(self.obj._user_has_update_perms(
                 accept_translations=True,
             ))
-        self.assertFalse(self.obj._check_user_perms(
+        self.assertFalse(self.obj._user_has_update_perms(
                 is_maintainer=True,
             ))
 
-        self.assertFalse(self.obj._check_user_perms(
+        self.assertFalse(self.obj._user_has_update_perms(
                 can_submit_translations=True,
                 accept_translations=True,
             ))
 
-        self.assertTrue(self.obj._check_user_perms(
+        self.assertTrue(self.obj._user_has_update_perms(
+                translation_objs=translation_objs,
+                can_submit_translations=True,
+                accept_translations=True,
+                translation_reviewed=False
+            ))
+
+        self.assertFalse(self.obj._user_has_update_perms(
                 can_submit_translations=True,
                 accept_translations=True,
                 translation_objs=translation_objs,
-                translation={'reviewed': False}
+                translation_reviewed=True
             ))
 
-        self.assertFalse(self.obj._check_user_perms(
-                can_submit_translations=True,
-                accept_translations=True,
-                translation_objs=translation_objs,
-                translation={'reviewed': True}
-            ))
-
-        self.assertTrue(self.obj._check_user_perms(
+        self.assertTrue(self.obj._user_has_update_perms(
                 is_maintainer=True,
                 translation_objs=translation_objs,
-                translation={'reviewed': False}
+                translation_reviewed=False
             ))
 
         translation_objs[0].reviewed = True
-        self.assertFalse(self.obj._check_user_perms(
+        self.assertFalse(self.obj._user_has_update_perms(
                 can_submit_translations=True,
                 accept_translations=True,
                 translation_objs=translation_objs,
-                translation={'reviewed': False}
+                translation_reviewed=False
             )
         )
-        self.assertTrue(self.obj._check_user_perms(
+        self.assertTrue(self.obj._user_has_update_perms(
                 can_submit_translations=True,
                 accept_translations=True,
                 can_review=True,
                 translation_objs=translation_objs,
-                translation={'reviewed': True}
+                translation_reviewed=True
             )
         )
 
@@ -1157,25 +1177,25 @@ class UnitTestTranslationObjectsHandler(TestCase):
         self.assertEqual(t1.string, 'foo5')
 
     def test_is_pluralized(self):
-        translation = {'translation': {1: 'one', 5: 'other'}}
+        translation = {'key': 'foo', 'context': ''}
+        translation['translation'] =  {1: 'one', 5: 'other'}
         nplurals = [1, 5]
-        self.assertEqual(self.obj._is_pluralized(translation,
-            nplurals), {'pluralized': True, 'error':False})
-        translation = {'translation': {0: 'zero', 1: 'one', 5: 'other'}}
+        self.assertTrue(self.obj._is_pluralized(translation,nplurals))
+        translation['translation'] = {0: 'zero', 1: 'one', 5: 'other'}
         nplurals = [1, 5]
-        self.assertEqual(self.obj._is_pluralized(translation,
-            nplurals), {'pluralized': True, 'error':True})
-        translation = {'translation': {1: 'one', 5: 'other'}}
+        self.assertRaises(BadRequestError, self.obj._is_pluralized,
+                translation, nplurals)
+        translation['translation'] =  {1: 'one', 5: 'other'}
         nplurals = [0, 1, 5]
-        self.assertEqual(self.obj._is_pluralized(translation,
-            nplurals), {'pluralized': True, 'error':True})
-        translation = {'translation': '   '}
+        self.assertRaises(BadRequestError, self.obj._is_pluralized,
+                translation, nplurals)
+        translation['translation'] = '   '
         nplurals = [1, 5]
-        self.assertEqual(self.obj._is_pluralized(translation,
-            nplurals), {'pluralized': False, 'error':True})
-        translation = {'translation': 'foo'}
-        self.assertEqual(self.obj._is_pluralized(translation,
-            nplurals), {'pluralized': False, 'error':False})
+        self.assertFalse(self.obj._is_pluralized(translation,
+            nplurals))
+        translation['translation'] = 'foo'
+        self.assertFalse(self.obj._is_pluralized(translation,
+            nplurals))
 
     def test_get_update_fieldmap_and_fields(self):
         keys = ['source_entity_id', 'key', 'context', 'user',
@@ -1197,30 +1217,29 @@ class UnitTestTranslationObjectsHandler(TestCase):
 
 
 class SystemTestTranslationStrings(BaseTestCase):
-    def test_get_objects_from_read_request_params(self):
+    def test_get_objects_from_request_params(self):
         obj = TranslationObjectsHandler()
         self.assertRaises(NotFoundError,
-                obj._get_objects_from_read_request_params,
+                obj._get_objects_from_request_params,
                 'foo', 'resource1', 'foo')
         self.assertRaises(NotFoundError,
-                obj._get_objects_from_read_request_params,
+                obj._get_objects_from_request_params,
                 'project1', 'foo', 'foo')
         self.assertRaises(NotFoundError,
-                obj._get_objects_from_read_request_params,
+                obj._get_objects_from_request_params,
                 'project1', 'resource1', 'foo')
         self.assertEqual(
-                obj._get_objects_from_read_request_params(
+                obj._get_objects_from_request_params(
                     'project1', 'resource1', 'ar'),
                 (self.project, self.resource, self.language_ar))
 
-    def test_get_objects_from_update_request_params(self):
+    def test_validate_language_is_not_source_language(self):
         obj = TranslationObjectsHandler()
-        value = obj._get_objects_from_update_request_params(
-                'project1', 'resource1', 'ar')
-        self.assertEqual(value, (self.project, self.resource, self.language_ar))
+        value = obj._validate_language_is_not_source_language(
+                self.project.source_language, self.language)
         self.assertRaises(ForbiddenError,
-                obj._get_objects_from_update_request_params,
-                'project1', 'resource1', 'en_US')
+                obj._validate_language_is_not_source_language,
+                self.project.source_language, self.language_en)
 
     def test_read_translations(self):
         response = self.client['team_member'].get(reverse(
@@ -1381,7 +1400,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
         self = create_sample_translations(self)
 
     def test_single_translation_handler(self):
-        #read
+        # read
         string_hash = self.source_entity1.string_hash
         response = self.client['team_member'].get(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
@@ -1392,7 +1411,7 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
         self.assertEqual(json['translation'], self.source_entity1.translations.\
                 get(language=self.language_ar).string)
 
-        #update
+        # update
         json['translation'] = 'Hello world'
         response = self.client['team_member'].put(reverse('translation_string',
             args=[self.project.slug, self.resource.slug, self.language_ar.code,
