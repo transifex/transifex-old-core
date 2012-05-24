@@ -295,7 +295,8 @@ class BaseTranslationHandler(BaseHandler):
             raise BadRequestError("Translations are not in a list!")
         return True
 
-    def _translations_as_dict(self, translations, resource, language):
+    def _translations_as_dict(self, translations, resource, language,
+            string_hash=None):
         """
         Get a dictionary where source_entity id is mapped to
         translations.
@@ -311,8 +312,12 @@ class BaseTranslationHandler(BaseHandler):
         """
         query = Q()
         for translation in translations:
-            query |= Q(source_entity__string=translation['key'],
-                    source_entity__context=translation['context'])
+            if translation.has_key('string_hash'):
+                query |= Q(source_entity__string_hash=translation[
+                    'string_hash'])
+            else:
+                query |= Q(source_entity__string=translation['key'],
+                        source_entity__context=translation['context'])
         query &= Q(resource=resource, language=language)
 
         trans_obj_dict = {}
@@ -488,94 +493,89 @@ class BaseTranslationHandler(BaseHandler):
             user = request_user
         return user
 
-
-class SingleTranslationHandler(BaseTranslationHandler):
-    """Read and update a single translation"""
-
-    def _validate_user_can_update_translation(self, project, resource,
-            language, user, translations, translation_data,
-            update_fields):
-        """Check if user can update translations. This method
-        also adds some data to update_fields.
-
-        We use the following criteria for this:
-            - request_user must be a project maintainer or
-                team coordinator.
-            - user must be a maintainer or a translator. If he is
-                a translator, then resource must accept translations.
-            - If the translations to be updated are reviewed, then
-                user must have necessary permissions to review the
-                translations in order to update them
+    def _get_user_perms(self, user, project, resource, language,
+            team, checksum, is_maintainer):
+        """
+        Get permissions for a user.
 
         Args:
+            user: A User instance
             project: A Project instance
             resource: A Resource instance
             language: A Language instance
-            user: A User instance
-            translations: A Translation queryset
-            translation_data: A dictionary (request.data),
-            update_fields: A dictionary containing fields to be
-                    updated in the translations.
+            team: A Team instance
+            checksum: An md5 checksum representing a source entity
+            is_maintiner: A boolean
+        Returns:
+            A dictionary containing various user permissions
         """
-        team = Team.objects.get_or_none(project, language.code)
         check = ProjectPermission(user)
-        if (not check.submit_translations(team or project) or\
-            not resource.accept_translations) and not\
-                check.maintain(project):
-            raise ForbiddenError("User '%s' is forbidden to update this "\
-                    "translation for resource '%s.%s' in language '%s'."\
-                    % (user.username, project.slug,
-                        resource.slug, language.code))
-
-        reviewed = translations[0].reviewed
         can_review = check.proofread(project, language)
-        if (reviewed or translation_data.get('reviewed') != reviewed)\
-                and not can_review:
-            raise ForbiddenError("User '%s' cannot update this reviewed "\
-                    "translation." % user.username)
-        if isinstance(translation_data.get('reviewed'), bool):
-            update_fields['reviewed'] = translation_data.get('reviewed')
-        update_fields['user'] = user
+        can_submit_translations = check.submit_translations(
+                team or resource.project)
+        accept_translations = resource.accept_translations
 
-    @transaction.commit_on_success
-    def _update_translations_for_a_source_entity(self, source_entity,
-            language, translations, translation_strings, update_fields):
-        """Updates translations and returns a queryset for updated
-        translations
+        return {
+            'can_review': can_review,
+            'can_submit_translations': can_submit_translations,
+            'accept_translations': accept_translations,
+            'is_maintainer': check.maintain(project),
+        }
+
+    def _process_translation_dict(self, translation, project, resource,
+            language, team, check, is_maintainer, request_user, se_ids,
+            updated_translations, trans_obj_dict):
+        """
+        Process a translation dictionary in the JSON request and update
+        se_ids and updated_translations lists.
 
         Args:
-            source_entity: A SourceEntity instance
+            translation: A dictionary representing a translation(group)
+                in requested JSON
+            project: A Project instance
+            resource: A Resource instance
             language: A Language instance
-            translations: A Translation queryset for the
-                translations to be updated.
-            translation_strings: A string if source_entity
-                is not pluralized, else a dictionary mapping
-                translation string to a plural rule.
-            update_fields: A dictionary containing translation
-                attributes to be updated.
-
-        Returns:
-            A queryset of Translation containing translations
-            that have been updated.
+            team: A Team instance
+            check: A ProjectPermission instance for user
+            request_user: A User instance issuing this request
+            se_ids: A list containing all the SourceEntity ids whose
+                translations have been updated.
+            updated_translations: A list containing updated Translation
+                instances.
+            trans_obj_dict: A dictionary mapping source_entity.string_hash
+                to a list of Translation objects.
         """
-
-        if not source_entity.pluralized:
-            update_fields['string']=translation_strings
-            translations.filter(rule=5).update(**update_fields)
+        if translation.has_key('string_hash'):
+            checksum = translation['string_hash']
         else:
-            nplurals = language.get_pluralrules_numbers()
-            for rule in translation_strings.keys():
-                if not translation_strings.get(rule, '').strip():
-                    translation_strings.pop(rule)
-            plural_forms = translation_strings.keys()
-            plural_forms = [int(r) for r in plural_forms]
-            plural_forms.sort()
-            if nplurals != plural_forms:
-                raise BadRequestError("Invalid plural forms in translation.")
-            for rule in translation_strings.keys():
-                update_fields['string'] = translation_strings[rule]
-                translations.filter(rule=rule).update(**update_fields)
-        return translations
+            key = translation.get('key')
+            context = translation.get('context')
+            checksum = hash_tag(key, context)
+        translation_objs = trans_obj_dict.get(checksum)
+        se = translation_objs[0].source_entity
+        se_id = se.id
+        nplurals = language.get_pluralrules_numbers()
+        user = self._get_user_to_update_translation(project,
+                check, request_user, translation.get('user'),
+                is_maintainer)
+        user_perms = self._get_user_perms(user, project, resource,
+                language, team, checksum, is_maintainer)
+        if not self._user_has_update_perms(translation_objs=translation_objs,
+                translation_reviewed=translation.get('reviewed'),
+                **user_perms):
+            raise ForbiddenError("User '%(user)s' is not allowed to "
+                    "update translation for '%(se)s' in language "
+                    "'%(lang_code)s'." % {'user': user, 'se': se,
+                    'lang_code': language.code})
+        pluralized = self._is_pluralized(translation, nplurals)
+        self._collect_updated_translations(
+                translation, trans_obj_dict, checksum,
+                updated_translations, user, pluralized)
+        se_ids.append(se_id)
+
+
+class SingleTranslationHandler(BaseTranslationHandler):
+    """Read and update a single translation"""
 
     def _get_fieldmap(self):
         """
@@ -659,31 +659,32 @@ class SingleTranslationHandler(BaseTranslationHandler):
                         string_hash=source_hash, resource=resource)
             except SourceEntity.DoesNotExist, e:
                 return rc.NOT_FOUND
+            team = Team.objects.get_or_none(project, language.code)
             data = request.data
+            # This is a hack to use the methods for TranslationObjectsHandler
+            data['string_hash'] = source_hash
             check = ProjectPermission(request.user)
+            is_maintainer = check.maintain(project)
             user = self._get_user_to_update_translation(project, check,
                     request.user, data.get('user'))
+            trans_obj_dict = self._translations_as_dict(
+                    [data], resource, language)
+            if not trans_obj_dict:
+                return rc.NOT_FOUND
+            updated_translations = []
+            se_ids = []
+            self._process_translation_dict(data, project, resource,
+                    language, team, check, is_maintainer, request.user,
+                    se_ids, updated_translations, trans_obj_dict)
+            self._update_translations(updated_translations)
 
             translations = Translation.objects.filter(
                     source_entity=source_entity, language=language)
-            if not translations:
-                return rc.NOT_FOUND
-            # A dictionary of translation attributes to be updated
-            update_fields = {}
-            # Validate if user can update a translation
-            self._validate_user_can_update_translation(project, resource,
-                    language, user, translations, data, update_fields)
-            # Get translations from request.data
-            translation_strings = data.get('translation')
-            # Update translations and get a queryset for updated translations
-            translations = self._update_translations_for_a_source_entity(
-                    source_entity, language, translations,
-                    translation_strings, update_fields)
             field_map = self._get_fieldmap()
             fields = self._get_fields_for_translation_value_query_set(field_map)
             return self._generate_translations_dict(
-                    translations.values(*fields),
-                    field_map, True)
+                    Translation.objects.filter( source_entity__id__in=se_ids,
+                        language=language).values(*fields), field_map, True)
         except NotFoundError, e:
             return NOT_FOUND_REQUEST(unicode(e))
         except NoContentError, e:
@@ -698,83 +699,6 @@ class TranslationObjectsHandler(BaseTranslationHandler):
     """
     Read and update a set of translations in a language for a resource.
     """
-
-    def _get_user_perms(self, user, project, resource, language,
-            team, checksum, is_maintainer):
-        """
-        Get permissions for a user.
-
-        Args:
-            user: A User instance
-            project: A Project instance
-            resource: A Resource instance
-            language: A Language instance
-            team: A Team instance
-            checksum: An md5 checksum representing a source entity
-            is_maintiner: A boolean
-        Returns:
-            A dictionary containing various user permissions
-        """
-        check = ProjectPermission(user)
-        can_review = check.proofread(project, language)
-        can_submit_translations = check.submit_translations(
-                team or resource.project)
-        accept_translations = resource.accept_translations
-
-        return {
-            'can_review': can_review,
-            'can_submit_translations': can_submit_translations,
-            'accept_translations': accept_translations,
-            'is_maintainer': is_maintainer,
-        }
-
-    def _process_translation_dict(self, translation, project, resource,
-            language, team, check, is_maintainer, request_user, se_ids,
-            updated_translations, trans_obj_dict):
-        """
-        Process a translation dictionary in the JSON request and update
-        se_ids and updated_translations lists.
-
-        Args:
-            translation: A dictionary representing a translation(group)
-                in requested JSON
-            project: A Project instance
-            resource: A Resource instance
-            language: A Language instance
-            team: A Team instance
-            check: A ProjectPermission instance for user
-            request_user: A User instance issuing this request
-            se_ids: A list containing all the SourceEntity ids whose
-                translations have been updated.
-            updated_translations: A list containing updated Translation
-                instances.
-            trans_obj_dict: A dictionary mapping source_entity.string_hash
-                to a list of Translation objects.
-        """
-        key = translation.get('key')
-        context = translation.get('context')
-        checksum = hash_tag(key, context)
-        translation_objs = trans_obj_dict.get(checksum)
-        se = translation_objs[0].source_entity
-        se_id = se.id
-        nplurals = language.get_pluralrules_numbers()
-        user = self._get_user_to_update_translation(project,
-                check, request_user, translation.get('user'),
-                is_maintainer)
-        user_perms = self._get_user_perms(user, project, resource,
-                language, team, checksum, is_maintainer)
-        if not self._user_has_update_perms(translation_objs=translation_objs,
-                translation_reviewed=translation.get('reviewed'),
-                **user_perms):
-            raise ForbiddenError("User '%(user)s' is not allowed to "
-                    "update translation for '%(se)s' in language "
-                    "'%(lang_code)s'." % {'user': user, 'se': se,
-                    'lang_code': language.code})
-        pluralized = self._is_pluralized(translation, nplurals)
-        self._collect_updated_translations(
-                translation, trans_obj_dict, checksum,
-                updated_translations, user, pluralized)
-        se_ids.append(se_id)
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
@@ -833,13 +757,11 @@ class TranslationObjectsHandler(BaseTranslationHandler):
             self._validate_translations_json_data(translations)
             team = Team.objects.get_or_none(project, language.code)
 
-            is_maintainer = False
             check = ProjectPermission(request.user)
             # User must be a member of the project
-            if check.maintain(project):
-                is_maintainer = True
-            elif not (check.submit_translations(team or project) or
-                    check.proofread(project, language)):
+            is_maintainer = check.maintain(project)
+            if not is_maintainer and  not (check.submit_translations(
+                team or project) or check.proofread(project, language)):
                 return FORBIDDEN_REQUEST(
                         "You are not allowed to update translations.")
             keys = ['key', 'context', 'translation',
