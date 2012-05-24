@@ -358,7 +358,7 @@ class BaseTranslationHandler(BaseHandler):
     def _collect_updated_translations(self, translation, trans_obj_dict,
             checksum, updated_translations, user, pluralized):
         """
-        Collect updated translations
+        Collect only updated translations
         Args:
             translation: A dictionary representing a translation(s) in
                          request JSON
@@ -369,16 +369,25 @@ class BaseTranslationHandler(BaseHandler):
             user: A User object
             pluaralized: A boolean
         """
+        translations = []
+        updated = False
         for t in trans_obj_dict.get(checksum):
             t.user = user
             if translation.has_key('reviewed'):
-                t.reviewed = translation.get('reviewed')
+                reviewed = translation.get('reviewed')
+                if t.reviewed != reviewed:
+                    updated = True
+                    t.reviewed = reviewed
             if pluralized:
-                t.string = translation['translation'].get(str(t.rule))
+                new_translation = translation['translation'].get(str(t.rule))
             else:
-                t.string = translation['translation']
-
-            updated_translations.append(t)
+                new_translation = translation['translation']
+            if new_translation and t.string != new_translation:
+                updated = True
+                t.string = new_translation
+            translations.append(t)
+            if updated:
+                updated_translations.extend(translations)
 
     def _is_pluralized(self, translation, nplurals):
         """
