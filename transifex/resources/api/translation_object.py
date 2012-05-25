@@ -64,6 +64,7 @@ class BaseTranslationHandler(BaseHandler):
                 if append:
                     trans_dict[field_map[key]] = translation['wordcount']
                 else:
+                    # Aggregated wordcount for pluralized translations
                     trans_dict[field_map[key]] += translation['wordcount']
             else:
                 trans_dict[field_map[key]] = translation[key]
@@ -377,7 +378,6 @@ class BaseTranslationHandler(BaseHandler):
         translations = []
         updated = False
         for t in trans_obj_dict.get(checksum):
-            t.user = user
             if translation.has_key('reviewed'):
                 reviewed = translation.get('reviewed')
                 if t.reviewed != reviewed:
@@ -390,6 +390,9 @@ class BaseTranslationHandler(BaseHandler):
             if new_translation and t.string != new_translation:
                 updated = True
                 t.string = new_translation
+                # Update author info for a translation only when the
+                # translation strings is updated
+                t.user = user
             translations.append(t)
             if updated:
                 updated_translations.extend(translations)
@@ -558,8 +561,12 @@ class BaseTranslationHandler(BaseHandler):
         user = self._get_user_to_update_translation(project,
                 check, request_user, translation.get('user'),
                 is_maintainer)
+        # Get user permissions for the project
         user_perms = self._get_user_perms(user, project, resource,
                 language, team, checksum, is_maintainer)
+        # Check if user is allowed to updated the translation. This also takes
+        # into account if a user is allowed to review a translation or modify
+        # a reviewed translation.
         if not self._user_has_update_perms(translation_objs=translation_objs,
                 translation_reviewed=translation.get('reviewed'),
                 **user_perms):
@@ -567,6 +574,10 @@ class BaseTranslationHandler(BaseHandler):
                     "update translation for '%(se)s' in language "
                     "'%(lang_code)s'." % {'user': user, 'se': se,
                     'lang_code': language.code})
+        # Validate if a translation group is properly pluralized or
+        # not. In case of improper plural forms, it raises an error.
+        # Else, it returns True if translation group is pluralized,
+        # otherwise False.
         pluralized = self._is_pluralized(translation, nplurals)
         self._collect_updated_translations(
                 translation, trans_obj_dict, checksum,
@@ -652,6 +663,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
             project, resource, language = \
                     self._get_objects_from_request_params(project_slug,
                     resource_slug, language_code)
+            # A translation in source language cannot be updated
             self._validate_language_is_not_source_language(
                     project.source_language, language)
             try:
@@ -661,21 +673,28 @@ class SingleTranslationHandler(BaseTranslationHandler):
                 return rc.NOT_FOUND
             team = Team.objects.get_or_none(project, language.code)
             data = request.data
-            # This is a hack to use the methods for TranslationObjectsHandler
+            # This is a hack to use the methods from TranslationObjectsHandler
             data['string_hash'] = source_hash
             check = ProjectPermission(request.user)
             is_maintainer = check.maintain(project)
-            user = self._get_user_to_update_translation(project, check,
-                    request.user, data.get('user'))
+            # Allow only project members to issue this update request
+            if not is_maintainer and  not (check.submit_translations(
+                team or project) or check.proofread(project, language)):
+                return FORBIDDEN_REQUEST(
+                        "You are not allowed to update translations.")
             trans_obj_dict = self._translations_as_dict(
                     [data], resource, language)
             if not trans_obj_dict:
                 return rc.NOT_FOUND
             updated_translations = []
             se_ids = []
+            # All permission checks for a user is done here and
+            # updated translations are collected in updated_tranlsations
+            # and source_entity.id in se_ids
             self._process_translation_dict(data, project, resource,
                     language, team, check, is_maintainer, request.user,
                     se_ids, updated_translations, trans_obj_dict)
+            # Updated translations are saved to db
             self._update_translations(updated_translations)
 
             translations = Translation.objects.filter(
@@ -760,13 +779,11 @@ class TranslationObjectsHandler(BaseTranslationHandler):
             check = ProjectPermission(request.user)
             # User must be a member of the project
             is_maintainer = check.maintain(project)
+            # Allow only project members to issue this update request
             if not is_maintainer and  not (check.submit_translations(
                 team or project) or check.proofread(project, language)):
                 return FORBIDDEN_REQUEST(
                         "You are not allowed to update translations.")
-            keys = ['key', 'context', 'translation',
-                    'reviewed', 'pluralized', 'wordcount',
-                    'last_update', 'user', 'position', 'occurrences',]
 
             trans_obj_dict = self._translations_as_dict(
                     translations, resource, language)
@@ -774,11 +791,18 @@ class TranslationObjectsHandler(BaseTranslationHandler):
             updated_translations = []
             se_ids = []
             for translation in translations:
+                # All permission checks for a user is done here and
+                # updated translations are collected in updated_tranlsations
+                # and source_entity.id in se_ids
                 self._process_translation_dict(translation, project, resource,
                         language, team, check, is_maintainer, request.user,
                         se_ids, updated_translations, trans_obj_dict)
 
             self._update_translations(updated_translations)
+
+            keys = ['key', 'context', 'translation',
+                    'reviewed', 'pluralized', 'wordcount',
+                    'last_update', 'user', 'position', 'occurrences',]
             field_map, fields = self._get_update_fieldmap_and_fields(keys)
 
             return self._generate_translations_dict(
