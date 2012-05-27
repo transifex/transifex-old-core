@@ -27,17 +27,6 @@ class LotteTemplateTests(BaseTestCase):
         resp = self.client['team_member'].get(self.translate_view_url)
         self.assertContains(resp, 'Translate')
 
-    def test_search_translation_link(self):
-        """Test that search translation link exists and points to search page."""
-
-        # Test the response contents
-        resp = self.client['team_member'].get(self.translate_view_url)
-        self.assertTemplateUsed(resp, 'translate.html')
-        self.assertContains(resp, 'Search translations', status_code=200)
-        self.assertContains(resp,
-            'Search in Transifex memory for existing translations (uses a new tab/window)')
-        self.assertContains(resp, reverse('search_translations'))
-
     def test_filters(self):
         """Test that more languages, filter by users, resources appear."""
 
