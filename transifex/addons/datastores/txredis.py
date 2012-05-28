@@ -26,11 +26,13 @@ def redis_exception_handler(func):
 class TxRedis(object):
     """Wrapper class around redis for Transifex."""
 
-    def __init__(self, host=None, port=None, db=0):
+    def __init__(self, host=None, port=None, db=None):
         if host is None:
             host = settings.REDIS_HOST
         if port is None:
             port = settings.REDIS_PORT
+        if db is None:
+            db = settings.REDIS_DATABASE
         self._r = StrictRedis(host=host, port=port, db=db)
 
     def __getattr__(self, name):
