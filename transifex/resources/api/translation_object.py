@@ -629,17 +629,9 @@ class SingleTranslationHandler(BaseTranslationHandler):
 
         field_map = self._get_fieldmap()
         fields = self._get_fields_for_translation_value_query_set(field_map)
-        try:
-            return self._generate_translations_dict(translations.values(
-                    *fields), field_map, True)
-        except NotFoundError, e:
-            return NOT_FOUND_REQUEST(unicode(e))
-        except NoContentError, e:
-            return BAD_REQUEST(unicode(e))
-        except ForbiddenError, e:
-            return FORBIDDEN_REQUEST(unicode(e))
-        except BadRequestError, e:
-            return BAD_REQUEST(unicode(e))
+        return self._generate_translations_dict(
+            translations.values(*fields), field_map, True
+        )
 
     @require_mime('json')
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
@@ -726,26 +718,19 @@ class TranslationObjectsHandler(BaseTranslationHandler):
         to show detailed info about the translations.
         """
         try:
-            project, resource, language = \
-                    self._requested_objects(
-                    project_slug, resource_slug, language_code)
-
-            field_map =  self._get_fieldmap(request.GET.has_key('details'))
-            fields = self._get_fields_for_translation_value_query_set(
-                    field_map)
-            filters = self._get_translation_query_filters(request,
-                    resource, language)
-            translations = Translation.objects.filter(**filters
-                    ).values(*fields)
-            return self._generate_translations_dict(translations, field_map)
+            project, resource, language = self._requested_objects(
+                    project_slug, resource_slug, language_code
+            )
         except NotFoundError, e:
             return NOT_FOUND_REQUEST(unicode(e))
-        except NoContentError, e:
-            return BAD_REQUEST(unicode(e))
-        except ForbiddenError, e:
-            return FORBIDDEN_REQUEST(unicode(e))
-        except BadRequestError, e:
-            return BAD_REQUEST(unicode(e))
+
+        field_map =  self._get_fieldmap(request.GET.has_key('details'))
+        fields = self._get_fields_for_translation_value_query_set(field_map)
+        filters = self._get_translation_query_filters(
+            request, resource, language
+        )
+        translations = Translation.objects.filter(**filters).values(*fields)
+        return self._generate_translations_dict(translations, field_map)
 
     @require_mime('json')
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
