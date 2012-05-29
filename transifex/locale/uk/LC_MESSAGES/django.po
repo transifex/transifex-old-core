@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 13:30+0000\n"
+"POT-Creation-Date: 2012-05-29 16:04+0000\n"
 "PO-Revision-Date: 2012-05-15 16:05+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
@@ -26,26 +26,26 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Знайдіть користувача або не заповнюйте"
 
-#: actionlog/models.py:161 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:162 actionlog/templates/object_action_list.html:7
 #: addons/copyright/models.py:80 addons/suggestions/models.py:45
 #: addons/suggestions/models.py:111 projects/models.py:376 teams/models.py:132
 #: teams/models.py:168 txpermissions/forms.py:18
 msgid "User"
 msgstr "Користувач"
 
-#: actionlog/models.py:170
+#: actionlog/models.py:171
 msgid "Action type"
 msgstr "Тип дії"
 
-#: actionlog/models.py:171
+#: actionlog/models.py:172
 msgid "Action time"
 msgstr "Час дії"
 
-#: actionlog/models.py:179
+#: actionlog/models.py:180
 msgid "log entry"
 msgstr "запис журналу"
 
-#: actionlog/models.py:180
+#: actionlog/models.py:181
 msgid "log entries"
 msgstr "записи журналу"
 
@@ -413,28 +413,6 @@ msgstr "Проект, якого стосуються ці налаштуван�
 #: addons/helptext/templates/extended_helptext.html:9
 msgid "...more"
 msgstr "…більше"
-
-#: addons/jsonmap/models.py:20
-msgid "Slug for the mapping. Usually the same as the old component slug."
-msgstr ""
-"Початок для створення відповідності. Зазвичай, той самий, що і для старого "
-"компонента."
-
-#: addons/jsonmap/models.py:23
-msgid "Mapping in JSON format."
-msgstr "Правила відповідності у форматі JSON."
-
-#: addons/jsonmap/models.py:29
-msgid "Project to which the JSON mapping belongs."
-msgstr "Проект, якого стосуються правила відповідності JSON."
-
-#: addons/jsonmap/models.py:39
-msgid "JSONMap"
-msgstr "JSONMap"
-
-#: addons/jsonmap/models.py:40
-msgid "JSONMaps"
-msgstr "JSONMaps"
 
 #: addons/locks/handlers.py:59
 msgid "This translation is locked by someone else."
@@ -937,13 +915,11 @@ msgstr "Загалом"
 
 #: addons/lotte/templates/translate.html:943
 #: addons/lotte/templates/view_strings.html:224
-#: addons/trans_memory/templates/search_translation.html:52
 msgid "Source string"
 msgstr "Рядок джерела"
 
 #: addons/lotte/templates/translate.html:944
 #: addons/lotte/templates/view_strings.html:225
-#: addons/trans_memory/templates/search_translation.html:53
 msgid "Translation"
 msgstr "Переклад"
 
@@ -1211,50 +1187,6 @@ msgstr "Профіль"
 #, python-format
 msgid "%(project_name)s Timeline"
 msgstr "Розклад %(project_name)s"
-
-#: addons/trans_memory/templates/search_translation.html:14
-#: addons/trans_memory/templates/search_translation.html:20
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid "Search translations"
-msgstr "Пошук перекладів"
-
-#: addons/trans_memory/templates/search_translation.html:41
-#, python-format
-msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr "%(source_language)s &rarr; %(translation_language)s"
-
-#: addons/trans_memory/templates/search_translation.html:61
-msgid "Location:"
-msgstr "Розташування:"
-
-#: addons/trans_memory/templates/search_translation.html:73
-msgid "Tough luck! No translations obtained."
-msgstr "Не щастить! Не отримано жодного перекладу."
-
-#: addons/trans_memory/templates/search_translation_form.html:7
-msgid "Search for a string:"
-msgstr "Шукати рядок:"
-
-#: addons/trans_memory/templates/search_translation_form.html:11
-msgid "From:"
-msgstr "Від:"
-
-#: addons/trans_memory/templates/search_translation_form.html:13
-msgid "To:"
-msgstr "До:"
-
-#: addons/trans_memory/templates/search_translation_form.html:38
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6
-msgid "Search"
-msgstr "Пошук:"
-
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid ""
-"Search in Transifex memory for existing translations (uses a new tab/window)"
-msgstr ""
-"Шукати у пам’яті Transifex існуючі переклади (результати у новій вкладці або "
-"вікні)"
 
 #: addons/txapps/models.py:40 projects/models.py:161 releases/models.py:31
 #: resources/models.py:141 templates/helptext/project_form_helptext.html:5
@@ -2078,16 +2010,6 @@ msgstr "сповіщення щодо випуску"
 msgid "The release '%s' was deleted."
 msgstr "Випуск «%s» було вилучено."
 
-#: resources/api.py:1201
-#, python-format
-msgid "%i strings added"
-msgstr "Додано %i рядків"
-
-#: resources/api.py:1203
-#, python-format
-msgid "%i strings updated"
-msgstr "Оновлено %i рядків"
-
 #: resources/backends.py:83
 #, python-format
 msgid "Error creating resource: %s"
@@ -2476,6 +2398,16 @@ msgstr "Не можна заблокувати! (Вже заблоковано %
 #: resources/views.py:589
 msgid "You are not allowed to upload a translation."
 msgstr "Ви не маєте права вивантажувати переклади."
+
+#: resources/api/__init__.py:682
+#, python-format
+msgid "%i strings added"
+msgstr "Додано %i рядків"
+
+#: resources/api/__init__.py:684
+#, python-format
+msgid "%i strings updated"
+msgstr "Оновлено %i рядків"
 
 #: resources/formats/core.py:239
 #, python-format
@@ -3024,6 +2956,11 @@ msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 "Також ви можете пройтись по <a href=\"%(project_list)s\">усім проектам</a>."
+
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6
+msgid "Search"
+msgstr "Пошук:"
 
 #: templates/search.html:9
 msgid "Results"
@@ -6064,3 +6001,48 @@ msgstr "Ви вилучили права доступу."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Ви вилучити запит щодо прав доступу."
+
+#~ msgid "Slug for the mapping. Usually the same as the old component slug."
+#~ msgstr ""
+#~ "Початок для створення відповідності. Зазвичай, той самий, що і для "
+#~ "старого компонента."
+
+#~ msgid "Mapping in JSON format."
+#~ msgstr "Правила відповідності у форматі JSON."
+
+#~ msgid "Project to which the JSON mapping belongs."
+#~ msgstr "Проект, якого стосуються правила відповідності JSON."
+
+#~ msgid "JSONMap"
+#~ msgstr "JSONMap"
+
+#~ msgid "JSONMaps"
+#~ msgstr "JSONMaps"
+
+#~ msgid "Search translations"
+#~ msgstr "Пошук перекладів"
+
+#~ msgid "%(source_language)s &rarr; %(translation_language)s"
+#~ msgstr "%(source_language)s &rarr; %(translation_language)s"
+
+#~ msgid "Location:"
+#~ msgstr "Розташування:"
+
+#~ msgid "Tough luck! No translations obtained."
+#~ msgstr "Не щастить! Не отримано жодного перекладу."
+
+#~ msgid "Search for a string:"
+#~ msgstr "Шукати рядок:"
+
+#~ msgid "From:"
+#~ msgstr "Від:"
+
+#~ msgid "To:"
+#~ msgstr "До:"
+
+#~ msgid ""
+#~ "Search in Transifex memory for existing translations (uses a new tab/"
+#~ "window)"
+#~ msgstr ""
+#~ "Шукати у пам’яті Transifex існуючі переклади (результати у новій вкладці "
+#~ "або вікні)"

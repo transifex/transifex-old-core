@@ -13,15 +13,16 @@
 # Paul Kaganer <paul.kaganer@gmail.com>, 2012.
 # Pavel Maryanov <acid@jack.kiev.ua>, 2011.
 # sytkov <sytkov@gmail.com>, 2011.
+#   <tret2003@gmail.com>, 2012.
 # Yuri Kozlov <yuray@komyakino.ru>, 2011.
 # Александр Ю <dobs@bk.ru>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 13:25+0000\n"
-"PO-Revision-Date: 2012-05-15 15:43+0000\n"
-"Last-Translator: Ilias-Dimitrios Vrachnis <vid@transifex.com>\n"
+"POT-Creation-Date: 2012-05-29 15:58+0000\n"
+"PO-Revision-Date: 2012-05-28 07:09+0000\n"
+"Last-Translator: Vyacheslav Tretyakov <tret2003@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.net/projects/p/transifex/"
 "language/ru/)\n"
 "Language: ru\n"
@@ -35,26 +36,26 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Ищите по имени пользователя или оставьте это поле пустым"
 
-#: actionlog/models.py:161 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:162 actionlog/templates/object_action_list.html:7
 #: addons/copyright/models.py:80 addons/suggestions/models.py:45
 #: addons/suggestions/models.py:111 projects/models.py:376 teams/models.py:132
 #: teams/models.py:168 txpermissions/forms.py:18
 msgid "User"
 msgstr "Пользователь"
 
-#: actionlog/models.py:170
+#: actionlog/models.py:171
 msgid "Action type"
 msgstr "Тип действия"
 
-#: actionlog/models.py:171
+#: actionlog/models.py:172
 msgid "Action time"
 msgstr "Время выполнение"
 
-#: actionlog/models.py:179
+#: actionlog/models.py:180
 msgid "log entry"
 msgstr "запись журнала"
 
-#: actionlog/models.py:180
+#: actionlog/models.py:181
 msgid "log entries"
 msgstr "записи журнала"
 
@@ -369,6 +370,9 @@ msgid ""
 "Leave it blank, if you do not want to have the feature enabled. You will "
 "have to insert your API key for the service, too."
 msgstr ""
+"Выберите тип службы, который вы хотите использовать для авто перевода. "
+"Оставьте это поле пустым, если вы не хотите активировать эту функцию. Вам "
+"так же будет необходимо будет вставить ввести API для службы."
 
 #: addons/gtranslate/handlers.py:49
 msgid "Auto Translate API Key"
@@ -419,26 +423,6 @@ msgstr "Проект, в рамках которого применяется э
 #: addons/helptext/templates/extended_helptext.html:9
 msgid "...more"
 msgstr "...подробнее"
-
-#: addons/jsonmap/models.py:20
-msgid "Slug for the mapping. Usually the same as the old component slug."
-msgstr "Фрагмент для сопоставления. Обычно такой же, как и старый компонент."
-
-#: addons/jsonmap/models.py:23
-msgid "Mapping in JSON format."
-msgstr "Отображение в формате JSON."
-
-#: addons/jsonmap/models.py:29
-msgid "Project to which the JSON mapping belongs."
-msgstr "Проект, которому принадлежит отображение JSON."
-
-#: addons/jsonmap/models.py:39
-msgid "JSONMap"
-msgstr "Отображение JSON"
-
-#: addons/jsonmap/models.py:40
-msgid "JSONMaps"
-msgstr "Отображения JSON"
 
 #: addons/locks/handlers.py:59
 msgid "This translation is locked by someone else."
@@ -944,13 +928,11 @@ msgstr "Всего"
 
 #: addons/lotte/templates/translate.html:943
 #: addons/lotte/templates/view_strings.html:224
-#: addons/trans_memory/templates/search_translation.html:52
 msgid "Source string"
 msgstr "Исходная строка"
 
 #: addons/lotte/templates/translate.html:944
 #: addons/lotte/templates/view_strings.html:225
-#: addons/trans_memory/templates/search_translation.html:53
 msgid "Translation"
 msgstr "Перевод"
 
@@ -985,11 +967,11 @@ msgstr "Автосохранение"
 
 #: addons/lotte/templates/translate.html:981
 msgid "Enable shortcuts"
-msgstr ""
+msgstr "Задействовать сочетание клавиш"
 
 #: addons/lotte/templates/translate.html:985
 msgid "Enable suggestions auto-open"
-msgstr ""
+msgstr "Задействовать авто-открытие предложений"
 
 #: addons/lotte/templates/view_strings.html:49
 msgid "Search:"
@@ -1213,48 +1195,6 @@ msgstr "Профиль"
 msgid "%(project_name)s Timeline"
 msgstr "Хронология %(project_name)s "
 
-#: addons/trans_memory/templates/search_translation.html:14
-#: addons/trans_memory/templates/search_translation.html:20
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid "Search translations"
-msgstr "Поиск переводов"
-
-#: addons/trans_memory/templates/search_translation.html:41
-#, python-format
-msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr "%(source_language)s &rarr; %(translation_language)s"
-
-#: addons/trans_memory/templates/search_translation.html:61
-msgid "Location:"
-msgstr "Расположение:"
-
-#: addons/trans_memory/templates/search_translation.html:73
-msgid "Tough luck! No translations obtained."
-msgstr "Вот это удача! Не найдено ни одного перевода."
-
-#: addons/trans_memory/templates/search_translation_form.html:7
-msgid "Search for a string:"
-msgstr "Найти строку:"
-
-#: addons/trans_memory/templates/search_translation_form.html:11
-msgid "From:"
-msgstr "От:"
-
-#: addons/trans_memory/templates/search_translation_form.html:13
-msgid "To:"
-msgstr "Кому:"
-
-#: addons/trans_memory/templates/search_translation_form.html:38
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6
-msgid "Search"
-msgstr "Поиск"
-
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid ""
-"Search in Transifex memory for existing translations (uses a new tab/window)"
-msgstr "Поиск в памяти Transifex существующих переводов (в новой вкладке/окне)"
-
 #: addons/txapps/models.py:40 projects/models.py:161 releases/models.py:31
 #: resources/models.py:141 templates/helptext/project_form_helptext.html:5
 msgid "Slug"
@@ -1440,6 +1380,8 @@ msgstr "Показать фрагмент кода для юзербара:"
 msgid ""
 "This version of API is obsolete. Please have a look at %(url)s for details."
 msgstr ""
+"Это версия API устарела, пожалуйста, посмотрите %(url)s для получения "
+"подробностей."
 
 #: languages/feeds.py:14
 #, python-format
@@ -1514,7 +1456,7 @@ msgstr "языки"
 
 #: projects/admin.py:18
 msgid "permission"
-msgstr ""
+msgstr "разрешение"
 
 #: projects/feeds.py:14
 #, python-format
@@ -2055,16 +1997,6 @@ msgstr "уведомления о выпусках"
 msgid "The release '%s' was deleted."
 msgstr "Выпуск «%s» был удален."
 
-#: resources/api.py:1201
-#, python-format
-msgid "%i strings added"
-msgstr "добавлено строк: %i"
-
-#: resources/api.py:1203
-#, python-format
-msgid "%i strings updated"
-msgstr "обновлено строк: %i"
-
 #: resources/backends.py:83
 #, python-format
 msgid "Error creating resource: %s"
@@ -2223,6 +2155,8 @@ msgid ""
 "The flags which mark the source string. For example, if there is a python "
 "formatted string this is marked as \"#, python-format\" in gettext."
 msgstr ""
+"Флаг, которым помечают исходные строки. Для примера строки отформатированные "
+"python  помечены как \"#, python-format\" в gettext."
 
 #: resources/models.py:373
 msgid "Comments"
@@ -2453,6 +2387,16 @@ msgstr ""
 msgid "You are not allowed to upload a translation."
 msgstr "Вы не можете загрузить перевод."
 
+#: resources/api/__init__.py:682
+#, python-format
+msgid "%i strings added"
+msgstr "добавлено строк: %i"
+
+#: resources/api/__init__.py:684
+#, python-format
+msgid "%i strings updated"
+msgstr "обновлено строк: %i"
+
 #: resources/formats/core.py:239
 #, python-format
 msgid "Specified file %s does not exist."
@@ -2469,6 +2413,8 @@ msgid ""
 "We're not able to extract any string from the file uploaded for language "
 "%(language)s in resource %(resource)s."
 msgstr ""
+"Мы не смогли извлечь какую либо строку из файла, загруженного  для языка "
+"%(language)s в ресурсе %(resource)s."
 
 #: resources/formats/desktop.py:190
 #, python-format
@@ -2606,7 +2552,7 @@ msgstr "Корневой элемент не «xliff»"
 
 #: resources/formats/xliff.py:195
 msgid "Root element 'xliff' does not have a 'version' attribute"
-msgstr ""
+msgstr "Корневой элемент 'xliff' не имеет атрибута  'version'"
 
 #: simpleauth/forms.py:7
 msgid "Remember me"
@@ -2678,6 +2624,8 @@ msgid ""
 "User(s) %s cannot be in both Members and Reviewers lists. Please make sure "
 "that the lists are unique."
 msgstr ""
+"Пользователь(ли) %s не может быть одновременно в списке членов и  "
+"рецензентов. Пожалуйста, убедитесь, что эти списки являются уникальными."
 
 #: teams/forms.py:169
 msgid "All child projects"
@@ -2862,6 +2810,9 @@ msgid ""
 "Looks like you followed a bad link. If you think it's our fault, please <a "
 "href='http://code.transifex.com/transifex/issues/'>let us know</a>."
 msgstr ""
+"Выглядит так, как будто вы перешли по неверной ссылке. если вы думаете что "
+"это наша вина, пожалуйста <a href='http://code.transifex.com/transifex/"
+"issues/'>дайте нам знать</a>."
 
 #: templates/500.html:7 templates/500.html.py:22
 msgid "Page unavailable"
@@ -2987,6 +2938,11 @@ msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 "Также вы можете пройтись по <a href=\"%(project_list)s\">всем проектам</a>."
+
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6
+msgid "Search"
+msgstr "Поиск"
 
 #: templates/search.html:9
 msgid "Results"
@@ -3146,6 +3102,10 @@ msgid ""
 "the project. For example, the bug tracker url of transifex is at:\n"
 "http://code.transifex.com/transifex/issues/\n"
 msgstr ""
+"\n"
+"Это поле должно содержать ссылку для обслуживания, систему контроля за "
+"проектом. Например, система контроля ошибок transifex: http://code.transifex."
+"com/transifex/issues/\n"
 
 #: templates/helptext/project_form_helptext.html:83
 msgid ""
@@ -3216,6 +3176,9 @@ msgid ""
 "\"http://help.transifex.com/user-guide/faq.html#where-does-the-language-list-"
 "come-from-how-can-i-add-my-own\">let us know</a>!"
 msgstr ""
+"Не можете найти нужный язык? Пожалуйста, используйте форму обратной связи и  "
+"<a href=\"http://help.transifex.com/user-guide/faq.html#where-does-the-"
+"language-list-come-from-how-can-i-add-my-own\">дайте нам знать</a>!"
 
 #: templates/notification/notices.html:7 templates/notification/notices.html:8
 #: templates/notification/notices.html:9
@@ -3388,6 +3351,9 @@ msgid ""
 "%(release_name)s</a> string freeze of the <a href=\"%(project_url)s\">"
 "%(project_name)s</a> project has been sent"
 msgstr ""
+"Извещение о приближении <a href=\"%(release_url)s\">%(release_name)s</a> и "
+"заморозке строк <a href=\"%(project_url)s\">%(project_name)s</a> проекта "
+"было отправлено"
 
 #: templates/notification/project_release_before_trans_deadline/notice.html:2
 #, python-format
@@ -3396,6 +3362,9 @@ msgid ""
 "%(release_name)s</a> translation deadline of the <a href=\"%(project_url)s\">"
 "%(project_name)s</a> project has been sent"
 msgstr ""
+"Извещение о приближении <a href=\"%(release_url)s\">%(release_name)s</a> и "
+"конце сроков перевода <a href=\"%(project_url)s\">%(project_name)s</a> "
+"проекта было отправлено"
 
 #: templates/notification/project_release_deleted/notice.html:2
 #, python-format
@@ -3413,6 +3382,9 @@ msgid ""
 "%(release_name)s</a> release of the <a href=\"%(project_url)s\">"
 "%(project_name)s</a> project being over has been sent"
 msgstr ""
+"Извещение о сроках перевода  <a href=\"%(release_url)s\">%(release_name)s</"
+"a> и выпуске <a href=\"%(project_url)s\">%(project_name)s</a> проекта было "
+"отправлено"
 
 #: templates/notification/project_release_in_stringfreeze/notice.html:2
 #, python-format
@@ -3421,6 +3393,9 @@ msgid ""
 "of the <a href=\"%(project_url)s\">%(project_name)s</a> project being in "
 "string freeze has been sent"
 msgstr ""
+"Извещение о <a href=\"%(release_url)s\">%(release_name)s</a> выпуске  <a "
+"href=\"%(project_url)s\">%(project_name)s</a> проект в статусе заморозки "
+"строк , было отправлено"
 
 #: templates/notification/project_release_stringfreeze_breakage/notice.html:2
 #, python-format
@@ -3945,11 +3920,11 @@ msgstr "Пользователи с предоставленным правом 
 
 #: templates/projects/project_hub_projects.html:11
 msgid "Child projects"
-msgstr ""
+msgstr "Дочерние проекты"
 
 #: templates/projects/project_hub_projects.html:15
 msgid "List of the hub's child projects"
-msgstr ""
+msgstr "Список хабов дочерних проектов"
 
 #: templates/projects/project_hub_projects.html:23
 msgid "Hub projects"
@@ -4046,7 +4021,7 @@ msgstr ""
 #: templates/projects/project_menu.html:59
 #, python-format
 msgid " Go to %(hub_project)s hub"
-msgstr ""
+msgstr " Перейти %(hub_project)s хаб"
 
 #: templates/projects/project_menu.html:59
 msgid "Child project"
@@ -4419,7 +4394,7 @@ msgstr " Осталось:&nbsp;строк — %(trans_count)s (слов — %(t
 #: templates/resources/resource_actions.html:90
 #, python-format
 msgid " Reviewed:&nbsp;%(reviewed_count)s strings "
-msgstr ""
+msgstr " Проверено:&nbsp;%(reviewed_count)s строк "
 
 #: templates/resources/resource_actions.html:105
 msgid ""
@@ -4469,7 +4444,7 @@ msgstr "Осталось: "
 #: templates/resources/resource_actions.html:135
 #: templates/resources/stats_bar_simple.html:4
 msgid "Reviewed: "
-msgstr ""
+msgstr "Проверено: "
 
 #: templates/resources/resource_actions.html:150
 msgid "View strings online"
@@ -4572,6 +4547,8 @@ msgid ""
 "Lock the file under your ownership and download it locally to edit it, in "
 "one action. Untranslated strings are filled by source strings."
 msgstr ""
+"Заблокируйте файл и скачайте его для редактирования одним действием. "
+"Непереведённые строки заполнены исходным текстом."
 
 #: templates/resources/resource_actions.html:268
 msgid "Get pseudo translations"
@@ -4703,6 +4680,8 @@ msgid ""
 "Are you sure you want to permanently delete the translation resource "
 "'%(resource_name)s'?"
 msgstr ""
+"Вы уверены что хотите окончательно удалить перевод ресурсов "
+"'%(resource_name)s'?"
 
 #: templates/resources/resource_list_more.html:16
 msgid "edit"
@@ -4913,10 +4892,12 @@ msgid ""
 "Edit %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</sup> "
 "team"
 msgstr ""
+"Изменить %(language_name)s <sup class=\"entry_metalink\">%(language_code)s</"
+"sup> команду"
 
 #: templates/teams/team_form.html:70
 msgid "Edit language-team"
-msgstr ""
+msgstr "Изменить команду переводчиков"
 
 #: templates/teams/team_form.html:92
 msgid ""
@@ -4931,14 +4912,16 @@ msgid ""
 "The current language has no teams. You can delete the whole language by "
 "deleting all the translations of all resources."
 msgstr ""
+"Выбранный язык не имеет команды переводчиков. Вы можете удалить язык удаляя "
+"переводы его ресурсов."
 
 #: templates/teams/team_form.html:108
 msgid "Delete language-team"
-msgstr ""
+msgstr "Удалить команду переводчиков"
 
 #: templates/teams/team_form.html:111
 msgid "Do you wish to delete the team?"
-msgstr ""
+msgstr "Вы хотите удалить команду?"
 
 #: templates/teams/team_form.html:112
 msgid ""
@@ -4991,7 +4974,7 @@ msgstr "Обзор"
 
 #: templates/teams/team_menu.html:78
 msgid "Edit language team"
-msgstr ""
+msgstr "Изменить команду переводчиков"
 
 #: templates/teams/team_off.html:12
 msgid "This project does not maintain its own translation teams"
@@ -5199,6 +5182,8 @@ msgid ""
 "Your password has been reset. You can now <a href=\"%(login_url)s\">sign in</"
 "a> with your new password."
 msgstr ""
+"Ваш пароль был сброшен, теперь вы можете <a href=\"%(login_url)s\">войти</a> "
+"с вашим новым паролем."
 
 #: templates/userena/password_reset_confirm_form.html:6
 #: templates/userena/password_reset_confirm_form.html:10
@@ -5435,7 +5420,7 @@ msgstr "Платёжная информация"
 
 #: templates/userena/signup_form.html:50
 msgid "Get started with transifex and optimize your localization workflow"
-msgstr ""
+msgstr "Начните работу с transifex и оптимизируйте рабочий процесс локализации"
 
 #: templates/userena/signup_form.html:56
 msgid "Credentials"
@@ -5837,6 +5822,8 @@ msgstr "Перевод ресурса проверен полностью"
 msgid ""
 "when a resource translation of one of your projects becomes fully reviewed"
 msgstr ""
+"когда перевод ресурса одного из ваших проектов становится полностью "
+"пересмотрен"
 
 #: txcommon/db/models.py:84
 msgid "Enter 0 or more comma-separated integers in parentheses."
@@ -5883,3 +5870,46 @@ msgstr "Вы удалили разрешение."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Вы удалили запрос на разрешение."
+
+#~ msgid "Slug for the mapping. Usually the same as the old component slug."
+#~ msgstr ""
+#~ "Фрагмент для сопоставления. Обычно такой же, как и старый компонент."
+
+#~ msgid "Mapping in JSON format."
+#~ msgstr "Отображение в формате JSON."
+
+#~ msgid "Project to which the JSON mapping belongs."
+#~ msgstr "Проект, которому принадлежит отображение JSON."
+
+#~ msgid "JSONMap"
+#~ msgstr "Отображение JSON"
+
+#~ msgid "JSONMaps"
+#~ msgstr "Отображения JSON"
+
+#~ msgid "Search translations"
+#~ msgstr "Поиск переводов"
+
+#~ msgid "%(source_language)s &rarr; %(translation_language)s"
+#~ msgstr "%(source_language)s &rarr; %(translation_language)s"
+
+#~ msgid "Location:"
+#~ msgstr "Расположение:"
+
+#~ msgid "Tough luck! No translations obtained."
+#~ msgstr "Вот это удача! Не найдено ни одного перевода."
+
+#~ msgid "Search for a string:"
+#~ msgstr "Найти строку:"
+
+#~ msgid "From:"
+#~ msgstr "От:"
+
+#~ msgid "To:"
+#~ msgstr "Кому:"
+
+#~ msgid ""
+#~ "Search in Transifex memory for existing translations (uses a new tab/"
+#~ "window)"
+#~ msgstr ""
+#~ "Поиск в памяти Transifex существующих переводов (в новой вкладке/окне)"

@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 13:29+0000\n"
-"PO-Revision-Date: 2012-05-15 15:43+0000\n"
-"Last-Translator: Ilias-Dimitrios Vrachnis <vid@transifex.com>\n"
+"POT-Creation-Date: 2012-05-29 16:03+0000\n"
+"PO-Revision-Date: 2012-05-29 10:51+0000\n"
+"Last-Translator: Wei Hu <cheesecake4392@yahoo.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.net/projects/p/"
 "transifex/language/zh_CN/)\n"
 "Language: zh_CN\n"
@@ -28,26 +28,26 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "搜索用户名或留空"
 
-#: actionlog/models.py:161 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:162 actionlog/templates/object_action_list.html:7
 #: addons/copyright/models.py:80 addons/suggestions/models.py:45
 #: addons/suggestions/models.py:111 projects/models.py:376 teams/models.py:132
 #: teams/models.py:168 txpermissions/forms.py:18
 msgid "User"
 msgstr "用户"
 
-#: actionlog/models.py:170
+#: actionlog/models.py:171
 msgid "Action type"
 msgstr "操作类型"
 
-#: actionlog/models.py:171
+#: actionlog/models.py:172
 msgid "Action time"
 msgstr "操作时间"
 
-#: actionlog/models.py:179
+#: actionlog/models.py:180
 msgid "log entry"
 msgstr "日志条目"
 
-#: actionlog/models.py:180
+#: actionlog/models.py:181
 msgid "log entries"
 msgstr "日志条目"
 
@@ -390,26 +390,6 @@ msgstr ""
 #: addons/helptext/templates/extended_helptext.html:9
 msgid "...more"
 msgstr "..."
-
-#: addons/jsonmap/models.py:20
-msgid "Slug for the mapping. Usually the same as the old component slug."
-msgstr ""
-
-#: addons/jsonmap/models.py:23
-msgid "Mapping in JSON format."
-msgstr ""
-
-#: addons/jsonmap/models.py:29
-msgid "Project to which the JSON mapping belongs."
-msgstr ""
-
-#: addons/jsonmap/models.py:39
-msgid "JSONMap"
-msgstr ""
-
-#: addons/jsonmap/models.py:40
-msgid "JSONMaps"
-msgstr ""
 
 #: addons/locks/handlers.py:59
 msgid "This translation is locked by someone else."
@@ -890,13 +870,11 @@ msgstr "总计"
 
 #: addons/lotte/templates/translate.html:943
 #: addons/lotte/templates/view_strings.html:224
-#: addons/trans_memory/templates/search_translation.html:52
 msgid "Source string"
 msgstr "原始字符串"
 
 #: addons/lotte/templates/translate.html:944
 #: addons/lotte/templates/view_strings.html:225
-#: addons/trans_memory/templates/search_translation.html:53
 msgid "Translation"
 msgstr "翻译"
 
@@ -1153,48 +1131,6 @@ msgstr "资料"
 #: templates/txcommon/user_timeline.html:22
 #, python-format
 msgid "%(project_name)s Timeline"
-msgstr ""
-
-#: addons/trans_memory/templates/search_translation.html:14
-#: addons/trans_memory/templates/search_translation.html:20
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid "Search translations"
-msgstr "搜索翻译"
-
-#: addons/trans_memory/templates/search_translation.html:41
-#, python-format
-msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr "%(source_language)s &rarr; %(translation_language)s"
-
-#: addons/trans_memory/templates/search_translation.html:61
-msgid "Location:"
-msgstr "位置："
-
-#: addons/trans_memory/templates/search_translation.html:73
-msgid "Tough luck! No translations obtained."
-msgstr ""
-
-#: addons/trans_memory/templates/search_translation_form.html:7
-msgid "Search for a string:"
-msgstr "搜索字符串："
-
-#: addons/trans_memory/templates/search_translation_form.html:11
-msgid "From:"
-msgstr "从："
-
-#: addons/trans_memory/templates/search_translation_form.html:13
-msgid "To:"
-msgstr "到："
-
-#: addons/trans_memory/templates/search_translation_form.html:38
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6
-msgid "Search"
-msgstr "搜索"
-
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid ""
-"Search in Transifex memory for existing translations (uses a new tab/window)"
 msgstr ""
 
 #: addons/txapps/models.py:40 projects/models.py:161 releases/models.py:31
@@ -1795,7 +1731,7 @@ msgstr "已请求加入 '%s' 项目中心。"
 #: projects/views/project.py:270
 #, python-format
 msgid "The project '%s' was deleted."
-msgstr ""
+msgstr "项目 '%s'已被删除。"
 
 #: releases/feeds.py:31
 #, python-format
@@ -1949,7 +1885,7 @@ msgstr ""
 
 #: releases/models.py:137
 msgid "Release"
-msgstr ""
+msgstr "版本"
 
 #: releases/models.py:143
 #, python-format
@@ -1967,16 +1903,6 @@ msgstr ""
 #: releases/views.py:154
 #, python-format
 msgid "The release '%s' was deleted."
-msgstr ""
-
-#: resources/api.py:1201
-#, python-format
-msgid "%i strings added"
-msgstr ""
-
-#: resources/api.py:1203
-#, python-format
-msgid "%i strings updated"
 msgstr ""
 
 #: resources/backends.py:83
@@ -2346,6 +2272,16 @@ msgstr "您目前不能锁定它！（已被 %s 锁定）"
 #: resources/views.py:589
 msgid "You are not allowed to upload a translation."
 msgstr "您不被允许上传翻译。"
+
+#: resources/api/__init__.py:682
+#, python-format
+msgid "%i strings added"
+msgstr ""
+
+#: resources/api/__init__.py:684
+#, python-format
+msgid "%i strings updated"
+msgstr ""
 
 #: resources/formats/core.py:239
 #, python-format
@@ -2841,6 +2777,11 @@ msgstr ""
 msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr "您也可以通过<a href=\"%(project_list)s\">全部项目</a>浏览。"
+
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6
+msgid "Search"
+msgstr "搜索"
 
 #: templates/search.html:9
 msgid "Results"
@@ -3595,7 +3536,7 @@ msgstr "批准"
 #: templates/projects/project_detail_languages.html:100
 #: templates/resources/resource_detail.html:193
 msgid "(source language)"
-msgstr ""
+msgstr "(源语言)"
 
 #: templates/projects/project_detail_languages.html:111
 #, python-format
@@ -3990,7 +3931,7 @@ msgstr ""
 
 #: templates/projects/release_detail.html:67
 msgid "Edit release"
-msgstr ""
+msgstr "编辑版本"
 
 #: templates/projects/release_detail.html:80
 msgid "Release date:"
@@ -4052,11 +3993,11 @@ msgstr "保存发布"
 
 #: templates/projects/release_form.html:47
 msgid "Delete release from Transifex"
-msgstr ""
+msgstr "从Transifex删除版本"
 
 #: templates/projects/release_form.html:49
 msgid "Delete release..."
-msgstr ""
+msgstr "删除版本..."
 
 #: templates/projects/release_form.html:55
 #, python-format
@@ -4116,7 +4057,7 @@ msgstr ""
 #: templates/projects/release_language_detail.html:267
 #: templates/projects/release_language_detail.html:275
 msgid "click for resource details"
-msgstr ""
+msgstr "点击以了解资源细节"
 
 #: templates/projects/release_list.html:11
 #: templates/projects/release_list.html:39
@@ -4129,7 +4070,7 @@ msgstr "添加"
 
 #: templates/projects/release_list.html:13
 msgid "Add new release "
-msgstr ""
+msgstr "添加新版本"
 
 #: templates/projects/release_list.html:47
 #, python-format
@@ -4324,7 +4265,7 @@ msgstr ""
 
 #: templates/resources/resource_detail.html:103
 msgid "Edit resource"
-msgstr ""
+msgstr "编辑资源"
 
 #: templates/resources/resource_detail.html:110
 msgid "Total strings:"
@@ -4358,7 +4299,7 @@ msgstr[0] "发布："
 #: templates/resources/resource_detail.html:163
 #, python-format
 msgid "Available languages (%(num_of_langs)s)"
-msgstr ""
+msgstr "可用语言 (%(num_of_langs)s)"
 
 #: templates/resources/resource_detail.html:165
 msgid ""
@@ -4406,7 +4347,7 @@ msgstr ""
 
 #: templates/resources/resource_form.html:93
 msgid "Delete resource from Transifex"
-msgstr ""
+msgstr "从Transifix删除资源"
 
 #: templates/resources/resource_form.html:96
 msgid "By deleting the resource your translations will be lost:"
@@ -4414,7 +4355,7 @@ msgstr ""
 
 #: templates/resources/resource_form.html:99
 msgid "Delete resource"
-msgstr ""
+msgstr "删除资源"
 
 #: templates/resources/resource_form.html:105
 #, python-format
@@ -4641,7 +4582,7 @@ msgstr ""
 
 #: templates/teams/team_form.html:111
 msgid "Do you wish to delete the team?"
-msgstr ""
+msgstr "您希望删除团队吗？"
 
 #: templates/teams/team_form.html:112
 msgid ""
@@ -4683,7 +4624,7 @@ msgstr ""
 
 #: templates/teams/team_menu.html:49
 msgid "Outsourcing"
-msgstr ""
+msgstr "外包中"
 
 #: templates/teams/team_menu.html:72
 msgid "Overview"
@@ -4691,7 +4632,7 @@ msgstr "概述"
 
 #: templates/teams/team_menu.html:78
 msgid "Edit language team"
-msgstr ""
+msgstr "编辑语言团队"
 
 #: templates/teams/team_off.html:12
 msgid "This project does not maintain its own translation teams"
@@ -4909,7 +4850,7 @@ msgstr "提交"
 
 #: templates/userena/profile_detail.html:11
 msgid "Your mugshot"
-msgstr ""
+msgstr "您的大头照"
 
 #: templates/userena/profile_detail.html:16
 msgid "Email"
@@ -5301,7 +5242,7 @@ msgstr ""
 
 #: txcommon/notifications.py:131
 msgid "Release deleted"
-msgstr ""
+msgstr "版本已删除"
 
 #: txcommon/notifications.py:132
 msgid "when a release of a project is deleted"
@@ -5408,7 +5349,7 @@ msgstr ""
 
 #: txcommon/notifications.py:232
 msgid "Denied to join translation team"
-msgstr ""
+msgstr "拒绝加入翻译团队"
 
 #: txcommon/notifications.py:233
 msgid "when a user is denied as a member of a project translation team"
@@ -5416,7 +5357,7 @@ msgstr ""
 
 #: txcommon/notifications.py:240
 msgid "Withdrew request to join team"
-msgstr ""
+msgstr "收回加入团队的请求"
 
 #: txcommon/notifications.py:241
 msgid "when a user decides not to join a project translation team"
@@ -5448,7 +5389,7 @@ msgstr ""
 
 #: txcommon/notifications.py:277
 msgid "Resource created"
-msgstr ""
+msgstr "资源已创建"
 
 #: txcommon/notifications.py:278
 msgid "when a new resource is added to a project"
@@ -5456,7 +5397,7 @@ msgstr ""
 
 #: txcommon/notifications.py:284
 msgid "Resource modified"
-msgstr ""
+msgstr "资源已修改"
 
 #: txcommon/notifications.py:285
 msgid "when a resource of a project is changed"
@@ -5464,7 +5405,7 @@ msgstr ""
 
 #: txcommon/notifications.py:291
 msgid "Resource deleted"
-msgstr ""
+msgstr "资源已删除"
 
 #: txcommon/notifications.py:292
 msgid "when a resource of a project is deleted"
@@ -5540,3 +5481,27 @@ msgstr "您删除了该权限。"
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "您删除了该权限請求。"
+
+#~ msgid "Mapping in JSON format."
+#~ msgstr "以JSON格式映射"
+
+#~ msgid "JSONMap"
+#~ msgstr "JSON映射"
+
+#~ msgid "Search translations"
+#~ msgstr "搜索翻译"
+
+#~ msgid "%(source_language)s &rarr; %(translation_language)s"
+#~ msgstr "%(source_language)s &rarr; %(translation_language)s"
+
+#~ msgid "Location:"
+#~ msgstr "位置："
+
+#~ msgid "Search for a string:"
+#~ msgstr "搜索字符串："
+
+#~ msgid "From:"
+#~ msgstr "从："
+
+#~ msgid "To:"
+#~ msgstr "到："

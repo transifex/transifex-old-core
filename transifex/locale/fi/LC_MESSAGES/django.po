@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 13:28+0000\n"
-"PO-Revision-Date: 2012-05-15 15:43+0000\n"
-"Last-Translator: Ilias-Dimitrios Vrachnis <vid@transifex.com>\n"
+"POT-Creation-Date: 2012-05-29 16:01+0000\n"
+"PO-Revision-Date: 2012-05-22 09:16+0000\n"
+"Last-Translator: Larso <larso@gmx.com>\n"
 "Language-Team: Finnish (http://www.transifex.net/projects/p/transifex/"
 "language/fi/)\n"
 "Language: fi\n"
@@ -30,26 +30,26 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Etsi käyttäjänimeä tai jätä tyhjäksi."
 
-#: actionlog/models.py:161 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:162 actionlog/templates/object_action_list.html:7
 #: addons/copyright/models.py:80 addons/suggestions/models.py:45
 #: addons/suggestions/models.py:111 projects/models.py:376 teams/models.py:132
 #: teams/models.py:168 txpermissions/forms.py:18
 msgid "User"
 msgstr "Käyttäjä"
 
-#: actionlog/models.py:170
+#: actionlog/models.py:171
 msgid "Action type"
 msgstr "Tapahtumatyyppi"
 
-#: actionlog/models.py:171
+#: actionlog/models.py:172
 msgid "Action time"
 msgstr "Ajankohta"
 
-#: actionlog/models.py:179
+#: actionlog/models.py:180
 msgid "log entry"
 msgstr "lokimerkintä"
 
-#: actionlog/models.py:180
+#: actionlog/models.py:181
 msgid "log entries"
 msgstr "lokimerkintää"
 
@@ -400,26 +400,6 @@ msgstr "Projekti, jota tämä asetus koskee."
 #: addons/helptext/templates/extended_helptext.html:9
 msgid "...more"
 msgstr "...lisää"
-
-#: addons/jsonmap/models.py:20
-msgid "Slug for the mapping. Usually the same as the old component slug."
-msgstr ""
-
-#: addons/jsonmap/models.py:23
-msgid "Mapping in JSON format."
-msgstr ""
-
-#: addons/jsonmap/models.py:29
-msgid "Project to which the JSON mapping belongs."
-msgstr ""
-
-#: addons/jsonmap/models.py:39
-msgid "JSONMap"
-msgstr ""
-
-#: addons/jsonmap/models.py:40
-msgid "JSONMaps"
-msgstr ""
 
 #: addons/locks/handlers.py:59
 msgid "This translation is locked by someone else."
@@ -911,13 +891,11 @@ msgstr "Yhteensä"
 
 #: addons/lotte/templates/translate.html:943
 #: addons/lotte/templates/view_strings.html:224
-#: addons/trans_memory/templates/search_translation.html:52
 msgid "Source string"
 msgstr "Lähdemerkkijono"
 
 #: addons/lotte/templates/translate.html:944
 #: addons/lotte/templates/view_strings.html:225
-#: addons/trans_memory/templates/search_translation.html:53
 msgid "Translation"
 msgstr "Käännös"
 
@@ -1179,49 +1157,6 @@ msgstr "Profiili"
 #, python-format
 msgid "%(project_name)s Timeline"
 msgstr "%(project_name)s - aikajana"
-
-#: addons/trans_memory/templates/search_translation.html:14
-#: addons/trans_memory/templates/search_translation.html:20
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid "Search translations"
-msgstr "Etsi käännöksiä"
-
-#: addons/trans_memory/templates/search_translation.html:41
-#, python-format
-msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr "%(source_language)s &rarr; %(translation_language)s"
-
-#: addons/trans_memory/templates/search_translation.html:61
-msgid "Location:"
-msgstr "Sijainti:"
-
-#: addons/trans_memory/templates/search_translation.html:73
-msgid "Tough luck! No translations obtained."
-msgstr "Käännöksiä ei löytynyt."
-
-#: addons/trans_memory/templates/search_translation_form.html:7
-msgid "Search for a string:"
-msgstr "Etsi merkkijonoa:"
-
-#: addons/trans_memory/templates/search_translation_form.html:11
-msgid "From:"
-msgstr "Kieleltä:"
-
-#: addons/trans_memory/templates/search_translation_form.html:13
-msgid "To:"
-msgstr "Kielelle:"
-
-#: addons/trans_memory/templates/search_translation_form.html:38
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6
-msgid "Search"
-msgstr "Etsi:"
-
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid ""
-"Search in Transifex memory for existing translations (uses a new tab/window)"
-msgstr ""
-"Etsi käännöksiä Transifexin muistista (uudessa välilehdessä/ikkunassa)."
 
 #: addons/txapps/models.py:40 projects/models.py:161 releases/models.py:31
 #: resources/models.py:141 templates/helptext/project_form_helptext.html:5
@@ -2000,7 +1935,7 @@ msgstr "Julkaisu"
 #: releases/models.py:143
 #, python-format
 msgid "<ReleaseNotification: %(rel)s (Project %(proj)s)>"
-msgstr ""
+msgstr "<ReleaseNotification: %(rel)s (Projekti %(proj)s)>"
 
 #: releases/models.py:148
 msgid "release notification"
@@ -2014,16 +1949,6 @@ msgstr "julkaisuilmoitukset"
 #, python-format
 msgid "The release '%s' was deleted."
 msgstr "Julkaisu %s poistettiin."
-
-#: resources/api.py:1201
-#, python-format
-msgid "%i strings added"
-msgstr "%i merkkijonoa lisätty"
-
-#: resources/api.py:1203
-#, python-format
-msgid "%i strings updated"
-msgstr "%i merkkijonoa päivitetty"
 
 #: resources/backends.py:83
 #, python-format
@@ -2401,6 +2326,16 @@ msgstr "Lukitus ei onnistu tällä hetkellä! (Lukinnut käyttäjä %s)"
 #: resources/views.py:589
 msgid "You are not allowed to upload a translation."
 msgstr "Et voi lähettää käännöstä."
+
+#: resources/api/__init__.py:682
+#, python-format
+msgid "%i strings added"
+msgstr "%i merkkijonoa lisätty"
+
+#: resources/api/__init__.py:684
+#, python-format
+msgid "%i strings updated"
+msgstr "%i merkkijonoa päivitetty"
 
 #: resources/formats/core.py:239
 #, python-format
@@ -2920,6 +2855,11 @@ msgstr ""
 msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr "Voit selata myös <a href=\"%(project_list)s\">kaikkia projekteja</a>."
+
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6
+msgid "Search"
+msgstr "Etsi:"
 
 #: templates/search.html:9
 msgid "Results"
@@ -5195,8 +5135,8 @@ msgstr "<a class=\"name\" href=\"%(project_url)s\">%(project_name)s</a>"
 #: templates/userena/public.html:112
 msgid "Coordinator of the following team"
 msgid_plural "Coordinator of the following teams"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Seuraavan ryhmän ylläpitäjä"
+msgstr[1] "Seuraavien ryhmien ylläpitäjä"
 
 #: templates/userena/public.html:119 templates/userena/public.html.py:140
 #, python-format
@@ -5730,3 +5670,30 @@ msgstr "Poistit lähetysoikeuden."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Poistit lähetysoikeushakemuksen."
+
+#~ msgid "Search translations"
+#~ msgstr "Etsi käännöksiä"
+
+#~ msgid "%(source_language)s &rarr; %(translation_language)s"
+#~ msgstr "%(source_language)s &rarr; %(translation_language)s"
+
+#~ msgid "Location:"
+#~ msgstr "Sijainti:"
+
+#~ msgid "Tough luck! No translations obtained."
+#~ msgstr "Käännöksiä ei löytynyt."
+
+#~ msgid "Search for a string:"
+#~ msgstr "Etsi merkkijonoa:"
+
+#~ msgid "From:"
+#~ msgstr "Kieleltä:"
+
+#~ msgid "To:"
+#~ msgstr "Kielelle:"
+
+#~ msgid ""
+#~ "Search in Transifex memory for existing translations (uses a new tab/"
+#~ "window)"
+#~ msgstr ""
+#~ "Etsi käännöksiä Transifexin muistista (uudessa välilehdessä/ikkunassa)."

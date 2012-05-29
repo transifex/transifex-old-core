@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 13:24+0000\n"
+"POT-Creation-Date: 2012-05-29 15:58+0000\n"
 "PO-Revision-Date: 2012-05-15 15:43+0000\n"
 "Last-Translator: Ilias-Dimitrios Vrachnis <vid@transifex.com>\n"
 "Language-Team: Polish (http://www.transifex.net/projects/p/transifex/"
@@ -29,26 +29,26 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Wyszukiwanie nazwy użytkownika"
 
-#: actionlog/models.py:161 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:162 actionlog/templates/object_action_list.html:7
 #: addons/copyright/models.py:80 addons/suggestions/models.py:45
 #: addons/suggestions/models.py:111 projects/models.py:376 teams/models.py:132
 #: teams/models.py:168 txpermissions/forms.py:18
 msgid "User"
 msgstr "Użytkownik"
 
-#: actionlog/models.py:170
+#: actionlog/models.py:171
 msgid "Action type"
 msgstr "Typ czynności"
 
-#: actionlog/models.py:171
+#: actionlog/models.py:172
 msgid "Action time"
 msgstr "Czas czynności"
 
-#: actionlog/models.py:179
+#: actionlog/models.py:180
 msgid "log entry"
 msgstr "wpis dziennika"
 
-#: actionlog/models.py:180
+#: actionlog/models.py:181
 msgid "log entries"
 msgstr "wpisy dziennika"
 
@@ -406,26 +406,6 @@ msgstr "Projekt, którego dotyczą te ustawienia."
 #: addons/helptext/templates/extended_helptext.html:9
 msgid "...more"
 msgstr "...więcej"
-
-#: addons/jsonmap/models.py:20
-msgid "Slug for the mapping. Usually the same as the old component slug."
-msgstr ""
-
-#: addons/jsonmap/models.py:23
-msgid "Mapping in JSON format."
-msgstr "Mapowanie w formacie JSON."
-
-#: addons/jsonmap/models.py:29
-msgid "Project to which the JSON mapping belongs."
-msgstr ""
-
-#: addons/jsonmap/models.py:39
-msgid "JSONMap"
-msgstr "Mapowanie JSON"
-
-#: addons/jsonmap/models.py:40
-msgid "JSONMaps"
-msgstr "Mapowania JSON"
 
 #: addons/locks/handlers.py:59
 msgid "This translation is locked by someone else."
@@ -925,13 +905,11 @@ msgstr "Razem"
 
 #: addons/lotte/templates/translate.html:943
 #: addons/lotte/templates/view_strings.html:224
-#: addons/trans_memory/templates/search_translation.html:52
 msgid "Source string"
 msgstr "Ciąg źródłowy"
 
 #: addons/lotte/templates/translate.html:944
 #: addons/lotte/templates/view_strings.html:225
-#: addons/trans_memory/templates/search_translation.html:53
 msgid "Translation"
 msgstr "Tłumaczenie"
 
@@ -1198,50 +1176,6 @@ msgstr "Profil"
 #, python-format
 msgid "%(project_name)s Timeline"
 msgstr "Oś czasu projektu %(project_name)s"
-
-#: addons/trans_memory/templates/search_translation.html:14
-#: addons/trans_memory/templates/search_translation.html:20
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid "Search translations"
-msgstr "Przeszukaj tłumaczenia"
-
-#: addons/trans_memory/templates/search_translation.html:41
-#, python-format
-msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr "%(source_language)s &rarr; %(translation_language)s"
-
-#: addons/trans_memory/templates/search_translation.html:61
-msgid "Location:"
-msgstr "Położenie:"
-
-#: addons/trans_memory/templates/search_translation.html:73
-msgid "Tough luck! No translations obtained."
-msgstr "Nie pobrano tłumaczenia."
-
-#: addons/trans_memory/templates/search_translation_form.html:7
-msgid "Search for a string:"
-msgstr "Wyszukiwanie ciągu:"
-
-#: addons/trans_memory/templates/search_translation_form.html:11
-msgid "From:"
-msgstr "Z:"
-
-#: addons/trans_memory/templates/search_translation_form.html:13
-msgid "To:"
-msgstr "Do:"
-
-#: addons/trans_memory/templates/search_translation_form.html:38
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6
-msgid "Search"
-msgstr "Wyszukiwanie"
-
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid ""
-"Search in Transifex memory for existing translations (uses a new tab/window)"
-msgstr ""
-"Wyszukiwanie istniejących tłumaczeń w pamięci usługi Transifex (używa nowej "
-"karty/okna)"
 
 #: addons/txapps/models.py:40 projects/models.py:161 releases/models.py:31
 #: resources/models.py:141 templates/helptext/project_form_helptext.html:5
@@ -2036,16 +1970,6 @@ msgstr "powiadomienia o wydaniu"
 msgid "The release '%s' was deleted."
 msgstr "Usunięto wydanie \"%s\"."
 
-#: resources/api.py:1201
-#, python-format
-msgid "%i strings added"
-msgstr "Dodano %i ciągów"
-
-#: resources/api.py:1203
-#, python-format
-msgid "%i strings updated"
-msgstr "Zaktualizowano %i ciągów"
-
 #: resources/backends.py:83
 #, python-format
 msgid "Error creating resource: %s"
@@ -2430,6 +2354,16 @@ msgstr ""
 #: resources/views.py:589
 msgid "You are not allowed to upload a translation."
 msgstr "Nie masz uprawnień do wysyłania tłumaczenia."
+
+#: resources/api/__init__.py:682
+#, python-format
+msgid "%i strings added"
+msgstr "Dodano %i ciągów"
+
+#: resources/api/__init__.py:684
+#, python-format
+msgid "%i strings updated"
+msgstr "Zaktualizowano %i ciągów"
 
 #: resources/formats/core.py:239
 #, python-format
@@ -2964,6 +2898,11 @@ msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 "Można także przeglądać <a href=\"%(project_list)s\">wszystkie projekty</a>."
+
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6
+msgid "Search"
+msgstr "Wyszukiwanie"
 
 #: templates/search.html:9
 msgid "Results"
@@ -5842,3 +5781,40 @@ msgstr "Usunięto pozwolenie."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Usunięto żądanie pozwolenia."
+
+#~ msgid "Mapping in JSON format."
+#~ msgstr "Mapowanie w formacie JSON."
+
+#~ msgid "JSONMap"
+#~ msgstr "Mapowanie JSON"
+
+#~ msgid "JSONMaps"
+#~ msgstr "Mapowania JSON"
+
+#~ msgid "Search translations"
+#~ msgstr "Przeszukaj tłumaczenia"
+
+#~ msgid "%(source_language)s &rarr; %(translation_language)s"
+#~ msgstr "%(source_language)s &rarr; %(translation_language)s"
+
+#~ msgid "Location:"
+#~ msgstr "Położenie:"
+
+#~ msgid "Tough luck! No translations obtained."
+#~ msgstr "Nie pobrano tłumaczenia."
+
+#~ msgid "Search for a string:"
+#~ msgstr "Wyszukiwanie ciągu:"
+
+#~ msgid "From:"
+#~ msgstr "Z:"
+
+#~ msgid "To:"
+#~ msgstr "Do:"
+
+#~ msgid ""
+#~ "Search in Transifex memory for existing translations (uses a new tab/"
+#~ "window)"
+#~ msgstr ""
+#~ "Wyszukiwanie istniejących tłumaczeń w pamięci usługi Transifex (używa "
+#~ "nowej karty/okna)"
