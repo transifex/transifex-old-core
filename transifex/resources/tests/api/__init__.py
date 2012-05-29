@@ -1265,10 +1265,14 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
         json = simplejson.loads(response.content)
         for index, item in enumerate(json):
             if item['key'] == 'pluralized_String1' and item['context'] == 'Context1':
+                item['source_entity_hash'] = hash_tag(item['key'], item['context'])
                 item['translation'] = {'0': '0', '1': '1', '2': '2', '3': '3',
                         '4': '4', '5': '5'}
                 json[index] = item
             if item['key'] == 'String2' and item['context'] == 'Context2':
+                item['source_entity_hash'] = hash_tag(item['key'], item['context'])
+                item.pop('key')
+                item.pop('context')
                 item['translation'] = 'fooo'
                 item['user'] = 'team_member'
                 item['reviewed'] = True
@@ -1282,6 +1286,14 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
 
         expected_json = []
         self.assertEqual(response.status_code, 403)
+        for item in json:
+            item.pop('user')
+        response = self.client['maintainer'].put(reverse(
+            'translation_strings',
+            args=['project1', 'resource1', self.language_ar.code]),
+            data = simplejson.dumps(json),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 200)
 
 
 def create_sample_translations(cls):

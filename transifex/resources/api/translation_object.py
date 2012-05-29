@@ -5,7 +5,6 @@ API for Translation objects.
 """
 
 from __future__ import absolute_import
-from collections import OrderedDict
 from django.db import transaction
 from django.db.models import Q
 from django.conf import settings
@@ -35,11 +34,11 @@ class BaseTranslationHandler(BaseHandler):
 
     def _generate_dict_for_translation(self, trans_dict, translation,
             field_map, append, pluralized):
-        """Generate or update an OrderedDict for a source_entity along
+        """Generate or update a dictionary for a source_entity along
         with its translation(s).
 
         Args:
-            trans_dict: An OrderedDict, may be empty or existing
+            trans_dict: A dictionary, may be empty or existing
             translation: A translation values dictionary
             field_map: A dictionary mapping the keys of dictionary
                        translation to the keys used in output JSON
@@ -49,7 +48,7 @@ class BaseTranslationHandler(BaseHandler):
                     else False.
 
         Returns:
-            An OrderedDict representing a source entity and its translations
+            A dictionary representing a source entity and its translations
             along with other aggregated attributes.
         """
         for key in field_map.keys():
@@ -93,7 +92,7 @@ class BaseTranslationHandler(BaseHandler):
         else, update trans_dict already in *result* at position *index*.
 
         Args:
-            trans_dict: A dictionary (or OrderedDict) representing
+            trans_dict: A dictionary representing
                 translation(s) belonging to a source entity.
             result: A list containing many trans_dict.
             append: A boolean, True if trans_dict is to be appended to
@@ -137,9 +136,9 @@ class BaseTranslationHandler(BaseHandler):
             append = True
             pluralized = False
 
-            # An OrderedDict representing translation(s) belonging to a source
+            # An dictionary representing translation(s) belonging to a source
             # entity along with other aggregated attributes
-            trans_dict = OrderedDict()
+            trans_dict = dict()
             index = -1
             if translation.get('source_entity__pluralized'):
                 if buf.get(translation.get('source_entity__id')) != None:
@@ -162,34 +161,32 @@ class BaseTranslationHandler(BaseHandler):
         Get fieldmap for Translation model.
 
         What is a fieldmap?
-        A dictionary (or OrderedDict) that maps django
-        model attributes for Translation to humanized *keys*
-        to be used in output JSON.
+        A dictionary that maps django model attributes for Translation
+        to humanized *keys* to be used in output JSON.
 
         Args:
             details: A Boolean, True if request contains `details`
                     as a GET parameter.
 
         Returns:
-            An OrderedDict
+            A dictionary
         """
-        field_map_elems = [
-                ('source_entity__string', 'key'),
-                ('source_entity__context', 'context'),
-                ('string', 'translation'),
-                ('reviewed', 'reviewed'),
-                ('source_entity__pluralized', 'pluralized')
-        ]
+        field_map = {
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'source_entity__pluralized': 'pluralized'
+        }
 
         if details:
-            field_map_elems.extend([
-                ('wordcount', 'wordcount'),
-                ('last_update', 'last_update'),
-                ('user__username', 'user'),
-                ('source_entity__position', 'position'),
-                ('source_entity__occurrences', 'occurrences'),
-            ])
-        field_map = OrderedDict(field_map_elems)
+            field_map.update({
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+            })
         return field_map
 
     def _get_fields_for_translation_value_query_set(self, field_map):
@@ -198,7 +195,7 @@ class BaseTranslationHandler(BaseHandler):
         for a Translation QuerySet.
 
         Args:
-            field_map: A dictionary (or OrderedDict) that maps django
+            field_map: A dictionary that maps django
             model attributes for Translation to humanized *keys*
             to be used in output JSON.
         Returns:
@@ -296,8 +293,7 @@ class BaseTranslationHandler(BaseHandler):
             raise BadRequestError("Translations are not in a list!")
         return True
 
-    def _translations_as_dict(self, translations, resource, language,
-            string_hash=None):
+    def _translations_as_dict(self, translations, resource, language):
         """
         Get a dictionary where source_entity id is mapped to
         translations.
@@ -313,12 +309,10 @@ class BaseTranslationHandler(BaseHandler):
         """
         query = Q()
         for translation in translations:
-            if translation.has_key('string_hash'):
+            if translation.has_key('source_entity_hash'):
                 query |= Q(source_entity__string_hash=translation[
-                    'string_hash'])
-            else:
-                query |= Q(source_entity__string=translation['key'],
-                        source_entity__context=translation['context'])
+                    'source_entity_hash'])
+
         query &= Q(resource=resource, language=language)
 
         trans_obj_dict = {}
@@ -446,18 +440,18 @@ class BaseTranslationHandler(BaseHandler):
         Returns:
             A tuple, (dictionary, list)
         """
-        field_map = OrderedDict([
-                ('source_entity__string', 'key'),
-                ('source_entity__context', 'context'),
-                ('string', 'translation'),
-                ('reviewed', 'reviewed'),
-                ('source_entity__pluralized', 'pluralized'),
-                ('wordcount', 'wordcount'),
-                ('last_update', 'last_update'),
-                ('user__username', 'user'),
-                ('source_entity__position', 'position'),
-                ('source_entity__occurrences', 'occurrences'),
-        ])
+        field_map = {
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'source_entity__pluralized': 'pluralized',
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+        }
 
         fields = []
         field_map_ = {}
@@ -548,12 +542,10 @@ class BaseTranslationHandler(BaseHandler):
             trans_obj_dict: A dictionary mapping source_entity.string_hash
                 to a list of Translation objects.
         """
-        if translation.has_key('string_hash'):
-            checksum = translation['string_hash']
+        if translation.has_key('source_entity_hash'):
+            checksum = translation['source_entity_hash']
         else:
-            key = translation.get('key')
-            context = translation.get('context')
-            checksum = hash_tag(key, context)
+            return
         translation_objs = trans_obj_dict.get(checksum)
         se = translation_objs[0].source_entity
         se_id = se.id
@@ -596,18 +588,18 @@ class SingleTranslationHandler(BaseTranslationHandler):
         model with the field names used in the JSON representation of the
         translations.
         """
-        field_map = OrderedDict([
-                ('source_entity__string', 'key'),
-                ('source_entity__context', 'context'),
-                ('string', 'translation'),
-                ('reviewed', 'reviewed'),
-                ('source_entity__pluralized', 'pluralized'),
-                ('wordcount', 'wordcount'),
-                ('last_update', 'last_update'),
-                ('user__username', 'user'),
-                ('source_entity__position', 'position'),
-                ('source_entity__occurrences', 'occurrences'),
-        ])
+        field_map = {
+                'source_entity__string': 'key',
+                'source_entity__context': 'context',
+                'string': 'translation',
+                'reviewed': 'reviewed',
+                'source_entity__pluralized': 'pluralized',
+                'wordcount': 'wordcount',
+                'last_update': 'last_update',
+                'user__username': 'user',
+                'source_entity__position': 'position',
+                'source_entity__occurrences': 'occurrences',
+        }
         return field_map
 
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
@@ -675,7 +667,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
             team = Team.objects.get_or_none(project, language.code)
             data = request.data
             # This is a hack to use the methods from TranslationObjectsHandler
-            data['string_hash'] = source_hash
+            data['source_entity_hash'] = source_hash
             check = ProjectPermission(request.user)
             is_maintainer = check.maintain(project)
             # Allow only project members to issue this update request
