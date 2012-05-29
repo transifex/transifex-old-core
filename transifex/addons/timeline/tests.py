@@ -25,25 +25,6 @@ class TestTimeline(BaseTestCase):
         self.url_project_edit = reverse('project_edit',
             args=[self.project.slug])
 
-    def test_anon(self):
-        """Test anonymous user."""
-
-        # Check user timeline page as anonymous user
-        resp = self.client['anonymous'].get(self.url_user_timeline, follow=True)
-        self.assertEqual(resp.status_code, 200)
-        #FIXME
-        #self.assertTemplateUsed(resp, 'userena/signin_form.html')
-        self.assertContains(resp, 'input type="submit" class="i16 tick '\
-                'buttonized" value="Sign in"', status_code=200)
-
-        # Check project timeline page as anonymous user
-        resp = self.client['anonymous'].get(self.url_project_timeline, follow=True)
-        self.assertEqual(resp.status_code, 200)
-        #FIXME
-        #self.assertTemplateUsed(resp, 'userena/signin_form.html')
-        self.assertContains(resp, 'input type="submit" class="i16 tick '\
-                'buttonized" value="Sign in"', status_code=200)
-
     def test_regular(self):
         """Test regular registered user."""
 
