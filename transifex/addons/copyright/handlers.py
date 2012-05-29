@@ -4,7 +4,7 @@ from datetime import date
 from django.db.models import get_model
 from django.conf import settings
 from transifex.resources.signals import post_save_translation
-from transifex.addons.lotte.signals import lotte_save_translation
+from transifex.projects.signals import lotte_save_translation
 
 
 def save_copyrights(sender, **kwargs):
@@ -54,7 +54,6 @@ def lotte_copyrights(sender, **kwargs):
                 resource=resource, language=language,
                 owner=owner, year=year, user=user
             )
-
 
 def connect():
     post_save_translation.connect(save_copyrights)

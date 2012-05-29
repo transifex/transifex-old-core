@@ -26,6 +26,8 @@ from transifex.languages.models import Language
 from transifex.projects.models import Project
 from transifex.projects.permissions import *
 from transifex.projects.permissions.project import ProjectPermission
+from transifex.projects.signals import lotte_init, lotte_done, \
+    lotte_save_translation, lotte_delete_translation
 from transifex.resources.models import Translation, Resource, SourceEntity, \
     ReviewHistory, get_source_language
 from transifex.resources.handlers import invalidate_stats_cache
@@ -38,7 +40,6 @@ from transifex.txcommon.utils import normalize_query
 # Temporary
 from transifex.txcommon import notifications as txnotification
 
-from signals import lotte_init, lotte_done, lotte_save_translation
 from filters import get_search_filter_query
 
 Suggestion = get_model('suggestions', 'Suggestion')
@@ -967,10 +968,8 @@ def _save_translation(source_string, translations, target_language, user):
 
 
 def _add_copyright(source_string, target_language, user):
-    from transifex.addons.copyright.handlers import lotte_copyrights
-    lotte_save_translation.connect(lotte_copyrights)
     lotte_save_translation.send(
-        None, resource=resource, source_string=source_string,
+        None, resource=source_string.resource, source_string=source_string,
         language=target_language, user=user
     )
 
@@ -1045,18 +1044,16 @@ def delete_translation(request, project_slug=None, resource_slug=None,
         if se_id:
             ids.append(se_id)
 
-
     try:
-        translations = Translation.objects.filter(source_entity__pk__in=ids,
-                                   language=language)
-
+        translations = Translation.objects.filter(
+            source_entity__pk__in=ids, language=language)
         translations.delete()
-#        request.user.message_set.create(
-#            message=_("Translations deleted successfully!"))
     except:
-#        request.user.message_set.create(
-#            message=_("Failed to delete translations due to some error!"))
         raise Http404
+
+    # Send signal
+    lotte_delete_translation.send(None, resource=resource,
+        source_string_ids=ids, language=language, user=request.user)
 
     invalidate_stats_cache(resource, language, user=request.user)
 

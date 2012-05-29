@@ -4,7 +4,8 @@ from django.utils.translation import ugettext as _
 from django.contrib import messages
 from cla.models import Cla, ClaSignature
 from transifex.projects.forms import ProjectAccessControlForm
-from transifex.projects.signals import pre_team_request, pre_team_join, cla_create, project_access_control_form_start, ClaNotSignedError
+from transifex.projects.signals import pre_team_request, pre_team_join, \
+    cla_create, project_access_control_form_start, ClaNotSignedError
 
 def handle_pre_team(sender, **kwargs):
     project = kwargs['project']

@@ -12,8 +12,8 @@ from transifex.resources.utils import invalidate_template_cache
 from transifex.teams.models import Team
 from transifex.txcommon.log import logger
 from txcron.signals import cron_daily, cron_hourly
-from transifex.projects.signals import pre_submit_translation, post_submit_translation
-from lotte.signals import lotte_init, lotte_done
+from transifex.projects.signals import pre_submit_translation, \
+    post_submit_translation, lotte_init, lotte_done
 from models import Lock, LockError
 
 
