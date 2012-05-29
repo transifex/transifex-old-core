@@ -92,13 +92,14 @@ def _distinct_action_time(query, limit=None):
         Rows with the same 'action_time' are eliminated, keeping the one with
         highest 'id'.
     """
-    pks = query.values('action_time').annotate(gid=models.Max('id'))
+    pks = query.defer('object_id', 'content_type').distinct()
     if limit:
         pks = pks.order_by('-id')[:limit]
     else:
-        pks = pks.order_by()
-    pks = pks.values_list('gid', flat=True)
-    return LogEntry.objects.select_related('user').filter(pk__in=pks)
+        # For some reason, when using defer() the Meta ordering
+        # is not respected so we have to set it explicitly.
+        pks = pks.order_by('-action_time')
+    return pks.select_related('user')
 
 class LogEntryManager(models.Manager):
     def by_object(self, obj, limit=None):
