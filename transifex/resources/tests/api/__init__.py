@@ -1217,19 +1217,19 @@ class UnitTestTranslationObjectsHandler(TestCase):
 
 
 class SystemTestTranslationStrings(BaseTestCase):
-    def test_get_objects_from_request_params(self):
+    def test_requested_objects(self):
         obj = TranslationObjectsHandler()
         self.assertRaises(NotFoundError,
-                obj._get_objects_from_request_params,
+                obj._requested_objects,
                 'foo', 'resource1', 'foo')
         self.assertRaises(NotFoundError,
-                obj._get_objects_from_request_params,
+                obj._requested_objects,
                 'project1', 'foo', 'foo')
         self.assertRaises(NotFoundError,
-                obj._get_objects_from_request_params,
+                obj._requested_objects,
                 'project1', 'resource1', 'foo')
         self.assertEqual(
-                obj._get_objects_from_request_params(
+                obj._requested_objects(
                     'project1', 'resource1', 'ar'),
                 (self.project, self.resource, self.language_ar))
 

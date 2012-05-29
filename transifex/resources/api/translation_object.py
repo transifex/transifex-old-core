@@ -236,7 +236,7 @@ class BaseTranslationHandler(BaseHandler):
 
         return filters
 
-    def _get_objects_from_request_params(self, project_slug,
+    def _requested_objects(self, project_slug,
             resource_slug, language_code):
         """
         Get objects from request parameters if the related objects
@@ -662,7 +662,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
         """
         try:
             project, resource, language = \
-                    self._get_objects_from_request_params(project_slug,
+                    self._requested_objects(project_slug,
                     resource_slug, language_code)
             # A translation in source language cannot be updated
             self._validate_language_is_not_source_language(
@@ -735,7 +735,7 @@ class TranslationObjectsHandler(BaseTranslationHandler):
         """
         try:
             project, resource, language = \
-                    self._get_objects_from_request_params(
+                    self._requested_objects(
                     project_slug, resource_slug, language_code)
 
             field_map =  self._get_fieldmap(request.GET.has_key('details'))
@@ -769,7 +769,7 @@ class TranslationObjectsHandler(BaseTranslationHandler):
         """
         try:
             project, resource, language = \
-                    self._get_objects_from_request_params(
+                    self._requested_objects(
                     project_slug, resource_slug, language_code)
             self._validate_language_is_not_source_language(
                     project.source_language, language)
