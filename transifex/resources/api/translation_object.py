@@ -622,23 +622,24 @@ class SingleTranslationHandler(BaseTranslationHandler):
         along with aggregated detailed info about the translations.
         """
         try:
-            project, resource, language =\
-                    self._get_objects_from_request_params(
-                    project_slug, resource_slug, language_code)
-            try:
-                source_entity = SourceEntity.objects.get(string_hash=source_hash,
-                        resource=resource)
-            except SourceEntity.DoesNotExist, e:
-                return rc.NOT_FOUND
+            project, resource, language = self._requested_objects(
+                    project_slug, resource_slug, language_code
+            )
+        except NotFoundError, e:
+            return NOT_FOUND_REQUEST(unicode(e))
 
-            translations = Translation.objects.filter(
-                    source_entity=source_entity, language=language)
-            if not translations:
-                return rc.NOT_FOUND
-            field_map = self._get_fieldmap()
-            fields = self._get_fields_for_translation_value_query_set(field_map)
+        translations = Translation.objects.filter(
+            resource=resource, source_entity__string_hash=source_hash,
+            language=language
+        )
+        if not translations:
+            return rc.NOT_FOUND
+
+        field_map = self._get_fieldmap()
+        fields = self._get_fields_for_translation_value_query_set(field_map)
+        try:
             return self._generate_translations_dict(translations.values(
-                *fields), field_map, True)
+                    *fields), field_map, True)
         except NotFoundError, e:
             return NOT_FOUND_REQUEST(unicode(e))
         except NoContentError, e:
