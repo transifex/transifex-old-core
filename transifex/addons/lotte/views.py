@@ -928,6 +928,11 @@ def _save_translation(source_string, translations, target_language, user):
             # If an empty string has been issued then we delete the translation.
             if target_string == "":
                 translation_string.delete()
+
+                # Raising translation deleted signal
+                lotte_delete_translation.send(None, resource=resource,
+                    source_string_ids=[source_string.source_entity.id],
+                    language=target_language, user=user)
             else:
                 translation_string.string = target_string
                 translation_string.user = user
