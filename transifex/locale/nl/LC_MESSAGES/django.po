@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Transifex\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-17 13:23+0000\n"
+"POT-Creation-Date: 2012-05-29 15:56+0000\n"
 "PO-Revision-Date: 2012-05-15 17:17+0000\n"
 "Last-Translator: Richard E. van der Luit <nippur@fedoraproject.org>\n"
 "Language-Team: Dutch (http://www.transifex.net/projects/p/transifex/language/"
@@ -27,26 +27,26 @@ msgstr ""
 msgid "Search for a username or leave it blank"
 msgstr "Naar een gebruikersnaam zoeken of leeg laten"
 
-#: actionlog/models.py:161 actionlog/templates/object_action_list.html:7
+#: actionlog/models.py:162 actionlog/templates/object_action_list.html:7
 #: addons/copyright/models.py:80 addons/suggestions/models.py:45
 #: addons/suggestions/models.py:111 projects/models.py:376 teams/models.py:132
 #: teams/models.py:168 txpermissions/forms.py:18
 msgid "User"
 msgstr "Gebruiker"
 
-#: actionlog/models.py:170
+#: actionlog/models.py:171
 msgid "Action type"
 msgstr "Handelingstype"
 
-#: actionlog/models.py:171
+#: actionlog/models.py:172
 msgid "Action time"
 msgstr "Handelingstijd"
 
-#: actionlog/models.py:179
+#: actionlog/models.py:180
 msgid "log entry"
 msgstr "logboekregel"
 
-#: actionlog/models.py:180
+#: actionlog/models.py:181
 msgid "log entries"
 msgstr "logboekregels"
 
@@ -411,26 +411,6 @@ msgstr "Het project waar deze instelling van toepassing op is."
 #: addons/helptext/templates/extended_helptext.html:9
 msgid "...more"
 msgstr "...meer"
-
-#: addons/jsonmap/models.py:20
-msgid "Slug for the mapping. Usually the same as the old component slug."
-msgstr "Slug voor de toewijzing. Meestal hetzelfde als de oude component slug."
-
-#: addons/jsonmap/models.py:23
-msgid "Mapping in JSON format."
-msgstr "Mapping in JSON-formaat."
-
-#: addons/jsonmap/models.py:29
-msgid "Project to which the JSON mapping belongs."
-msgstr "Project waartoe de JSON-toewijzing behoort."
-
-#: addons/jsonmap/models.py:39
-msgid "JSONMap"
-msgstr "JSONMap"
-
-#: addons/jsonmap/models.py:40
-msgid "JSONMaps"
-msgstr "JSONMaps"
 
 #: addons/locks/handlers.py:59
 msgid "This translation is locked by someone else."
@@ -940,13 +920,11 @@ msgstr "Totaal"
 
 #: addons/lotte/templates/translate.html:943
 #: addons/lotte/templates/view_strings.html:224
-#: addons/trans_memory/templates/search_translation.html:52
 msgid "Source string"
 msgstr "Originele tekst"
 
 #: addons/lotte/templates/translate.html:944
 #: addons/lotte/templates/view_strings.html:225
-#: addons/trans_memory/templates/search_translation.html:53
 msgid "Translation"
 msgstr "Vertaling"
 
@@ -1214,50 +1192,6 @@ msgstr "Profiel"
 #, python-format
 msgid "%(project_name)s Timeline"
 msgstr "Tijdlijn van %(project_name)s"
-
-#: addons/trans_memory/templates/search_translation.html:14
-#: addons/trans_memory/templates/search_translation.html:20
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid "Search translations"
-msgstr "Vertalingen zoeken"
-
-#: addons/trans_memory/templates/search_translation.html:41
-#, python-format
-msgid "%(source_language)s &rarr; %(translation_language)s"
-msgstr "%(source_language)s &rarr; %(translation_language)s"
-
-#: addons/trans_memory/templates/search_translation.html:61
-msgid "Location:"
-msgstr "Locatie:"
-
-#: addons/trans_memory/templates/search_translation.html:73
-msgid "Tough luck! No translations obtained."
-msgstr "Helaas. Er zijn geen vertalingen verkregen."
-
-#: addons/trans_memory/templates/search_translation_form.html:7
-msgid "Search for a string:"
-msgstr "Zoeken naar een bericht:"
-
-#: addons/trans_memory/templates/search_translation_form.html:11
-msgid "From:"
-msgstr "Van:"
-
-#: addons/trans_memory/templates/search_translation_form.html:13
-msgid "To:"
-msgstr "Naar:"
-
-#: addons/trans_memory/templates/search_translation_form.html:38
-#: templates/search.html:7 templates/search.html.py:9
-#: templates/search_form.html:6
-msgid "Search"
-msgstr "Zoeken:"
-
-#: addons/trans_memory/templates/trans_memory/lotte_header_link.html:4
-msgid ""
-"Search in Transifex memory for existing translations (uses a new tab/window)"
-msgstr ""
-"Zoek in Transifex-geheugen voor bestaande vertalingen (gebruikt een nieuw "
-"venster/tab)"
 
 #: addons/txapps/models.py:40 projects/models.py:161 releases/models.py:31
 #: resources/models.py:141 templates/helptext/project_form_helptext.html:5
@@ -2080,16 +2014,6 @@ msgstr "release kennisgevingen"
 msgid "The release '%s' was deleted."
 msgstr "De release '%s' werd verwijderd."
 
-#: resources/api.py:1201
-#, python-format
-msgid "%i strings added"
-msgstr "%i strings toegevoegd"
-
-#: resources/api.py:1203
-#, python-format
-msgid "%i strings updated"
-msgstr "%i strings bijgewerkt"
-
 #: resources/backends.py:83
 #, python-format
 msgid "Error creating resource: %s"
@@ -2481,6 +2405,16 @@ msgstr "U kan op dit moment niet vergrendelen (Vergrendeld door %s)"
 #: resources/views.py:589
 msgid "You are not allowed to upload a translation."
 msgstr "U mag geen vertalingen uploaden."
+
+#: resources/api/__init__.py:682
+#, python-format
+msgid "%i strings added"
+msgstr "%i strings toegevoegd"
+
+#: resources/api/__init__.py:684
+#, python-format
+msgid "%i strings updated"
+msgstr "%i strings bijgewerkt"
 
 #: resources/formats/core.py:239
 #, python-format
@@ -3031,6 +2965,11 @@ msgid ""
 "You could also browse through <a href=\"%(project_list)s\">all projects</a>."
 msgstr ""
 "U kan ook bladeren door <a href=\"%(project_list)s\">alle projecten</a>."
+
+#: templates/search.html:7 templates/search.html.py:9
+#: templates/search_form.html:6
+msgid "Search"
+msgstr "Zoeken:"
 
 #: templates/search.html:9
 msgid "Results"
@@ -6086,3 +6025,47 @@ msgstr "Je hebt een toestemming verwijderd."
 #: txpermissions/views.py:153
 msgid "You removed the permission request."
 msgstr "Je hebt een verzoek om toestemming verwijderd."
+
+#~ msgid "Slug for the mapping. Usually the same as the old component slug."
+#~ msgstr ""
+#~ "Slug voor de toewijzing. Meestal hetzelfde als de oude component slug."
+
+#~ msgid "Mapping in JSON format."
+#~ msgstr "Mapping in JSON-formaat."
+
+#~ msgid "Project to which the JSON mapping belongs."
+#~ msgstr "Project waartoe de JSON-toewijzing behoort."
+
+#~ msgid "JSONMap"
+#~ msgstr "JSONMap"
+
+#~ msgid "JSONMaps"
+#~ msgstr "JSONMaps"
+
+#~ msgid "Search translations"
+#~ msgstr "Vertalingen zoeken"
+
+#~ msgid "%(source_language)s &rarr; %(translation_language)s"
+#~ msgstr "%(source_language)s &rarr; %(translation_language)s"
+
+#~ msgid "Location:"
+#~ msgstr "Locatie:"
+
+#~ msgid "Tough luck! No translations obtained."
+#~ msgstr "Helaas. Er zijn geen vertalingen verkregen."
+
+#~ msgid "Search for a string:"
+#~ msgstr "Zoeken naar een bericht:"
+
+#~ msgid "From:"
+#~ msgstr "Van:"
+
+#~ msgid "To:"
+#~ msgstr "Naar:"
+
+#~ msgid ""
+#~ "Search in Transifex memory for existing translations (uses a new tab/"
+#~ "window)"
+#~ msgstr ""
+#~ "Zoek in Transifex-geheugen voor bestaande vertalingen (gebruikt een nieuw "
+#~ "venster/tab)"
