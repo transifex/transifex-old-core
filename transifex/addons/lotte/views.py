@@ -933,7 +933,11 @@ def _save_translation(source_string, translations, target_language, user):
                 translation_string.user = user
                 translation_string.save()
 
-            _add_copyright(source_string, target_language, user)
+                # Raising translation saved signal
+                lotte_save_translation.send(None, resource=resource,
+                    source_string=source_string, language=target_language,
+                    user=user)
+
             invalidate_stats_cache(resource, target_language, user=user)
         except Translation.DoesNotExist:
             # Only create new if the translation string sent, is not empty!
@@ -943,7 +947,12 @@ def _save_translation(source_string, translations, target_language, user):
                     language=target_language, rule=rule, string=target_string,
                     resource=resource
                 )
-                _add_copyright(source_string, target_language, user)
+
+                # Raising translation saved signal
+                lotte_save_translation.send(None, resource=resource,
+                    source_string=source_string, language=target_language,
+                    user=user)
+
                 invalidate_stats_cache(resource, target_language, user=user)
             else:
                 # In cases of pluralized translations, sometimes only one
@@ -965,13 +974,6 @@ def _save_translation(source_string, translations, target_language, user):
             logger.error(msg, exc_info=True)
             raise LotteBadRequestError(msg)
     return warnings
-
-
-def _add_copyright(source_string, target_language, user):
-    lotte_save_translation.send(
-        None, resource=source_string.resource, source_string=source_string,
-        language=target_language, user=user
-    )
 
 
 # Restrict access only for private projects since this is used to fetch stuff
