@@ -17,6 +17,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 from django.db.models import get_model
 from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
+from transifex.languages.models import Language
 from .core import Handler, ParseError, CompileError
 from .compilation import PluralCompiler, SimpleCompilerFactory
 from .resource_collections import StringSet, GenericTranslation
@@ -205,21 +206,28 @@ class XliffHandler(SimpleCompilerFactory, Handler):
 
     def parse_tag_file(self, file_node, is_source=False):
         self.trans_unit_id_list = []
-        source_language = file_node.attributes.get('source-language', '').value
-        original = file_node.attributes.get('original', '').value
-        datatype = file_node.attributes.get('datatype', '').value
-        target_language_node = file_node.attributes.get('target-language', '')
-        if target_language_node:
-            target_language = target_language_node.value
-        else:
-            target_language = ''
-        if self.resource and source_language.replace('-', '_') != \
-                self.resource.source_language.code:
-            return
-        if target_language and \
-                target_language.replace('-', '_') != \
-                self.language.code:
-            return
+        xliff_source_language_code = file_node.attributes.get(
+                'source-language').value
+        source_language = Language.objects.by_code_or_alias_or_none(
+                xliff_source_language_code)
+        original = file_node.attributes.get('original').value
+        datatype = file_node.attributes.get('datatype').value
+        target_language_node = file_node.attributes.get('target-language')
+        xliff_target_language_code = target_language_node and\
+                target_language_node.value or ''
+        target_language = Language.objects.by_code_or_alias_or_none(
+                xliff_target_language_code)
+        if self.resource and source_language != self.resource.source_language:
+            raise self.HandlerParseError(_("Source language code '%s' in "\
+                "XLIFF file does not map to source language for the resource"\
+                ": '%s'." %(xliff_source_language_code,
+                    self.resource.source_language)))
+        if target_language and target_language != self.language:
+            raise self.HandlerParseError(_("Target language code '%s' in "\
+                "XLIFF file does not map to the translation language"\
+                ": '%s' for which it was uploaded." %(
+                    xliff_target_language_code,
+                    self.language)))
         context = [original, source_language, datatype]
         for node in file_node.childNodes:
             if node.nodeType == node.ELEMENT_NODE and node.localName == "body":
