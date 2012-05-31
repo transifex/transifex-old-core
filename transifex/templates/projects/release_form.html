@@ -6,7 +6,9 @@
 {{ block.super }}
 <script type="text/javascript">
 $(document).ready(function(){
-  $('a[rel*=facebox]').facebox()
+  $('a[rel*=facebox]').facebox();
+  $('#id_resources').attr('data-placeholder', 'Choose some projects...').css(
+      'width', '186px').chosen();
 });
 </script>
 {% endblock %}
