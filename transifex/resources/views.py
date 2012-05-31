@@ -31,6 +31,7 @@ from transifex.txcommon.log import logger
 
 from transifex.resources.forms import ResourceForm, ResourcePseudoTranslationForm
 from transifex.resources.models import Translation, Resource, RLStats
+from transifex.resources.signals import post_delete_translations
 from transifex.resources.handlers import (invalidate_object_templates,
     invalidate_stats_cache)
 from transifex.resources.formats.registry import registry
@@ -401,6 +402,9 @@ def resource_translations_delete(request, project_slug, resource_slug, lang_code
                           'lang': language.name,
                           'resource': resource.name})
         invalidate_stats_cache(resource, language, user=request.user)
+        post_delete_translations.send(
+            sender=None, resource=resource, language=language
+        )
         return HttpResponseRedirect(reverse('resource_detail',
                                     args=[resource.project.slug, resource.slug]),)
     else:
