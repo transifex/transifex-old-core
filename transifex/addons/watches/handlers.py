@@ -3,10 +3,8 @@ from django.conf import settings
 
 from notification import models as notification
 
-from lotte.signals import lotte_done
-from transifex.projects.signals import post_submit_translation
-from transifex.projects.signals import post_resource_save, \
-        post_release_save
+from transifex.projects.signals import post_submit_translation, \
+    post_resource_save, post_release_save, lotte_done
 from transifex.txcommon import notifications as txnotification
 from transifex.txcommon.log import logger
 

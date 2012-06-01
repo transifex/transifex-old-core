@@ -11,7 +11,7 @@
 {% load humanize%}
 
 <script type="text/javascript">
-  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});	
+  $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
 
   $("a.language_chooser_trigger").click(function(){
     $("div.language_chooser").slideToggle();
@@ -82,13 +82,13 @@
       </a>
     </h4>
   <div class="first_level title_wrapper" style="padding-top:0;border-top:none;">
-    
+
     <div class="details_font">
              {% blocktrans with stats.total|intcomma as total_entities and wordcount|intcomma as wordcount %} Total:&nbsp;{{ total_entities }} strings, {{ wordcount }} words{% endblocktrans %}<br/>
              {% blocktrans with stats.translated|intcomma as trans_count and stats.translated_wordcount|intcomma as trans_wordcount %} Translated:&nbsp;{{ trans_count }} strings, {{ trans_wordcount }} words {% endblocktrans %}<br/>
              {% blocktrans with stats.untranslated|intcomma as trans_count and stats.untranslated_wordcount|intcomma as trans_wordcount %} Remaining:&nbsp;{{ trans_count }} strings ({{ trans_wordcount }} words) {% endblocktrans %}<br/>
              {% if show_reviewed_stats %}{% blocktrans with stats.reviewed|intcomma as reviewed_count %} Reviewed:&nbsp;{{ reviewed_count }} strings {% endblocktrans %}<br/>{% endif %}
-             {% hook 'matches_overview.html' %}  
+             {% hook 'leverage.html' %}
     </div>
     <span class="translate_button_wrapper">
     {% if team %}
@@ -139,7 +139,7 @@
       {% endwith %}
 
     </div>
-    
+
   </div>
   <div class="first_level more_actions">
         <ul class="right">
@@ -233,7 +233,7 @@
             </span>
             <span class="tipsy_enable" title="{% trans "Add only reviewed translations into the file. Untranslated strings are not filled at all." %}" style="border:0">?</span>
           </li>
-          {% endifnotequal %}         
+          {% endifnotequal %}
 
           {% ifnotequal resource.source_language target_language %}
 

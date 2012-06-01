@@ -51,4 +51,10 @@ project_type_check = Signal(providing_args=['instance'])
 # Cache signals
 project_outsourced_changed = Signal(providing_args=['project'])
 
+# FIXME: Lotte signals should stay with its app
+lotte_init = Signal(providing_args=["request", "resources", "language"])
+lotte_done = Signal(providing_args=["request", "resources", "language", "modified"])
+lotte_save_translation = Signal()
+lotte_delete_translation = Signal()
+
 class ClaNotSignedError(Exception): pass
