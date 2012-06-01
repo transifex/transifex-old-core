@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from transifex.releases.feeds import ReleaseFeed, ReleaseLanguageFeed
 from transifex.releases.views import *
 
-RELEASE_URL_PARTIAL = r'r/(?P<release_slug>[-\w]+)/'
+RELEASE_URL_PARTIAL = r'^r/(?P<release_slug>[\-\w_]+)/'
 
 feeds = {
     'release': ReleaseFeed,
