@@ -23,13 +23,13 @@ resource_handler = Resource(ResourceHandler, authentication=auth)
 release_handler = Resource(ReleaseHandler, authentication=auth)
 project_handler = Resource(ProjectHandler, authentication=auth)
 stats_handler = Resource(StatsHandler, authentication=auth)
-translation_handler = Resource(TranslationHandler, authentication=auth)
 actionlog_handler = Resource(ActionlogHandler, authentication=auth)
 formats_handler = Resource(FormatsHandler, authentication=auth)
 translation_objects_handler = Resource(TranslationObjectsHandler,
         authentication=auth)
 single_translation_handler = Resource(SingleTranslationHandler,
         authentication=auth)
+translation_handler = Resource(TranslationHandler)
 
 urlpatterns = patterns('',
     url(
