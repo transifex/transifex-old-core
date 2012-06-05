@@ -998,6 +998,7 @@ class UnitTestTranslationObjectsHandler(TestCase):
         expected_fieldmap = {
             'source_entity__string': 'key',
             'source_entity__context': 'context',
+            'source_entity__developer_comment': 'comment',
             'string': 'translation',
             'reviewed': 'reviewed',
             'source_entity__pluralized': 'pluralized'

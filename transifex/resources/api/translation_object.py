@@ -174,6 +174,7 @@ class BaseTranslationHandler(BaseHandler):
         field_map = {
                 'source_entity__string': 'key',
                 'source_entity__context': 'context',
+                'source_entity__developer_comment': 'comment',
                 'string': 'translation',
                 'reviewed': 'reviewed',
                 'source_entity__pluralized': 'pluralized'
@@ -443,6 +444,7 @@ class BaseTranslationHandler(BaseHandler):
         field_map = {
                 'source_entity__string': 'key',
                 'source_entity__context': 'context',
+                'source_entity__developer_comment': 'comment',
                 'string': 'translation',
                 'reviewed': 'reviewed',
                 'source_entity__pluralized': 'pluralized',
@@ -591,6 +593,7 @@ class SingleTranslationHandler(BaseTranslationHandler):
         field_map = {
                 'source_entity__string': 'key',
                 'source_entity__context': 'context',
+                'source_entity__developer_comment': 'comment',
                 'string': 'translation',
                 'reviewed': 'reviewed',
                 'source_entity__pluralized': 'pluralized',
@@ -778,7 +781,7 @@ class TranslationObjectsHandler(BaseTranslationHandler):
 
             self._update_translations(updated_translations)
 
-            keys = ['key', 'context', 'translation',
+            keys = ['key', 'context', 'comment', 'translation',
                     'reviewed', 'pluralized', 'wordcount',
                     'last_update', 'user', 'position', 'occurrences',]
             field_map, fields = self._get_update_fieldmap_and_fields(keys)
