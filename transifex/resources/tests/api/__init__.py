@@ -464,7 +464,9 @@ class TestTranslationAPI(APIBaseTests):
 
     def test_get_translation(self):
         res = self.client['anonymous'].get(self.url_new_translation)
-        self.assertEquals(res.status_code, 401)
+        # Status code is 404 since anonymous users can now read translations
+        # and resource was not found.
+        self.assertEquals(res.status_code, 404)
         res = self.client['registered'].get(
             reverse(
                 'apiv2_translation',
@@ -500,6 +502,26 @@ class TestTranslationAPI(APIBaseTests):
         ])
         res = self.client['registered'].get(url)
         self.assertEquals(res.status_code, 200)
+        # Anonymous user can download files from public projects
+        res = self.client['anonymous'].get(url)
+
+        # Registered and Anonymous users are forbidden to download
+        # translation files from private projects.
+        self.assertEquals(res.status_code, 200)
+        url = "".join([
+                reverse(
+                    'apiv2_translation',
+                    kwargs={
+                        'project_slug': 'project2',
+                        'resource_slug': 'resource1',
+                            'lang_code': 'en_US',
+                    }),
+                "?file"
+        ])
+        res = self.client['registered'].get(url)
+        self.assertEquals(res.status_code, 403)
+        res = self.client['anonymous'].get(url)
+        self.assertEquals(res.status_code, 403)
 
     def test_delete_translations(self):
         self._create_resource()
