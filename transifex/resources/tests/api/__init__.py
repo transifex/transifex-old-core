@@ -1153,9 +1153,11 @@ class UnitTestTranslationObjectsHandler(TestCase):
         se_id = 1
         trans_obj_dict = {se_id: [t1]}
         updated_translations = []
+        new_translations = []
         pluralized = False
         self.obj._collect_updated_translations(translation, trans_obj_dict,
-                se_id, updated_translations, user, pluralized)
+                se_id, updated_translations, new_translations,
+                user, pluralized)
         self.assertTrue(t1 in updated_translations)
         self.assertEqual(t1.user, user)
         self.assertEqual(t1.reviewed, False)
@@ -1166,10 +1168,11 @@ class UnitTestTranslationObjectsHandler(TestCase):
         t2.reviewed = False
         translation = {'translation':{'1':'foo1', '5':'foo5'}}
         updated_translations = []
+        new_translations = []
         trans_obj_dict[se_id].append(t2)
         pluralized = True
         self.obj._collect_updated_translations(translation, trans_obj_dict,
-                se_id, updated_translations, user, pluralized)
+                se_id, updated_translations, new_translations, user, pluralized)
         self.assertTrue(t1 in updated_translations)
         self.assertTrue(t2 in updated_translations)
         self.assertEqual(t2.user, user)
@@ -1270,7 +1273,7 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
                 item['translation'] = {'0': '0', '1': '1', '2': '2', '3': '3',
                         '4': '4', '5': '5'}
                 json[index] = item
-            if item['key'] == 'String2' and item['context'] == 'Context2':
+            elif item['key'] == 'String2' and item['context'] == 'Context2':
                 item['source_entity_hash'] = hash_tag(item['key'], item['context'])
                 item.pop('key')
                 item.pop('context')
@@ -1287,6 +1290,13 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
 
         expected_json = []
         self.assertEqual(response.status_code, 403)
+        json.append(
+                {
+                    'source_entity_hash': hash_tag('String4', 'Context4'),
+                    'translation': 'foobar',
+                    'user': 'team_member'
+                }
+        )
         for item in json:
             item.pop('user')
         response = self.client['maintainer'].put(reverse(
@@ -1297,8 +1307,7 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
         self.assertEqual(response.status_code, 200)
 
 
-def create_sample_translations(cls):
-    self = cls
+def create_sample_translations(self):
 
     self.source_entity1 = SourceEntity.objects.create(string='String2',
         context='Context2', occurrences='Occurrences2',
@@ -1529,5 +1538,5 @@ class SystemTestSingleTranslationHandler(BaseTestCase):
             }),
             content_type="application/json"
         )
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 200)
 

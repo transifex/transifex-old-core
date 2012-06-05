@@ -22,6 +22,8 @@ from transifex.resources.models import Resource, SourceEntity, Translation
 from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.teams.models import Team
 from transifex.resources.handlers import invalidate_stats_cache
+from transifex.resources.formats.resource_collections import \
+        SourceEntityCollection, TranslationCollection
 from transifex.api.utils import BAD_REQUEST, FORBIDDEN_REQUEST,\
         NOT_FOUND_REQUEST
 from .exceptions import BadRequestError, NoContentError, NotFoundError, \
@@ -294,6 +296,40 @@ class BaseTranslationHandler(BaseHandler):
             raise BadRequestError("Translations are not in a list!")
         return True
 
+    def _init_source_entity_collection(self, source_entities):
+        ses = SourceEntityCollection()
+        for se in source_entities:
+            ses.add(se)
+        return ses
+
+    def _init_translation_collection(self, translations):
+        translation_collection = TranslationCollection()
+        for translation in translations:
+            translation_collection.add(translation)
+        return translation_collection
+
+    def _get_trans_obj_dict(self, se_collection, translation_collection,
+            language):
+        pluralrules_numbers = language.get_pluralrules_numbers()
+        trans_obj_dict = {}
+        for s in se_collection:
+            se = se_collection._items.get(s)
+            if not se:
+                continue
+            if se.pluralized:
+                t = []
+                for rule in pluralrules_numbers:
+                    t.append(translation_collection._items.get((se.id, rule),
+                            Translation(string="", rule=rule,
+                                language=language, source_entity=se,
+                                resource=se.resource)))
+            else:
+                t = [translation_collection._items.get((se.id, 5),
+                        Translation(string="", rule=5, source_entity=se,
+                            language=language, resource=se.resource))]
+            trans_obj_dict[se.string_hash] = t
+        return trans_obj_dict
+
     def _translations_as_dict(self, translations, resource, language):
         """
         Get a dictionary where source_entity id is mapped to
@@ -311,21 +347,20 @@ class BaseTranslationHandler(BaseHandler):
         query = Q()
         for translation in translations:
             if translation.has_key('source_entity_hash'):
-                query |= Q(source_entity__string_hash=translation[
+                query |= Q(string_hash=translation[
                     'source_entity_hash'])
-
-        query &= Q(resource=resource, language=language)
-
-        trans_obj_dict = {}
-        for t in Translation.objects.filter(query).select_related(
-                'source_entity', 'user').iterator():
-            se = t.source_entity
-            if trans_obj_dict.get(se.string_hash):
-                trans_obj_dict.get(se.string_hash).append(t)
-            else:
-                trans_obj_dict[se.string_hash] = [t]
-
-        return trans_obj_dict
+        query &= Q(resource=resource)
+        # SourceEntity collection
+        se_collection = self._init_source_entity_collection(
+                SourceEntity.objects.filter(query).iterator())
+        # Translation collection
+        translation_collection = self._init_translation_collection(
+                Translation.objects.filter(
+                    source_entity__id__in=se_collection.se_ids(),
+                    language=language).select_related(
+                'source_entity', 'user').iterator())
+        return self._get_trans_obj_dict(se_collection,
+                translation_collection, language)
 
     def _user_has_update_perms(self, translation_objs=None,
             translation_reviewed=False,  can_submit_translations=False,
@@ -357,7 +392,8 @@ class BaseTranslationHandler(BaseHandler):
         return True
 
     def _collect_updated_translations(self, translation, trans_obj_dict,
-            checksum, updated_translations, user, pluralized):
+            checksum, updated_translations, new_translations,
+            user, pluralized):
         """
         Collect only updated translations
         Args:
@@ -367,6 +403,7 @@ class BaseTranslationHandler(BaseHandler):
                            translations
             checksum: An md5 checksum for a key and context
             updated_translations: A list of updated translations
+            new_translation: A list of new translations
             user: A User object
             pluaralized: A boolean
         """
@@ -389,7 +426,10 @@ class BaseTranslationHandler(BaseHandler):
                 # translation strings is updated
                 t.user = user
             translations.append(t)
-            if updated:
+        if updated:
+            if not t.id:
+                new_translations.extend(translations)
+            else:
                 updated_translations.extend(translations)
 
     def _is_pluralized(self, translation, nplurals):
@@ -433,6 +473,10 @@ class BaseTranslationHandler(BaseHandler):
             updated_translations: A list of updated Translation objects
         """
         Translation.objects.bulk_update(updated_translations)
+
+    @transaction.commit_on_success
+    def _insert_translations(self, new_translations):
+        Translation.objects.bulk_insert(new_translations)
 
     def _get_update_fieldmap_and_fields(self, keys):
         """Get fieldmap and fields for a PUT request.
@@ -523,7 +567,7 @@ class BaseTranslationHandler(BaseHandler):
 
     def _process_translation_dict(self, translation, project, resource,
             language, team, check, is_maintainer, request_user, se_ids,
-            updated_translations, trans_obj_dict):
+            updated_translations, new_translations, trans_obj_dict):
         """
         Process a translation dictionary in the JSON request and update
         se_ids and updated_translations lists.
@@ -541,6 +585,7 @@ class BaseTranslationHandler(BaseHandler):
                 translations have been updated.
             updated_translations: A list containing updated Translation
                 instances.
+            new_translations: A list containing new Translation instances.
             trans_obj_dict: A dictionary mapping source_entity.string_hash
                 to a list of Translation objects.
         """
@@ -575,7 +620,8 @@ class BaseTranslationHandler(BaseHandler):
         pluralized = self._is_pluralized(translation, nplurals)
         self._collect_updated_translations(
                 translation, trans_obj_dict, checksum,
-                updated_translations, user, pluralized)
+                updated_translations, new_translations,
+                user, pluralized)
         se_ids.append(se_id)
 
 
@@ -675,15 +721,18 @@ class SingleTranslationHandler(BaseTranslationHandler):
             if not trans_obj_dict:
                 return rc.NOT_FOUND
             updated_translations = []
+            new_translations = []
             se_ids = []
             # All permission checks for a user is done here and
             # updated translations are collected in updated_tranlsations
             # and source_entity.id in se_ids
             self._process_translation_dict(data, project, resource,
                     language, team, check, is_maintainer, request.user,
-                    se_ids, updated_translations, trans_obj_dict)
+                    se_ids, updated_translations, new_translations,
+                    trans_obj_dict)
             # Updated translations are saved to db
             self._update_translations(updated_translations)
+            self._insert_translations(new_translations)
 
             translations = Translation.objects.filter(
                     source_entity=source_entity, language=language)
@@ -770,6 +819,7 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                     translations, resource, language)
 
             updated_translations = []
+            new_translations = []
             se_ids = []
             for translation in translations:
                 # All permission checks for a user is done here and
@@ -777,9 +827,11 @@ class TranslationObjectsHandler(BaseTranslationHandler):
                 # and source_entity.id in se_ids
                 self._process_translation_dict(translation, project, resource,
                         language, team, check, is_maintainer, request.user,
-                        se_ids, updated_translations, trans_obj_dict)
+                        se_ids, updated_translations, new_translations,
+                        trans_obj_dict)
 
             self._update_translations(updated_translations)
+            self._insert_translations(new_translations)
 
             keys = ['key', 'context', 'comment', 'translation',
                     'reviewed', 'pluralized', 'wordcount',
