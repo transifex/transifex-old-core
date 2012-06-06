@@ -220,14 +220,14 @@ class XliffHandler(SimpleCompilerFactory, Handler):
         if self.resource and source_language != self.resource.source_language:
             raise self.HandlerParseError(_("Source language code '%s' in "\
                 "XLIFF file does not map to source language for the resource"\
-                ": '%s'." %(xliff_source_language_code,
-                    self.resource.source_language)))
+                ": '%s'.") %(xliff_source_language_code,
+                    self.resource.source_language))
         if target_language and target_language != self.language:
             raise self.HandlerParseError(_("Target language code '%s' in "\
                 "XLIFF file does not map to the translation language"\
-                ": '%s' for which it was uploaded." %(
+                ": '%s' for which it was uploaded.") %(
                     xliff_target_language_code,
-                    self.language)))
+                    self.language))
         context = [original, source_language, datatype]
         for node in file_node.childNodes:
             if node.nodeType == node.ELEMENT_NODE and node.localName == "body":
