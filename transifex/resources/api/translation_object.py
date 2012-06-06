@@ -448,8 +448,8 @@ class BaseTranslationHandler(BaseHandler):
             pluaralized: A boolean
         """
         translations = []
-        updated = False
         for t in trans_obj_dict.get(checksum):
+            updated = False
             if translation.has_key('reviewed'):
                 reviewed = translation.get('reviewed')
                 if t.reviewed != reviewed:
@@ -465,15 +465,14 @@ class BaseTranslationHandler(BaseHandler):
                 # Update author info for a translation only when the
                 # translation strings is updated
                 t.user = user
-            translations.append(t)
-        if updated:
-            # If Translation instance t does not have a ID, then
-            # append translations in new_translations to be inserted
-            # in the database.
-            if not t.id:
-                new_translations.extend(translations)
-            else:
-                updated_translations.extend(translations)
+            if updated:
+                # If Translation instance t does not have a ID, then
+                # append translation in new_translations to be inserted
+                # in the database.
+                if not t.id:
+                    new_translations.append(t)
+                else:
+                    updated_translations.append(t)
 
     def _is_pluralized(self, translation, nplurals):
         """

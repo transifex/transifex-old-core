@@ -1147,6 +1147,7 @@ class UnitTestTranslationObjectsHandler(TestCase):
         t1 = Mock()
         t1.rule = 5
         t1.reviewed = True
+        t1.id = 1
         user = Mock()
         translation = {'translation': 'foo', 'reviewed': False}
 
@@ -1166,6 +1167,7 @@ class UnitTestTranslationObjectsHandler(TestCase):
         t2 = Mock()
         t2.rule = 1
         t2.reviewed = False
+        t2.id = None
         translation = {'translation':{'1':'foo1', '5':'foo5'}}
         updated_translations = []
         new_translations = []
@@ -1174,7 +1176,7 @@ class UnitTestTranslationObjectsHandler(TestCase):
         self.obj._collect_updated_translations(translation, trans_obj_dict,
                 se_id, updated_translations, new_translations, user, pluralized)
         self.assertTrue(t1 in updated_translations)
-        self.assertTrue(t2 in updated_translations)
+        self.assertTrue(t2 in new_translations)
         self.assertEqual(t2.user, user)
         self.assertEqual(t2.reviewed, False)
         self.assertEqual(t2.string, 'foo1')
@@ -1305,6 +1307,15 @@ class SystemTestPutTranslationStrings(TransactionBaseTestCase):
             data = simplejson.dumps(json),
             content_type="application/json")
         self.assertEqual(response.status_code, 200)
+
+        # No SourceEntity found for source_entity_hash for a resource
+        json = [{'source_entity_hash': 'foo', 'translation': 'foobar'}]
+        response = self.client['maintainer'].put(reverse(
+            'translation_strings',
+            args=['project1', 'resource1', self.language_ar.code]),
+            data = simplejson.dumps(json),
+            content_type="application/json")
+        self.assertEqual(response.status_code, 404)
 
 
 def create_sample_translations(self):
