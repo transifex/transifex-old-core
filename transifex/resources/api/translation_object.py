@@ -297,12 +297,30 @@ class BaseTranslationHandler(BaseHandler):
         return True
 
     def _init_source_entity_collection(self, source_entities):
+        """
+        Initialize SourceEntityCollection from SourceEntity
+        queryset.
+
+        Args:
+            source_entities: A SourceEntity queryset.
+        Returns:
+            Returns a SourceEntityCollection instance.
+        """
         ses = SourceEntityCollection()
         for se in source_entities:
             ses.add(se)
         return ses
 
     def _init_translation_collection(self, translations):
+        """
+        Intialize TranslationCollection from Translation
+        queryset.
+
+        Args:
+            translations: A Translation queryset.
+        Returns:
+            Returns a TranslationCollection instance.
+        """
         translation_collection = TranslationCollection()
         for translation in translations:
             translation_collection.add(translation)
@@ -310,6 +328,25 @@ class BaseTranslationHandler(BaseHandler):
 
     def _get_trans_obj_dict(self, se_collection, translation_collection,
             language):
+        """
+        Generate trans_obj_dict from a  SourceEntityCollection, a
+        TranslationCollection and a Language.
+
+        trans_obj_dict is a dictionary mapping source_entity.string_hash
+        to a list of its translations in a language.
+
+        Args:
+            se_collection: A SourceEntityCollection instance.
+            translation_collection: A TranslationCollection instance.
+            language: A Language instance.
+
+        Returns:
+            A dictionary: trans_obj_dict
+
+        If a translation is not found for a source entity in the
+        TranslationCollection instance, then an in-memory
+        Translation object is instantiated and saved in trans_obj_dict.
+        """
         pluralrules_numbers = language.get_pluralrules_numbers()
         trans_obj_dict = {}
         for s in se_collection:
@@ -328,6 +365,9 @@ class BaseTranslationHandler(BaseHandler):
                         Translation(string="", rule=5, source_entity=se,
                             language=language, resource=se.resource))]
             trans_obj_dict[se.string_hash] = t
+        if not trans_obj_dict:
+            raise NotFoundError("No source entity exists for the supplied"\
+                    "data for which translations can be updated or created.")
         return trans_obj_dict
 
     def _translations_as_dict(self, translations, resource, language):
@@ -350,10 +390,10 @@ class BaseTranslationHandler(BaseHandler):
                 query |= Q(string_hash=translation[
                     'source_entity_hash'])
         query &= Q(resource=resource)
-        # SourceEntity collection
+        # Create a SourceEntityCollection
         se_collection = self._init_source_entity_collection(
                 SourceEntity.objects.filter(query).iterator())
-        # Translation collection
+        # Create a TranslationCollection
         translation_collection = self._init_translation_collection(
                 Translation.objects.filter(
                     source_entity__id__in=se_collection.se_ids(),
@@ -395,7 +435,7 @@ class BaseTranslationHandler(BaseHandler):
             checksum, updated_translations, new_translations,
             user, pluralized):
         """
-        Collect only updated translations
+        Collects updated and new translations.
         Args:
             translation: A dictionary representing a translation(s) in
                          request JSON
@@ -427,6 +467,9 @@ class BaseTranslationHandler(BaseHandler):
                 t.user = user
             translations.append(t)
         if updated:
+            # If Translation instance t does not have a ID, then
+            # append translations in new_translations to be inserted
+            # in the database.
             if not t.id:
                 new_translations.extend(translations)
             else:
@@ -476,6 +519,11 @@ class BaseTranslationHandler(BaseHandler):
 
     @transaction.commit_on_success
     def _insert_translations(self, new_translations):
+        """
+        Bulk insert translations.
+        Args:
+            new_translations: A list of new Translation objects.
+        """
         Translation.objects.bulk_insert(new_translations)
 
     def _get_update_fieldmap_and_fields(self, keys):
