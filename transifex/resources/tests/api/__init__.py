@@ -784,17 +784,6 @@ class TestTranslationAPI(APIBaseTests):
 
         res = self.client['anonymous'].post(self.url_new_translation)
         self.assertEquals(res.status_code, 405)
-        res = self.client['anonymous'].post(
-            reverse(
-                'apiv2_translation',
-                kwargs={
-                    'project_slug': 'project2',
-                    'resource_slug': 'resource1',
-                    'lang_code': 'en_US',
-                }
-            )
-        )
-        self.assertEquals(res.status_code, 405)
 
         f = open(self.po_file)
         res = self.client['anonymous'].put(
