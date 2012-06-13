@@ -552,7 +552,7 @@ class TestTranslationAPI(APIBaseTests):
                 }
             )
         )
-        self.assertEquals(res.status_code, 401)
+        self.assertEquals(res.status_code, 403)
         res = self.client['registered'].delete(
             reverse(
                 'apiv2_translation',
@@ -651,6 +651,28 @@ class TestTranslationAPI(APIBaseTests):
             )
         )
         self.assertContains(res, "source language", status_code=400)
+        res = self.client['anonymous'].delete(
+			reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'project2',
+                    'resource_slug': 'resource1',
+                    'lang_code': 'en_US',
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 403)
+        res = self.client['registered'].delete(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'project2',
+                    'resource_slug': 'resource1',
+                    'lang_code': 'en_US',
+                }
+            )
+        )
+        self.assertEquals(res.status_code, 403)
 
     def test_put_translations(self):
         self._create_resource()
@@ -761,7 +783,24 @@ class TestTranslationAPI(APIBaseTests):
         self.assertEquals(len(r.available_languages_without_teams), 2)
 
         res = self.client['anonymous'].post(self.url_new_translation)
-        self.assertEquals(res.status_code, 401)
+        self.assertEquals(res.status_code, 405)
+
+        f = open(self.po_file)
+        res = self.client['anonymous'].put(
+            reverse(
+                'apiv2_translation',
+                kwargs={
+                    'project_slug': 'project2',
+                    'resource_slug': 'resource1',
+                    'lang_code': 'en_US'
+                }
+            ),
+            data={
+                'name': 'name.po',
+                'attachment': f
+            },
+        )
+        self.assertEqual(res.status_code, 401)
 
         f = open(self.po_file)
         res = self.client['registered'].put(
