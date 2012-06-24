@@ -6,10 +6,12 @@ User related class and functions.
 from uuid import uuid4
 from django.conf import settings
 from django.contrib.auth.models import User
-from userena.models import UserenaSignup
-from social_auth.backends.pipeline import USERNAME, USERNAME_MAX_LENGTH, \
-        warn_setting
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
+from userena.models import UserenaSignup
+
+from transifex.txcommon.forms import GetUsernameForm
 
 class CreateUserFromSocial(object):
     """Create local users from a social auth mechanism.
@@ -42,57 +44,20 @@ class CreateUserFromSocial(object):
 
 create_user = CreateUserFromSocial()
 
+def redirect_to_get_username_form(request, user=None, username=None, *args, **kwargs):
 
-class GetUsername(object):
-    """Choose a username for socially authenticated users.
+    if user:
+        return {'username': user.username}
 
-    This is a wrapper around social_auth.backends.pipeline.user.get_username.
-    """
+    template_name = 'txcommon/get_username.html'
+    if request.method == 'POST':
+        form = GetUsernameForm(request.POST)
+        if form.is_valid():
+            return {'username': form.cleaned_data['username']}
+    else:
+        form = GetUsernameForm({'username': username})
 
-    def __call__(self, details, user=None, *args, **kwargs):
-        """Get a new username.
+    return render_to_response(template_name, {
+        'form': form
+        }, context_instance=RequestContext(request))
 
-        We check for existing usernames in a case-insensitive way.
-        """
-        if user:
-            return {'username': user.username}
-
-        warn_setting('SOCIAL_AUTH_FORCE_RANDOM_USERNAME', 'get_username')
-        warn_setting('SOCIAL_AUTH_DEFAULT_USERNAME', 'get_username')
-        warn_setting('SOCIAL_AUTH_UUID_LENGTH', 'get_username')
-        warn_setting('SOCIAL_AUTH_USERNAME_FIXER', 'get_username')
-
-        if getattr(settings, 'SOCIAL_AUTH_FORCE_RANDOM_USERNAME', False):
-            username = uuid4().get_hex()
-        elif details.get(USERNAME):
-            username = details[USERNAME]
-        elif settings.hasattr('SOCIAL_AUTH_DEFAULT_USERNAME'):
-            username = settings.SOCIAL_AUTH_DEFAULT_USERNAME
-            if callable(username):
-                username = username()
-        else:
-            username = uuid4().get_hex()
-
-        uuid_lenght = getattr(settings, 'SOCIAL_AUTH_UUID_LENGTH', 16)
-        username_fixer = getattr(settings, 'SOCIAL_AUTH_USERNAME_FIXER',
-                                 lambda u: u)
-
-        short_username = username[:USERNAME_MAX_LENGTH - uuid_lenght]
-        final_username = None
-
-        while True:
-            final_username = username_fixer(username)[:USERNAME_MAX_LENGTH]
-
-            try:
-                User.objects.get(username__iexact=final_username)
-            except User.DoesNotExist:
-                break
-            else:
-                # User with same username already exists, generate a unique
-                # username for current user using username as base but adding
-                # a unique hash at the end. Original username is cut to avoid
-                # the field max_length.
-                username = short_username + uuid4().get_hex()[:uuid_lenght]
-        return {'username': final_username}
-
-get_username = GetUsername()
