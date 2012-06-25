@@ -45,11 +45,12 @@ class CreateUserFromSocial(object):
 create_user = CreateUserFromSocial()
 
 def redirect_to_get_username_form(request, user=None, username=None, *args, **kwargs):
-
+    """ Redirect user to from to enter desired username
+    """
+    template_name = 'txcommon/get_username.html'
     if user:
         return {'username': user.username}
 
-    template_name = 'txcommon/get_username.html'
     if request.method == 'POST':
         form = GetUsernameForm(request.POST)
         if form.is_valid():
