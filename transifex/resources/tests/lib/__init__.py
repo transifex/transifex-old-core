@@ -9,6 +9,7 @@ from strings import *
 from xliff import *
 from wiki import *
 from mozilla_properties import *
+from magento import *
 from pseudo import *
 from validators import *
 from info import *

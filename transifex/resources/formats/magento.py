@@ -3,16 +3,62 @@
 """
 Magento CSV handler
 """
-import os, re
+from __future__ import absolute_import
+import os
+import re
 import codecs
+import csv
+from cStringIO import StringIO
 
 from transifex.txcommon.log import logger
 from transifex.resources.formats.utils.decorators import *
 from transifex.resources.formats.utils.hash_tag import hash_tag
-from transifex.resources.formats.core import GenericTranslation, Handler, \
-        STRICT, StringSet
+from transifex.resources.formats.core import GenericTranslation,\
+    STRICT, StringSet, Handler
+from transifex.resources.formats.compilation import SimpleCompilerFactory,\
+    NormalDecoratorBuilder, Compiler
 
-class MagentoCSVHandler(Handler):
+
+class CommentedFile(object):
+    """
+    A File like class to skip comment lines in a CSV file
+    and append the comment lines to template_dict['buf']
+    """
+    def __init__(self, f, template_dict, comment_chars=("#",)):
+        self.f = f
+        self.comment_chars = comment_chars
+        self.template_dict = template_dict
+
+    def next(self):
+        line = self.f.next()
+        while line.startswith(self.comment_chars):
+            self.template_dict['buf'] += line.decode('utf-8')
+            line = self.f.next()
+        return line
+
+    def __iter__(self):
+        return self
+
+
+class CSVDecoratorBuilder(NormalDecoratorBuilder):
+    def __call__(self, translation):
+        """Escape the string first including empty strings"""
+        return self._escape(translation)
+
+
+class MagentoCSVCompilerFactory(SimpleCompilerFactory):
+
+    def _get_translation_decorator(self, pseudo_type):
+        if pseudo_type is None:
+            return CSVDecoratorBuilder(escape_func=self._escape)
+        else:
+            return PseudoDecoratorBuilder(
+                escape_func=self._escape,
+                pseudo_func=pseudo_type.compile
+            )
+
+
+class MagentoCSVHandler(MagentoCSVCompilerFactory, Handler):
     """
     Handler for Magento CSV files.
     """
@@ -33,69 +79,48 @@ class MagentoCSVHandler(Handler):
     def contents_check(self, filename):
         pass
 
-    def __init__(self, filename=None, resource= None, language = None):
-        super(MagentoCSVHandler, self).__init__(filename, resource, language)
-
-    @need_language
-    @need_file
-    def parse_file(self, is_source=False, lang_rules=None):
+    def _parse(self, is_source=False, lang_rules=None):
         """
         Parse an CSV file and create a stringset with all entries in the file.
         """
-        stringset = StringSet()
-        suggestions = StringSet()
+        template = u''
+        template_dict = {'buf': ''}
+        f = StringIO(self.content.encode(self.default_encoding))
+        f = CommentedFile(f, template_dict, comment_chars=self.comment_chars)
+        csv_reader = csv.reader(f)
+        self._find_linesep(self.content)
 
-        fh = codecs.open(self.filename, "r", "utf-8")
-        try:
-            buf = fh.read()
-        finally:
-            fh.close()
-
-        for line in buf.split('\n'):
-
-            # Skip empty lines and comments
-            if not line or line.startswith(self.comment_chars):
+        for row in csv_reader:
+            line = ','.join(['"%s"' % col for col in row]).decode(
+                self.default_encoding)
+            # Skip empty lines
+            # Comment lines have already been skipped and recorded in
+            # CommentedFile
+            if not line:
+                if is_source:
+                    template_dict['buf'] += line + self.linesep
                 continue
-
             try:
-                source, trans = line.split(',', 1)
+                source, trans = row
+                source = source.decode(self.default_encoding)
+                trans = trans.decode(self.default_encoding)
             except ValueError:
-                logger.error('Could not parse line "%s"' % line)
+                logger.warning('Could not parse line "%s"' % line)
+                if is_source:
+                    template_dict['buf'] += line + self.linesep
                 continue
-
-            # CSV-strings are surrounded by quotes, which need to be removed
-            if source.startswith('"') and source.endswith('"'):
-                source = source[1:-1]
-
-            if source.startswith('\'') and source.endswith('\''):
-                source = source[1:-1]
-
-            if trans.startswith('"') and trans.endswith('"'):
-                trans = trans[1:-1]
-
-            if trans.startswith('\'') and trans.endswith('\''):
-                trans = trans[1:-1]
-
-            # We use empty context
             context = ""
-
             if is_source:
-                new_line = re.sub(
-                    re.escape(trans),
-                    "%(hash)s_tr" % {'hash': hash_tag(source, context)},
-                    line
-                )
-                # this looks fishy
-                buf = re.sub(re.escape(line), new_line, buf)
+                source_hash = "%(hash)s_tr" % {'hash': hash_tag(
+                    source, context)}
+                escaped_source = self._escape(source)
+                template_dict['buf'] += ','.join(
+                    [escaped_source, source_hash]) + self.linesep
 
-            stringset.strings.append(GenericTranslation(source,
-                trans, rule=5, context=context,
-                pluralized=False, fuzzy=False,
-                obsolete=False))
-
-        self.stringset=stringset
-        self.suggestions=suggestions
-
+            self._add_translation_string(source, trans, context=context)
         if is_source:
-            self.template = str(buf.encode('utf-8'))
+            template = template_dict['buf'][: -1 * len(self.linesep)]
+        return template
 
+    def _escape(self, s):
+        return '"%s"' % s.replace('"', '""')
