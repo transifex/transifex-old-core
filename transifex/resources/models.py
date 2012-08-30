@@ -222,7 +222,8 @@ class Resource(models.Model):
         created=False
         if not self.pk:
             created=True
-        self.source_language = self.project.source_language
+        if not self.source_language:
+            self.source_language = self.project.source_language
         # Update total_entries
         self.update_total_entities(save=False)
 
