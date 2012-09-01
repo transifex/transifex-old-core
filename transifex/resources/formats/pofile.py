@@ -351,7 +351,7 @@ class GettextCompiler(PluralCompiler):
         po.encoding = self.format_encoding
         revision_date = self.resource.created.strftime("%Y-%m-%d %H:%M+0000")
         po.metadata['PO-Revision-Date'] = revision_date
-        plurals = "nplurals=%s; plural=%s" % (
+        plurals = "nplurals=%s; plural=%s;" % (
             self.language.nplurals, self.language.pluralequation
         )
         po.metadata['Plural-Forms'] = plurals
