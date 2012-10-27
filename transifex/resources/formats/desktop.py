@@ -100,7 +100,7 @@ class DesktopHandler(SimpleCompilerFactory, Handler):
     delimiter = '='
     # We are only intrested in localestrings, see
     # http://standards.freedesktop.org/desktop-entry-spec/latest/ar01s05.html
-    localized_keys = ['Name', 'GenericName', 'Comment', 'Icon', ]
+    localized_keys = ['Name', 'GenericName', 'Comment', ]
 
     def _is_comment_line(self, line):
         """Return True, if the line is a comment."""
