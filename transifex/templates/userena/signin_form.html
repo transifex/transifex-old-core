@@ -11,7 +11,7 @@
 {{ block.super }}
 <script  type="text/javascript">
 $(document).ready(function(){
-	$('<a class="forgot-pass" href="{% url userena_password_reset %}">({% trans "Forgot your password?" %})</a>').appendTo('label[for="id_password"]');
+	$('<a class="forgot-pass" tabindex="-1" href="{% url userena_password_reset %}">({% trans "Forgot your password?" %})</a>').appendTo('label[for="id_password"]');
 });
 </script>
 {% endblock %}
