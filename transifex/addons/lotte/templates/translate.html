@@ -269,7 +269,7 @@
                            + '    <li>'
                            + '     <a class="tabs_trigger show_suggestions" href="#">'+(bold_flag?'<strong>':'')+'{% trans "suggestions" %}'+suggestions_num+(bold_flag?'</strong>':'')+'</a>'
                            + '    </li>';
-                           
+
                     // Must contain something like: tabs += '<li><a>foo</a></li>'
                     {% hook "tab_lotte.html" tab %}
 
@@ -818,7 +818,7 @@
         $(".lotte-header-link").each(function(){
             $(this).appendTo("#stringset_table_wrapper .top").show();
         });
-        
+
         $("a.shortcuts.fancy").facebox({});
     });
 
@@ -845,7 +845,7 @@
   <div class="lotte-header-link"><a href="#shortcutsdiv" class="i16 nude-button shortcuts fancy tipsy_enable" title="Lotte keyboard shortcuts">{% trans "Shortcuts" %}</a></div>
 
   {% hook "lotte_header_link.html" %}
-    
+
     <div style="display:none;">
     	<div id="shortcutsdiv" class="facebox-content">
     		<h4>{% trans "Keyboard shortcuts" %}</h4>
@@ -856,7 +856,7 @@
     		<div><div class="shortcut-label">Alt-g</div> <div class="shortcut-action">{% trans "Fill in the translation textarea with the content of the source string. (Copy the source string as it is, to the translation area.)" %}</div></div>
     	</div>
     </div>
-    
+
 {% endblock %}
 
 
@@ -969,20 +969,28 @@
             <div class="subpanel">
                 <ul>
                     <li class="verbose">
-                        <input id="toggle_verbose" type="checkbox" />
-                        <span>{% trans "Verbose editing" %}</span>
+                        <label>
+                            <input id="toggle_verbose" type="checkbox" />
+                            <span>{% trans "Verbose editing" %}</span>
+                        </label>
                     </li>
                     <li class="auto_save">
-                        <input id="toggle_autosave" type="checkbox" checked="checked"/>
-                        <span>{% trans "Auto save" %}</span>
+                        <label>
+                            <input id="toggle_autosave" type="checkbox" checked="checked"/>
+                            <span>{% trans "Auto save" %}</span>
+                        </label>
                     </li>
                     <li class="shortcuts">
-                        <input id="toggle_shortcuts" type="checkbox" checked="checked"/>
-                        <span>{% trans "Enable shortcuts" %}</span>
+                        <label>
+                            <input id="toggle_shortcuts" type="checkbox" checked="checked"/>
+                            <span>{% trans "Enable shortcuts" %}</span>
+                        </label>
                     </li>
                     <li class="auto_open_suggestions">
-                        <input id="toggle_autosuggestions" type="checkbox" />
-                        <span>{% trans "Enable suggestions auto-open" %}</span>
+                        <label>
+                            <input id="toggle_autosuggestions" type="checkbox" />
+                            <span>{% trans "Enable suggestions auto-open" %}</span>
+                        </label>
                     </li>
                 </ul>
             </div>
