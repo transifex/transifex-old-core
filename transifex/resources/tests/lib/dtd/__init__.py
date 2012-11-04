@@ -34,7 +34,7 @@ class TestDTDHandler(BaseTestCase):
                 u"Welcome Humans!"),
             (u" Movie: The Day The Earth Stood Still. Spoken by Klaatu. ",
                 u"robots.errorShortDescText",
-                u"We have come to visit you in peace & with goodwill!"),
+                u"We have come to visit you in peace &amp; with goodwill!"),
             ]
         self.assertEqual(len(handler.stringset), 4)
         for i, s in enumerate(handler.stringset):

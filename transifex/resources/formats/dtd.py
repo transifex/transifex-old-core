@@ -40,21 +40,11 @@ class DTDHandler(SimpleCompilerFactory, Handler):
         single quotes are omitted,
         because double quotes around the value are forced in template
         """
-        return xml_escape(s, {
-            '"': '&quot;',
-            '%': '&#37;'
-        })
+        return s.replace('"', '&quot;')
 
     def _unescape(self, s):
         """ Unescape entities for easy editing """
-        return xml_unescape(s, {
-            '&quot;': '"',
-            '&#39;': "'",
-            '&#37;': '%',
-            '&#039;': "'",
-            '&#037;': '%',
-            '&apos;': "'",
-        })
+        return s.replace('&quot;', '"')
 
     def _get_content_from_file(self, filename, encoding):
         fh = open(filename, "r")

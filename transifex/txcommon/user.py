@@ -7,8 +7,9 @@ from uuid import uuid4
 from django.conf import settings
 from django.contrib.auth.models import User
 from userena.models import UserenaSignup
-from social_auth.backends.pipeline import USERNAME, USERNAME_MAX_LENGTH, \
-        warn_setting
+from social_auth.backends import USERNAME
+# HACK: commented out this line and module to let other tests run
+# from social_auth.backends.pipeline import USERNAME_MAX_LENGTH, warn_setting
 
 
 class CreateUserFromSocial(object):
