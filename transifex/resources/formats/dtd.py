@@ -11,7 +11,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
-from .compilation import SimpleCompilerFactory
+from .compilation import FillEmptyCompilerFactory
 
 
 class DTDParseError(ParseError):
@@ -22,7 +22,7 @@ class DTDCompileError(CompileError):
     pass
 
 
-class DTDHandler(SimpleCompilerFactory, Handler):
+class DTDHandler(FillEmptyCompilerFactory, Handler):
     """ Handler for DTD translation files. """
     default_encoding = 'UTF-8'
     format_encoding = 'UTF-8'
