@@ -16,6 +16,7 @@ from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
 from transifex.resources.formats.properties import PropertiesHandler, \
         PropertiesParseError, PropertiesCompileError, PropertiesCompiler
+from .compilation import FillEmptyCompilerFactory
 
 
 class MozillaPropertiesParseError(PropertiesParseError):
@@ -26,7 +27,7 @@ class MozillaPropertiesCompileError(PropertiesCompileError):
     pass
 
 
-class MozillaPropertiesHandler(PropertiesHandler):
+class MozillaPropertiesHandler(FillEmptyCompilerFactory, PropertiesHandler):
     name = "Mozilla *.PROPERTIES file handler"
     format = "Mozilla PROPERTIES (*.properties)"
     method_name = 'MOZILLAPROPERTIES'
