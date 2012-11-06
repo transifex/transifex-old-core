@@ -69,8 +69,9 @@
                 { "bVisible":false, "bSortable": false, },
                 { "sClass": "msg", "asSorting": [ "desc", "asc" ],  "sWidth": "350px",
                   "fnRender": function(oObj){
-                    var clean_array = array_escape({"source_dict":oObj.aData[2]});
-                    var source_divs = '';
+                    {# PATCH: include key in output #}
+                    var clean_array = array_escape({"key":oObj.aData[1], "source_dict":oObj.aData[2]});
+                    var source_divs = '<span class="source_entity">'+clean_array["key"]+'</span>';
                     var plural_types = ['zero', 'one', 'two', 'few', 'many', 'other'];
                     var plurals_counter = 0;
                     for(rule in plural_types){
@@ -231,6 +232,15 @@
         </tr>
     </thead>
 </table>
+
+<style> {# PATCH: denser layout #}
+.dataTables_wrapper table tbody td.msg { padding-top: 0; }
+.source_string, .source_string_plural { padding-bottom: 0.6em; }
+div.translation {
+    padding-top: 0;
+    padding-bottom: 0.6em;
+}
+</style>
 
 {% endblock %}
 
