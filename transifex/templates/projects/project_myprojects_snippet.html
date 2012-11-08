@@ -19,7 +19,6 @@
         	<h4><p style="margin-right:12em;">{% blocktrans with maintain_projects|length|apnumber as num_of_projects count maintain_projects|length as counter %}Maintaining {{ num_of_projects }} project{% plural %}Maintaining {{ num_of_projects }} projects{% endblocktrans %}</p></h4>
             <div id="dashboard_projects">
           	<ul>
-
             {% for mproject in maintain_projects %}
                 {% with mproject.slug as project_slug %}
 
@@ -40,8 +39,7 @@
 
                 </li>
             {% endfor %}
-
-            <ul>
+            </ul>
         {% else %}
 
         <h4 class="empty-panel"><p>{% trans "Maintaining no projects yet" %}</p>
