@@ -6,9 +6,11 @@
 {% load locks_tags %}
 {% load helptext_tags %}
 {% load truncate %}
+{% load project_tags %}
+{% load statistics_resources %}
 
 {% if user.is_authenticated %}
-
+{% with 480 as barwidth %}
 <div id="my_projects">
         {% if maintain_projects %}
         <h3>{% trans "YOUR PROJECTS" %}</h3>
@@ -56,12 +58,13 @@
 
                 <li id="trans_{{ lock.rlstats.resource.id }}_{{ lock.rlstats.language.code }}" class="cpanel-entry">
 
+                    <a href="{% url project_detail lock.rlstats.resource.project.slug %}">{{ lock.rlstats.resource.project.name }}</a> /
                     <a href="{% url resource_detail lock.rlstats.resource.project.slug lock.rlstats.resource.slug %}">
-                    {{ lock.rlstats.resource.name|truncate_chars:"30" }}</a> &raquo; {{ lock.rlstats.language.name|truncate_chars:"20" }}
+                    {{ lock.rlstats.resource.name|truncate_chars:"30" }}</a> / {{ lock.rlstats.language.name|truncate_chars:"20" }}
                     <a href="{% url resource_actions lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}" id="detail_{{ forloop.counter }}" style="float:right;margin-right:2px;">
                          {% trans "Details" %}
                     </a>
-                  
+                    {% stats_bar_simple lock.rlstats barwidth %}
                   	<script type="text/javascript">
 								      jQuery(document).ready(function($) {
 								        $("#detail_{{forloop.counter}}").facebox({ ajax: '{% url resource_actions lock.rlstats.resource.project.slug lock.rlstats.resource.slug lock.rlstats.language.code %}'});
@@ -72,14 +75,14 @@
             </ul>
         {% else %}
 
-        <h4 class="empty-panel"><p>{% trans "Currently not translating something" %}</p></h4>
+        <h4 class="empty-panel"><p>{% trans "Not translating any resource right now" %}</p></h4>
         <div>
 
         {% endif %}
         </p>
         </div>
         </div>
-        
+
         <h3>{% trans "YOUR TRANSLATION TEAMS" %}</h3>
 
         <div class="panel-area">
@@ -91,14 +94,14 @@
             <ul>
             {% for team in coordinator_teams|dictsort:"language.name" %}
                 <li class="cpanel-entry">
-
-                <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>  -
-                <a href="{% url project_detail team.project.slug %}">{{ team.project.name }}</a>
+                <a href="{% url project_detail team.project.slug %}">{{ team.project.name }}</a> /
+                <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>
                 <span style="float:right">
                     <a href="{% url team_update team.project.slug team.language.code %}">
                       {% trans "Edit" %}
                     </a>
                 </span>
+                {% progress_for_project team.project team.language.code barwidth %}
                 </li>
             {% endfor %}
             </ul>
@@ -114,11 +117,12 @@
             <ul>
             {% for team in member_teams|dictsort:"language.name" %}
                 <li class="cpanel-entry">
-                <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>  -
-                <a href="{% url project_detail team.project.slug %}">{{ team.project.name }}</a>
-                <form style="float:right;diplay:inline" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
+                <a href="{% url project_detail team.project.slug %}">{{ team.project.name }}</a> /
+                <a href="{% url team_detail team.project.slug team.language.code %}">{{ team.language.name }}</a>
+<!--                  <form style="float:right;diplay:inline" method="post" action="{% url team_leave team.project.slug team.language.code %}">{% csrf_token %}
                     <input name="team_leave" class="leave_team" type="submit" value="{% trans 'Leave' %}" title="Leave team"/>
                 </form>
+ -->                {% progress_for_project team.project team.language.code barwidth %}
                 </li>
             {% endfor %}
             </ul>
@@ -173,5 +177,6 @@
 
          </div>
 </div>
+{% endwith %}
 {% endif %}
 
