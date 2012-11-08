@@ -24,8 +24,7 @@
 {% endblock %}
 
 {% block content_title %}
-  {% if project.logo %}<img src="{{ project.get_logo_url }}" id="project-logo-main" />{% endif %}
-
+  {% include "projects/logo.html" %}
   <h2 class="pagetitle with_description">
   {% if not project %}
     {% trans "New project" %}

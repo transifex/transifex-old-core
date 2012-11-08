@@ -24,9 +24,7 @@
 
 {% block content_title %}
 {% with project.description as short_desc %}
-{% if project.logo %}
-<img src="{{ project.get_logo_url }}" id="project-logo-main" />
-{% endif %}
+{% include "projects/logo.html" %}
 <div class="lastchild-emf">
 <h2 class="pagetitle{% if short_desc %} with_description{% endif %}">
 {% block project_header %}
