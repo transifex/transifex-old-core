@@ -42,8 +42,8 @@ add_introspection_rules([], ["tagging_autocomplete.models.TagAutocompleteField"]
 
 # Settings for the Project.logo field, based on the userena settings mugshot
 # settings
-PROJECT_LOGO_SETTINGS = {'size': (settings.USERENA_MUGSHOT_SIZE,
-                                  settings.USERENA_MUGSHOT_SIZE),
+PROJECT_LOGO_SETTINGS = {'size': (settings.PROJECT_LOGO_SIZE,
+                                  settings.PROJECT_LOGO_SIZE),
                          'crop': settings.USERENA_MUGSHOT_CROP_TYPE}
 
 class DefaultProjectQuerySet(models.query.QuerySet):
