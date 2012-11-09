@@ -52,7 +52,8 @@ class _FormatsRegistry(object):
     def available_methods(self):
         """Get the available methods."""
         methods = self.methods.copy()
-        del methods['POT']
+        if 'POT' in methods:
+            del methods['POT']
         return methods
 
     def descriptions(self):
