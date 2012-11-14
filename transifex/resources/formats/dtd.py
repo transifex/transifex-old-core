@@ -3,7 +3,6 @@
 
 from __future__ import absolute_import
 import os, re
-from xml.sax.saxutils import escape as xml_escape, unescape as xml_unescape
 from transifex.txcommon.log import logger
 from transifex.resources.formats import FormatError
 from transifex.resources.formats.utils.decorators import *
@@ -35,16 +34,18 @@ class DTDHandler(FillEmptyCompilerFactory, Handler):
 
     def _escape(self, s):
         """Escape format content.
-
-        HTML escape quotes, ampersands and angle brackets
-        single quotes are omitted,
-        because double quotes around the value are forced in template
+        HTML escape double quotes. Other things are permitted.
         """
         return s.replace('"', '&quot;')
 
     def _unescape(self, s):
         """ Unescape entities for easy editing """
         return s.replace('&quot;', '"')
+
+    def _should_skip_translation(self, se, trans):
+        """ Never skip empty translations, they are valid in DTD
+        """
+        return False
 
     def _get_content_from_file(self, filename, encoding):
         fh = open(filename, "r")
