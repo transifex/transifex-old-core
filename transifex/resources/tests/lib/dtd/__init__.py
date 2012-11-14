@@ -128,6 +128,13 @@ class TestDTDHandler(BaseTestCase):
             u'<!ENTITY robots.errorTitleText "Привіт людинам!">',
             compiled_template.decode('UTF-8')
         )
+        # missing entities should be substited
+        self.assertIn(
+            u'<!ENTITY robots.specialChars "&lt;',
+            compiled_template.decode('UTF-8')
+        )
+
+        # check exactness of compilation results.
         handler.set_language(l_en)
         compiled_template = handler.compile()
         source_compiled_file = os.path.join(os.path.dirname(__file__),
