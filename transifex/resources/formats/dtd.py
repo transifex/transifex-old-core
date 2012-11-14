@@ -3,7 +3,6 @@
 
 from __future__ import absolute_import
 import os, re
-from xml.sax.saxutils import escape as xml_escape, unescape as xml_unescape
 from transifex.txcommon.log import logger
 from transifex.resources.formats import FormatError
 from transifex.resources.formats.utils.decorators import *
@@ -11,7 +10,7 @@ from transifex.resources.formats.utils.hash_tag import hash_tag
 from transifex.resources.formats.core import Handler, ParseError, CompileError
 from transifex.resources.formats.resource_collections import StringSet, \
         GenericTranslation
-from .compilation import SimpleCompilerFactory
+from .compilation import FillEmptyCompilerFactory
 
 
 class DTDParseError(ParseError):
@@ -22,7 +21,7 @@ class DTDCompileError(CompileError):
     pass
 
 
-class DTDHandler(SimpleCompilerFactory, Handler):
+class DTDHandler(FillEmptyCompilerFactory, Handler):
     """ Handler for DTD translation files. """
     default_encoding = 'UTF-8'
     format_encoding = 'UTF-8'
@@ -35,26 +34,18 @@ class DTDHandler(SimpleCompilerFactory, Handler):
 
     def _escape(self, s):
         """Escape format content.
-
-        HTML escape quotes, ampersands and angle brackets
-        single quotes are omitted,
-        because double quotes around the value are forced in template
+        HTML escape double quotes. Other things are permitted.
         """
-        return xml_escape(s, {
-            '"': '&quot;',
-            '%': '&#37;'
-        })
+        return s.replace('"', '&quot;')
 
     def _unescape(self, s):
         """ Unescape entities for easy editing """
-        return xml_unescape(s, {
-            '&quot;': '"',
-            '&#39;': "'",
-            '&#37;': '%',
-            '&#039;': "'",
-            '&#037;': '%',
-            '&apos;': "'",
-        })
+        return s.replace('&quot;', '"')
+
+    def _should_skip_translation(self, se, trans):
+        """ Never skip empty translations, they are valid in DTD
+        """
+        return False
 
     def _get_content_from_file(self, filename, encoding):
         fh = open(filename, "r")

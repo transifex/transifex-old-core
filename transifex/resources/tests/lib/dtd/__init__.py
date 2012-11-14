@@ -23,7 +23,7 @@ class TestDTDHandler(BaseTestCase):
         )
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
-        self.assertEqual(len(handler.stringset), 4)
+        self.assertEqual(len(handler.stringset), 5)
         content = [
             (u' Nonsense line from the movie "The Day The Earth Stood Still". ',
                 u"robots.pagetitle",
@@ -34,9 +34,8 @@ class TestDTDHandler(BaseTestCase):
                 u"Welcome Humans!"),
             (u" Movie: The Day The Earth Stood Still. Spoken by Klaatu. ",
                 u"robots.errorShortDescText",
-                u"We have come to visit you in peace & with goodwill!"),
+                u"We have come to visit you in peace &amp; with goodwill!"),
             ]
-        self.assertEqual(len(handler.stringset), 4)
         for i, s in enumerate(handler.stringset):
             if i == 3:
                 break
@@ -56,7 +55,7 @@ class TestDTDHandler(BaseTestCase):
         )
         handler.set_language(self.resource.source_language)
         handler.parse_file(is_source=True)
-        self.assertEqual(len(handler.stringset), 3)
+        self.assertEqual(len(handler.stringset), 4)
         content = [
             (u"robots.pagetitle",
                 u'Ґорт! Клаату барада ніхто!'),
@@ -64,8 +63,9 @@ class TestDTDHandler(BaseTestCase):
                 u"Привіт людинам!"),
             (u"robots.errorShortDescText",
                 u"Ми прийшли до вас з миром!"),
+            (u"robots.optional",
+                u""),
             ]
-        self.assertEqual(len(handler.stringset), 3)
         for i, s in enumerate(handler.stringset):
             self.assertEqual(s.source_entity, content[i][0])
             self.assertEqual(s.translation, content[i][1])
@@ -75,8 +75,8 @@ class TestDTDHandler(BaseTestCase):
     def test_escaping(self):
         """Test escaping and unescaping"""
         j = DTDHandler()
-        self.assertEqual(j._escape('& < > "\''),"&amp; &lt; &gt; &quot;'" )
-        self.assertEqual(j._unescape("&amp; &lt; &gt; &quot;&#39;"), '& < > "\'' )
+        self.assertEqual(j._escape('& < > "\''),"& < > &quot;'" )
+        self.assertEqual(j._unescape("&amp; &lt; &gt; &quot;&#39;"), '&amp; &lt; &gt; "&#39;' )
 
     def test_accept(self):
         parser = DTDHandler()
@@ -88,9 +88,9 @@ class TestDTDHandler(BaseTestCase):
             os.path.join(os.path.dirname(__file__), 'aboutRobots.dtd')
         )
         r = self.resource
-        l = self.resource.source_language
+        l_en = self.resource.source_language
 
-        handler.set_language(l)
+        handler.set_language(l_en)
         handler.bind_resource(r)
         handler.parse_file(is_source=True)
         handler.save2db(is_source=True)
@@ -100,18 +100,23 @@ class TestDTDHandler(BaseTestCase):
             os.path.join(os.path.dirname(__file__),
              'aboutRobots_uk.dtd')
         )
-        l = Language.objects.get(code='uk')
-        handler.set_language(l)
+        l_uk = Language.objects.get(code='uk')
+        handler.set_language(l_uk)
         handler.parse_file()
         handler.save2db()
 
         # check number of source entities imported
-        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 4)
-
+        self.assertEqual(SourceEntity.objects.filter(resource=r).count(), 5)
         # Check that all source translations are there
         self.assertEqual(
             Translation.objects.filter(
-                source_entity__resource=r, language=l).count(), 3
+                source_entity__resource=r, language=l_en).count(), 5
+            )
+
+        # Check that all Ukrainian translations are there
+        self.assertEqual(
+            Translation.objects.filter(
+                source_entity__resource=r, language=l_uk).count(), 4
             )
 
         compiled_template = handler.compile()
@@ -123,7 +128,7 @@ class TestDTDHandler(BaseTestCase):
             u'<!ENTITY robots.errorTitleText "Привіт людинам!">',
             compiled_template.decode('UTF-8')
         )
-        handler.set_language(self.resource.source_language)
+        handler.set_language(l_en)
         compiled_template = handler.compile()
         source_compiled_file = os.path.join(os.path.dirname(__file__),
                 'aboutRobots_compiled.dtd')
