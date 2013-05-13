@@ -1,0 +1,62 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load txcommontags %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>Transifex Mobile Client</title>
+		<meta name="keywords" content="mobile transifex client" />
+		<meta name="descriptions" content="mobile transifex client" />
+		<link rel="icon" type="image/png" href="{% static 'mobile/image/mtx_logo.png' %}">
+		<link rel="stylesheet" href="{% static 'mobile/jquery/css/jquery.mobile-1.2.0.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'mobile/jquery/themes/mtx.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'mobile/css/index.css' %}" />
+		<script src="{% static 'mobile/jquery/js/jquery-1.8.3.min.js' %}"></script>
+		<script src="{% static 'mobile/jquery/js/jquery.mobile-1.2.0.min.js' %}"></script>
+		<script  type="text/javascript">
+		$(document).ready(function(){
+			$('<a class="forgot-pass" href="{% url userena_password_reset %}">({% trans "Forgot your password?" %})</a>').appendTo('label[for="id_password"]');
+		});
+</script>
+	</head>
+<body>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-position="inline">
+		<center><img src="{% static 'mobile/image/mtx_logo.png' %}" width="50" alt="" ></center>
+	</div>
+	<div data-role="content" data-theme="a">
+		<form id="login-form" class="tx-form" action="" method="post" target="_self">
+			{% csrf_token %}
+			<div id="login" class="login">
+				{{ form.non_field_errors }}
+			    {% for field in form %}
+			    {{ field.errors }}
+			    {% comment %} Displaying checkboxes differently {% endcomment %}
+			    {% if field.name == 'remember_me' %}
+			    <div class="checkbox">
+			    	<label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+			    </div>
+			    {% else %}
+			    <div class="input-cell">
+			    	<div class="form-label-tag">{{ field.label_tag }}</div>
+			    	<div class="form-field">{{ field }}</div>
+			    </div>
+			    {% endif %}
+			    {% endfor %}
+				</fieldset>
+			  <input type="submit" class="i16 tick buttonized" value="{% trans "Sign in" %}" />
+			  	  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+			</div>
+		</form>
+		<script type="text/javascript" >
+			$(document).ready(function(){
+				$('#username').focus();	
+			});
+		</script>
+	</div>
+</div>
+</body>
+</html>

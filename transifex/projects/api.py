@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -30,6 +32,18 @@ from uuid import uuid4
 
 # Temporary
 from transifex.txcommon import notifications as txnotification
+
+from transifex.api.utils import NOT_FOUND_REQUEST
+
+from haystack.query import SearchQuerySet
+from transifex.actionlog.models import LogEntry, action_logging
+#from transifex.projects.models import Project
+from transifex.txcommon.haystack.utils import (support_fulltext_search,
+        prepare_solr_query_string, fulltext_fuzzy_match_filter,
+        fulltext_project_search_filter)
+from transifex.txcommon.log import logger
+
+FULLTEXT = support_fulltext_search()
 
 
 class ProjectHandler(BaseHandler):
@@ -70,11 +84,11 @@ class ProjectHandler(BaseHandler):
 
     def read(self, request, project_slug=None, api_version=1):
         """
-        Get project details in json format
+        Get project details or search for a project, response in json format 
         """
         # Reset fields to default value
         ProjectHandler.fields = ProjectHandler.default_fields
-        if "details" in request.GET.iterkeys():
+        if "details" in request.GET.iterkeys() and "myprojects" not in request.GET.iterkeys():
             if project_slug is None:
                 return rc.NOT_IMPLEMENTED
             ProjectHandler.fields = ProjectHandler.details_fields
@@ -122,16 +136,30 @@ class ProjectHandler(BaseHandler):
 
     def _read(self, request, project_slug):
         """
-        Return a list of projects or the details for a specific project.
+        Return a list of projects or the details for a specific project or search for a project.
         """
         if project_slug is None:
+            # Catch myprojects request e.g. projects/?myprojects&q=submit_projects,watched_projects,maintain
+            if "myprojects" in request.GET.iterkeys():
+                p = self.myprojects(request)
+            # Catch search request e.g. projects/?search&q=query_string
+            elif "search" in request.GET.iterkeys():
+                results = self.search(request) # Send request to the search api in txcommon
+                sl = []
+                for sr in results:
+                    sl.append(sr.slug)
+                p = Project.objects.filter(slug__in=sl)
+            # Else get all the projects for user
+            else:
+                p = Project.objects.for_user(request.user)
             # Use pagination
-            p = Project.objects.for_user(request.user)
             res, msg = paginate(
                 p, request.GET.get('start'), request.GET.get('end')
             )
             if res is None:
                 return BAD_REQUEST(msg)
+            if not p:
+                return NOT_FOUND_REQUEST("NO RESULTS") # Added new message
             return res
         else:
             try:
@@ -288,3 +316,50 @@ class ProjectHandler(BaseHandler):
         for field in fields:
             if field not in self.allowed_fields or field in extra_exclude:
                 raise AttributeError(field)
+            
+    def myprojects(self,request):
+        if "details" in request.GET.iterkeys():
+            ProjectHandler.fields = ProjectHandler.details_fields
+        user = request.user
+        # Not everything used here yet
+        #watched_resource_translations = TranslationWatch.get_watched(user)
+        #locks = Lock.objects.valid().filter(owner=user)
+        try:
+            if request.GET['q'] == 'submit_projects':
+                submit_projects = Project.objects.translated_by(user)
+                return submit_projects
+            elif request.GET['q'] == 'watched_projects':
+                watched_projects = Project.get_watched(user)
+                return watched_projects
+            else:
+                maintain = Project.objects.maintained_by(user)
+                return maintain
+        except:
+            maintain = Project.objects.maintained_by(user)
+            return maintain
+        
+    def search(self,request):
+        # Not everything used yet here!
+        query_string = prepare_solr_query_string(request.GET.get('q', ""))
+        #search_terms = query_string.split()
+        index_query = SearchQuerySet().models(Project)
+        #spelling_suggestion = None
+    
+        if not FULLTEXT:
+            try:
+                results = index_query.auto_query(query_string)
+                count = results.count()
+            except TypeError:
+                count = 0
+        else:
+            try:
+                qfilter = fulltext_project_search_filter(query_string)
+                results = index_query.filter(qfilter)
+                #spelling_suggestion = results.spelling_suggestion(query_string)
+                count = results.count()
+            except TypeError:
+                results = []
+                count = 0
+    
+        logger.debug("Api Searched for %s. Found %s results." % (query_string, count))
+        return results
