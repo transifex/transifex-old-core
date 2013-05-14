@@ -45,12 +45,19 @@ urlpatterns += patterns('',
         {'form_class': CustomContactForm}, name='contact_form'),
 )
 
-# piston, oauth urls
+# piston, mobile oauth urls
 urlpatterns += patterns(
     'mobile.authentication',
     url(r'^mobile/oauth/request_token/$','oauth_request_token'),
     url(r'^mobile/oauth/authorize/$','oauth_user_auth'),
     url(r'^mobile/oauth/access_token/$','oauth_access_token'),
+)
+
+#mobile sign in
+urlpatterns += patterns('',
+    url(r'^mobile/accounts/signin/$',
+        mobile_views.signin,
+        name='userena_signin'),
 )
 
 if settings.ENABLE_CONTACT_FORM:
@@ -91,10 +98,6 @@ else:
 
         url(regex   =   r'^accounts/',
             view    =   include('userena.urls')),
-
-        url(r'^mobile/accounts/signin/$',
-               mobile_views.signin,
-            name='userena_signin'),
 
         url(regex   =   r'^accounts/profile/(?P<username>.+)/$',
             view    =   'txcommon.views.profile_public',
