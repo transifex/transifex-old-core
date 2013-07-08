@@ -1,0 +1,438 @@
+.. -*- mode:rst -*-
+
+.. _user-client-02:
+
+====================================
+ Transifex Command-line Client v0.2
+====================================
+
+.. note::
+
+	This document describes Transifex Client **v0.2** (outdated).
+	There are also docs for the
+	:ref:`latest stable release <user-client-index>` and the
+	:ref:`development version <user-client-devel>`.
+		
+
+The Transifex Command-line Client is a command line tool that enables you to
+easily manage your translations within a project without the need of an
+elaborate UI system. With the command line client you can easily create new
+resources, map locale files to translations and synchronize your Transifex
+project with your local repository and vice-versa.
+
+
+.. _user-client-02-install:
+
+Getting the client
+==================
+
+The Transifex Client can be found on the Python Package Index (PYPI) under the
+name *transifex-client*. So to install it, make sure you have a recent
+version of setuptools installed and then issue the following command::
+
+    easy_install -U transifex-client
+
+This command will install the latest version of transifex-client and if
+you have an outdated version it'll perform an update.
+
+Alternatively, you can get the source code of transifex-client directly
+from our repository on bitbucket. To clone the repository locally, issue::
+
+    git clone git://github.com/transifex/transifex-client.git
+
+To install it on your computer you may run the following::
+    
+    cd transifex-client
+    (sudo) python setup.py install
+
+
+Using the client
+================
+
+To make sure that transifex-client was installed correctly, try running it
+with the following command::
+
+    tx --help
+
+If everything was completed, then you should see a brief help message
+and basic instructions on how to use the tool. You can also view
+the available commands by running::
+
+    tx help
+
+To get more information for each command you can use ``tx help *command*``.
+
+
+Command list
+------------
+
+A brief introduction to the most commonly used commands provided by
+transifex-client follows.
+
+
+.. _user-client-02-init:
+
+init
+~~~~
+
+The :command:`tx init` command is used to initialize a project.
+
+This is very similar to the way most :term:`VCS` treat the init command. Use
+this command to create a new project in the current directory. This way
+you will be able to manage all translation files of the project that exist
+under the project's root directory.
+
+Here's a sample run::
+
+    $ tx init
+    Creating .tx folder...
+    Please enter your transifex username: editor
+    Password: <...>
+    Creating .transifexrc file...
+    Creating txdata file...
+    Please enter your tx project URL:
+    http://www.transifex.com/projects/p/Transifex/
+    Transifex instance:
+    Project slug:
+    Creating skeleton...
+    Done.
+
+
+set_source_file
+~~~~~~~~~~~~~~~
+
+:command:`tx set_source_file -r resource -l language <file>`
+
+The :command:`set_source_file` command associates a source translation file with
+a resource. If the resource doesn't exist, it gets created with the next push.
+You must specify the name of the resource and the language of the source file.
+
+
+set_translation
+~~~~~~~~~~~~~~~
+
+:command:`tx set_translation -r resource -l language <file>`
+
+Run this command after creating a resource with the
+:command:`set_source_file` in order to associate locale translation files with
+specific language translations in Transifex. 
+
+auto_find
+~~~~~~~~~
+
+:command:`tx auto_find -r resource <expression>`
+
+This command can help you setup the translations of a resource automatically
+provided that you have a common naming scheme and directory hierarchy for all
+translation files. If for example you have a ``locale`` dir inside which you
+have a separate folder for each language and in that you have the translation
+file for this language, you could automatically assign all translations to
+their corresponding language by running::
+	
+	tx auto_find -r resource 'locale/<lang>/foo.po'
+
+For more complex setups, you could use regular expressions to identify
+the translation files in your project.
+
+status
+~~~~~~
+
+:command:`tx status`
+
+This is a simple command that displays the existing project configuration
+in a more human readable format. It lists all resources associated with
+this project along with their translation files and the translation
+progress percentage for each file.
+
+Sample output::
+
+    $ tx status
+    myproject -> default (1 of 1)
+    Translation Files:
+     - en: po/smolt.pot (source)
+     - ar: po/ar.po [5%]
+     - as: po/as.po [48%]
+     - bg: po/bg.po [48%]
+     - bn_IN: po/bn_IN.po [48%]
+     ...
+
+push
+~~~~
+
+:command:`tx push`
+
+This command sends local changes to the Transifex server. If you have
+added new source files, the corresponding resources are created on
+the Transifex server and if you have new translations those will get
+pushed as well. This can also be used to update existing source files or
+translations on the server with new strings.
+
+Transifex will update the source strings to match those of the new source file.
+This operation may result in loss of information, so please pay extra attention
+when pushing a source file.
+
+Here's how differences between the old and new source files will be handled:
+
+- New strings will be added.
+- Modified strings will be considered new ones and added as well.
+- Strings which do not exist in the new source file (including ones which have
+  been modified) will be removed from the database, along with their
+  translations.
+
+
+pull
+~~~~
+
+:command:`tx pull`
+
+This command updates your local files by pulling the latest translations
+from the server as well as new translation files that were created in
+the Transifex UI. By default, this command will overwrite existing
+translation files so if you don't want this to happen use the
+``--disable-overwrite`` flag.
+
+
+Managing your project
+=====================
+
+For information regarding projects and what they represent, check :ref:`the
+appropriate documentation <user-projects>`.
+
+
+Creating a project
+------------------
+
+Currently, the client doesn't support creating a project directly from the
+command line. So, in order to create a project, you need to visit the project
+creation page and fill out the corresponding form. Once you have created your
+project, the only thing you need is the project url (usually it is in the
+following format: ``http://transifex.com/projects/p/myproject/``).
+
+Once you have a project created on the Transifex site, go into your project's
+root directory and run the *tx init* command. This will initialize your
+project
+and will create all necessary configuration files. Once this is finished you
+are ready to go on to the next step....
+
+
+Managing your translations
+--------------------------
+
+Under a single project you may have a lot of different source files for
+translating. Each of these files should be mapped to a resource (an
+organizational unit corresponding to a source file) under which all of the
+available translations will be listed. To create a mapping between a file
+and a resource, simply run::
+
+    tx set_source_file -r <resource_name> -l <language> source_file
+
+.. note:: The resource name cannot contain special characters. The only valid
+    characters are alphanumeric, the hyphen and the underscore.
+
+Once you have created a mapping between a source file and a resource, you
+should add more translations to this resource. To do this simply run::
+
+    tx set_translation -r <resource_name> -l <language> translation_file
+
+After doing this for all available languages, you can check the existing
+mapping using the ``tx status`` command. When you're sure that the mapping is
+correct, you can push your files to the Transifex server using the ``tx push``
+command. Similarly, whenever you've done some work in the online translation
+editor in Transifex and you want to incorporate those changes back into your
+project, you can simply run ``tx pull``. This will update all tracked
+translation files with new translations as well as downloading new
+translation files and saving them in the ``.tx`` folder. After downloading new
+translation files, you should move them to the appropriate localization folder
+by hand and add them to the managed files using the ``set_translation``
+command.
+
+.. note:: Depending on the size of the files and the number of languages, this
+    process can take up to several minutes as it requires uploading all files,
+    parsing them, extracting the available strings, and storing them into the
+    database.  To avoid misuse of the API, we have some throttling mechanisms
+    in play which should not interfere with your work but just to be safe,
+    whenever uploading or downloading from the Transifex server, if you want a
+    specific resource or language use the ``-r/--resource`` and
+    ``-l/--language`` options of the ``push``/``pull`` commands to avoid
+    pushing/pulling all of the tracked files.
+
+
+Configuration files
+-------------------
+
+All of the configuration files that the ``transifex-client`` is using are
+simple text files that you can edit by hand. In this section, we will go over
+the structure of each configuration file so that if you need to edit a file by
+hand, you'll know what to look for.
+
+The ``transifex-client`` is using two basic configuration files. The first one
+is ``.transifexrc`` and is unique per user. In this file, we store the user
+name and password for Transifex as well as the hostname of the Transifex
+server:
+
+.. code-block:: ini
+
+    [API credentials]
+    username = user
+    token = 
+    password = p@ssw0rd
+    hostname = http://www.transifex.com
+
+If you change your password on the Transifex server for example, you should
+edit this file with the new password. The ``token`` variable should be left
+blank.
+
+Apart from the system-wide ``.transifexrc``, ``transifex-client`` uses a
+per project configuration file to store the project's details and the
+file-to-resource mappings. This file is stored in ``.tx/txdata`` of your
+project's root directory and has the following outline:
+
+.. code-block:: javascript
+
+    {
+        "meta": {
+            "last_push": null, 
+            "project_slug": "Transifex"
+        }, 
+        "resources": [
+            {
+                "source_file": "transifex/locale/en/LC_MESSAGES/django.po", 
+                "resource_slug": "txo", 
+                "source_lang": "en"
+
+                "translations": {
+                    ""el": {
+                        "file": "transifex/locale/el/LC_MESSAGES/django.po"
+                    }, 
+                    "af": {
+                        "file": "transifex/locale/af/LC_MESSAGES/django.po"
+                    }, 
+                    ...
+                }
+            }
+        ]
+    }
+
+So if you ever need to change the language of a file or correct the file path
+for a specific translation, you can edit this file directly.
+
+.. warning:: Transifex does not offer a way to revert your ``txdata``
+    configuration back after some unsuccessful changes so make sure you
+    back up the original file before editing by hand.
+
+.. _user-client-02-sample-usage:
+
+
+Sample Usage
+============
+
+Let's assume you are the maintainer of the Transifex project itself, and you
+want to setup your client. First of all, change into your project's main
+directory, such as your VCS directory root. Then, issue the following command:
+
+.. code-block:: bash
+
+    $ tx init
+    Creating .tx folder...
+    Please enter your transifex username: editor
+    Password:
+    Creating .transifexrc file...
+    Creating txdata file...
+    Please enter your tx project url here: http://www.transifex.com/projects/p/transifex/
+    Transifex instance:
+    Project slug:
+    Creating skeleton...
+    Done.
+
+To ask Transifex to detect your files automatically, run the following command:
+
+.. code-block:: bash
+
+    $ tx auto_find -l en -r myresource 'transifex/locale/<lang>/LC_MESSAGES/django.po'
+    Only printing the commands which will be run if the --execute switch is specified.
+    
+    tx set_source_file -r default -l en po/myproject.pot
+    tx set_translation -r default -l bal transifex/locale/bal/LC_MESSAGES/django.po
+    tx set_translation -r default -l bn_IN transifex/locale/bn_IN/LC_MESSAGES/django.po
+    ...
+    Done.
+
+If everything looks good, issue the command again with the ``--execute`` switch:
+ 
+.. code-block:: bash
+
+    $ tx auto_find --execute -l en -r foo 'transifex/locale/<lang>/LC_MESSAGES/django.po'
+
+    Setting source file for resource foo ( en -> transifex/locale/en/LC_MESSAGES/django.po ).
+    Updating resource foo ( bal -> ./transifex/locale/bal/LC_MESSAGES/django.po ).
+    Updating resource foo ( bn_IN -> ./transifex/locale/bn_IN/LC_MESSAGES/django.po ).
+    Updating resource foo ( ca -> ./transifex/locale/ca/LC_MESSAGES/django.po ).
+    ...
+    Done.
+
+Finally, here's a sample run with manual mapping of your files:
+
+.. code-block:: bash
+
+    $ tx set_source_file -r foo -l en transifex/locale/en/LC_MESSAGES/django.po
+    Updating txdata file...
+    Done.
+
+    $ tx set_translation -r foo -l bal transifex/locale/bal/LC_MESSAGES/django.po
+    Updating txdata file...
+    Done.
+
+    $ tx set_translation -r foo -l ...
+    $ tx set_translation -r foo -l ...
+
+    $ tx pull
+    Pulling translations for source file transifex/locale/en/LC_MESSAGES/django.po
+     -> bal: transifex/locale/bal/LC_MESSAGES/django.po
+     -> bn_IN: transifex/locale/bn_IN/LC_MESSAGES/django.po
+     -> ca: transifex/locale/ca/LC_MESSAGES/django.po
+     -> cs: transifex/locale/cs/LC_MESSAGES/django.po
+     ...
+    Done. 
+
+    $ tx status
+    Transifex -> txo (1 of 1)
+    Translation Files:
+     - en: transifex/locale/en/LC_MESSAGES/django.po (source)
+     - bal: transifex/locale/bal/LC_MESSAGES/django.po [10%]
+     - bn_IN: transifex/locale/bn_IN/LC_MESSAGES/django.po [15%]
+     - ca: transifex/locale/ca/LC_MESSAGES/django.po [22%]
+     ...
+
+
+Then, you can visit the Transifex server and view the available translations
+from the web UI. Let's say, you translate your project into more languages and
+just before the new release, you want to update the translations. In that
+case, this is what you should do:
+
+.. code-block:: bash
+
+    $ tx pull -a 
+    ...
+	Pulling new translations for source file transifex/locale/en/LC_MESSAGES/django.po
+     -> af: /home/user/mainline-happix/.tx/txo/af_translation
+    Done.
+
+    $ mkdir -p transifex/locale/af/LC_MESSAGES/
+
+    $ mv .tx/txo/af_translation transifex/locale/af/LC_MESSAGES/django.po
+
+    $ tx set_translation -r txo -l af transifex/locale/af/LC_MESSAGES/django.po
+    Updating txdata file...
+    Done.
+
+    $ tx status
+    Transifex -> txo (1 of 1)
+    Translation Files:
+     - en: transifex/locale/en/LC_MESSAGES/django.po (source)
+     - af: transifex/locale/en/LC_MESSAGES/django.po [1%]
+     - bal: transifex/locale/bal/LC_MESSAGES/django.po [1%]
+     - bn_IN: transifex/locale/bn_IN/LC_MESSAGES/django.po [3%]
+     - ca: transifex/locale/ca/LC_MESSAGES/django.po [58%]
+
+Notice the 'ar' language: the new translation file is now managed by Transifex,
+which means that in subsequent pushes/pulls this will be updated as well.

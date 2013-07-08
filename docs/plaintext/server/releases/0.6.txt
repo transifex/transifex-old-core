@@ -1,0 +1,313 @@
+.. -*- mode:rst -*-
+
+.. _releases-0.6:
+
+=======================================
+ Transifex version 0.6.x release notes
+=======================================
+
+
+Transifex 0.6 (Apocalypse)
+==========================
+
+Released:
+  April 28th, 2009
+
+
+Welcome to the Transifex 0.6 release, codenamed Apocalypse_.
+
+This release marks a major release in the advancement of Transifex, and includes
+a number of new exciting new features and many, many bugfixes. It was released
+in late April 2009 and is targeted for new installations of Transifex and
+parties who choose to migrate to a new major version and enjoy the new features.
+
+Transifex 0.6 is intended for production use.
+
+What's new in Transifex 0.6
+---------------------------
+
+Here's a 40K-foot view of the release in numbers::
+
+  745 files changed, 72695 insertions(+), 65554 deletions(-)
+
+The following major features were introduced in this release.
+
+
+Tarball repositories
+::::::::::::::::::::
+
+In addition to pulling from sources hosted on revision-controlled repositories,
+Transifex now adds beta support for tarball sources (``.tar.gz`` files).
+With this feature, the need that projects should be hosted on a VCS is raised,
+and shipped releases of projects can now be translated as well.
+
+.. image:: /static/images/shots/0.6/0.6-tarball.png
+   :class: shot alcenter
+
+Tarball sources also features experimental support for submission of
+translation files. These submissions are not being pushed upstream to the
+tarball but reside on the Transifex server itself. In the future, translations
+could be sent to an email address too.
+
+.. warning::
+
+    Clearing the local cache of tarball brings in a newly pulled
+    tarball, overwriting the local files. Projects enabling submissions to
+    tarballs should note that any submissions sent would be overwritten with a
+    fresh extract of the tarball from the remote server.
+
+
+User Notifications
+::::::::::::::::::
+
+.. image:: /static/images/shots/0.6/0.6-notices.png
+   :class: shot
+
+Watching translation files
+  Transifex can now monitor the repositories it follows for changes and
+  identify when files have been modified. Users can 'watch' their favorite file
+  by clicking its 'Watch' icon, and get notified by Transifex when the file
+  has been changed, either by an upstream commit or by a submission through
+  Transifex itself.
+
+Watching projects
+  Users can also subscribe to projects and get notified, for example, whenever
+  new components are added or deleted. This can be useful when a user wants to
+  get notified when a project branches off for a new release.
+
+Notifying maintainers for I18n errors
+  Project maintainers are now being notified when their project has issues with
+  its i18n support causing translation statistics generation fails. An example
+  is intltool-powered projects having issues generating their source files
+  (POT).
+
+Notifications can be delivered in a number of ways. The user's latest
+notifications are collected on the user's profile page. In addition, users
+have the choice to also receive the notifications by email. In the future,
+more channels could be supported.
+
+
+Multiple files per language
+:::::::::::::::::::::::::::
+
+.. image:: /static/images/shots/0.6/0.6-multifile.png
+   :class: shot
+
+Transifex now adds support for components shipping multiple translation files
+per language. The groups of files per language-component are now identified and
+associated with their language, and their completion percentages are
+grouped in one statistics bar for the language. The breakdown of the files is
+shown on a separate page, along with the usual actions on each file (download,
+view, lock, etc.).
+
+For each of these translation files, the source file is also identified and its
+contents are msgmerged with the files, producing up-to-date statistics. 
+
+
+Internationalization support
+::::::::::::::::::::::::::::
+
+.. image:: /static/images/shots/0.6/0.6-langs.png
+   :class: shot
+   
+Transifex's user interface is now internationalized, and includes support for
+viewing it in the user's preferred language. A drop-down menu shows the
+available languages on the top-right part of the screen, allowing overriding
+of the detected preference.
+
+A new management command has been added, ``txmakemessage``, which creates the
+PO files on-the-fly from the source code and templates.
+
+Following the policy 'eat our own dogfood', Transifex is in fact translatable
+through Transifex itself. Volunteer contributions for new translations and
+improvements in the existing translations are submitted through Transifex at
+http://www.transifex.com/.
+
+
+Translation file archives
+:::::::::::::::::::::::::
+
+.. image:: /static/images/shots/0.6/0.6-zip.png
+   :class: shot
+   
+Transifex now adds support for downloading compressed archives containing the
+files belonging to a release for a particular language. The compressed archive
+types supported are **zip files** and gzipped **tarballs**.
+
+Translators can now retrieve a compressed file containing all the files needed
+to translate the release's components to their language. An example URL
+providing this feature is ``/languages/fr/collection/gnome/2.26/download_zip/``.
+
+This feature eliminates the need to download one file at a time, and is
+especially useful for very active contributors and people with slow Internet
+connectivity.
+
+
+User Interface improvements
+:::::::::::::::::::::::::::
+
+During the development cycle of 0.6, quite a few improvements in the user
+interface took place here and there. Here's a list of the most important ones:
+
+Untranslated components list
+""""""""""""""""""""""""""""
+The language-release page now include a list of components which haven't
+had any translations so far. This gives a better picture of the parts which
+need translation to make the completion status increase.
+
+More RSS feeds
+""""""""""""""
+The release page with the completion percentage of each language is now
+published also as an RSS feed, allowing people like release engineer to easily
+check the translation status of their release.
+
+Easy file selection for editing
+"""""""""""""""""""""""""""""""
+.. image:: /static/images/shots/0.6/0.6-target.png
+   :class: shot
+
+The 'advanced' submission form now supports either editing a remote file or
+creating a new one. The user can choose either to overwrite an existing
+file or create a new one.
+
+Sortable statistics tables
+""""""""""""""""""""""""""
+.. image:: /static/images/shots/0.6/0.6-longbars.png
+   :class: shot
+
+The tables presented are now sortable by a number of variables, including
+the language name and the completion percentage.
+
+Commit improvements
+"""""""""""""""""""
+Custom file submissions can now define their own message to be used for the
+file submission. This allows users to publish the state of the translation and
+other useful information to be shared with the project maintainer and the rest
+of the translators.
+
+In addition, commits are now using the user's full name in the author commit
+information instead of just the username.
+
+Better whitespace usage
+"""""""""""""""""""""""
+Statistics bars now support arbitrary lengths (and by default longer), making
+better use of the whitespace, increasing readability and allowing the designer
+to more easily choose how to present the information.
+
+
+Under the hood changes
+::::::::::::::::::::::
+
+This release introduces some improvements in the platform itself, which might
+interest people who administrate their own Transifex instance or build on top
+of the platform.
+
+Revamped settings mechanism
+"""""""""""""""""""""""""""
+Settings are now organized in multiple files under the ``settings/``
+directory, allowing easier management and override. (r456)
+
+Improved abstraction for repositories
+"""""""""""""""""""""""""""""""""""""
+Backend support for repositories has been improved to allow more types of
+repos to pull from. The new ``codebases`` application has been
+introduced which abstracts the VCS functionality for the ``vcs`` and
+``tarball`` applications.
+
+Improved languages support
+""""""""""""""""""""""""""
+
+- More languages have been added for commonly used locale codes (#200).
+- Language creation command added: ``(python manage.py) txcreatelanguages``.
+- After first syncdb, admin is prompted for language creation (#213).
+
+Action logging
+""""""""""""""
+The action log support has been re-engineered to allow more notifications of
+changes and better reporting. It includes more clear HTML templates and text
+and can refer to different objects resulting in increase of performance and
+usability.
+
+Standard code directory structure
+"""""""""""""""""""""""""""""""""
+The transifex code has been moved under the ``transifex/`` directory in the
+source tree. This improves the packaging and installation procedure, avoiding
+common pitfalls with python imports.
+
+
+Translations
+------------
+
+- Polish (Piotr Drąg)
+
+
+Bugfixes from 0.5.x
+-------------------
+
+In addition to the bugfixes introduced in the maintenance
+:ref:`0.5.x releases <releases-0.5>`, the following issues have also been fixed:
+
+- Default mode of operation is now DEBUG.
+- Fixed ordering in language-release feed (fixes #149) (Markos Fragkakis)
+- Run msgfmt check and stats calculation only for .po files
+- Changing a repository root url now deletes the local cache of the repository.
+- List of releases for components is now filtered by the collections chosen in
+  the project. Additionally, when a collection is dropped from a project, the
+  components of the project also reflect that change, removing releases related
+  to that collection.
+- Regular expressions in ComponentForm are now validated for correctness.
+- Added setup_repo to svn-browser (fixes #131)
+
+.. _upgrading-to-0-6:
+
+Upgrading to 0.6
+----------------
+
+The schema has undergone many changes, and 0.6 includes code to perform
+a schema evolution using ``django-evolution``.
+
+.. warning::
+
+    Due to heavy changes in the schema, the following were only tested and
+    guaranteed to work only with PostgreSQL.
+
+Here are the steps:
+  
+- Add ``django_evolution`` to ``INSTALLED_APPS`` in the 0.5.x Transifex
+  configuration.
+- Run ``python manage.py syncdb`` to get the required tables set up.
+- Proceed to upgrade the project to v0.6, e.g. by deploying the new package.
+- Run ``python manage.py syncdb``. This might result in an exception, but
+  this may be safely ignored.
+- Run ``python manage.py evolve ---execute``, and then ``python manage.py
+  syncdb`` again.
+
+Finally, execute the following code on the command line::
+
+    cd <transifex_path>/transifex/
+    ./manage.py shell
+    
+    from translations.models import POFile
+    for po in POFile.objects.all():
+        if po.language:
+            po.language_code = po.language.code
+        else:
+            po.language_code = po.object.trans.tm.guess_language(po.filename)
+        po.save()
+
+Also note that the settings files have been broken down for easier maintenance
+in ``settings/``. The ``settings.py`` file needs to be overwritten with the
+new version and settings migrated to the respective ``.conf`` files.
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+- Dimitris Glezos
+- Diego Búrigo Zacarão
+- Ignacio Vazquez-Abrams
+- John Beredimas
+
+.. _Apocalypse: http://en.wikipedia.org/wiki/Apocalypse_(comics)

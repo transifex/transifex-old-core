@@ -1,0 +1,114 @@
+.. -*- mode:rst -*-
+
+.. _releases-0.3:
+
+=======================================
+ Transifex version 0.3.x release notes
+=======================================
+
+Welcome to the Transifex 0.3 release.
+
+The 0.3 release cycle includes many new features, some of them developed
+during the 2008 Google Summer of Code, where Transifex succeeded in having
+three slots accepted.
+
+
+Version 0.3 "Get smart"
+=======================
+
+Released: 2008-07-20
+
+New Features
+------------
+
+* Full i18n support in both templates and database (Diego Búrigo Zacarão)
+* Support for editing repositories (Diego Búrigo Zacarão)
+* Switched model library from SQLObject to SQLAlchemy (Asgeir Frimannsson)
+* Switched templating language from Kid to Genshi (Diego Búrigo Zacarão)
+* Switched widget library to ToscaWidgets (Diego Búrigo Zacarão)
+* Code quality control, unit testing (Dimitris Glezos, Diego Búrigo Zacarão)
+* Development moved to transifex.org, references updated (Dimitris Glezos)
+
+Bugfixes
+--------
+
+* Better support for multiple pages in tables (Dimitris Glezos)
+* Fixed GIT support for non-master branches (FH #17) (Christos Trochalakis)
+* Hide links to admin pages from homepage for non-admins (Dimitris Glezos)
+* Form validation in submit form (FH #51) (Diego Búrigo Zacarão)
+* Cleaner commit msg for decentralized VCS (Tx #3) (Dimitris Glezos)
+* Fixed redirect after submission to correct branch (Diego Búrigo Zacarão)
+
+Translations
+------------
+
+* German (Fabian Affolter)
+* Italian (Silvio Pierro, Francesco Tombolini)
+* Malay (Sharuzzaman Ahmat Raslan)
+* Hungarian (Sulyok Péter)
+* Brazilian Portuguese (Diego Búrigo Zararão)
+
+
+Version 0.3.1 "A Clockwork Orange"
+==================================
+
+Released: 2008-08-01
+
+New Features
+------------
+
+* New generic theme (Dimitris Glezos, Diego Búrigo Zacarão)
+* Packaging with setuptools, pypi (Christos Trochalakis, Dimitris Glezos)
+* CSS stylesheet overhaul, reworked submission form (Dimitris Glezos)
+
+Bugfixes
+--------
+
+* Use standard name/email for hg commits (Dimitris Glezos)
+
+Translations
+------------
+
+* Serbian (Miloš Komarčević)
+* Greek (Dimitris Glezos)
+* Receiving translations from Fedora's Tx instance (Dimitris Glezos)
+
+
+Version 0.3.2 "As Good as It Gets"
+==================================
+
+Released: 2009-01-29
+
+New Features
+------------
+
+* Show more results per page in list views (Dimitris Glezos)
+* Scripts uniformly named as `tx-*.py` (#31, Christos Trochalakis)
+* Session backend is now using database (#42, Christos Trochalakis)
+* Updated Identity for new Fedora Account System (Toshio Kuratomi)
+
+Translations
+------------
+
+* Albanian (Besnik Bleta)
+* Balochi (Mostafa Daneshvar)
+* Brazilian Portuguese (Glaucia Cintra)
+* Catalan (Xavier Conde)
+* Chinese (Tian shixiong, Chai Zhenhua)
+* Polish (Piotr Drąg)
+* Russian (ValeriyKruchko)
+* Slovak (Pavol Šimo)
+* Spanish (Gladys Guerrero, Juan Manuel Rodriguez Moreno)
+* Swedish (Magnus, Daniel Nylander)
+
+Bugfixes
+--------
+
+* Correct dVCS commit message and changelog entry (#77, Dimitris Glezos)
+* Correct order of identity validators + tests (Christos Trochalakis)
+* Changed shebang of ez_setup.py (Michaël Ughetto)
+* Fixed incorrect forward_url (#38, Stéphane Raimbault)
+* Teach init.py to work away from home (#28, Christos Trochalakis)
+* Dirs config files are now relative to workdir (Christos Trochalakis)
+* Docs dir now auto-created (#36, Claude Paroz)
+* Various minor i18n changes. (#29 #30 #50, Diego Búrigo Zacarão)

@@ -1,0 +1,218 @@
+.. -*- mode:rst -*-
+
+.. _releases-0.5:
+
+======================================
+ Transifex version 0.5.x release notes
+======================================
+
+Welcome to the Transifex 0.5 release.
+
+
+Transifex 0.5 (Gold)
+====================
+
+Released:
+  March 19th, 2009
+
+
+Summary
+-------
+
+This release represents a significant advance in Transifex development since
+the Transifex 0.3 release in November 2008, maybe even the creation of Transifex
+itself in 2007. The single most major change is the complete re-write of the
+code from scratch, migrating to the Django framework, but also the multitude
+of features added, both of which signify a turning point in Transifex's history.
+
+Here's a 40K-foot view of the release in numbers::
+
+    243 files changed, 14027 insertions(+), 319 deletions(-)
+
+Transifex 0.5 comes with a multitude of features, most of them introduced in
+this release.
+
+
+Major features
+--------------
+
+- Complete re-write of the source code on top of the Django_ Web framework
+- New data model supporting multiple repositories per project (e.g. branches
+  or domains of files), and project collections (e.g. Fedora, GNOME)
+- Calculation of a project's translation coverage (statistics)
+- Submission support of files to a variety of version control systems
+- Support for serving translation files to users for easy access to them 
+- User registrations and authentication (including OpenID)
+- Simple workflow support
+
+
+Translation files
+:::::::::::::::::
+
+- Statistics: Analysis of translation files and generation of completeness
+  charts (translation statistics)
+- Support for PO-based i18n codebases (translated, fuzzy, untranslated)
+- Support for both static and dynamic (intltool-based) i18n POT formats
+- Statistics generation per project, language or release
+- In-browser viewing of translation files with syntax highlighting
+- Direct download of translation files
+- Support for locale variants (e.g. pt_BR, pt-br)
+- Support for statistics-only projects (no submission) 
+- Pre-commit hook to check the syntax validity of the submitted translation
+  file
+
+
+User experience
+:::::::::::::::
+
+- Full-blown administration support. Core objects have Edit and Delete views
+  used by privileged users to control the objects (Create Projects, Edit
+  Collections, etc.).
+- RSS feeds for every major element in the system.
+- New and revamped theme, using the awesome Silk_ icon set from famfamfam
+- Support for Tags on various objects like projects and collections
+- Search support in object information with result highlighting
+- Easier navigation with breadcrumb-like positional links (You are here: ...)
+- Pagination of object lists for easy navigation
+- Support for notification on changes in registered projects. The feature is
+  also extensible for more notifications.
+- Support for long descriptions of objects using Markdown_ syntax for rich
+  markup and presentation.
+- Enhanced user experience using JavaScript events and AJAX support 
+- Easy-to-access contact form for direct reporting of issues and comments
+- I18n support for multiple User Interface languages
+
+
+User accounts
+:::::::::::::
+
+- Standalone user account management subsystem
+- Registration of new user accounts
+- OpenID support
+- User profiles
+- Profile management features (change/remind password, change email, delete
+  account, etc.)
+- Model action history (logging changes to information) for transparency and
+  security
+
+
+Deployment
+::::::::::
+
+- Support for any Django-supported database platform (SQLite, MySQL,
+  PostgreSQL, etc.)
+- User permissions support, allowing fine-grained permission handling per
+  user (e.g. 'can_add_projects', 'can_refresh_cache')
+- Full-blown, flexible admin interface for easy-to-access administration for
+  user permissions and all other entities in the system, as well as for
+  debugging
+- Custom authentication backends to connect the Tx users to legacy databases
+- Support for highly customizable deployment, including overriding of VCS
+  backends, themes and custom classes for i18n support in projects
+- "Pretty" URLs by allowing project identifiers (slugs) containing alphanumeric
+  characters and dashes.
+- Custom error messages (404, 500, etc.)
+- Extensible templating system, with support for per-host partial overriding
+- Flexible CLI script for scheduled statistics updates
+- Support for database schema evolution for painless upgrades 
+- RPM packages available for Transifex and its dependencies
+- Protection against CSRF attacks
+- Documentation using the Sphinx library
+
+
+Platform
+::::::::
+
+- Refactoring of the version control system level, supporting
+  cvs, svn, hg, git and bzr repositories hosted anywhere on the Internet.
+- Support for multiple Components in one Project (e.g. branches)
+- Fine-grained hosting choices: Components can come from different sources (e.g.
+  VCS repositories) while belonging to the same project
+- Extensible codebase for other projects to be able to build on top of the
+  platform
+- Pluggable and reusable Python VCS layer (transifex.vcs)
+- Rich validation of user input in edit forms and error reporting on bogus
+  information.
+- Extensible sub-system for easy addition of more l10n types
+- Backwards compatibility with Python v2.4
+
+
+Bugfixes from 0.3.x release
+---------------------------
+
+- Local cache refresh times are now per-branch (#15)
+- Versioning system dependencies are now soft, as Tx only depends on hg (#51)
+- Support for OpenID logins (#9)
+- Support for search in project names and descriptions (#23)
+- ... and a bunch of others that are now considered irrelevant, outdated or just
+  obsolete.
+
+
+Contributors
+------------
+
+The complete re-write of Transifex using the Django framework was led by
+Dimitris Glezos and Diego Búrigo Zacarão.
+
+In addition, the following people have contributed to this release:
+
+- Christos Trochalakis
+- Ignacio Vazquez-Abrams
+- John Beredimas
+- Nikos Tsirakis
+
+Finally, we'd like to thank Toshio Kuratomi, Jannis Leidel and Mike McGrath
+for their expertise and suggestions throughout the development phase.
+
+
+Transifex 0.5.1 (Aurora)
+========================
+
+Released:
+  March 26th, 2009
+
+Diffstat:
+  14 files changed, 218 insertions(+), 18 deletions(-)
+
+Aurora_ is a maintenance release, fixing a few issues identified by the
+`Fedora Translation community`_.
+
+Bugfixes
+--------
+
+* Show untranslated modules too as a separate list on pages (#141) 
+* Fixed stats for projects with intltool support broken (#157)
+* Added mercurial compatibility for 1.2.x version
+* Added list of files to the submit form (#174)
+
+All fixes by Diego Búrigo Zacarão.
+
+.. _Aurora: http://en.wikipedia.org/wiki/Aurora_(comics)
+.. _Fedora Translation community: http://translate.fedoraproject.org/
+
+
+Transifex 0.5.2 (Wendigo)
+=========================
+
+Released:
+  April 1st, 2009
+
+Diffstat:
+   12 files changed, 50 insertions(+), 26 deletions(-)
+
+Bugfixes
+--------
+
+* Fixed ordering of components untranslated by a Release X Lang
+* Fixed missing parameter for the set_stats_for_lang method call
+* Fixed msgfmt to work large files
+
+Fixes by Diego Búrigo Zacarão and Ignacio Vazquez-Abrams.
+
+
+.. _Wendigo: http://en.wikipedia.org/wiki/Wendigo_(comics)
+
+
+.. _Django: http://www.djangoproject.com/
+.. _Silk: http://www.famfamfam.com/lab/icons/silk/
+.. _Markdown: http://daringfireball.net/projects/markdown/syntax

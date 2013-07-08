@@ -1,0 +1,53 @@
+.. -*- mode:rst -*-
+
+.. _releases-0.4:
+
+=======================================
+ Transifex version 0.4.x release notes
+=======================================
+
+Transifex 0.4 was planned to be the last major stable release from the
+TurboGears branch.
+
+Seeing that 0.3 was pretty stable and the new features on 0.4 were already
+implemented in the Django branch (to be named 0.5), the Transifex development
+team decided to continue supporting the 0.3 branch for a few more months and
+skip shipping a 0.4 release, allowing more focus on the newest and greatest
+release based on the Django framework.
+
+The relevant features from below were either backported to 0.3 or shipped with
+Transifex 0.5. 
+
+Version 0.4 (skipped)
+=====================
+
+New Features
+------------
+
+* Session backend: Using database stored sessions now (Ricky Zhou, #42)
+* Rewritten model.py with the declarative plugin of SA (Stéphane Raimbault)
+* Fix redirection at login (Stéphane Raimbault, #38)
+* Removed dependency from patch (Dimitris Glezos, #37)
+* I18n: Data/View POs properly separated (Diego Búrigo Zacarão, #29 #30 #50)
+
+Bugfixes
+--------
+
+* Fix long strings to conform new guidelines (Michaël Ughetto)
+* Changed shebang of ez_setup.py (Michaël Ughetto)
+* Fixed Session primary_key type in model (Christos Trochalakis)
+* Removed dependency from setup.py (Christos Trochalakis)
+* Scripts renamed to indicate the Tx domain (Christos Trochalakis, #31)
+* Switch init.py to use optparse (Christos Trochalakis, #30)
+* Teach init.py to work away from home (Christos Trochalakis, #28)
+
+Translations
+------------
+
+* Albanian (Besnik Bleta, #61)
+* Balochi (Mostafa Daneshvar)
+* Catalan (Xavier Conde Rueda)
+* Hungarian (Peter Sulyok)
+* Polish (Piotr Drąg)
+* Spanish (Juan Manuel Rodriguez Moreno)
+* Swedish (Daniel Nylander)

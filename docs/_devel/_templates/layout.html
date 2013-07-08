@@ -1,0 +1,147 @@
+{% extends "!layout.html" %}
+
+{%- macro secondnav() %}
+  {%- if prev %}
+    &laquo; <a href="{{ prev.link|e }}" title="{{ prev.title|e }}">previous</a> 
+    {{ reldelim2 }}
+  {%- endif %}
+  {%- if parents %}
+    <a href="{{ parents.0.link|e }}" title="{{ parents.0.title|e }}" accesskey="U">up</a> 
+  {%- else %}
+    <a title="{{ docstitle }}" href="{{ pathto('index') }}" accesskey="U">up</a> 
+  {%- endif %}
+  {%- if next %}
+  {{ reldelim2 }}
+    <a href="{{ next.link|e }}" title="{{ next.title|e }}">next</a> &raquo;
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro mainbodynav() %}
+  {%- if next %}
+    Next Section: <a href="{{ next.link|e }}" title="{{ next.title|e }}">{{ next.title|e }}</a> &raquo;
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro bodynav() %}
+  {%- if prev %}
+    &laquo; <a href="{{ prev.link|e }}" title="{{ prev.title|e }}">{{
+    prev.title|e }}</a> 
+    {{ reldelim2 }}
+  {%- endif %}
+  {%- if parents %}
+    <a href="{{ parents.0.link|e }}" title="{{ parents.0.title|e }}" accesskey="U">up</a> 
+  {%- else %}
+    <a title="{{ docstitle }}" href="{{ pathto('index') }}" accesskey="U">up</a> 
+  {%- endif %}
+  {%- if next %}
+  {{ reldelim2 }}
+    <a href="{{ next.link|e }}" title="{{ next.title|e }}">{{ next.title|e }}</a> &raquo;
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro media_url() %}http://sw.transifex.net/2/static/{%- endmacro %}
+
+{% block document %}
+  <div id="global-header">
+    <div class="wrapper" >
+      <a id="transifex-logo" href="https://www.transifex.com/" title="Go to start page">
+  			<img src="{{ pathto('_static/' + logo, 1) }}" alt="Transifex logo" width="109" height="30"/>
+  		</a>
+  		<ul id="global-nav" >
+				<li><h6><a href="{{ pathto('genindex') }}" class="smooth-transition">INDEX</a></h6></li>
+				<li><h6><a href="{{ pathto('contents') }}" class="smooth-transition">TABLE OF CONTENTS</a></h6></li>
+				<li><h6><a href="{{ pathto('index') }}" class="smooth-transition">DOCS HOME</a></h6></li>
+  		</ul>
+  		
+    </div>
+    <div class="wrapper" >
+      <span style="font-weight:bold;padding-top: 3px;display: block;text-align: center;margin: 0em 0em 0em 1.75em;color: #cacfd2;">For most up-to-date information, please refer to <a href="https://www.transifex.com">Transifex.com</a> and <a href="http://support.transifex.com">support.transifex.com.</a>
+    </div>
+  </div>
+ 
+  <div class="nav wrapper"><div class="wrapper_contents">{{ bodynav() }}</div></div>
+ 
+  <div id="custom-doc" class="{% block bodyclass %}{{ 'yui-t6' }}{% endblock %}">
+   <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="{{ pagename|replace('/', '-') }}">
+            {% block body %}{% endblock %}
+      <div class="mainbodynav">{{ mainbodynav() }}</div>
+
+          </div>         
+        </div>
+      </div>
+      {% block sidebarwrapper %}
+          <div class="yui-b" id="sidebar">
+            {{ sidebar() }}
+          </div> 
+      {% endblock %}
+    </div>
+    
+
+  </div>
+  <div id="ft">
+    <div class="nav wrapper"><div class="wrapper_contents">{{ bodynav() }}</div></div>
+  </div>
+{% endblock %}
+
+{% block sidebarrel %}
+  <h3>You are here:</h3>
+  <ul>
+      <li>
+        <a href="{{ pathto('index') }}">{{ docstitle }}</a>
+        {% for p in parents %}
+          <ul><li><a href="{{ p.link }}">{{ p.title }}</a>
+        {% endfor %}
+        <ul><li>{{ title }}</li></ul>
+        {% for p in parents %}</li></ul>{% endfor %}
+      </li>
+  </ul>  
+{% endblock %}
+
+{# Empty some default blocks out #}
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block sidebar1 %}{% endblock %}
+{% block sidebarlogo %}{% endblock %}
+{% block sidebar2 %}{% endblock %}
+{% block extrahead %}  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold">{% endblock %}
+{%- block footer %}
+    <div class="footer wrapper">
+    {%- if hasdoc('copyright') %}
+      &copy; <a href="{{ pathto('copyright') }}">Copyright</a> {{ copyright }}.
+    {%- else %}
+      &copy; Copyright {{ copyright }}.
+    {%- endif %}
+    {%- if last_updated %}
+      Last updated on {{ last_updated }}{%- if show_sphinx %} using <a href="http://sphinx.pocoo.org/">Sphinx</a>{%- endif %}.
+    {%- endif %}
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-4362397-5");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<!-- Google Analytics for help.transifex.net (new) -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21799942-3']);
+  _gaq.push(['_setDomainName', '.transifex.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+{%- endblock %}

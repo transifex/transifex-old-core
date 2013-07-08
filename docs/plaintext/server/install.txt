@@ -1,0 +1,586 @@
+.. -*- mode:rst -*-
+
+.. _installing:
+
+================================================
+ Transifex Community Edition Installation Guide
+================================================
+
+
+Before you can use Transifex CE, you'll need to get it installed. This document
+will guide you through a simple, minimal installation that'll work while you
+walk through the introduction.
+
+To avoid spending too much time talking about packaging systems, this guide
+is based on yum and Fedora. You can replace those commands with your own
+distribution's packaging system commands.
+
+
+First things first
+==================
+
+
+Who should consider installing Transifex?
+-----------------------------------------
+
+Good question!
+
+Transifex is a web system for managing complex translation projects and serving
+files to a community of translators. You can see it live at Transifex.com_, our
+hosted, upstream version of Transifex common for any project which chooses to
+start receiving translations in a snap. This instance is managed by Transifex_,
+the company sponsoring the development of Transifex.
+
+So, who would be interested in installing Transifex CE on their systems?
+
+
+Project maintainers
+~~~~~~~~~~~~~~~~~~~
+
+If you're the administrator of a project or community, then you need to decide
+whether you would like to setup your own, self-hosted instance of Transifex CE,
+or use an upstream, hosted one such as Transifex.com_.
+
+The users who usually consider installing their own instance are communities
+with lots of projects (hundreds) and complex translation workflows. This
+translates into setting up Tx on one's own servers and growing a local community
+of translators instead of using an upstream pool of translators. This choice
+gives control and freedom to manage the server, however it implies an isolated
+translation community and higher maintenance costs.
+
+The alternative of a self-managed version is using a common, hosted instance.
+This allows the sharing of a larger translation community, lower management
+overhead, and sometimes some extra features available there.
+
+
+Translators
+~~~~~~~~~~~
+
+If you're a translator, you're probably *not* interested in installing
+Transifex itself. Transifex CE serves the purpose of the *server*: It distributes
+translations pulled from a number of upstream projects to people. Currently,
+you can interact with Transifex using your every-day browser, and there is
+no specialized Transifex client you can install.
+
+Now that we've made clear who our audience is, let's proceed to describing
+how to set up a private installation of Transifex.
+
+
+I'm ultra hardcore. Give me the bottom line!
+============================================
+
+The following is what a set of super-fast installation instructions would look
+like (run as root or using ``sudo``)::
+
+    yum install python python-setuptools python-imaging
+    easy_install transifex
+
+Please note that the above might eventually end up missing something compared
+to the full instructions below.
+
+
+Installing Basic Dependencies
+=============================
+
+Python
+------
+
+Being a Python tool, Transifex requires Python. We recommend
+installing Python 2.5 or later.
+
+You can get Python from http://www.python.org/, or from your favorite
+distribution. If you're running Linux or Mac OS X, you probably already have
+it already installed.
+
+You can verify that Python's installed by typing ``python`` from your
+shell. You should see something like::
+
+    Python 2.5.1 (r251:54863, Jun 15 2008, 18:24:51)
+    [GCC 4.3.0 20080428 (Red Hat 4.3.0-8)] on linux2
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>>
+
+
+A note on ``PythonPath``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+These applications can be installed anywhere on your system, as long as Python
+can find them. Python uses the ``PythonPath`` environment variable for this.
+The value you use for ``PythonPath`` should include the parent directories of
+all the modules you are going to import in your application. It should also
+include the parent directory of Transifex itself.
+This is exactly the same situation as
+setting the Python path for interactive usage. Whenever you try to import
+something, Python will run through all the directories in ``sys.path`` in turn,
+from first to last, and try to import from each directory until one succeeds.
+
+An example might make this clearer. Suppose you have some applications under
+``/usr/local/django-apps/`` (for example, ``/usr/local/django-apps/weblog/`` and
+so forth), your settings file is at ``/var/www/mysite/settings.py`` and you have
+specified DJANGO_SETTINGS_MODULE_ as in the above
+example. In this case, you would need to write your ``PythonPath`` directive
+as::
+
+    PythonPath "['/usr/local/django-apps/', '/var/www'] + sys.path"
+
+With this path, ``import weblog`` and ``import mysite.settings`` will both
+work. If you had ``import blogroll`` in your code somewhere and ``blogroll``
+lived under the ``weblog/`` directory, you would *also* need to add
+``/usr/local/django-apps/weblog/`` to your ``PythonPath``. Remember: the
+**parent directories** of anything you import directly must be on the Python
+path.
+
+
+Installing Transifex Community Edition
+======================================
+
+There are three basic ways to install Transifex CE:
+
+* Using Python's packaging tools (stable version)
+* Using your distribution's packaging tools (stable version)
+* Pulling directly from our development repository (stable and development
+  versions)
+
+
+Install using Python's setuptools
+---------------------------------
+
+Probably the easiest way to install Transifex is by using Python's common
+packaging tools. Since Tx is registered in the Python Packaging Index and
+has defined its own Python dependencies, using this method to install all the
+required software is quite easy.
+
+First off, you'll need the following packages installed::
+
+    yum install python-setuptools python-imaging
+
+.. note::
+
+    If ``python-imaging`` isn't available in your packaging system, just install
+    ``gcc`` and the following command will pull and auto-compile this package for
+    you.
+
+By default, ``easy_install`` installs the software in your system's standard
+Python packages directory (e.g. ``/usr/lib/python2.5/site-packages/transifex``).
+If you want to do this, running the following as root or with sudo, should
+do the trick::
+
+    easy_install transifex
+
+
+Using a virtual environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Alternatively, you can setup a virtual environment using ``virtualenv``, and
+isolate your Transifex installation in its own "shell". This is particularly
+useful for testing Tx, for "freezing" Tx's dependencies, and, your best choice
+if you don't have root access on the system.
+
+A set of commands similar to the following will create a virtual environment
+in the current directory and install Transifex in there::
+
+    sudo easy_install virtualenv    # or: sudo [yum] install virtualenv
+    virtualenv txenv                # create the environment
+    source txenv/bin/activate       # switch in using it
+    easy_install transifex          # install Tx in the virtual env
+
+For more information on this way of installing Tx, please refer to the
+documentation of virtualenv itself.
+
+If you've already installed the non-Python dependencies (like some of the
+versioning systems you might use) mentioned in the previous sections, you could
+jump to the `Initial configuration`_ section to proceed in configuring your
+setup.
+
+
+Install using your distribution's tools
+---------------------------------------
+
+Transifex CE has been packaged in a number of Linux distributions. You can check
+your distribution's packaging system to see if it is available in yours::
+
+    $ yum info transifex
+    Available Packages
+    Name       : transifex
+    Arch       : noarch
+    Summary    : A system for distributed translation submissions
+    URL        : https://www.transifex.com/
+    License    : GPLv2
+    Description: Transifex is a web-system that facilitates the process of submitting
+               : translations in remote and disparate version control systems (VCS).
+
+If Transifex is available for your distribution, you can proceed by installing
+it just like any other package. In the case of Fedora, the software is split
+in two packages, and can be installed as follows::
+
+    yum install transifex transifex-extras
+
+To configure your setup, proceed to the `Initial configuration`_ section.
+
+
+.. _install-manually-ref:
+
+Install manually
+----------------
+
+You can get the source code in a number of ways.
+
+
+Getting a stable version
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Stable release tarballs are available from the following locations, in
+addition to alpha, beta, and release candidates:
+
+- http://pypi.python.org/pypi/transifex
+- https://github.com/transifex/transifex/tags
+
+Tarballs are source packages, whereas eggs are binary distributions for a
+specific version of Python.
+
+
+Getting a stable version with git
+:::::::::::::::::::::::::::::::::
+
+Quite simple::
+
+    git clone git@github.com:transifex/transifex.git
+    git checkout 1.0
+
+
+Getting a development version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The current development version of Transifex CE can be fetched by cloning the
+mainline repository::
+
+    git clone git@github.com:transifex/transifex.git
+
+Our development tree is kept quite stable at all times. This is achieved by
+reviewing patches before they are committed, and by having very few core
+committers. However, you should keep in mind that while the code is stable,
+the database schema isn't. During the development of a major release, the
+DB structure (Django models) change rapidly, so you'll need to evolve your
+schema quite often using our out-of-the-box migrations.
+
+Knowing the above, feel free to jump right in and install a development
+version from our Mercurial repo and enjoy our newest and greatest features.
+
+*(Note: that this repository does not have the branched stable versions which
+exist only in the transifex-stable repository.)*
+
+
+
+Install dependencies
+~~~~~~~~~~~~~~~~~~~~
+
+Django
+::::::
+
+Transifex is developed on top of a Python Web Framework called Django. We
+recommend installing the 1.2.5 version of Django, but anything above 1.2
+should do. You can get more information about how to install Django on
+your system from the official Django documentation.
+
+Usually you can use the package your distribution provides you::
+
+    yum install Django
+
+Or use easy_install::
+
+    easy_install django==1.3.1
+
+
+.. _install-django-deps:
+
+Python dependencies
+:::::::::::::::::::
+
+This is the generic method for creating a development environment for
+Transifex. We strongly suggest running those commands inside a virtualenv
+environment instead of running them as root. You can also
+install some of these dependencies as packages in your distribution, if they
+are available.
+
+.. code-block:: bash
+
+    easy_install django-addons django-ajax-selects django-authority \
+        django-filter django-haystack django-notification==0.1.5 django-pagination \
+        django-sorting 'django-staticfiles<0.4' django-tagging markdown polib==0.6.3 \
+        pygooglechart python-magic south
+
+    easy_install -f http://transifex.org/files/deps/ django-piston \
+        contact-form userprofile django-threadedcomments
+
+    easy_install -f http://effbot.org/downloads/ Imaging
+
+
+
+Any other non-Python dependencies reported when running the above methods need
+to be installed using traditional methods (such as your system's packaging mechanism).
+
+
+Translation-specific packages
+:::::::::::::::::::::::::::::
+
+Transifex CE requires a couple of standard packages to support translations.
+Currently these are the following:
+
+* gettext (standard Internationalization library)
+* intltool (for dynamic ``POT``-file generation)
+
+On Fedora you can run::
+
+    yum install gettext intltool
+
+
+Initial configuration
+=====================
+
+
+Initialize the database
+-----------------------
+
+After you have all dependencies and packages installed, the Transifex CE
+installation should be very simple. Customize ``settings/*.conf`` and
+``urls.py`` to accommodate your server's needs.
+
+To enable Transifex's notifications you'll need to switch the relevant setting
+called ENABLE_NOTICES to ``True``.
+
+To have your widget code viewable from outside your transifex instance you have
+to set your ``STATIC_URL`` variable to an absolute URL (by using relative paths
+you can still view the widgets on your own installation)
+
+.. note::
+
+    Ensure the database server defined in the settings files is properly
+    configured and running, and that your selected database is using UTF-8.
+    Depending on the backend, this is achieved in different ways; for example,
+    in MySQl, you might want to modify ``my.cnf`` or create the database with
+    a command similar to the following:
+
+    .. code-block:: sql
+
+        CREATE DATABASE db_name DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+    For more information refer to the Django Documentation Section
+    "`Creating the database`_".
+
+.. note::
+
+    There are known issues with Django and MySQL, due to which
+    Transifex might not work properly. See the "`Collation settings`_"
+    notes in the Django documentation. You should consider using
+    PostgreSQL instead.
+
+Once you're done configuring, run inside the project directory::
+
+    ./manage.py txcreatedirs        # Create necessary directories
+    ./manage.py syncdb              # Setup DB tables, create superuser
+    ./manage.py migrate             # Setup more DB tables
+    ./manage.py txlanguages         # Create a standard set of languages
+    ./manage.py txcreatenoticetypes # Create a standard set of notice types
+    ./manage.py collectstatic       # Copy all the app static files to the static dir
+    ./manage.py runserver 8000      # Start the development server
+
+The first command will create the necessary directories on the disk. Note that
+the user you're running the software as, needs to have write access to these
+directories (check out your configuration files to see what these are).
+
+``syncdb`` will create the database tables, and ask you to create an admin user
+(superuser), who will have access to the admin panel. The latter is by default
+accessible through ``/admin/``, something you can customize by modifying the
+file ``transifex/urls.py``.
+
+Now, you can fire up your browser at ``http://localhost:8000/``, grab a cup of
+coffee and lean back.
+
+
+Import some data
+----------------
+
+Transifex uses the fixtures feature of Django to load some initial data in the
+database. The following commands require you having run ``./manage.py syncdb``
+at least once before in order for the database tables to exist.
+
+The following command loads a bunch of sample data to play around with.
+
+.. code-block:: bash
+
+    ./manage.py loaddata txcommon/fixtures/sample_*.json
+
+Two users are created: 'guest' and 'editor'. The 'guest' has the
+basic rights of a logged-in user of the site, while the 'editor' account has
+more advanced privileges like modifying projects, etc. Together with the 'admin'
+user created with the 'syncdb' step above, you should have 3 accounts now, each
+with its own access level.
+
+You can now fire up your browser to check out the newly imported data.
+
+
+Internationalization (i18n) support
+-----------------------------------
+
+To be able to use Transifex with a localized interface, it is necessary to
+create the translations objects files (.mo) using one of the following commands,
+for example:
+
+.. code-block:: bash
+
+    ./manage.py txcompilemessages -l pt_BR
+    or
+    ./manage.py txcompilemessages
+
+
+.. _install-customizing:
+
+Customizing your server
+=======================
+
+At this point you probably have Transifex up and running, probably with some
+initial data. This section will help you with some common tasks around how to
+run and customize Transifex.
+
+
+Administrator accounts
+----------------------
+
+Admin users are able to login to Transifex's admin panel, at ``/admin/`` and
+have full control over the whole website content. If you haven't created one
+in the steps above, you can do so as follows::
+
+    $ python manage.py createsuperuser
+    Username (Leave blank to use 'mits'): myadminuser
+    E-mail address: admin@example.com
+    Password:
+    Password (again):
+    Superuser created successfully.
+
+
+Site Domain and Name
+--------------------
+
+Transifex leverages the power of Django's Sites_ framework to make it easy
+to have instances of Transifex on different domains using the same models
+and database.
+
+If you have imported the sample data, a single website is created in the
+database called 'example.com'. If you haven't, you'll need to create it.
+
+This value is used in a number of places, including email sent by the system.
+You can edit or create your default website in two ways:
+
+* Using the `Django admin panel`_: By default Transifex comes with a handy
+  admin panel. By default, this is mounted at ``/admin/`` (you can change
+  this by editing your settings file).
+
+  Login to the admin panel using the credentials you created during the
+  database creation step, and navigate to the ``Sites`` model. There, you can
+  either edit the default site or create your own.
+
+* Alternatively, you may use the command line:
+
+  .. code-block:: pycon
+
+    $ cd transifex
+    $ python manage.py shell
+    >>> from django.contrib.sites.models import Site
+
+    >>> # To edit the existing one:
+    >>> current_site = Site.objects.get_current()
+    >>> current_site.domain = 'mydomain.com'
+    >>> current_site.name = 'Transifex'
+    >>> current_site.save()
+
+    >>> # To create your own:
+    >>> s = Site(domain='mydomain.com', name='Transifex')
+    >>> s.save()
+
+You can now proceed to the next section to import some data, or read about
+managing your instance right away.
+
+
+User Interface
+--------------
+
+The default Transifex interface lives in the ``templates`` directory and can
+be customized at will.
+
+You can also customize the theme by copying this directory to a different
+location and updating the ``TEMPLATE_DIR`` setting with this new location.
+
+Finally, Django supports multiple locations of template source files, which it
+searches in order. Instead of copying the entire template directory, you can
+simply copy particular files you'd like to override and define the
+``TEMPLATE_DIR`` setting as a tuple in the order you'd like the directories
+to be searched (first entry takes preference over second, etc.).
+
+
+
+Debugging
+=========
+
+Debugging is enabled through a separate ``SETTINGS`` file, which enables some
+additional applications and features. Some of these additional applications
+might require installation using ``easy_install``, but you can enable any
+number you want by editing the ``settings_debug.py`` file.
+
+Some of these applications define their own models, so the first time you'll
+use the file, a 'syncdb' using that file will be needed to have the respective
+database tables created::
+
+    ./manage.py syncdb --settings settings_debug
+
+From that point on, you can run the debug server as follows::
+
+    ./manage.py runserver --settings settings_debug
+
+
+Testing
+=======
+
+For testing the whole project you can run::
+
+    ./manage.py test
+
+For testing a specific application inside Transifex you can run::
+
+    ./manage.py test projects
+
+
+Deployment
+==========
+
+There are many ways to deploy Transifex in your own server. See
+`Deploying Django`_ for a few ways discussed in the django
+documentation.
+
+In any case, make sure you correctly set the ``LANG`` variable in your
+setup to the value ``en_US.UTF-8`` (or any other UTF-8 value). A good
+way to verify this is to execute the command::
+
+  cat /proc/<pid of process running Transifex>/environ | tr '\0' '\n'
+
+and check the locale variables used.
+
+
+Frequently Asked Questions
+==========================
+
+When I try to upload a file nothing happens
+-------------------------------------------
+
+Check whether you successfully run ``./manage.py txcreatedirs`` and that you
+have the correct version of django-piston.
+
+
+
+.. _Transifex.com: http://www.transifex.com/
+.. _Transifex: http://team.transifex.com/
+.. _DJANGO_SETTINGS_MODULE: http://docs.djangoproject.com/en/dev/topics/settings/#django-settings-module
+.. _`Creating the database`: http://docs.djangoproject.com/en/dev/ref/unicode/#creating-the-database
+.. _`Django admin panel`: http://www.djangobook.com/en/1.0/chapter06/
+.. _Sites: http://docs.djangoproject.com/en/dev/ref/contrib/sites
+.. _`Collation settings`: https://docs.djangoproject.com/en/dev/ref/databases/#mysql-collation
+.. _`Deploying Django`: https://docs.djangoproject.com/en/dev/howto/deployment/

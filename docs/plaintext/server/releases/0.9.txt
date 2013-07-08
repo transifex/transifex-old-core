@@ -1,0 +1,576 @@
+.. -*- mode:rst -*-
+
+.. _releases-0.9:
+ 
+=======================================
+ Transifex version 0.9.x release notes
+=======================================
+ 
+ 
+Transifex 0.9 (Mojo)
+====================
+ 
+Welcome to Transifex 0.9, codenamed Mojo_.
+ 
+Released:
+  19 July 2010
+
+ 
+Transifex 0.9 'Mojo' is a production release of Transifex. It is targeted for
+new installations of Transifex and parties willing to upgrade to a new major
+version to take advantage of new features.
+
+Transifex 0.9 is kind of an interim release. It does include a number of new
+features and many important bugfixes. It also lays the groundwork for
+the next major release, which will include some huge changes in Transifex's
+codebase. Stay tuned for more, but until then, enjoy the fresh air
+Transifex 0.9 brings to your daily multilingual life.
+
+Here's a 40k-foot view of the release major features and numbers:
+
+- Addons engine
+- Project Team Sharing
+- More supported i18n directory structures
+- Widgets
+- Improved file ownership
+- More pre-submit checks
+- Improved handling of VCS Exceptions
+- Improved searching
+
+
+.. code-block:: bash
+
+    336 changesets recorded
+    38 tickets resolved
+    798 files changed, 132258 insertions(+), 87223 deletions(-)
+
+
+.. figure:: /static/images/shots/0.9/mojo.jpg
+   :class: alcenter shot2
+   
+   Ultimate Mojo_ -- Art by Stuart Immonen, Wade von Grawbadger, and
+   Justin Ponsor.
+
+
+Being served hot at Transifex.com
+---------------------------------
+
+Transifex 0.9 is a release of the open-source, community-powered Transifex
+flavor. It is suitable for very large projects with their own existing
+translation community, such as the Fedora Project, the GNOME Desktop, etc.
+
+Transifex is also offered as a Software-as-a-Service, at
+www.transifex.com_, ready to serve your translation needs with a few clicks.
+Transifex.com is a one-stop, batteries-included hosted service serving more
+than 900 independent projects and businesses who don't want to worry about
+deploying their own Transifex instance.
+
+Transifex.com is managed by Transifex_, the company sponsoring the development
+of Transifex.
+
+
+What's new in Transifex 0.9
+---------------------------
+
+Let's see what's fresh!
+
+
+Extension engine
+::::::::::::::::
+
+Transifex 0.9 sports a brand-new extension engine called django-addons_, which
+allows developers to write plug-and-play extensions (or plug-ins) which extend
+or override parts of the core functionality. django-addons_ was developed by
+the Transifex team and is now shipped as a reusable Django application.
+
+.. _django-addons: http://code.transifex.com/django-addons/
+
+Here are some of the benefits of this feature:
+
+- **Extensibility**: By creating hooks and connectors in the Transifex core code,
+  extra code can be decoupled and stored in separate directories. This allows
+  more functionality to be added when needed with less hassle. 
+- **Reduced code complexity**: By storing code in more and smaller files, the code
+  is more readable and manageable.
+- **Scalability**: Addons can be enabled and disabled on the production web-server,
+  and addons which fully support this functionality can simply be
+  deactivated when necessary (for example, when too much traffic hits your site).
+- **Friendlier code**: New developers can more easily experiment with new features
+  without having to mess with Transifex internals which might seem complex at
+  first sight.
+
+A number of Transifex modules have been converted to addons, which can be
+disabled if required by circumstance. Here's a list of them::
+
+    $ ./manage.py addons
+    Available addons:
+     * charts - Google Charts for Transifex
+     * locks - Locking mechanism for Transifex
+     * presubmit_checks
+     * repowatch - Repository watching
+     * timeline - Timeline for Transifex
+     * txcron - Transifex Cronjobs
+     * widgets - Transifex Widgets
+     
+Finally, for the Django developers out there, here are some of the features
+supported by django-addons:
+
+- Automatic URL discovery of addons: No need to tweak your main project's
+  'url.py' file.
+- Automatic signal connecting of addons
+- Support for 'default settings' per addon
+- Template hooking system (inject code from addons into your main project)
+- Support for 'django-staticfiles' to serve site media from each addon
+- Automatic registration of 'django-notification_' notice types
+- Support for storing and loading localization from inside each addon
+- Disable addons using a management command: ``./manage.py addons``
+- Addons overview page, allowing admins to learn which addons are currently
+  active.
+
+For a full list of features and code examples, please refer to the
+`django-addons documentation`_ itself.
+
+.. figure:: /static/images/shots/0.9/addons.png
+   :class: alcenter shot2
+
+
+Project Team Sharing
+::::::::::::::::::::
+
+A great new feature is the ability to share translation teams between projects.
+A Transifex project can now 'outsource' its language teams to another one,
+effectively trusting and re-using the other project's community to translate
+its own resources.
+
+Why is this useful? Open source software projects tend to group together in
+larger communities. Good examples of such project collections are desktop
+environments, such as GNOME and KDE, or distributions, such as Fedora and
+Moblin. Since Transifex supports per-project translation teams, these
+communities requested the ability to re-use the collection's translation teams
+instead of managing their own.
+
+This control can accessed by Project Maintainers under the tab "Access Control".
+Note that a project's fine-grained permission and team controls are disabled
+when the project outsources its access control.
+
+.. figure:: /static/images/shots/0.9/outsource.png
+   :class: alcenter shot2
+
+The Teams Outsourcing feature is the major lever behind the very influential
+website http://meego.transifex.com/. There, the MeeGo project, a common effort
+between Intel, Nokia, and the Linux Foundation, hosts the translations of a large
+number of projects, all being translated by the same community: The MeeGo
+Localization Community.
+
+
+Widgets
+:::::::
+
+Starting with this version, each Transifex project now has its own Widgets.
+You may now display your project's translation statistics on your website
+as a simple image. Perfect for embedding in wiki pages, Trac instances, and email.
+The chart will always reflect your live Transifex numbers.
+
+Widgets are publicly accessible from a tab on the Project Details page.
+Additional widgets may be available in the next releases in the same place.
+
+.. figure:: /static/images/shots/0.9/chart.png
+   :class: alcenter shot2
+
+
+Improved file ownership
+:::::::::::::::::::::::
+
+The file locking feature has been greatly improved in this version. The new
+functionality more closely resembles "file ownership". Here's a list of the
+improvements:
+
+- The download button has been replaced with the message "Download for viewing",
+  indicating that this action will not also assign the translation to the person
+  clicking it.
+- Submit access has been restricted to the person holding the lock.
+- Editing with the online translation editor automatically locks the file.
+- Users are only allowed to lock 2 files and locks expire by default after
+  2 days, signifying the importance of the file ownerships. Both these settings
+  are configurable by the Transifex administrator.
+- When a file ownership is about to expire (e.g. 12 hours before), a
+  warning is sent to the owner.
+- Users can submit part of their job and opt to continue working on their files
+  by extending the lock as part of submitting the file.
+- The owner of a file is allowed to "Extend lock for 2 more days" by clicking
+  the related icon next to the file.
+- Language coordinators are able to remove ownership from other people's files
+  for the language files they manage.
+
+.. figure:: /static/images/shots/0.9/lock.png
+   :class: alcenter shot2
+
+
+More supported i18n directory structures
+::::::::::::::::::::::::::::::::::::::::
+
+Transifex 0.9 introduces an overhaul of the ``guess_language`` method using
+regular expressions (tickets #541, #542), adding support for a number of i18n
+directory structures and shows improved extensibility.
+
+This method is run whenever the statistics are refreshed, so approximately once
+per day. The new code has no visible overhead (when run against 30.000 files, it
+takes 300 milliseconds, compared to 140 milliseconds previously).
+
+The standard directory structures now supported are the following:
+
+#. PO files inside a po directory named with the language code
+   (``/po/<lang>.po``). Depending on the i18n method, a POT file might or
+   might not be available.
+
+#. The LC_MESSAGES locale standard (``/<lang>/LC_MESSAGES/something.po``).
+
+#. Grouped language files (``/po/el/foo.po``)
+
+#. Suffixed language files (``/po/foo.el.po``)
+   
+#. The Publican standard structure. The languages are discovered by the
+   presence of the 'pot' directory in the tree. A 'pot' directory is needed to
+   allow language discovery.
+
+
+More pre-submit checks
+::::::::::::::::::::::
+
+Transifex now supports more validation checks for a submission. This helps
+avoid bad submissions and can reduce the maintenance overhead for the
+developer and Transifex administrator. Here is a list of the new checks:
+
+- Reject empty files (0% translations)
+- Reject changes to POT files
+- Warn in the presence of DOS line endings in the file
+- Option to disallow anything other than UTF-8 header encoding
+- Check the existence of a 'Plurals-Form' header in a file
+
+
+Various improvements and bugfixes
+---------------------------------
+
+
+Improved searching
+::::::::::::::::::
+
+The search box now also crawls in project names and descriptions, components,
+repository URLs. Now, users can search for projects having specific keywords
+in their description, projects hosted on a particular hosting website such as
+Gitorious, etc.
+
+
+Improved handling of VCS Errors
+:::::::::::::::::::::::::::::::
+
+Transifex now shows errors from the related VCS back-end in the UI. This will
+allow project developers to better understand what's wrong with their project
+repository URL and fix it accordingly.
+
+
+Under-the-hood Improvements
+:::::::::::::::::::::::::::
+
+- Local repo URIs are now allowed on DEBUG mode
+- Added ':pserver:' as a prefix for CVS repos
+- Do not delete POFiles when cleaning cache. This fixes a problem when cleaning
+  and refreshing the component cache. This patch allows Tx to continue
+  cleaning/refreshing the component cache but without deleting the POFiles. They
+  are set as enabled=False and hidden from the UI. A project or component
+  deletion still removes the POFiles that belong to it.
+- Added Tx repository revision into the footer. Helpful to identify the exact
+  revision used to run a Tx instance running from a devel branch.
+- Added project look-up for django-ajax-select queries.
+- Further restrict the regex for URLs that contain filenames.
+- Split Catalan into two languages: 'ca' and 'ca@valencia' (#613).
+- Added template escaping on all firstof tags.
+- Added support for intltool multi-domain projects.
+- Disable Lotte for broken pofiles.
+- Show i18n method on component page (#349).
+
+
+Improved Mercurial Back-end
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Mercurial back-end now updates whenever a pull is done, avoiding the creation
+  of local new heads in the repo history
+- After some scrutiny tests we realized that using 'tip'
+  as the default branch might be troublesome for repos that have
+  named branches, so it was reverted back to 'default'.
+- The 'commands.push' command doesn't use a 'revs' argument, so
+  we turned it into 'branch' argument.
+
+
+Bugfixes
+::::::::
+
+- Fixed issues with Dutch language (#537)
+- Fix for the "DoesNotExist: ObservedItem matching query does not exist."
+  exception. Whenever a component has its cache cleaned, all the related POFile
+  objects are now deleted. This way, other objects that use those POFiles are
+  also deleted in cascade. The repowatch app does not use the POFile object and
+  'cascade' is not applied.
+- Fixed permission check for components with multiple PO files
+- Calling correct method on the component get_stats method
+- Fixed Lotte data session wizard craziness when changing pages (#552)
+- Fixed URL for components with multiple po files per language
+- Handling user object on the svn lib with more properties (#565)
+- Fixed registration problem, occurring after merging.
+- Added a dependency into a projects app migration script
+- Fixed permission check for team coordinators
+- Converted exception output into a string before using it
+- Missing JS lib for the component multiple POFiles page
+- Fix wrapping of multi-line messages on top of page.
+- Made form errors more visible
+- Fixed get_or_none method for the Team class (#531)
+- Fixed some permission checks on the component_submit_file view
+- Fixed multiple copies of same event on timeline lists (#528)
+- Fix an issue in run commands where no env was passed via kwargs.
+- Bugfix: the rev kwarg should not be passed to hg pull cause we do not pull
+  specific revision numbers!
+- Improved get_log templatetag for the actionlog app
+- Fix SITE_URL_PREFIX generation with request.build_absolute_uri("") call
+- Added option to enable django-contact app URL
+- Added option to setup up the Django admin panel URL
+- BUGFix: Variable initialization was missing in settings file.
+- Fix initializers of test_svn.
+- Minor cleanup on the bzr repositories.
+- Added empty models.py file on modules that didn't have one.
+- When skip_stats was in effect the pofiles was equal to None.
+- Improved debugging for the stats calculation process
+- Fixed stats calc whenever a POT changes (#583, #587)
+- Added django-staticfiles context processors
+- Do not delete POFiles when cleaning cache
+- Clear unlocking of files
+- Added a permission check for lock info
+- Added Tx repository revision into the footer
+- txstatsrefresh command has been setup to correctly register addon handlers.
+- A simple templatetag to wrap the size_human utility method.
+- Fixed file locking through Lotte (#593): When a user now tries to open up
+  Lotte for a file locked by someone else, a message is shown explaining that
+  only submission through a review are allowed.
+
+
+Translations
+------------
+
+- A S Alam -- Punjabi (pa)
+- Bruce Cowan -- English (United Kingdom) (en_GB)
+- Cheng-Chia Tseng -- Chinese (Taiwan)
+- David King -- British English
+- Diego Búrigo Zacarão -- Portuguese (Brazilian) (pt_BR)
+- Dimitris Glezos -- Greek (el)
+- Emmanuel Trillaud -- French (fr)
+- Guido Grazioli -- Italian (it)
+- Harald Servat -- Catalan (Valencian) (ca)
+- Héctor Daniel Cabrera -- Spanish (Castilian) (es)
+- Jake Li -- Chinese (China) (zh_CN)
+- Jannis Leidel -- German (de)
+- Jari Rahkonen -- Finnish (fi)
+- Jens -- German (de)
+- Jeroen Hellingman -- Dutch (Netherlands) (nl)
+- Lauri Võsandi -- Estonian (et)
+- Leandro Regueiro -- Galician (gl)
+- Nikolas Slivka -- Hungarian
+- Nikos Tsirakis -- Greek (el)
+- Pavel Maryanov -- Russian (ru)
+- Péter Sulyok -- Hungarian (hu)
+- Petr Novák -- Czech (cs)
+- Piotr Drąg -- Polish (pl)
+- Sankarshan Mukhopadhyay -- Bengali (India)
+- Sérgio Marques -- Portuguese (pt)
+- Silvio Pierro -- Italian (it)
+- Teguh Dwicaksana -- Indonesian (id)
+- Thomas De Rocker -- Dutch (Netherlands) (nl)
+- Thorsten -- German (de)
+- Tim Gerundt -- German (de)
+- Tomáš Virgl -- Slovak (sk)
+- Valerij Krjuchko -- Russian (ru)
+- Veeven -- Telugu (te)
+- Vladimir Stupin -- Russian (ru)
+- Yaron Shahrabani -- Hebrew (he)
+- Yuri Chornoivan -- Ukrainian (uk)
+- వీవెన్ వీరపనేని -- Telugu (te)
+
+
+Getting Transifex 0.9
+---------------------
+
+You can experience Transifex 0.9 live at the upstream instance hosted by
+Transifex, at http://www.transifex.com/. 
+
+Project and community managers who want to deploy Transifex for their 
+own community can get Transifex in a variety of ways. A tarball is available
+from the following locations:
+
+* The Python Packaging Index (Cheeseshop): http://pypi.python.org/pypi/transifex/
+
+RPM packages for the latest versions of Fedora may soon be available
+via yum. The same applies for RHEL 5, CentOS 5, and Scientific Linux 5, from
+the `Fedora EPEL`_ yum repository::
+
+    yum install transifex transifex-extras 
+
+Information about installing Transifex can be found in the
+:ref:`Installation documentation <installing>`.
+
+
+The Transifex Appliance
+:::::::::::::::::::::::
+
+If you want to play with the latest Transifex code, you may want to use our
+development images for the Transifex Appliance. Following the stand-alone,
+"batteries included" model of software appliances, you get a complete
+Transifex system with all dependencies and services pre-configured so that
+you can start experimenting with it right away. Choose from ISO, VMware or EC2
+images, for both x86 and x86_64 architectures to run on a virtual machine,
+dedicated server, or using virtualization software.
+
+.. image:: /static/images/shots/0.7/0.7_appliance_front_page.png
+   :class: shot2 alcenter
+
+Your appliances can be updated using its own web based management system by
+pointing your browser to the appliance's IP using port 8003. Login with the
+credentials 'admin' and 'password'. Make sure to change the password once
+you've successfully logged in.
+
+This appliance version is based on the latest branch of Transifex, where a
+couple of projects have already been created for you to play with. Log in using
+either guest/guest or editor/editor as your user name and password combination
+and tinker to your heart's content!
+
+Make sure to read the documentation and file issues/send us your feedback.
+
+Transifex Appliance web site:
+ http://www.rpath.org/web/project/transifex/
+
+Stable and development images:
+ http://www.rpath.org/web/project/transifex/releases
+
+
+Upgrading to this version
+-------------------------
+
+To upgrade the code, update your package distribution as usual:
+
+- If you installed from your package distribution, check if there's been a
+  package upgrade and go for it.
+- If you used ``easy_install``, run ``easy_install -U`` to upgrade.
+- Fresh tarballs are available, if you installed from a release zipfile.
+- Finally, if you're of the daredevil kind and feed straight from the source,
+  ``hg pull`` followed by an ``hg update <version>`` should do the trick for you.
+
+
+Dependencies
+::::::::::::
+
+The following dependencies were *added* in this version:
+
+- Django = 1.1.2
+- South >= 0.7
+- django-threadedcomments >= 0.9
+- django-addons
+- django-staticfiles
+- pygooglechart
+
+.. warning::
+
+  This version is not compatible with Django 1.2 or later, due to numerous
+  changes in this version. To install a specific version of Django using
+  ``easy_install`` you may run ``easy_install Django==1.1.2``.
+
+Instructions on how to install them can be found at the
+:ref:`Installation docs <installing>`. You'll need to complete this step
+before actually doing the database upgrade.
+
+
+Database migration
+::::::::::::::::::
+
+Transifex includes a script which will automatically migrate your database to
+the new schema from the previous version. All you need to do, from a clean
+schema of the previous version, is run the following::
+
+    ./manage.py syncdb
+    ./manage.py migrate
+    ./manage.py build_static
+    cd transifex/site_media/
+    mv userprofile media/userprofile
+    mv reviews_files media/reviews_files
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+- Andreas Loupasakis
+- Diego Búrigo Zacarão
+- Dimitris Glezos
+- Jannis Leidel
+- Lauri Võsandi
+- Margie Foster
+- Nikos Korkakakis
+- Og Maciel
+- Seraphim Mellos
+- timeless
+- Art Adams and Ann Nocenti
+
+For a list of our awesome translators, refer to the `Translations`_ section.
+
+A big "Thanks" goes to the `MeeGo Project`_, Intel and Nokia for their support
+in this release.
+
+
+Transifex 0.9.1
+===============
+
+Released:
+  24 September 2010
+  
+This release includes an important command called 'txcreatemap', which is
+necessary to upgrade to 1.0::
+
+    $ ./manage.py txcreatemap --help
+    Usage: ./manage.py txcreatemap [options] <project_slug project_slug ...>
+    
+        Create a JSON formatted mapping of the POT files and theirs translations
+        (PO) for projects, converting components into resources. Each project
+        component has it own mapping which is stored in the database within the
+        ``jsonmap.models.JSONMap`` model.
+    
+        This mapping can be used by the CLI app of Transifex as the ``.tx/txdata``
+        file content in the remote repository.
+    
+        Project slugs can be passed by argument to map specific projects. If no
+        argument is passed the mapping will happen for all the projects in the
+        database.
+    
+        This mapping is used to migrate versions <= 0.9.x to the 1.0 version of
+        Transifex.
+
+
+
+
+Transifex 0.9 Development Releases
+==================================
+
+- Alpha: 21 May 2010
+- Beta: 4 June 2010
+- Final: 19 July 2010
+
+Please refer to the full `Transifex 0.9 changelog`_ for more information on
+what has changed between the development releases and final one.
+
+
+.. _Transifex.com: http://www.transifex.com/
+.. _www.transifex.com: http://www.transifex.com/
+.. _Transifex: http://team.transifex.com/
+.. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
+
+.. _Mojo: http://en.wikipedia.org/wiki/Mojo_(comics)
+.. _`django-notification`: http://github.com/jtauber/django-notification/
+.. _`django-addons documentation`: http://code.transifex.com/transifex/django-addons/blob/master/index.rst
+.. _MeeGo Project: http://www.meego.com/
+

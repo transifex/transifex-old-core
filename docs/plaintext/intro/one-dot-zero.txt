@@ -1,0 +1,430 @@
+.. -*- mode:rst -*-
+
+.. _user-one-dot-zero:
+
+=======================================
+ The big, scary Transifex One-Dot-Zero
+=======================================
+
+
+In October 2010, we released Transifex 1.0. This release features a huge number
+of improvements and possibilities, which open up new roads for our next
+versions. At the same time, it introduces a number of changes to the user
+workflow.
+
+This page describes how some of the changes affect users and will help you
+:ref:`migrate your workflow <user-migrating-one-dot-zero>` to the new order of things.
+
+
+The Gist
+========
+
+For Transifex 1.0, the whole translation storage engine was written from
+scratch. This meant the re-writing of more than 10 thousand lines of code.
+
+The core goal is to migrate to a far more robust translation system, where
+**translations live in Transifex itself** instead of files scattered around
+repositories. This allows us to improve the workflow by offering more
+flexibility for both developers and translators, improve quality with more
+powerful features and enhance the efficiency of the translation process.
+
+Here's a list of the major improvements:
+
+1. Transifex's native integration with Version Control Systems
+   has been replaced by a mechanism for automatic updates of the source
+   language file using HTTP, and a more secure command-line tool for project
+   maintainers and translators.
+
+2. Resources have now replaced the obsolete notion of components,
+   which used to represent a VCS branch.
+
+3. All operations are now done on a string-level, rather than a file-level,
+   allowing greater flexibility and more features like suggestions, comments,
+   translation memory, etc.
+
+4. Tracking of source file changes now happen on top of HTTP, compared to the
+   previous VCS-only support. This allows the translation of any source file
+   hosted on any web server on the Internet.
+
+5. Arbitrary translation of file types are now seamlessly supported, not just 
+   PO files. Transifex 1.0 also comes with native support for Qt files.
+
+
+Some of these changes may sound scary. They're actually fun, keep reading. :-)
+
+
+How does this affect you?
+-------------------------
+
+If you're a **translator**, this won't affect you a bit. You will probably notice
+a couple of new features available in the online web-based editor, which allow
+you to translate more effectively and communicate better with your fellow
+translators.
+
+If you're a **developer**, the biggest change is that Transifex will not
+auto-commit translations. Instead, you can use a command-line tool to pull
+the translations right before you need them, for example before a release
+of your project.
+
+
+Advantages
+----------
+
+- **Security**:
+  By removing the VCS integration we overcome one of the greater
+  obstacles and security risks that the previous version of Transifex had:
+  having write access to other people's repositories. In addition, Transifex
+  does not even require *read* access to your VCS: you control when and how
+  files will be sent to Transifex and received back.
+
+- **Predictability**:
+  Transifex had to jump through hoops to "talk" with some
+  VCSs. Sometimes a commit/push operation would fail because of
+  timeouts on the remote server, causing loss of translations. Now Transifex
+  has full control over the translations, and you have full control over the
+  final result.
+
+- **More languages**:
+  By allowing you to directly control how local files are mapped to languages,
+  Transifex no longer restricts your translation file naming scheme and
+  directory structure. Your files may exist anywhere in your tree and
+  ``myproject.john-en2.po`` could map to English, like you always planned.
+
+- **Streamlined builds**:
+  Translation files are now *guaranteed* to be valid,
+  so no longer translators can accidentally break your package build.
+
+- **Versatility**:
+  This file agnostic storage engine which works underneath
+  the layer of importers and exporters makes it much easier to add support for
+  multiple file formats without having to modify Transifex's core.
+
+- **Improved Scalability**:
+  The new approach enables to better handle large amounts of
+  strings and support projects which have thousands of strings marked for
+  translation.
+
+- **Simplicity**:
+  As the motto *Less is more* implies, quality doesn't mean quantity. In this
+  release, we've made a major clean up of the existing code and the new design
+  of Transifex is dead simple and overly effective. This makes it much more
+  easier to extend Transifex with additional functionality.
+
+
+Major Changes
+=============
+
+
+Overhaul of VCS integration
+---------------------------
+
+Starting with version 1.0, the native integration of Transifex with version
+control systems has been replaced by a more versatile approach using a client-side
+command-line tool and a set of APIs to interact directly with Transifex.
+Put bluntly, Transifex will not checkout/clone your whole repository to
+calculate statistics and will not commit translations straight to your repository.
+
+We've introduced a number of other tools to help you work more efficiently with
+Transifex. Let's drill down to what actually changes. The following two
+operations are important to Transifex:
+
+1. Tracking source language files from the development repository
+2. Integrating translations in a product's release
+
+
+Source language file tracking
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before 1.0, Transifex frequently and transparently fetched the source files
+from the source repository with a checkout/pull. The whole repository
+(sometimes hundred of MBs) was fetched.
+
+Starting from 1.0, Transifex now stores an HTTP-like URL for each translatable
+resource pointing to a single and specific source language file (e.g. an 'en.po'
+or 'myproject.pot' file. Transifex frequently and transparently fetches this
+file over HTTP with a simple HTTP GET request (a few KBs).
+
+So, the 'git pull' or 'svn checkout' operation was replaced by a more simple
+'HTTP GET' request. The end-result for the project maintainer is the same:
+Transifex automatically detects source language string additions and deletions.
+
+Please note that because of this design decision, intltool-based projects
+which do not have a POT file are not supported. If your project is of this kind,
+create a POT file using intltool, commit it to your repository, and proceed
+as though your project is a Gettext-based one. For more information, please
+refer to the :ref:`related documenttion section <intltool-nopot>`.
+
+Submitting translations
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Before 1.0, the developer gave Transifex write access to his VCS repository,
+and translations were automatically committed by Transifex. Each translation
+task resulted in a VCS commit & push.
+   
+Starting from 1.0, you can choose when and how to retrieve translations.
+Translation files can be exported from Transifex with a handy command in your
+terminal: ``tx pull``.
+
+On a related note, you have full control over where your translations will live.
+Here are three different options:
+
+- You may house your translations on Transifex. To create a new project release,
+  you can fetch the files to a local directory of yours with the command-line
+  tool.
+
+- You may host your translation files in your repository, like you used to do.
+  Once per week, or whenever you feel like it, issue a ``tx pull`` command and
+  commit all files in your repository. Or, even set up a cronjob to do exactly
+  this.
+
+- Alternatively, you may choose to host your translation files on a separate
+  repository from your project, or even on multiple repositories. For example,
+  if you are the manager of 50 projects, you may choose to put all translations
+  in a single repository for simplicity reasons. You have full control on where
+  your exported files will be put and how they'll be committed.
+
+
+.. _user-components-resources:
+
+'Components' replaced by 'Resources'
+------------------------------------
+
+The word 'component' will be phased out in favor of the more improved concept
+of 'resources'. For more information on Resources, please refer to the
+section :ref:`user-resources`.
+
+The biggest difference is that while Components could refer to one or more
+source language files (e.g. many POT files), Resources refer to a single
+source file. This allows Transifex to better track the relationship between
+files and manage the mapping between a source file and its translation files.
+
+If your project has multiple source files, just create a separate translatable
+resource for each. Translators will love you for it.
+
+
+.. _user-migrating-one-dot-zero:
+
+Migrating your Project
+======================
+
+Transifex.com has now been `upgraded to the newer version`__. You should have
+receive an email or seen the announcement about this a few days before the
+upgrade, and received a newsletter from our team one right after the upgrade.
+
+During the upgrade, the following will happen automatically to your project:
+
+1. Your old Components will be converted to **Resources**. All related objects,
+   such as Releases and Hubs, will also point to the newly created Resources.
+
+   Transifex will try to name your resource in a unique way. You'll most likely
+   need to rename your resources to something which makes more sense to you.
+
+2. Each PO file you previously had in your Component, will now be **imported**
+   in your new Resource. For example, your 'fr.po' file will be imported to the
+   French translation of your Resource.
+
+   PO files for which a language could not be guessed (e.g. ``myfile.po``) will
+   be skipped.
+
+3. If your Component had multiple POT files, Transifex will create a **separate
+   Resource for each POT** file found.
+
+   If a PO file could not be mapped to a single POT, then it won't be able to
+   be mapped to one of the new resources, and will be skipped.
+
+4. Any fuzzy strings found in your PO files will be converted to **suggestions**
+   in the Transifex database. These are available to all translators in the
+   Online Web Editor. 
+
+At this point, your project should be ready. Translators can login to translate,
+and you can export your files freely.
+
+
+.. warning::
+
+  **Invalid source files**
+
+  An exception to the above workflow is when Transifex could not read your POT
+  file. This might happen because it was incorrectly encoded or it was simply
+  broken. If this was the case, Transifex could not load the file, and you'll
+  need to manually create your resource with a fresh, valid file.
+
+
+Creating your local settings
+-----------------------------
+
+The next time you'll need to interact with Transifex is probably when you'd like
+to export your translations to local files, which you'll include in your new
+project release.
+
+Additionally, if one of the above steps failed (e.g. one of your files have not
+been detected), you can manually fix them (something which was not possible
+with the previous Transifex version).
+
+You may find all information you need at the :ref:`Transifex Client <user-client>`
+section. Assuming you have a POT file named 'po/myproject.pot', here is a
+sample run of the commands you could run at this point.
+
+.. code-block:: bash
+
+    $ cd myproject
+    $ sudo easy_install -U transifex-client
+    $ tx init
+    $ tx set --auto-local -r myproject.myresource --source-language en \
+      --source-file 'po/myproject.pot' 'po/<lang>.po'
+    # (Review output...)
+    $ tx set --auto-local -r myproject.myresource --source-language=en \
+      --source-file 'po/myproject.pot' 'po/<lang>.po' --execute
+    $ tx status
+
+    # Pull fresh translation files from Transifex:
+    $ tx pull
+
+    # To notify Transifex of new source strings available, run:
+    $ tx push --source
+
+
+If your source language file is following the same pattern (e.g. it is named
+'po/en.po'), you can omit the '-source-file' argument.
+
+If you face any issues with your project migration, don't hesitate to drop by
+IRC, on the #transifex channel on FreeNode, and ask away.
+
+
+Rationale
+=========
+
+Transifex started a few years ago as a web-based VCS File Submission
+tool. It had a perfect match with translator's needs and found its niche
+application. It was written in a whole different Python framework, TurboGears,
+and things were good.
+
+One year later, we shifted gears: We added translation 
+statistics support and re-wrote the whole tool in Django. This marked a
+big step for us, and the evolution of Transifex to a translation
+management platform. Since then, some very big open-source projects
+have switched to Transifex [1], some of them working really close with
+our team to develop features in an astonishing speed.
+
+It was time to switch gears again.
+
+Previously, translations were handled on a file-based level. This has served
+us well in the past. While it was intuitive and bound well with how
+developers were doing things, it was also very limiting and didn't reflect well
+how translators were doing things.
+
+With the new translation storage engine, functions like merging translations,
+handling file encoding, searching, grouping translations, splitting the
+work among translators, performing and packaging translations across projects
+are now possible.
+
+The feedback we've received from our most active users was very positive. We've
+also ironed out the biggest issues, and found an almost seamless upgrade
+mechanism. This, along with the sheer motivation to build a better translation
+platform, were all we needed to go forward.
+
+Translators shouldn't notice most of these changes. Developers will have a small
+change in their workflow, but we've got them covered with our new tools. They
+should also feel more comfortable since Transifex no longer requires access
+to their VCS repository.
+
+
+
+Frequently Asked Questions (FAQs)
+=================================
+
+
+Have you removed VCS support altogether?
+----------------------------------------
+
+Yes and No. Translation files can still be committed in the versioning system,
+but Transifex is not doing that automatically. Additionally, Transifex can
+still track changes to your POT files using a web-accessible URL (instead of
+cloning the whole repo).
+
+
+Why, why, WHY? I'm scared.
+--------------------------
+
+You shouldn't! The new version does not enforce you to remove your files from
+the VCS if you want them there. Just create a Makefile rule, cronjob,
+post-commit hook to do it automatically using the client. This gives you full
+control on where and how your files will be placed.
+
+We're dedicated in providing the best translation management platform out there.
+By trusting translations to live inside Transifex, we can do things which were
+not possible before.
+
+We're more committed than ever to continue improving Transifex and adding
+more functionality. Our team is growing, and the best is yet to come!
+
+
+Now that Tx no longer commits to VCSs, why should I still use it?
+-----------------------------------------------------------------
+
+Transifex used to be a simple PO file committer two years ago. Today, it can
+manage teams, file submissions, comments and announcements and a number of
+other features useful to both maintainers and translators.
+
+We suggest to *try* the new version and workflow and see how it works for you.
+If you need any kind of help, please don't hesitate to let us know.
+
+
+Why was this such a bumpy upgrade?
+----------------------------------
+
+This was a very big step for our small team and large codebase, so please bear
+with us while we're getting more experienced with smooth upgrades.
+
+For any kind of help or questions, please contact us directly at
+support (at) transifex.com. If you need assistance over the telephone or
+Skype, let us know. For live, community-based IRC support you may find us
+on #transifex on Freenode.
+
+
+Why is my resource missing?
+---------------------------
+
+Resources were not migrated from components in the following cases:
+
+1. There was no source language file (POT). Transifex could not find the
+   source strings and match them to translation files.
+    
+2. Your POT file was invalid. Invalid files are those which do not pass the
+   msgfmt correctness check (``msgfmt -c``). In this case Transifex could not
+   read the source strings at all, and was unable to match them with the ones
+   in your PO files.
+
+
+Why is a PO file of mine missing?
+---------------------------------
+
+The upgrade might have skipped a PO file migration in the following cases:
+
+1. It did not pass the validity check (``msgfmt -c``).
+ 
+2. Its name could not be matched to a language, because it was either named
+   strangely ('myfile.po') or its headers did not point to a standard language
+   name.
+
+
+I really need my VCS history. Is there something we can do?
+-----------------------------------------------------------
+
+For some projects, the VCS history is an indispensable tool. Our goal is to
+allow Transifex to expose the translation history in such a way, that the
+Tx Client will be able to convert it to normal VCS history. Here's an example
+on how this could work in the future on the developer's workstation::
+
+    tx history --format=full myproj.myresource | git am ...
+
+If you really need this functionality, please get in contact so that we'll
+implement all the necessary support on the server-side.
+
+
+
+
+.. _Transifex.com: http://www.transifex.com/
+.. _Transifex: http://team.transifex.com/
+.. _transifex-client: http://pypi.python.org/pypi/transifex-client/0.2
+__ http://blog.transifex.com/2010/11/one-dot-zero/

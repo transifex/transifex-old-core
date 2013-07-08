@@ -1,0 +1,729 @@
+.. -*- mode:rst -*-
+
+.. _releases-0.7:
+
+=======================================
+ Transifex version 0.7.x release notes
+=======================================
+
+
+Transifex 0.7 (Pyro) 火
+=======================
+
+Welcome to the Transifex 0.7 release, codenamed Pyro_.
+
+Released:
+  August 22 2009
+
+
+Transifex 0.7 is intended for production use and is targeted for new
+installations of Transifex and parties who choose to migrate to a new major
+version and enjoy the new features.
+
+Here's a 40K-foot view of the release:
+
+* Online Translation Editor
+* More control to Project Maintainers
+* Submissions to a mailbox
+* User Profiles
+* Publican-like I18n Support
+* Simplified branching support
+* Improved URL structure
+* User sign in changes
+* I18n support improvements
+* Easier File Logging
+* Misc new features
+
+.. code-block:: bash
+
+    273 files changed, 10752 insertions(+), 2491 deletions(-)
+
+
+What's new in Transifex 0.7
+---------------------------
+
+The following major features were introduced in this release.
+
+
+Online Translation Editor
+:::::::::::::::::::::::::
+
+One of the often requested features in Transifex was an online translation
+editor. Users would like to perform simple translation tasks straight from
+their browser.
+
+Transifex 0.7 includes an exciting feature in beta mode: 'Lotte', the
+lightweight online translation editor.
+
+.. image:: /static/images/shots/0.7/0.7_lotte.png
+   :class: shot2 alcenter
+   
+Projects which have enabled translation submission get a new icon, which
+translators can click to translate through the browser. Of course, the choice
+of uploading normal translated files still applies.
+
+Here are some of the features you can find in Lotte:
+
+* Live translation from inside the browser itself. No extra addons needed.
+* Support for all languages which come built-in with Transifex.
+* Machine-powered translation suggestions for every string with the click of
+  a button using the `Google Translate API`_. At the time of writing, the
+* Translation support for PO-based and intltool-powered translation files.
+  number of supported languages is 42.
+* Live update of the translation completion during the translation process.
+* Upon completion of the work, the file is automatically submitted to the
+  remote project.
+* Dynamic filtering of viewable strings: Choose to display translated, fuzzy,
+  untranslated strings, or a combination of them.
+* Color-based identification of the string state for ultra-fast location of
+  the strings needing the user's attention.
+* Sortable list of translation strings by ID, source string, or translated
+  version.
+* Contextual information: Translators are presenting with a link to the
+  relevant source code lines, should they need to get more context for a
+  string. 
+
+.. image:: /static/images/shots/0.7/0.7_lotte    2.png
+   :class: shot2 alcenter
+
+Note that currently Lotte is enabled only for files with less than 100 strings
+for efficiency reasons. Improvements to the interface to enable efficient
+handling of larger files are scheduled with a next release.   
+
+
+More control to Project Maintainers
+:::::::::::::::::::::::::::::::::::
+
+.. image:: /static/images/shots/0.7/0.7_edit-project.png
+   :class: shot2
+
+This release features a major addition to the Transifex engine, which unlocks
+a multitude of new possibilities for controlling who can do what on the
+service. Support is now included for fine-grained permission control, allowing
+the definition of access control lists for a variety of actions.
+
+These fine-grained permissions come *in addition* to the global permission
+support Transifex includes. One user of your deployment can have the permission
+"Can do Foo on any project", and another one the "Can do Foo on project Bar"
+one.
+
+Project details control
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Project maintainers are now able to modify the details of their projects. They
+can alter the associated information, control the components they have
+registered and the releases they are assigned to.
+
+Registering projects
+~~~~~~~~~~~~~~~~~~~~
+
+.. image:: /static/images/shots/0.7/0.7_acl.png
+   :class: shot2
+
+Transifex now allows users to register their own projects. People who do this
+automatically become maintainers of the project, and later on they can choose
+to pass on the maintainership to other people, or simply add more people on
+the maintainers list.
+
+To enable this feature, the admin needs to give the permission
+'projects.add_project' to the group of users with the name 'registered'.
+This can be done as usual from the admin panel.
+
+Per-project submitters list
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Project maintainers are now able to choose who can submit files to their
+repository. This can help the maintainer form a group of translators who he
+trusts, which is specific to his project. Using a special form, one can add
+one by one the translators they trust.
+
+Additionally, users themselves can request access to a project. The maintainer
+will be notified with this request and act upon it. The user has the choice to
+revoke his request, if he chooses so.
+
+.. image:: /static/images/shots/0.7/0.7_request-submit-access.png
+   :class: shot2 alcenter
+
+
+Submissions to a mailbox
+::::::::::::::::::::::::
+
+In addition to submitting files to remote versioning systems over SSH,
+Transifex now supports submission via email to the project maintainers. This
+could be useful for setup scenarios such as the following:
+
+1. The content repository is living behind a firewall and/or NAT, making
+   external connections harder to configure and manage.
+
+2. The upstream repository does not allow SSH access (e.g. it only supports
+   ``https``).
+
+3. The repository pulls from a tarball hosted on the net (e.g. it's an archived
+   release), to which Transifex has no way to submit files.  
+
+4. The maintainer chooses to have a tighter control of what is landing in his
+   repository.
+
+.. image:: /static/images/shots/0.7/0.7_submit-via-email.png
+   :class: shot2 alcenter
+
+.. note::
+
+    Submissions via email are **not** stored on the Transifex server. The
+    translation statistics are not updated with the commit, since there is no
+    way to know if the maintainer is indeed going to commit the file in his
+    repository.
+
+
+User Profiles
+:::::::::::::
+
+.. image:: /static/images/shots/0.7/0.7_avatar.png
+   :class: shot2
+
+Transifex 0.7 features a brand new backend for user account and profile
+management. Users are able to include information about themselves and manage
+their account in detail. Here are some of the features supported:
+
+- Avatar support
+- Google Maps Integration for specifying the user's exact location (tab
+  disabled temporarily in 0.7).
+- Standard account features: Register for a new account, login/logout
+- Password management (change password, recover lost one, etc.)
+- Email address modification 
+- Ability to clear profile information
+
+.. warning::
+
+    OpenID was dropped in this release. The plan is to re-add it in a next
+    release, depending on the feedback from our users. 
+
+
+Publican-like I18n Support
+::::::::::::::::::::::::::
+
+.. image:: /static/images/shots/0.7/0.7_publican.png
+   :class: shot2
+
+This new i18n support method allows handling of Publican-like documents. These
+include multiple source and translation files, allowing more than one people
+translating the same language by working on different files at the same time.
+Publican is the base tool for building the Fedora Project documents such as
+the Release Notes.
+
+
+Simplified branching support
+::::::::::::::::::::::::::::
+
+Transifex 0.7 drops support for VCS "branches" for Subversion, Mercurial and
+Bazaar versioning systems. These VCS types traditionally define "big-picture"
+branches: a checkout/clone of a particular URL is considered a "branch".
+
+By dropping the input of a branch name for these types, Transifex allows users
+to define just any URL they want, as long as it's a URL which can be checked
+out or cloned.
+
+With this feature, support is added for non-standard branching names for
+Subversion repositories (contrary to the ``/trunk`` and ``/branches/<name>``
+scheme. When adding your repository, just provide the full URL as your
+root, like so::
+
+    http://svn.example.com/svn/mybranches/1.1
+    svn://svn.example.com/svn/trunk
+
+Furthermore, the default branch name for Mercurial has been renamed to 'default',
+which is a better branch name to use than 'tip'.
+
+An automatic data evolution for Subversion and Mercurial repositories is
+included, which will migrate your data to support the newer branch definition
+format.
+
+Support for Git and CVS branches continues as before.
+
+
+Improved URL structure
+::::::::::::::::::::::
+
+Quite a few URLs have been slightly modified in this release. In particular,
+keywords in the URLs have been prepended with a letter denoting the action
+taking place. This improves the namespace of the URLs for future additions and
+enhances usability by distinguishing parts in the URL which are keywords.
+(#298)
+
+The following structure is now used::
+
+    <section>/<object_alias>/<object_slug>/<action>
+
+Here are some examples::
+
+    /projects/transifex/        → /projects/p/transifex/
+    /projects/transifex/default → /projects/p/transifex/c/default
+    /languages/pt_BR            → /languages/l/pt_BR/
+
+.. warning::
+
+    This is a backwards incompatible change. Please modify your links and
+    notify your users to update their bookmarks.
+
+
+User sign in changes
+::::::::::::::::::::
+
+- By default users are kept logged in for 3 weeks. This is an option which can
+  be configured by the administrator from the setting files.
+- Upon account creation, users are now automatically added to a group called
+  'registered'. This way, admins can add permissions to all eponymous users,
+  distinguishing them from the anonymous ones.
+- Replaced 'Log in' template occurrences to 'Sign in'.
+
+
+I18n support improvements
+:::::::::::::::::::::::::
+
+.. image:: /static/images/shots/0.7/0.7_zebra.png
+   :class: shot2
+
+- A new command was added, ``./manage.py txcompilemessages``, which replaces
+  Django's own ``compilemessages``, since the latter recursively builds all PO
+  files for many more things than the ones we need. This affects admins who are
+  building their own Transifex PO files.
+- 0.7 adds built-in support for the following new languages:
+
+  - Asturian (ast)
+  - Esperanto (eo)
+  - Irish (ga)
+  - Kashmiri (ks)
+  - Kirgyz (ky)
+  - Latin (la)
+  - Xhosa (xh)
+
+- Added support for a whooping set of language code aliases (#267).
+- Added number of languages and projects to the index view
+- Added toggle to expand and collapse the multi source files div (#220).
+- Commit messages are now by default prepended with the keyword 'l10n' prefix
+  (#209). This option is configurable through the setting files.
+- Commit messages now have the user's profile info embedded instead of just
+  the username (#235).
+- Management command ``create_languages`` has been renamed to
+  ``txcreatelanguages`` to improve compatibility with other Transifex commands.
+
+Easier File Logging
+:::::::::::::::::::
+
+Transifex now comes pre-configured with logging support to a file on the disk
+in the ``logs/`` directory. You can control the verbosity through the
+corresponding configuration options. Make sure the directory is created by
+running the command ``./manage.py txcreatedirs``.
+
+Here is a sample output of the file, with the logging level set to ``DEBUG``::
+ 
+    2009-08-21 18:29:05,812 DEBUG Requested stats calc for component usermode.tip
+    2009-08-21 18:29:05,813 DEBUG Updating local repo for usermode.tip
+    2009-08-21 18:29:05,816 DEBUG Preparing repo for vcsunit usermode.tip
+    2009-08-21 18:29:16,405 DEBUG Repowatch revision file po/as.po: Old: (...L,), New: (...L,)
+    2009-08-21 18:29:16,450 DEBUG Setting stats for tip (Usermode)
+    2009-08-21 18:29:22,119 INFO localhost -- [GET /projects/p/usermode/c/tip/set_stats/ HTTP/1.1] 302 0
+    2009-08-21 18:29:23,437 INFO localhost -- [GET /projects/p/usermode/c/tip/ HTTP/1.1] 200 10997
+
+
+Misc new features
+:::::::::::::::::
+
+- Preliminary setuptools support
+- Speed improvements across the platform
+- Divided Component form in tabs and fixed the validation issues
+- Added tooltip for submission note
+- Made base template inheritable for easier overriding.
+- Added support for dynamic Table Of Contents in pages.
+- Added option in settings to enable download of compressed files
+- Added templatetag get_latest_projects
+- Replaced django-evolution with South
+- Added buildout support
+- Added zebra style to the stats tables
+- Added option to filter out completed files in a statistics table.
+- Upon clicking 'Watch', user is now presented with a 'waiting' icon while
+  he waits for his watch to be activated through AJAX.
+- *All* tracebacks (500 errors) are now logged, printed out or notified to the
+  admins for immediate action and future reference.
+- Component option ``should_calculate`` now makes stats calculation to be
+  skipped. If we have old statistics available, they are preserved until the
+  cache is cleaned.
+
+
+Various Improvements and Bugfixes
+---------------------------------
+
+The following issues have been fixed in this release:
+
+- Added missed option to delete releases
+- Aggregate untranslated strings also for single files
+- Added support to hidden fields to the form_as_table_rows templatetag
+- Added filter for VCS stuff (i.e. .hg/) be ignored by default (#91)
+- Added CharField validation for ValidRegexField as well
+- The component unit_subforms must be loaded always
+- Changed name of the body block to make Tx compatible with others django apps
+- Added evolution for Component.submission_type (#227)
+- Collection slug should be unique
+- Query releases on the database by id and not by slug
+- Added evolution for Collection.slug (#231)
+- Ignore svn externals
+- Forward compatible import for clean_tree.
+- Flatpages are now by default considered in Markdown format.
+- Checking proper permission for submitting a file (#246)
+- Removed obsolete 'release' application templates.
+- Catching TypeError exception when looking for files
+- Correct urls for changing email in the notices page
+- Correct contact info for language addition.
+- Split up project_create_update view for having different perms
+- Fix / improve the English messages in several files
+- Not needed granular permission for adding a project
+- Enabled editor user to enter the admin panel
+- Permission check missed in language multi-file template
+- Find object for checking perm by using the slug__exact
+- Added a tooltip for the access control part of the project
+- Avoided query slowness for generic relations
+- Added support for Tibetan language
+- Added index to is_pot and filename in the POFile model
+- Ordering list by language_code for stats grouping
+- Removed unneeded admin registration
+- Fixed duplication in the get_langs method
+- Calculate stats only on file change within the repo
+- Projects maintainers are required now
+- Dropped using of custom revision field
+- More permissions checks in templates for "Add Project", etc.
+- Avoid choking in PO viewing when a file has incorrect encoding.
+- Re-enabled custom revision field
+- Added permission request feature for projects
+- Return endif template tag left out by mistake.
+- Fixed component.set_unit method (#270)
+- Added installation tip for database encoding (by Og Maciel).
+- Clean POFile objects when a component i18n type changes
+- Standardize in calling home link as 'transifex.home'
+- Login required when a guest user asking for email validation (fixed
+  upstream).
+- Become compatible with newer versions of hg.
+- Show rich tooltip for locking icons.
+- form_as_table_rows must display errors for hidden fields
+- Added sr_Latn as alias for Serbian.
+- Lotte needs to open the msgmerged files for editing
+- Fixed encode problem with polib (#292, #297). Now Tx requires polib
+  0.4.2
+- Used 'floor' instead of 'round' for Lotte perc calcs (#294)
+- Fixed access for locking files (kind of related to #300). People that have
+  access to submit files for a project must be able to lock files too.
+- bugfix: Check if the request object is valid before using it.
+- Admin pages now do not return 404 errors when models are changed, by
+  removing ``admin.autodiscover()`` calls in app URLconfs. (#309)
+- Fixed commit author if users do not fill the first name (#310)
+
+
+Documentation improvements
+::::::::::::::::::::::::::
+
+- Moved compiled files in ``html`` directory.
+- Make Sphinx automagically understand our version/release.
+- Minor theme redesign (mostly colors).
+
+
+Translations
+------------
+
+The following translations of Transifex were added or updated in this release: 
+
+- Catalan (xconde)
+- Chinese Simplified (tiansworld)
+- German (tomspur)
+- Greek (thalia)
+- Hungarian (peti)
+- Polish (Piotr Drąg)
+- Russian (aguskov)
+- Slovak (palos)
+- Spanish (elsupergomez)
+
+
+Getting Transifex 0.7
+---------------------
+
+Project and community managers who want to deploy Transifex for their 
+own community can get Transifex in a variety of ways. 
+
+A tarball of Transifex 0.7 is available from the following locations:
+
+* The Python Packaging Index (Cheeseshop): http://pypi.python.org/pypi/transifex/
+
+RPM packages for Fedora 9, Fedora 10, and Fedora Rawhide are or will 
+soon be available via yum::
+
+    yum install transifex transifex-extras 
+
+RPM packages for RHEL 5, CentOS 5, and Scientific Linux 5 will be 
+available in the `Fedora EPEL`_ yum repository. 
+
+Information about installing Transifex can be found in the
+:ref:`Installation documentation <installing>`.
+
+.. note::
+
+    If you are interested in reading the Installation documentation exactly how
+    it looked like when 0.7 was released, please refer to our archived
+    "Install Docs for 0.7". 
+    
+
+
+The Transifex Appliance
+:::::::::::::::::::::::
+
+If you want to play with the latest Transifex code, you may want to use our
+development images for the Transifex Appliance. Following the stand-alone,
+"batteries included" model of software appliances, you get a complete
+Transifex system with all dependencies and services pre-configured so that
+you can start experimenting with it right away. Choose from ISO, VMware or EC2
+images, for both x86 and x86_64 architectures to run on a virtual machine,
+dedicated server or using a virtualization software.
+
+.. image:: /static/images/shots/0.7/0.7_appliance_front_page.png
+   :class: shot2 alcenter
+
+Your appliances can be updated using its own web based management system by
+pointing your browser to the appliance’s IP using port 8003. Login with the
+credentials 'admin' and 'password'. Make sure to change the password once
+you’ve successfully logged in.
+
+This appliance version is based on the 0.7 branch of Transifex, where a couple
+of projects have already been created for you to play with. Log in using either
+guest/guest or editor/editor as your user name and password combination and
+tinker to your heart’s content!
+
+Make sure to read the documentation and file issues/send us your feedback.
+
+Transifex Appliance web site:
+ http://www.rpath.org/web/project/transifex/
+
+Stable and development images:
+ http://www.rpath.org/web/project/transifex/releases
+
+
+Upgrading to 0.7
+----------------
+
+To upgrade the code, update your package distribution as usual. Here are some
+additional steps you might need to execute, depending on your environment:
+
+1. Install dependencies
+:::::::::::::::::::::::
+
+The following dependencies were *added* in this version:
+
+- Imaging (Python Imaging Library, PIL)
+- polib
+- django-authority
+- South
+- django-piston
+- django-profile (named 'userprofile')
+- mercurial >= 1.3
+
+The following dependencies were *removed* in this version:
+
+- python-openid
+- django-evolution
+
+For instructions on how to install them, refer to the
+:ref:`Installation docs <installing>`. You'll need to complete this step
+before actually doing the database upgrade.
+
+
+2. Schema and data migration
+::::::::::::::::::::::::::::
+
+Transifex includes a script which will automatically migrate your database to
+the new schema from the previous version. All you need to do, from a clean
+0.6 schema, is run the following::
+
+    ./manage.py syncdb
+    ./manage.py migrate 0001_initial --all --fake
+    ./manage.py migrate
+
+To upgrade from a 0.5 schema to 0.7 you first need to upgrade your schema to
+0.6 and from there to 0.7. Instructions for the first step can be found in the
+relevant section of the :ref:`Transifex 0.6 release notes <upgrading-to-0-6>`.
+
+
+3. New generic data
+:::::::::::::::::::
+
+Finally, run the following two commands to add any new objects updated from the
+last release::
+
+    ./manage.py txcreatelanguages
+    ./manage.py txcreatenoticetypes
+
+
+4. Configuration settings
+:::::::::::::::::::::::::
+
+Finally, review the changes which have happened in the configuration settings
+and update yours accordingly. If your config file are stored in a place not
+handled by the upgrade, then you'll need to copy them over or update them.
+
+In general, if you have overridden your settings in a file such as
+``90-local.conf`` you should be OK since the upgrade will just update the other
+files and leave that alone.
+
+
+
+Contributors
+------------
+
+The following people have contributed to this release, with one way or another:
+
+- Dimitris Glezos
+- Diego Búrigo Zacarão
+- Jannis Leidel
+- John Beredimas
+- Ignacio Vazquez-Abrams
+- Dimitris Bousis
+- Og Maciel
+- John Gakos
+- Manolis Kiagias
+- Ruediger Landmann
+- Professor Charles Xavier
+
+For a list of our awesome translators, refer to the `Translations`_ section.
+
+Special credits
+:::::::::::::::
+
+We'd like to publicly thank the `Greek Open Source Company`_ for their
+ongoing support in the Transifex development. 
+
+
+Transifex 0.7.1 (Frenzy)
+========================
+
+Transifex 0.7.1 release, codenamed Frenzy_, is a maintenance release, which
+fixes a few minor issues.
+
+Released:
+  August 30 2009
+
+Diffstat:
+  12 files changed, 394 insertions(+), 170 deletions(-)
+
+Bugfixes
+--------  
+
+* bugfix: Return an empty string for 'next=' in case of an exception
+* bugfix: Added missed templatetag loading in userprofile reset template
+* bugfix: Fixed maintainers ordering in the project form
+* bugfix: Change logger to increment mode (#315)
+* bugfix: Hidden request perm. button when global submit perm. is granted (#328)
+* docs: Some clarifications and ultra-fast install instructions.
+* docs: Updated Installation and Running docs.
+
+
+Transifex 0.7.2 (Basilisk)
+==========================
+
+Transifex 0.7.2 release, codenamed Basilisk_ is a maintenance release, which
+fixes a few issues.
+
+
+Released:
+  September 21, 2009
+
+Diffstat:
+  20 files changed, 70 insertions(+), 39 deletions(-)
+
+Bugfixes
+--------  
+
+* Also check for 'warnings' when running 'msgfmt -c' (#326)
+* Added committer info from settings for VCSs that support it
+* Make mercurial use utf-8 encoding
+* Indent error in vcs/models.py
+* Add missing import and exception ref.
+
+
+Transifex 0.7.3 (Quicksilver)
+=============================
+
+Transifex 0.7.3 release, codenamed Quicksilver_ is a maintenance release, which
+fixes a few issues.
+
+
+Released:
+  October 2, 2009
+
+Diffstat:
+  5 files changed, 26 insertions(+), 5 deletions(-)
+
+
+Bugfixes
+--------  
+
+* bugfix: Reverted changes from rev 892 (made some additions not working)
+* Also calculate stats for files sent to tarball components
+* Tarball units also need an _get_user method
+
+
+Transifex 0.7.4 (Xorn)
+======================
+
+Transifex 0.7.4 release, codenamed Xorn_, is a security release which
+fixes one issue when users are allowed to administrate their own projects.
+
+Released:
+  January 22, 2010
+
+Diffstat:
+  6 files changed, 116 insertions(+), 17 deletions(-)
+
+Affected releases:
+  This security issue affects instances running the 0.7.x branch only. The
+  previous versions only allowed administrators to modify projects.
+
+
+Details
+-------
+
+Prior to this release, a project maintainer could define a special URL which
+Transifex has access to, but resides on the filesystem. This
+way users could gain unauthorized access to local versioned repositories on the
+Transifex server. This applied to distributed VCSs and can be accomplished by
+defining the correct local path as the repository URL
+(e.g. ``/transifex/local_repos/git/...``).
+
+The allowed repository root URLs are now limited to specific prefixes, such as
+``ssh://`` and ``http://``, via a validator which verifies that the URL has a
+correct prefix. The list of allowed prefixes is a white list and is defined in
+the vcs-related config files, ``settings/60-vcs.conf`` and
+``settings/80-vcs-extras.conf``.
+
+Additionally, a new basic validation has been added, which does not allow the
+use of repositories which have been registered to other projects.
+
+Transifex instances which are affected are those allowing users to add their
+own projects (``project_add`` permission open) or are using project
+maintainers instead of site-wide admins only.
+
+This release adds a new configuration option: ``ALLOWED_REPOSITORY_PREFIXES``.
+You can download it from http://pypi.python.org/pypi/transifex/0.7.4.
+
+Transifex 0.7 Release Candidates
+================================
+
+Two release candidates were shipped for 0.7, RC1 and RC2, on August 7 and
+August 14 respectively.
+
+Please refer to the full `Transifex 0.7 changelog`_ for more information on
+what has changed between these releases and the final 0.7 release.
+
+
+.. _Pyro: http://en.wikipedia.org/wiki/Pyro_(comics)
+.. _Frenzy: http://en.wikipedia.org/wiki/Joanna_Cargill
+.. _Quicksilver: http://en.wikipedia.org/wiki/Quicksilver_(comics)
+.. _Xorn: http://en.wikipedia.org/wiki/Xorn
+.. _Basilisk: http://en.wikipedia.org/wiki/Basilisk_(Mutant)
+.. _Fedora EPEL: https://fedoraproject.org/wiki/EPEL
+.. _Google Translate API: http://code.google.com/apis/ajaxlanguage/documentation/#SupportedPairs
+.. _Greek Open Source Company: http://www.eellak.gr/

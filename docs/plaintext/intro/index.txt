@@ -1,0 +1,99 @@
+.. -*- mode:rst -*-
+
+.. _intro-index:
+
+==============
+ Introduction
+==============
+
+Transifex_ is a novel web application for localization in an easy, agile,
+and hassle-free way. Transifex was designed from the ground-up for **dynamic,
+frequently-published content** consolidated from multiple sources, such as
+software, documentation, websites, and news publication.
+
+Transifex seamlessly integrates with existing content infrastructure, such as a
+software development repository or content management system, using a rich API.
+Translation is "crowd-sourced" to a global network of human translators using
+smart and agile translation techniques adopted from the open source ecosystem.
+
+This guide will bring examples from software localization, however most
+notions and workflows apply to arbitrary content localization as well.
+
+
+Localization 101
+================
+
+*(This section contains text from the awesome related articles of Wikipedia.)*
+
+Localization is the second phase of a larger process of product translation
+and cultural adaptation (for specific countries, regions, or groups) to account
+for differences in distinct markets, a process known as internationalisation
+and localisation.
+
+Language localisation is not merely a translation activity, because it
+involves a comprehensive study of the target culture in order to correctly
+adapt the product to local needs. Localisation is sometimes referred to by
+the numeronym "L10N" (as in: "L", followed by ten more letters, and then "N").
+
+First, a software application is designed in a way so that it *can* be
+adapted to various languages and regions without engineering changes.
+This is a developer task, which enables a product to be used with multiple
+scripts and cultures (globalization) and separating user interface resources
+in a localizable format.
+
+The localisation process is most generally related to the cultural adaptation
+and translation of software, video games, and websites, and less frequently
+to any written translation (which may also involve cultural adaptation
+processes). Localisation can be done for regions or countries where people
+speak different languages, or where the same language is spoken: for instance,
+different dialects of Spanish, with different idioms, are spoken in Spain than
+are spoken in Latin America; likewise, word choices and idioms vary among
+countries where English is the official language (e.g., in the United States,
+the United Kingdom, and the Philippines).
+
+
+Coding practice
+---------------
+
+The current prevailing practice is for applications to place text in resource
+strings which are loaded during program execution as needed. These strings,
+stored in resource files, are relatively easy to translate. Programs are often
+built to reference resource libraries depending on the selected locale data.
+One software library that aids this is **gettext**.
+
+Thus to get an application to support multiple languages one would design the
+application to select the relevant language resource file at runtime. Resource
+files are translated to the required languages. This method tends to be
+application-specific and, at best, vendor-specific. The code required to
+manage date entry verification and many other locale-sensitive data types also
+must support differing locale requirements. Modern development systems and
+operating systems include sophisticated libraries for international support of
+these types.
+
+
+Challenges
+----------
+
+Traditional localization solutions, such as translation offices, in-house
+translators and others work well with content which is rarely updated, such as
+books, traditional products, advertisements and others. However, in the world
+of technology and the Internet, where content is updated very frequently,
+Transifex offers a number of advantages:
+
+* Faster release cycles, enabling mobile apps and websites to be released in
+  a weekly-to-monthly basis instead of a yearly one.
+
+* Short translation periods, by crowdsourcing to a wider audience the
+  localization effort.
+
+
+.. toctree::
+   :hidden:
+
+   getting-started
+
+.. _Transifex: http://www.transifex.com/ 
+.. _Transifex.com: http://www.transifex.com/
+.. _Transifex Professional Services: http://www.transifex.com/
+.. _Transifex: http://www.transifex.com/
+

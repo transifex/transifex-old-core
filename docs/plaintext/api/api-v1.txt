@@ -1,0 +1,314 @@
+.. -*- mode:rst -*-
+
+.. _tech-api-v1:
+
+===============================
+ Transifex API v1 (deprecated)
+===============================
+
+.. note::
+
+  This document describes Transifex API v1, which is no longer used.
+  There are also docs for the :ref:`development version
+  <tech-api-devel>`.
+
+Transifex offers an extensive API which is currently being used by Transifex
+itself and the ``transifex-client`` to perform some of the most common
+operations such as pulling information about projects and translation
+resources and uploading or downloading translation files. The API calls are
+ReST compliant and make use of the most common HTTP methods such as GET, POST,
+PUT and DELETE.
+
+.. _api_authentication-v1:
+
+Authentication
+==============
+
+All of the API calls on Transifex require the user to be authenticated with
+Transifex in order to complete them. Currently, the API supports `HTTP Basic
+Authentication <http://en.wikipedia.org/wiki/Basic_access_authentication>`_
+and it's also sharing login information with django's built in authentication
+system that's being used on Transifex. All external applications should make
+use of the HTTP Basic Authentication if they need to perform some operations
+through the Transifex API.
+
+Part of the development roadmap for Transifex is to add support for other
+authentication methods as well, such as authentication tokens in order to
+avoid forcing users to share their login credentials with third party
+applications. Until then, the only available method is the one stated above.
+
+
+API Sections
+============
+
+The Transifex API is divided in sections, based on the application it refers to
+and the models it interacts with.
+
+Storage
+-------
+
+This application handles file uploads and provides a way to store temporary
+data from a file before we extract all it and save it into the database.
+
+StorageHandler
+~~~~~~~~~~~~~~
+
+The major functionality of this handler is that it allows you to upload files
+into transifex which later can be extracted and saved to the database,
+updating an existing resource.
+
+
+**URL** */api/storage/*
+
++--------+-------------------------------------------------------------------+
+| METHOD | FUNCTION                                                          |
++========+===================================================================+
+| GET    | .. py:function:: read(self, request[, uuid=None])                 |
+|        |                                                                   |
+|        | Returns a list of all StorageFile objects or a single object if a |
+|        | uuid	is specified.                                                |
++--------+-------------------------------------------------------------------+
+| POST   | .. py:function:: create(self, request[, uuid=None])               |
+|        |                                                                   |
+|        | API call for uploading a file via POST. If a uuid is provided and |
+|        | this	matches another file, it gets overwritten.                   |
++--------+-------------------------------------------------------------------+
+| DELETE | .. py:function:: delete(self, request[, uuid=None])               |
+|        |                                                                   |
+|        | Deletes file by storage UUID.                                     |
++--------+-------------------------------------------------------------------+
+
+When doing POST requests, if the requests are successful you'll get a JSON
+response containing the UUID of the created StorageFile. If you want to
+extract the strings from the file you need to do a POST request with this UUID
+to the :ref:`project-resource-handler`.
+
+Projects
+--------
+
+The *Projects* application provides project specific operations. From the
+implemented handlers, you can perform CRUD operations on projects and
+also upload source translation files under a project and create the associated
+translation resources.
+
+ProjectHandler
+~~~~~~~~~~~~~~
+
+The ProjectHandler is the one used to perform CRUD operations on the project
+objects. You can get information on existing projects, create new ones or
+update existing ones with new information.
+
+**URL** */api/project/project_slug/*
+
++--------+-------------------------------------------------------------------+
+| METHOD | FUNCTION                                                          |
++========+===================================================================+
+| GET    | .. py:function:: read(self, request[, project_slug=None])         |
+|        |                                                                   |
+|        | Get project details in json format.                               |
++--------+-------------------------------------------------------------------+
+| POST   | .. py:function:: create(self, request, project_slug)              |
+|        |                                                                   |
+|        | API call to create new projects based on JSON files.              |
++--------+-------------------------------------------------------------------+
+| PUT    | .. py:function:: delete(self, request, project_slug)              |
+|        |                                                                   |
+|        | API call to update project details via JSON file.                 |
++--------+-------------------------------------------------------------------+
+
+When requesting a project's details, you'll be offered a JSON file in the
+following format (this file is for the Transifex project):
+
+.. code-block:: guess
+
+	{
+		"description": "An open translation platform.",
+		"created": "2009-04-21 08:12:16",
+		"slug": "transifex",
+		"owner": {
+			"username": "diegobz",
+			"email": "diegobz@transifex.com"
+		},
+		"anyone_submit": false,
+		"long_description": "Transifex is web system to manage translations from
+			various distributed repositories.",
+		"resources": [
+			{
+				"i18n_type": "PO",
+				"created": "2010-10-04 12:45:31",
+				"source_language": {
+					"code_aliases": " ",
+					"code": "en",
+					"name": "English"
+				},
+				"slug": "txo",
+				"name": "Transifex core"
+			},
+			{
+				"i18n_type": "PO",
+				"created": "2010-10-13 14:37:45",
+				"source_language": {
+					"code_aliases": " ",
+					"code": "en",
+					"name": "English"
+				},
+				"slug": "txn",
+				"name": "Transifex.com"
+			}
+		],
+		"name": "Transifex"
+	}
+
+Similarly, whenever you need to create a new project or update an existing
+one, you can include a JSON file when doing the POST or PUT request which must
+be in the format stated above and it'll create or update the project with the
+details included in the file.
+
+.. _project-resource-handler:
+
+ProjectResourceHandler
+~~~~~~~~~~~~~~~~~~~~~~
+
+This handler is one of the core parts of the Transifex API. It is used to
+extract uploaded files, specified by their UUID, and create new translation
+resources for these files.
+
+**URL** */api/project/<project_slug>/files/*
+
++--------+-----------------------------------------------------------------------------------------+
+| METHOD | FUNCTION                                                                                |
++========+=========================================================================================+
+| POST   | .. py:function:: create(self, request, project_slug)                                    |
+|        |                                                                                         |
+|        | Create new resource under project with slug <project_slug> by                           |
+|        | extracting the StorageFile with matching UUID.                                          |
++--------+-----------------------------------------------------------------------------------------+
+| UPDATE | .. py:function:: update(self, request, project_slug, resource_slug, language_code=None) |
+|        |                                                                                         |
+|        | Update resource translations of a project by the UUID of a StorageFile.                 |
++--------+-----------------------------------------------------------------------------------------+
+
+In the POST data of the request you need to specify the ``UUID`` of the
+StorageFile that you got as a response when you uploaded a file and as an
+optional argument the slug (specified with the POST data variable ``slug``) of
+the target resource that will be created (by default, the filename is used if
+no slug is provided).
+
+Resources
+---------
+
+FileHandler
+~~~~~~~~~~~
+
+The FileHandler simply takes care of providing an API call to export and
+download translation files from Transifex. It offers a single GET method for
+file downloads which is described below.
+
+**URL** */api/project/<project_slug>/resource/<resource_slug>/<language_code>/file/*
+
++--------+--------------------------------------------------------------------------------------------+
+| METHOD | FUNCTION                                                                                   |
++========+============================================================================================+
+| GET    | .. py:function:: read(self, request, project_slug, resource_slug=None, language_code=None) |
+|        |                                                                                            |
+|        | API Handler to export translation files from the database.                                 |
++--------+--------------------------------------------------------------------------------------------+
+
+ResourceHandler
+~~~~~~~~~~~~~~~
+
+The ResourceHandler is tied with the Resource model and allows CRUD operations
+on the Resource model.
+
+
+**URL** */api/project/project_slug/resource/resource_slug/*
+
++--------+-------------------------------------------------------------------------+
+| METHOD | FUNCTION                                                                |
++========+=========================================================================+
+| GET    | .. py:function:: read(self, request, project_slug, resource_slug=None)  |
+|        |                                                                         |
+|        | Get resource details in JSON format.                                    |
++--------+-------------------------------------------------------------------------+
+| POST   | .. py:function:: create(self, request, project_slug, resource_slug=None)|
+|        |                                                                         |
+|        | Create new resource under project with slug=`project_slug` via POST.    |
++--------+-------------------------------------------------------------------------+
+| PUT    | .. py:function:: delete(self, request, project_slug, resource_slug=None)|
+|        |                                                                         |
+|        | API call to update resource details via JSON file.                      |
++--------+-------------------------------------------------------------------------+
+
+When requesting the resource details from the server you should get a JSON
+file like the following:
+
+.. code-block:: guess
+
+	{
+		"name": "Transifex core",
+		"created": "2010-10-04 12:45:31",
+		"i18n_type": "PO",
+		"source_language": {
+			"code_aliases": " ",
+			"code": "en",
+			"name": "English"
+		},
+		"available_languages": [
+			{
+				"code_aliases": " sq-AL ",
+				"code": "sq",
+				"name": "Albanian"
+			},
+			{
+				"code_aliases": " bal-IR ",
+				"code": "bal",
+				"name": "Balochi"
+			},
+			...
+			{
+				"code_aliases": " te-IN ",
+				"code": "te",
+				"name": "Telugu"
+			},
+			{
+				"code_aliases": " uk-UA ",
+				"code": "uk",
+				"name": "Ukrainian"
+			}
+		],
+		"slug": "txo"
+	}
+
+In order to update the resource details, you can issue a PUT request with a
+file containing JSON formatting like the one displayed above. However, keep in
+mind that it's not possible to change the available languages or the source
+language of the resource.
+
+
+StatsHandler
+~~~~~~~~~~~~
+
+**URLS**:
+
+* */api/project/<project_slug>/resource/<resource_slug>/stats/*
+* */api/project/<project_slug>/resource/<resource_slug>/stats/<lang_code>/*
+
++--------+----------------------------------------------------------------------------------+
+| METHOD | FUNCTION                                                                         |
++========+==================================================================================+
+| GET    | .. py:function:: read(self, request, project_slug, resource_slug, lang_code=None)|
+|        |                                                                                  |
+|        | This is used to display translation statistics for individual resources.         |
++--------+----------------------------------------------------------------------------------+
+
+If no language code is specified then statistics are displayed for all the
+available languages of the resource, otherwise, if a language code is given
+only the statistics for the matching language will be displayed. The
+statistics include the completion percentage for each language, the number of
+the strings translated and the date the language was last updated.
+
+
+
+
+
+.. _Transifex.com: http://www.transifex.com/

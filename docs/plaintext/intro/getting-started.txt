@@ -1,0 +1,118 @@
+.. -*- mode:rst -*-
+
+.. _introduction:
+
+=================
+ Getting Started
+=================
+
+
+
+Basic Concepts in Transifex
+===========================
+
+In Transifex, everything revolves around a Translation Projects. This
+usually represents a branded project or product, such as a specific text
+editor or a web browser. For example, MeeGo's Installer, which is the
+software the user sees when trying to install the MeeGo Operating System,
+would be registered as an independent project on Transifex.
+
+Projects are created and managed by people
+who Transifex refers to as **project maintainers**.
+They can configure all aspects of a project and are ultimately responsible
+for it.
+
+Translators who contribute to a project are organized in **Language Teams**.
+Each project has its own set of Translation Teams, one per language. This
+ensures people work on the files they are interested in. Teams can also have
+**coordinators**, who are privileged members who can help in team management
+tasks, such as approving new members and reviewing contributions to that
+language.
+
+Now, let's get to the chorus.
+
+
+.. _user-project-intro:
+
+Things inside a Project
+-----------------------
+
+A project may have many translatable parts, which, in Transifex, we call
+Resources. If you are familiar with PO files and gettext, a resource is a
+source POT file and all its respective PO files. For example, a software project
+on Transifex may create separate resources for its User Interface,
+Documentation, command-line tool, etc.
+
+A resource is basically a set of translatable entities and their translations.
+Each resource has a **Source Language**, which is the language in which the
+entity was originally written (e.g. in the source code). When translating
+online, this is the language from which the translators will translate.
+
+A resource can be created by uploading a translation file such as a POT file
+or TS file (Qt), and selecting its language. Transifex opens
+the uploaded file and searches for translatable strings. For each string it
+finds, it creates a translatable entity in the source language (e.g. English).
+
+We now have a resource and a set of translatable strings (e.g. in English),
+and can proceed to the actual translation phase.
+
+
+Translating
+-----------
+
+Translators, who are members of a language team in the project, can now create
+a **new translation of the resource**, typically, using English as the source
+language. They can choose to translate online by using the web-based Transifex
+translation editor (**Lotte**), or offline, by downloading a file and
+translating it using their own desktop tools.
+
+The translator can now translate the resource to a **new language**. By choosing
+to translate online, the web editor opens up. The English strings are shown
+on the left, on the right are have text boxes to select/enter translations.
+Each translated string is automatically saved in Transifex, so translators
+never lose their work.
+
+Translators can also choose to **download a file** for translation. The type of
+the file depends on the source/template file the maintainer used to
+originally create the resource. For example, if the resource was created using
+a POT file, the downloaded translation file in French will be ``fr.po``.
+
+Depending on the file type, translators can use their favorite desktop tools
+to translate it. When they're ready, they can **upload the file** to Transifex
+in their language and Transifex will import the translations, just like if
+they used the online translation editor. 
+
+The project maintainer now has imported his source translation files in
+Transifex and got a bunch of translations. Cool. Let's now see how this is
+combined with the content itself and its publication.
+
+
+Using Translations
+------------------
+
+Depending on the project type, Transifex offers the maintainer a number
+of ways to get the translations back.
+
+The most common one is to **export** them as translation files. This is done
+the same way a translator downloaded the file, as described above.
+
+Let's take a moment and explain how this works under the hood. Remember the
+source file (e.g. POT) we uploaded when we created the resource
+originally? Transifex actually stored this template/source file in its database.
+To download the translations in a file (e.g. ``fr.po`` for French), Transifex
+takes the template file, replaces all English strings with the French
+translations, and provides this new file for download.
+
+Since this process can be repeated often, we've created a handy
+command-line tool called transifex-client, which is targeted mainly
+towards software developers, localization coordinators and language leaders.
+They can use the client to 'pull' translations from Transifex right before a
+release, every week or even every half an hour if they so choose.
+
+But there's more. Transifex supports fetching translations directly from the
+database using an Application Programmable Interface (API),
+without the need to mess around with translation files. This way, software
+developers can integrate their tools directly with Transifex.
+So, for example, an application could even fetch fresh translations the moment
+the user launches it.
+
