@@ -6,7 +6,7 @@
 These pages document the older versions of the Community Edition of Transifex. 
 Its repository can be found on GitHub_.
 
-For the most up-to-date information on Transifex, please refer to transifex.com_
+For the most up-to-date information on Transifex, please refer to Transifex_
 and support.transifex.com_.
 
 The docs are available in the following formats:
