@@ -2,13 +2,7 @@
 Transifex
 =========
 
-"Translation workflow and crowdsourcing for agile teams and smart translators."
-
-http://www.transifex.com/
-
-
-What is Transifex?
-------------------
+This repository is **no longer maintained**. Here be dragons.
 
 Transifex is a [cloud-based localization platform](http://www.transifex.com/)
 that manages localization of digital products and supporting web content.
@@ -24,7 +18,6 @@ Transifex.com. Since mid 2012, this repository is
 [no longer actively maintained](https://github.com/transifex/transifex/issues/206#issuecomment-15243207)
 in favor of working aggressively in extending Transifex.com itself.
 
-Maintaining both an open-source repo and Transifex.com was becoming much harder
-with time and 99.9% of projects were hosted on Transifex.com anyway. We decided
-to switch to a GitHub model where we work on one non-open codebase and
-open-source the libraries which are actually useful for others.
+Nowadays there is almost no resemblance between the two products.
+
+For any help, please visit Transifex.com and our [documentation pages](http://docs.transifex.com) or contact us through there.
