@@ -13,3 +13,5 @@ conffiles.sort()
 
 for f in conffiles:
     execfile(os.path.abspath(f))
+
+OAUTH_CALLBACK_VIEW = "api.views.request_token_ready"

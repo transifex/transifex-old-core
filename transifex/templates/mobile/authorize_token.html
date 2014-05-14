@@ -1,0 +1,13 @@
+{% extends "mobile/base.html" %}
+{% load i18n %}
+{% load txcommontags %}
+
+{% block content %}
+	<div id="login" class="login">
+		<form action='{% url mobile.authentication.oauth_user_auth %}' method="POST" target="_self">
+			{% csrf_token %}
+	  			{{ form.as_table }}
+	  			<button type="submit">Confirm</button>
+		</form>
+	</div>
+{% endblock %}

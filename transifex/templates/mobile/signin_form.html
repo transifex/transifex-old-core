@@ -1,0 +1,35 @@
+{% extends "mobile/base.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load txcommontags %}
+
+{% block content %}
+	<form id="login-form" class="tx-form" action="" method="post" target="_self">
+		{% csrf_token %}
+		<div id="login" class="login">
+			{{ form.non_field_errors }}
+		    {% for field in form %}
+		    {{ field.errors }}
+		    {% comment %} Displaying checkboxes differently {% endcomment %}
+		    {% if field.name == 'remember_me' %}
+		    <div class="checkbox">
+		    	<label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+		    </div>
+		    {% else %}
+		    <div class="input-cell">
+		    	<div class="form-label-tag">{{ field.label_tag }}</div>
+		    	<div class="form-field">{{ field }}</div>
+		    </div>
+		    {% endif %}
+		    {% endfor %}
+			</fieldset>
+		  <input type="submit" class="i16 tick buttonized" value="{% trans "Sign in" %}" />
+		  	  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+		</div>
+	</form>
+	<script type="text/javascript" >
+		$(document).ready(function(){
+			$('#username').focus();	
+		});
+	</script>
+{% endblock %}

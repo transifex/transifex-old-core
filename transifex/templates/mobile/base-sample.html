@@ -1,0 +1,54 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load txcommontags %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>{% block title %}{% trans "Transifex Mobile Client" %}{% endblock %}</title>
+		<meta name="keywords" content="mobile transifex client" />
+		<meta name="descriptions" content="mobile transifex client" />
+		<link rel="icon" type="image/png" href="{% static 'mobile/image/mtx_logo.png' %}">
+		<link rel="stylesheet" href="{% static 'mobile/jquery/css/jquery.mobile-1.2.0.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'mobile/jquery/themes/mtx.min.css' %}" />
+		<link rel="stylesheet" href="{% static 'mobile/css/index.css' %}" />
+		<script src="{% static 'mobile/jquery/js/jquery-1.8.3.min.js' %}"></script>
+		<script src="{% static 'mobile/jquery/js/jquery.mobile-1.2.0.min.js' %}"></script>
+		<script src="{% static 'mobile/js/index.js' %}"></script>		
+		<script  type="text/javascript">
+		$(document).ready(function(){
+			$('<a class="forgot-pass" href="{% url userena_password_reset %}">({% trans "Forgot your password?" %})</a>').appendTo('label[for="id_password"]');
+		});
+</script>
+	</head>
+<body>
+<div id="sidebar" style="width:0;">
+	{% if not request.user.is_authenticated %}		
+		<ul>
+			<li>
+				<a href="/mobile/accounts/signin/" rel="external">{% trans "Login" %}</a>				
+			</li>
+			<li>
+				<a href="/accounts/signup/" rel="external">{% trans "Sign up free" %}</a>				
+			</li>		
+		</ul>
+	{% endif %}
+</div>
+<div data-role="page" data-theme="a">
+	<div data-role="header" data-position="inline">
+		<div class="button left">
+			<a onclick="toggleSidebar()" >
+				<img src="{% static 'mobile/image/menu.png' %}" alt="" >
+			</a>				
+		</div>		
+		<center><img src="{% static 'mobile/image/mtx_logo.png' %}" width="50" alt="" ></center>
+		{% block header_extension %}{% endblock %}
+	</div>
+	<div data-role="content" data-theme="a">
+		{% block content %}{% endblock %}
+	</div>
+</div>
+</body>
+</html>

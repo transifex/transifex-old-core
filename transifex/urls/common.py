@@ -6,6 +6,7 @@ from django.views.generic.simple import redirect_to
 import authority
 
 from userena import views as userena_views
+from mobile import views as mobile_views
 
 from txcommon.forms import EditProfileForm, CustomContactForm
 from txcommon.feeds import UserFeed
@@ -38,9 +39,25 @@ urlpatterns += patterns('',
     url(r'^ajax/', include('projects.urls.ajax')),
     url(r'^ajax/', include('resources.urls.ajax')),
     url(r'^api/', include('api.urls')),
+    url(r'^mobile/api/', include('mobile.api.urls')),
     url(r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
     url(r'^contact/$', 'contact_form.views.contact_form',
         {'form_class': CustomContactForm}, name='contact_form'),
+)
+
+# piston, mobile oauth urls
+urlpatterns += patterns(
+    'mobile.authentication',
+    url(r'^mobile/oauth/request_token/$','oauth_request_token'),
+    url(r'^mobile/oauth/authorize/$','oauth_user_auth'),
+    url(r'^mobile/oauth/access_token/$','oauth_access_token'),
+)
+
+#mobile sign in
+urlpatterns += patterns('',
+    url(r'^mobile/accounts/signin/$',
+        mobile_views.signin,
+        name='userena_signin'),
 )
 
 if settings.ENABLE_CONTACT_FORM:
