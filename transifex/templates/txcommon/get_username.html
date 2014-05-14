@@ -1,0 +1,19 @@
+{% extends "base-sample.html" %}
+{% load i18n %}
+{% block title %}{% trans "Registration" %}{% endblock %}
+
+{% block content_title %}{% trans "User Registration" %}{% endblock %}
+
+{% block content_main %}
+	<form action="" method="post">{% csrf_token %}
+    	{{ form.non_field_errors }}
+        <div class="fieldWrapper">
+    		{{ form.username.errors }}
+    		<label for="id_username">Username:</label>
+            {{ form.username }}
+       	</div>
+        <input type="submit" value="Submit" />
+	</form>
+{% endblock %}
+
+{% block content_footer %}{% endblock %}
