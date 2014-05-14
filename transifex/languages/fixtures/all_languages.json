@@ -3675,14 +3675,14 @@
       "code": "be_BY",
       "name": "Belarusian (Belarus)",
       "description": "",
-      "pluralequation": "(n != 1)",
+      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
       "rule_zero": null,
       "rule_two": null,
-      "rule_one": "n is 1",
+      "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
       "rule_other": "everything else",
       "specialchars": "\u00eb\u00ef\u00ea\u00f4\u00fb\u00e1\u00e9\u00ed\u00f3\u00fa\u00fd",
-      "rule_many": null,
-      "nplurals": 2
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
+      "nplurals": 4
     }
   },
   {
