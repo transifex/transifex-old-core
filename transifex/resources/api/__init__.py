@@ -417,7 +417,8 @@ class TranslationHandler(BaseHandler):
     @throttle(settings.API_MAX_REQUESTS, settings.API_THROTTLE_INTERVAL)
     @method_decorator(one_perm_required_or_403(
             pr_project_private_perm,
-            (Project, 'slug__exact', 'project_slug')
+            (Project, 'slug__exact', 'project_slug'),
+            anonymous_access = True
     ))
     def read(self, request, project_slug, resource_slug,
              lang_code=None, is_pseudo=None, api_version=2):
