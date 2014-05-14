@@ -1447,18 +1447,18 @@
     "pk": 77,
     "model": "languages.language",
     "fields": {
-      "rule_few": "n mod 10 is 1 and n mod 100 is not 11",
       "code_aliases": " ",
       "code": "sr",
       "name": "Serbian",
       "description": "",
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
       "rule_zero": "",
-      "rule_two": "",
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
       "rule_other": "everything else",
       "specialchars": "",
-      "rule_many": "",
       "nplurals": 3
     }
   },
@@ -1466,18 +1466,18 @@
     "pk": 78,
     "model": "languages.language",
     "fields": {
-      "rule_few": "n mod 10 is 1 and n mod 100 is not 11",
       "code_aliases": " sr@Latin sr@latn sr@Latn sr-Latn sr_Latn ",
       "code": "sr@latin",
       "name": "Serbian (Latin)",
       "description": "",
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
       "rule_zero": "",
-      "rule_two": "",
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
       "rule_other": "everything else",
       "specialchars": "",
-      "rule_many": "",
       "nplurals": 3
     }
   },
@@ -4563,18 +4563,18 @@
     "pk": 241,
     "model": "languages.language",
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
       "code_aliases": " sr-RS sr-rs ",
       "code": "sr_RS",
       "name": "Serbian (Serbia)",
       "description": "",
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
       "rule_zero": "",
-      "rule_two": "",
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
       "rule_other": "everything else",
       "specialchars": "",
-      "rule_many": "n mod 10 is 1 and n mod 100 is not 11",
       "nplurals": 3
     }
   },
@@ -4943,18 +4943,18 @@
     "pk": 261,
     "model": "languages.language",
     "fields": {
-      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
       "code_aliases": " sr-RS@latin sr-rs@latin sr_RS@latn sr-RS@latn ",
       "code": "sr_RS@latin",
       "name": "Serbian (Latin) (Serbia)",
       "description": "",
       "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
       "rule_zero": "",
-      "rule_two": "",
       "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
       "rule_other": "everything else",
       "specialchars": "",
-      "rule_many": "n mod 10 is 1 and n mod 100 is not 11",
       "nplurals": 3
     }
   },
@@ -5261,5 +5261,81 @@
       "rule_many": null,
       "nplurals": 1
   	}
+  },
+  {
+    "pk": 278,
+    "model": "languages.language",
+    "fields": {
+      "code_aliases": " sr@ije ",
+      "code": "sr@ijekavian",
+      "name": "Serbian Ijekavian",
+      "description": "",
+      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+      "rule_zero": "",
+      "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
+      "rule_other": "everything else",
+      "specialchars": "",
+      "nplurals": 3
+    }
+  },
+  {
+    "pk": 279,
+    "model": "languages.language",
+    "fields": {
+      "code_aliases": " ",
+      "code": "sr@ijekavianlatin",
+      "name": "Serbian (Ijekavian Latin)",
+      "description": "",
+      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+      "rule_zero": "",
+      "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
+      "rule_other": "everything else",
+      "specialchars": "",
+      "nplurals": 3
+    }
+  },
+  {
+    "pk": 280,
+    "model": "languages.language",
+    "fields": {
+      "code_aliases": " sr-BA sr-ba ",
+      "code": "sr_BA",
+      "name": "Serbian (Bosnia and Herzegovina)",
+      "description": "",
+      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+      "rule_zero": "",
+      "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
+      "rule_other": "everything else",
+      "specialchars": "",
+      "nplurals": 3
+    }
+  },
+  {
+    "pk": 281,
+    "model": "languages.language",
+    "fields": {
+      "code_aliases": "  sr-BA@latin sr-ba@latin sr_BA@latn sr-BA@latn ",
+      "code": "sr_BA@latin",
+      "name": "Serbian (Latin) (Bosnia and Herzegovina)",
+      "description": "",
+      "pluralequation": "(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)",
+      "rule_zero": "",
+      "rule_one": "n mod 10 is 1 and n mod 100 is not 11",
+      "rule_two": "",
+      "rule_few": "n mod 10 in 2..4 and n mod 100 not in 12..14",
+      "rule_many": "n mod 10 is 0 or n mod 10 in 5..9 or n mod 100 in 11..14",
+      "rule_other": "everything else",
+      "specialchars": "",
+      "nplurals": 3
+    }
   }
 ]
