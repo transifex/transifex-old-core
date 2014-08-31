@@ -377,7 +377,7 @@ class GettextCompiler(PluralCompiler):
             if team.mainlist:
                 team_contact = "<%s>" % team.mainlist
             else:
-                team_contact = "(http://%s%s)" % (
+                team_contact = "(https://%s%s)" % (
                     Site.objects.get_current().domain,
                     team.get_absolute_url()
                 )
