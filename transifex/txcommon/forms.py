@@ -27,7 +27,8 @@ class EditProfileForm(UserenaEditProfileForm):
         exclude = ('user', 'privacy', 'mugshot', )
         fields = (
             'first_name', 'last_name', 'location', 'languages', 'tags', 'blog',
-            'linked_in', 'twitter', 'about', 'looking_for_work'
+            'linked_in', 'twitter', 'about', 'looking_for_work', 'company_name',
+            'phone_number'
         )
 
 class CustomContactForm(ContactForm):

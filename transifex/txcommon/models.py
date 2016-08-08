@@ -50,6 +50,11 @@ class Profile(UserenaBaseProfile):
     location = models.CharField(_("Location"), max_length=255, null=True, blank=True,
         editable=True)
 
+    company_name = models.CharField( _("Company name"),
+                                    max_length=255, null=True, blank=True)
+    phone_number = models.CharField( _("Phone number"),
+                                    max_length=64, null=True, blank=True)
+
     class Meta:
         db_table = 'txcommon_userenaprofile'
 
