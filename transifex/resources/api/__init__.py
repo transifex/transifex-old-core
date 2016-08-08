@@ -25,7 +25,7 @@ from transifex.txcommon.log import logger
 from transifex.txcommon.exceptions import FileCheckError
 from transifex.txcommon.utils import paginate
 from transifex.projects.permissions import *
-from transifex.languages.models import Language
+from transifex.languages.models import Language, language_choice_list
 from transifex.projects.models import Project
 from transifex.projects.permissions.project import ProjectPermission
 from transifex.projects.signals import post_submit_translation, post_resource_save
@@ -90,7 +90,7 @@ class ResourceHandler(BaseHandler):
     fields = default_fields
     allowed_fields = (
         'slug', 'name', 'accept_translations', 'i18n_type',
-        'content', 'category',
+        'content', 'category', 'source_language_code'
     )
     written_fields = (
         'slug', 'name', 'accept_translations', 'content', 'category',
@@ -237,11 +237,18 @@ class ResourceHandler(BaseHandler):
             filename = self._get_filename(request, data)
         except NoContentError, e:
             raise BadRequestError(unicode(e))
-
         try:
             rb = ResourceBackend()
-            rb_create =  rb.create(
-                project, slug, name, method, project.source_language, content,
+            try:
+                slang = data['source_language_code']
+                for lcode, lang in language_choice_list():
+                    if lcode == slang:
+                        source_language = lang
+                        break
+            except KeyError:
+                source_language = project.source_language
+            rb_create = rb.create(
+                project, slug, name, method, source_language, content,
                 extra_data={'filename': filename}
             )
             post_resource_save.send(sender=None, instance=Resource.objects.get(
