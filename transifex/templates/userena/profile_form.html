@@ -10,11 +10,12 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
     <script type="text/javascript">
     $(document).ready(function(){
-    	$(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
-			$('.tx-form .required, .tx-form .field-helptext').each(function(){
-				$(this).appendTo($(this).siblings('label'));
-			});
-		});
+        $(".tipsy_enable").tipsy({'html':true, 'gravity':'s'});
+            $('.tx-form .required, .tx-form .field-helptext').each(function(){
+                $(this).appendTo($(this).siblings('label'));
+            });
+        $("#id_languages").chosen()
+        });
     </script>
 
 {% endblock %}
