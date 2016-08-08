@@ -119,13 +119,17 @@ $(function(){
     {% endif %}
 
     {% if coordinators %}
-      <dt class="i16 coordinators">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</dt>
-      <dd>
-        {% for c in coordinators %}
-          <img class="border" width="16" height="16" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:middle"/>
-          <a href="{% url profile_public c.username %}">{{ c.username }}</a>
-        {% endfor %}
-      </dd>
+    <div class="details-row">
+      <span class="i16 coordinators detlabel">{% blocktrans count coordinators|length as counter %}Coordinator:{% plural %}Coordinators:{% endblocktrans %}</span>
+
+      {% for c in coordinators %}      
+      <span class="user-indetails">
+        <img class="ui-corner-left" width="20" height="20" src="{{ c.profile.get_mugshot_url }}" style="vertical-align:top"/>
+        <a href="{% url profile_public c.username %}">{{c.username}}</a>
+      </span>
+      {% endfor %}      
+
+    </div>
     {% endif %}
   </dl>
 </div>

@@ -25,47 +25,36 @@
 {% block content_title %}
 {% with project.description as short_desc %}
 <div class="lastchild-emf">
-<h2 class="pagetitle{% if short_desc %} with_description{% endif %}">
+<h2 class="pagetitle">
 {% block project_header %}
 <span><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></span>
 {% endblock %}
 </h2>
 </div>
 
-{% block current_description %}
-{% if short_desc %}
-<div class="description">
-	<p>{{ project.description }}</p>
-</div>
-{% endif %}
-{% endblock %}
+
 
 {% endwith %}
 {% endblock %}
 
 {% block content_header_sec %}
-  {% if project.logo %}
-  <img src="{{ project.get_logo_url }}" id="project-logo-main" height="48" width="48"/>
-  {% endif %}
-
   {% url project_detail project.outsource.slug as url_hub_project %}
 	{% if project.anyone_submit %}
-  <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/ffa-project.png" %})center top no-repeat;">
-	<p>{% trans "Free for all"%}</p>
+  <span id="ffa_project_sign" class="project-sign">
+	<p>{% trans "FreeForAll"%}</p>
 	</span>
 	{% endif %}
 	{% if project.outsource %}
-  <span id="private_project_banner" class="project-sign"
-	style="background:url({% static "images/icons/outsource-project.png" %})center top no-repeat;"><a title="{% blocktrans with project.outsource.name as hub_project %} Go to {{hub_project}} hub{% endblocktrans %}" href="{{ url_hub_project }}" style="display:block;"><p>{% trans "Child project" %} </p></a>
+  <span id="cp_project_sign" class="project-sign"><a title="{% blocktrans with project.outsource.name as hub_project %} Go to {{hub_project}} hub{% endblocktrans %}" href="{{ url_hub_project }}" style="display:block;"><p>{% trans "Child" %} </p></a>
 	</span>
 	{% endif %}
 	{% if project.is_hub %}
-  <span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/hub-project.png" %})center top no-repeat;">
+  <span id="hub_project_sign" class="project-sign">
 	<p>{% trans "Hub"%}</p>
 	</span>
 	{% endif %}
 	{% if project.private %}
-	<span id="private_project_banner" class="project-sign" style="background:url({% static "images/icons/private-project.png" %})center top no-repeat;">
+	<span id="private_project_sign" class="project-sign">
 	<p>{% trans "Private"%}</p>
 	</span>
 	{% endif %}
@@ -76,7 +65,7 @@
 	{% if project %}
 	<div class="tab-wrapper grid_12">
 		<ul  class="tabs clearfix">
-		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Project overview" %}</a></li>
+		  <li class="{% if project_overview %}selected{% endif %}"><a href="{% url project_detail project_slug=project.slug %}">{% trans "Overview" %}</a></li>
     		{% if project.is_hub and is_maintainer %}
     	  <li class="{% if hub_projects_page %}selected{% endif %}">
     		  <a href="{% url project_hub_projects project.slug %}">
