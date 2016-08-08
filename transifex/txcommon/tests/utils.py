@@ -1,5 +1,39 @@
+from contextlib import contextmanager
+
 from transifex.txcommon.tests.base import USER_ROLES
 from transifex.txcommon.log import logger
+
+
+class SettingDoesNotExist:
+    pass
+
+@contextmanager
+def patch_settings(**kwargs):
+    """
+    Context manager to patch setting on the fly for unittests.
+
+    Previous settings values will be put back once the code leaves the
+    context manager block.
+
+    Usage:
+        with patch_settings(ONE_SETTING=1, ANOTHER_SETTING=2):
+
+            # Do something
+
+    """
+    from django.conf import settings
+    old_settings = []
+    for key, new_value in kwargs.items():
+        old_value = getattr(settings, key, SettingDoesNotExist)
+        old_settings.append((key, old_value))
+        setattr(settings, key, new_value)
+    yield
+    for key, old_value in old_settings:
+        if old_value is SettingDoesNotExist:
+            delattr(settings, key)
+        else:
+            setattr(settings, key, old_value)
+
 
 def getitem(list, index, default=None):
     """
