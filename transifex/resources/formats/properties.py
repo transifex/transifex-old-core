@@ -143,12 +143,20 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
         self._find_linesep(self.content)
         template = u""
         lines = self._iter_by_line(self.content)
+        comment_lines = []
         for line in lines:
             line = self._prepare_line(line)
             # Skip empty lines and comments
             if not line or line.startswith(self.comment_chars):
                 if is_source:
                     template += line + self.linesep
+                if not line:
+                    # Reset comment block to zero, if newline happened.
+                    # That is to omit start Licence texts and such
+                    comment_lines = []
+                else:
+                    # this is a comment, add it to the block
+                    comment_lines.append(line[1:])
                 continue
             # If the last character is a backslash
             # it has to be preceded by a space in which
@@ -176,8 +184,11 @@ class PropertiesHandler(MarkedSourceCompilerFactory, Handler):
                 # ignore keys with no translation
                 continue
             self.stringset.add(GenericTranslation(
-                    key, self._unescape(value), context=context
+                    key, self._unescape(value), context=context,
+                    comment="\n".join(comment_lines),
             ))
+            # reset comment block, it has already been written
+            comment_lines = []
         if is_source:
             template = template[:-1*(len(self.linesep))]
         return template

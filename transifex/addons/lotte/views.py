@@ -702,7 +702,9 @@ def _get_source_strings(source_string, source_language, lang_code, more_language
             plural_name = source_language.get_rule_name_from_num(t.rule)
             similar_lang_strings[l.name][plural_name] = t.string
     return { 'source_strings' : source_strings,
-             'similar_lang_strings' : similar_lang_strings }
+             'similar_lang_strings' : similar_lang_strings,
+             'developer_comment': source_entity.developer_comment,
+            }
 
 
 def _get_strings(query, target_language, source_entity):

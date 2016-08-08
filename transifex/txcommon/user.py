@@ -7,8 +7,9 @@ from uuid import uuid4
 from django.conf import settings
 from django.contrib.auth.models import User
 from userena.models import UserenaSignup
-from social_auth.backends.pipeline import USERNAME, USERNAME_MAX_LENGTH, \
-        warn_setting
+from social_auth.models import UserSocialAuth
+from social_auth.backends import USERNAME
+USERNAME_MAX_LENGTH = UserSocialAuth.username_max_length()
 
 
 class CreateUserFromSocial(object):
@@ -36,7 +37,7 @@ class CreateUserFromSocial(object):
             username, email, password=None, active=True, send_email=False
         )
         # Activate user automatically
-        user = UserenaSignup.objects.activate_user(user, user.userena_signup.activation_key)
+        user = UserenaSignup.objects.activate_user(user.userena_signup.activation_key)
         return {'user': user, 'is_new': True}
 
 
@@ -56,11 +57,6 @@ class GetUsername(object):
         """
         if user:
             return {'username': user.username}
-
-        warn_setting('SOCIAL_AUTH_FORCE_RANDOM_USERNAME', 'get_username')
-        warn_setting('SOCIAL_AUTH_DEFAULT_USERNAME', 'get_username')
-        warn_setting('SOCIAL_AUTH_UUID_LENGTH', 'get_username')
-        warn_setting('SOCIAL_AUTH_USERNAME_FIXER', 'get_username')
 
         if getattr(settings, 'SOCIAL_AUTH_FORCE_RANDOM_USERNAME', False):
             username = uuid4().get_hex()
